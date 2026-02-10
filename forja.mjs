@@ -106,9 +106,7 @@ Hooks.once("init", () => {
     }
   };
 
-  // Register Actor sheets
-  DocumentSheetConfig.unregisterSheet(Actor, "core", ActorSheet);
-
+  // Register Actor sheets (makeDefault: true overrides core sheets)
   DocumentSheetConfig.registerSheet(Actor, "forja", ForjaCharacterSheet, {
     types: ["character"],
     makeDefault: true,
@@ -133,9 +131,7 @@ Hooks.once("init", () => {
     label: "FORJA.Sheet.Animal"
   });
 
-  // Register Item sheets
-  DocumentSheetConfig.unregisterSheet(Item, "core", ItemSheet);
-
+  // Register Item sheets (makeDefault: true overrides core sheets)
   DocumentSheetConfig.registerSheet(Item, "forja", ForjaSkillSheet, {
     types: ["skill"],
     makeDefault: true,

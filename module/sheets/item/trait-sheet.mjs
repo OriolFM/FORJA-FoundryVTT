@@ -1,7 +1,9 @@
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Item sheet for Traits.
  */
-export default class ForjaTraitSheet extends foundry.applications.sheets.ItemSheetV2 {
+export default class ForjaTraitSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
 
   static DEFAULT_OPTIONS = {
     classes: ["forja", "sheet", "item", "trait"],

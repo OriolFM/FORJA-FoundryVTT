@@ -1,7 +1,9 @@
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Simplified sheet for NPCs (PNJ).
  */
-export default class ForjaNPCSheet extends foundry.applications.sheets.ActorSheetV2 {
+export default class ForjaNPCSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
 
   static DEFAULT_OPTIONS = {
     classes: ["forja", "sheet", "actor", "npc"],

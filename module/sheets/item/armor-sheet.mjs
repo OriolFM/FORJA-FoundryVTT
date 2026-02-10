@@ -1,7 +1,9 @@
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Item sheet for Armor.
  */
-export default class ForjaArmorSheet extends foundry.applications.sheets.ItemSheetV2 {
+export default class ForjaArmorSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
 
   static DEFAULT_OPTIONS = {
     classes: ["forja", "sheet", "item", "armor"],

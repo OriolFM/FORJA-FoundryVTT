@@ -1,8 +1,10 @@
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Character sheet for Player Characters (PJ).
  * Uses Foundry v13 ApplicationV2 with HandlebarsApplicationMixin.
  */
-export default class ForjaCharacterSheet extends foundry.applications.sheets.ActorSheetV2 {
+export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
 
   static DEFAULT_OPTIONS = {
     classes: ["forja", "sheet", "actor", "character"],

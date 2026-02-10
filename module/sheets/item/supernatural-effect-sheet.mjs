@@ -1,7 +1,9 @@
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Item sheet for Supernatural Effects.
  */
-export default class ForjaSupernaturalEffectSheet extends foundry.applications.sheets.ItemSheetV2 {
+export default class ForjaSupernaturalEffectSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
 
   static DEFAULT_OPTIONS = {
     classes: ["forja", "sheet", "item", "supernatural-effect"],
