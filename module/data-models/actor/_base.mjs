@@ -74,6 +74,7 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
    */
   prepareDerivedData() {
     const cfg = CONFIG.FORJA;
+    if (!cfg) return;
     const attrs = this.attributes;
 
     // Max wounds = size × 10
@@ -85,8 +86,9 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
     // Defense = AGI + size defense modifier
     this.defense = attrs.AGI.value + (cfg.sizeDefenseModifiers[this.size] ?? 0);
 
-    // Latency = max(1, 10 + size - AGI × 2)
-    this.latency = Math.max(1, 10 + this.size - (attrs.AGI.value * 2));
+    // Latency = max(1, 10 + size - AGI × 2 + armorLatencyMod)
+    const armorLatencyMod = this._getArmorLatencyMod();
+    this.latency = Math.max(1, 10 + this.size - (attrs.AGI.value * 2) + armorLatencyMod);
 
     // Damage reduction = FOR
     this.damageReduction = attrs.FOR.value;
@@ -103,6 +105,21 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
     // Wound and fatigue levels
     this.woundLevel = this._getWoundLevel();
     this.fatigueLevel = this._getFatigueLevel();
+  }
+
+  /**
+   * Get latency modifier from equipped armor.
+   */
+  _getArmorLatencyMod() {
+    let mod = 0;
+    const items = this.parent?.items;
+    if (!items) return mod;
+    for (const item of items) {
+      if (item.type === "armor" && item.system.equipped) {
+        mod += item.system.latencyMod ?? 0;
+      }
+    }
+    return mod;
   }
 
   /**
@@ -150,6 +167,7 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
    */
   _calculatePoints() {
     const cfg = CONFIG.FORJA;
+    if (!cfg) return;
     const items = this.parent?.items;
 
     // Attribute costs

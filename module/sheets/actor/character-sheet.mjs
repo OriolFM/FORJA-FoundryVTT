@@ -12,7 +12,9 @@ export default class ForjaCharacterSheet extends foundry.applications.sheets.Act
       rollSkill: ForjaCharacterSheet.#onRollSkill,
       rollAttack: ForjaCharacterSheet.#onRollAttack,
       adjustTracker: ForjaCharacterSheet.#onAdjustTracker,
-      toggleEquip: ForjaCharacterSheet.#onToggleEquip
+      toggleEquip: ForjaCharacterSheet.#onToggleEquip,
+      itemEdit: ForjaCharacterSheet.#onItemEdit,
+      itemDelete: ForjaCharacterSheet.#onItemDelete
     },
     form: { submitOnChange: true }
   };
@@ -145,5 +147,17 @@ export default class ForjaCharacterSheet extends foundry.applications.sheets.Act
     const item = this.document.items.get(itemId);
     if (!item) return;
     item.update({ "system.equipped": !item.system.equipped });
+  }
+
+  static #onItemEdit(event, target) {
+    const itemId = target.closest("[data-item-id]")?.dataset.itemId ?? target.dataset.itemId;
+    const item = this.document.items.get(itemId);
+    if (item) item.sheet.render(true);
+  }
+
+  static #onItemDelete(event, target) {
+    const itemId = target.closest("[data-item-id]")?.dataset.itemId ?? target.dataset.itemId;
+    const item = this.document.items.get(itemId);
+    if (item) item.deleteDialog();
   }
 }

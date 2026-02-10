@@ -1,6 +1,6 @@
 # Progrés del Desenvolupament - FORJA Foundry VTT
 
-## Estat General: Fases 1-6 completes, Fase 7 pendent
+## Estat General: Fases 1-7a completes (revisió i correcció de bugs)
 
 ---
 
@@ -68,13 +68,29 @@
   - `packs/artifacts/` — 15 artefactes
   - `packs/supernatural-effects/` — 28 efectes sobrenaturals (màgia, psi, qi)
 
-## Fase 7: Test i Poliment — PENDENT
-- [ ] Provar creació d'actors i derivats
+## Fase 7a: Revisió de Codi i Correccions — COMPLETADA
+- [x] Revisió de l'entry point i registraments (forja.mjs, system.json) — OK
+- [x] Revisió de data models per correctesa de schema
+- [x] Revisió de sheets (ApplicationV2) i templates (Handlebars)
+- [x] Revisió del sistema de daus i combat
+- [x] Verificació de consistència de claus i18n entre templates i fitxers de llengua
+- [x] **FIX CRÍTIC**: Registre de ForjaRoll a forja.mjs (CONFIG.Dice.rolls) — sense això els modificadors de trets no s'aplicaven
+- [x] **FIX CRÍTIC**: Refactorització de `_rollForjaPool` per usar ForjaRoll amb detecció automàtica de modificadors de trets (adepte, inepte, especialista, atribut-titànic)
+- [x] **FIX CRÍTIC**: Afegits handlers `itemEdit` i `itemDelete` a character-sheet.mjs i npc-sheet.mjs — sense això no es podien editar/eliminar items de les fitxes
+- [x] **FIX CRÍTIC**: Inclusió del modificador de latència de l'armadura al càlcul de latència (_base.mjs)
+- [x] **FIX CRÍTIC**: Corregida expressió Handlebars trencada a wound-fatigue-tracker.hbs (ús de forjaLocalize en lloc de lookup encadenat)
+- [x] **FIX CRÍTIC**: Guard de CONFIG.FORJA a prepareDerivedData i _calculatePoints
+- [x] **FIX i18n**: Afegides ~80 claus de localització que faltaven als 3 fitxers de llengua (ca/es/en)
+- [x] **FIX i18n**: Corregides 10 discrepàncies de majúscules/minúscules (Derived.defense→Defense, Health.wounds→Wounds, Points.total→Total, etc.)
+- [x] **FIX i18n**: Eliminades claus `FORJA.Fields.*` duplicades, unificades amb les claus directes que usen els templates
+
+## Fase 7b: Test Manual a Foundry — PENDENT
+- [ ] Provar creació d'actors i verificar derivats
 - [ ] Provar arrossegament d'items des de compendiums
-- [ ] Provar tirades de daus
-- [ ] Provar combat complet
-- [ ] Verificar traduccions ca/es/en
-- [ ] Verificar barres de tokens
+- [ ] Provar tirades de daus amb modificadors de trets
+- [ ] Provar combat complet amb rellotge de latència
+- [ ] Verificar traduccions ca/es/en (canvi d'idioma en viu)
+- [ ] Verificar barres de tokens (ferides/fatiga)
 - [ ] Poliment visual
 - [ ] Icones per cada tipus d'item
 
@@ -82,5 +98,5 @@
 
 ## Properes Tasques Prioritàries
 1. Provar el sistema a Foundry VTT v13
-2. Corregir errors i polir
-3. Afegir icones personalitzades per cada tipus d'item
+2. Afegir icones personalitzades per cada tipus d'item
+3. Poliment de CSS i UX

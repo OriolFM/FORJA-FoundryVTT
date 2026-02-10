@@ -11,7 +11,9 @@ export default class ForjaNPCSheet extends foundry.applications.sheets.ActorShee
       rollSkill: ForjaNPCSheet.#onRollSkill,
       rollAttack: ForjaNPCSheet.#onRollAttack,
       adjustTracker: ForjaNPCSheet.#onAdjustTracker,
-      toggleEquip: ForjaNPCSheet.#onToggleEquip
+      toggleEquip: ForjaNPCSheet.#onToggleEquip,
+      itemEdit: ForjaNPCSheet.#onItemEdit,
+      itemDelete: ForjaNPCSheet.#onItemDelete
     },
     form: { submitOnChange: true }
   };
@@ -73,5 +75,17 @@ export default class ForjaNPCSheet extends foundry.applications.sheets.ActorShee
     const itemId = target.closest("[data-item-id]")?.dataset.itemId;
     const item = this.document.items.get(itemId);
     if (item) item.update({ "system.equipped": !item.system.equipped });
+  }
+
+  static #onItemEdit(event, target) {
+    const itemId = target.closest("[data-item-id]")?.dataset.itemId ?? target.dataset.itemId;
+    const item = this.document.items.get(itemId);
+    if (item) item.sheet.render(true);
+  }
+
+  static #onItemDelete(event, target) {
+    const itemId = target.closest("[data-item-id]")?.dataset.itemId ?? target.dataset.itemId;
+    const item = this.document.items.get(itemId);
+    if (item) item.deleteDialog();
   }
 }

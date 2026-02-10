@@ -27,6 +27,9 @@ import ForjaItem from "./module/documents/item.mjs";
 import ForjaCombat from "./module/documents/combat.mjs";
 import ForjaCombatant from "./module/documents/combatant.mjs";
 
+// Dice
+import ForjaRoll from "./module/dice/forja-roll.mjs";
+
 // Actor Sheets
 import ForjaCharacterSheet from "./module/sheets/actor/character-sheet.mjs";
 import ForjaNPCSheet from "./module/sheets/actor/npc-sheet.mjs";
@@ -56,6 +59,9 @@ Hooks.once("init", () => {
   CONFIG.Item.documentClass = ForjaItem;
   CONFIG.Combat.documentClass = ForjaCombat;
   CONFIG.Combatant.documentClass = ForjaCombatant;
+
+  // Register custom Roll class
+  CONFIG.Dice.rolls.push(ForjaRoll);
 
   // Register data models
   CONFIG.Actor.dataModels = {

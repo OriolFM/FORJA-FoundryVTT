@@ -1,3 +1,5 @@
+import ForjaRoll from "../dice/forja-roll.mjs";
+
 /**
  * Extended Actor document for the FORJA system.
  * Provides roll methods and derived data integration.
@@ -73,8 +75,25 @@ export default class ForjaActor extends Actor {
   }
 
   /**
-   * Core FORJA dice pool roll: Xd10, count fites (successes).
-   * 6-9 = 1 fite, 10 = 2 fites, 1 with 0 fites = pifia.
+   * Detect trait modifiers on this actor for dice rolls.
+   * Returns an object with boolean flags for: adept, inept, specialist, titanic.
+   */
+  _getTraitModifiers() {
+    const modifiers = {};
+    for (const item of this.items) {
+      if (item.type !== "trait") continue;
+      const traitId = item.system.traitId;
+      if (traitId === "adepte") modifiers.adept = true;
+      if (traitId === "inepte") modifiers.inept = true;
+      if (traitId === "especialista") modifiers.specialist = true;
+      if (traitId === "atribut-titanic") modifiers.titanic = true;
+    }
+    return modifiers;
+  }
+
+  /**
+   * Core FORJA dice pool roll: Xd10, count fites (successes) using ForjaRoll.
+   * Automatically applies trait modifiers (adept, inept, specialist, titanic).
    * @param {number} poolSize - Number of d10 to roll
    * @param {string} label - Roll label for chat
    * @param {object} options - Roll options
@@ -82,27 +101,17 @@ export default class ForjaActor extends Actor {
   async _rollForjaPool(poolSize, label, options = {}) {
     if (poolSize <= 0) poolSize = 1;
 
-    const roll = new Roll(`${poolSize}d10`);
+    // Detect trait modifiers from this actor's items
+    const forjaModifiers = options.forja ?? this._getTraitModifiers();
+
+    const roll = new ForjaRoll(`${poolSize}d10`, {}, { forja: forjaModifiers });
     await roll.evaluate();
 
-    const dice = roll.dice[0].results.map(r => r.result);
-    let fites = 0;
-    let hasOnes = false;
-
-    for (const die of dice) {
-      if (die >= 10) fites += 2;
-      else if (die >= 6) fites += 1;
-      if (die === 1) hasOnes = true;
-    }
-
-    const isPifia = hasOnes && fites === 0;
+    const { dice, fites, isPifia } = roll.forjaResults;
 
     // Build chat message content
     const diceHtml = dice.map(d => {
-      let cls = "die-result";
-      if (d === 1) cls += " die-fumble";
-      else if (d >= 10) cls += " die-critical";
-      else if (d >= 6) cls += " die-success";
+      const cls = `die-result ${ForjaRoll.getDieClass(d)}`;
       return `<span class="${cls}">${d}</span>`;
     }).join(" ");
 
