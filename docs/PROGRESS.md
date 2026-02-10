@@ -1,6 +1,6 @@
 # Progrés del Desenvolupament - FORJA Foundry VTT
 
-## Estat General: Fases 1-5 completes, Fase 6-7 pendents
+## Estat General: Fases 1-6 completes, Fase 7 pendent
 
 ---
 
@@ -36,14 +36,12 @@
 - [x] `module/sheets/item/armor-sheet.mjs` — Fitxa Armadura
 - [x] `module/sheets/item/artifact-sheet.mjs` — Fitxa Artefacte
 - [x] `module/sheets/item/supernatural-effect-sheet.mjs` — Fitxa Efecte Sobrenatural
-- [x] Templates Handlebars (22 fitxers .hbs): actor sheets, item sheets, partials
+- [x] Templates Handlebars (25 fitxers .hbs): actor sheets, item sheets, partials, dice, combat
 - [x] `styles/forja.css` — Estils complets (tema teal/fosc, daus, combat, trackers)
 - [x] `module/helpers/templates.mjs` — Handlebars helpers (times, ifeq, percentage, levelDots, etc.)
-
-### PENDENT dins Fase 3:
-- [ ] `templates/dice/roll-dialog.hbs` — Diàleg de tirada
-- [ ] `templates/dice/roll-result.hbs` — Targeta de xat per resultats
-- [ ] `templates/combat/combat-tracker.hbs` — UI del combat tracker
+- [x] `templates/dice/roll-dialog.hbs` — Diàleg de tirada
+- [x] `templates/dice/roll-result.hbs` — Targeta de xat per resultats
+- [x] `templates/combat/combat-tracker.hbs` — UI del combat tracker
 
 ## Fase 4: Mecànica de Daus — COMPLETADA
 - [x] `module/dice/forja-roll.mjs` — Roll customitzat amb fites, pífies, modificadors de trets (adept/inept/specialist/titanic)
@@ -56,12 +54,19 @@
 - [x] `module/combat/latency-clock.mjs` — getDeclarationOrder, calculateActionPosition, advanceClock, calculateDamage
 - [x] `module/combat/combat-tracker.mjs` — CombatTracker personalitzat
 
-## Fase 6: Compendiums i i18n — PARCIALMENT COMPLETADA
-- [x] `lang/ca.json` — Traduccions en català
-- [x] `lang/es.json` — Traduccions en castellà
-- [x] `lang/en.json` — Traduccions en anglès
-- [ ] `scripts/build-packs.mjs` — Script per generar compendiums des de dades FORJAPP
-- [ ] Compendiums generats: skills, traits, weapons, armor, artifacts, supernatural-effects
+## Fase 6: Compendiums i i18n — COMPLETADA
+- [x] `lang/ca.json` — Traduccions en català (207 claus)
+- [x] `lang/es.json` — Traduccions en castellà (207 claus)
+- [x] `lang/en.json` — Traduccions en anglès (207 claus)
+- [x] `scripts/build-packs.mjs` — Script per generar compendiums LevelDB des de dades FORJAPP
+- [x] `package.json` — Configuració npm amb classic-level per generar packs
+- [x] Compendiums generats (219 items totals):
+  - `packs/skills/` — 46 habilitats (41 bàsiques + 5 restringides)
+  - `packs/traits/` — 95 trets (positius i negatius, totes les categories)
+  - `packs/weapons/` — 29 armes (7 naturals + 10 cos a cos + 12 distància)
+  - `packs/armor/` — 6 armadures
+  - `packs/artifacts/` — 15 artefactes
+  - `packs/supernatural-effects/` — 28 efectes sobrenaturals (màgia, psi, qi)
 
 ## Fase 7: Test i Poliment — PENDENT
 - [ ] Provar creació d'actors i derivats
@@ -76,8 +81,6 @@
 ---
 
 ## Properes Tasques Prioritàries
-1. Crear les 3 plantilles HBS que falten (dice/roll-dialog, dice/roll-result, combat/combat-tracker)
-2. Crear `scripts/build-packs.mjs` per generar els compendiums LevelDB
-3. Executar el build script per omplir els `packs/`
-4. Provar el sistema a Foundry VTT v13
-5. Corregir errors i polir
+1. Provar el sistema a Foundry VTT v13
+2. Corregir errors i polir
+3. Afegir icones personalitzades per cada tipus d'item

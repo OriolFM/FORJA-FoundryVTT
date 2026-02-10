@@ -1,0 +1,13 @@
+{
+  "name": "forja-foundryvtt",
+  "version": "0.1.0",
+  "description": "FORJA RPG system for Foundry VTT v13",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:packs": "node scripts/build-packs.mjs"
+  },
+  "devDependencies": {
+    "classic-level": "^2.0.0"
+  }
+}
