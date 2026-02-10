@@ -180,7 +180,8 @@ FORJA.traitCategories = {
   longevitat: "FORJA.TraitCategory.longevitat",
   sobrenatural: "FORJA.TraitCategory.sobrenatural",
   sort: "FORJA.TraitCategory.sort",
-  especial: "FORJA.TraitCategory.especial"
+  especial: "FORJA.TraitCategory.especial",
+  general: "FORJA.TraitCategory.general"
 };
 
 // Trait types

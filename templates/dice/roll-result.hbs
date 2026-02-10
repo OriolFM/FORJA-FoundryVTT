@@ -2,7 +2,7 @@
   <h4 class="roll-label">{{label}}</h4>
   <div class="dice-results">
     {{#each dice}}
-    <span class="die-result {{dieClass this}}">{{this}}</span>
+    <span class="die-result {{this.class}}">{{this.value}}</span>
     {{/each}}
   </div>
   <div class="roll-result {{resultClass}}">

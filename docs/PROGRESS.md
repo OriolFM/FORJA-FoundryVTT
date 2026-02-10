@@ -1,6 +1,6 @@
 # Progrés del Desenvolupament - FORJA Foundry VTT
 
-## Estat General: Fases 1-7a completes (revisió i correcció de bugs)
+## Estat General: Fases 1-7a.2 completes (segona ronda de correccions)
 
 ---
 
@@ -83,6 +83,18 @@
 - [x] **FIX i18n**: Afegides ~80 claus de localització que faltaven als 3 fitxers de llengua (ca/es/en)
 - [x] **FIX i18n**: Corregides 10 discrepàncies de majúscules/minúscules (Derived.defense→Defense, Health.wounds→Wounds, Points.total→Total, etc.)
 - [x] **FIX i18n**: Eliminades claus `FORJA.Fields.*` duplicades, unificades amb les claus directes que usen els templates
+
+## Fase 7a.2: Segona Revisió i Correccions — COMPLETADA
+- [x] **FIX CRÍTIC**: Expressió Handlebars trencada `(lookup cfg.woundLevels x).label` → `forjaLocalize` a npc-sheet.hbs, creature-sheet.hbs, animal-sheet.hbs
+- [x] **FIX i18n**: Corregides 4 claus en minúscula al combat-tracker.hbs (latency→Latency, defense→Defense, wounds→Wounds, fatigue→Fatigue)
+- [x] **FIX**: Afegida clau `FORJA.Combat.defeated` als 3 fitxers de llengua
+- [x] **FIX**: Registre de ForjaCombatTracker a forja.mjs (CONFIG.ui.combat) — el tracker custom no s'activava
+- [x] **FIX**: Afegit handler `toggleDefeated` al CombatTracker amb `activateListeners`
+- [x] **FIX API v13**: ForjaRoll.evaluate() ja no passa options a super.evaluate() (incompatible amb Foundry v13)
+- [x] **FIX**: Afegida categoria `general` als traitCategories de config.mjs (faltava al dropdown)
+- [x] **FIX**: Refactoritzat actor.mjs per usar `renderTemplate("roll-result.hbs")` en lloc de HTML inline — el template ja no és orfe
+- [x] **FIX**: Actualitzat roll-result.hbs per usar dades pre-calculades (`{{this.class}}`, `{{this.value}}`) en lloc del helper inexistent `{{dieClass}}`
+- [x] Validació final: 0 patrons trencats, 0 claus i18n en minúscula, 0 templates orfes
 
 ## Fase 7b: Test Manual a Foundry — PENDENT
 - [ ] Provar creació d'actors i verificar derivats

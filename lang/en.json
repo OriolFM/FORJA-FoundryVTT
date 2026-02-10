@@ -271,6 +271,7 @@
   "FORJA.Combat.block": "Block",
   "FORJA.Combat.damage": "Damage",
   "FORJA.Combat.ammo": "Ammo",
+  "FORJA.Combat.defeated": "Defeated",
 
   "FORJA.Tier.label": "NPC Tier",
   "FORJA.Tier.nemesis": "Nemesis",

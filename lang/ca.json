@@ -271,6 +271,7 @@
   "FORJA.Combat.block": "Blocar",
   "FORJA.Combat.damage": "Dany",
   "FORJA.Combat.ammo": "Munició",
+  "FORJA.Combat.defeated": "Derrotat",
 
   "FORJA.Tier.label": "Nivell de PNJ",
   "FORJA.Tier.nemesis": "Nèmesi",

@@ -109,24 +109,12 @@ export default class ForjaActor extends Actor {
 
     const { dice, fites, isPifia } = roll.forjaResults;
 
-    // Build chat message content
-    const diceHtml = dice.map(d => {
-      const cls = `die-result ${ForjaRoll.getDieClass(d)}`;
-      return `<span class="${cls}">${d}</span>`;
-    }).join(" ");
-
+    // Render chat message from template
+    const diceData = dice.map(d => ({ value: d, class: ForjaRoll.getDieClass(d) }));
     const resultClass = isPifia ? "roll-pifia" : fites > 0 ? "roll-success" : "roll-failure";
-    const resultLabel = isPifia
-      ? game.i18n.localize("FORJA.Dice.pifia")
-      : `${fites} ${game.i18n.localize("FORJA.Dice.fites")}`;
-
-    const content = `
-      <div class="forja-roll">
-        <h4 class="roll-label">${label}</h4>
-        <div class="dice-results">${diceHtml}</div>
-        <div class="roll-result ${resultClass}">${resultLabel}</div>
-      </div>
-    `;
+    const content = await renderTemplate("systems/forja/templates/dice/roll-result.hbs", {
+      label, dice: diceData, fites, isPifia, resultClass
+    });
 
     // Create the chat message
     const messageData = {

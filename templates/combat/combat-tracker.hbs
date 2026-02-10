@@ -2,13 +2,13 @@
   {{#each turns}}
   <li class="combatant {{#if active}}active{{/if}} {{side}}"
       data-combatant-id="{{id}}"
-      data-tooltip="{{localize 'FORJA.Derived.latency'}}: {{latency}} | {{localize 'FORJA.Derived.defense'}}: {{defense}}">
+      data-tooltip="{{localize 'FORJA.Derived.Latency'}}: {{latency}} | {{localize 'FORJA.Derived.Defense'}}: {{defense}}">
 
     <div class="combatant-info">
       <img class="token-image" src="{{img}}" alt="{{name}}" />
       <div class="combatant-details">
         <span class="combatant-name">{{name}}</span>
-        <span class="combatant-initiative" title="{{localize 'FORJA.Derived.latency'}}">
+        <span class="combatant-initiative" title="{{localize 'FORJA.Derived.Latency'}}">
           {{initiative}}
         </span>
       </div>
@@ -17,12 +17,12 @@
     {{!-- Health bars --}}
     <div class="combatant-health">
       {{#ifgt woundsPercent 0}}
-      <div class="health-bar wounds-bar" title="{{localize 'FORJA.Health.wounds'}}: {{forjaLocalize 'FORJA.WoundLevel' woundLevel}}">
+      <div class="health-bar wounds-bar" title="{{localize 'FORJA.Health.Wounds'}}: {{forjaLocalize 'FORJA.WoundLevel' woundLevel}}">
         <div class="bar-fill" style="width: {{woundsPercent}}%"></div>
       </div>
       {{/ifgt}}
       {{#ifgt fatiguePercent 0}}
-      <div class="health-bar fatigue-bar" title="{{localize 'FORJA.Health.fatigue'}}: {{forjaLocalize 'FORJA.FatigueLevel' fatigueLevel}}">
+      <div class="health-bar fatigue-bar" title="{{localize 'FORJA.Health.Fatigue'}}: {{forjaLocalize 'FORJA.FatigueLevel' fatigueLevel}}">
         <div class="bar-fill" style="width: {{fatiguePercent}}%"></div>
       </div>
       {{/ifgt}}
@@ -38,7 +38,7 @@
     {{!-- Controls --}}
     {{#if ../user.isGM}}
     <div class="combatant-controls">
-      <a class="combatant-control" data-action="toggleDefeated" title="Defeated">
+      <a class="combatant-control" data-action="toggleDefeated" title="{{localize 'FORJA.Combat.defeated'}}">
         <i class="fas fa-skull"></i>
       </a>
     </div>

@@ -30,6 +30,9 @@ import ForjaCombatant from "./module/documents/combatant.mjs";
 // Dice
 import ForjaRoll from "./module/dice/forja-roll.mjs";
 
+// Combat UI
+import ForjaCombatTracker from "./module/combat/combat-tracker.mjs";
+
 // Actor Sheets
 import ForjaCharacterSheet from "./module/sheets/actor/character-sheet.mjs";
 import ForjaNPCSheet from "./module/sheets/actor/npc-sheet.mjs";
@@ -62,6 +65,9 @@ Hooks.once("init", () => {
 
   // Register custom Roll class
   CONFIG.Dice.rolls.push(ForjaRoll);
+
+  // Register custom Combat Tracker UI
+  CONFIG.ui.combat = ForjaCombatTracker;
 
   // Register data models
   CONFIG.Actor.dataModels = {

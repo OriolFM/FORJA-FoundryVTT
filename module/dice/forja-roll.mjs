@@ -24,8 +24,8 @@ export default class ForjaRoll extends Roll {
   /**
    * After evaluation, compute FORJA-specific results.
    */
-  async evaluate(options = {}) {
-    await super.evaluate(options);
+  async evaluate() {
+    await super.evaluate();
     this._computeForjaResults();
     return this;
   }

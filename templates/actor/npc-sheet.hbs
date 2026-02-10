@@ -246,7 +246,7 @@
           </button>
         </div>
         <span class="forja-tracker__level forja-tracker__level--{{system.woundLevel}}">
-          {{localize (lookup cfg.woundLevels system.woundLevel).label}}
+          {{forjaLocalize "FORJA.WoundLevel" system.woundLevel}}
         </span>
       </div>
       {{!-- Fatigue --}}
@@ -264,7 +264,7 @@
           </button>
         </div>
         <span class="forja-tracker__level forja-tracker__level--{{system.fatigueLevel}}">
-          {{localize (lookup cfg.fatigueLevels system.fatigueLevel).label}}
+          {{forjaLocalize "FORJA.FatigueLevel" system.fatigueLevel}}
         </span>
       </div>
     </div>

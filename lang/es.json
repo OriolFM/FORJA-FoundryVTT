@@ -271,6 +271,7 @@
   "FORJA.Combat.block": "Bloquear",
   "FORJA.Combat.damage": "Daño",
   "FORJA.Combat.ammo": "Munición",
+  "FORJA.Combat.defeated": "Derrotado",
 
   "FORJA.Tier.label": "Nivel de PNJ",
   "FORJA.Tier.nemesis": "Némesis",

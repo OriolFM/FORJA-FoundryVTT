@@ -15,6 +15,26 @@ export default class ForjaCombatTracker extends CombatTracker {
   }
 
   /** @override */
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find("[data-action='toggleDefeated']").on("click", this._onToggleDefeated.bind(this));
+  }
+
+  /**
+   * Toggle the defeated status of a combatant.
+   */
+  async _onToggleDefeated(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const li = event.currentTarget.closest("[data-combatant-id]");
+    const combatantId = li?.dataset.combatantId;
+    if (!combatantId) return;
+    const combatant = this.viewed?.combatants.get(combatantId);
+    if (!combatant) return;
+    await combatant.update({ defeated: !combatant.defeated });
+  }
+
+  /** @override */
   async getData(options = {}) {
     const context = await super.getData(options);
 
