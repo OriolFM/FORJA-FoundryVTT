@@ -9,6 +9,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Claude Code
+.claude/
+
 # Foundry VTT packs (generated, not committed)
 # Uncomment if you want to regenerate from build script:
 # packs/skills/*.db
