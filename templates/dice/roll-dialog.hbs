@@ -1,0 +1,13 @@
+<form class="forja-roll-dialog">
+  <div class="form-group">
+    <label>{{localize "FORJA.Dice.pool"}}</label>
+    <input type="number" name="pool" value="{{poolSize}}" min="1" max="20" />
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Dice.modifier"}}</label>
+    <input type="number" name="modifier" value="0" min="-10" max="10" />
+  </div>
+  {{#if label}}
+  <p class="roll-label-preview">{{label}}</p>
+  {{/if}}
+</form>

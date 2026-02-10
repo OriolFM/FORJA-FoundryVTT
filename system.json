@@ -1,0 +1,89 @@
+{
+  "id": "forja",
+  "title": "FORJA RPG",
+  "description": "Official Foundry VTT implementation of the FORJA tabletop RPG system. A point-buy, d10 pool system with latency-based combat.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "FORJA RPG Team"
+    }
+  ],
+  "esmodules": ["forja.mjs"],
+  "styles": ["styles/forja.css"],
+  "languages": [
+    { "lang": "ca", "name": "Català", "path": "lang/ca.json" },
+    { "lang": "es", "name": "Castellano", "path": "lang/es.json" },
+    { "lang": "en", "name": "English", "path": "lang/en.json" }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "npc": {},
+      "creature": {},
+      "animal": {}
+    },
+    "Item": {
+      "skill": {},
+      "trait": {},
+      "weapon": {},
+      "armor": {},
+      "artifact": {},
+      "supernaturalEffect": {}
+    }
+  },
+  "packs": [
+    {
+      "name": "skills",
+      "label": "FORJA.Compendium.Skills",
+      "type": "Item",
+      "system": "forja",
+      "path": "packs/skills"
+    },
+    {
+      "name": "traits",
+      "label": "FORJA.Compendium.Traits",
+      "type": "Item",
+      "system": "forja",
+      "path": "packs/traits"
+    },
+    {
+      "name": "weapons",
+      "label": "FORJA.Compendium.Weapons",
+      "type": "Item",
+      "system": "forja",
+      "path": "packs/weapons"
+    },
+    {
+      "name": "armor",
+      "label": "FORJA.Compendium.Armor",
+      "type": "Item",
+      "system": "forja",
+      "path": "packs/armor"
+    },
+    {
+      "name": "artifacts",
+      "label": "FORJA.Compendium.Artifacts",
+      "type": "Item",
+      "system": "forja",
+      "path": "packs/artifacts"
+    },
+    {
+      "name": "supernatural-effects",
+      "label": "FORJA.Compendium.SupernaturalEffects",
+      "type": "Item",
+      "system": "forja",
+      "path": "packs/supernatural-effects"
+    }
+  ],
+  "primaryTokenAttribute": "health.wounds",
+  "secondaryTokenAttribute": "health.fatigue",
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
+  "socket": true
+}

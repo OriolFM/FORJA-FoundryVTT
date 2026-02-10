@@ -1,0 +1,22 @@
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Foundry VTT packs (generated, not committed)
+# Uncomment if you want to regenerate from build script:
+# packs/skills/*.db
+# packs/traits/*.db
+# packs/weapons/*.db
+# packs/armor/*.db
+# packs/artifacts/*.db
+# packs/supernatural-effects/*.db
+
+# Build artifacts
+dist/

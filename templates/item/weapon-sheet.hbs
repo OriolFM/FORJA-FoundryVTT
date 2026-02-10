@@ -1,0 +1,89 @@
+<form class="forja-item-sheet forja-weapon-sheet" autocomplete="off">
+  <header class="forja-item-sheet__header">
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-item-sheet__img" data-edit="img" />
+    <div class="forja-item-sheet__title">
+      <input type="text" name="name" value="{{document.name}}" class="forja-item-sheet__name"
+             placeholder="{{localize 'FORJA.WeaponName'}}" />
+    </div>
+  </header>
+
+  <div class="forja-item-sheet__body">
+    {{!-- Weapon type --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.WeaponType"}}</label>
+      <select name="system.weaponType">
+        <option value="natural" {{#if (eq system.weaponType "natural")}}selected{{/if}}>{{localize "FORJA.WeaponType.natural"}}</option>
+        <option value="melee" {{#if (eq system.weaponType "melee")}}selected{{/if}}>{{localize "FORJA.WeaponType.melee"}}</option>
+        <option value="ranged" {{#if (eq system.weaponType "ranged")}}selected{{/if}}>{{localize "FORJA.WeaponType.ranged"}}</option>
+      </select>
+    </div>
+
+    {{!-- Attack type --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.AttackType.label"}}</label>
+      <select name="system.attackType">
+        {{#each cfg.attackTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.attackType)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Damage formula --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Damage"}}</label>
+      <input type="text" name="system.damage" value="{{system.damage}}" placeholder="FOR+1" />
+    </div>
+
+    {{!-- Latency mod --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.LatencyMod"}}</label>
+      <input type="number" name="system.latencyMod" value="{{system.latencyMod}}" />
+    </div>
+
+    {{!-- Reach and range --}}
+    <div class="forja-form-row">
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.Reach"}}</label>
+        <input type="text" name="system.reach" value="{{system.reach}}" />
+      </div>
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.Range.label"}}</label>
+        <input type="text" name="system.range" value="{{system.range}}" />
+      </div>
+    </div>
+
+    {{!-- Ammo --}}
+    <div class="forja-form-row">
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.Ammo"}} ({{localize "FORJA.Current"}})</label>
+        <input type="number" name="system.ammo.value" value="{{system.ammo.value}}" min="0" />
+      </div>
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.Ammo"}} ({{localize "FORJA.Max"}})</label>
+        <input type="number" name="system.ammo.max" value="{{system.ammo.max}}" min="0" />
+      </div>
+    </div>
+
+    {{!-- Special --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Special"}}</label>
+      <input type="text" name="system.special" value="{{system.special}}" />
+    </div>
+
+    {{!-- Quantity and equipped --}}
+    <div class="forja-form-row">
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.Quantity"}}</label>
+        <input type="number" name="system.quantity" value="{{system.quantity}}" min="1" />
+      </div>
+      <div class="forja-form-group forja-form-group--half forja-form-group--checkbox">
+        <label>
+          <input type="checkbox" name="system.equipped" {{#if system.equipped}}checked{{/if}} />
+          {{localize "FORJA.Equipped"}}
+        </label>
+      </div>
+    </div>
+  </div>
+</form>

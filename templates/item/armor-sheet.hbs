@@ -1,0 +1,37 @@
+<form class="forja-item-sheet forja-armor-sheet" autocomplete="off">
+  <header class="forja-item-sheet__header">
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-item-sheet__img" data-edit="img" />
+    <div class="forja-item-sheet__title">
+      <input type="text" name="name" value="{{document.name}}" class="forja-item-sheet__name"
+             placeholder="{{localize 'FORJA.ArmorName'}}" />
+    </div>
+  </header>
+
+  <div class="forja-item-sheet__body">
+    {{!-- Protection --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Protection"}}</label>
+      <input type="number" name="system.protection" value="{{system.protection}}" min="0" max="10" />
+    </div>
+
+    {{!-- Latency mod --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.LatencyMod"}}</label>
+      <input type="number" name="system.latencyMod" value="{{system.latencyMod}}" min="0" />
+    </div>
+
+    {{!-- Size mod --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.SizeMod"}}</label>
+      <input type="text" name="system.sizeMod" value="{{system.sizeMod}}" />
+    </div>
+
+    {{!-- Equipped --}}
+    <div class="forja-form-group forja-form-group--checkbox">
+      <label>
+        <input type="checkbox" name="system.equipped" {{#if system.equipped}}checked{{/if}} />
+        {{localize "FORJA.Equipped"}}
+      </label>
+    </div>
+  </div>
+</form>

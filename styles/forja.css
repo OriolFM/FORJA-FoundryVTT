@@ -1,0 +1,2448 @@
+/* ============================================================================
+   FORJA RPG - Foundry VTT System Stylesheet
+   Dark/teal theme matching FORJAPP aesthetic
+   ============================================================================ */
+
+/* ============================================================================
+   1. CSS CUSTOM PROPERTIES
+   ============================================================================ */
+
+:root {
+  /* --- Primary / Accent --- */
+  --forja-primary: #0d9488;
+  --forja-primary-light: #14b8a6;
+  --forja-primary-dark: #0f766e;
+  --forja-primary-bg: rgba(13, 148, 136, 0.15);
+  --forja-primary-border: rgba(13, 148, 136, 0.4);
+
+  /* --- Backgrounds --- */
+  --forja-bg-darkest: #0f1117;
+  --forja-bg-900: #111827;
+  --forja-bg-800: #1f2937;
+  --forja-bg-700: #374151;
+  --forja-bg-600: #4b5563;
+  --forja-bg-500: #6b7280;
+
+  /* --- Text --- */
+  --forja-text-primary: #f3f4f6;
+  --forja-text-secondary: #d1d5db;
+  --forja-text-muted: #9ca3af;
+  --forja-text-disabled: #6b7280;
+
+  /* --- Semantic Colors --- */
+  --forja-success: #22c55e;
+  --forja-success-bg: rgba(34, 197, 94, 0.15);
+  --forja-danger: #ef4444;
+  --forja-danger-bg: rgba(239, 68, 68, 0.15);
+  --forja-critical: #b91c1c;
+  --forja-critical-bg: rgba(185, 28, 28, 0.2);
+  --forja-gold: #eab308;
+  --forja-gold-bg: rgba(234, 179, 8, 0.15);
+  --forja-warning: #f59e0b;
+  --forja-info: #3b82f6;
+  --forja-info-bg: rgba(59, 130, 246, 0.15);
+
+  /* --- Gift Colors (Supernatural) --- */
+  --forja-gift-magus: #8b5cf6;
+  --forja-gift-canalitzador: #06b6d4;
+  --forja-gift-psiquic: #ec4899;
+  --forja-gift-qi: #f97316;
+
+  /* --- Wound/Fatigue Gradients --- */
+  --forja-health-full: #22c55e;
+  --forja-health-mid: #eab308;
+  --forja-health-low: #ef4444;
+  --forja-health-critical: #b91c1c;
+
+  /* --- Typography --- */
+  --forja-font-primary: "Signika", "Palatino Linotype", serif;
+  --forja-font-mono: "Roboto Mono", "Fira Code", monospace;
+  --forja-font-size-xs: 0.7rem;
+  --forja-font-size-sm: 0.8rem;
+  --forja-font-size-base: 0.9rem;
+  --forja-font-size-lg: 1rem;
+  --forja-font-size-xl: 1.15rem;
+  --forja-font-size-2xl: 1.35rem;
+  --forja-font-size-3xl: 1.6rem;
+
+  /* --- Spacing --- */
+  --forja-space-xs: 2px;
+  --forja-space-sm: 4px;
+  --forja-space-md: 8px;
+  --forja-space-lg: 12px;
+  --forja-space-xl: 16px;
+  --forja-space-2xl: 24px;
+
+  /* --- Borders & Radius --- */
+  --forja-border-color: rgba(255, 255, 255, 0.1);
+  --forja-border-color-strong: rgba(255, 255, 255, 0.2);
+  --forja-radius-sm: 3px;
+  --forja-radius-md: 6px;
+  --forja-radius-lg: 10px;
+  --forja-radius-xl: 14px;
+  --forja-radius-full: 9999px;
+
+  /* --- Shadows --- */
+  --forja-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --forja-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --forja-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --forja-shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+
+  /* --- Transitions --- */
+  --forja-transition: 150ms ease;
+}
+
+
+/* ============================================================================
+   2. SHEET LAYOUT - .forja.sheet wrapper, tabs, sidebar
+   ============================================================================ */
+
+/* --- Base Sheet Container --- */
+.forja.sheet {
+  background: var(--forja-bg-900);
+  color: var(--forja-text-primary);
+  font-family: var(--forja-font-primary);
+  font-size: var(--forja-font-size-base);
+  border: 1px solid var(--forja-primary-dark);
+  border-radius: var(--forja-radius-lg);
+  overflow: hidden;
+}
+
+.forja.sheet .window-content {
+  background: var(--forja-bg-900);
+  color: var(--forja-text-primary);
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--forja-bg-600) var(--forja-bg-800);
+}
+
+.forja.sheet .window-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.forja.sheet .window-content::-webkit-scrollbar-track {
+  background: var(--forja-bg-800);
+}
+
+.forja.sheet .window-content::-webkit-scrollbar-thumb {
+  background: var(--forja-bg-600);
+  border-radius: var(--forja-radius-full);
+}
+
+.forja.sheet .window-content::-webkit-scrollbar-thumb:hover {
+  background: var(--forja-bg-500);
+}
+
+/* --- Window Header Override --- */
+.forja.sheet .window-header {
+  background: var(--forja-bg-darkest);
+  border-bottom: 2px solid var(--forja-primary);
+  color: var(--forja-text-primary);
+}
+
+.forja.sheet .window-header .window-title {
+  color: var(--forja-primary-light);
+}
+
+/* --- Sheet Body Layout --- */
+.forja.sheet .sheet-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* --- Tab Navigation --- */
+.forja.sheet .tabs {
+  display: flex;
+  gap: var(--forja-space-xs);
+  background: var(--forja-bg-darkest);
+  border-bottom: 1px solid var(--forja-border-color);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.forja.sheet .tabs .item {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--forja-radius-md) var(--forja-radius-md) 0 0;
+  cursor: pointer;
+  transition: all var(--forja-transition);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.forja.sheet .tabs .item:hover {
+  color: var(--forja-text-primary);
+  background: var(--forja-bg-800);
+}
+
+.forja.sheet .tabs .item.active {
+  color: var(--forja-primary-light);
+  background: var(--forja-bg-800);
+  border-color: var(--forja-border-color);
+  border-bottom-color: var(--forja-bg-800);
+}
+
+.forja.sheet .tabs .item i {
+  font-size: var(--forja-font-size-base);
+}
+
+/* --- Tab Content Areas --- */
+.forja.sheet .tab {
+  display: none;
+  padding: var(--forja-space-xl);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.forja.sheet .tab.active {
+  display: block;
+}
+
+/* --- Section Titles --- */
+.forja.sheet .forja-section-title {
+  font-size: var(--forja-font-size-lg);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: var(--forja-space-sm);
+  margin-bottom: var(--forja-space-lg);
+  border-bottom: 2px solid var(--forja-primary-border);
+}
+
+/* --- General form field resets --- */
+.forja.sheet input[type="text"],
+.forja.sheet input[type="number"],
+.forja.sheet select,
+.forja.sheet textarea {
+  background: var(--forja-bg-800);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  font-family: var(--forja-font-primary);
+  font-size: var(--forja-font-size-base);
+  transition: border-color var(--forja-transition);
+}
+
+.forja.sheet input[type="text"]:focus,
+.forja.sheet input[type="number"]:focus,
+.forja.sheet select:focus,
+.forja.sheet textarea:focus {
+  border-color: var(--forja-primary);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--forja-primary-bg);
+}
+
+.forja.sheet input[type="number"] {
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.forja.sheet input[type="number"]::-webkit-outer-spin-button,
+.forja.sheet input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.forja.sheet select {
+  cursor: pointer;
+}
+
+.forja.sheet label {
+  color: var(--forja-text-muted);
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+/* ============================================================================
+   3. CHARACTER HEADER - Name, info fields, point summary bar
+   ============================================================================ */
+
+.forja-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--forja-space-lg);
+  padding: var(--forja-space-xl);
+  background: linear-gradient(180deg, var(--forja-bg-darkest) 0%, var(--forja-bg-900) 100%);
+  border-bottom: 2px solid var(--forja-primary-dark);
+}
+
+/* Portrait */
+.forja-header__portrait {
+  grid-row: 1;
+  grid-column: 1;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--forja-radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--forja-primary);
+  box-shadow: var(--forja-shadow-md);
+  flex-shrink: 0;
+}
+
+.forja-header__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform var(--forja-transition);
+}
+
+.forja-header__img:hover {
+  transform: scale(1.05);
+}
+
+/* Info block */
+.forja-header__info {
+  grid-row: 1;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-md);
+  min-width: 0;
+}
+
+/* Name input */
+.forja-header__name-row {
+  display: flex;
+}
+
+.forja-header__name-input {
+  flex: 1;
+  font-size: var(--forja-font-size-2xl) !important;
+  font-weight: 700;
+  color: var(--forja-text-primary) !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid var(--forja-border-color) !important;
+  border-radius: 0 !important;
+  padding: var(--forja-space-xs) 0 !important;
+}
+
+.forja-header__name-input:focus {
+  border-bottom-color: var(--forja-primary) !important;
+  box-shadow: none !important;
+}
+
+/* Detail fields */
+.forja-header__details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+  gap: var(--forja-space-md);
+}
+
+.forja-header__selectors {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--forja-space-md);
+}
+
+/* Generic field wrapper */
+.forja-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-xs);
+}
+
+.forja-field--half {
+  /* Used in the header for smaller fields */
+}
+
+.forja-field label {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.forja-field input,
+.forja-field select {
+  width: 100%;
+}
+
+/* Point summary bar */
+.forja-header__points {
+  grid-row: 2;
+  grid-column: 1 / -1;
+}
+
+.forja-points-bar {
+  display: flex;
+  gap: var(--forja-space-md);
+  background: var(--forja-bg-800);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-md) var(--forja-space-lg);
+  border: 1px solid var(--forja-border-color);
+}
+
+.forja-points-bar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  flex: 1;
+  justify-content: center;
+}
+
+.forja-points-bar__label {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.forja-points-bar__value {
+  font-size: var(--forja-font-size-lg);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  width: 50px;
+  text-align: center;
+}
+
+.forja-points-bar__value--readonly {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.forja-points-bar__item--over .forja-points-bar__value {
+  color: var(--forja-danger) !important;
+}
+
+
+/* ============================================================================
+   4. ATTRIBUTES GRID - 6 attributes in 2x3 or 3x2 grid
+   ============================================================================ */
+
+.forja-attributes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--forja-space-lg);
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-attribute {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-lg);
+  padding: var(--forja-space-lg);
+  transition: all var(--forja-transition);
+  cursor: pointer;
+  position: relative;
+}
+
+.forja-attribute:hover {
+  border-color: var(--forja-primary);
+  box-shadow: var(--forja-shadow-md);
+  transform: translateY(-1px);
+}
+
+.forja-attribute__label {
+  font-size: var(--forja-font-size-xs);
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.forja-attribute__value {
+  font-size: var(--forja-font-size-3xl);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--forja-bg-900);
+  border: 2px solid var(--forja-primary-border);
+  border-radius: var(--forja-radius-full);
+}
+
+.forja-attribute__value input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: var(--forja-font-size-3xl);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.forja-attribute__value input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Clickable roll area indicator */
+.forja-attribute__roll-icon {
+  position: absolute;
+  top: var(--forja-space-sm);
+  right: var(--forja-space-sm);
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-disabled);
+  opacity: 0;
+  transition: opacity var(--forja-transition);
+}
+
+.forja-attribute:hover .forja-attribute__roll-icon {
+  opacity: 1;
+  color: var(--forja-primary);
+}
+
+
+/* ============================================================================
+   5. DERIVED STATS - Horizontal row of stat badges
+   ============================================================================ */
+
+.forja-derived-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-md);
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-stat-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-md) var(--forja-space-lg);
+  min-width: 80px;
+  flex: 1;
+}
+
+.forja-stat-badge__label {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.forja-stat-badge__value {
+  font-size: var(--forja-font-size-xl);
+  font-weight: 700;
+  color: var(--forja-text-primary);
+  font-family: var(--forja-font-mono);
+}
+
+.forja-stat-badge--highlight .forja-stat-badge__value {
+  color: var(--forja-primary-light);
+}
+
+.forja-stat-badge--defense .forja-stat-badge__value {
+  color: var(--forja-info);
+}
+
+.forja-stat-badge--protection .forja-stat-badge__value {
+  color: var(--forja-gold);
+}
+
+
+/* ============================================================================
+   6. SKILLS LIST - Grouped by attribute, with level indicators
+   ============================================================================ */
+
+.forja-skills-group {
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-skills-group__header {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  padding: var(--forja-space-sm) 0;
+  margin-bottom: var(--forja-space-md);
+  border-bottom: 1px solid var(--forja-primary-border);
+}
+
+.forja-skills-group__attr {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--forja-primary-bg);
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  border-radius: var(--forja-radius-sm);
+}
+
+.forja-skills-group__title {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+}
+
+.forja-skill-row {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  border-radius: var(--forja-radius-sm);
+  transition: background var(--forja-transition);
+  cursor: pointer;
+}
+
+.forja-skill-row:hover {
+  background: var(--forja-bg-800);
+}
+
+.forja-skill-row__name {
+  flex: 1;
+  font-size: var(--forja-font-size-base);
+  color: var(--forja-text-primary);
+}
+
+.forja-skill-row__type {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-disabled);
+  font-style: italic;
+}
+
+.forja-skill-row__type--restricted {
+  color: var(--forja-warning);
+}
+
+/* Skill level dots */
+.forja-skill-level {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.forja-skill-level__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--forja-radius-full);
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color-strong);
+  transition: all var(--forja-transition);
+}
+
+.forja-skill-level__dot--filled {
+  background: var(--forja-primary);
+  border-color: var(--forja-primary-light);
+  box-shadow: 0 0 4px rgba(13, 148, 136, 0.4);
+}
+
+.forja-skill-row__value {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  font-family: var(--forja-font-mono);
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Dice pool indicator on skill */
+.forja-skill-row__pool {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-disabled);
+  font-family: var(--forja-font-mono);
+  min-width: 30px;
+  text-align: right;
+}
+
+.forja-skill-row:hover .forja-skill-row__pool {
+  color: var(--forja-text-muted);
+}
+
+
+/* ============================================================================
+   7. TRAITS LIST - Category headings, positive/negative color coding
+   ============================================================================ */
+
+.forja-traits-category {
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-traits-category__header {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: var(--forja-space-sm) 0;
+  margin-bottom: var(--forja-space-md);
+  border-bottom: 1px solid var(--forja-border-color);
+}
+
+.forja-trait-row {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  border-radius: var(--forja-radius-sm);
+  border-left: 3px solid transparent;
+  transition: background var(--forja-transition);
+}
+
+.forja-trait-row:hover {
+  background: var(--forja-bg-800);
+}
+
+/* Positive traits */
+.forja-trait-row--positive {
+  border-left-color: var(--forja-success);
+}
+
+.forja-trait-row--positive .forja-trait-row__type-icon {
+  color: var(--forja-success);
+}
+
+/* Negative traits */
+.forja-trait-row--negative {
+  border-left-color: var(--forja-danger);
+}
+
+.forja-trait-row--negative .forja-trait-row__type-icon {
+  color: var(--forja-danger);
+}
+
+.forja-trait-row__type-icon {
+  font-size: var(--forja-font-size-sm);
+  width: 16px;
+  text-align: center;
+}
+
+.forja-trait-row__name {
+  flex: 1;
+  font-size: var(--forja-font-size-base);
+  color: var(--forja-text-primary);
+}
+
+.forja-trait-row__level {
+  font-size: var(--forja-font-size-sm);
+  font-family: var(--forja-font-mono);
+  color: var(--forja-text-muted);
+}
+
+.forja-trait-row__cost {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+  font-family: var(--forja-font-mono);
+  min-width: 40px;
+  text-align: right;
+}
+
+.forja-trait-row--positive .forja-trait-row__cost {
+  color: var(--forja-success);
+}
+
+.forja-trait-row--negative .forja-trait-row__cost {
+  color: var(--forja-danger);
+}
+
+.forja-trait-row__controls {
+  display: flex;
+  gap: var(--forja-space-xs);
+  opacity: 0;
+  transition: opacity var(--forja-transition);
+}
+
+.forja-trait-row:hover .forja-trait-row__controls {
+  opacity: 1;
+}
+
+
+/* ============================================================================
+   8. COMBAT SECTION - Weapons table, armor display
+   ============================================================================ */
+
+.forja-combat-section {
+  margin-bottom: var(--forja-space-xl);
+}
+
+/* Weapons Table */
+.forja-weapons-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-weapons-table thead th {
+  font-size: var(--forja-font-size-xs);
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  border-bottom: 2px solid var(--forja-border-color);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.forja-weapons-table tbody tr {
+  border-bottom: 1px solid var(--forja-border-color);
+  transition: background var(--forja-transition);
+}
+
+.forja-weapons-table tbody tr:hover {
+  background: var(--forja-bg-800);
+}
+
+.forja-weapons-table td {
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  vertical-align: middle;
+}
+
+.forja-weapons-table td.weapon-name {
+  font-weight: 600;
+  color: var(--forja-text-primary);
+}
+
+.forja-weapons-table td.weapon-type {
+  color: var(--forja-text-muted);
+  font-style: italic;
+}
+
+.forja-weapons-table td.weapon-damage {
+  font-family: var(--forja-font-mono);
+  font-weight: 600;
+  color: var(--forja-danger);
+}
+
+.forja-weapons-table td.weapon-latency {
+  font-family: var(--forja-font-mono);
+  color: var(--forja-text-muted);
+}
+
+.forja-weapons-table td.weapon-range {
+  color: var(--forja-text-secondary);
+}
+
+.forja-weapons-table td.weapon-special {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.forja-weapon-roll-btn {
+  background: var(--forja-primary-bg);
+  border: 1px solid var(--forja-primary-border);
+  color: var(--forja-primary-light);
+  border-radius: var(--forja-radius-sm);
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  cursor: pointer;
+  font-size: var(--forja-font-size-xs);
+  transition: all var(--forja-transition);
+}
+
+.forja-weapon-roll-btn:hover {
+  background: var(--forja-primary);
+  color: white;
+}
+
+/* Equip toggle */
+.forja-equip-toggle {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  color: var(--forja-text-disabled);
+  transition: color var(--forja-transition);
+}
+
+.forja-equip-toggle.equipped {
+  color: var(--forja-success);
+}
+
+/* Armor Display */
+.forja-armor-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-md);
+  margin-top: var(--forja-space-lg);
+}
+
+.forja-armor-card {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-lg);
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-md) var(--forja-space-lg);
+  flex: 1;
+  min-width: 200px;
+}
+
+.forja-armor-card--equipped {
+  border-color: var(--forja-primary-border);
+  background: var(--forja-primary-bg);
+}
+
+.forja-armor-card__name {
+  flex: 1;
+  font-weight: 600;
+  color: var(--forja-text-primary);
+}
+
+.forja-armor-card__protection {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+}
+
+.forja-armor-card__protection-value {
+  font-size: var(--forja-font-size-xl);
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-gold);
+}
+
+.forja-armor-card__protection-label {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+}
+
+.forja-armor-card__latency {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+  font-family: var(--forja-font-mono);
+}
+
+
+/* ============================================================================
+   9. EQUIPMENT / ARTIFACTS - Card-like items with charges
+   ============================================================================ */
+
+.forja-equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--forja-space-lg);
+}
+
+.forja-artifact-card {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-lg);
+  overflow: hidden;
+  transition: all var(--forja-transition);
+}
+
+.forja-artifact-card:hover {
+  border-color: var(--forja-primary-border);
+  box-shadow: var(--forja-shadow-md);
+}
+
+.forja-artifact-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  padding: var(--forja-space-md) var(--forja-space-lg);
+  background: var(--forja-bg-700);
+  border-bottom: 1px solid var(--forja-border-color);
+}
+
+.forja-artifact-card__img {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--forja-radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--forja-border-color);
+}
+
+.forja-artifact-card__name {
+  flex: 1;
+  font-weight: 600;
+  color: var(--forja-text-primary);
+  font-size: var(--forja-font-size-base);
+}
+
+.forja-artifact-card__cost {
+  font-size: var(--forja-font-size-xs);
+  font-family: var(--forja-font-mono);
+  color: var(--forja-gold);
+  background: var(--forja-gold-bg);
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  border-radius: var(--forja-radius-full);
+}
+
+.forja-artifact-card__body {
+  padding: var(--forja-space-md) var(--forja-space-lg);
+}
+
+.forja-artifact-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-sm);
+  margin-bottom: var(--forja-space-md);
+}
+
+.forja-artifact-stat {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  background: var(--forja-bg-700);
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  border-radius: var(--forja-radius-full);
+}
+
+.forja-artifact-stat strong {
+  color: var(--forja-text-secondary);
+}
+
+/* Charges bar */
+.forja-charges {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+}
+
+.forja-charges__label {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+}
+
+.forja-charges__bar {
+  flex: 1;
+  height: 8px;
+  background: var(--forja-bg-700);
+  border-radius: var(--forja-radius-full);
+  overflow: hidden;
+}
+
+.forja-charges__fill {
+  height: 100%;
+  background: var(--forja-primary);
+  border-radius: var(--forja-radius-full);
+  transition: width 300ms ease;
+}
+
+.forja-charges__value {
+  font-size: var(--forja-font-size-sm);
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  white-space: nowrap;
+}
+
+.forja-artifact-card__notes {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+  line-height: 1.4;
+  margin-top: var(--forja-space-md);
+}
+
+
+/* ============================================================================
+   10. SUPERNATURAL EFFECTS - Grouped by gift type with colored headers
+   ============================================================================ */
+
+.forja-effects-section {
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-effects-group {
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-effects-group__header {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  border-radius: var(--forja-radius-md);
+  margin-bottom: var(--forja-space-md);
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Gift-specific colored headers */
+.forja-effects-group--magus .forja-effects-group__header {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--forja-gift-magus);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.forja-effects-group--canalitzador .forja-effects-group__header {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--forja-gift-canalitzador);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.forja-effects-group--psiquic .forja-effects-group__header {
+  background: rgba(236, 72, 153, 0.15);
+  color: var(--forja-gift-psiquic);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+.forja-effects-group--qi .forja-effects-group__header {
+  background: rgba(249, 115, 22, 0.15);
+  color: var(--forja-gift-qi);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.forja-effect-row {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  border-radius: var(--forja-radius-sm);
+  transition: background var(--forja-transition);
+  border-bottom: 1px solid var(--forja-border-color);
+}
+
+.forja-effect-row:last-child {
+  border-bottom: none;
+}
+
+.forja-effect-row:hover {
+  background: var(--forja-bg-800);
+}
+
+.forja-effect-row__name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--forja-text-primary);
+}
+
+.forja-effect-row__activation {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  background: var(--forja-bg-700);
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  border-radius: var(--forja-radius-full);
+}
+
+.forja-effect-row__difficulty {
+  font-size: var(--forja-font-size-sm);
+  font-family: var(--forja-font-mono);
+  color: var(--forja-text-secondary);
+}
+
+.forja-effect-row__equilibrium {
+  font-size: var(--forja-font-size-sm);
+  font-family: var(--forja-font-mono);
+  color: var(--forja-gold);
+}
+
+.forja-effect-row__cost {
+  font-size: var(--forja-font-size-xs);
+  font-family: var(--forja-font-mono);
+  color: var(--forja-text-muted);
+}
+
+.forja-effect-row__tags {
+  display: flex;
+  gap: var(--forja-space-xs);
+  flex-wrap: wrap;
+}
+
+.forja-effect-tag {
+  font-size: var(--forja-font-size-xs);
+  padding: 1px var(--forja-space-sm);
+  border-radius: var(--forja-radius-sm);
+  background: var(--forja-bg-700);
+  color: var(--forja-text-muted);
+}
+
+
+/* ============================================================================
+   11. WOUND/FATIGUE TRACKER - Progress bars with color gradients
+   ============================================================================ */
+
+.forja-health-trackers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-lg);
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-tracker {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-lg);
+  padding: var(--forja-space-lg);
+}
+
+.forja-tracker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--forja-space-md);
+}
+
+.forja-tracker__label {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.forja-tracker__numbers {
+  display: flex;
+  align-items: baseline;
+  gap: var(--forja-space-xs);
+}
+
+.forja-tracker__current {
+  font-size: var(--forja-font-size-xl);
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+}
+
+.forja-tracker__separator {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-disabled);
+}
+
+.forja-tracker__max {
+  font-size: var(--forja-font-size-base);
+  font-family: var(--forja-font-mono);
+  color: var(--forja-text-muted);
+}
+
+.forja-tracker__level-label {
+  font-size: var(--forja-font-size-xs);
+  font-style: italic;
+  color: var(--forja-text-muted);
+}
+
+/* Progress bar */
+.forja-tracker__bar {
+  width: 100%;
+  height: 12px;
+  background: var(--forja-bg-700);
+  border-radius: var(--forja-radius-full);
+  overflow: hidden;
+  margin-bottom: var(--forja-space-md);
+  box-shadow: var(--forja-shadow-inset);
+}
+
+.forja-tracker__fill {
+  height: 100%;
+  border-radius: var(--forja-radius-full);
+  transition: width 300ms ease, background-color 300ms ease;
+}
+
+/* Wound bar - green to red as damage increases */
+.forja-tracker--wounds .forja-tracker__fill {
+  background: var(--forja-health-full);
+}
+
+.forja-tracker--wounds[data-level="masegat"] .forja-tracker__fill,
+.forja-tracker--wounds[data-level="nafrat"] .forja-tracker__fill {
+  background: var(--forja-health-full);
+}
+
+.forja-tracker--wounds[data-level="ferit"] .forja-tracker__fill {
+  background: var(--forja-health-mid);
+}
+
+.forja-tracker--wounds[data-level="malferit"] .forja-tracker__fill {
+  background: var(--forja-warning);
+}
+
+.forja-tracker--wounds[data-level="critic"] .forja-tracker__fill {
+  background: var(--forja-health-low);
+}
+
+.forja-tracker--wounds[data-level="incapacitat"] .forja-tracker__fill {
+  background: var(--forja-health-critical);
+}
+
+/* Fatigue bar - same gradient logic */
+.forja-tracker--fatigue .forja-tracker__fill {
+  background: var(--forja-health-full);
+}
+
+.forja-tracker--fatigue[data-level="afeblit"] .forja-tracker__fill,
+.forja-tracker--fatigue[data-level="cansat"] .forja-tracker__fill {
+  background: var(--forja-health-full);
+}
+
+.forja-tracker--fatigue[data-level="defallit"] .forja-tracker__fill {
+  background: var(--forja-health-mid);
+}
+
+.forja-tracker--fatigue[data-level="exhaurit"] .forja-tracker__fill {
+  background: var(--forja-warning);
+}
+
+.forja-tracker--fatigue[data-level="rebentat"] .forja-tracker__fill {
+  background: var(--forja-health-low);
+}
+
+.forja-tracker--fatigue[data-level="inconscient"] .forja-tracker__fill {
+  background: var(--forja-health-critical);
+}
+
+/* Color the current value based on severity */
+.forja-tracker--wounds[data-level="illes"] .forja-tracker__current,
+.forja-tracker--wounds[data-level="masegat"] .forja-tracker__current,
+.forja-tracker--wounds[data-level="nafrat"] .forja-tracker__current,
+.forja-tracker--fatigue[data-level="reposat"] .forja-tracker__current,
+.forja-tracker--fatigue[data-level="afeblit"] .forja-tracker__current,
+.forja-tracker--fatigue[data-level="cansat"] .forja-tracker__current {
+  color: var(--forja-health-full);
+}
+
+.forja-tracker--wounds[data-level="ferit"] .forja-tracker__current,
+.forja-tracker--fatigue[data-level="defallit"] .forja-tracker__current {
+  color: var(--forja-health-mid);
+}
+
+.forja-tracker--wounds[data-level="malferit"] .forja-tracker__current,
+.forja-tracker--fatigue[data-level="exhaurit"] .forja-tracker__current {
+  color: var(--forja-warning);
+}
+
+.forja-tracker--wounds[data-level="critic"] .forja-tracker__current,
+.forja-tracker--fatigue[data-level="rebentat"] .forja-tracker__current {
+  color: var(--forja-health-low);
+}
+
+.forja-tracker--wounds[data-level="incapacitat"] .forja-tracker__current,
+.forja-tracker--fatigue[data-level="inconscient"] .forja-tracker__current {
+  color: var(--forja-health-critical);
+}
+
+/* +/- buttons for adjusting tracker */
+.forja-tracker__controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--forja-space-md);
+}
+
+.forja-tracker__btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-secondary);
+  cursor: pointer;
+  font-size: var(--forja-font-size-lg);
+  font-weight: 700;
+  transition: all var(--forja-transition);
+  line-height: 1;
+}
+
+.forja-tracker__btn:hover {
+  background: var(--forja-bg-600);
+  border-color: var(--forja-border-color-strong);
+}
+
+.forja-tracker__btn--damage:hover {
+  background: var(--forja-danger-bg);
+  border-color: var(--forja-danger);
+  color: var(--forja-danger);
+}
+
+.forja-tracker__btn--heal:hover {
+  background: var(--forja-success-bg);
+  border-color: var(--forja-success);
+  color: var(--forja-success);
+}
+
+/* Equilibrium tracker (supernatural resource) */
+.forja-equilibrium {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-md) var(--forja-space-lg);
+}
+
+.forja-equilibrium__label {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+  color: var(--forja-gift-magus);
+  text-transform: uppercase;
+}
+
+.forja-equilibrium__value {
+  font-size: var(--forja-font-size-xl);
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-gift-magus);
+}
+
+
+/* ============================================================================
+   12. POINT SUMMARY - Sidebar/bar showing points breakdown
+   ============================================================================ */
+
+.forja-point-summary {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-lg);
+  padding: var(--forja-space-lg);
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-point-summary__title {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--forja-space-md);
+  padding-bottom: var(--forja-space-sm);
+  border-bottom: 1px solid var(--forja-primary-border);
+}
+
+.forja-point-summary__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--forja-space-xs) 0;
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-point-summary__label {
+  color: var(--forja-text-muted);
+}
+
+.forja-point-summary__value {
+  font-family: var(--forja-font-mono);
+  font-weight: 600;
+  color: var(--forja-text-secondary);
+}
+
+.forja-point-summary__value--positive {
+  color: var(--forja-success);
+}
+
+.forja-point-summary__value--negative {
+  color: var(--forja-danger);
+}
+
+.forja-point-summary__divider {
+  border: none;
+  border-top: 1px solid var(--forja-border-color);
+  margin: var(--forja-space-md) 0;
+}
+
+.forja-point-summary__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--forja-space-sm) 0;
+  font-weight: 700;
+}
+
+.forja-point-summary__total-label {
+  font-size: var(--forja-font-size-base);
+  color: var(--forja-text-primary);
+  text-transform: uppercase;
+}
+
+.forja-point-summary__total-value {
+  font-size: var(--forja-font-size-xl);
+  font-family: var(--forja-font-mono);
+}
+
+.forja-point-summary__total-value--over {
+  color: var(--forja-danger);
+}
+
+.forja-point-summary__total-value--ok {
+  color: var(--forja-primary-light);
+}
+
+
+/* ============================================================================
+   13. DICE RESULTS - Die result spans with color coding
+   ============================================================================ */
+
+/* Chat message roll container */
+.forja-roll {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-lg);
+  margin: var(--forja-space-sm) 0;
+}
+
+.forja-roll .roll-label {
+  font-size: var(--forja-font-size-base);
+  font-weight: 600;
+  color: var(--forja-text-primary);
+  margin: 0 0 var(--forja-space-md);
+  border-bottom: 1px solid var(--forja-border-color);
+  padding-bottom: var(--forja-space-sm);
+}
+
+.forja-roll .dice-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-sm);
+  margin-bottom: var(--forja-space-md);
+  justify-content: center;
+}
+
+/* Individual die results */
+.die-result {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--forja-radius-md);
+  font-size: var(--forja-font-size-base);
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  background: var(--forja-bg-700);
+  color: var(--forja-text-muted);
+  border: 2px solid var(--forja-border-color);
+  line-height: 1;
+}
+
+/* Fumble die: result of 1 - red */
+.die-fumble {
+  background: var(--forja-danger-bg);
+  color: var(--forja-danger);
+  border-color: var(--forja-danger);
+}
+
+/* Success die: results 6-9 - green */
+.die-success {
+  background: var(--forja-success-bg);
+  color: var(--forja-success);
+  border-color: var(--forja-success);
+}
+
+/* Critical die: result of 10 - gold */
+.die-critical {
+  background: var(--forja-gold-bg);
+  color: var(--forja-gold);
+  border-color: var(--forja-gold);
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.3);
+}
+
+
+/* ============================================================================
+   14. ROLL RESULTS - Pifia (red), success (green), failure (gray)
+   ============================================================================ */
+
+.roll-result {
+  text-align: center;
+  font-size: var(--forja-font-size-lg);
+  font-weight: 700;
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  border-radius: var(--forja-radius-md);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Pifia (Fumble) - catastrophic failure */
+.roll-pifia {
+  background: var(--forja-critical-bg);
+  color: var(--forja-danger);
+  border: 1px solid var(--forja-critical);
+  animation: forja-pifia-pulse 1s ease-in-out;
+}
+
+/* Success - at least one fite */
+.roll-success {
+  background: var(--forja-success-bg);
+  color: var(--forja-success);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* Failure - no fites, no pifia */
+.roll-failure {
+  background: var(--forja-bg-700);
+  color: var(--forja-text-muted);
+  border: 1px solid var(--forja-border-color);
+}
+
+@keyframes forja-pifia-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+
+/* ============================================================================
+   15. ITEM SHEETS - Clean form layouts for all 6 item types
+   ============================================================================ */
+
+/* --- Base Item Sheet --- */
+.forja.sheet.item {
+  background: var(--forja-bg-900);
+}
+
+.forja.sheet.item .window-content {
+  padding: var(--forja-space-xl);
+}
+
+.forja-item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-lg);
+  margin-bottom: var(--forja-space-xl);
+  padding-bottom: var(--forja-space-lg);
+  border-bottom: 2px solid var(--forja-primary-dark);
+}
+
+.forja-item-header__img {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--forja-radius-md);
+  border: 2px solid var(--forja-primary-border);
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.forja-item-header__name {
+  flex: 1;
+  font-size: var(--forja-font-size-2xl);
+  font-weight: 700;
+  color: var(--forja-text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--forja-border-color);
+  padding: var(--forja-space-xs) 0;
+}
+
+.forja-item-header__name:focus {
+  border-bottom-color: var(--forja-primary);
+  outline: none;
+}
+
+/* Item form fields layout */
+.forja-item-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--forja-space-lg);
+  margin-bottom: var(--forja-space-xl);
+}
+
+.forja-item-fields--3col {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.forja-item-fields--single {
+  grid-template-columns: 1fr;
+}
+
+.forja-item-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-xs);
+}
+
+.forja-item-field--full {
+  grid-column: 1 / -1;
+}
+
+.forja-item-field label {
+  font-size: var(--forja-font-size-xs);
+  font-weight: 600;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.forja-item-field input,
+.forja-item-field select,
+.forja-item-field textarea {
+  width: 100%;
+}
+
+.forja-item-field textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Item description/notes area */
+.forja-item-notes {
+  margin-top: var(--forja-space-lg);
+}
+
+.forja-item-notes__label {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--forja-space-md);
+}
+
+.forja-item-notes .editor {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  min-height: 100px;
+}
+
+/* --- Skill Sheet specific --- */
+.forja.sheet.item.skill .forja-skill-level-editor {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+}
+
+.forja.sheet.item.skill .forja-skill-level-slider {
+  flex: 1;
+}
+
+/* --- Trait Sheet specific --- */
+.forja.sheet.item.trait .forja-trait-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-xs) var(--forja-space-lg);
+  border-radius: var(--forja-radius-full);
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+}
+
+.forja-trait-type-badge--positive {
+  background: var(--forja-success-bg);
+  color: var(--forja-success);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.forja-trait-type-badge--negative {
+  background: var(--forja-danger-bg);
+  color: var(--forja-danger);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* --- Weapon Sheet specific --- */
+.forja.sheet.item.weapon .forja-damage-preview {
+  font-size: var(--forja-font-size-lg);
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-danger);
+  text-align: center;
+  padding: var(--forja-space-md);
+  background: var(--forja-danger-bg);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--forja-radius-md);
+}
+
+/* --- Armor Sheet specific --- */
+.forja.sheet.item.armor .forja-protection-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--forja-space-md);
+  padding: var(--forja-space-lg);
+  background: var(--forja-gold-bg);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  border-radius: var(--forja-radius-md);
+}
+
+.forja.sheet.item.armor .forja-protection-value {
+  font-size: var(--forja-font-size-3xl);
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-gold);
+}
+
+/* --- Artifact Sheet specific --- */
+.forja.sheet.item.artifact .forja-artifact-charges-editor {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-lg);
+}
+
+/* --- Supernatural Effect Sheet specific --- */
+.forja.sheet.item.supernatural-effect .forja-effect-gift-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-xs) var(--forja-space-lg);
+  border-radius: var(--forja-radius-full);
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.forja-effect-gift-badge--magus {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--forja-gift-magus);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.forja-effect-gift-badge--canalitzador {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--forja-gift-canalitzador);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.forja-effect-gift-badge--psiquic {
+  background: rgba(236, 72, 153, 0.15);
+  color: var(--forja-gift-psiquic);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+.forja-effect-gift-badge--qi {
+  background: rgba(249, 115, 22, 0.15);
+  color: var(--forja-gift-qi);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.forja-effect-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--forja-space-md);
+  margin-bottom: var(--forja-space-lg);
+}
+
+.forja-effect-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-xs);
+  background: var(--forja-bg-800);
+  padding: var(--forja-space-md);
+  border-radius: var(--forja-radius-md);
+  border: 1px solid var(--forja-border-color);
+}
+
+.forja-effect-meta-item__label {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+}
+
+.forja-effect-meta-item__value {
+  font-size: var(--forja-font-size-base);
+  font-weight: 600;
+  color: var(--forja-text-primary);
+}
+
+
+/* ============================================================================
+   16. NPC / CREATURE / ANIMAL SHEETS - Compact single-page layouts
+   ============================================================================ */
+
+/* --- NPC Sheet --- */
+.forja.sheet.actor.npc .window-content {
+  padding: var(--forja-space-lg);
+}
+
+.forja-npc-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-lg);
+}
+
+/* NPC compact header */
+.forja-npc-header {
+  display: flex;
+  gap: var(--forja-space-lg);
+  align-items: flex-start;
+  padding-bottom: var(--forja-space-lg);
+  border-bottom: 2px solid var(--forja-primary-dark);
+}
+
+.forja-npc-header__portrait {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--forja-radius-md);
+  overflow: hidden;
+  border: 2px solid var(--forja-primary);
+  flex-shrink: 0;
+}
+
+.forja-npc-header__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.forja-npc-header__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-sm);
+}
+
+.forja-npc-header__name {
+  font-size: var(--forja-font-size-xl);
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--forja-border-color);
+  color: var(--forja-text-primary);
+  padding: 0 0 var(--forja-space-xs);
+}
+
+.forja-npc-header__meta {
+  display: flex;
+  gap: var(--forja-space-lg);
+  flex-wrap: wrap;
+}
+
+.forja-npc-meta-item {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+}
+
+.forja-npc-meta-item strong {
+  color: var(--forja-text-secondary);
+}
+
+/* NPC compact attributes - inline horizontal */
+.forja-npc-attributes {
+  display: flex;
+  gap: var(--forja-space-md);
+  flex-wrap: wrap;
+}
+
+.forja-npc-attr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  min-width: 50px;
+  cursor: pointer;
+  transition: all var(--forja-transition);
+}
+
+.forja-npc-attr:hover {
+  border-color: var(--forja-primary);
+}
+
+.forja-npc-attr__label {
+  font-size: var(--forja-font-size-xs);
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+}
+
+.forja-npc-attr__value {
+  font-size: var(--forja-font-size-lg);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  font-family: var(--forja-font-mono);
+}
+
+/* NPC compact skills list */
+.forja-npc-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-sm);
+}
+
+.forja-npc-skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-full);
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  font-size: var(--forja-font-size-sm);
+  cursor: pointer;
+  transition: all var(--forja-transition);
+}
+
+.forja-npc-skill-tag:hover {
+  border-color: var(--forja-primary);
+  background: var(--forja-primary-bg);
+}
+
+.forja-npc-skill-tag__name {
+  color: var(--forja-text-secondary);
+}
+
+.forja-npc-skill-tag__level {
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  font-family: var(--forja-font-mono);
+}
+
+/* NPC compact traits */
+.forja-npc-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-sm);
+}
+
+.forja-npc-trait-tag {
+  font-size: var(--forja-font-size-sm);
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  border-radius: var(--forja-radius-full);
+  border: 1px solid;
+}
+
+.forja-npc-trait-tag--positive {
+  color: var(--forja-success);
+  background: var(--forja-success-bg);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.forja-npc-trait-tag--negative {
+  color: var(--forja-danger);
+  background: var(--forja-danger-bg);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* NPC compact section divider */
+.forja-npc-section {
+  margin-bottom: var(--forja-space-lg);
+}
+
+.forja-npc-section__title {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--forja-space-md);
+  padding-bottom: var(--forja-space-xs);
+  border-bottom: 1px solid var(--forja-primary-border);
+}
+
+/* --- Creature Sheet Overrides --- */
+.forja.sheet.actor.creature {
+  border-color: var(--forja-danger);
+}
+
+.forja.sheet.actor.creature .window-header {
+  border-bottom-color: var(--forja-danger);
+}
+
+.forja.sheet.actor.creature .forja-npc-header {
+  border-bottom-color: rgba(239, 68, 68, 0.3);
+}
+
+.forja.sheet.actor.creature .forja-npc-header__portrait {
+  border-color: var(--forja-danger);
+}
+
+.forja.sheet.actor.creature .forja-npc-section__title {
+  color: var(--forja-danger);
+  border-bottom-color: rgba(239, 68, 68, 0.3);
+}
+
+/* --- Animal Sheet Overrides --- */
+.forja.sheet.actor.animal {
+  border-color: var(--forja-success);
+}
+
+.forja.sheet.actor.animal .window-header {
+  border-bottom-color: var(--forja-success);
+}
+
+.forja.sheet.actor.animal .forja-npc-header {
+  border-bottom-color: rgba(34, 197, 94, 0.3);
+}
+
+.forja.sheet.actor.animal .forja-npc-header__portrait {
+  border-color: var(--forja-success);
+}
+
+.forja.sheet.actor.animal .forja-npc-section__title {
+  color: var(--forja-success);
+  border-bottom-color: rgba(34, 197, 94, 0.3);
+}
+
+
+/* ============================================================================
+   17. BIOGRAPHY & RICH TEXT
+   ============================================================================ */
+
+.forja-biography {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-xl);
+  min-height: 200px;
+}
+
+.forja-biography .editor-content {
+  color: var(--forja-text-secondary);
+  line-height: 1.6;
+}
+
+.forja-biography .editor-content h1,
+.forja-biography .editor-content h2,
+.forja-biography .editor-content h3 {
+  color: var(--forja-text-primary);
+  margin-top: var(--forja-space-lg);
+}
+
+.forja-biography .editor-content a {
+  color: var(--forja-primary-light);
+  text-decoration: underline;
+}
+
+
+/* ============================================================================
+   18. UTILITY CLASSES
+   ============================================================================ */
+
+/* Inline item controls (edit, delete) */
+.forja-item-controls {
+  display: flex;
+  gap: var(--forja-space-xs);
+  align-items: center;
+}
+
+.forja-item-control {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--forja-text-disabled);
+  cursor: pointer;
+  border-radius: var(--forja-radius-sm);
+  transition: all var(--forja-transition);
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-item-control:hover {
+  background: var(--forja-bg-700);
+  color: var(--forja-text-primary);
+}
+
+.forja-item-control--delete:hover {
+  background: var(--forja-danger-bg);
+  color: var(--forja-danger);
+}
+
+/* Empty state */
+.forja-empty-state {
+  text-align: center;
+  padding: var(--forja-space-2xl);
+  color: var(--forja-text-disabled);
+  font-style: italic;
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-empty-state i {
+  display: block;
+  font-size: var(--forja-font-size-2xl);
+  margin-bottom: var(--forja-space-md);
+  opacity: 0.4;
+}
+
+/* Drop zone for drag & drop */
+.forja-drop-zone {
+  border: 2px dashed var(--forja-border-color);
+  border-radius: var(--forja-radius-lg);
+  padding: var(--forja-space-2xl);
+  text-align: center;
+  color: var(--forja-text-disabled);
+  transition: all var(--forja-transition);
+}
+
+.forja-drop-zone.dragover {
+  border-color: var(--forja-primary);
+  background: var(--forja-primary-bg);
+  color: var(--forja-primary-light);
+}
+
+/* Separator */
+.forja-separator {
+  border: none;
+  border-top: 1px solid var(--forja-border-color);
+  margin: var(--forja-space-lg) 0;
+}
+
+/* Inline badge */
+.forja-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--forja-font-size-xs);
+  font-weight: 600;
+  padding: 1px var(--forja-space-md);
+  border-radius: var(--forja-radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.forja-badge--primary {
+  background: var(--forja-primary-bg);
+  color: var(--forja-primary-light);
+  border: 1px solid var(--forja-primary-border);
+}
+
+.forja-badge--success {
+  background: var(--forja-success-bg);
+  color: var(--forja-success);
+}
+
+.forja-badge--danger {
+  background: var(--forja-danger-bg);
+  color: var(--forja-danger);
+}
+
+.forja-badge--gold {
+  background: var(--forja-gold-bg);
+  color: var(--forja-gold);
+}
+
+.forja-badge--info {
+  background: var(--forja-info-bg);
+  color: var(--forja-info);
+}
+
+/* Button styles */
+.forja-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+  font-family: var(--forja-font-primary);
+  border-radius: var(--forja-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--forja-transition);
+  text-transform: none;
+}
+
+.forja-btn--primary {
+  background: var(--forja-primary);
+  color: white;
+  border-color: var(--forja-primary-dark);
+}
+
+.forja-btn--primary:hover {
+  background: var(--forja-primary-light);
+}
+
+.forja-btn--ghost {
+  background: transparent;
+  color: var(--forja-text-muted);
+  border-color: var(--forja-border-color);
+}
+
+.forja-btn--ghost:hover {
+  background: var(--forja-bg-700);
+  color: var(--forja-text-primary);
+}
+
+.forja-btn--sm {
+  padding: var(--forja-space-xs) var(--forja-space-md);
+  font-size: var(--forja-font-size-xs);
+}
+
+
+/* ============================================================================
+   19. FOUNDRY INTEGRATION - Override / harmonize Foundry default styles
+   ============================================================================ */
+
+/* Ensure Foundry's application frame respects our dark theme */
+.forja.sheet .application-header {
+  background: var(--forja-bg-darkest);
+  color: var(--forja-text-primary);
+}
+
+/* Prosemirror / TinyMCE editor in dark mode */
+.forja.sheet .editor {
+  background: var(--forja-bg-800);
+  color: var(--forja-text-secondary);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+}
+
+.forja.sheet .editor .editor-content {
+  color: var(--forja-text-secondary);
+  padding: var(--forja-space-md);
+}
+
+/* Override Foundry's default light inputs */
+.forja.sheet input,
+.forja.sheet select,
+.forja.sheet textarea {
+  color: var(--forja-text-primary);
+  background: var(--forja-bg-800);
+}
+
+/* Override Foundry's default buttons */
+.forja.sheet button {
+  color: var(--forja-text-primary);
+}
+
+/* Foundry notification overlays within sheets */
+.forja.sheet .notification {
+  font-family: var(--forja-font-primary);
+}
+
+/* Foundry's context menu inside our sheets */
+.forja .context-items .context-item {
+  color: var(--forja-text-primary);
+}
+
+/* Dialog windows spawned by FORJA sheets */
+.dialog.forja-dialog {
+  background: var(--forja-bg-900);
+  color: var(--forja-text-primary);
+}
+
+.dialog.forja-dialog .dialog-buttons button {
+  background: var(--forja-bg-700);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-border-color);
+}
+
+.dialog.forja-dialog .dialog-buttons button:hover {
+  background: var(--forja-primary);
+  color: white;
+}
+
+/* Token HUD overrides for FORJA tokens */
+.forja-token-tooltip {
+  background: var(--forja-bg-900);
+  border: 1px solid var(--forja-primary-dark);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-md);
+  color: var(--forja-text-primary);
+  font-family: var(--forja-font-primary);
+}
+
+/* Combat tracker enhancements */
+#combat-tracker .combatant.forja-combatant {
+  border-left: 3px solid var(--forja-primary);
+}
+
+#combat-tracker .combatant.forja-combatant .token-initiative {
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  font-weight: 700;
+}
+
+
+/* ============================================================================
+   20. RESPONSIVE - Reasonable at different window sizes
+   ============================================================================ */
+
+/* Narrow sheets (< 600px width) */
+@container (max-width: 600px) {
+  .forja-header {
+    grid-template-columns: 1fr;
+  }
+
+  .forja-header__portrait {
+    margin: 0 auto;
+  }
+
+  .forja-header__details {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .forja-header__selectors {
+    grid-template-columns: 1fr;
+  }
+
+  .forja-attributes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .forja-derived-stats {
+    flex-direction: column;
+  }
+
+  .forja-item-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .forja-equipment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fallback media queries for browsers without container queries */
+@media (max-width: 600px) {
+  .forja-header {
+    grid-template-columns: 1fr;
+  }
+
+  .forja-header__portrait {
+    margin: 0 auto;
+  }
+
+  .forja-header__details {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .forja-header__selectors {
+    grid-template-columns: 1fr;
+  }
+
+  .forja-attributes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .forja-derived-stats {
+    flex-direction: column;
+  }
+
+  .forja-item-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .forja-equipment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .forja-weapons-table {
+    font-size: var(--forja-font-size-xs);
+  }
+
+  .forja.sheet .tabs .item {
+    padding: var(--forja-space-xs) var(--forja-space-md);
+    font-size: var(--forja-font-size-xs);
+  }
+}
+
+/* Very narrow (animal sheets, etc.) */
+@media (max-width: 450px) {
+  .forja-npc-attributes {
+    gap: var(--forja-space-sm);
+  }
+
+  .forja-npc-attr {
+    padding: var(--forja-space-xs) var(--forja-space-md);
+  }
+
+  .forja-npc-attr__value {
+    font-size: var(--forja-font-size-base);
+  }
+
+  .forja-tracker {
+    padding: var(--forja-space-md);
+  }
+}

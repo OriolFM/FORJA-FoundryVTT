@@ -1,0 +1,43 @@
+<section class="forja-biography tab" data-group="primary" data-tab="biography">
+  {{!-- Concept and origin (text inputs) --}}
+  <div class="forja-biography__fields">
+    <div class="forja-field">
+      <label>{{localize "FORJA.Concept"}}</label>
+      <input type="text" name="system.concept" value="{{system.concept}}" />
+    </div>
+    <div class="forja-field">
+      <label>{{localize "FORJA.Origin"}}</label>
+      <input type="text" name="system.origin" value="{{system.origin}}" />
+    </div>
+  </div>
+
+  {{!-- Biography rich text editor --}}
+  <div class="forja-biography__section">
+    <h3 class="forja-section-heading">{{localize "FORJA.Biography"}}</h3>
+    <div class="forja-biography__editor">
+      {{formInput (formField document.system.schema.getField "biography")
+        value=system.biography name="system.biography"}}
+    </div>
+  </div>
+
+  {{!-- Notes rich text editor --}}
+  <div class="forja-biography__section">
+    <h3 class="forja-section-heading">{{localize "FORJA.Notes"}}</h3>
+    <div class="forja-biography__editor">
+      {{formInput (formField document.system.schema.getField "notes")
+        value=system.notes name="system.notes"}}
+    </div>
+  </div>
+
+  {{!-- Resources --}}
+  <div class="forja-biography__section">
+    <h3 class="forja-section-heading">{{localize "FORJA.Resources"}}</h3>
+    <textarea name="system.resources" class="forja-biography__textarea" rows="3">{{system.resources}}</textarea>
+  </div>
+
+  {{!-- Guanxi --}}
+  <div class="forja-biography__section">
+    <h3 class="forja-section-heading">{{localize "FORJA.Guanxi"}}</h3>
+    <textarea name="system.guanxi" class="forja-biography__textarea" rows="3">{{system.guanxi}}</textarea>
+  </div>
+</section>

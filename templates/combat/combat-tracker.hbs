@@ -1,0 +1,48 @@
+<ol id="combat-tracker" class="directory-list forja-combat-tracker">
+  {{#each turns}}
+  <li class="combatant {{#if active}}active{{/if}} {{side}}"
+      data-combatant-id="{{id}}"
+      data-tooltip="{{localize 'FORJA.Derived.latency'}}: {{latency}} | {{localize 'FORJA.Derived.defense'}}: {{defense}}">
+
+    <div class="combatant-info">
+      <img class="token-image" src="{{img}}" alt="{{name}}" />
+      <div class="combatant-details">
+        <span class="combatant-name">{{name}}</span>
+        <span class="combatant-initiative" title="{{localize 'FORJA.Derived.latency'}}">
+          {{initiative}}
+        </span>
+      </div>
+    </div>
+
+    {{!-- Health bars --}}
+    <div class="combatant-health">
+      {{#ifgt woundsPercent 0}}
+      <div class="health-bar wounds-bar" title="{{localize 'FORJA.Health.wounds'}}: {{forjaLocalize 'FORJA.WoundLevel' woundLevel}}">
+        <div class="bar-fill" style="width: {{woundsPercent}}%"></div>
+      </div>
+      {{/ifgt}}
+      {{#ifgt fatiguePercent 0}}
+      <div class="health-bar fatigue-bar" title="{{localize 'FORJA.Health.fatigue'}}: {{forjaLocalize 'FORJA.FatigueLevel' fatigueLevel}}">
+        <div class="bar-fill" style="width: {{fatiguePercent}}%"></div>
+      </div>
+      {{/ifgt}}
+    </div>
+
+    {{!-- Declared action indicator --}}
+    {{#if declaredAction}}
+    <div class="declared-action" title="{{declaredAction.description}}">
+      <i class="fas fa-bolt"></i>
+    </div>
+    {{/if}}
+
+    {{!-- Controls --}}
+    {{#if ../user.isGM}}
+    <div class="combatant-controls">
+      <a class="combatant-control" data-action="toggleDefeated" title="Defeated">
+        <i class="fas fa-skull"></i>
+      </a>
+    </div>
+    {{/if}}
+  </li>
+  {{/each}}
+</ol>

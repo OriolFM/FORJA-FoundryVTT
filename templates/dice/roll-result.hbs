@@ -1,0 +1,15 @@
+<div class="forja-roll">
+  <h4 class="roll-label">{{label}}</h4>
+  <div class="dice-results">
+    {{#each dice}}
+    <span class="die-result {{dieClass this}}">{{this}}</span>
+    {{/each}}
+  </div>
+  <div class="roll-result {{resultClass}}">
+    {{#if isPifia}}
+      {{localize "FORJA.Dice.pifia"}}
+    {{else}}
+      {{fites}} {{localize "FORJA.Dice.fites"}}
+    {{/if}}
+  </div>
+</div>

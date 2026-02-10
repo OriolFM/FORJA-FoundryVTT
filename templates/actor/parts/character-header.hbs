@@ -1,0 +1,86 @@
+<section class="forja-header">
+  {{!-- Character portrait + name --}}
+  <div class="forja-header__portrait">
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-header__img" data-edit="img" />
+  </div>
+
+  <div class="forja-header__info">
+    {{!-- Name --}}
+    <div class="forja-header__name-row">
+      <input type="text" name="name" value="{{document.name}}" class="forja-header__name-input"
+             placeholder="{{localize 'FORJA.CharacterName'}}" />
+    </div>
+
+    {{!-- Concept, origin, gender, age --}}
+    <div class="forja-header__details">
+      <div class="forja-field">
+        <label>{{localize "FORJA.Concept"}}</label>
+        <input type="text" name="system.concept" value="{{system.concept}}" />
+      </div>
+      <div class="forja-field">
+        <label>{{localize "FORJA.Origin"}}</label>
+        <input type="text" name="system.origin" value="{{system.origin}}" />
+      </div>
+      <div class="forja-field forja-field--half">
+        <label>{{localize "FORJA.Gender"}}</label>
+        <input type="text" name="system.gender" value="{{system.gender}}" />
+      </div>
+      <div class="forja-field forja-field--half">
+        <label>{{localize "FORJA.Age"}}</label>
+        <input type="number" name="system.age" value="{{system.age}}" min="0" />
+      </div>
+    </div>
+
+    {{!-- Species, size, constitution selectors --}}
+    <div class="forja-header__selectors">
+      <div class="forja-field">
+        <label>{{localize "FORJA.Species.label"}}</label>
+        <select name="system.species">
+          {{#each cfg.species as |label key|}}
+            <option value="{{key}}" {{#if (eq key ../system.species)}}selected{{/if}}>
+              {{localize label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="forja-field">
+        <label>{{localize "FORJA.Size.label"}}</label>
+        <select name="system.size">
+          {{#each cfg.sizes as |label key|}}
+            <option value="{{key}}" {{#if (eq key ../system.size)}}selected{{/if}}>
+              {{localize label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="forja-field">
+        <label>{{localize "FORJA.Constitution.label"}}</label>
+        <select name="system.constitution">
+          {{#each cfg.constitutions as |label key|}}
+            <option value="{{key}}" {{#if (eq key ../system.constitution)}}selected{{/if}}>
+              {{localize label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Point summary bar --}}
+  <div class="forja-header__points">
+    <div class="forja-points-bar">
+      <div class="forja-points-bar__item">
+        <span class="forja-points-bar__label">{{localize "FORJA.Points.Total"}}</span>
+        <input type="number" name="system.totalPoints" value="{{system.totalPoints}}" class="forja-points-bar__value" min="0" />
+      </div>
+      <div class="forja-points-bar__item">
+        <span class="forja-points-bar__label">{{localize "FORJA.Points.Spent"}}</span>
+        <span class="forja-points-bar__value forja-points-bar__value--readonly">{{system.spentPoints}}</span>
+      </div>
+      <div class="forja-points-bar__item {{#if (lt system.availablePoints 0)}}forja-points-bar__item--over{{/if}}">
+        <span class="forja-points-bar__label">{{localize "FORJA.Points.Available"}}</span>
+        <span class="forja-points-bar__value forja-points-bar__value--readonly">{{system.availablePoints}}</span>
+      </div>
+    </div>
+  </div>
+</section>

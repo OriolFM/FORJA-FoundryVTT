@@ -1,0 +1,68 @@
+<div class="forja-weapons">
+  <h3 class="forja-section-heading">{{localize "FORJA.Weapons"}}</h3>
+  {{#if weapons.length}}
+    <table class="forja-weapons__table">
+      <thead>
+        <tr>
+          <th>{{localize "FORJA.Name"}}</th>
+          <th>{{localize "FORJA.AttackType.label"}}</th>
+          <th>{{localize "FORJA.Damage"}}</th>
+          <th>{{localize "FORJA.LatencyMod"}}</th>
+          <th>{{localize "FORJA.ReachRange"}}</th>
+          <th>{{localize "FORJA.Ammo"}}</th>
+          <th>{{localize "FORJA.Special"}}</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each weapons}}
+          <tr class="forja-weapons__row {{#if this.system.equipped}}forja-weapons__row--equipped{{/if}}" data-item-id="{{this.id}}">
+            <td class="forja-weapons__name">{{this.name}}</td>
+            <td class="forja-weapons__attack-type">
+              {{localize (lookup ../cfg.attackTypes this.system.attackType)}}
+            </td>
+            <td class="forja-weapons__damage">{{this.system.damage}}</td>
+            <td class="forja-weapons__latency">
+              {{#if this.system.latencyMod}}+{{this.system.latencyMod}}{{else}}0{{/if}}
+            </td>
+            <td class="forja-weapons__range">
+              {{#if this.system.reach}}{{this.system.reach}}{{/if}}
+              {{#if this.system.range}}{{this.system.range}}{{/if}}
+            </td>
+            <td class="forja-weapons__ammo">
+              {{#if this.system.ammo.max}}
+                {{this.system.ammo.value}} / {{this.system.ammo.max}}
+              {{else}}
+                &mdash;
+              {{/if}}
+            </td>
+            <td class="forja-weapons__special">{{this.system.special}}</td>
+            <td>
+              <button type="button" class="forja-weapons__roll-btn" data-action="rollAttack"
+                      title="{{localize 'FORJA.RollAttack'}}">
+                <i class="fas fa-dice-d10"></i>
+              </button>
+            </td>
+            <td>
+              <a class="forja-item-control" data-action="toggleEquip" data-item-id="{{this.id}}"
+                 title="{{localize 'FORJA.ToggleEquip'}}">
+                <i class="fas {{#if this.system.equipped}}fa-shield-check{{else}}fa-shield{{/if}}"></i>
+              </a>
+              <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
+                 title="{{localize 'FORJA.ItemEdit'}}">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
+                 title="{{localize 'FORJA.ItemDelete'}}">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p class="forja-empty-notice">{{localize "FORJA.NoWeapons"}}</p>
+  {{/if}}
+</div>

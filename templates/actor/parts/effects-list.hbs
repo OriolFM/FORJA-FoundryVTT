@@ -1,0 +1,99 @@
+<section class="forja-effects tab" data-group="primary" data-tab="supernatural">
+  {{#each effectsByGift as |effects giftKey|}}
+    {{#if effects.length}}
+      <div class="forja-effects__group">
+        <h3 class="forja-effects__group-heading">
+          <i class="fas fa-hat-wizard"></i>
+          {{localize (lookup ../cfg.giftTypes giftKey)}}
+        </h3>
+        <ul class="forja-effects__list">
+          {{#each effects}}
+            <li class="forja-effects__item" data-item-id="{{this.id}}">
+              <div class="forja-effects__header">
+                <span class="forja-effects__name">{{this.name}}</span>
+                <span class="forja-effects__cost" title="{{localize 'FORJA.Cost'}}">
+                  {{this.system.cost}} {{localize "FORJA.Points.Abbr"}}
+                </span>
+                <div class="forja-item-controls">
+                  <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
+                     title="{{localize 'FORJA.ItemEdit'}}">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
+                     title="{{localize 'FORJA.ItemDelete'}}">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="forja-effects__details">
+                {{#if this.system.difficulty}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.Difficulty"}}</span>
+                    {{this.system.difficulty}}
+                  </span>
+                {{/if}}
+                {{#if this.system.equilibriumCost}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.EquilibriumCost"}}</span>
+                    {{this.system.equilibriumCost}}
+                  </span>
+                {{/if}}
+                <span class="forja-effects__detail">
+                  <span class="forja-effects__detail-label">{{localize "FORJA.Activation.label"}}</span>
+                  {{localize (lookup ../../cfg.activationTypes this.system.activation)}}
+                </span>
+                {{#if this.system.range}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.Range.label"}}</span>
+                    {{localize (lookup ../../cfg.rangeTypes this.system.range)}}
+                  </span>
+                {{/if}}
+                {{#if this.system.duration}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.Duration.label"}}</span>
+                    {{localize (lookup ../../cfg.durationTypes this.system.duration)}}
+                  </span>
+                {{/if}}
+                {{#if this.system.damageValue}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.Damage"}}</span>
+                    {{this.system.damageValue}}
+                    {{#if this.system.damageType}}
+                      ({{localize (lookup ../../cfg.damageTypes this.system.damageType)}})
+                    {{/if}}
+                  </span>
+                {{/if}}
+                {{#if this.system.healingValue}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.Healing"}}</span>
+                    {{this.system.healingValue}}
+                  </span>
+                {{/if}}
+                {{#if this.system.protection}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.Protection"}}</span>
+                    {{this.system.protection}}
+                  </span>
+                {{/if}}
+                {{#if this.system.mentalEffect}}
+                  <span class="forja-effects__detail">
+                    <span class="forja-effects__detail-label">{{localize "FORJA.MentalEffect"}}</span>
+                    {{this.system.mentalEffect}}
+                  </span>
+                {{/if}}
+              </div>
+              {{#if this.system.notes}}
+                <div class="forja-effects__notes">{{this.system.notes}}</div>
+              {{/if}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+  {{/each}}
+
+  {{!-- Fallback when no effects exist --}}
+  {{#unless supernaturalEffects.length}}
+    <p class="forja-empty-notice">{{localize "FORJA.NoSupernaturalEffects"}}</p>
+  {{/unless}}
+</section>

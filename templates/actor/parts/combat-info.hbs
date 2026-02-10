@@ -1,0 +1,34 @@
+<section class="forja-combat tab" data-group="primary" data-tab="combat">
+  {{!-- Combat stats summary --}}
+  <div class="forja-combat__summary">
+    <div class="forja-combat__stat">
+      <span class="forja-combat__stat-label">{{localize "FORJA.Derived.Defense"}}</span>
+      <span class="forja-combat__stat-value">{{system.defense}}</span>
+    </div>
+    <div class="forja-combat__stat">
+      <span class="forja-combat__stat-label">{{localize "FORJA.Derived.Latency"}}</span>
+      <span class="forja-combat__stat-value">{{system.latency}}</span>
+    </div>
+    <div class="forja-combat__stat">
+      <span class="forja-combat__stat-label">{{localize "FORJA.Derived.DamageReduction"}}</span>
+      <span class="forja-combat__stat-value">{{system.damageReduction}}</span>
+    </div>
+    <div class="forja-combat__stat">
+      <span class="forja-combat__stat-label">{{localize "FORJA.Derived.Reaction"}}</span>
+      <span class="forja-combat__stat-value">{{system.reaction}}</span>
+    </div>
+    <div class="forja-combat__stat">
+      <span class="forja-combat__stat-label">{{localize "FORJA.Derived.Protection"}}</span>
+      <span class="forja-combat__stat-value">{{system.protection}}</span>
+    </div>
+  </div>
+
+  {{!-- Weapons list --}}
+  {{> "systems/forja/templates/actor/parts/weapons-list.hbs"}}
+
+  {{!-- Armor display --}}
+  {{> "systems/forja/templates/actor/parts/armor-display.hbs"}}
+
+  {{!-- Wound/fatigue tracker --}}
+  {{> "systems/forja/templates/actor/parts/wound-fatigue-tracker.hbs"}}
+</section>

@@ -1,0 +1,61 @@
+<form class="forja-item-sheet forja-skill-sheet" autocomplete="off">
+  <header class="forja-item-sheet__header">
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-item-sheet__img" data-edit="img" />
+    <div class="forja-item-sheet__title">
+      <input type="text" name="name" value="{{document.name}}" class="forja-item-sheet__name"
+             placeholder="{{localize 'FORJA.SkillName'}}" />
+    </div>
+  </header>
+
+  <div class="forja-item-sheet__body">
+    {{!-- Skill ID --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.SkillId"}}</label>
+      <input type="text" name="system.skillId" value="{{system.skillId}}" />
+    </div>
+
+    {{!-- Skill type --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.SkillType.label"}}</label>
+      <select name="system.skillType">
+        {{#each cfg.skillTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.skillType)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Related attribute --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.RelatedAttribute"}}</label>
+      <select name="system.relatedAttribute">
+        {{#each cfg.attributes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.relatedAttribute)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Level --}}
+    <div class="forja-form-row">
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.Level"}}</label>
+        <input type="number" name="system.level" value="{{system.level}}" min="0" max="{{system.maxLevel}}" />
+      </div>
+
+      {{!-- Max level --}}
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.MaxLevel"}}</label>
+        <input type="number" name="system.maxLevel" value="{{system.maxLevel}}" min="0" />
+      </div>
+    </div>
+
+    {{!-- Notes --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Notes"}}</label>
+      <textarea name="system.notes" rows="3">{{system.notes}}</textarea>
+    </div>
+  </div>
+</form>

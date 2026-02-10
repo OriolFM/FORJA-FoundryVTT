@@ -1,0 +1,43 @@
+<div class="forja-trackers">
+  {{!-- Wound tracker --}}
+  <div class="forja-tracker forja-tracker--wounds">
+    <span class="forja-tracker__label">{{localize "FORJA.Health.Wounds"}}</span>
+    <div class="forja-tracker__controls">
+      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="-1"
+              title="{{localize 'FORJA.Health.Decrease'}}">
+        <i class="fas fa-minus"></i>
+      </button>
+      <span class="forja-tracker__value">
+        {{system.health.wounds.value}} / {{system.health.wounds.max}}
+      </span>
+      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="1"
+              title="{{localize 'FORJA.Health.Increase'}}">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+    <span class="forja-tracker__level forja-tracker__level--{{system.woundLevel}}">
+      {{localize (lookup cfg.woundLevels system.woundLevel).label}}
+    </span>
+  </div>
+
+  {{!-- Fatigue tracker --}}
+  <div class="forja-tracker forja-tracker--fatigue">
+    <span class="forja-tracker__label">{{localize "FORJA.Health.Fatigue"}}</span>
+    <div class="forja-tracker__controls">
+      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="-1"
+              title="{{localize 'FORJA.Health.Decrease'}}">
+        <i class="fas fa-minus"></i>
+      </button>
+      <span class="forja-tracker__value">
+        {{system.health.fatigue.value}} / {{system.health.fatigue.max}}
+      </span>
+      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="1"
+              title="{{localize 'FORJA.Health.Increase'}}">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+    <span class="forja-tracker__level forja-tracker__level--{{system.fatigueLevel}}">
+      {{localize (lookup cfg.fatigueLevels system.fatigueLevel).label}}
+    </span>
+  </div>
+</div>

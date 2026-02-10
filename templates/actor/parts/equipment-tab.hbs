@@ -1,0 +1,77 @@
+<section class="forja-equipment tab" data-group="primary" data-tab="equipment">
+  <h3 class="forja-section-heading">{{localize "FORJA.Artifacts"}}</h3>
+  {{#if artifacts.length}}
+    <ul class="forja-artifacts__list">
+      {{#each artifacts}}
+        <li class="forja-artifacts__item" data-item-id="{{this.id}}">
+          <div class="forja-artifacts__header">
+            <span class="forja-artifacts__name">{{this.name}}</span>
+            <span class="forja-artifacts__cost" title="{{localize 'FORJA.Cost'}}">
+              {{this.system.cost}} {{localize "FORJA.Points.Abbr"}}
+            </span>
+            <div class="forja-item-controls">
+              <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
+                 title="{{localize 'FORJA.ItemEdit'}}">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
+                 title="{{localize 'FORJA.ItemDelete'}}">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </div>
+          <div class="forja-artifacts__details">
+            <span class="forja-artifacts__detail">
+              <span class="forja-artifacts__detail-label">{{localize "FORJA.Activation.label"}}</span>
+              {{localize (lookup ../cfg.activationTypes this.system.activation)}}
+            </span>
+            {{#if this.system.charges.max}}
+              <span class="forja-artifacts__detail">
+                <span class="forja-artifacts__detail-label">{{localize "FORJA.Charges"}}</span>
+                {{this.system.charges.value}} / {{this.system.charges.max}}
+              </span>
+            {{/if}}
+            {{#if this.system.difficulty}}
+              <span class="forja-artifacts__detail">
+                <span class="forja-artifacts__detail-label">{{localize "FORJA.Difficulty"}}</span>
+                {{this.system.difficulty}}
+              </span>
+            {{/if}}
+            {{#if this.system.range}}
+              <span class="forja-artifacts__detail">
+                <span class="forja-artifacts__detail-label">{{localize "FORJA.Range.label"}}</span>
+                {{localize (lookup ../cfg.rangeTypes this.system.range)}}
+              </span>
+            {{/if}}
+            {{#if this.system.duration}}
+              <span class="forja-artifacts__detail">
+                <span class="forja-artifacts__detail-label">{{localize "FORJA.Duration.label"}}</span>
+                {{localize (lookup ../cfg.durationTypes this.system.duration)}}
+              </span>
+            {{/if}}
+            {{#if this.system.damageValue}}
+              <span class="forja-artifacts__detail">
+                <span class="forja-artifacts__detail-label">{{localize "FORJA.Damage"}}</span>
+                {{this.system.damageValue}}
+                {{#if this.system.damageType}}
+                  ({{localize (lookup ../cfg.damageTypes this.system.damageType)}})
+                {{/if}}
+              </span>
+            {{/if}}
+            {{#if this.system.protection}}
+              <span class="forja-artifacts__detail">
+                <span class="forja-artifacts__detail-label">{{localize "FORJA.Protection"}}</span>
+                {{this.system.protection}}
+              </span>
+            {{/if}}
+          </div>
+          {{#if this.system.notes}}
+            <div class="forja-artifacts__notes">{{this.system.notes}}</div>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="forja-empty-notice">{{localize "FORJA.NoArtifacts"}}</p>
+  {{/if}}
+</section>

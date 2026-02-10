@@ -1,0 +1,89 @@
+<form class="forja-item-sheet forja-trait-sheet" autocomplete="off">
+  <header class="forja-item-sheet__header">
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-item-sheet__img" data-edit="img" />
+    <div class="forja-item-sheet__title">
+      <input type="text" name="name" value="{{document.name}}" class="forja-item-sheet__name"
+             placeholder="{{localize 'FORJA.TraitName'}}" />
+    </div>
+  </header>
+
+  <div class="forja-item-sheet__body">
+    {{!-- Trait ID --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.TraitId"}}</label>
+      <input type="text" name="system.traitId" value="{{system.traitId}}" />
+    </div>
+
+    {{!-- Type (positive/negative) --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.TraitType.label"}}</label>
+      <select name="system.traitType">
+        {{#each cfg.traitTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.traitType)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Category --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.TraitCategory.label"}}</label>
+      <select name="system.category">
+        {{#each cfg.traitCategories as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.category)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Cost --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Cost"}}</label>
+      <input type="number" name="system.cost" value="{{system.cost}}" />
+    </div>
+
+    {{!-- Parametric settings --}}
+    <div class="forja-form-group forja-form-group--checkbox">
+      <label>
+        <input type="checkbox" name="system.isParametric" {{#if system.isParametric}}checked{{/if}} />
+        {{localize "FORJA.IsParametric"}}
+      </label>
+    </div>
+
+    {{#if system.isParametric}}
+      <div class="forja-form-row">
+        <div class="forja-form-group forja-form-group--third">
+          <label>{{localize "FORJA.BaseCost"}}</label>
+          <input type="number" name="system.baseCost" value="{{system.baseCost}}" />
+        </div>
+        <div class="forja-form-group forja-form-group--third">
+          <label>{{localize "FORJA.FactorCost"}}</label>
+          <input type="number" name="system.factorCost" value="{{system.factorCost}}" />
+        </div>
+        <div class="forja-form-group forja-form-group--third">
+          <label>{{localize "FORJA.MaxLevel"}}</label>
+          <input type="number" name="system.maxLevel" value="{{system.maxLevel}}" min="0" />
+        </div>
+      </div>
+
+      <div class="forja-form-group">
+        <label>{{localize "FORJA.Level"}}</label>
+        <input type="number" name="system.level" value="{{system.level}}" min="0" max="{{system.maxLevel}}" />
+      </div>
+    {{/if}}
+
+    {{!-- Computed cost display --}}
+    <div class="forja-form-group forja-form-group--readonly">
+      <label>{{localize "FORJA.ComputedCost"}}</label>
+      <span class="forja-form-value">{{system.computedCost}} {{localize "FORJA.Points.Abbr"}}</span>
+    </div>
+
+    {{!-- Notes --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Notes"}}</label>
+      <textarea name="system.notes" rows="3">{{system.notes}}</textarea>
+    </div>
+  </div>
+</form>

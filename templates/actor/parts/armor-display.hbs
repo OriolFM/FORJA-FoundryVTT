@@ -1,0 +1,38 @@
+<div class="forja-armor">
+  <h3 class="forja-section-heading">{{localize "FORJA.Armor"}}</h3>
+  {{#if armor.length}}
+    <ul class="forja-armor__list">
+      {{#each armor}}
+        <li class="forja-armor__item {{#if this.system.equipped}}forja-armor__item--equipped{{/if}}" data-item-id="{{this.id}}">
+          <span class="forja-armor__name">{{this.name}}</span>
+          <span class="forja-armor__stat">
+            <span class="forja-armor__stat-label">{{localize "FORJA.Protection"}}</span>
+            <span class="forja-armor__stat-value">{{this.system.protection}}</span>
+          </span>
+          <span class="forja-armor__stat">
+            <span class="forja-armor__stat-label">{{localize "FORJA.LatencyMod"}}</span>
+            <span class="forja-armor__stat-value">
+              {{#if this.system.latencyMod}}+{{this.system.latencyMod}}{{else}}0{{/if}}
+            </span>
+          </span>
+          <div class="forja-item-controls">
+            <a class="forja-item-control" data-action="toggleEquip" data-item-id="{{this.id}}"
+               title="{{localize 'FORJA.ToggleEquip'}}">
+              <i class="fas {{#if this.system.equipped}}fa-shield-check{{else}}fa-shield{{/if}}"></i>
+            </a>
+            <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
+               title="{{localize 'FORJA.ItemEdit'}}">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
+               title="{{localize 'FORJA.ItemDelete'}}">
+              <i class="fas fa-trash"></i>
+            </a>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="forja-empty-notice">{{localize "FORJA.NoArmor"}}</p>
+  {{/if}}
+</div>

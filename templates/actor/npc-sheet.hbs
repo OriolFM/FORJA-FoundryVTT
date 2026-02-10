@@ -1,0 +1,272 @@
+{{!-- Compact single-page sheet for NPCs (PNJ) --}}
+<section class="forja-npc-sheet">
+  {{!-- Header: name, concept, tier --}}
+  <div class="forja-npc-header">
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-npc-header__img" data-edit="img" />
+    <div class="forja-npc-header__info">
+      <input type="text" name="name" value="{{document.name}}" class="forja-npc-header__name"
+             placeholder="{{localize 'FORJA.CharacterName'}}" />
+      <div class="forja-npc-header__fields">
+        <div class="forja-field">
+          <label>{{localize "FORJA.Concept"}}</label>
+          <input type="text" name="system.concept" value="{{system.concept}}" />
+        </div>
+        <div class="forja-field">
+          <label>{{localize "FORJA.Tier.label"}}</label>
+          <select name="system.tier">
+            <option value="nemesis" {{#if (eq system.tier "nemesis")}}selected{{/if}}>{{localize "FORJA.Tier.nemesis"}}</option>
+            <option value="antagonist" {{#if (eq system.tier "antagonist")}}selected{{/if}}>{{localize "FORJA.Tier.antagonist"}}</option>
+            <option value="extra" {{#if (eq system.tier "extra")}}selected{{/if}}>{{localize "FORJA.Tier.extra"}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="forja-npc-header__selectors">
+        <div class="forja-field">
+          <label>{{localize "FORJA.Species.label"}}</label>
+          <select name="system.species">
+            {{#each cfg.species as |label key|}}
+              <option value="{{key}}" {{#if (eq key ../system.species)}}selected{{/if}}>
+                {{localize label}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="forja-field">
+          <label>{{localize "FORJA.Size.label"}}</label>
+          <select name="system.size">
+            {{#each cfg.sizes as |label key|}}
+              <option value="{{key}}" {{#if (eq key ../system.size)}}selected{{/if}}>
+                {{localize label}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="forja-field">
+          <label>{{localize "FORJA.Constitution.label"}}</label>
+          <select name="system.constitution">
+            {{#each cfg.constitutions as |label key|}}
+              <option value="{{key}}" {{#if (eq key ../system.constitution)}}selected{{/if}}>
+                {{localize label}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Attributes grid --}}
+  <div class="forja-npc-section">
+    <h3 class="forja-section-heading">{{localize "FORJA.Tabs.Attributes"}}</h3>
+    <div class="forja-attributes__grid forja-attributes__grid--compact">
+      {{#each cfg.attributes as |label key|}}
+        <div class="forja-attribute">
+          <span class="forja-attribute__label">{{localize label}}</span>
+          <input type="number" name="system.attributes.{{key}}.value"
+                 value="{{lookup (lookup ../system.attributes key) 'value'}}"
+                 class="forja-attribute__input" min="0" max="5" />
+          <button type="button" class="forja-attribute__roll" data-action="rollAttribute" data-attribute="{{key}}"
+                  title="{{localize 'FORJA.Roll'}} {{localize label}}">
+            <i class="fas fa-dice-d10"></i>
+          </button>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{!-- Derived stats --}}
+  <div class="forja-npc-section">
+    <div class="forja-derived">
+      <div class="forja-derived__stat">
+        <span class="forja-derived__label">{{localize "FORJA.Derived.Defense"}}</span>
+        <span class="forja-derived__value">{{system.defense}}</span>
+      </div>
+      <div class="forja-derived__stat">
+        <span class="forja-derived__label">{{localize "FORJA.Derived.Latency"}}</span>
+        <span class="forja-derived__value">{{system.latency}}</span>
+      </div>
+      <div class="forja-derived__stat">
+        <span class="forja-derived__label">{{localize "FORJA.Derived.DamageReduction"}}</span>
+        <span class="forja-derived__value">{{system.damageReduction}}</span>
+      </div>
+      <div class="forja-derived__stat">
+        <span class="forja-derived__label">{{localize "FORJA.Derived.Reaction"}}</span>
+        <span class="forja-derived__value">{{system.reaction}}</span>
+      </div>
+      <div class="forja-derived__stat">
+        <span class="forja-derived__label">{{localize "FORJA.Derived.Protection"}}</span>
+        <span class="forja-derived__value">{{system.protection}}</span>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Skills (only those with level > 0) --}}
+  {{#if skills.length}}
+    <div class="forja-npc-section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Tabs.Skills"}}</h3>
+      <ul class="forja-skills__list forja-skills__list--compact">
+        {{#each skills}}
+          <li class="forja-skills__item" data-item-id="{{this.id}}">
+            <span class="forja-skills__name">{{this.name}}</span>
+            <input type="number" name="items.{{this.id}}.system.level" value="{{this.system.level}}"
+                   class="forja-skills__level" min="0" max="{{this.system.maxLevel}}" />
+            <button type="button" class="forja-skills__roll" data-action="rollSkill"
+                    title="{{localize 'FORJA.Roll'}} {{this.name}}">
+              <i class="fas fa-dice-d10"></i>
+            </button>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{!-- Traits --}}
+  {{#if traits.length}}
+    <div class="forja-npc-section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Tabs.Traits"}}</h3>
+      <ul class="forja-traits__list forja-traits__list--compact">
+        {{#each traits}}
+          <li class="forja-traits__item" data-item-id="{{this.id}}">
+            <span class="forja-traits__name">{{this.name}}</span>
+            <span class="forja-traits__badge forja-traits__badge--{{this.system.traitType}}">
+              {{localize (lookup ../cfg.traitTypes this.system.traitType)}}
+            </span>
+            {{#if this.system.isParametric}}
+              <span class="forja-traits__level-display">{{localize "FORJA.Level"}} {{this.system.level}}</span>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{!-- Weapons --}}
+  {{#if weapons.length}}
+    <div class="forja-npc-section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Weapons"}}</h3>
+      <ul class="forja-weapons__list-compact">
+        {{#each weapons}}
+          <li class="forja-weapons__compact-item {{#if this.system.equipped}}forja-weapons__compact-item--equipped{{/if}}" data-item-id="{{this.id}}">
+            <span class="forja-weapons__name">{{this.name}}</span>
+            <span class="forja-weapons__damage">{{this.system.damage}}</span>
+            <span class="forja-weapons__attack-type">
+              {{localize (lookup ../cfg.attackTypes this.system.attackType)}}
+            </span>
+            <button type="button" class="forja-weapons__roll-btn" data-action="rollAttack"
+                    title="{{localize 'FORJA.RollAttack'}}">
+              <i class="fas fa-dice-d10"></i>
+            </button>
+            <a class="forja-item-control" data-action="toggleEquip" data-item-id="{{this.id}}"
+               title="{{localize 'FORJA.ToggleEquip'}}">
+              <i class="fas {{#if this.system.equipped}}fa-shield-check{{else}}fa-shield{{/if}}"></i>
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{!-- Armor --}}
+  {{#if armor.length}}
+    <div class="forja-npc-section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Armor"}}</h3>
+      <ul class="forja-armor__list forja-armor__list--compact">
+        {{#each armor}}
+          <li class="forja-armor__item {{#if this.system.equipped}}forja-armor__item--equipped{{/if}}" data-item-id="{{this.id}}">
+            <span class="forja-armor__name">{{this.name}}</span>
+            <span class="forja-armor__stat">
+              {{localize "FORJA.Protection"}}: {{this.system.protection}}
+            </span>
+            <a class="forja-item-control" data-action="toggleEquip" data-item-id="{{this.id}}"
+               title="{{localize 'FORJA.ToggleEquip'}}">
+              <i class="fas {{#if this.system.equipped}}fa-shield-check{{else}}fa-shield{{/if}}"></i>
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{!-- Artifacts --}}
+  {{#if artifacts.length}}
+    <div class="forja-npc-section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Artifacts"}}</h3>
+      <ul class="forja-artifacts__list forja-artifacts__list--compact">
+        {{#each artifacts}}
+          <li class="forja-artifacts__item" data-item-id="{{this.id}}">
+            <span class="forja-artifacts__name">{{this.name}}</span>
+            {{#if this.system.charges.max}}
+              <span class="forja-artifacts__detail">
+                {{this.system.charges.value}} / {{this.system.charges.max}}
+              </span>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{!-- Supernatural Effects --}}
+  {{#if supernaturalEffects.length}}
+    <div class="forja-npc-section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Tabs.Supernatural"}}</h3>
+      <ul class="forja-effects__list forja-effects__list--compact">
+        {{#each supernaturalEffects}}
+          <li class="forja-effects__item" data-item-id="{{this.id}}">
+            <span class="forja-effects__name">{{this.name}}</span>
+            <span class="forja-effects__detail">
+              {{localize (lookup ../cfg.giftTypes this.system.requiredGift)}}
+            </span>
+            {{#if this.system.equilibriumCost}}
+              <span class="forja-effects__detail">
+                {{localize "FORJA.EquilibriumCost"}}: {{this.system.equilibriumCost}}
+              </span>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{!-- Wound/fatigue tracker --}}
+  <div class="forja-npc-section">
+    <div class="forja-trackers">
+      {{!-- Wounds --}}
+      <div class="forja-tracker forja-tracker--wounds">
+        <span class="forja-tracker__label">{{localize "FORJA.Health.Wounds"}}</span>
+        <div class="forja-tracker__controls">
+          <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="-1">
+            <i class="fas fa-minus"></i>
+          </button>
+          <span class="forja-tracker__value">
+            {{system.health.wounds.value}} / {{system.health.wounds.max}}
+          </span>
+          <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="1">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <span class="forja-tracker__level forja-tracker__level--{{system.woundLevel}}">
+          {{localize (lookup cfg.woundLevels system.woundLevel).label}}
+        </span>
+      </div>
+      {{!-- Fatigue --}}
+      <div class="forja-tracker forja-tracker--fatigue">
+        <span class="forja-tracker__label">{{localize "FORJA.Health.Fatigue"}}</span>
+        <div class="forja-tracker__controls">
+          <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="-1">
+            <i class="fas fa-minus"></i>
+          </button>
+          <span class="forja-tracker__value">
+            {{system.health.fatigue.value}} / {{system.health.fatigue.max}}
+          </span>
+          <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="1">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <span class="forja-tracker__level forja-tracker__level--{{system.fatigueLevel}}">
+          {{localize (lookup cfg.fatigueLevels system.fatigueLevel).label}}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

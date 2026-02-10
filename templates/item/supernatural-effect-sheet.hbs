@@ -1,0 +1,151 @@
+<form class="forja-item-sheet forja-effect-sheet" autocomplete="off">
+  <header class="forja-item-sheet__header">
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-item-sheet__img" data-edit="img" />
+    <div class="forja-item-sheet__title">
+      <input type="text" name="name" value="{{document.name}}" class="forja-item-sheet__name"
+             placeholder="{{localize 'FORJA.EffectName'}}" />
+    </div>
+  </header>
+
+  <div class="forja-item-sheet__body">
+    {{!-- Cost --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Cost"}}</label>
+      <input type="number" name="system.cost" value="{{system.cost}}" />
+    </div>
+
+    {{!-- Required gift --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.RequiredGift"}}</label>
+      <select name="system.requiredGift">
+        {{#each cfg.giftTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.requiredGift)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Activation --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Activation.label"}}</label>
+      <select name="system.activation">
+        {{#each cfg.activationTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.activation)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Difficulty --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Difficulty"}}</label>
+      <input type="number" name="system.difficulty" value="{{system.difficulty}}" min="0" />
+    </div>
+
+    {{!-- Equilibrium cost --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.EquilibriumCost"}}</label>
+      <input type="number" name="system.equilibriumCost" value="{{system.equilibriumCost}}" min="0" />
+    </div>
+
+    {{!-- Latency mod --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.LatencyMod"}}</label>
+      <input type="number" name="system.latencyMod" value="{{system.latencyMod}}" />
+    </div>
+
+    {{!-- Range --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Range.label"}}</label>
+      <select name="system.range">
+        <option value="">--</option>
+        {{#each cfg.rangeTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.range)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Target --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Target.label"}}</label>
+      <select name="system.target">
+        <option value="">--</option>
+        {{#each cfg.targetTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.target)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Duration --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Duration.label"}}</label>
+      <select name="system.duration">
+        <option value="">--</option>
+        {{#each cfg.durationTypes as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../system.duration)}}selected{{/if}}>
+            {{localize label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- Damage --}}
+    <div class="forja-form-row">
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.DamageValue"}}</label>
+        <input type="number" name="system.damageValue" value="{{system.damageValue}}" />
+      </div>
+      <div class="forja-form-group forja-form-group--half">
+        <label>{{localize "FORJA.DamageType.label"}}</label>
+        <select name="system.damageType">
+          <option value="">--</option>
+          {{#each cfg.damageTypes as |label key|}}
+            <option value="{{key}}" {{#if (eq key ../system.damageType)}}selected{{/if}}>
+              {{localize label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+
+    {{!-- Healing --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.HealingValue"}}</label>
+      <input type="number" name="system.healingValue" value="{{system.healingValue}}" />
+    </div>
+
+    {{!-- Protection --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Protection"}}</label>
+      <input type="number" name="system.protection" value="{{system.protection}}" />
+    </div>
+
+    {{!-- Mental effect --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.MentalEffect"}}</label>
+      <select name="system.mentalEffect">
+        <option value="">--</option>
+        <option value="read" {{#if (eq system.mentalEffect "read")}}selected{{/if}}>{{localize "FORJA.MentalEffect.read"}}</option>
+        <option value="project" {{#if (eq system.mentalEffect "project")}}selected{{/if}}>{{localize "FORJA.MentalEffect.project"}}</option>
+        <option value="emotional" {{#if (eq system.mentalEffect "emotional")}}selected{{/if}}>{{localize "FORJA.MentalEffect.emotional"}}</option>
+        <option value="suggestion" {{#if (eq system.mentalEffect "suggestion")}}selected{{/if}}>{{localize "FORJA.MentalEffect.suggestion"}}</option>
+        <option value="control" {{#if (eq system.mentalEffect "control")}}selected{{/if}}>{{localize "FORJA.MentalEffect.control"}}</option>
+      </select>
+    </div>
+
+    {{!-- Notes --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Notes"}}</label>
+      <div class="forja-item-sheet__notes">
+        {{{enrichedDescription}}}
+      </div>
+      <textarea name="system.notes" rows="4">{{system.notes}}</textarea>
+    </div>
+  </div>
+</form>
