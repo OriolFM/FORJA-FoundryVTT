@@ -5,7 +5,7 @@
  */
 import { getDeclarationOrder, advanceClock } from "./latency-clock.mjs";
 
-export default class ForjaCombatTracker extends CombatTracker {
+export default class ForjaCombatTracker extends foundry.applications.sidebar.tabs.CombatTracker {
 
   /** @override */
   static get defaultOptions() {

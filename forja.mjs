@@ -107,6 +107,8 @@ Hooks.once("init", () => {
   };
 
   // Register Actor sheets (makeDefault: true overrides core sheets)
+  const { DocumentSheetConfig } = foundry.applications.apps;
+
   DocumentSheetConfig.registerSheet(Actor, "forja", ForjaCharacterSheet, {
     types: ["character"],
     makeDefault: true,
@@ -218,5 +220,5 @@ async function _preloadHandlebarsTemplates() {
     "systems/forja/templates/dice/roll-result.hbs"
   ];
 
-  return loadTemplates(templatePaths);
+  return foundry.applications.handlebars.loadTemplates(templatePaths);
 }
