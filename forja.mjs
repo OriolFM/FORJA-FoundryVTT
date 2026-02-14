@@ -33,6 +33,9 @@ import ForjaRoll from "./module/dice/forja-roll.mjs";
 // Combat UI
 import ForjaCombatTracker from "./module/combat/combat-tracker.mjs";
 
+// Import
+import ForjaCharacterImporter from "./module/import/character-importer.mjs";
+
 // Actor Sheets
 import ForjaCharacterSheet from "./module/sheets/actor/character-sheet.mjs";
 import ForjaNPCSheet from "./module/sheets/actor/npc-sheet.mjs";
@@ -185,6 +188,27 @@ Hooks.once("init", () => {
 
 Hooks.once("ready", () => {
   console.log("FORJA RPG | System ready");
+});
+
+/* -------------------------------------------- */
+/*  Actor Directory - Import Button             */
+/* -------------------------------------------- */
+
+Hooks.on("getActorDirectoryEntryContext", () => {});
+Hooks.on("renderActorDirectory", (app, html) => {
+  const button = document.createElement("button");
+  button.classList.add("forja-import-btn");
+  button.innerHTML = `<i class="fas fa-file-import"></i> ${game.i18n.localize("FORJA.Import.Title")}`;
+  button.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ForjaCharacterImporter.showImportDialog();
+  });
+
+  // Insert button into the directory header actions
+  const headerActions = html[0]?.querySelector(".header-actions") ?? html.find(".header-actions")[0];
+  if (headerActions) {
+    headerActions.appendChild(button);
+  }
 });
 
 /* -------------------------------------------- */

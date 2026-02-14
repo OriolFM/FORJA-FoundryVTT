@@ -2653,3 +2653,56 @@
     padding: var(--forja-space-md);
   }
 }
+
+/* ============================================================================
+   IMPORT DIALOG
+   ============================================================================ */
+
+.forja-import-btn {
+  background: var(--forja-primary-dark);
+  color: var(--forja-primary-light);
+  border: 1px solid var(--forja-primary);
+  border-radius: var(--forja-radius-md);
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: var(--forja-font-size-xs);
+  transition: all var(--forja-transition);
+}
+
+.forja-import-btn:hover {
+  background: var(--forja-primary);
+  color: var(--forja-text-primary);
+}
+
+.forja-import-dialog__hint {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+  margin-bottom: var(--forja-space-md);
+}
+
+.forja-import-dialog__textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: var(--forja-font-size-xs);
+  resize: vertical;
+}
+
+.forja-import-dialog__file-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  cursor: pointer;
+  padding: 4px 8px;
+  border: 1px dashed var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-import-dialog__file-label:hover {
+  border-color: var(--forja-primary);
+  color: var(--forja-primary-light);
+}
+
+.forja-import-dialog__file {
+  display: none;
+}

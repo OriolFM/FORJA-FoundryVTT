@@ -281,5 +281,15 @@
   "FORJA.Tier.antagonist": "Antagonist",
   "FORJA.Tier.extra": "Extra",
 
-  "FORJA.Warnings.NoAttribute": "Attribute is 0, cannot roll"
+  "FORJA.Warnings.NoAttribute": "Attribute is 0, cannot roll",
+
+  "FORJA.Import.Title": "Import from FORJAPP",
+  "FORJA.Import.Hint": "Paste a character JSON exported from FORJAPP, or upload a .json file.",
+  "FORJA.Import.Paste": "Paste JSON here...",
+  "FORJA.Import.Upload": "Upload JSON file",
+  "FORJA.Import.Button": "Import",
+  "FORJA.Import.NoData": "No JSON data provided",
+  "FORJA.Import.Success": "{name} imported with {count} items",
+  "FORJA.Import.Error": "Import error",
+  "FORJA.Import.UnnamedCharacter": "Imported Character"
 }

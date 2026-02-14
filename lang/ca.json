@@ -281,5 +281,15 @@
   "FORJA.Tier.antagonist": "Antagonista",
   "FORJA.Tier.extra": "Extra",
 
-  "FORJA.Warnings.NoAttribute": "L'atribut és 0, no es pot tirar"
+  "FORJA.Warnings.NoAttribute": "L'atribut és 0, no es pot tirar",
+
+  "FORJA.Import.Title": "Importar des de FORJAPP",
+  "FORJA.Import.Hint": "Enganxa el JSON d'un personatge exportat des de FORJAPP, o puja un fitxer .json.",
+  "FORJA.Import.Paste": "Enganxa el JSON aquí...",
+  "FORJA.Import.Upload": "Pujar fitxer JSON",
+  "FORJA.Import.Button": "Importar",
+  "FORJA.Import.NoData": "No s'ha proporcionat cap JSON",
+  "FORJA.Import.Success": "{name} importat amb {count} elements",
+  "FORJA.Import.Error": "Error d'importació",
+  "FORJA.Import.UnnamedCharacter": "Personatge importat"
 }
