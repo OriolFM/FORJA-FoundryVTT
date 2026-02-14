@@ -284,12 +284,27 @@
   "FORJA.Warnings.NoAttribute": "L'atribut és 0, no es pot tirar",
 
   "FORJA.Import.Title": "Importar des de FORJAPP",
+  "FORJA.Import.TabJSON": "JSON",
+  "FORJA.Import.TabForjapp": "FORJAPP",
   "FORJA.Import.Hint": "Enganxa el JSON d'un personatge exportat des de FORJAPP, o puja un fitxer .json.",
+  "FORJA.Import.ForjappHint": "Connecta't amb el teu compte de FORJAPP per navegar i importar els teus personatges directament.",
   "FORJA.Import.Paste": "Enganxa el JSON aquí...",
   "FORJA.Import.Upload": "Pujar fitxer JSON",
   "FORJA.Import.Button": "Importar",
   "FORJA.Import.NoData": "No s'ha proporcionat cap JSON",
   "FORJA.Import.Success": "{name} importat amb {count} elements",
+  "FORJA.Import.SuccessMultiple": "{count} personatges importats",
   "FORJA.Import.Error": "Error d'importació",
-  "FORJA.Import.UnnamedCharacter": "Personatge importat"
+  "FORJA.Import.UnnamedCharacter": "Personatge importat",
+  "FORJA.Import.ConnectGoogle": "Connectar amb Google",
+  "FORJA.Import.Disconnect": "Desconnectar",
+  "FORJA.Import.ConnectedAs": "Connectat com {name}",
+  "FORJA.Import.MyCharacters": "Els meus personatges",
+  "FORJA.Import.PublicCharacters": "Personatges públics",
+  "FORJA.Import.NoCharacters": "No s'han trobat personatges",
+  "FORJA.Import.SelectAll": "Seleccionar tots",
+  "FORJA.Import.ImportSelected": "Importar seleccionats",
+  "FORJA.Import.Loading": "Carregant...",
+  "FORJA.Import.ConnectionError": "Error de connexió",
+  "FORJA.Import.BrowsePublic": "Explorar públics"
 }

@@ -284,12 +284,27 @@
   "FORJA.Warnings.NoAttribute": "El atributo es 0, no se puede tirar",
 
   "FORJA.Import.Title": "Importar desde FORJAPP",
+  "FORJA.Import.TabJSON": "JSON",
+  "FORJA.Import.TabForjapp": "FORJAPP",
   "FORJA.Import.Hint": "Pega el JSON de un personaje exportado desde FORJAPP, o sube un archivo .json.",
+  "FORJA.Import.ForjappHint": "Conéctate con tu cuenta de FORJAPP para navegar e importar tus personajes directamente.",
   "FORJA.Import.Paste": "Pega el JSON aquí...",
   "FORJA.Import.Upload": "Subir archivo JSON",
   "FORJA.Import.Button": "Importar",
   "FORJA.Import.NoData": "No se ha proporcionado ningún JSON",
   "FORJA.Import.Success": "{name} importado con {count} elementos",
+  "FORJA.Import.SuccessMultiple": "{count} personajes importados",
   "FORJA.Import.Error": "Error de importación",
-  "FORJA.Import.UnnamedCharacter": "Personaje importado"
+  "FORJA.Import.UnnamedCharacter": "Personaje importado",
+  "FORJA.Import.ConnectGoogle": "Conectar con Google",
+  "FORJA.Import.Disconnect": "Desconectar",
+  "FORJA.Import.ConnectedAs": "Conectado como {name}",
+  "FORJA.Import.MyCharacters": "Mis personajes",
+  "FORJA.Import.PublicCharacters": "Personajes públicos",
+  "FORJA.Import.NoCharacters": "No se han encontrado personajes",
+  "FORJA.Import.SelectAll": "Seleccionar todos",
+  "FORJA.Import.ImportSelected": "Importar seleccionados",
+  "FORJA.Import.Loading": "Cargando...",
+  "FORJA.Import.ConnectionError": "Error de conexión",
+  "FORJA.Import.BrowsePublic": "Explorar públicos"
 }

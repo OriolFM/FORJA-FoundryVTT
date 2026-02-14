@@ -2706,3 +2706,256 @@
 .forja-import-dialog__file {
   display: none;
 }
+
+/* --- Import Dialog Tabs --- */
+
+.forja-import-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: var(--forja-space-md);
+  border-bottom: 2px solid var(--forja-border-color);
+}
+
+.forja-import-tab {
+  flex: 1;
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+  transition: all var(--forja-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--forja-space-xs);
+}
+
+.forja-import-tab:hover {
+  color: var(--forja-text-primary);
+  background: var(--forja-surface);
+}
+
+.forja-import-tab--active {
+  color: var(--forja-primary-light);
+  border-bottom-color: var(--forja-primary);
+}
+
+/* --- FORJAPP Auth Section --- */
+
+.forja-import-auth {
+  margin-bottom: var(--forja-space-md);
+}
+
+.forja-import-auth__disconnected {
+  text-align: center;
+  padding: var(--forja-space-md) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--forja-space-sm);
+}
+
+.forja-import-auth__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  cursor: pointer;
+  font-size: var(--forja-font-size-sm);
+  transition: all var(--forja-transition);
+  width: 220px;
+  justify-content: center;
+}
+
+.forja-import-auth__btn--google {
+  background: #4285f4;
+  color: #fff;
+  border-color: #3367d6;
+}
+
+.forja-import-auth__btn--google:hover {
+  background: #3367d6;
+}
+
+.forja-import-auth__btn--public {
+  background: transparent;
+  color: var(--forja-text-secondary);
+}
+
+.forja-import-auth__btn--public:hover {
+  color: var(--forja-primary-light);
+  border-color: var(--forja-primary);
+}
+
+.forja-import-auth__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  background: var(--forja-surface);
+  border-radius: var(--forja-radius-md);
+  margin-bottom: var(--forja-space-sm);
+}
+
+.forja-import-auth__user {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-primary-light);
+}
+
+.forja-import-auth__disconnect {
+  background: transparent;
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  transition: all var(--forja-transition);
+}
+
+.forja-import-auth__disconnect:hover {
+  color: var(--forja-danger);
+  border-color: var(--forja-danger);
+}
+
+/* --- Source Tabs (My Characters / Public) --- */
+
+.forja-import-source-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: var(--forja-space-sm);
+}
+
+.forja-import-source-tab {
+  flex: 1;
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  background: var(--forja-surface);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  cursor: pointer;
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+  transition: all var(--forja-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--forja-space-xs);
+}
+
+.forja-import-source-tab:hover {
+  color: var(--forja-text-primary);
+}
+
+.forja-import-source-tab--active {
+  background: var(--forja-primary-dark);
+  color: var(--forja-primary-light);
+  border-color: var(--forja-primary);
+}
+
+/* --- Character List --- */
+
+.forja-import-charlist {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  background: var(--forja-surface);
+}
+
+.forja-import-charlist__loading,
+.forja-import-charlist__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-lg);
+  color: var(--forja-text-muted);
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-import-charlist__item {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  border-bottom: 1px solid var(--forja-border-color);
+  cursor: pointer;
+  transition: background var(--forja-transition);
+}
+
+.forja-import-charlist__item:last-child {
+  border-bottom: none;
+}
+
+.forja-import-charlist__item:hover {
+  background: var(--forja-primary-dark);
+}
+
+.forja-import-charlist__info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.forja-import-charlist__name {
+  font-weight: 600;
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.forja-import-charlist__meta {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-muted);
+}
+
+/* --- Actions Bar --- */
+
+.forja-import-charlist__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--forja-space-sm) 0;
+  margin-top: var(--forja-space-sm);
+}
+
+.forja-import-charlist__select-all {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+  cursor: pointer;
+}
+
+.forja-import-charlist__import-btn {
+  background: var(--forja-primary);
+  color: var(--forja-text-primary);
+  border: none;
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  cursor: pointer;
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  transition: all var(--forja-transition);
+}
+
+.forja-import-charlist__import-btn:hover {
+  background: var(--forja-primary-light);
+}
+
+.forja-import-charlist__import-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
