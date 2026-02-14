@@ -18,13 +18,13 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       itemEdit: ForjaCharacterSheet.#onItemEdit,
       itemDelete: ForjaCharacterSheet.#onItemDelete
     },
-    form: { submitOnChange: true }
+    form: { submitOnChange: true },
+    dragDrop: [{ dropSelector: "form" }]
   };
 
   static PARTS = {
     header: { template: "systems/forja/templates/actor/parts/character-header.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    attributes: { template: "systems/forja/templates/actor/parts/attributes.hbs", scrollable: [""] },
     skills: { template: "systems/forja/templates/actor/parts/skills-list.hbs", scrollable: [""] },
     combat: { template: "systems/forja/templates/actor/parts/combat-info.hbs", scrollable: [""] },
     traits: { template: "systems/forja/templates/actor/parts/traits-list.hbs", scrollable: [""] },
@@ -36,7 +36,6 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
   static TABS = {
     primary: {
       tabs: [
-        { id: "attributes", group: "primary", icon: "fas fa-dice-d20", label: "FORJA.Tabs.Attributes" },
         { id: "skills", group: "primary", icon: "fas fa-book", label: "FORJA.Tabs.Skills" },
         { id: "combat", group: "primary", icon: "fas fa-swords", label: "FORJA.Tabs.Combat" },
         { id: "traits", group: "primary", icon: "fas fa-star", label: "FORJA.Tabs.Traits" },
@@ -44,7 +43,7 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
         { id: "supernatural", group: "primary", icon: "fas fa-hat-wizard", label: "FORJA.Tabs.Supernatural" },
         { id: "biography", group: "primary", icon: "fas fa-feather", label: "FORJA.Tabs.Biography" }
       ],
-      initial: "attributes"
+      initial: "skills"
     }
   };
 
@@ -83,6 +82,10 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       }
     }
 
+    // Count skills and traits for empty-state display
+    const hasSkills = this.document.items.some(i => i.type === "skill");
+    const hasTraits = this.document.items.some(i => i.type === "trait");
+
     // Weapons and armor
     const weapons = this.document.items.filter(i => i.type === "weapon");
     const armor = this.document.items.filter(i => i.type === "armor");
@@ -102,7 +105,7 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
 
     // Prepare tab data for the tab navigation template
     const tabs = {};
-    const activeTab = this.tabGroups?.primary ?? "attributes";
+    const activeTab = this.tabGroups?.primary ?? "skills";
     for (const tab of this.constructor.TABS.primary.tabs) {
       tabs[tab.id] = {
         ...tab,
@@ -120,7 +123,9 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       sizeStr: String(system.size),
       constitutionStr: String(system.constitution),
       skillsByAttribute,
+      hasSkills,
       traitsByCategory,
+      hasTraits,
       weapons,
       armor,
       equippedArmor,
@@ -137,7 +142,7 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
     super._onRender(context, options);
 
     // Activate the initial tab on first render
-    const activeTab = this.tabGroups?.primary ?? "attributes";
+    const activeTab = this.tabGroups?.primary ?? "skills";
     const tabContent = this.element?.querySelector(`.tab[data-tab="${activeTab}"]`);
     if (tabContent && !tabContent.classList.contains("active")) {
       // Deactivate all tabs, activate the current one

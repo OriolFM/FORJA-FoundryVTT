@@ -176,6 +176,8 @@
   "FORJA.NoArmor": "Sin armadura",
   "FORJA.NoArtifacts": "Sin artefactos",
   "FORJA.NoSupernaturalEffects": "Sin efectos sobrenaturales",
+  "FORJA.EmptySkills": "Sin habilidades. Arrastra habilidades del compendio de Habilidades para añadirlas.",
+  "FORJA.EmptyTraits": "Sin rasgos. Arrastra rasgos del compendio de Rasgos para añadirlos.",
 
   "FORJA.DamageType.fatigue": "Fatiga",
   "FORJA.DamageType.wounds": "Heridas",

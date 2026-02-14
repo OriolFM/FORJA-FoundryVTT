@@ -1,37 +1,44 @@
 <section class="forja-skills tab" data-group="primary" data-tab="skills">
-  {{#each skillsByAttribute as |skills attrKey|}}
-    {{#if skills.length}}
-      <div class="forja-skills__group">
-        <h3 class="forja-skills__group-heading">
-          {{localize (lookup ../cfg.attributes attrKey)}}
-        </h3>
-        <ul class="forja-skills__list">
-          {{#each skills}}
-            <li class="forja-skills__item" data-item-id="{{this.id}}">
-              <span class="forja-skills__name">{{this.name}}</span>
-              <span class="forja-skills__badge forja-skills__badge--{{this.system.skillType}}">
-                {{localize (lookup ../../cfg.skillTypes this.system.skillType)}}
-              </span>
-              <input type="number" name="items.{{this.id}}.system.level" value="{{this.system.level}}"
-                     class="forja-skills__level" min="0" max="{{this.system.maxLevel}}" />
-              <button type="button" class="forja-skills__roll" data-action="rollSkill"
-                      title="{{localize 'FORJA.Roll'}} {{this.name}}">
-                <i class="fas fa-dice-d10"></i>
-              </button>
-              <div class="forja-item-controls">
-                <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
-                   title="{{localize 'FORJA.ItemEdit'}}">
-                  <i class="fas fa-edit"></i>
-                </a>
-                <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
-                   title="{{localize 'FORJA.ItemDelete'}}">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/if}}
-  {{/each}}
+  {{#if hasSkills}}
+    {{#each skillsByAttribute as |skills attrKey|}}
+      {{#if skills.length}}
+        <div class="forja-skills__group">
+          <h3 class="forja-skills__group-heading">
+            {{localize (lookup ../cfg.attributes attrKey)}}
+          </h3>
+          <ul class="forja-skills__list">
+            {{#each skills}}
+              <li class="forja-skills__item" data-item-id="{{this.id}}">
+                <span class="forja-skills__name">{{this.name}}</span>
+                <span class="forja-skills__badge forja-skills__badge--{{this.system.skillType}}">
+                  {{localize (lookup ../../cfg.skillTypes this.system.skillType)}}
+                </span>
+                <input type="number" name="items.{{this.id}}.system.level" value="{{this.system.level}}"
+                       class="forja-skills__level" min="0" max="{{this.system.maxLevel}}" />
+                <button type="button" class="forja-skills__roll" data-action="rollSkill"
+                        title="{{localize 'FORJA.Roll'}} {{this.name}}">
+                  <i class="fas fa-dice-d10"></i>
+                </button>
+                <div class="forja-item-controls">
+                  <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
+                     title="{{localize 'FORJA.ItemEdit'}}">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
+                     title="{{localize 'FORJA.ItemDelete'}}">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
+    {{/each}}
+  {{else}}
+    <div class="forja-empty-state">
+      <i class="fas fa-book forja-empty-state__icon"></i>
+      <p class="forja-empty-state__text">{{localize "FORJA.EmptySkills"}}</p>
+    </div>
+  {{/if}}
 </section>

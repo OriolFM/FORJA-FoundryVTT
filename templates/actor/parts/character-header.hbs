@@ -1,17 +1,14 @@
 <section class="forja-header">
-  {{!-- Character portrait + name --}}
+  {{!-- Row 1: Portrait + Identity --}}
   <div class="forja-header__portrait">
     <img src="{{document.img}}" alt="{{document.name}}" class="forja-header__img" data-edit="img" />
   </div>
 
   <div class="forja-header__info">
-    {{!-- Name --}}
     <div class="forja-header__name-row">
       <input type="text" name="name" value="{{document.name}}" class="forja-header__name-input"
              placeholder="{{localize 'FORJA.CharacterName'}}" />
     </div>
-
-    {{!-- Concept, origin, gender, age --}}
     <div class="forja-header__details">
       <div class="forja-field">
         <label>{{localize "FORJA.Concept"}}</label>
@@ -30,8 +27,26 @@
         <input type="number" name="system.age" value="{{system.age}}" min="0" />
       </div>
     </div>
+  </div>
 
-    {{!-- Species, size, constitution selectors --}}
+  {{!-- Row 2: Primary Attributes (6 in a row) --}}
+  <div class="forja-header__attributes">
+    {{#each cfg.attributes as |label key|}}
+      <div class="forja-header-attr">
+        <span class="forja-header-attr__label">{{localize label}}</span>
+        <input type="number" name="system.attributes.{{key}}.value"
+               value="{{lookup (lookup ../system.attributes key) 'value'}}"
+               class="forja-header-attr__input" min="0" max="5" />
+        <button type="button" class="forja-header-attr__roll" data-action="rollAttribute" data-attribute="{{key}}"
+                title="{{localize 'FORJA.Roll'}} {{localize label}}">
+          <i class="fas fa-dice-d10"></i>
+        </button>
+      </div>
+    {{/each}}
+  </div>
+
+  {{!-- Row 3: Secondary attributes (species, size, constitution) + derived stats --}}
+  <div class="forja-header__secondary">
     <div class="forja-header__selectors">
       <div class="forja-field">
         <label>{{localize "FORJA.Species.label"}}</label>
@@ -52,21 +67,65 @@
         </select>
       </div>
     </div>
-  </div>
-
-  {{!-- Attributes grid (compact 3x2) --}}
-  <div class="forja-header__attributes">
-    {{#each cfg.attributes as |label key|}}
-      <div class="forja-header-attr" data-action="rollAttribute" data-attribute="{{key}}">
-        <span class="forja-header-attr__label">{{localize label}}</span>
-        <input type="number" name="system.attributes.{{key}}.value"
-               value="{{lookup (lookup ../system.attributes key) 'value'}}"
-               class="forja-header-attr__input" min="0" max="5" />
+    <div class="forja-header__derived">
+      <div class="forja-derived-stat">
+        <span class="forja-derived-stat__label">{{localize "FORJA.Derived.Defense"}}</span>
+        <span class="forja-derived-stat__value">{{system.defense}}</span>
       </div>
-    {{/each}}
+      <div class="forja-derived-stat">
+        <span class="forja-derived-stat__label">{{localize "FORJA.Derived.Latency"}}</span>
+        <span class="forja-derived-stat__value">{{system.latency}}</span>
+      </div>
+      <div class="forja-derived-stat">
+        <span class="forja-derived-stat__label">{{localize "FORJA.Derived.DamageReduction"}}</span>
+        <span class="forja-derived-stat__value">{{system.damageReduction}}</span>
+      </div>
+      <div class="forja-derived-stat">
+        <span class="forja-derived-stat__label">{{localize "FORJA.Derived.Reaction"}}</span>
+        <span class="forja-derived-stat__value">{{system.reaction}}</span>
+      </div>
+      <div class="forja-derived-stat">
+        <span class="forja-derived-stat__label">{{localize "FORJA.Derived.Protection"}}</span>
+        <span class="forja-derived-stat__value">{{system.protection}}</span>
+      </div>
+    </div>
   </div>
 
-  {{!-- Point summary bar --}}
+  {{!-- Row 4: Wound/Fatigue trackers --}}
+  <div class="forja-header__trackers">
+    <div class="forja-tracker forja-tracker--wounds">
+      <span class="forja-tracker__label">{{localize "FORJA.Health.Wounds"}}</span>
+      <div class="forja-tracker__controls">
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="-1">
+          <i class="fas fa-minus"></i>
+        </button>
+        <span class="forja-tracker__value">{{system.health.wounds.value}} / {{system.health.wounds.max}}</span>
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="1">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <span class="forja-tracker__level forja-tracker__level--{{system.woundLevel}}">
+        {{forjaLocalize "FORJA.WoundLevel" system.woundLevel}}
+      </span>
+    </div>
+    <div class="forja-tracker forja-tracker--fatigue">
+      <span class="forja-tracker__label">{{localize "FORJA.Health.Fatigue"}}</span>
+      <div class="forja-tracker__controls">
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="-1">
+          <i class="fas fa-minus"></i>
+        </button>
+        <span class="forja-tracker__value">{{system.health.fatigue.value}} / {{system.health.fatigue.max}}</span>
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="1">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <span class="forja-tracker__level forja-tracker__level--{{system.fatigueLevel}}">
+        {{forjaLocalize "FORJA.FatigueLevel" system.fatigueLevel}}
+      </span>
+    </div>
+  </div>
+
+  {{!-- Row 5: Points bar --}}
   <div class="forja-header__points">
     <div class="forja-points-bar">
       <div class="forja-points-bar__item">

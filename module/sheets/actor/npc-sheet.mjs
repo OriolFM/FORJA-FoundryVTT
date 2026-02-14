@@ -17,7 +17,8 @@ export default class ForjaNPCSheet extends HandlebarsApplicationMixin(foundry.ap
       itemEdit: ForjaNPCSheet.#onItemEdit,
       itemDelete: ForjaNPCSheet.#onItemDelete
     },
-    form: { submitOnChange: true }
+    form: { submitOnChange: true },
+    dragDrop: [{ dropSelector: "form" }]
   };
 
   static PARTS = {

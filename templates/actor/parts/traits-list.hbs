@@ -1,42 +1,49 @@
 <section class="forja-traits tab" data-group="primary" data-tab="traits">
-  {{#each traitsByCategory as |traits catKey|}}
-    {{#if traits.length}}
-      <div class="forja-traits__group">
-        <h3 class="forja-traits__group-heading">
-          {{#if (lookup ../cfg.traitCategories catKey)}}
-            {{localize (lookup ../cfg.traitCategories catKey)}}
-          {{else}}
-            {{catKey}}
-          {{/if}}
-        </h3>
-        <ul class="forja-traits__list">
-          {{#each traits}}
-            <li class="forja-traits__item" data-item-id="{{this.id}}">
-              <span class="forja-traits__name">{{this.name}}</span>
-              <span class="forja-traits__badge forja-traits__badge--{{this.system.traitType}}">
-                {{localize (lookup ../../cfg.traitTypes this.system.traitType)}}
-              </span>
-              <span class="forja-traits__cost" title="{{localize 'FORJA.Cost'}}">
-                {{this.system.computedCost}} {{localize "FORJA.Points.Abbr"}}
-              </span>
-              {{#if this.system.isParametric}}
-                <input type="number" name="items.{{this.id}}.system.level" value="{{this.system.level}}"
-                       class="forja-traits__level" min="0" max="{{this.system.maxLevel}}" />
-              {{/if}}
-              <div class="forja-item-controls">
-                <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
-                   title="{{localize 'FORJA.ItemEdit'}}">
-                  <i class="fas fa-edit"></i>
-                </a>
-                <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
-                   title="{{localize 'FORJA.ItemDelete'}}">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/if}}
-  {{/each}}
+  {{#if hasTraits}}
+    {{#each traitsByCategory as |traits catKey|}}
+      {{#if traits.length}}
+        <div class="forja-traits__group">
+          <h3 class="forja-traits__group-heading">
+            {{#if (lookup ../cfg.traitCategories catKey)}}
+              {{localize (lookup ../cfg.traitCategories catKey)}}
+            {{else}}
+              {{catKey}}
+            {{/if}}
+          </h3>
+          <ul class="forja-traits__list">
+            {{#each traits}}
+              <li class="forja-traits__item" data-item-id="{{this.id}}">
+                <span class="forja-traits__name">{{this.name}}</span>
+                <span class="forja-traits__badge forja-traits__badge--{{this.system.traitType}}">
+                  {{localize (lookup ../../cfg.traitTypes this.system.traitType)}}
+                </span>
+                <span class="forja-traits__cost" title="{{localize 'FORJA.Cost'}}">
+                  {{this.system.computedCost}} {{localize "FORJA.Points.Abbr"}}
+                </span>
+                {{#if this.system.isParametric}}
+                  <input type="number" name="items.{{this.id}}.system.level" value="{{this.system.level}}"
+                         class="forja-traits__level" min="0" max="{{this.system.maxLevel}}" />
+                {{/if}}
+                <div class="forja-item-controls">
+                  <a class="forja-item-control" data-action="itemEdit" data-item-id="{{this.id}}"
+                     title="{{localize 'FORJA.ItemEdit'}}">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="forja-item-control" data-action="itemDelete" data-item-id="{{this.id}}"
+                     title="{{localize 'FORJA.ItemDelete'}}">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
+    {{/each}}
+  {{else}}
+    <div class="forja-empty-state">
+      <i class="fas fa-star forja-empty-state__icon"></i>
+      <p class="forja-empty-state__text">{{localize "FORJA.EmptyTraits"}}</p>
+    </div>
+  {{/if}}
 </section>

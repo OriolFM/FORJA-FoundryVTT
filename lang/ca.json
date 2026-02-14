@@ -176,6 +176,8 @@
   "FORJA.NoArmor": "Sense armadura",
   "FORJA.NoArtifacts": "Sense artefactes",
   "FORJA.NoSupernaturalEffects": "Sense efectes sobrenaturals",
+  "FORJA.EmptySkills": "Sense habilitats. Arrossega habilitats del compendi d'Habilitats per afegir-les.",
+  "FORJA.EmptyTraits": "Sense trets. Arrossega trets del compendi de Trets per afegir-los.",
 
   "FORJA.DamageType.fatigue": "Fatiga",
   "FORJA.DamageType.wounds": "Ferides",

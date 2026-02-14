@@ -176,6 +176,8 @@
   "FORJA.NoArmor": "No armor",
   "FORJA.NoArtifacts": "No artifacts",
   "FORJA.NoSupernaturalEffects": "No supernatural effects",
+  "FORJA.EmptySkills": "No skills yet. Drag skills from the Skills compendium to add them.",
+  "FORJA.EmptyTraits": "No traits yet. Drag traits from the Traits compendium to add them.",
 
   "FORJA.DamageType.fatigue": "Fatigue",
   "FORJA.DamageType.wounds": "Wounds",
