@@ -62,6 +62,7 @@
   "FORJA.WoundLevel.malferit": "Badly Wounded",
   "FORJA.WoundLevel.critic": "Critical",
   "FORJA.WoundLevel.incapacitat": "Incapacitated",
+  "FORJA.Incapacitated": "Out!",
 
   "FORJA.FatigueLevel.reposat": "Rested",
   "FORJA.FatigueLevel.afeblit": "Weakened",

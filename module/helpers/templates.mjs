@@ -94,4 +94,19 @@ export function registerHandlebarsHelpers() {
     const num = Number(value) || 0;
     return num >= 0 ? `+${num}` : `${num}`;
   });
+
+  /**
+   * Return penalty label for a wound/fatigue level.
+   * {{penaltyLabel "wound" system.woundLevel}} -> "" or "+1" or "+2" or "+4" or "Fora!"
+   */
+  Handlebars.registerHelper("penaltyLabel", function (type, level) {
+    const cfg = CONFIG.FORJA;
+    if (!cfg) return "";
+    const levels = type === "wound" ? cfg.woundLevels : cfg.fatigueLevels;
+    const entry = levels?.[level];
+    if (!entry) return "";
+    if (entry.penalty === null) return game.i18n.localize("FORJA.Incapacitated");
+    if (entry.penalty > 0) return `+${entry.penalty}`;
+    return "";
+  });
 }

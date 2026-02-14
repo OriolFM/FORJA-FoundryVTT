@@ -181,26 +181,28 @@ Des de pistoles (DES+2, lat+0) fins a armes pesades (DES+5, lat+4)
 ## Nivells de Ferides i Fatiga
 
 ### Ferides (% del màxim)
-| Llindar | ca | es | en |
-|---------|----|----|-----|
-| 0% | Il·lès | Ileso | Unscathed |
-| 1-16% | Masegat | Magullado | Bruised |
-| 17-33% | Nafrat | Rasguñado | Scratched |
-| 34-50% | Ferit | Herido | Wounded |
-| 51-66% | Malferit | Malherido | Badly Wounded |
-| 67-83% | Crític | Crítico | Critical |
-| 84-100% | Incapacitat | Incapacitado | Incapacitated |
+| Llindar | ca | en | +Dificultat |
+|---------|----|----|------------|
+| 0% | Il·lès | Unscathed | +0 |
+| 1-16% | Masegat | Bruised | +0 |
+| 17-33% | Nafrat | Scratched | +0 |
+| 34-50% | Ferit | Wounded | +1 |
+| 51-66% | Malferit | Badly Wounded | +2 |
+| 67-83% | Crític | Critical | +4 |
+| 84-100% | Incapacitat | Incapacitated | Fora de combat |
 
 ### Fatiga (% del màxim)
-| Llindar | ca | es | en |
-|---------|----|----|-----|
-| 0% | Reposat | Descansado | Rested |
-| 1-16% | Afeblit | Debilitado | Weakened |
-| 17-33% | Cansat | Cansado | Tired |
-| 34-50% | Defallit | Desfallecido | Exhausted |
-| 51-66% | Exhaurit | Agotado | Worn Out |
-| 67-83% | Rebentat | Reventado | Spent |
-| 84-100% | Inconscient | Inconsciente | Unconscious |
+| Llindar | ca | en | +Dificultat |
+|---------|----|----|------------|
+| 0% | Reposat | Rested | +0 |
+| 1-16% | Afeblit | Weakened | +0 |
+| 17-33% | Cansat | Tired | +0 |
+| 34-50% | Defallit | Exhausted | +1 |
+| 51-66% | Exhaurit | Worn Out | +2 |
+| 67-83% | Rebentat | Spent | +4 |
+| 84-100% | Inconscient | Unconscious | Fora de combat |
+
+**Nota**: Quan es fan tirades, sempre compta la pitjor penalització entre ferides i fatiga.
 
 ---
 

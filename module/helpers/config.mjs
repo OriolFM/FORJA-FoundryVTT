@@ -196,26 +196,26 @@ FORJA.skillTypes = {
   restricted: "FORJA.SkillType.restricted"
 };
 
-// Wound levels (thresholds as % of max wounds)
+// Wound levels (thresholds as % of max wounds) + difficulty penalty
 FORJA.woundLevels = {
-  illes: { threshold: 0, label: "FORJA.WoundLevel.illes" },
-  masegat: { threshold: 0.01, label: "FORJA.WoundLevel.masegat" },
-  nafrat: { threshold: 0.17, label: "FORJA.WoundLevel.nafrat" },
-  ferit: { threshold: 0.34, label: "FORJA.WoundLevel.ferit" },
-  malferit: { threshold: 0.51, label: "FORJA.WoundLevel.malferit" },
-  critic: { threshold: 0.67, label: "FORJA.WoundLevel.critic" },
-  incapacitat: { threshold: 0.84, label: "FORJA.WoundLevel.incapacitat" }
+  illes: { threshold: 0, penalty: 0, label: "FORJA.WoundLevel.illes" },
+  masegat: { threshold: 0.01, penalty: 0, label: "FORJA.WoundLevel.masegat" },
+  nafrat: { threshold: 0.17, penalty: 0, label: "FORJA.WoundLevel.nafrat" },
+  ferit: { threshold: 0.34, penalty: 1, label: "FORJA.WoundLevel.ferit" },
+  malferit: { threshold: 0.51, penalty: 2, label: "FORJA.WoundLevel.malferit" },
+  critic: { threshold: 0.67, penalty: 4, label: "FORJA.WoundLevel.critic" },
+  incapacitat: { threshold: 0.84, penalty: null, label: "FORJA.WoundLevel.incapacitat" }
 };
 
-// Fatigue levels
+// Fatigue levels + difficulty penalty
 FORJA.fatigueLevels = {
-  reposat: { threshold: 0, label: "FORJA.FatigueLevel.reposat" },
-  afeblit: { threshold: 0.01, label: "FORJA.FatigueLevel.afeblit" },
-  cansat: { threshold: 0.17, label: "FORJA.FatigueLevel.cansat" },
-  defallit: { threshold: 0.34, label: "FORJA.FatigueLevel.defallit" },
-  exhaurit: { threshold: 0.51, label: "FORJA.FatigueLevel.exhaurit" },
-  rebentat: { threshold: 0.67, label: "FORJA.FatigueLevel.rebentat" },
-  inconscient: { threshold: 0.84, label: "FORJA.FatigueLevel.inconscient" }
+  reposat: { threshold: 0, penalty: 0, label: "FORJA.FatigueLevel.reposat" },
+  afeblit: { threshold: 0.01, penalty: 0, label: "FORJA.FatigueLevel.afeblit" },
+  cansat: { threshold: 0.17, penalty: 0, label: "FORJA.FatigueLevel.cansat" },
+  defallit: { threshold: 0.34, penalty: 1, label: "FORJA.FatigueLevel.defallit" },
+  exhaurit: { threshold: 0.51, penalty: 2, label: "FORJA.FatigueLevel.exhaurit" },
+  rebentat: { threshold: 0.67, penalty: 4, label: "FORJA.FatigueLevel.rebentat" },
+  inconscient: { threshold: 0.84, penalty: null, label: "FORJA.FatigueLevel.inconscient" }
 };
 
 // Attack formula mapping: attackType -> { attribute, skill }

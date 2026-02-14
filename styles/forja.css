@@ -561,15 +561,27 @@
   white-space: nowrap;
 }
 
-.forja-tracker__level--healthy { color: var(--forja-success); }
-.forja-tracker__level--scratched,
-.forja-tracker__level--tired { color: var(--forja-warning); }
-.forja-tracker__level--wounded,
-.forja-tracker__level--fatigued { color: var(--forja-danger); }
-.forja-tracker__level--critical,
-.forja-tracker__level--exhausted { color: var(--forja-danger); font-weight: 800; }
-.forja-tracker__level--incapacitated,
-.forja-tracker__level--collapsed { color: var(--forja-danger); font-weight: 800; text-decoration: underline; }
+/* Wound levels (Catalan keys from _base.mjs) */
+.forja-tracker__level--illes,
+.forja-tracker__level--reposat { color: var(--forja-success); }
+.forja-tracker__level--masegat,
+.forja-tracker__level--nafrat,
+.forja-tracker__level--afeblit,
+.forja-tracker__level--cansat { color: var(--forja-warning); }
+.forja-tracker__level--ferit,
+.forja-tracker__level--defallit { color: var(--forja-danger); }
+.forja-tracker__level--malferit,
+.forja-tracker__level--exhaurit { color: var(--forja-danger); font-weight: 800; }
+.forja-tracker__level--critic,
+.forja-tracker__level--rebentat { color: var(--forja-danger); font-weight: 800; }
+.forja-tracker__level--incapacitat,
+.forja-tracker__level--inconscient { color: var(--forja-danger); font-weight: 800; text-decoration: underline; }
+
+.forja-tracker__penalty {
+  color: var(--forja-danger);
+  font-weight: 800;
+  margin-left: var(--forja-space-xs);
+}
 
 /* Point summary bar */
 .forja-header__points {

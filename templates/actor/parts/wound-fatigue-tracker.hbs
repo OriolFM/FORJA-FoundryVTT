@@ -17,6 +17,9 @@
     </div>
     <span class="forja-tracker__level forja-tracker__level--{{system.woundLevel}}">
       {{forjaLocalize "FORJA.WoundLevel" system.woundLevel}}
+      {{#if (penaltyLabel "wound" system.woundLevel)}}
+        <span class="forja-tracker__penalty">{{penaltyLabel "wound" system.woundLevel}}</span>
+      {{/if}}
     </span>
   </div>
 
@@ -38,6 +41,9 @@
     </div>
     <span class="forja-tracker__level forja-tracker__level--{{system.fatigueLevel}}">
       {{forjaLocalize "FORJA.FatigueLevel" system.fatigueLevel}}
+      {{#if (penaltyLabel "fatigue" system.fatigueLevel)}}
+        <span class="forja-tracker__penalty">{{penaltyLabel "fatigue" system.fatigueLevel}}</span>
+      {{/if}}
     </span>
   </div>
 </div>

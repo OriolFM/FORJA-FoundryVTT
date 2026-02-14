@@ -132,6 +132,13 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       artifacts,
       supernaturalEffects,
       effectsByGift,
+      // Penalty labels for wound/fatigue display (empty string = no penalty shown)
+      woundPenaltyLabel: system.woundPenalty === null
+        ? game.i18n.localize("FORJA.Incapacitated")
+        : system.woundPenalty > 0 ? `+${system.woundPenalty}` : "",
+      fatiguePenaltyLabel: system.fatiguePenalty === null
+        ? game.i18n.localize("FORJA.Incapacitated")
+        : system.fatiguePenalty > 0 ? `+${system.fatiguePenalty}` : "",
       enrichedBiography: await TextEditorImpl.enrichHTML(system.biography, { async: true }),
       enrichedNotes: await TextEditorImpl.enrichHTML(system.notes, { async: true })
     };

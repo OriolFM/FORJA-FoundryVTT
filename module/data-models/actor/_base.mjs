@@ -102,9 +102,15 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
     // Point costs
     this._calculatePoints();
 
-    // Wound and fatigue levels
+    // Wound and fatigue levels + difficulty penalties
     this.woundLevel = this._getWoundLevel();
     this.fatigueLevel = this._getFatigueLevel();
+    const wp = cfg.woundLevels[this.woundLevel]?.penalty;
+    const fp = cfg.fatigueLevels[this.fatigueLevel]?.penalty;
+    this.woundPenalty = wp;    // number or null (incapacitated)
+    this.fatiguePenalty = fp;
+    // Effective penalty for rolls = worst of the two (null = incapacitated)
+    this.healthPenalty = (wp === null || fp === null) ? null : Math.max(wp, fp);
   }
 
   /**
