@@ -196,18 +196,32 @@ Hooks.once("ready", () => {
 
 Hooks.on("getActorDirectoryEntryContext", () => {});
 Hooks.on("renderActorDirectory", (app, html) => {
+  // Avoid duplicating the button on re-renders
+  const root = html[0] ?? html;
+  if (root.querySelector?.(".forja-import-btn")) return;
+
   const button = document.createElement("button");
   button.classList.add("forja-import-btn");
+  button.type = "button";
   button.innerHTML = `<i class="fas fa-file-import"></i> ${game.i18n.localize("FORJA.Import.Title")}`;
   button.addEventListener("click", (ev) => {
     ev.preventDefault();
     ForjaCharacterImporter.showImportDialog();
   });
 
-  // Insert button into the directory header actions
-  const headerActions = html[0]?.querySelector(".header-actions") ?? html.find(".header-actions")[0];
-  if (headerActions) {
-    headerActions.appendChild(button);
+  // Try multiple selectors for v13 compatibility
+  const container = root.querySelector?.(".header-actions")
+    ?? root.querySelector?.(".action-buttons")
+    ?? root.querySelector?.(".directory-header")
+    ?? html.find?.(".header-actions")?.[0]
+    ?? html.find?.(".directory-header")?.[0];
+
+  if (container) {
+    container.appendChild(button);
+  } else {
+    // Last resort: append to the element itself (top of sidebar)
+    console.warn("FORJA | Could not find header container in ActorDirectory, appending to root");
+    (root.querySelector?.(".directory") ?? root).prepend(button);
   }
 });
 
