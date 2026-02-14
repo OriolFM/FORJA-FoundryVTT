@@ -164,7 +164,7 @@
   "FORJA.AttackType.brawl": "Brawl",
   "FORJA.AttackType.martial": "Martial Arts",
 
-  "FORJA.WeaponType": "Weapon Type",
+  "FORJA.WeaponType.label": "Weapon Type",
   "FORJA.WeaponType.natural": "Natural",
   "FORJA.WeaponType.melee": "Melee",
   "FORJA.WeaponType.ranged": "Ranged",
@@ -189,7 +189,7 @@
   "FORJA.DamageType.disease": "Disease",
   "FORJA.DamageType.radiation": "Radiation",
 
-  "FORJA.MentalEffect": "Mental Effect",
+  "FORJA.MentalEffect.label": "Mental Effect",
   "FORJA.MentalEffect.read": "Read",
   "FORJA.MentalEffect.project": "Project",
   "FORJA.MentalEffect.emotional": "Emotional",

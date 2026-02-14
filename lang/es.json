@@ -164,7 +164,7 @@
   "FORJA.AttackType.brawl": "Pelea",
   "FORJA.AttackType.martial": "Artes marciales",
 
-  "FORJA.WeaponType": "Tipo de arma",
+  "FORJA.WeaponType.label": "Tipo de arma",
   "FORJA.WeaponType.natural": "Natural",
   "FORJA.WeaponType.melee": "Cuerpo a cuerpo",
   "FORJA.WeaponType.ranged": "Distancia",
@@ -189,7 +189,7 @@
   "FORJA.DamageType.disease": "Enfermedad",
   "FORJA.DamageType.radiation": "Radiación",
 
-  "FORJA.MentalEffect": "Efecto mental",
+  "FORJA.MentalEffect.label": "Efecto mental",
   "FORJA.MentalEffect.read": "Leer",
   "FORJA.MentalEffect.project": "Proyectar",
   "FORJA.MentalEffect.emotional": "Emocional",

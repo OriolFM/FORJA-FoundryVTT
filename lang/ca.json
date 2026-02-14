@@ -164,7 +164,7 @@
   "FORJA.AttackType.brawl": "Barallar-se",
   "FORJA.AttackType.martial": "Arts marcials",
 
-  "FORJA.WeaponType": "Tipus d'arma",
+  "FORJA.WeaponType.label": "Tipus d'arma",
   "FORJA.WeaponType.natural": "Natural",
   "FORJA.WeaponType.melee": "Cos a cos",
   "FORJA.WeaponType.ranged": "Distància",
@@ -189,7 +189,7 @@
   "FORJA.DamageType.disease": "Malaltia",
   "FORJA.DamageType.radiation": "Radiació",
 
-  "FORJA.MentalEffect": "Efecte mental",
+  "FORJA.MentalEffect.label": "Efecte mental",
   "FORJA.MentalEffect.read": "Llegir",
   "FORJA.MentalEffect.project": "Projectar",
   "FORJA.MentalEffect.emotional": "Emocional",

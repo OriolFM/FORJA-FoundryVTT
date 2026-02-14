@@ -12,6 +12,8 @@
       "name": "FORJA RPG Team"
     }
   ],
+  "manifest": "https://raw.githubusercontent.com/OriolFM/FORJA-FoundryVTT/main/system.json",
+  "download": "https://github.com/OriolFM/FORJA-FoundryVTT/archive/refs/heads/main.zip",
   "esmodules": ["forja.mjs"],
   "styles": ["styles/forja.css"],
   "languages": [

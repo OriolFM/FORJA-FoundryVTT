@@ -737,9 +737,6 @@ async function writePack(packName, items) {
     await db.put(`!items!${item._id}`, JSON.stringify(item));
   }
 
-  // Write folders index (empty, no sub-folders used)
-  await db.put('!folders!', '[]');
-
   await db.close();
   console.log(`  ${packName}: ${items.length} items`);
 }
