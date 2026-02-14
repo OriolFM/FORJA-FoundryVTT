@@ -53,6 +53,7 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
     const context = await super._prepareContext(options);
     const system = this.document.system;
     const cfg = CONFIG.FORJA;
+    const TextEditorImpl = foundry.applications.ux.TextEditor.implementation;
 
     // Group skills by related attribute
     const skillsByAttribute = {};
@@ -99,10 +100,25 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       effectsByGift[gift].push(effect);
     }
 
+    // Prepare tab data for the tab navigation template
+    const tabs = {};
+    const activeTab = this.tabGroups?.primary ?? "attributes";
+    for (const tab of this.constructor.TABS.primary.tabs) {
+      tabs[tab.id] = {
+        ...tab,
+        active: tab.id === activeTab,
+        cssClass: tab.id === activeTab ? "active" : ""
+      };
+    }
+
     return {
       ...context,
       system,
       cfg,
+      tabs,
+      // String versions for selectOptions comparison
+      sizeStr: String(system.size),
+      constitutionStr: String(system.constitution),
       skillsByAttribute,
       traitsByCategory,
       weapons,
@@ -111,9 +127,23 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       artifacts,
       supernaturalEffects,
       effectsByGift,
-      enrichedBiography: await TextEditor.enrichHTML(system.biography, { async: true }),
-      enrichedNotes: await TextEditor.enrichHTML(system.notes, { async: true })
+      enrichedBiography: await TextEditorImpl.enrichHTML(system.biography, { async: true }),
+      enrichedNotes: await TextEditorImpl.enrichHTML(system.notes, { async: true })
     };
+  }
+
+  /** @override */
+  _onRender(context, options) {
+    super._onRender(context, options);
+
+    // Activate the initial tab on first render
+    const activeTab = this.tabGroups?.primary ?? "attributes";
+    const tabContent = this.element?.querySelector(`.tab[data-tab="${activeTab}"]`);
+    if (tabContent && !tabContent.classList.contains("active")) {
+      // Deactivate all tabs, activate the current one
+      this.element.querySelectorAll(".tab[data-group='primary']").forEach(t => t.classList.remove("active"));
+      tabContent.classList.add("active");
+    }
   }
 
   // --- Actions ---

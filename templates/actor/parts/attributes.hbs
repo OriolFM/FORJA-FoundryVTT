@@ -1,20 +1,4 @@
 <section class="forja-attributes tab" data-group="primary" data-tab="attributes">
-  {{!-- Attributes grid --}}
-  <div class="forja-attributes__grid">
-    {{#each cfg.attributes as |label key|}}
-      <div class="forja-attribute">
-        <span class="forja-attribute__label">{{localize label}}</span>
-        <input type="number" name="system.attributes.{{key}}.value"
-               value="{{lookup (lookup ../system.attributes key) 'value'}}"
-               class="forja-attribute__input" min="0" max="5" />
-        <button type="button" class="forja-attribute__roll" data-action="rollAttribute" data-attribute="{{key}}"
-                title="{{localize 'FORJA.Roll'}} {{localize label}}">
-          <i class="fas fa-dice-d10"></i>
-        </button>
-      </div>
-    {{/each}}
-  </div>
-
   {{!-- Derived stats --}}
   {{> "systems/forja/templates/actor/parts/derived-stats.hbs"}}
 

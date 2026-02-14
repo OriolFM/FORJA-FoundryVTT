@@ -276,7 +276,7 @@
 .forja-header {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   gap: var(--forja-space-lg);
   padding: var(--forja-space-xl);
   background: linear-gradient(180deg, var(--forja-bg-darkest) 0%, var(--forja-bg-900) 100%);
@@ -376,9 +376,62 @@
   width: 100%;
 }
 
+/* Header attributes (compact 3x2 grid) */
+.forja-header__attributes {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--forja-space-sm);
+}
+
+.forja-header-attr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  padding: var(--forja-space-sm);
+  cursor: pointer;
+  transition: all var(--forja-transition);
+}
+
+.forja-header-attr:hover {
+  border-color: var(--forja-primary);
+  box-shadow: var(--forja-shadow-sm);
+}
+
+.forja-header-attr__label {
+  font-size: var(--forja-font-size-xs);
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.forja-header-attr__input {
+  width: 40px !important;
+  height: 36px;
+  text-align: center;
+  font-size: var(--forja-font-size-xl) !important;
+  font-weight: 700;
+  color: var(--forja-primary-light) !important;
+  background: var(--forja-bg-900) !important;
+  border: 2px solid var(--forja-primary-border) !important;
+  border-radius: var(--forja-radius-full) !important;
+  padding: 0 !important;
+}
+
+.forja-header-attr__input:focus {
+  border-color: var(--forja-primary) !important;
+  box-shadow: none !important;
+}
+
 /* Point summary bar */
 .forja-header__points {
-  grid-row: 2;
+  grid-row: 3;
   grid-column: 1 / -1;
 }
 

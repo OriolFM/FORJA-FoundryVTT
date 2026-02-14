@@ -36,34 +36,34 @@
       <div class="forja-field">
         <label>{{localize "FORJA.Species.label"}}</label>
         <select name="system.species">
-          {{#each cfg.species as |label key|}}
-            <option value="{{key}}" {{#if (eq key ../system.species)}}selected{{/if}}>
-              {{localize label}}
-            </option>
-          {{/each}}
+          {{selectOptions cfg.species selected=system.species localize=true}}
         </select>
       </div>
       <div class="forja-field">
         <label>{{localize "FORJA.Size.label"}}</label>
         <select name="system.size">
-          {{#each cfg.sizes as |label key|}}
-            <option value="{{key}}" {{#if (eq key ../system.size)}}selected{{/if}}>
-              {{localize label}}
-            </option>
-          {{/each}}
+          {{selectOptions cfg.sizes selected=sizeStr localize=true}}
         </select>
       </div>
       <div class="forja-field">
         <label>{{localize "FORJA.Constitution.label"}}</label>
         <select name="system.constitution">
-          {{#each cfg.constitutions as |label key|}}
-            <option value="{{key}}" {{#if (eq key ../system.constitution)}}selected{{/if}}>
-              {{localize label}}
-            </option>
-          {{/each}}
+          {{selectOptions cfg.constitutions selected=constitutionStr localize=true}}
         </select>
       </div>
     </div>
+  </div>
+
+  {{!-- Attributes grid (compact 3x2) --}}
+  <div class="forja-header__attributes">
+    {{#each cfg.attributes as |label key|}}
+      <div class="forja-header-attr" data-action="rollAttribute" data-attribute="{{key}}">
+        <span class="forja-header-attr__label">{{localize label}}</span>
+        <input type="number" name="system.attributes.{{key}}.value"
+               value="{{lookup (lookup ../system.attributes key) 'value'}}"
+               class="forja-header-attr__input" min="0" max="5" />
+      </div>
+    {{/each}}
   </div>
 
   {{!-- Point summary bar --}}
