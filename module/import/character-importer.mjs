@@ -261,6 +261,10 @@ export default class ForjaCharacterImporter {
       const importBtn = html.closest(".dialog").find("button[data-button='import']");
       if (tab === "forjapp") {
         importBtn.hide();
+        // Pre-initialize Firebase SDK so signIn popup won't be blocked
+        ForjappService.preload().catch(err => {
+          console.warn("FORJA | Firebase preload failed:", err);
+        });
       } else {
         importBtn.show();
       }

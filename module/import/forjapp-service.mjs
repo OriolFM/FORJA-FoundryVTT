@@ -61,14 +61,19 @@ async function _initFirebase() {
 
 /**
  * Sign in with Google via popup.
+ * IMPORTANT: preload() must be called before this method so Firebase is
+ * already initialized. Otherwise the async gap between user click and
+ * popup open will cause browsers to block the popup.
  * @returns {Promise<object>} Firebase User object
  */
-export async function signIn() {
-  const { auth } = await _initFirebase();
+export function signIn() {
+  if (!_auth || !_firebaseModules) {
+    return Promise.reject(new Error("Firebase not initialized. Call preload() first."));
+  }
   const { authMod } = _firebaseModules;
   const provider = new authMod.GoogleAuthProvider();
-  const result = await authMod.signInWithPopup(auth, provider);
-  return result.user;
+  // Call signInWithPopup synchronously (no await before it) to preserve user gesture
+  return authMod.signInWithPopup(_auth, provider).then(result => result.user);
 }
 
 /**
@@ -183,8 +188,10 @@ export function isLoaded() {
 }
 
 /**
- * Pre-load the Firebase SDK (can be called early to warm up).
+ * Pre-initialize Firebase completely (SDK + app + auth + db).
+ * Call this early (e.g. when FORJAPP tab is shown) so that signIn()
+ * can open the popup synchronously within the user gesture window.
  */
 export async function preload() {
-  await _loadFirebaseSDK();
+  await _initFirebase();
 }
