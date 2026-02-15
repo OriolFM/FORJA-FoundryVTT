@@ -283,9 +283,16 @@ export default class ForjaCharacterImporter {
 
     // --- Google sign-in ---
     html.find(".forja-import-auth__btn--google").on("click", async () => {
+      // Open popup IMMEDIATELY in the click handler (user gesture)
+      // to avoid popup blocker. Then pass it to signIn().
+      const popup = window.open(
+        "/systems/forja/auth.html",
+        "forjapp-auth",
+        "width=500,height=600,menubar=no,toolbar=no,location=no"
+      );
       try {
         html.find(".forja-import-auth__btn--google").prop("disabled", true);
-        const user = await ForjappService.signIn();
+        const user = await ForjappService.signIn(popup);
         ForjaCharacterImporter._showConnected(html, user);
         await ForjaCharacterImporter._loadCharacters(html, "mine");
       } catch (err) {

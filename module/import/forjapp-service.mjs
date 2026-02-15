@@ -80,18 +80,13 @@ async function _initFirebase() {
  *
  * @returns {Promise<object>} User object with uid, displayName, email
  */
-export function signIn() {
+export function signIn(popup) {
   // Clear any stale auth result from previous attempts
   localStorage.removeItem("forjapp-auth-result");
 
   return new Promise((resolve, reject) => {
-    // Open the auth helper page in a new window
-    const popup = window.open(
-      "/systems/forja/auth.html",
-      "forjapp-auth",
-      "width=500,height=600,menubar=no,toolbar=no,location=no"
-    );
-
+    // The popup must be opened by the caller in the click handler
+    // (direct user gesture) to avoid popup blockers.
     if (!popup) {
       reject(new Error("Popup blocked. Please allow popups for this site."));
       return;
