@@ -24,6 +24,7 @@ const FIREBASE_CONFIG = {
 
 // Auth timeout (2 minutes)
 const AUTH_TIMEOUT_MS = 120_000;
+const CHANNEL_NAME = "forjapp-auth-channel";
 
 // Singleton references
 let _app = null;
@@ -74,7 +75,8 @@ async function _initFirebase() {
  *
  * Opens auth.html (served from Foundry's system directory, same origin)
  * which handles the Google OAuth flow via signInWithRedirect.
- * After auth, auth.html sends the credentials back via postMessage.
+ * After auth, auth.html sends credentials back via BroadcastChannel
+ * (works even when window.opener is null, which happens in Electron).
  * We then use signInWithCredential to authenticate in the main window.
  *
  * @returns {Promise<object>} User object with uid, displayName, email
@@ -95,15 +97,24 @@ export function signIn() {
 
     let resolved = false;
 
-    // Listen for auth result from the popup via postMessage
-    const handler = async (event) => {
-      if (event.data?.type !== "forjapp-auth-result") return;
-      window.removeEventListener("message", handler);
-      clearTimeout(timer);
-      resolved = true;
+    // Listen for auth result via BroadcastChannel
+    // (window.opener is null in Electron, so postMessage won't work)
+    const channel = new BroadcastChannel(CHANNEL_NAME);
 
-      if (!event.data.success) {
-        reject(new Error(event.data.error || "Authentication failed"));
+    function cleanup() {
+      channel.close();
+      clearTimeout(timer);
+      clearInterval(checkClosed);
+    }
+
+    channel.onmessage = async (event) => {
+      const data = event.data;
+      if (data?.type !== "forjapp-auth-result") return;
+      resolved = true;
+      cleanup();
+
+      if (!data.success) {
+        reject(new Error(data.error || "Authentication failed"));
         return;
       }
 
@@ -113,10 +124,10 @@ export function signIn() {
         const { authMod } = _firebaseModules;
 
         // Try to sign in with Google credential from popup
-        if (event.data.googleIdToken || event.data.googleAccessToken) {
+        if (data.googleIdToken || data.googleAccessToken) {
           const credential = authMod.GoogleAuthProvider.credential(
-            event.data.googleIdToken,
-            event.data.googleAccessToken
+            data.googleIdToken,
+            data.googleAccessToken
           );
           const result = await authMod.signInWithCredential(_auth, credential);
           _currentUser = result.user;
@@ -125,22 +136,20 @@ export function signIn() {
             displayName: result.user.displayName,
             email: result.user.email
           });
-        } else if (event.data.user) {
-          // Fallback: use user data directly (Firestore queries will use
-          // the Firebase ID token via REST API if SDK auth fails)
-          _currentUser = event.data.user;
-          resolve(event.data.user);
+        } else if (data.user) {
+          // Fallback: use user data directly
+          _currentUser = data.user;
+          resolve(data.user);
         } else {
           reject(new Error("No credential received from auth popup"));
         }
       } catch (err) {
         console.error("FORJA | signInWithCredential failed:", err);
-        // Even if credential sign-in fails, we can still use the user info
-        // for Firestore queries via REST API
-        if (event.data.user && event.data.firebaseIdToken) {
+        // Even if credential sign-in fails, use the user info directly
+        if (data.user && data.firebaseIdToken) {
           _currentUser = {
-            ...event.data.user,
-            _firebaseIdToken: event.data.firebaseIdToken
+            ...data.user,
+            _firebaseIdToken: data.firebaseIdToken
           };
           resolve(_currentUser);
         } else {
@@ -149,24 +158,21 @@ export function signIn() {
       }
     };
 
-    window.addEventListener("message", handler);
-
     // Timeout
     const timer = setTimeout(() => {
       if (resolved) return;
-      window.removeEventListener("message", handler);
+      cleanup();
       if (popup && !popup.closed) popup.close();
       reject(new Error("Authentication timed out"));
     }, AUTH_TIMEOUT_MS);
 
-    // Also detect if popup is closed manually
+    // Detect if popup is closed manually
     const checkClosed = setInterval(() => {
       if (resolved) { clearInterval(checkClosed); return; }
       if (popup.closed) {
         clearInterval(checkClosed);
         if (!resolved) {
-          window.removeEventListener("message", handler);
-          clearTimeout(timer);
+          cleanup();
           reject(new Error("Authentication window was closed"));
         }
       }
