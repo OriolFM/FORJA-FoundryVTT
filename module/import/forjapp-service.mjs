@@ -24,7 +24,6 @@ const FIREBASE_CONFIG = {
 
 // Auth timeout (2 minutes)
 const AUTH_TIMEOUT_MS = 120_000;
-const CHANNEL_NAME = "forjapp-auth-channel";
 
 // Singleton references
 let _app = null;
@@ -82,8 +81,11 @@ async function _initFirebase() {
  * @returns {Promise<object>} User object with uid, displayName, email
  */
 export function signIn() {
+  // Clear any stale auth result from previous attempts
+  localStorage.removeItem("forjapp-auth-result");
+
   return new Promise((resolve, reject) => {
-    // Open the auth helper page as a popup (same origin = no cross-origin issues)
+    // Open the auth helper page in a new window
     const popup = window.open(
       "/systems/forja/auth.html",
       "forjapp-auth",
@@ -97,21 +99,19 @@ export function signIn() {
 
     let resolved = false;
 
-    // Listen for auth result via BroadcastChannel
-    // (window.opener is null in Electron, so postMessage won't work)
-    const channel = new BroadcastChannel(CHANNEL_NAME);
-
     function cleanup() {
-      channel.close();
       clearTimeout(timer);
-      clearInterval(checkClosed);
+      clearInterval(poller);
     }
 
-    channel.onmessage = async (event) => {
-      const data = event.data;
-      if (data?.type !== "forjapp-auth-result") return;
+    /**
+     * Process the auth result received from auth.html via localStorage.
+     */
+    async function handleResult(data) {
+      if (resolved) return;
       resolved = true;
       cleanup();
+      localStorage.removeItem("forjapp-auth-result");
 
       if (!data.success) {
         reject(new Error(data.error || "Authentication failed"));
@@ -156,27 +156,32 @@ export function signIn() {
           reject(err);
         }
       }
-    };
+    }
+
+    // Poll localStorage for auth result from the popup.
+    // This is the most reliable cross-window communication method
+    // (works in Electron, regular browsers, regardless of window.opener).
+    const poller = setInterval(() => {
+      const raw = localStorage.getItem("forjapp-auth-result");
+      if (raw) {
+        try {
+          const data = JSON.parse(raw);
+          handleResult(data);
+        } catch (e) {
+          console.error("FORJA | Failed to parse auth result:", e);
+          localStorage.removeItem("forjapp-auth-result");
+        }
+      }
+    }, 300);
 
     // Timeout
     const timer = setTimeout(() => {
       if (resolved) return;
       cleanup();
+      localStorage.removeItem("forjapp-auth-result");
       if (popup && !popup.closed) popup.close();
       reject(new Error("Authentication timed out"));
     }, AUTH_TIMEOUT_MS);
-
-    // Detect if popup is closed manually
-    const checkClosed = setInterval(() => {
-      if (resolved) { clearInterval(checkClosed); return; }
-      if (popup.closed) {
-        clearInterval(checkClosed);
-        if (!resolved) {
-          cleanup();
-          reject(new Error("Authentication window was closed"));
-        }
-      }
-    }, 500);
   });
 }
 

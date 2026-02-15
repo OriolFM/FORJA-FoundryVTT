@@ -59,7 +59,6 @@
       appId: "1:838748075347:web:6fb0847ec5156aeb175da6"
     };
 
-    const CHANNEL_NAME = "forjapp-auth-channel";
     const statusEl = document.getElementById("status");
     const googleBtn = document.getElementById("google-btn");
 
@@ -72,12 +71,14 @@
     }
 
     function sendResult(data) {
+      // Use localStorage as the cross-window communication channel.
+      // This is the most reliable method across all environments
+      // (regular browser, Electron, etc).
+      // The main Foundry window polls for this key.
       try {
-        const channel = new BroadcastChannel(CHANNEL_NAME);
-        channel.postMessage(data);
-        channel.close();
+        localStorage.setItem("forjapp-auth-result", JSON.stringify(data));
       } catch (e) {
-        console.warn("BroadcastChannel failed:", e);
+        console.warn("localStorage write failed:", e);
       }
     }
 
