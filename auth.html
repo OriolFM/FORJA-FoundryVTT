@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FORJAPP - Sign In</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #1a1a2e;
+      color: #e0e0e0;
+    }
+    .container { text-align: center; max-width: 320px; }
+    .spinner { display: inline-block; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { color: #ff6b6b; margin-top: 1em; }
+    .success { color: #51cf66; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p id="status"><span class="spinner">&#9203;</span> Connecting to Google...</p>
+  </div>
+  <script type="module">
+    const FIREBASE_VERSION = "11.0.0";
+    const CDN = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}`;
+
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyDCs6d0Z-VQAi1_tZoar_R7fk2w7-IXq8U",
+      authDomain: "forjapp.firebaseapp.com",
+      projectId: "forjapp",
+      storageBucket: "forjapp.firebasestorage.app",
+      messagingSenderId: "838748075347",
+      appId: "1:838748075347:web:6fb0847ec5156aeb175da6"
+    };
+
+    const statusEl = document.getElementById("status");
+
+    function showError(msg) {
+      statusEl.innerHTML = `<span class="error">\u2717 ${msg}</span>`;
+    }
+
+    function showSuccess(msg) {
+      statusEl.innerHTML = `<span class="success">\u2713 ${msg}</span>`;
+    }
+
+    try {
+      const { initializeApp, getApp } = await import(`${CDN}/firebase-app.js`);
+      const {
+        getAuth, signInWithRedirect, getRedirectResult,
+        GoogleAuthProvider
+      } = await import(`${CDN}/firebase-auth.js`);
+
+      // Initialize Firebase (avoid duplicate if page reloads after redirect)
+      let app;
+      try { app = getApp("forjapp-auth"); } catch { app = initializeApp(FIREBASE_CONFIG, "forjapp-auth"); }
+      const auth = getAuth(app);
+
+      // Check if we're returning from a Google redirect
+      const result = await getRedirectResult(auth);
+
+      if (result && result.user) {
+        // Auth successful - send credentials back to opener (Foundry)
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const firebaseIdToken = await result.user.getIdToken();
+
+        if (window.opener) {
+          window.opener.postMessage({
+            type: "forjapp-auth-result",
+            success: true,
+            firebaseIdToken,
+            googleIdToken: credential?.idToken || null,
+            googleAccessToken: credential?.accessToken || null,
+            user: {
+              uid: result.user.uid,
+              displayName: result.user.displayName,
+              email: result.user.email,
+              photoURL: result.user.photoURL
+            }
+          }, "*");
+          showSuccess("Signed in! This window will close...");
+          setTimeout(() => window.close(), 1500);
+        } else {
+          showError("This page must be opened from Foundry VTT.");
+        }
+      } else {
+        // No redirect result yet - start the sign-in flow
+        if (!window.opener) {
+          showError("This page must be opened from Foundry VTT.");
+        } else {
+          statusEl.innerHTML = '<span class="spinner">&#9203;</span> Redirecting to Google...';
+          await signInWithRedirect(auth, new GoogleAuthProvider());
+        }
+      }
+    } catch (err) {
+      console.error("FORJAPP Auth Error:", err);
+      showError(err.message);
+      if (window.opener) {
+        window.opener.postMessage({
+          type: "forjapp-auth-result",
+          success: false,
+          error: err.message
+        }, "*");
+      }
+    }
+  </script>
+</body>
+</html>

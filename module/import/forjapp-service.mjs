@@ -2,6 +2,12 @@
  * FORJA RPG - FORJAPP Firebase Service
  * Lazy-loads Firebase SDK from CDN and provides auth + Firestore access
  * to import characters directly from the FORJAPP cloud database.
+ *
+ * Auth strategy: Opens auth.html (served by Foundry on same origin) as a popup.
+ * That page handles Google OAuth via signInWithRedirect, then sends the
+ * credentials back via postMessage. This avoids cross-origin popup issues
+ * that occur when signInWithPopup tries to communicate between
+ * forjapp.firebaseapp.com and localhost.
  */
 
 const FIREBASE_VERSION = "11.0.0";
@@ -16,11 +22,15 @@ const FIREBASE_CONFIG = {
   appId: "1:838748075347:web:6fb0847ec5156aeb175da6"
 };
 
+// Auth timeout (2 minutes)
+const AUTH_TIMEOUT_MS = 120_000;
+
 // Singleton references
 let _app = null;
 let _auth = null;
 let _db = null;
 let _firebaseModules = null;
+let _currentUser = null;
 
 /**
  * Lazy-load Firebase SDK modules from CDN.
@@ -60,29 +70,119 @@ async function _initFirebase() {
 }
 
 /**
- * Sign in with Google via popup.
- * IMPORTANT: preload() must be called before this method so Firebase is
- * already initialized. Otherwise the async gap between user click and
- * popup open will cause browsers to block the popup.
- * @returns {Promise<object>} Firebase User object
+ * Sign in with Google via a popup window that handles OAuth redirect.
+ *
+ * Opens auth.html (served from Foundry's system directory, same origin)
+ * which handles the Google OAuth flow via signInWithRedirect.
+ * After auth, auth.html sends the credentials back via postMessage.
+ * We then use signInWithCredential to authenticate in the main window.
+ *
+ * @returns {Promise<object>} User object with uid, displayName, email
  */
 export function signIn() {
-  if (!_auth || !_firebaseModules) {
-    return Promise.reject(new Error("Firebase not initialized. Call preload() first."));
-  }
-  const { authMod } = _firebaseModules;
-  const provider = new authMod.GoogleAuthProvider();
-  // Call signInWithPopup synchronously (no await before it) to preserve user gesture
-  return authMod.signInWithPopup(_auth, provider).then(result => result.user);
+  return new Promise((resolve, reject) => {
+    // Open the auth helper page as a popup (same origin = no cross-origin issues)
+    const popup = window.open(
+      "/systems/forja/auth.html",
+      "forjapp-auth",
+      "width=500,height=600,menubar=no,toolbar=no,location=no"
+    );
+
+    if (!popup) {
+      reject(new Error("Popup blocked. Please allow popups for this site."));
+      return;
+    }
+
+    let resolved = false;
+
+    // Listen for auth result from the popup via postMessage
+    const handler = async (event) => {
+      if (event.data?.type !== "forjapp-auth-result") return;
+      window.removeEventListener("message", handler);
+      clearTimeout(timer);
+      resolved = true;
+
+      if (!event.data.success) {
+        reject(new Error(event.data.error || "Authentication failed"));
+        return;
+      }
+
+      try {
+        // Initialize Firebase in main window if not done yet
+        await _initFirebase();
+        const { authMod } = _firebaseModules;
+
+        // Try to sign in with Google credential from popup
+        if (event.data.googleIdToken || event.data.googleAccessToken) {
+          const credential = authMod.GoogleAuthProvider.credential(
+            event.data.googleIdToken,
+            event.data.googleAccessToken
+          );
+          const result = await authMod.signInWithCredential(_auth, credential);
+          _currentUser = result.user;
+          resolve({
+            uid: result.user.uid,
+            displayName: result.user.displayName,
+            email: result.user.email
+          });
+        } else if (event.data.user) {
+          // Fallback: use user data directly (Firestore queries will use
+          // the Firebase ID token via REST API if SDK auth fails)
+          _currentUser = event.data.user;
+          resolve(event.data.user);
+        } else {
+          reject(new Error("No credential received from auth popup"));
+        }
+      } catch (err) {
+        console.error("FORJA | signInWithCredential failed:", err);
+        // Even if credential sign-in fails, we can still use the user info
+        // for Firestore queries via REST API
+        if (event.data.user && event.data.firebaseIdToken) {
+          _currentUser = {
+            ...event.data.user,
+            _firebaseIdToken: event.data.firebaseIdToken
+          };
+          resolve(_currentUser);
+        } else {
+          reject(err);
+        }
+      }
+    };
+
+    window.addEventListener("message", handler);
+
+    // Timeout
+    const timer = setTimeout(() => {
+      if (resolved) return;
+      window.removeEventListener("message", handler);
+      if (popup && !popup.closed) popup.close();
+      reject(new Error("Authentication timed out"));
+    }, AUTH_TIMEOUT_MS);
+
+    // Also detect if popup is closed manually
+    const checkClosed = setInterval(() => {
+      if (resolved) { clearInterval(checkClosed); return; }
+      if (popup.closed) {
+        clearInterval(checkClosed);
+        if (!resolved) {
+          window.removeEventListener("message", handler);
+          clearTimeout(timer);
+          reject(new Error("Authentication window was closed"));
+        }
+      }
+    }, 500);
+  });
 }
 
 /**
  * Sign out from Firebase.
  */
 export async function signOut() {
-  const { auth } = await _initFirebase();
-  const { authMod } = _firebaseModules;
-  await authMod.signOut(auth);
+  if (_auth && _firebaseModules) {
+    const { authMod } = _firebaseModules;
+    await authMod.signOut(_auth);
+  }
+  _currentUser = null;
 }
 
 /**
@@ -90,19 +190,9 @@ export async function signOut() {
  * @returns {Promise<object|null>}
  */
 export async function getCurrentUser() {
-  const { auth } = await _initFirebase();
-  return auth.currentUser;
-}
-
-/**
- * Subscribe to auth state changes.
- * @param {Function} callback - Called with (user) or (null)
- * @returns {Promise<Function>} Unsubscribe function
- */
-export async function onAuthChange(callback) {
-  const { auth } = await _initFirebase();
-  const { authMod } = _firebaseModules;
-  return authMod.onAuthStateChanged(auth, callback);
+  if (_currentUser) return _currentUser;
+  if (_auth) return _auth.currentUser;
+  return null;
 }
 
 /**
@@ -136,8 +226,7 @@ export async function getUserCharacters(userId) {
 }
 
 /**
- * Get all public and approved characters (no auth required for Firestore read,
- * but Firebase Auth is still needed per Firestore rules).
+ * Get all public and approved characters.
  * @returns {Promise<object[]>}
  */
 export async function getPublicCharacters() {
@@ -189,8 +278,8 @@ export function isLoaded() {
 
 /**
  * Pre-initialize Firebase completely (SDK + app + auth + db).
- * Call this early (e.g. when FORJAPP tab is shown) so that signIn()
- * can open the popup synchronously within the user gesture window.
+ * Call this early (e.g. when FORJAPP tab is shown) so that
+ * Firestore queries work immediately after sign-in.
  */
 export async function preload() {
   await _initFirebase();
