@@ -49,11 +49,6 @@
       statusEl.innerHTML = `<span class="success">\u2713 ${msg}</span>`;
     }
 
-    /**
-     * Send auth result to the Foundry main window.
-     * Uses BroadcastChannel (works even when window.opener is null,
-     * which happens in Electron / Foundry VTT).
-     */
     function sendResult(data) {
       const channel = new BroadcastChannel(CHANNEL_NAME);
       channel.postMessage(data);
@@ -63,17 +58,33 @@
     try {
       const { initializeApp, getApp } = await import(`${CDN}/firebase-app.js`);
       const {
-        getAuth, signInWithRedirect, getRedirectResult,
-        GoogleAuthProvider
+        initializeAuth, getRedirectResult, signInWithRedirect,
+        GoogleAuthProvider, browserSessionPersistence,
+        browserPopupRedirectResolver
       } = await import(`${CDN}/firebase-auth.js`);
 
-      // Initialize Firebase (avoid duplicate if page reloads after redirect)
+      // Initialize Firebase app (avoid duplicate if page reloads after redirect)
       let app;
       try { app = getApp("forjapp-auth"); } catch { app = initializeApp(FIREBASE_CONFIG, "forjapp-auth"); }
-      const auth = getAuth(app);
+
+      // Initialize Auth with EXPLICIT resolver and persistence.
+      // This is required when using dynamic ESM imports from CDN —
+      // without it, getRedirectResult() returns null after redirect.
+      let auth;
+      try {
+        auth = initializeAuth(app, {
+          persistence: browserSessionPersistence,
+          popupRedirectResolver: browserPopupRedirectResolver
+        });
+      } catch {
+        // If auth was already initialized (e.g. by getApp finding existing app),
+        // import getAuth as fallback
+        const { getAuth } = await import(`${CDN}/firebase-auth.js`);
+        auth = getAuth(app);
+      }
 
       // Check if we're returning from a Google redirect
-      const result = await getRedirectResult(auth);
+      const result = await getRedirectResult(auth, browserPopupRedirectResolver);
 
       if (result && result.user) {
         // Auth successful - send credentials back to Foundry
@@ -99,7 +110,7 @@
       } else {
         // No redirect result yet - start the sign-in flow
         statusEl.innerHTML = '<span class="spinner">&#9203;</span> Redirecting to Google...';
-        await signInWithRedirect(auth, new GoogleAuthProvider());
+        await signInWithRedirect(auth, new GoogleAuthProvider(), browserPopupRedirectResolver);
       }
     } catch (err) {
       console.error("FORJAPP Auth Error:", err);
