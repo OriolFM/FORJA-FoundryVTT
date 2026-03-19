@@ -3,11 +3,9 @@
  * Lazy-loads Firebase SDK from CDN and provides auth + Firestore access
  * to import characters directly from the FORJAPP cloud database.
  *
- * Auth strategy: Opens auth.html (served by Foundry on same origin) as a popup.
- * That page handles Google OAuth via signInWithRedirect, then sends the
- * credentials back via postMessage. This avoids cross-origin popup issues
- * that occur when signInWithPopup tries to communicate between
- * forjapp.firebaseapp.com and localhost.
+ * Auth strategy: User signs in via auth.html (opens in browser/popup),
+ * copies a code, and pastes it back into Foundry. This avoids all
+ * cross-window communication issues in Electron.
  */
 
 const FIREBASE_VERSION = "11.0.0";
@@ -21,9 +19,6 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "838748075347",
   appId: "1:838748075347:web:6fb0847ec5156aeb175da6"
 };
-
-// Auth timeout (2 minutes)
-const AUTH_TIMEOUT_MS = 120_000;
 
 // Singleton references
 let _app = null;
@@ -49,135 +44,87 @@ async function _loadFirebaseSDK() {
 }
 
 /**
- * Initialize Firebase app, auth, and Firestore (singleton).
+ * Initialize Firebase app, auth, and Firestore.
  */
 async function _initFirebase() {
   if (_app && _auth && _db) return { app: _app, auth: _auth, db: _db };
 
   const { appMod, authMod, firestoreMod } = await _loadFirebaseSDK();
 
-  // Check if already initialized (avoid duplicate app error)
   try {
     _app = appMod.getApp("forjapp-foundry");
   } catch {
     _app = appMod.initializeApp(FIREBASE_CONFIG, "forjapp-foundry");
   }
 
-  _auth = authMod.getAuth(_app);
+  try {
+    _auth = authMod.initializeAuth(_app, {
+      persistence: authMod.browserSessionPersistence,
+      popupRedirectResolver: authMod.browserPopupRedirectResolver
+    });
+  } catch {
+    _auth = authMod.getAuth(_app);
+  }
+
   _db = firestoreMod.getFirestore(_app);
 
   return { app: _app, auth: _auth, db: _db };
 }
 
 /**
- * Sign in with Google via a popup window that handles OAuth redirect.
+ * Sign in using a code pasted from auth.html.
+ * The code is base64-encoded JSON with Google/Firebase tokens.
  *
- * Opens auth.html (served from Foundry's system directory, same origin)
- * which handles the Google OAuth flow via signInWithRedirect.
- * After auth, auth.html sends credentials back via BroadcastChannel
- * (works even when window.opener is null, which happens in Electron).
- * We then use signInWithCredential to authenticate in the main window.
- *
+ * @param {string} code - The auth code from auth.html
  * @returns {Promise<object>} User object with uid, displayName, email
  */
-export function signIn(popup) {
-  // Clear any stale auth result from previous attempts
-  localStorage.removeItem("forjapp-auth-result");
+export async function signInWithCode(code) {
+  // Decode the code
+  let data;
+  try {
+    data = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
+  } catch {
+    throw new Error("Invalid authentication code");
+  }
 
-  return new Promise((resolve, reject) => {
-    // The popup must be opened by the caller in the click handler
-    // (direct user gesture) to avoid popup blockers.
-    if (!popup) {
-      reject(new Error("Popup blocked. Please allow popups for this site."));
-      return;
+  if (data.v !== 1) {
+    throw new Error("Unsupported code version");
+  }
+
+  await _initFirebase();
+  const { authMod } = _firebaseModules;
+
+  // Try signInWithCredential for full Firestore auth
+  if (data.git || data.gat) {
+    try {
+      const credential = authMod.GoogleAuthProvider.credential(data.git, data.gat);
+      console.log("FORJA | Attempting signInWithCredential...");
+      const result = await authMod.signInWithCredential(_auth, credential);
+      console.log("FORJA | signInWithCredential succeeded, uid:", result.user.uid);
+      _currentUser = result.user;
+      return {
+        uid: result.user.uid,
+        displayName: result.user.displayName,
+        email: result.user.email
+      };
+    } catch (err) {
+      console.warn("FORJA | signInWithCredential failed, using fallback:", err.message);
     }
+  }
 
-    let resolved = false;
+  // Fallback: use the user data directly from the code
+  if (data.uid) {
+    console.log("FORJA | Using direct user data from code, uid:", data.uid);
+    _currentUser = {
+      uid: data.uid,
+      displayName: data.dn,
+      email: data.em,
+      _firebaseIdToken: data.fit
+    };
+    return _currentUser;
+  }
 
-    function cleanup() {
-      clearTimeout(timer);
-      clearInterval(poller);
-    }
-
-    /**
-     * Process the auth result received from auth.html via localStorage.
-     */
-    async function handleResult(data) {
-      if (resolved) return;
-      resolved = true;
-      cleanup();
-      localStorage.removeItem("forjapp-auth-result");
-
-      if (!data.success) {
-        reject(new Error(data.error || "Authentication failed"));
-        return;
-      }
-
-      try {
-        // Initialize Firebase in main window if not done yet
-        await _initFirebase();
-        const { authMod } = _firebaseModules;
-
-        // Try to sign in with Google credential from popup
-        if (data.googleIdToken || data.googleAccessToken) {
-          const credential = authMod.GoogleAuthProvider.credential(
-            data.googleIdToken,
-            data.googleAccessToken
-          );
-          const result = await authMod.signInWithCredential(_auth, credential);
-          _currentUser = result.user;
-          resolve({
-            uid: result.user.uid,
-            displayName: result.user.displayName,
-            email: result.user.email
-          });
-        } else if (data.user) {
-          // Fallback: use user data directly
-          _currentUser = data.user;
-          resolve(data.user);
-        } else {
-          reject(new Error("No credential received from auth popup"));
-        }
-      } catch (err) {
-        console.error("FORJA | signInWithCredential failed:", err);
-        // Even if credential sign-in fails, use the user info directly
-        if (data.user && data.firebaseIdToken) {
-          _currentUser = {
-            ...data.user,
-            _firebaseIdToken: data.firebaseIdToken
-          };
-          resolve(_currentUser);
-        } else {
-          reject(err);
-        }
-      }
-    }
-
-    // Poll localStorage for auth result from the popup.
-    // This is the most reliable cross-window communication method
-    // (works in Electron, regular browsers, regardless of window.opener).
-    const poller = setInterval(() => {
-      const raw = localStorage.getItem("forjapp-auth-result");
-      if (raw) {
-        try {
-          const data = JSON.parse(raw);
-          handleResult(data);
-        } catch (e) {
-          console.error("FORJA | Failed to parse auth result:", e);
-          localStorage.removeItem("forjapp-auth-result");
-        }
-      }
-    }, 300);
-
-    // Timeout
-    const timer = setTimeout(() => {
-      if (resolved) return;
-      cleanup();
-      localStorage.removeItem("forjapp-auth-result");
-      if (popup && !popup.closed) popup.close();
-      reject(new Error("Authentication timed out"));
-    }, AUTH_TIMEOUT_MS);
-  });
+  throw new Error("Invalid authentication data");
 }
 
 /**
@@ -219,7 +166,6 @@ export async function getUserCharacters(userId) {
     const snapshot = await firestoreMod.getDocs(q);
     return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   } catch (err) {
-    // Fallback without ordering if index not ready
     console.warn("FORJAPP | Index not ready, using client-side sort:", err);
     const q = firestoreMod.query(
       firestoreMod.collection(db, "characters"),
@@ -284,8 +230,6 @@ export function isLoaded() {
 
 /**
  * Pre-initialize Firebase completely (SDK + app + auth + db).
- * Call this early (e.g. when FORJAPP tab is shown) so that
- * Firestore queries work immediately after sign-in.
  */
 export async function preload() {
   await _initFirebase();

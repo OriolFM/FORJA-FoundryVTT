@@ -1,7 +1,8 @@
 <section class="forja-header">
   {{!-- Row 1: Portrait + Identity --}}
   <div class="forja-header__portrait">
-    <img src="{{document.img}}" alt="{{document.name}}" class="forja-header__img" data-edit="img" />
+    <img src="{{document.img}}" alt="{{document.name}}" class="forja-header__img" data-action="editImage"
+         title="{{localize 'FORJA.EditImage'}}" />
   </div>
 
   <div class="forja-header__info">
@@ -10,22 +11,42 @@
              placeholder="{{localize 'FORJA.CharacterName'}}" />
     </div>
     <div class="forja-header__details">
-      <div class="forja-field">
-        <label>{{localize "FORJA.Concept"}}</label>
-        <input type="text" name="system.concept" value="{{system.concept}}" />
-      </div>
-      <div class="forja-field">
-        <label>{{localize "FORJA.Origin"}}</label>
-        <input type="text" name="system.origin" value="{{system.origin}}" />
-      </div>
-      <div class="forja-field forja-field--half">
-        <label>{{localize "FORJA.Gender"}}</label>
-        <input type="text" name="system.gender" value="{{system.gender}}" />
-      </div>
-      <div class="forja-field forja-field--half">
-        <label>{{localize "FORJA.Age"}}</label>
-        <input type="number" name="system.age" value="{{system.age}}" min="0" />
-      </div>
+      {{!-- Concept: character + npc --}}
+      {{#if (or (eq actorType "character") (eq actorType "npc"))}}
+        <div class="forja-field">
+          <label>{{localize "FORJA.Concept"}}</label>
+          <input type="text" name="system.concept" value="{{system.concept}}" />
+        </div>
+      {{/if}}
+      {{!-- Origin: character + npc --}}
+      {{#if (or (eq actorType "character") (eq actorType "npc"))}}
+        <div class="forja-field">
+          <label>{{localize "FORJA.Origin"}}</label>
+          <input type="text" name="system.origin" value="{{system.origin}}" />
+        </div>
+      {{/if}}
+      {{!-- Gender + Age: character only --}}
+      {{#if (eq actorType "character")}}
+        <div class="forja-field forja-field--half">
+          <label>{{localize "FORJA.Gender"}}</label>
+          <input type="text" name="system.gender" value="{{system.gender}}" />
+        </div>
+        <div class="forja-field forja-field--half">
+          <label>{{localize "FORJA.Age"}}</label>
+          <input type="number" name="system.age" value="{{system.age}}" min="0" />
+        </div>
+      {{/if}}
+      {{!-- Tier: npc only --}}
+      {{#if (eq actorType "npc")}}
+        <div class="forja-field">
+          <label>{{localize "FORJA.Tier.label"}}</label>
+          <select name="system.tier">
+            <option value="nemesis" {{#if (eq system.tier "nemesis")}}selected{{/if}}>{{localize "FORJA.Tier.nemesis"}}</option>
+            <option value="antagonist" {{#if (eq system.tier "antagonist")}}selected{{/if}}>{{localize "FORJA.Tier.antagonist"}}</option>
+            <option value="extra" {{#if (eq system.tier "extra")}}selected{{/if}}>{{localize "FORJA.Tier.extra"}}</option>
+          </select>
+        </div>
+      {{/if}}
     </div>
   </div>
 

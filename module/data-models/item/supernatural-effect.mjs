@@ -21,15 +21,15 @@ export default class SupernaturalEffectData extends foundry.abstract.TypeDataMod
       equilibriumCost: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
       latencyMod: new fields.NumberField({ integer: true, initial: 0 }),
       range: new fields.StringField({
-        initial: "",
+        initial: "", blank: true,
         choices: ["", "touch", "short", "medium", "long", "extreme", "multiversal"]
       }),
       target: new fields.StringField({
-        initial: "",
+        initial: "", blank: true,
         choices: ["", "self", "individual", "area"]
       }),
       duration: new fields.StringField({
-        initial: "",
+        initial: "", blank: true,
         choices: ["", "instant", "scene", "sustained", "permanent"]
       }),
       damageValue: new fields.NumberField({ integer: true, initial: 0 }),
@@ -46,7 +46,7 @@ export default class SupernaturalEffectData extends foundry.abstract.TypeDataMod
       })),
       traitsGranted: new fields.ArrayField(new fields.StringField()),
       mentalEffect: new fields.StringField({
-        initial: "",
+        initial: "", blank: true,
         choices: ["", "read", "project", "emotional", "suggestion", "control"]
       }),
       notes: new fields.StringField({ initial: "" })

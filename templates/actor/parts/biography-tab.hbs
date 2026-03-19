@@ -15,15 +15,17 @@
     </div>
   </div>
 
-  {{!-- Resources --}}
-  <div class="forja-biography__section">
-    <h3 class="forja-section-heading">{{localize "FORJA.Resources"}}</h3>
-    <textarea name="system.resources" class="forja-biography__textarea" rows="3">{{system.resources}}</textarea>
-  </div>
+  {{!-- Resources: character only --}}
+  {{#if (eq actorType "character")}}
+    <div class="forja-biography__section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Resources"}}</h3>
+      <textarea name="system.resources" class="forja-biography__textarea" rows="3">{{system.resources}}</textarea>
+    </div>
 
-  {{!-- Guanxi --}}
-  <div class="forja-biography__section">
-    <h3 class="forja-section-heading">{{localize "FORJA.Guanxi"}}</h3>
-    <textarea name="system.guanxi" class="forja-biography__textarea" rows="3">{{system.guanxi}}</textarea>
-  </div>
+    {{!-- Guanxi: character only --}}
+    <div class="forja-biography__section">
+      <h3 class="forja-section-heading">{{localize "FORJA.Guanxi"}}</h3>
+      <textarea name="system.guanxi" class="forja-biography__textarea" rows="3">{{system.guanxi}}</textarea>
+    </div>
+  {{/if}}
 </section>

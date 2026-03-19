@@ -1,49 +1,93 @@
 <div class="forja-trackers">
   {{!-- Wound tracker --}}
   <div class="forja-tracker forja-tracker--wounds">
-    <span class="forja-tracker__label">{{localize "FORJA.Health.Wounds"}}</span>
-    <div class="forja-tracker__controls">
-      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="-1"
-              title="{{localize 'FORJA.Health.Decrease'}}">
-        <i class="fas fa-minus"></i>
-      </button>
-      <span class="forja-tracker__value">
-        {{system.health.wounds.value}} / {{system.health.wounds.max}}
-      </span>
-      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="1"
-              title="{{localize 'FORJA.Health.Increase'}}">
-        <i class="fas fa-plus"></i>
-      </button>
+    <div class="forja-tracker__top">
+      <span class="forja-tracker__label">{{localize "FORJA.Health.Wounds"}}</span>
+      <div class="forja-tracker__controls">
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="-1"
+                title="{{localize 'FORJA.Health.Decrease'}}">
+          <i class="fas fa-minus"></i>
+        </button>
+        <span class="forja-tracker__value">
+          {{system.health.wounds.value}} / {{system.health.wounds.max}}
+        </span>
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="wounds" data-delta="1"
+                title="{{localize 'FORJA.Health.Increase'}}">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
     </div>
-    <span class="forja-tracker__level forja-tracker__level--{{system.woundLevel}}">
-      {{forjaLocalize "FORJA.WoundLevel" system.woundLevel}}
-      {{#if (penaltyLabel "wound" system.woundLevel)}}
-        <span class="forja-tracker__penalty">{{penaltyLabel "wound" system.woundLevel}}</span>
-      {{/if}}
-    </span>
+    <div class="forja-tracker__levels">
+      {{#each woundLevels}}
+        {{#if this.count}}
+          <div class="forja-tracker__level-row">
+            <span class="forja-tracker__level-name forja-tracker__level-name--{{this.colorClass}}">
+              {{this.label}}
+              {{#if this.penalty}}
+                <span class="forja-tracker__level-penalty">({{this.penalty}})</span>
+              {{/if}}
+            </span>
+            <div class="forja-tracker__level-squares">
+              {{#each this.squares}}
+                <span class="forja-tracker__square forja-tracker__square--{{../colorClass}} {{#if this.filled}}forja-tracker__square--filled{{/if}}"></span>
+              {{/each}}
+            </div>
+          </div>
+        {{else}}
+          {{!-- Level 7 (Incapacitat): no squares, show label only --}}
+          <div class="forja-tracker__level-row forja-tracker__level-row--final">
+            <span class="forja-tracker__level-name forja-tracker__level-name--{{this.colorClass}}">
+              {{this.label}}
+            </span>
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
   </div>
 
   {{!-- Fatigue tracker --}}
   <div class="forja-tracker forja-tracker--fatigue">
-    <span class="forja-tracker__label">{{localize "FORJA.Health.Fatigue"}}</span>
-    <div class="forja-tracker__controls">
-      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="-1"
-              title="{{localize 'FORJA.Health.Decrease'}}">
-        <i class="fas fa-minus"></i>
-      </button>
-      <span class="forja-tracker__value">
-        {{system.health.fatigue.value}} / {{system.health.fatigue.max}}
-      </span>
-      <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="1"
-              title="{{localize 'FORJA.Health.Increase'}}">
-        <i class="fas fa-plus"></i>
-      </button>
+    <div class="forja-tracker__top">
+      <span class="forja-tracker__label">{{localize "FORJA.Health.Fatigue"}}</span>
+      <div class="forja-tracker__controls">
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="-1"
+                title="{{localize 'FORJA.Health.Decrease'}}">
+          <i class="fas fa-minus"></i>
+        </button>
+        <span class="forja-tracker__value">
+          {{system.health.fatigue.value}} / {{system.health.fatigue.max}}
+        </span>
+        <button type="button" class="forja-tracker__btn" data-action="adjustTracker" data-tracker="fatigue" data-delta="1"
+                title="{{localize 'FORJA.Health.Increase'}}">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
     </div>
-    <span class="forja-tracker__level forja-tracker__level--{{system.fatigueLevel}}">
-      {{forjaLocalize "FORJA.FatigueLevel" system.fatigueLevel}}
-      {{#if (penaltyLabel "fatigue" system.fatigueLevel)}}
-        <span class="forja-tracker__penalty">{{penaltyLabel "fatigue" system.fatigueLevel}}</span>
-      {{/if}}
-    </span>
+    <div class="forja-tracker__levels">
+      {{#each fatigueLevels}}
+        {{#if this.count}}
+          <div class="forja-tracker__level-row">
+            <span class="forja-tracker__level-name forja-tracker__level-name--{{this.colorClass}}">
+              {{this.label}}
+              {{#if this.penalty}}
+                <span class="forja-tracker__level-penalty">({{this.penalty}})</span>
+              {{/if}}
+            </span>
+            <div class="forja-tracker__level-squares">
+              {{#each this.squares}}
+                <span class="forja-tracker__square forja-tracker__square--{{../colorClass}} {{#if this.filled}}forja-tracker__square--filled{{/if}}"></span>
+              {{/each}}
+            </div>
+          </div>
+        {{else}}
+          {{!-- Level 7 (Inconscient): no squares, show label only --}}
+          <div class="forja-tracker__level-row forja-tracker__level-row--final">
+            <span class="forja-tracker__level-name forja-tracker__level-name--{{this.colorClass}}">
+              {{this.label}}
+            </span>
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
   </div>
 </div>

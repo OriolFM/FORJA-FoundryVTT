@@ -30,8 +30,8 @@ import ForjaCombatant from "./module/documents/combatant.mjs";
 // Dice
 import ForjaRoll from "./module/dice/forja-roll.mjs";
 
-// Combat UI
-import ForjaCombatTracker from "./module/combat/combat-tracker.mjs";
+// Combat UI (hook-based injection)
+import { registerCombatHooks } from "./module/combat/combat-tracker.mjs";
 
 // Import
 import ForjaCharacterImporter from "./module/import/character-importer.mjs";
@@ -69,8 +69,8 @@ Hooks.once("init", () => {
   // Register custom Roll class
   CONFIG.Dice.rolls.push(ForjaRoll);
 
-  // Register custom Combat Tracker UI
-  CONFIG.ui.combat = ForjaCombatTracker;
+  // Register FORJA combat tracker hooks (inject UI into default tracker)
+  registerCombatHooks();
 
   // Register data models
   CONFIG.Actor.dataModels = {
@@ -255,7 +255,15 @@ async function _preloadHandlebarsTemplates() {
 
     // Dice
     "systems/forja/templates/dice/roll-dialog.hbs",
-    "systems/forja/templates/dice/roll-result.hbs"
+    "systems/forja/templates/dice/roll-result.hbs",
+
+    // Combat
+    "systems/forja/templates/combat/combat-tracker.hbs",
+    "systems/forja/templates/combat/start-combat-dialog.hbs",
+    "systems/forja/templates/combat/declare-action-dialog.hbs",
+    "systems/forja/templates/combat/defense-dialog.hbs",
+    "systems/forja/templates/combat/damage-confirm-dialog.hbs",
+    "systems/forja/templates/combat/area-damage-confirm-dialog.hbs"
   ];
 
   return foundry.applications.handlebars.loadTemplates(templatePaths);

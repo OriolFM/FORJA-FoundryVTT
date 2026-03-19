@@ -15,15 +15,15 @@ export default class ArtifactData extends foundry.abstract.TypeDataModel {
       difficulty: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
       latencyMod: new fields.NumberField({ integer: true, initial: 0 }),
       range: new fields.StringField({
-        initial: "",
+        initial: "", blank: true,
         choices: ["", "touch", "short", "medium", "long", "extreme", "multiversal"]
       }),
       target: new fields.StringField({
-        initial: "",
+        initial: "", blank: true,
         choices: ["", "self", "individual", "area"]
       }),
       duration: new fields.StringField({
-        initial: "",
+        initial: "", blank: true,
         choices: ["", "instant", "scene", "sustained", "permanent"]
       }),
       charges: new fields.SchemaField({

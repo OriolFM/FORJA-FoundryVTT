@@ -1,5 +1,18 @@
 <section class="forja-equipment tab" data-group="primary" data-tab="equipment">
-  <h3 class="forja-section-heading">{{localize "FORJA.Artifacts"}}</h3>
+  {{!-- Weapons list --}}
+  {{> "systems/forja/templates/actor/parts/weapons-list.hbs"}}
+
+  {{!-- Armor display --}}
+  {{> "systems/forja/templates/actor/parts/armor-display.hbs"}}
+
+  {{!-- Artifacts --}}
+  <div class="forja-section-header">
+    <h3 class="forja-section-heading">{{localize "FORJA.Artifacts"}}</h3>
+    <button type="button" class="forja-section-add-btn" data-action="openArtifactPicker"
+            title="{{localize 'FORJA.AddArtifact'}}">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
   {{#if artifacts.length}}
     <ul class="forja-artifacts__list">
       {{#each artifacts}}
@@ -74,4 +87,25 @@
   {{else}}
     <p class="forja-empty-notice">{{localize "FORJA.NoArtifacts"}}</p>
   {{/if}}
+
+  {{!-- Free-text item adder --}}
+  <h3 class="forja-section-heading">{{localize "FORJA.Inventory"}}</h3>
+  <div class="forja-inventory">
+    {{#each inventoryNotes}}
+      <div class="forja-inventory__item" data-index="{{@index}}">
+        <span class="forja-inventory__text">{{this}}</span>
+        <button type="button" class="forja-inventory__remove" data-action="removeInventoryNote" data-index="{{@index}}"
+                title="{{localize 'FORJA.ItemDelete'}}">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    {{/each}}
+    <div class="forja-inventory__add">
+      <input type="text" class="forja-inventory__input" placeholder="{{localize 'FORJA.InventoryAdd'}}" />
+      <button type="button" class="forja-inventory__add-btn" data-action="addInventoryNote"
+              title="{{localize 'FORJA.InventoryAdd'}}">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </div>
 </section>

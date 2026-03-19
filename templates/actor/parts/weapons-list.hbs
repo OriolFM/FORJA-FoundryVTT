@@ -66,3 +66,85 @@
     <p class="forja-empty-notice">{{localize "FORJA.NoWeapons"}}</p>
   {{/if}}
 </div>
+
+{{!-- Weapon-type artifacts: artifacts that deal damage (shown alongside regular weapons) --}}
+{{#if weaponArtifacts.length}}
+<div class="forja-weapons forja-weapons--artifact">
+  <h3 class="forja-section-heading">{{localize "FORJA.ArtifactWeapons"}}</h3>
+  <table class="forja-weapons__table">
+    <thead>
+      <tr>
+        <th>{{localize "FORJA.Name"}}</th>
+        <th>{{localize "FORJA.AttackType.label"}}</th>
+        <th>{{localize "FORJA.Damage"}}</th>
+        <th>{{localize "FORJA.LatencyMod"}}</th>
+        <th>{{localize "FORJA.Reach"}}</th>
+        <th>{{localize "FORJA.Special"}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each weaponArtifacts}}
+        <tr class="forja-weapons__row forja-weapons__row--artifact" data-item-id="{{this.id}}">
+          <td class="forja-weapons__name">{{this.name}}</td>
+          <td class="forja-weapons__attack-type">
+            {{localize (lookup ../cfg.attackTypes this.attackType)}}
+          </td>
+          <td class="forja-weapons__damage">{{this.damage}}</td>
+          <td class="forja-weapons__latency">
+            {{#if this.latencyMod}}+{{this.latencyMod}}{{else}}0{{/if}}
+          </td>
+          <td class="forja-weapons__range">{{this.reach}}</td>
+          <td class="forja-weapons__special">{{this.special}}</td>
+          <td>
+            <button type="button" class="forja-weapons__roll-btn" data-action="rollArtifactWeapon"
+                    data-item-id="{{this.id}}" title="{{localize 'FORJA.RollAttack'}}">
+              <i class="fas fa-dice-d10"></i>
+            </button>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{/if}}
+
+{{!-- Natural weapons: always shown (Cop + trait-based extras) --}}
+<div class="forja-weapons forja-weapons--natural">
+  <h3 class="forja-section-heading">{{localize "FORJA.NaturalWeapons"}}</h3>
+  <table class="forja-weapons__table">
+    <thead>
+      <tr>
+        <th>{{localize "FORJA.Name"}}</th>
+        <th>{{localize "FORJA.AttackType.label"}}</th>
+        <th>{{localize "FORJA.Damage"}}</th>
+        <th>{{localize "FORJA.LatencyMod"}}</th>
+        <th>{{localize "FORJA.Reach"}}</th>
+        <th>{{localize "FORJA.Special"}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each naturalWeapons}}
+        <tr class="forja-weapons__row forja-weapons__row--natural" data-weapon-id="{{this.id}}">
+          <td class="forja-weapons__name">{{this.name}}</td>
+          <td class="forja-weapons__attack-type">
+            {{localize (lookup ../cfg.attackTypes this.attackType)}}
+          </td>
+          <td class="forja-weapons__damage">{{this.damage}}</td>
+          <td class="forja-weapons__latency">
+            {{#if this.latencyMod}}+{{this.latencyMod}}{{else}}0{{/if}}
+          </td>
+          <td class="forja-weapons__range">{{this.reach}}</td>
+          <td class="forja-weapons__special">{{this.special}}</td>
+          <td>
+            <button type="button" class="forja-weapons__roll-btn" data-action="rollNaturalWeapon"
+                    title="{{localize 'FORJA.RollNaturalAttack'}}">
+              <i class="fas fa-dice-d10"></i>
+            </button>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

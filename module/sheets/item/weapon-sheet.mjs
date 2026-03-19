@@ -7,7 +7,7 @@ export default class ForjaWeaponSheet extends HandlebarsApplicationMixin(foundry
 
   static DEFAULT_OPTIONS = {
     classes: ["forja", "sheet", "item", "weapon"],
-    position: { width: 480, height: 450 },
+    position: { width: 480, height: 560 },
     form: { submitOnChange: true }
   };
 

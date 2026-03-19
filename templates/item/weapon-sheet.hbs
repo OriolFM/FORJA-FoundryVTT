@@ -4,6 +4,7 @@
     <div class="forja-item-sheet__title">
       <input type="text" name="name" value="{{document.name}}" class="forja-item-sheet__name"
              placeholder="{{localize 'FORJA.WeaponName'}}" />
+      <span class="forja-item-sheet__autosave"><i class="fas fa-cloud-upload-alt"></i> {{localize "FORJA.AutoSave"}}</span>
     </div>
   </header>
 
@@ -65,6 +66,25 @@
         <input type="number" name="system.ammo.max" value="{{system.ammo.max}}" min="0" />
       </div>
     </div>
+
+    {{!-- Area template type --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Weapon.TemplateType"}}</label>
+      <select name="system.templateType">
+        <option value="none" {{#if (eq system.templateType "none")}}selected{{/if}}>{{localize "FORJA.Weapon.TemplateNone"}}</option>
+        <option value="linear" {{#if (eq system.templateType "linear")}}selected{{/if}}>{{localize "FORJA.Weapon.TemplateLinear"}}</option>
+        <option value="angular" {{#if (eq system.templateType "angular")}}selected{{/if}}>{{localize "FORJA.Weapon.TemplateAngular"}}</option>
+        <option value="circular" {{#if (eq system.templateType "circular")}}selected{{/if}}>{{localize "FORJA.Weapon.TemplateCircular"}}</option>
+      </select>
+    </div>
+
+    {{!-- Template radius (only for circular) --}}
+    {{#ifeq system.templateType "circular"}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.Weapon.TemplateSize"}}</label>
+      <input type="number" name="system.templateSize" value="{{system.templateSize}}" min="1" step="1" />
+    </div>
+    {{/ifeq}}
 
     {{!-- Special --}}
     <div class="forja-form-group">

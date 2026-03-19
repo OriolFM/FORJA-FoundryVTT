@@ -1,17 +1,13 @@
-import ForjaNPCSheet from "./npc-sheet.mjs";
+import ForjaCharacterSheet from "./character-sheet.mjs";
 
 /**
- * Sheet for Animals. Minimal version of the NPC sheet.
+ * Sheet for Animals. Uses the same tab-based layout as the character sheet.
  */
-export default class ForjaAnimalSheet extends ForjaNPCSheet {
+export default class ForjaAnimalSheet extends ForjaCharacterSheet {
 
   static DEFAULT_OPTIONS = {
-    ...ForjaNPCSheet.DEFAULT_OPTIONS,
+    ...ForjaCharacterSheet.DEFAULT_OPTIONS,
     classes: ["forja", "sheet", "actor", "animal"],
-    position: { width: 520, height: 600 }
-  };
-
-  static PARTS = {
-    sheet: { template: "systems/forja/templates/actor/animal-sheet.hbs", scrollable: [""] }
+    position: { width: 860, height: 860 }
   };
 }

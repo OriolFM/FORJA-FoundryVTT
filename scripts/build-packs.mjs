@@ -481,31 +481,35 @@ function buildArtifacts() {
     }
   ];
 
-  return artifacts.map(a => createItem(
-    generateId('artifact', a.id),
-    a.name,
-    'artifact',
-    'icons/svg/item-bag.svg',
-    {
-      cost: a.cost || 0,
-      activation: a.activation || 'normal',
-      difficulty: a.difficulty || 0,
-      latencyMod: a.latencyMod || 0,
-      range: a.range || '',
-      target: a.target || '',
-      duration: a.duration || '',
-      charges: { value: a.charges || 0, max: a.charges || 0 },
-      rechargeRate: a.rechargeRate || 0,
-      damageValue: a.damageValue || 0,
-      damageType: a.damageType || '',
-      protection: a.protection || 0,
-      skillBonus: a.skillBonus || [],
-      statesApplied: a.statesApplied || [],
-      traitsGranted: a.traitsGranted || [],
-      baseWeapon: a.baseWeapon || '',
-      notes: ''
-    }
-  ));
+  return artifacts.map(a => {
+    const item = createItem(
+      generateId('artifact', a.id),
+      a.name,
+      'artifact',
+      'icons/svg/item-bag.svg',
+      {
+        cost: a.cost || 0,
+        activation: a.activation || 'normal',
+        difficulty: a.difficulty || 0,
+        latencyMod: a.latencyMod || 0,
+        range: a.range || '',
+        target: a.target || '',
+        duration: a.duration || '',
+        charges: { value: a.charges || 0, max: a.charges || 0 },
+        rechargeRate: a.rechargeRate || 0,
+        damageValue: a.damageValue || 0,
+        damageType: a.damageType || '',
+        protection: a.protection || 0,
+        skillBonus: a.skillBonus || [],
+        statesApplied: a.statesApplied || [],
+        traitsGranted: a.traitsGranted || [],
+        baseWeapon: a.baseWeapon || '',
+        notes: ''
+      }
+    );
+    item.flags = { forja: { sourceId: a.id } };
+    return item;
+  });
 }
 
 // ---------------------------------------------------------------------------

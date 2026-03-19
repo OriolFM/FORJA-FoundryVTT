@@ -27,7 +27,11 @@ export default class WeaponData extends foundry.abstract.TypeDataModel {
       }),
       special: new fields.StringField({ initial: "" }),
       quantity: new fields.NumberField({ integer: true, min: 1, initial: 1 }),
-      equipped: new fields.BooleanField({ initial: false })
+      equipped: new fields.BooleanField({ initial: false }),
+      templateType: new fields.StringField({ required: true, initial: "none" }),
+      // "none" | "linear" | "angular" | "circular"
+      templateSize: new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false })
+      // circular: radius in hexes; linear/angular: ignored (uses reach/range)
     };
   }
 }

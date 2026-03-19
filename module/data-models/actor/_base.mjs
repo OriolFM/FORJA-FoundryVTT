@@ -61,6 +61,12 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
         max: new fields.NumberField({ integer: true, min: 0, initial: 0 })
       }),
 
+      // Free-text inventory notes
+      inventoryNotes: new fields.ArrayField(
+        new fields.StringField({ required: true }),
+        { initial: [] }
+      ),
+
       // Biography/Notes (HTML)
       biography: new fields.HTMLField({ initial: "" })
     };
@@ -77,11 +83,11 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
     if (!cfg) return;
     const attrs = this.attributes;
 
-    // Max wounds = size × 10
-    this.health.wounds.max = this.size * 10;
+    // Max wounds = size × 6 (6 levels, each with 'size' squares)
+    this.health.wounds.max = this.size * 6;
 
-    // Max fatigue = constitution × 10
-    this.health.fatigue.max = this.constitution * 10;
+    // Max fatigue = constitution × 6 (6 levels, each with 'constitution' squares)
+    this.health.fatigue.max = this.constitution * 6;
 
     // Defense = AGI + size defense modifier
     this.defense = attrs.AGI.value + (cfg.sizeDefenseModifiers[this.size] ?? 0);
@@ -234,34 +240,30 @@ export default class ForjaActorBase extends foundry.abstract.TypeDataModel {
   }
 
   /**
-   * Determine wound level from current wounds vs max.
+   * Determine wound level from current wounds.
+   * Each level holds exactly 'size' wound points. Level 7 (incapacitat) has no points.
    */
   _getWoundLevel() {
-    const { value, max } = this.health.wounds;
-    if (max === 0 || value === 0) return "illes";
-    const ratio = value / max;
-    if (ratio >= 0.84) return "incapacitat";
-    if (ratio >= 0.67) return "critic";
-    if (ratio >= 0.51) return "malferit";
-    if (ratio >= 0.34) return "ferit";
-    if (ratio >= 0.17) return "nafrat";
-    if (ratio > 0) return "masegat";
-    return "illes";
+    const value = this.health.wounds.value;
+    const perLevel = this.size;
+    if (perLevel === 0 || value === 0) return "illes";
+    const filledLevels = Math.ceil(value / perLevel);
+    if (filledLevels >= 7) return "incapacitat";
+    const levels = ["illes", "masegat", "nafrat", "ferit", "malferit", "critic"];
+    return levels[Math.min(filledLevels, levels.length - 1)];
   }
 
   /**
-   * Determine fatigue level from current fatigue vs max.
+   * Determine fatigue level from current fatigue.
+   * Each level holds exactly 'constitution' fatigue points. Level 7 (inconscient) has no points.
    */
   _getFatigueLevel() {
-    const { value, max } = this.health.fatigue;
-    if (max === 0 || value === 0) return "reposat";
-    const ratio = value / max;
-    if (ratio >= 0.84) return "inconscient";
-    if (ratio >= 0.67) return "rebentat";
-    if (ratio >= 0.51) return "exhaurit";
-    if (ratio >= 0.34) return "defallit";
-    if (ratio >= 0.17) return "cansat";
-    if (ratio > 0) return "afeblit";
-    return "reposat";
+    const value = this.health.fatigue.value;
+    const perLevel = this.constitution;
+    if (perLevel === 0 || value === 0) return "reposat";
+    const filledLevels = Math.ceil(value / perLevel);
+    if (filledLevels >= 7) return "inconscient";
+    const levels = ["reposat", "afeblit", "cansat", "defallit", "exhaurit", "rebentat"];
+    return levels[Math.min(filledLevels, levels.length - 1)];
   }
 }

@@ -1,16 +1,13 @@
-import ForjaNPCSheet from "./npc-sheet.mjs";
+import ForjaCharacterSheet from "./character-sheet.mjs";
 
 /**
- * Sheet for Creatures (Criatura). Reuses NPC sheet with different styling.
+ * Sheet for Creatures (Criatura). Uses the same tab-based layout as the character sheet.
  */
-export default class ForjaCreatureSheet extends ForjaNPCSheet {
+export default class ForjaCreatureSheet extends ForjaCharacterSheet {
 
   static DEFAULT_OPTIONS = {
-    ...ForjaNPCSheet.DEFAULT_OPTIONS,
-    classes: ["forja", "sheet", "actor", "creature"]
-  };
-
-  static PARTS = {
-    sheet: { template: "systems/forja/templates/actor/creature-sheet.hbs", scrollable: [""] }
+    ...ForjaCharacterSheet.DEFAULT_OPTIONS,
+    classes: ["forja", "sheet", "actor", "creature"],
+    position: { width: 860, height: 860 }
   };
 }

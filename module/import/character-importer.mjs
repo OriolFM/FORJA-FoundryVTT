@@ -150,12 +150,24 @@ export default class ForjaCharacterImporter {
             <div class="forja-import-auth">
               <div class="forja-import-auth__disconnected">
                 <p class="forja-import-dialog__hint">${i18n("FORJA.Import.ForjappHint")}</p>
-                <button type="button" class="forja-import-auth__btn forja-import-auth__btn--google">
-                  <i class="fab fa-google"></i> ${i18n("FORJA.Import.ConnectGoogle")}
-                </button>
-                <button type="button" class="forja-import-auth__btn forja-import-auth__btn--public">
-                  <i class="fas fa-globe"></i> ${i18n("FORJA.Import.BrowsePublic")}
-                </button>
+                <div class="forja-import-auth__steps">
+                  <div class="forja-import-auth__step">
+                    <span class="forja-import-auth__step-num">1</span>
+                    <button type="button" class="forja-import-auth__btn forja-import-auth__btn--google">
+                      <i class="fab fa-google"></i> ${i18n("FORJA.Import.ConnectGoogle")}
+                    </button>
+                  </div>
+                  <div class="forja-import-auth__step">
+                    <span class="forja-import-auth__step-num">2</span>
+                    <div class="forja-import-auth__code-input">
+                      <input type="text" name="authCode" placeholder="${i18n("FORJA.Import.PasteCode")}"
+                             class="forja-import-auth__code" />
+                      <button type="button" class="forja-import-auth__btn forja-import-auth__btn--connect">
+                        <i class="fas fa-plug"></i> ${i18n("FORJA.Import.Connect")}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="forja-import-auth__connected" style="display:none;">
                 <div class="forja-import-auth__status">
@@ -175,6 +187,11 @@ export default class ForjaCharacterImporter {
               </div>
             </div>
             <div class="forja-import-charlist">
+              <div class="forja-import-charlist__search" style="display:none;">
+                <i class="fas fa-search forja-picker-search__icon"></i>
+                <input type="text" class="forja-picker-search__input forja-import-charlist__search-input"
+                       placeholder="${i18n("FORJA.Search")}…" autocomplete="off" />
+              </div>
               <div class="forja-import-charlist__loading" style="display:none;">
                 <i class="fas fa-spinner fa-spin"></i> ${i18n("FORJA.Import.Loading")}
               </div>
@@ -261,10 +278,6 @@ export default class ForjaCharacterImporter {
       const importBtn = html.closest(".dialog").find("button[data-button='import']");
       if (tab === "forjapp") {
         importBtn.hide();
-        // Pre-initialize Firebase SDK so signIn popup won't be blocked
-        ForjappService.preload().catch(err => {
-          console.warn("FORJA | Firebase preload failed:", err);
-        });
       } else {
         importBtn.show();
       }
@@ -281,39 +294,46 @@ export default class ForjaCharacterImporter {
       reader.readAsText(file);
     });
 
-    // --- Google sign-in ---
-    html.find(".forja-import-auth__btn--google").on("click", async () => {
-      // Open popup IMMEDIATELY in the click handler (user gesture)
-      // to avoid popup blocker. Then pass it to signIn().
-      const popup = window.open(
+    // --- Step 1: Open auth.html in a new window ---
+    html.find(".forja-import-auth__btn--google").on("click", () => {
+      window.open(
         "/systems/forja/auth.html",
         "forjapp-auth",
         "width=500,height=600,menubar=no,toolbar=no,location=no"
       );
-      try {
-        html.find(".forja-import-auth__btn--google").prop("disabled", true);
-        const user = await ForjappService.signIn(popup);
-        ForjaCharacterImporter._showConnected(html, user);
-        await ForjaCharacterImporter._loadCharacters(html, "mine");
-      } catch (err) {
-        console.error("FORJA | Firebase auth error:", err);
-        ui.notifications.error(`${i18n("FORJA.Import.ConnectionError")}: ${err.message}`);
-        html.find(".forja-import-auth__btn--google").prop("disabled", false);
+      // Focus the code input after opening
+      html.find("input[name='authCode']").focus();
+    });
+
+    // --- Step 2: Paste code and connect (Enter key support) ---
+    html.find("input[name='authCode']").on("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        html.find(".forja-import-auth__btn--connect").trigger("click");
       }
     });
 
-    // --- Browse public (no login needed) ---
-    html.find(".forja-import-auth__btn--public").on("click", async () => {
+    html.find(".forja-import-auth__btn--connect").on("click", async () => {
+      const code = html.find("input[name='authCode']").val()?.trim();
+      if (!code) {
+        ui.notifications.warn(i18n("FORJA.Import.NoData"));
+        return;
+      }
       try {
-        html.find(".forja-import-auth__btn--public").prop("disabled", true);
-        // Need minimal Firebase init for public queries (Firestore rules require auth)
-        // Try without auth first for systemCharacters, otherwise prompt login
-        await ForjaCharacterImporter._loadCharacters(html, "public");
+        html.find(".forja-import-auth__btn--connect").prop("disabled", true);
+        // Pre-init Firebase while processing
+        ForjappService.preload().catch(() => {});
+        console.log("FORJA | Processing auth code...");
+        const user = await ForjappService.signInWithCode(code);
+        console.log("FORJA | signIn resolved, user:", user?.displayName || user?.email);
+        ForjaCharacterImporter._showConnected(html, user);
+        console.log("FORJA | Loading characters...");
+        await ForjaCharacterImporter._loadCharacters(html, "mine");
+        console.log("FORJA | Characters loaded.");
       } catch (err) {
-        console.error("FORJA | Public browse error:", err);
+        console.error("FORJA | Firebase auth error:", err);
         ui.notifications.error(`${i18n("FORJA.Import.ConnectionError")}: ${err.message}`);
-      } finally {
-        html.find(".forja-import-auth__btn--public").prop("disabled", false);
+        html.find(".forja-import-auth__btn--connect").prop("disabled", false);
       }
     });
 
@@ -331,10 +351,24 @@ export default class ForjaCharacterImporter {
       await ForjaCharacterImporter._loadCharacters(html, source);
     });
 
-    // --- Select all ---
+    // --- Character search/filter ---
+    html.find(".forja-import-charlist__search-input").on("input", (ev) => {
+      const q = ev.target.value.trim().toLowerCase();
+      html.find(".forja-import-charlist__items .forja-import-charlist__item").each((_, el) => {
+        const name = el.querySelector(".forja-import-charlist__name")?.textContent.toLowerCase() ?? "";
+        el.style.display = name.includes(q) ? "" : "none";
+      });
+    });
+
+    // --- Prevent type select from toggling checkbox (inside label) ---
+    html.find(".forja-import-charlist__items").on("click", ".forja-import-charlist__type", (ev) => {
+      ev.stopPropagation();
+    });
+
+    // --- Select all (only visible items) ---
     html.find("input[name='selectAll']").on("change", (ev) => {
       const checked = ev.target.checked;
-      html.find(".forja-import-charlist__items input[type='checkbox']").prop("checked", checked);
+      html.find(".forja-import-charlist__items .forja-import-charlist__item:visible input[type='checkbox']").prop("checked", checked);
     });
 
     // --- Import selected ---
@@ -352,6 +386,9 @@ export default class ForjaCharacterImporter {
       for (const el of checked) {
         try {
           const charData = JSON.parse(el.dataset.character);
+          // Apply the selected type from the dropdown
+          const typeSelect = el.closest(".forja-import-charlist__item")?.querySelector(".forja-import-charlist__type");
+          if (typeSelect) charData.characterType = typeSelect.value;
           await ForjaCharacterImporter.importFromJSON(charData);
           imported++;
         } catch (err) {
@@ -401,15 +438,19 @@ export default class ForjaCharacterImporter {
     const items = html.find(".forja-import-charlist__items");
     const actions = html.find(".forja-import-charlist__actions");
 
+    const searchWrap = html.find(".forja-import-charlist__search");
     loading.show();
     empty.hide();
     items.empty();
     actions.hide();
+    searchWrap.hide();
+    html.find(".forja-import-charlist__search-input").val("");
 
     try {
       let characters;
       if (source === "mine") {
         const user = await ForjappService.getCurrentUser();
+        console.log("FORJA | _loadCharacters: currentUser =", user?.uid || "null");
         if (!user) {
           loading.hide();
           return;
@@ -419,6 +460,7 @@ export default class ForjaCharacterImporter {
         characters = await ForjappService.getPublicCharacters();
       }
 
+      console.log("FORJA | _loadCharacters: got", characters?.length ?? 0, "characters");
       loading.hide();
 
       if (!characters?.length) {
@@ -427,13 +469,21 @@ export default class ForjaCharacterImporter {
       }
 
       // Render character list
+      const typeOptions = ["PJ", "PNJ", "Criatura", "Animal"];
       for (const char of characters) {
-        const typeLabel = game.i18n.localize(TYPE_LABELS[char.characterType] ?? "FORJA.ActorType.character");
         const date = char.updatedAt ? new Date(char.updatedAt).toLocaleDateString() : "";
         const points = char.totalPoints ?? "?";
+        const currentType = char.characterType || "PJ";
 
         // Store character data as JSON in data attribute
         const charJson = JSON.stringify(char).replace(/"/g, "&quot;");
+
+        // Build type selector options
+        const selectOptions = typeOptions.map(t => {
+          const label = game.i18n.localize(TYPE_LABELS[t] ?? "FORJA.ActorType.character");
+          const selected = t === currentType ? "selected" : "";
+          return `<option value="${t}" ${selected}>${label}</option>`;
+        }).join("");
 
         const itemHtml = `
           <label class="forja-import-charlist__item">
@@ -441,14 +491,16 @@ export default class ForjaCharacterImporter {
             <div class="forja-import-charlist__info">
               <span class="forja-import-charlist__name">${char.name}</span>
               <span class="forja-import-charlist__meta">
-                ${typeLabel} · ${points} PC · ${date}
+                ${points} PC · ${date}
               </span>
             </div>
+            <select class="forja-import-charlist__type">${selectOptions}</select>
           </label>
         `;
         items.append(itemHtml);
       }
 
+      searchWrap.show();
       actions.show();
       html.find("input[name='selectAll']").prop("checked", false);
     } catch (err) {
@@ -510,9 +562,17 @@ export default class ForjaCharacterImporter {
       systemData.notes = data.notes ?? "";
     }
 
-    // Create the actor
+    // Create the actor (add incremental suffix if name already exists)
+    let actorName = data.name || game.i18n.localize("FORJA.Import.UnnamedCharacter");
+    const existingNames = new Set(game.actors.map(a => a.name));
+    if (existingNames.has(actorName)) {
+      let suffix = 2;
+      while (existingNames.has(`${actorName} (${suffix})`)) suffix++;
+      actorName = `${actorName} (${suffix})`;
+    }
+
     const actor = await Actor.create({
-      name: data.name || game.i18n.localize("FORJA.Import.UnnamedCharacter"),
+      name: actorName,
       type: actorType,
       system: systemData
     });
@@ -553,30 +613,97 @@ export default class ForjaCharacterImporter {
 
     // --- Traits ---
     if (data.traits?.length) {
+      // First pass: normalize all traits and resolve duplicates (keep highest level)
+      const traitMap = new Map(); // normalizedId → { normalizedId, level, variantCost, notes }
       for (const t of data.traits) {
-        const normalizedId = this.normalizeId(t.traitId);
-        const compItem = await this.findCompendiumItem("traits", "traitId", normalizedId);
+        let normalizedId = this.normalizeId(t.traitId);
+        let level = t.level ?? 0;
+
+        // FORJAPP may append level to parametric trait IDs (e.g. "armaduraNatural2" → "armadura-natural2")
+        // Strip trailing digits and use them as the level if no explicit level is set
+        const levelSuffix = normalizedId.match(/^(.+?)[-]?(\d+)$/);
+        if (levelSuffix && !level) {
+          const baseId = levelSuffix[1];
+          const suffixLevel = parseInt(levelSuffix[2]);
+          // Only use suffix as level if the base ID exists in compendium
+          const baseItem = await this.findCompendiumItem("traits", "traitId", baseId);
+          if (baseItem) {
+            normalizedId = baseId;
+            level = suffixLevel;
+          }
+        }
+
+        // Deduplicate: keep the entry with the highest level
+        const existing = traitMap.get(normalizedId);
+        if (!existing || level > (existing.level ?? 0)) {
+          traitMap.set(normalizedId, { normalizedId, level, variantCost: t.variantCost, notes: t.notes });
+        }
+      }
+
+      // Second pass: create items from deduplicated traits
+      for (const [, t] of traitMap) {
+        let compItem = await this.findCompendiumItem("traits", "traitId", t.normalizedId);
         if (compItem) {
           const itemData = compItem.toObject();
-          if (t.level != null) itemData.system.level = t.level;
+          if (t.level) itemData.system.level = t.level;
           if (t.variantCost != null) itemData.system.variantCost = t.variantCost;
           if (t.notes) itemData.system.notes = t.notes;
           delete itemData._id;
           items.push(itemData);
         } else {
           items.push({
-            name: normalizedId,
+            name: t.normalizedId,
             type: "trait",
             system: {
-              traitId: normalizedId,
+              traitId: t.normalizedId,
               traitType: "positive",
               category: "general",
               cost: 0,
-              level: t.level ?? 0,
+              level: t.level,
               notes: t.notes ?? ""
             }
           });
         }
+      }
+    }
+
+    // --- Natural Weapons (always added; derived from CONFIG.FORJA + traits) ---
+    // "Cop" is always available to all actors; additional natural weapons come from traits.
+    // These are created as real weapon items so they appear in the combat tracker.
+    {
+      const naturalDefs = CONFIG.FORJA?.naturalWeaponTraits ?? {};
+      const copDef = CONFIG.FORJA?.copWeapon ?? { id: "cop", nameKey: "FORJA.Natural.Cop", damage: "FOR+1", latencyMod: 0, reach: "0", attackType: "brawl" };
+
+      const makNaturalItem = (def) => ({
+        name: game.i18n.localize(def.nameKey) || def.id,
+        type: "weapon",
+        system: {
+          weaponType: "natural",
+          attackType: def.attackType ?? "natural",
+          latencyMod: def.latencyMod ?? 0,
+          reach: def.reach ?? "0",
+          range: "",
+          damage: def.damage ?? "FOR+1",
+          special: def.specialKey ? (game.i18n.localize(def.specialKey) || "") : "",
+          quantity: 1,
+          equipped: true
+        }
+      });
+
+      // Always add Cop (unless actor already has a natural weapon with id "cop" in data.weapons)
+      const hasNaturalCop = (data.weapons ?? []).some(w => w.attackType === "natural" && w.name?.toLowerCase() === "cop");
+      if (!hasNaturalCop) {
+        items.push(makNaturalItem(copDef));
+      }
+
+      // Add additional natural weapons from trait IDs present in this character
+      const importedTraitIds = new Set((data.traits ?? []).map(t => this.normalizeId(t.traitId)));
+      const addedNaturalIds = new Set(["cop"]);
+      for (const [traitId, def] of Object.entries(naturalDefs)) {
+        if (!importedTraitIds.has(traitId)) continue;
+        if (addedNaturalIds.has(def.id)) continue;
+        addedNaturalIds.add(def.id);
+        items.push(makNaturalItem(def));
       }
     }
 
@@ -638,9 +765,16 @@ export default class ForjaCharacterImporter {
       for (const a of data.artifacts) {
         let compItem = null;
         const pack = game.packs.get("forja.artifacts");
-        if (pack && a.name) {
+        if (pack) {
           const docs = await pack.getDocuments();
-          compItem = docs.find(i => i.name.toLowerCase() === a.name.toLowerCase()) ?? null;
+          // Try matching by artifactId (stored in flags.forja.sourceId) — works regardless of language
+          if (a.artifactId) {
+            compItem = docs.find(i => i.flags?.forja?.sourceId === a.artifactId) ?? null;
+          }
+          // Fallback: match by name (case-insensitive) — works if FORJAPP language matches compendium (Catalan)
+          if (!compItem && a.name) {
+            compItem = docs.find(i => i.name.toLowerCase() === a.name.toLowerCase()) ?? null;
+          }
         }
         if (compItem) {
           const itemData = compItem.toObject();

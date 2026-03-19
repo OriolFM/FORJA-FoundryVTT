@@ -12,4 +12,11 @@
       {{fites}} {{localize "FORJA.Dice.fites"}}
     {{/if}}
   </div>
+  {{#if combatNotes.length}}
+  <div class="roll-combat-notes">
+    {{#each combatNotes}}
+      <span class="roll-combat-note">{{this}}</span>
+    {{/each}}
+  </div>
+  {{/if}}
 </div>

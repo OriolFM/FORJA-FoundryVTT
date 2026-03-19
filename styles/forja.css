@@ -583,6 +583,96 @@
   margin-left: var(--forja-space-xs);
 }
 
+/* Health squares - level rows with label + squares side by side */
+.forja-tracker__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--forja-space-sm);
+}
+
+.forja-tracker__levels {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.forja-tracker__level-row {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+}
+
+.forja-tracker__level-name {
+  font-size: var(--forja-font-size-xs);
+  min-width: 100px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.forja-tracker__level-penalty {
+  font-weight: 700;
+}
+
+.forja-tracker__level-name--healthy { color: var(--forja-success); }
+.forja-tracker__level-name--light { color: #c4b53a; }
+.forja-tracker__level-name--moderate { color: #e67e22; }
+.forja-tracker__level-name--severe { color: var(--forja-danger); }
+.forja-tracker__level-name--critical { color: #8b0000; }
+.forja-tracker__level-name--incapacitated { color: #666; font-weight: 800; }
+
+.forja-tracker__level-squares {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.forja-tracker__level-row--final {
+  border-top: 1px solid var(--forja-border-color);
+  padding-top: 3px;
+  margin-top: 2px;
+}
+
+.forja-tracker__square {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--forja-border-color-strong);
+  border-radius: 2px;
+  background: var(--forja-bg-700);
+  transition: background 0.15s;
+}
+
+/* Filled squares get their level color */
+.forja-tracker__square--filled.forja-tracker__square--healthy {
+  background: var(--forja-success);
+  border-color: var(--forja-success);
+}
+
+.forja-tracker__square--filled.forja-tracker__square--light {
+  background: #c4b53a;
+  border-color: #c4b53a;
+}
+
+.forja-tracker__square--filled.forja-tracker__square--moderate {
+  background: #e67e22;
+  border-color: #e67e22;
+}
+
+.forja-tracker__square--filled.forja-tracker__square--severe {
+  background: var(--forja-danger);
+  border-color: var(--forja-danger);
+}
+
+.forja-tracker__square--filled.forja-tracker__square--critical {
+  background: #8b0000;
+  border-color: #8b0000;
+}
+
+.forja-tracker__square--filled.forja-tracker__square--incapacitated {
+  background: #333;
+  border-color: #555;
+}
+
 /* Point summary bar */
 .forja-header__points {
   grid-row: 5;
@@ -879,6 +969,44 @@
   color: var(--forja-text-muted);
 }
 
+.forja-skill-row__level-input {
+  width: 40px;
+  text-align: center;
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-primary-light);
+  font-family: var(--forja-font-mono);
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  padding: 2px 4px;
+}
+
+.forja-skill-row__roll {
+  background: transparent;
+  border: none;
+  color: var(--forja-text-muted);
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: color var(--forja-transition);
+}
+
+.forja-skill-row__roll:hover {
+  color: var(--forja-primary-light);
+}
+
+.forja-skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.forja-trait-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 
 /* ============================================================================
    7. TRAITS LIST - Category headings, positive/negative color coding
@@ -941,6 +1069,32 @@
   flex: 1;
   font-size: var(--forja-font-size-base);
   color: var(--forja-text-primary);
+}
+
+.forja-trait-row__name--positive {
+  color: var(--forja-success);
+}
+
+.forja-trait-row__name--negative {
+  color: var(--forja-danger);
+}
+
+.forja-trait-row__level-slash {
+  color: var(--forja-text-muted);
+  margin: 0 1px;
+}
+
+.forja-trait-row__level-input {
+  width: 32px;
+  text-align: center;
+  background: transparent;
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: inherit;
+  font-family: var(--forja-font-mono);
+  font-size: inherit;
+  font-weight: 700;
+  padding: 0 2px;
 }
 
 .forja-trait-row__level {
@@ -1137,6 +1291,25 @@
   font-family: var(--forja-font-mono);
 }
 
+.forja-armor__natural {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  background: var(--forja-bg-800);
+  border-radius: var(--forja-radius-sm);
+  border-left: 3px solid var(--forja-gold, #d4a017);
+  margin-top: var(--forja-space-xs);
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-secondary);
+}
+
+.forja-armor__natural .forja-armor__stat-value {
+  font-weight: 700;
+  color: var(--forja-gold, #d4a017);
+  font-family: var(--forja-font-mono);
+}
+
 
 /* ============================================================================
    9. EQUIPMENT / ARTIFACTS - Card-like items with charges
@@ -1259,6 +1432,83 @@
   margin-top: var(--forja-space-md);
 }
 
+
+/* --- Inventory (free-text items) --- */
+.forja-inventory {
+  margin-top: var(--forja-space-sm);
+}
+
+.forja-inventory__item {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  border-radius: var(--forja-radius-sm);
+  transition: background var(--forja-transition);
+}
+
+.forja-inventory__item:hover {
+  background: var(--forja-bg-800);
+}
+
+.forja-inventory__text {
+  flex: 1;
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-primary);
+}
+
+.forja-inventory__remove {
+  background: transparent;
+  border: none;
+  color: var(--forja-text-disabled);
+  cursor: pointer;
+  padding: 2px 4px;
+  opacity: 0;
+  transition: all var(--forja-transition);
+}
+
+.forja-inventory__item:hover .forja-inventory__remove {
+  opacity: 1;
+}
+
+.forja-inventory__remove:hover {
+  color: var(--forja-danger);
+}
+
+.forja-inventory__add {
+  display: flex;
+  gap: var(--forja-space-xs);
+  margin-top: var(--forja-space-sm);
+}
+
+.forja-inventory__input {
+  flex: 1;
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  background: var(--forja-bg-700);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-inventory__input::placeholder {
+  color: var(--forja-text-disabled);
+}
+
+.forja-inventory__add-btn {
+  background: var(--forja-primary-bg);
+  border: 1px solid var(--forja-primary-border);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-primary-light);
+  cursor: pointer;
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  transition: all var(--forja-transition);
+}
+
+.forja-inventory__add-btn:hover {
+  background: var(--forja-primary);
+  color: #fff;
+}
 
 /* ============================================================================
    10. SUPERNATURAL EFFECTS - Grouped by gift type with colored headers
@@ -1797,6 +2047,23 @@
   50% { opacity: 0.6; }
 }
 
+/* Combat notes on roll results */
+.roll-combat-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-xs);
+  justify-content: center;
+  margin-top: var(--forja-space-sm);
+}
+
+.roll-combat-note {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-info);
+  background: var(--forja-info-bg);
+  padding: 1px var(--forja-space-sm);
+  border-radius: var(--forja-radius-sm);
+}
+
 
 /* ============================================================================
    15. ITEM SHEETS - Clean form layouts for all 6 item types
@@ -2330,7 +2597,7 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--forja-text-disabled);
+  color: var(--forja-text-secondary);
   cursor: pointer;
   border-radius: var(--forja-radius-sm);
   transition: all var(--forja-transition);
@@ -2540,15 +2807,1025 @@
   font-family: var(--forja-font-primary);
 }
 
-/* Combat tracker enhancements */
-#combat-tracker .combatant.forja-combatant {
-  border-left: 3px solid var(--forja-primary);
+/* ============================================================================
+   COMBAT TRACKER — Latency-based Combat UI
+   ============================================================================ */
+
+/* --- Combat Header --- */
+.forja-combat-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-md);
+  border-bottom: 1px solid var(--forja-border-color);
 }
 
-#combat-tracker .combatant.forja-combatant .token-initiative {
+/* Round counter */
+.forja-round-counter {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  font-size: var(--forja-font-size-sm);
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.forja-round-counter i {
+  color: var(--forja-primary);
+}
+
+/* Ordinal rank badge (#1, #2...) inside position number */
+.forja-combatant-rank {
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  margin-left: 2px;
+  vertical-align: super;
+}
+
+.forja-combat-phase {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  font-size: var(--forja-font-size-base);
+  font-weight: 700;
+  color: var(--forja-primary-light);
+}
+
+.forja-combat-phase i {
+  font-size: var(--forja-font-size-lg);
+}
+
+.forja-ambush-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  padding: 2px var(--forja-space-md);
+  background: var(--forja-danger-bg);
+  color: var(--forja-danger);
+  border: 1px solid var(--forja-danger);
+  border-radius: var(--forja-radius-md);
+  font-size: var(--forja-font-size-xs);
+  font-weight: 600;
+}
+
+/* --- Phase Controls (GM) --- */
+.forja-combat-controls {
+  display: flex;
+  gap: var(--forja-space-sm);
+}
+
+.forja-combat-controls__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  padding: var(--forja-space-sm) var(--forja-space-lg);
+  background: var(--forja-primary-dark);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-primary);
+  border-radius: var(--forja-radius-md);
+  cursor: pointer;
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+  transition: all var(--forja-transition);
+}
+
+.forja-combat-controls__btn:hover {
+  background: var(--forja-primary);
+}
+
+.forja-combat-controls__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- Pending Damage --- */
+.forja-pending-damage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--forja-space-xs);
+  align-items: center;
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  background: var(--forja-danger-bg);
+  border-radius: var(--forja-radius-sm);
+  font-size: var(--forja-font-size-xs);
+}
+
+.forja-pending-damage__label {
+  color: var(--forja-danger);
+  font-weight: 600;
+}
+
+.forja-pending-damage__entry {
+  color: var(--forja-text-secondary);
+}
+
+/* --- Position Number --- */
+.forja-combat-position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--forja-radius-md);
+  background: var(--forja-bg-700);
+  color: var(--forja-primary-light);
   font-family: var(--forja-font-mono);
+  font-weight: 700;
+  font-size: var(--forja-font-size-base);
+  flex-shrink: 0;
+}
+
+.forja-combat-position--resolving {
+  background: var(--forja-gold-bg);
+  color: var(--forja-gold);
+  border: 1px solid var(--forja-gold);
+}
+
+/* --- Start Combat Dialog --- */
+.forja-start-dialog {
+  padding: var(--forja-space-md);
+}
+
+.forja-start-dialog__combatants {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-xs);
+  margin-top: var(--forja-space-md);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.forja-start-dialog__combatant {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  cursor: pointer;
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-start-dialog__combatant:hover {
+  background: var(--forja-primary-bg);
+  border-radius: var(--forja-radius-sm);
+}
+
+/* --- Combat Tracker List --- */
+.forja-combat-tracker {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.forja-combat-tracker .combatant {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm) var(--forja-space-md);
+  border-bottom: 1px solid var(--forja-border-color);
+  border-left: 3px solid transparent;
+  transition: all var(--forja-transition);
+  height: auto !important;
+  min-height: 44px;
+  overflow: visible !important;
+}
+
+.forja-combat-tracker .combatant.players {
+  border-left-color: var(--forja-primary);
+}
+
+.forja-combat-tracker .combatant.antagonists {
+  border-left-color: var(--forja-danger);
+}
+
+.forja-combat-tracker .combatant.active {
+  background: var(--forja-primary-bg);
+}
+
+.forja-combat-tracker .combatant.forja-resolving {
+  background: rgba(234, 179, 8, 0.1);
+  border-left-color: var(--forja-gold);
+}
+
+.forja-combat-tracker .combatant.defeated {
+  opacity: 0.5;
+}
+
+.forja-combat-tracker .combatant.forja-declaring {
+  background: rgba(59, 130, 246, 0.1);
+  border-left-color: var(--forja-info);
+}
+
+/* --- Combatant Info --- */
+.forja-combat-tracker .combatant-info {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.forja-combat-tracker .token-image {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--forja-radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--forja-border-color);
+}
+
+.forja-combat-tracker .combatant-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.forja-combat-tracker .combatant-name {
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+  color: var(--forja-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.forja-combat-tracker .combatant-initiative {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-primary-light);
+  font-family: var(--forja-font-mono);
+  font-weight: 700;
+}
+
+/* --- Health Bars --- */
+.forja-combat-tracker .combatant-health {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 40px;
+}
+
+.forja-combat-tracker .health-bar {
+  height: 4px;
+  background: var(--forja-bg-700);
+  border-radius: var(--forja-radius-full);
+  overflow: hidden;
+}
+
+.forja-combat-tracker .health-bar .bar-fill {
+  height: 100%;
+  border-radius: var(--forja-radius-full);
+  transition: width var(--forja-transition);
+}
+
+.forja-combat-tracker .wounds-bar .bar-fill {
+  background: var(--forja-danger);
+}
+
+.forja-combat-tracker .fatigue-bar .bar-fill {
+  background: var(--forja-warning);
+}
+
+/* --- Declared Action Indicator --- */
+.forja-combat-tracker .declared-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--forja-radius-full);
+  background: var(--forja-primary-bg);
+  color: var(--forja-primary-light);
+  font-size: var(--forja-font-size-xs);
+}
+
+/* --- Reaction Counters --- */
+.forja-reactions {
+  display: flex;
+  gap: 2px;
+  font-size: 10px;
+}
+
+.forja-reactions--available {
+  color: var(--forja-primary-light);
+}
+
+.forja-reactions--used {
+  color: var(--forja-bg-600);
+}
+
+.forja-reactions__use-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin-left: 2px;
+  background: var(--forja-info-bg);
+  color: var(--forja-info);
+  border: 1px solid var(--forja-info);
+  border-radius: var(--forja-radius-sm);
+  cursor: pointer;
+  font-size: 9px;
+  transition: all var(--forja-transition);
+}
+
+.forja-reactions__use-btn:hover {
+  background: var(--forja-info);
+  color: var(--forja-text-primary);
+}
+
+/* --- Declare Button (inline, opens dialog popup) --- */
+.forja-declare-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  margin-top: var(--forja-space-xs);
+  padding: 3px var(--forja-space-sm);
+  background: var(--forja-primary-dark);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-primary);
+  border-radius: var(--forja-radius-sm);
+  cursor: pointer;
+  font-size: var(--forja-font-size-xs);
+  font-weight: 600;
+  width: 100%;
+  justify-content: center;
+  transition: all var(--forja-transition);
+}
+
+.forja-declare-btn:hover {
+  background: var(--forja-primary);
+}
+
+/* --- Roll Action Buttons (resolution phase) --- */
+.forja-roll-actions {
+  display: flex;
+  gap: var(--forja-space-xs);
+  margin-top: var(--forja-space-xs);
+  width: 100%;
+}
+
+.forja-roll-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  padding: 3px var(--forja-space-sm);
+  background: #3a1a00;
+  color: #ffcc88;
+  border: 1px solid #c76a00;
+  border-radius: var(--forja-radius-sm);
+  cursor: pointer;
+  font-size: var(--forja-font-size-xs);
+  font-weight: 600;
+  flex: 1;
+  justify-content: center;
+  transition: all var(--forja-transition);
+}
+
+.forja-roll-btn:hover {
+  background: #c76a00;
+  color: #fff;
+}
+
+.forja-roll-btn--defense {
+  background: #001a3a;
+  color: #88ccff;
+  border-color: #0066cc;
+}
+
+.forja-roll-btn--defense:hover {
+  background: #0066cc;
+  color: #fff;
+}
+
+/* "Move now" button (apply pending movement during resolution) */
+.forja-move-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  margin-top: var(--forja-space-xs);
+  padding: 3px var(--forja-space-sm);
+  background: #001a30;
+  color: #ffcc00;
+  border: 1px solid #886600;
+  border-radius: var(--forja-radius-sm);
+  cursor: pointer;
+  font-size: var(--forja-font-size-xs);
+  font-weight: 600;
+  width: 100%;
+  justify-content: center;
+  transition: all var(--forja-transition);
+}
+.forja-move-btn:hover { background: #886600; color: #fff; }
+.forja-move-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* "Attack resolved" badge shown instead of Roll button */
+.forja-roll-done {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  padding: 3px var(--forja-space-sm);
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  border-radius: var(--forja-radius-sm);
+  color: #86efac;
+  font-size: var(--forja-font-size-sm);
+  font-weight: 600;
+}
+
+/* --- Click-to-target mode (when declaration dialog is open) --- */
+.forja-select-target-mode .combatant[data-combatant-id] {
+  cursor: crosshair;
+}
+
+.forja-select-target-mode .combatant[data-combatant-id]:hover {
+  outline: 2px solid var(--forja-primary);
+  outline-offset: -2px;
+}
+
+.combatant.forja-target-selected {
+  outline: 2px solid var(--forja-primary-light) !important;
+  outline-offset: -2px;
+  background: var(--forja-primary-bg);
+}
+
+/* Hint shown inside declaration dialog when in target-select mode */
+.forja-target-hint {
+  font-size: var(--forja-font-size-xs, 0.75rem);
+  color: var(--forja-primary-light);
+  padding: 4px var(--forja-space-sm);
+  background: var(--forja-primary-bg);
+  border: 1px dashed var(--forja-primary-border);
+  border-radius: var(--forja-radius-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+}
+
+/* --- Damage Confirmation Dialog --- */
+.forja-damage-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm);
+  color: var(--forja-text-primary);
+}
+
+.forja-damage-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--forja-space-md);
+  padding-bottom: var(--forja-space-sm);
+  border-bottom: 1px solid var(--forja-border-color);
+}
+
+.forja-damage-dialog__combatant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  max-width: 100px;
+}
+
+.forja-damage-dialog__portrait {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--forja-radius-sm);
+  border: 1px solid var(--forja-border-color-strong);
+  object-fit: cover;
+}
+
+.forja-damage-dialog__combatant-name {
+  font-size: var(--forja-font-size-xs, 0.75rem);
+  color: var(--forja-text-secondary);
+  text-align: center;
+  font-weight: 600;
+}
+
+.forja-damage-dialog__arrow {
+  font-size: 1.4rem;
+  color: var(--forja-text-muted);
+  flex-shrink: 0;
+}
+
+.forja-damage-dialog__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-damage-dialog__table td {
+  padding: 4px 6px;
+}
+
+.forja-damage-dialog__label {
+  color: var(--forja-text-secondary);
+  font-weight: 600;
+}
+
+.forja-damage-dialog__detail {
+  color: var(--forja-text-muted);
+  font-style: italic;
+}
+
+.forja-damage-dialog__formula {
+  color: var(--forja-text-muted);
+  font-family: var(--forja-font-mono);
+  font-size: 0.85em;
+}
+
+.forja-damage-dialog__value {
+  text-align: right;
+  font-family: var(--forja-font-mono);
+  font-weight: 600;
+  min-width: 40px;
+}
+
+.forja-damage-dialog__value--defense { color: #88bbff; }
+.forja-damage-dialog__value--attack  { color: var(--forja-gold); }
+.forja-damage-dialog__value--hit     { color: #ffd0b0; font-size: 1.1em; }
+.forja-damage-dialog__value--miss    { color: #88bbff; font-size: 1.1em; }
+.forja-damage-dialog__value--reduction { color: #86efac; }
+.forja-damage-dialog__value--total   { color: #ffd0b0; font-size: 1.15em; }
+
+.forja-damage-dialog__separator td {
+  border-top: 1px dashed var(--forja-border-color);
+  border-bottom: 1px dashed var(--forja-border-color);
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.forja-damage-dialog__breakdown {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: var(--forja-space-sm);
+}
+
+.forja-damage-dialog__breakdown-title {
+  font-size: var(--forja-font-size-xs, 0.75rem);
+  font-weight: 700;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.forja-damage-dialog__total-row td {
+  border-top: 2px solid var(--forja-border-color-strong);
+  padding-top: 6px;
+  font-size: 1.05em;
+}
+
+.forja-damage-dialog__miss {
+  text-align: center;
+  padding: var(--forja-space-sm);
+  background: rgba(30, 80, 200, 0.2);
+  border: 1px solid #4477dd;
+  border-radius: var(--forja-radius-sm);
+  color: #c0d8ff;
+  font-weight: 600;
+}
+
+/* --- Defense Dialog --- */
+.forja-defense-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm);
+}
+
+.forja-defense-dialog__combatants {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm);
+  background: rgba(0,0,0,0.2);
+  border-radius: var(--forja-radius-sm);
+}
+
+.forja-defense-dialog__fighter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.forja-defense-dialog__portrait {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--forja-primary);
+  object-fit: cover;
+}
+
+.forja-defense-dialog__fighter-name {
+  font-weight: 600;
+  font-size: var(--forja-font-size-sm);
+  text-align: center;
+}
+
+.forja-defense-dialog__fighter-label {
+  font-size: var(--forja-font-size-xs);
+  opacity: 0.7;
+}
+
+.forja-defense-dialog__vs {
+  font-size: 1.5rem;
+  opacity: 0.6;
+}
+
+.forja-defense-dialog__basic-info {
+  padding: 6px var(--forja-space-sm);
+  background: rgba(0,60,0,0.3);
+  border: 1px solid #2a6a2a;
+  border-radius: var(--forja-radius-sm);
+  font-size: var(--forja-font-size-sm);
+  color: #aaffaa;
+}
+
+.forja-defense-dialog__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.forja-defense-dialog__reaction-label {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  cursor: pointer;
+  font-size: var(--forja-font-size-sm);
+  padding: 4px var(--forja-space-xs);
+  border-radius: var(--forja-radius-sm);
+  transition: background var(--forja-transition);
+}
+
+.forja-defense-dialog__reaction-label:hover {
+  background: rgba(255,200,0,0.1);
+}
+
+.forja-defense-dialog__reaction-count {
+  opacity: 0.6;
+  font-size: var(--forja-font-size-xs);
+}
+
+.forja-defense-dialog__maneuver-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px var(--forja-space-sm);
+  border-left: 2px solid var(--forja-primary);
+  margin-left: var(--forja-space-sm);
+}
+
+.forja-defense-dialog__maneuver-label {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  cursor: pointer;
+  font-size: var(--forja-font-size-sm);
+  padding: 3px var(--forja-space-xs);
+  border-radius: var(--forja-radius-sm);
+  transition: background var(--forja-transition);
+}
+
+.forja-defense-dialog__maneuver-label:hover {
+  background: rgba(0,120,255,0.1);
+}
+
+.forja-defense-dialog__attr-hint {
+  opacity: 0.6;
+  font-size: var(--forja-font-size-xs);
+  margin-left: auto;
+}
+
+/* --- Resolution Summary (chat message) --- */
+.forja-resolution-summary {
+  padding: var(--forja-space-sm);
+  border-radius: var(--forja-radius-sm);
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--forja-border-color);
+}
+
+.forja-resolution-summary__row {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-secondary);
+  margin-top: 4px;
+}
+
+.forja-resolution--hit {
+  margin-top: var(--forja-space-xs);
+  padding: 6px var(--forja-space-sm);
+  background: rgba(220, 60, 0, 0.45);
+  border: 1px solid #e05020;
+  border-radius: var(--forja-radius-sm);
+  font-weight: 700;
+  color: #ffd0b0;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.forja-resolution--miss {
+  margin-top: var(--forja-space-xs);
+  padding: 6px var(--forja-space-sm);
+  background: rgba(30, 80, 200, 0.45);
+  border: 1px solid #4477dd;
+  border-radius: var(--forja-radius-sm);
+  font-weight: 700;
+  color: #c0d8ff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* --- Area damage confirm dialog --- */
+.forja-area-damage-dialog__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 12px;
+  border-bottom: 1px solid var(--forja-border-color);
+  margin-bottom: 10px;
+}
+.forja-area-damage-dialog__type-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   color: var(--forja-primary-light);
   font-weight: 700;
+  font-size: 1em;
+  gap: 2px;
+}
+.forja-area-damage-dialog__weapon {
+  font-weight: 400;
+  font-size: 0.85em;
+  color: var(--forja-text-secondary);
+}
+.forja-area-damage-dialog__attack-roll {
+  margin-left: auto;
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--forja-primary-light);
+}
+.forja-area-damage-dialog__targets th {
+  background: rgba(13,148,136,0.15);
+  padding: 4px 6px;
+  text-align: left;
+  font-size: 0.8em;
+  color: var(--forja-text-secondary);
+}
+.forja-area-damage-dialog__target-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.forja-area-damage-dialog__target-portrait {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+.forja-area-target--hit td {
+  background: rgba(13,148,136,0.08);
+}
+.forja-area-target--miss td {
+  background: rgba(80,80,80,0.08);
+  color: var(--forja-text-secondary);
+}
+.forja-area-damage-dialog__summary {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 8px 0 0;
+  border-top: 2px solid var(--forja-border-color-strong);
+  margin-top: 8px;
+  font-weight: 700;
+  color: var(--forja-primary-light);
+}
+
+/* --- Pending move indicator in combatant row --- */
+.forja-pending-move {
+  margin-left: 4px;
+  color: #ffcc00;
+  opacity: 0.9;
+  font-size: 0.85em;
+  font-family: var(--forja-font-mono);
+  white-space: nowrap;
+}
+
+/* --- Declaration Dialog (popup window) --- */
+.forja-declare-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-sm);
+  padding: var(--forja-space-sm);
+  color: var(--forja-text-primary);
+}
+
+.forja-declare-dialog__header {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-md);
+  padding-bottom: var(--forja-space-sm);
+  border-bottom: 1px solid var(--forja-border-color-strong);
+  margin-bottom: var(--forja-space-xs);
+  background: rgba(0,0,0,0.2);
+  padding: var(--forja-space-sm);
+  border-radius: var(--forja-radius-sm);
+}
+
+.forja-declare-dialog__portrait {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--forja-radius-sm);
+  border: 2px solid var(--forja-primary);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.forja-declare-dialog__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-secondary);
+}
+
+.forja-declare-dialog__header-text strong {
+  font-size: var(--forja-font-size-md);
+  color: var(--forja-text-primary);
+  font-weight: 700;
+}
+
+.forja-declare-dialog__row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: start;
+  gap: var(--forja-space-sm);
+}
+
+.forja-declare-dialog__row label {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-secondary);
+  padding-top: 6px;
+  font-weight: 600;
+}
+
+.forja-declare-dialog__row select,
+.forja-declare-dialog__row input[type="text"] {
+  width: 100%;
+  padding: 5px var(--forja-space-sm);
+  background: var(--forja-bg-700);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-border-color-strong);
+  border-radius: var(--forja-radius-sm);
+  font-size: var(--forja-font-size-sm);
+}
+
+.forja-declare-dialog__row select:focus,
+.forja-declare-dialog__row input[type="text"]:focus {
+  border-color: var(--forja-primary);
+  outline: none;
+}
+
+.forja-declare-dialog__row select option,
+.forja-dialog select option {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.forja-declare-dialog__move-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.forja-declare-dialog__move-options label {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-primary);
+  padding-top: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.forja-declare-dialog__move-options input[type="radio"] {
+  accent-color: var(--forja-primary);
+}
+
+.forja-declare-dialog__hex-counter {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  margin-top: 6px;
+  padding: 4px var(--forja-space-sm);
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color-strong);
+  border-radius: var(--forja-radius-sm);
+}
+
+.forja-declare-dialog__hex-counter label {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.forja-declare-dialog__hex-input {
+  width: 60px;
+  padding: 2px 6px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color-strong);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-primary);
+  font-size: var(--forja-font-size-sm);
+  font-family: var(--forja-font-mono);
+  text-align: center;
+}
+
+.forja-declare-dialog__hex-input:focus {
+  border-color: var(--forja-primary);
+  outline: none;
+}
+
+.forja-declare-dialog__hex-max {
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-muted);
+  font-family: var(--forja-font-mono);
+}
+
+.forja-declare-dialog__position-preview {
+  border-top: 1px dashed var(--forja-border-color-strong);
+  padding-top: var(--forja-space-sm);
+  margin-top: var(--forja-space-xs);
+  background: rgba(0,0,0,0.15);
+  padding: var(--forja-space-sm);
+  border-radius: var(--forja-radius-sm);
+}
+
+.forja-declare-dialog__position-number {
+  font-family: var(--forja-font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  text-shadow: 0 0 8px rgba(45, 212, 191, 0.4);
+}
+
+/* --- FORJA Dialog Dark Backgrounds --- */
+.forja-dialog .window-content {
+  background: var(--forja-bg-900) !important;
+  color: var(--forja-text-primary) !important;
+}
+
+.forja-dialog .window-header {
+  background: var(--forja-bg-darkest) !important;
+  color: var(--forja-text-primary) !important;
+}
+
+.forja-dialog .dialog-buttons {
+  background: var(--forja-bg-darkest) !important;
+  border-top: 1px solid var(--forja-border-color-strong);
+}
+
+/* --- Declaring combatant active highlight (dialog open) --- */
+.combatant.forja-declaring-active {
+  background: var(--forja-primary-bg) !important;
+  outline: 2px solid var(--forja-primary) !important;
+  outline-offset: -2px;
+}
+
+/* --- Combatant Controls --- */
+.forja-combat-tracker .combatant-controls {
+  display: flex;
+  gap: var(--forja-space-xs);
+}
+
+.forja-combat-tracker .combatant-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-muted);
+  cursor: pointer;
+  transition: all var(--forja-transition);
+}
+
+.forja-combat-tracker .combatant-control:hover {
+  color: var(--forja-danger);
+  background: var(--forja-danger-bg);
 }
 
 
@@ -2782,13 +4059,74 @@
   background: #3367d6;
 }
 
+.forja-import-auth__btn--connect {
+  background: var(--forja-primary, #26a69a);
+  color: #fff;
+  border-color: var(--forja-primary-dark, #1e8e82);
+}
+
+.forja-import-auth__btn--connect:hover {
+  background: var(--forja-primary-dark, #1e8e82);
+}
+
+.forja-import-auth__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-md);
+  width: 100%;
+  max-width: 400px;
+}
+
+.forja-import-auth__step {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-sm);
+}
+
+.forja-import-auth__step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+  background: var(--forja-primary, #26a69a);
+  color: #fff;
+  font-size: var(--forja-font-size-xs);
+  font-weight: bold;
+}
+
+.forja-import-auth__code-input {
+  display: flex;
+  gap: var(--forja-space-xs);
+  flex: 1;
+}
+
+.forja-import-auth__code {
+  flex: 1;
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  background: var(--forja-surface, #1e1e2e);
+  color: var(--forja-text-primary, #e0e0e0);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  font-family: monospace;
+  font-size: var(--forja-font-size-xs);
+}
+
+.forja-import-auth__code::placeholder {
+  color: var(--forja-text-muted);
+}
+
 .forja-import-auth__btn--public {
-  background: transparent;
-  color: var(--forja-text-secondary);
+  background: var(--forja-bg-secondary, #2a2a3e);
+  color: var(--forja-text-primary, #e0e0e0);
+  border-color: var(--forja-border-color);
 }
 
 .forja-import-auth__btn--public:hover {
   color: var(--forja-primary-light);
+  background: var(--forja-bg-tertiary, #353550);
   border-color: var(--forja-primary);
 }
 
@@ -2917,6 +4255,17 @@
   color: var(--forja-text-muted);
 }
 
+.forja-import-charlist__type {
+  padding: 2px 6px;
+  background: var(--forja-bg-700, #1e1e2e);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  font-size: var(--forja-font-size-xs);
+  cursor: pointer;
+  min-width: 80px;
+}
+
 /* --- Actions Bar --- */
 
 .forja-import-charlist__actions {
@@ -2958,4 +4307,247 @@
 .forja-import-charlist__import-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* ============================================================================
+   Item sheets (weapon, armor, etc.)
+   ============================================================================ */
+
+.forja-item-sheet__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--forja-border-color);
+  background: var(--forja-bg-900);
+}
+
+.forja-item-sheet__img {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--forja-radius-sm);
+  border: 1px solid var(--forja-border-color);
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.forja-item-sheet__title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.forja-item-sheet__name {
+  font-size: 1.1em;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  color: var(--forja-text-primary);
+  width: 100%;
+}
+
+.forja-item-sheet__name:focus {
+  outline: none;
+  border-bottom: 1px solid var(--forja-primary);
+}
+
+.forja-item-sheet__autosave {
+  font-size: 0.72em;
+  color: var(--forja-text-disabled);
+  letter-spacing: 0.03em;
+}
+
+.forja-item-sheet__body {
+  padding: 12px 14px;
+  overflow-y: auto;
+}
+
+.forja-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.forja-form-group label {
+  font-size: 0.78em;
+  font-weight: 600;
+  color: var(--forja-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.forja-form-group input,
+.forja-form-group select,
+.forja-form-group textarea {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-primary);
+  padding: 5px 8px;
+  font-size: 0.9em;
+  width: 100%;
+}
+
+.forja-form-group input:focus,
+.forja-form-group select:focus {
+  outline: none;
+  border-color: var(--forja-primary);
+}
+
+.forja-form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.forja-form-group--half {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.forja-form-group--checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.forja-form-group--checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+  font-size: 0.9em;
+  color: var(--forja-text-primary);
+  cursor: pointer;
+}
+
+/* ─── Section header with add button ────────────────────────────── */
+.forja-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 12px 0 4px;
+}
+
+.forja-section-header .forja-section-heading {
+  margin: 0;
+}
+
+.forja-section-add-btn {
+  background: transparent;
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-primary);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75em;
+  padding: 0;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.forja-section-add-btn:hover {
+  background: rgba(13, 148, 136, 0.15);
+  border-color: var(--forja-primary);
+}
+
+/* ─── Picker search field (shared: artifact picker + import charlist) ── */
+.forja-picker-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.forja-picker-search__icon {
+  color: var(--forja-text-muted);
+  font-size: 0.8em;
+  flex-shrink: 0;
+}
+
+.forja-picker-search__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--forja-text-primary);
+  font-size: var(--forja-font-size-sm);
+  padding: 0;
+}
+
+.forja-picker-search__input::placeholder {
+  color: var(--forja-text-muted);
+}
+
+.forja-import-charlist__search {
+  margin: 4px 0 6px;
+}
+
+/* ─── Artifact picker dialog ────────────────────────────────────── */
+.forja-artifact-picker {
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 4px 2px;
+}
+
+.forja-artifact-pick {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--forja-radius-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.forja-artifact-pick:hover {
+  background: rgba(13, 148, 136, 0.12);
+}
+
+.forja-artifact-pick__img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.forja-artifact-pick__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.forja-artifact-pick__name {
+  font-weight: 600;
+  color: var(--forja-text-primary);
+  font-size: 0.92em;
+}
+
+.forja-artifact-pick__meta {
+  font-size: 0.76em;
+  color: var(--forja-text-secondary);
+}
+
+.forja-artifact-pick__add {
+  color: var(--forja-primary);
+  font-size: 0.8em;
+  opacity: 0.6;
+  transition: opacity 0.12s;
+}
+
+.forja-artifact-pick:hover .forja-artifact-pick__add {
+  opacity: 1;
 }

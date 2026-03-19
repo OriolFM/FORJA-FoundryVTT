@@ -33,6 +33,15 @@
       {{/each}}
     </ul>
   {{else}}
-    <p class="forja-empty-notice">{{localize "FORJA.NoArmor"}}</p>
+    {{#unless naturalArmorLevel}}
+      <p class="forja-empty-notice">{{localize "FORJA.NoArmor"}}</p>
+    {{/unless}}
+  {{/if}}
+  {{#if naturalArmorLevel}}
+    <div class="forja-armor__natural">
+      <i class="fas fa-shield-alt"></i>
+      <span>{{localize "FORJA.NaturalArmor"}}</span>
+      <span class="forja-armor__stat-value">{{naturalArmorLevel}}</span>
+    </div>
   {{/if}}
 </div>

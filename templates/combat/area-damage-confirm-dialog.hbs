@@ -1,0 +1,57 @@
+<div class="forja-damage-dialog forja-area-damage-dialog">
+
+  {{!-- Attacker header --}}
+  <div class="forja-area-damage-dialog__header">
+    <div class="forja-damage-dialog__combatant">
+      <img src="{{attackerImg}}" class="forja-damage-dialog__portrait" alt="{{attackerName}}"/>
+      <span class="forja-damage-dialog__combatant-name">{{attackerName}}</span>
+    </div>
+    <div class="forja-area-damage-dialog__type-badge">
+      <i class="fas fa-burst"></i> {{localize "FORJA.Combat.AreaAttack"}}
+      <span class="forja-area-damage-dialog__weapon">{{weaponName}}</span>
+    </div>
+    <div class="forja-area-damage-dialog__attack-roll">
+      <i class="fas fa-dice-d10"></i> {{attackerFites}} ●
+    </div>
+  </div>
+
+  {{!-- Per-target results --}}
+  <table class="forja-damage-dialog__table forja-area-damage-dialog__targets">
+    <thead>
+      <tr>
+        <th>{{localize "FORJA.Combat.Defender"}}</th>
+        <th>{{localize "FORJA.Combat.DefenseType"}}</th>
+        <th>●</th>
+        <th>Net</th>
+        <th>{{localize "FORJA.Combat.TotalDamage"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each targets}}
+      <tr class="{{#if this.isHit}}forja-area-target--hit{{else}}forja-area-target--miss{{/if}}">
+        <td class="forja-area-damage-dialog__target-name">
+          <img src="{{this.img}}" class="forja-area-damage-dialog__target-portrait" alt="{{this.name}}"/>
+          {{this.name}}
+        </td>
+        <td class="forja-damage-dialog__detail">{{this.defenseLabel}}</td>
+        <td class="forja-damage-dialog__value">{{this.defenderFites}}</td>
+        <td class="forja-damage-dialog__value {{#if this.isHit}}forja-damage-dialog__value--hit{{else}}forja-damage-dialog__value--miss{{/if}}">
+          {{this.netHits}}
+        </td>
+        <td class="forja-damage-dialog__value forja-damage-dialog__value--total">
+          {{#if this.isHit}}{{this.totalDamage}}{{else}}—{{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  {{!-- Total damage summary --}}
+  {{#if totalDamageAll}}
+  <div class="forja-area-damage-dialog__summary">
+    <span>{{localize "FORJA.Combat.TotalDamage"}}:</span>
+    <strong class="forja-damage-dialog__value--total">{{totalDamageAll}}</strong>
+  </div>
+  {{/if}}
+
+</div>

@@ -196,26 +196,27 @@ FORJA.skillTypes = {
   restricted: "FORJA.SkillType.restricted"
 };
 
-// Wound levels (thresholds as % of max wounds) + difficulty penalty
+// Wound levels: each level holds 'size' points; penalty per FORJA rules
+// Level determination is done in _base.mjs based on value / size
 FORJA.woundLevels = {
-  illes: { threshold: 0, penalty: 0, label: "FORJA.WoundLevel.illes" },
-  masegat: { threshold: 0.01, penalty: 0, label: "FORJA.WoundLevel.masegat" },
-  nafrat: { threshold: 0.17, penalty: 0, label: "FORJA.WoundLevel.nafrat" },
-  ferit: { threshold: 0.34, penalty: 1, label: "FORJA.WoundLevel.ferit" },
-  malferit: { threshold: 0.51, penalty: 2, label: "FORJA.WoundLevel.malferit" },
-  critic: { threshold: 0.67, penalty: 4, label: "FORJA.WoundLevel.critic" },
-  incapacitat: { threshold: 0.84, penalty: null, label: "FORJA.WoundLevel.incapacitat" }
+  illes:       { level: 1, penalty: 0, label: "FORJA.WoundLevel.illes" },
+  masegat:     { level: 2, penalty: 0, label: "FORJA.WoundLevel.masegat" },
+  nafrat:      { level: 3, penalty: 0, label: "FORJA.WoundLevel.nafrat" },
+  ferit:       { level: 4, penalty: 1, label: "FORJA.WoundLevel.ferit" },
+  malferit:    { level: 5, penalty: 2, label: "FORJA.WoundLevel.malferit" },
+  critic:      { level: 6, penalty: 3, label: "FORJA.WoundLevel.critic" },
+  incapacitat: { level: 7, penalty: null, label: "FORJA.WoundLevel.incapacitat" }
 };
 
-// Fatigue levels + difficulty penalty
+// Fatigue levels: each level holds 'constitution' points; penalty per FORJA rules
 FORJA.fatigueLevels = {
-  reposat: { threshold: 0, penalty: 0, label: "FORJA.FatigueLevel.reposat" },
-  afeblit: { threshold: 0.01, penalty: 0, label: "FORJA.FatigueLevel.afeblit" },
-  cansat: { threshold: 0.17, penalty: 0, label: "FORJA.FatigueLevel.cansat" },
-  defallit: { threshold: 0.34, penalty: 1, label: "FORJA.FatigueLevel.defallit" },
-  exhaurit: { threshold: 0.51, penalty: 2, label: "FORJA.FatigueLevel.exhaurit" },
-  rebentat: { threshold: 0.67, penalty: 4, label: "FORJA.FatigueLevel.rebentat" },
-  inconscient: { threshold: 0.84, penalty: null, label: "FORJA.FatigueLevel.inconscient" }
+  reposat:     { level: 1, penalty: 0, label: "FORJA.FatigueLevel.reposat" },
+  afeblit:     { level: 2, penalty: 0, label: "FORJA.FatigueLevel.afeblit" },
+  cansat:      { level: 3, penalty: 0, label: "FORJA.FatigueLevel.cansat" },
+  defallit:    { level: 4, penalty: 1, label: "FORJA.FatigueLevel.defallit" },
+  exhaurit:    { level: 5, penalty: 2, label: "FORJA.FatigueLevel.exhaurit" },
+  rebentat:    { level: 6, penalty: 3, label: "FORJA.FatigueLevel.rebentat" },
+  inconscient: { level: 7, penalty: null, label: "FORJA.FatigueLevel.inconscient" }
 };
 
 // Attack formula mapping: attackType -> { attribute, skill }
@@ -226,4 +227,31 @@ FORJA.attackFormulas = {
   brawl: { attribute: "FOR", skill: "barallar-se" },
   martial: { attribute: "DES", skill: "arts-marcials" },
   natural: { attribute: "FOR", skill: "barallar-se" }
+};
+
+// Base weapon stats for artifact weapons that reference a base weapon type.
+// Maps artifact.system.baseWeapon → weapon profile (attack type, latency, reach, damage).
+// The artifact's own damageValue is added on top as a bonus.
+FORJA.weaponBaseStats = {
+  "espasa":       { weaponType: "melee",  attackType: "melee", latencyMod: 1, reach: "+1",     damage: "FOR+2" },
+  "espasa-llarga":{ weaponType: "melee",  attackType: "melee", latencyMod: 2, reach: "+1",     damage: "FOR+3" },
+  "basto":        { weaponType: "melee",  attackType: "melee", latencyMod: 2, reach: "+1",     damage: "FOR+2" },
+  "guant":        { weaponType: "melee",  attackType: "brawl", latencyMod: 0, reach: "A tocar",damage: "FOR+1" }
+};
+
+// Default natural weapon (all actors always have this)
+FORJA.copWeapon = {
+  id: "cop", nameKey: "FORJA.Natural.Cop", damage: "FOR+1",
+  latencyMod: 0, reach: "0", attackType: "brawl", specialKey: ""
+};
+
+// Natural weapon definitions keyed by trait ID
+// Actors with these trait IDs show the corresponding natural weapon in combat
+FORJA.naturalWeaponTraits = {
+  "armament-natural-banyes":    { id: "banyes",    nameKey: "FORJA.Natural.Banyes",    damage: "FOR+3", latencyMod: 1, reach: "1", attackType: "natural", specialKey: "" },
+  "armament-natural-urpes":     { id: "urpes",     nameKey: "FORJA.Natural.Urpes",     damage: "FOR+2", latencyMod: 1, reach: "0", attackType: "natural", specialKey: "" },
+  "armament-natural-mossegada": { id: "ullals",    nameKey: "FORJA.Natural.Mossegada", damage: "FOR+2", latencyMod: 1, reach: "0", attackType: "natural", specialKey: "" },
+  "armament-natural-pinces":    { id: "pinces",    nameKey: "FORJA.Natural.Pinces",    damage: "FOR+3", latencyMod: 1, reach: "0", attackType: "natural", specialKey: "" },
+  "armament-natural-fiblo":     { id: "fiblons",   nameKey: "FORJA.Natural.Fiblo",     damage: "FOR+2", latencyMod: 0, reach: "0", attackType: "natural", specialKey: "FORJA.Natural.FibloSpecial" },
+  "tentacles":                  { id: "tentacles", nameKey: "FORJA.Natural.Tentacles", damage: "FOR+2", latencyMod: 0, reach: "0", attackType: "natural", specialKey: "" }
 };
