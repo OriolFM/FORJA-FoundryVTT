@@ -90,8 +90,11 @@
     const FIREBASE_VERSION = "11.0.0";
     const CDN = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}`;
 
+    // API key is passed as URL parameter (?key=...) by the Foundry importer.
+    // No secrets are hardcoded in this file.
+    const urlKey = new URLSearchParams(window.location.search).get("key") ?? "";
     const FIREBASE_CONFIG = {
-      apiKey: "AIzaSyB5zSfj5RbuwKPHJeexG7tXtiJlUA_GAAQ",
+      apiKey: urlKey,
       authDomain: "forjapp.firebaseapp.com",
       projectId: "forjapp",
       storageBucket: "forjapp.firebasestorage.app",

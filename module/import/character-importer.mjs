@@ -295,9 +295,12 @@ export default class ForjaCharacterImporter {
     });
 
     // --- Step 1: Open auth.html in a new window ---
+    // Pass the API key via URL param so no secret is hardcoded in auth.html.
     html.find(".forja-import-auth__btn--google").on("click", () => {
+      const apiKey = game.settings.get("forja", "forjappApiKey") ?? "";
+      const authUrl = `/systems/forja/auth.html?key=${encodeURIComponent(apiKey)}`;
       window.open(
-        "/systems/forja/auth.html",
+        authUrl,
         "forjapp-auth",
         "width=500,height=600,menubar=no,toolbar=no,location=no"
       );
