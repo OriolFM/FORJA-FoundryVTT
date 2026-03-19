@@ -215,6 +215,7 @@ async function _onRenderCombatTracker(app, html, data) {
   LOG("Render:", { phase, combatants: combat.combatants.size, resolving: resolvingIds.length });
 
   _injectPhaseIndicator(root, tracker, combat, phase);
+  _injectDeclarationSections(root, tracker, combat, phase);
 
   // Build ordinal rank map: rank 1 = acts first, based on declared position
   const rankMap = {};
@@ -306,6 +307,77 @@ function _injectPhaseIndicator(root, tracker, combat, phase) {
     tracker.parentNode.insertBefore(header, tracker);
   } else {
     root.prepend(header);
+  }
+}
+
+/* ---------------------------------------- */
+/*  Declaration / Resolution Sections      */
+/* ---------------------------------------- */
+
+/**
+ * During the declaration phase, inject two mini-sections above the tracker list:
+ *   1. "Ordre d'actuació" — already declared, sorted by position ascending (acts first → top)
+ *   2. "Pendent de declarar" — not yet declared, sorted by latency descending (declares next → top)
+ */
+function _injectDeclarationSections(root, tracker, combat, phase) {
+  root.querySelector(".forja-declaration-sections")?.remove();
+  if (phase !== "declaration" && phase !== "ambush_declaration") return;
+
+  const all = combat.combatants.contents.filter(c => !c.defeated);
+
+  const declaredOrder = all
+    .filter(c => c.declaredAction)
+    .sort((a, b) => (a.position ?? Infinity) - (b.position ?? Infinity));
+
+  const pendingDeclaration = all
+    .filter(c => !c.declaredAction)
+    .sort((a, b) => {
+      const latA = a.actor?.system?.latency ?? 10;
+      const latB = b.actor?.system?.latency ?? 10;
+      return latB - latA; // highest latency first (declares next)
+    });
+
+  if (!declaredOrder.length && !pendingDeclaration.length) return;
+
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("forja-declaration-sections");
+
+  const _makeRow = (c, showPosition) => {
+    const pos = c.getFlag("forja", "position") ?? 0;
+    const lat = c.actor?.system?.latency ?? "?";
+    const icon = c.declaredAction?.icon ?? null;
+    return `
+      <div class="forja-section-row" data-combatant-id="${c.id}">
+        <img src="${c.img ?? "icons/svg/mystery-man.svg"}" title="${c.name}" />
+        <span class="forja-section-row__name">${c.name}</span>
+        ${showPosition
+          ? `<span class="forja-section-row__badge forja-section-row__badge--pos" title="${game.i18n.localize("FORJA.Derived.Latency")}">${pos}</span>`
+          : `<span class="forja-section-row__badge" title="${game.i18n.localize("FORJA.Derived.Latency")}">Lat. ${lat}</span>`
+        }
+        ${icon ? `<i class="fas ${icon} forja-section-row__action-icon"></i>` : ""}
+      </div>`;
+  };
+
+  if (declaredOrder.length) {
+    wrapper.innerHTML += `
+      <div class="forja-section forja-section--declared">
+        <div class="forja-section__title"><i class="fas fa-crosshairs"></i> ${game.i18n.localize("FORJA.Combat.ResolutionOrder")}</div>
+        ${declaredOrder.map(c => _makeRow(c, true)).join("")}
+      </div>`;
+  }
+
+  if (pendingDeclaration.length) {
+    wrapper.innerHTML += `
+      <div class="forja-section forja-section--pending">
+        <div class="forja-section__title"><i class="fas fa-scroll"></i> ${game.i18n.localize("FORJA.Combat.PendingDeclaration")}</div>
+        ${pendingDeclaration.map(c => _makeRow(c, false)).join("")}
+      </div>`;
+  }
+
+  if (tracker !== root && tracker.parentNode) {
+    tracker.parentNode.insertBefore(wrapper, tracker);
+  } else {
+    tracker.before(wrapper);
   }
 }
 
@@ -976,15 +1048,28 @@ function _parseWeaponDamage(damageStr, actor) {
 }
 
 /**
- * Calculate final damage dealt (min 0).
+ * Calculate final damage dealt using FORJA rules (armor vs DR separation).
+ * If armor alone stops all damage: 0. If DR brings the remainder to 0: min 1.
  */
-function _calcDamage(weaponItem, attackerActor, netHits, targetCombatant) {
+function _calcDamage(weaponItem, attackerActor, netHits, targetCombatant, { weaponBonus = 0, blockExtraDR = 0 } = {}) {
   const base = _parseWeaponDamage(weaponItem?.system?.damage ?? "", attackerActor);
+  const totalRaw = base + weaponBonus + netHits;
   const protection = targetCombatant?.actor?.system?.protection ?? 0;
-  const dr = targetCombatant?.actor?.system?.damageReduction ?? 0;
-  const total = base + netHits - protection - dr;
-  LOG(`Damage calc: base=${base} + netHits=${netHits} - prot=${protection} - DR=${dr} = ${total}`);
-  return Math.max(0, total);
+  const dr = (targetCombatant?.actor?.system?.damageReduction ?? 0) + blockExtraDR;
+  const minimumDamage = 1 + weaponBonus;
+
+  if (totalRaw <= protection) {
+    LOG(`Damage calc: armor stops all (${totalRaw} <= ${protection}) → 0`);
+    return 0;
+  }
+  const afterArmor = totalRaw - protection;
+  const afterDR = afterArmor - dr;
+  if (afterDR <= 0) {
+    LOG(`Damage calc: DR reduces to 0 → minimum ${minimumDamage}`);
+    return minimumDamage;
+  }
+  LOG(`Damage calc: base=${base}+bonus=${weaponBonus}+hits=${netHits} - prot=${protection} - DR=${dr} = ${afterDR}`);
+  return afterDR;
 }
 
 /**
@@ -1389,10 +1474,7 @@ async function _handleAreaAttackFlow(attackerCombatant, combat, weapon) {
 
     const netHits = attackerFites - defenderFites;
     const isHit   = netHits > 0;
-    const prot    = isHit ? (targetCombatant.actor?.system?.protection ?? 0) : 0;
-    const dr      = isHit ? (targetCombatant.actor?.system?.damageReduction ?? 0) : 0;
-    const base    = isHit ? _parseWeaponDamage(weapon?.system?.damage ?? "", attackerCombatant.actor) : 0;
-    const totalDamage = isHit ? Math.max(1, base + netHits - prot - dr - blockExtraDR) : 0;
+    const totalDamage = isHit ? _calcDamage(weapon, attackerCombatant.actor, netHits, targetCombatant, { blockExtraDR }) : 0;
 
     const defenseLabel = defenseResult.type === "basic"
       ? game.i18n.localize("FORJA.Combat.BasicDefense").replace("{dice}", defenderFites)
@@ -1598,8 +1680,8 @@ async function _handleAttackFlow(attackerCombatant, combat, buttonTargetId = nul
   const artifactDmgBonus = isHit ? (weapon?._damageBonus ?? 0) : 0;
   const protection = isHit ? (targetCombatant?.actor?.system?.protection ?? 0) : 0;
   const dr = isHit ? (targetCombatant?.actor?.system?.damageReduction ?? 0) : 0;
-  // Minimum damage is 1 if the attack hits; block adds extra DR; artifact bonus is added to base
-  const totalDamage = isHit ? Math.max(1, baseDamage + artifactDmgBonus + netHits - protection - dr - blockExtraDR) : 0;
+  // FORJA damage rules: armor stops all → 0 (no minimum); DR brings to 0 → min 1+bonus
+  const totalDamage = isHit ? _calcDamage(weapon, attackerCombatant.actor, netHits, targetCombatant, { weaponBonus: artifactDmgBonus, blockExtraDR }) : 0;
 
   // 6. Post summary to chat (visible to all)
   const attackerName  = attackerCombatant.name;

@@ -265,10 +265,12 @@ export default class ForjaCombat extends Combat {
    */
   async advanceToNext() {
     LOG("advanceToNext called");
-    // Find the minimum position among combatants with declared actions
+    // Find the minimum position among combatants with declared actions.
+    // Skip any already marked as resolving (race condition guard).
     let minPos = Infinity;
     for (const c of this.combatants) {
       if (c.defeated || !c.declaredAction) continue;
+      if (c.getFlag("forja", "resolving")) continue;
       const pos = c.position;
       LOG(`  ${c.name}: position=${pos}, action=${c.declaredAction?.type}`);
       if (pos > 0 && pos < minPos) minPos = pos;
@@ -283,7 +285,16 @@ export default class ForjaCombat extends Combat {
     const resolving = [];
     for (const c of this.combatants) {
       if (c.defeated || !c.declaredAction) continue;
+      if (c.getFlag("forja", "resolving")) continue;
       if (c.position === minPos) resolving.push(c.id);
+    }
+
+    // Mark resolving combatants atomically before changing phase (prevents double-acting)
+    if (resolving.length) {
+      await this.updateEmbeddedDocuments("Combatant", resolving.map(id => ({
+        _id: id,
+        "flags.forja.resolving": true
+      })));
     }
 
     LOG(`Advancing to position ${minPos}. Resolving:`, resolving.map(id => this.combatants.get(id)?.name));
@@ -367,7 +378,8 @@ export default class ForjaCombat extends Combat {
         "flags.forja.reactionsUsed": 0,
         "flags.forja.attackRolled": false,
         "flags.forja.pendingMove": null,
-        "flags.forja.preRolledDefenseFites": null
+        "flags.forja.preRolledDefenseFites": null,
+        "flags.forja.resolving": false // Clear resolving guard
         // position kept intentionally
       };
     });

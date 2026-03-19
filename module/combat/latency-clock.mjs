@@ -22,12 +22,18 @@ export function getDeclarationOrder(combatants) {
     // Latency descending (highest first = slowest declares first)
     if (latA !== latB) return latB - latA;
 
-    // Tiebreak: antagonists declare first
+    // Tiebreak 1: accumulated clock position descending
+    // (who is further ahead on the timeline declares first among equals)
+    const posA = a.getFlag("forja", "position") ?? 0;
+    const posB = b.getFlag("forja", "position") ?? 0;
+    if (posA !== posB) return posB - posA;
+
+    // Tiebreak 2: antagonists declare first
     if (a.side !== b.side) {
       return a.side === "antagonists" ? -1 : 1;
     }
 
-    // Lower AGI declares first (less agile declare earlier)
+    // Tiebreak 3: lower AGI declares first (less agile declare earlier)
     const agiA = a.actor?.system?.attributes?.AGI?.value ?? 0;
     const agiB = b.actor?.system?.attributes?.AGI?.value ?? 0;
     if (agiA !== agiB) return agiA - agiB;
@@ -96,21 +102,40 @@ export function getCombatTargets(combatants, actorSide, actionType) {
 }
 
 /**
- * Calculate damage from an attack resolution.
- * Damage = baseDamage + excessFites - protection - damageReduction (min 1 if hit).
+ * Calculate damage from an attack resolution (FORJA rules).
+ *
+ * Flow: Armor → DR → Minimum damage
+ *   - If armor alone stops all damage → 0 (no minimum)
+ *   - If armor partially stops it and DR reduces remainder to 0 → minimum damage (1 + weaponBonus)
+ *   - If both can't stop it → full remaining damage
+ *
  * @param {object} params
- * @param {number} params.baseDamage - Weapon's base damage value
- * @param {number} params.attackFites - Attacker's successes
- * @param {number} params.defenseFites - Defender's successes
- * @param {number} params.protection - Defender's total protection
- * @param {number} params.damageReduction - Defender's damage reduction (FOR)
- * @param {boolean} params.isHit - Whether the attack hit
- * @returns {number} Final damage (0 if miss)
+ * @param {number} params.weaponBaseDamage  - Weapon's base damage (without bonus)
+ * @param {number} params.weaponBonus       - Fixed weapon bonus (claws +2, sword +3, etc.)
+ * @param {number} params.attackExcess      - Net hits from attack roll (attackFites - defenseFites)
+ * @param {number} params.armorProtection   - Defender's total armor protection
+ * @param {number} params.damageReduction   - Defender's damage reduction (FOR)
+ * @param {boolean} params.isHit            - Whether the attack hit
+ * @returns {number} Final damage (0 if miss or fully stopped)
  */
-export function calculateDamage({ baseDamage, attackFites, defenseFites, protection, damageReduction, isHit }) {
+export function calculateDamage({ weaponBaseDamage, weaponBonus = 0, attackExcess, armorProtection, damageReduction, isHit }) {
   if (!isHit) return 0;
 
-  const excessFites = Math.max(0, attackFites - defenseFites);
-  const rawDamage = baseDamage + excessFites - protection - damageReduction;
-  return Math.max(1, rawDamage); // Minimum 1 damage on hit
+  const totalRaw = weaponBaseDamage + weaponBonus + attackExcess;
+  const minimumDamage = 1 + weaponBonus;
+
+  // Step 1: Armor
+  if (totalRaw <= armorProtection) {
+    return 0; // Armor stops everything — no minimum
+  }
+  const afterArmor = totalRaw - armorProtection;
+
+  // Step 2: Damage Reduction
+  const afterDR = afterArmor - damageReduction;
+  if (afterDR <= 0) {
+    // DR reduces to 0, but armor did NOT stop it alone → apply minimum
+    return minimumDamage;
+  }
+
+  return afterDR;
 }

@@ -11,14 +11,20 @@
 const FIREBASE_VERSION = "11.0.0";
 const CDN_BASE = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}`;
 
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyDCs6d0Z-VQAi1_tZoar_R7fk2w7-IXq8U",
+// Non-sensitive Firebase project identifiers (public by design — no secrets here).
+// The API key is stored separately in Foundry world settings (configured by the GM).
+const FIREBASE_PROJECT = {
   authDomain: "forjapp.firebaseapp.com",
   projectId: "forjapp",
   storageBucket: "forjapp.firebasestorage.app",
   messagingSenderId: "838748075347",
   appId: "1:838748075347:web:6fb0847ec5156aeb175da6"
 };
+
+function _getFirebaseConfig() {
+  const apiKey = game?.settings?.get("forja", "forjappApiKey") ?? "";
+  return { apiKey, ...FIREBASE_PROJECT };
+}
 
 // Singleton references
 let _app = null;
@@ -54,7 +60,7 @@ async function _initFirebase() {
   try {
     _app = appMod.getApp("forjapp-foundry");
   } catch {
-    _app = appMod.initializeApp(FIREBASE_CONFIG, "forjapp-foundry");
+    _app = appMod.initializeApp(_getFirebaseConfig(), "forjapp-foundry");
   }
 
   try {

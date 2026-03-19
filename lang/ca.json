@@ -417,5 +417,11 @@
   "FORJA.Import.BrowsePublic": "Explorar públics",
   "FORJA.Import.PasteCode": "Enganxa el codi aquí...",
   "FORJA.Import.Connect": "Connectar",
-  "FORJA.Import.PasteHint": "Copia el codi de la pàgina de login i enganxa'l aquí"
+  "FORJA.Import.PasteHint": "Copia el codi de la pàgina de login i enganxa'l aquí",
+
+  "FORJA.Settings.ForjappApiKey": "Clau API de FORJAPP",
+  "FORJA.Settings.ForjappApiKeyHint": "Clau de l'API de Firebase per connectar amb FORJAPP. Obteniu-la des de la consola de Firebase del projecte FORJAPP.",
+
+  "FORJA.Combat.ResolutionOrder": "Ordre d'actuació",
+  "FORJA.Combat.PendingDeclaration": "Pendent de declarar"
 }

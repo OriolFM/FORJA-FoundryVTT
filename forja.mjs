@@ -173,6 +173,16 @@ Hooks.once("init", () => {
     label: "FORJA.Sheet.SupernaturalEffect"
   });
 
+  // Register world settings
+  game.settings.register("forja", "forjappApiKey", {
+    name: "FORJA.Settings.ForjappApiKey",
+    hint: "FORJA.Settings.ForjappApiKeyHint",
+    scope: "world",
+    config: true,
+    type: String,
+    default: ""
+  });
+
   // Register Handlebars helpers
   registerHandlebarsHelpers();
 

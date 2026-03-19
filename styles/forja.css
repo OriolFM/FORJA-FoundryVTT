@@ -2923,6 +2923,84 @@
   color: var(--forja-text-secondary);
 }
 
+/* --- Declaration / Resolution Sections --- */
+.forja-declaration-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forja-space-xs);
+  padding: var(--forja-space-xs) var(--forja-space-sm);
+  border-bottom: 1px solid var(--forja-bg-800);
+  margin-bottom: var(--forja-space-xs);
+}
+
+.forja-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.forja-section__title {
+  font-size: var(--forja-font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--forja-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  padding: 2px 0;
+}
+
+.forja-section--declared .forja-section__title { color: var(--forja-primary-light); }
+.forja-section--pending  .forja-section__title { color: var(--forja-text-secondary); }
+
+.forja-section-row {
+  display: flex;
+  align-items: center;
+  gap: var(--forja-space-xs);
+  padding: 2px var(--forja-space-xs);
+  border-radius: var(--forja-radius-sm);
+  background: var(--forja-bg-900);
+}
+
+.forja-section-row img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.forja-section-row__name {
+  flex: 1;
+  font-size: var(--forja-font-size-sm);
+  color: var(--forja-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.forja-section-row__badge {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-text-secondary);
+  background: var(--forja-bg-800);
+  padding: 1px 5px;
+  border-radius: var(--forja-radius-sm);
+}
+
+.forja-section-row__badge--pos {
+  color: var(--forja-primary-light);
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
+}
+
+.forja-section-row__action-icon {
+  font-size: var(--forja-font-size-xs);
+  color: var(--forja-primary);
+  width: 14px;
+  text-align: center;
+}
+
 /* --- Position Number --- */
 .forja-combat-position {
   display: flex;

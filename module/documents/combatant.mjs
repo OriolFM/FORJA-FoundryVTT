@@ -63,6 +63,11 @@ export default class ForjaCombatant extends Combatant {
     return this.declaredAction?.type === "concentrate";
   }
 
+  /** Whether this combatant is currently in active resolution (guard against double-acting). */
+  get isResolving() {
+    return this.getFlag("forja", "resolving") ?? false;
+  }
+
   /* ---------------------------------------- */
   /*  Actions                                 */
   /* ---------------------------------------- */
