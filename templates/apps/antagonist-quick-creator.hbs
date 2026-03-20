@@ -1,0 +1,70 @@
+<div class="forja-antagonist-creator">
+
+  {{!-- Selector de plantilles per grup/nivell --}}
+  <div class="forja-antagonist-creator__templates">
+    {{#each groups}}
+      <div class="forja-antagonist-creator__group">
+        <h3 class="forja-antagonist-creator__group-title">{{localize labelKey}}</h3>
+        <div class="forja-antagonist-creator__grid">
+          {{#each templates}}
+            <button type="button"
+                    class="forja-antagonist-creator__tpl-btn {{#if selected}}forja-antagonist-creator__tpl-btn--selected{{/if}}"
+                    data-action="selectTemplate"
+                    data-template-key="{{key}}">
+              {{label}}
+            </button>
+          {{/each}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+
+  {{!-- Previsualització de la plantilla seleccionada --}}
+  {{#if selectedPreview}}
+    <div class="forja-antagonist-creator__preview">
+      <h3 class="forja-antagonist-creator__preview-title">{{selectedLabel}}</h3>
+      <div class="forja-antagonist-creator__preview-attrs">{{selectedPreview.attrStr}}</div>
+      <div class="forja-antagonist-creator__preview-row">
+        <span class="forja-antagonist-creator__preview-label">{{localize "FORJA.Tabs.Skills"}}:</span>
+        <span>{{selectedPreview.skillStr}}</span>
+      </div>
+      <div class="forja-antagonist-creator__preview-row">
+        <span class="forja-antagonist-creator__preview-label">{{localize "FORJA.Tabs.Traits"}}:</span>
+        <span>{{selectedPreview.traitStr}}</span>
+      </div>
+    </div>
+  {{else}}
+    <div class="forja-antagonist-creator__empty-preview">
+      <p>{{localize "FORJA.Antagonist.SelectHint"}}</p>
+    </div>
+  {{/if}}
+
+  {{!-- Opcions de creació --}}
+  <div class="forja-antagonist-creator__options">
+    <div class="forja-antagonist-creator__option-row">
+      <label for="antagonist-quantity">{{localize "FORJA.Antagonist.Quantity"}}</label>
+      <input type="number" id="antagonist-quantity" name="quantity"
+             value="{{quantity}}" min="1" max="20" class="forja-antagonist-creator__qty" />
+    </div>
+    {{#if hasCombat}}
+      <div class="forja-antagonist-creator__option-row">
+        <label for="antagonist-add-combat">{{localize "FORJA.Antagonist.AddToCombat"}}</label>
+        <input type="checkbox" id="antagonist-add-combat" name="addToCombat"
+               {{#if addToCombat}}checked{{/if}} />
+      </div>
+    {{/if}}
+  </div>
+
+  {{!-- Botó crear --}}
+  <div class="forja-antagonist-creator__footer">
+    <button type="button"
+            class="forja-antagonist-creator__create-btn"
+            data-action="createAntagonists"
+            {{#unless canCreate}}disabled{{/unless}}>
+      <i class="fas fa-user-plus"></i>
+      {{localize "FORJA.Antagonist.Create"}}
+      {{#if canCreate}}({{quantity}}){{/if}}
+    </button>
+  </div>
+
+</div>

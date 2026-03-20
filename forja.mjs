@@ -36,6 +36,10 @@ import { registerCombatHooks } from "./module/combat/combat-tracker.mjs";
 // Import
 import ForjaCharacterImporter from "./module/import/character-importer.mjs";
 
+// Apps
+import { AntagonistQuickCreator } from "./module/apps/antagonist-quick-creator.mjs";
+import { CharacterCreationWizard } from "./module/apps/character-creation-wizard.mjs";
+
 // Actor Sheets
 import ForjaCharacterSheet from "./module/sheets/actor/character-sheet.mjs";
 import ForjaNPCSheet from "./module/sheets/actor/npc-sheet.mjs";
@@ -183,6 +187,24 @@ Hooks.once("init", () => {
     default: ""
   });
 
+  game.settings.register("forja", "forjappProjectId", {
+    name: "FORJA.Settings.ForjAppProjectId",
+    hint: "FORJA.Settings.ForjAppProjectIdHint",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "forjapp"
+  });
+
+  game.settings.register("forja", "forjappUserId", {
+    name: "FORJA.Settings.ForjAppUserId",
+    hint: "FORJA.Settings.ForjAppUserIdHint",
+    scope: "client",
+    config: true,
+    type: String,
+    default: ""
+  });
+
   // Register Handlebars helpers
   registerHandlebarsHelpers();
 
@@ -206,17 +228,29 @@ Hooks.once("ready", () => {
 
 Hooks.on("getActorDirectoryEntryContext", () => {});
 Hooks.on("renderActorDirectory", (app, html) => {
-  // Avoid duplicating the button on re-renders
   const root = html[0] ?? html;
+
+  // Avoid duplicating buttons on re-renders
   if (root.querySelector?.(".forja-import-btn")) return;
 
-  const button = document.createElement("button");
-  button.classList.add("forja-import-btn");
-  button.type = "button";
-  button.innerHTML = `<i class="fas fa-file-import"></i> ${game.i18n.localize("FORJA.Import.Title")}`;
-  button.addEventListener("click", (ev) => {
+  // Import button
+  const importBtn = document.createElement("button");
+  importBtn.classList.add("forja-import-btn");
+  importBtn.type = "button";
+  importBtn.innerHTML = `<i class="fas fa-file-import"></i> ${game.i18n.localize("FORJA.Import.Title")}`;
+  importBtn.addEventListener("click", (ev) => {
     ev.preventDefault();
     ForjaCharacterImporter.showImportDialog();
+  });
+
+  // Antagonist quick creator button (GM only)
+  const antagonistBtn = document.createElement("button");
+  antagonistBtn.classList.add("forja-antagonist-btn");
+  antagonistBtn.type = "button";
+  antagonistBtn.innerHTML = `<i class="fas fa-user-secret"></i> ${game.i18n.localize("FORJA.Antagonist.QuickCreate")}`;
+  antagonistBtn.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    new AntagonistQuickCreator().render(true);
   });
 
   // Try multiple selectors for v13 compatibility
@@ -227,12 +261,26 @@ Hooks.on("renderActorDirectory", (app, html) => {
     ?? html.find?.(".directory-header")?.[0];
 
   if (container) {
-    container.appendChild(button);
+    container.appendChild(importBtn);
+    if (game.user.isGM) container.appendChild(antagonistBtn);
   } else {
-    // Last resort: append to the element itself (top of sidebar)
     console.warn("FORJA | Could not find header container in ActorDirectory, appending to root");
-    (root.querySelector?.(".directory") ?? root).prepend(button);
+    const target = root.querySelector?.(".directory") ?? root;
+    target.prepend(antagonistBtn);
+    target.prepend(importBtn);
   }
+});
+
+/* -------------------------------------------- */
+/*  Character Creation Wizard Hook              */
+/* -------------------------------------------- */
+
+Hooks.on("preCreateActor", (doc, data, options, userId) => {
+  if (data.type !== "character") return true;
+  if (options.skipWizard) return true;
+  if (userId !== game.user.id) return true;
+  new CharacterCreationWizard({ actorName: data.name ?? "" }).render(true);
+  return false;
 });
 
 /* -------------------------------------------- */
@@ -266,6 +314,11 @@ async function _preloadHandlebarsTemplates() {
     // Dice
     "systems/forja/templates/dice/roll-dialog.hbs",
     "systems/forja/templates/dice/roll-result.hbs",
+
+    // Apps
+    "systems/forja/templates/apps/forjapp-character-picker.hbs",
+    "systems/forja/templates/apps/antagonist-quick-creator.hbs",
+    "systems/forja/templates/apps/character-creation-wizard.hbs",
 
     // Combat
     "systems/forja/templates/combat/combat-tracker.hbs",

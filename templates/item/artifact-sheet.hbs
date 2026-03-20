@@ -120,6 +120,56 @@
       <input type="number" name="system.protection" value="{{system.protection}}" />
     </div>
 
+    {{!-- Base Weapon --}}
+    <div class="forja-form-group">
+      <label>{{localize "FORJA.BaseWeapon"}}</label>
+      <input type="text" name="system.baseWeapon" value="{{system.baseWeapon}}" />
+    </div>
+
+    {{!-- Skill Bonuses --}}
+    <div class="forja-form-group">
+      <div class="forja-array-header">
+        <label>{{localize "FORJA.SkillBonus"}}</label>
+        <button type="button" class="forja-array-add" data-action="addSkillBonus" title="{{localize 'FORJA.Add'}}">+</button>
+      </div>
+      {{#each system.skillBonus as |entry i|}}
+        <div class="forja-array-row" data-index="{{i}}">
+          <input type="text" name="system.skillBonus.{{i}}.skillId" value="{{entry.skillId}}" placeholder="{{localize 'FORJA.SkillId'}}" class="forja-array-row__id" />
+          <input type="number" name="system.skillBonus.{{i}}.bonus" value="{{entry.bonus}}" class="forja-array-row__num" />
+          <button type="button" class="forja-array-remove" data-action="removeSkillBonus" data-index="{{i}}" title="{{localize 'FORJA.Remove'}}">&times;</button>
+        </div>
+      {{/each}}
+    </div>
+
+    {{!-- States Applied --}}
+    <div class="forja-form-group">
+      <div class="forja-array-header">
+        <label>{{localize "FORJA.StatesApplied"}}</label>
+        <button type="button" class="forja-array-add" data-action="addStateApplied" title="{{localize 'FORJA.Add'}}">+</button>
+      </div>
+      {{#each system.statesApplied as |entry i|}}
+        <div class="forja-array-row" data-index="{{i}}">
+          <input type="text" name="system.statesApplied.{{i}}.stateId" value="{{entry.stateId}}" placeholder="{{localize 'FORJA.StateId'}}" class="forja-array-row__id" />
+          <input type="number" name="system.statesApplied.{{i}}.value" value="{{entry.value}}" class="forja-array-row__num" />
+          <button type="button" class="forja-array-remove" data-action="removeStateApplied" data-index="{{i}}" title="{{localize 'FORJA.Remove'}}">&times;</button>
+        </div>
+      {{/each}}
+    </div>
+
+    {{!-- Traits Granted --}}
+    <div class="forja-form-group">
+      <div class="forja-array-header">
+        <label>{{localize "FORJA.TraitsGranted"}}</label>
+        <button type="button" class="forja-array-add" data-action="addTraitGranted" title="{{localize 'FORJA.Add'}}">+</button>
+      </div>
+      {{#each system.traitsGranted as |traitId i|}}
+        <div class="forja-array-row" data-index="{{i}}">
+          <input type="text" name="system.traitsGranted.{{i}}" value="{{traitId}}" placeholder="{{localize 'FORJA.TraitId'}}" class="forja-array-row__full" />
+          <button type="button" class="forja-array-remove" data-action="removeTraitGranted" data-index="{{i}}" title="{{localize 'FORJA.Remove'}}">&times;</button>
+        </div>
+      {{/each}}
+    </div>
+
     {{!-- Notes --}}
     <div class="forja-form-group">
       <label>{{localize "FORJA.Notes"}}</label>

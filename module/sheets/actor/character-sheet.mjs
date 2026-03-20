@@ -22,7 +22,9 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       removeInventoryNote: ForjaCharacterSheet.#onRemoveInventoryNote,
       rollNaturalWeapon: ForjaCharacterSheet.#onRollNaturalWeapon,
       openArtifactPicker: ForjaCharacterSheet.#onOpenArtifactPicker,
-      rollArtifactWeapon: ForjaCharacterSheet.#onRollArtifactWeapon
+      rollArtifactWeapon: ForjaCharacterSheet.#onRollArtifactWeapon,
+      saveToForjApp: ForjaCharacterSheet.#onSaveToForjApp,
+      loadFromForjApp: ForjaCharacterSheet.#onLoadForjAppList
     },
     form: { submitOnChange: true },
     dragDrop: [{ dropSelector: "form" }]
@@ -408,5 +410,31 @@ export default class ForjaCharacterSheet extends HandlebarsApplicationMixin(foun
       }
     }, { classes: ["dialog", "forja-dialog"], width: 420 });
     dialog.render(true);
+  }
+
+  // ── ForjApp Bridge ────────────────────────────────────────────────────
+
+  static async #onSaveToForjApp(event, target) {
+    try {
+      const { ForjAppBridge } = await import("../../apps/forjapp-bridge.mjs");
+      await ForjAppBridge.saveCharacter(this.actor);
+    } catch (e) {
+      ui.notifications.error(`FORJApp: ${e.message}`);
+    }
+  }
+
+  static async #onLoadForjAppList(event, target) {
+    const btn = target;
+    btn.disabled = true;
+    try {
+      const { ForjAppBridge } = await import("../../apps/forjapp-bridge.mjs");
+      const { ForjAppCharacterPicker } = await import("../../apps/forjapp-character-picker.mjs");
+      const chars = await ForjAppBridge.listUserCharacters();
+      new ForjAppCharacterPicker(chars).render(true);
+    } catch (e) {
+      ui.notifications.error(`FORJApp: ${e.message}`);
+    } finally {
+      btn.disabled = false;
+    }
   }
 }

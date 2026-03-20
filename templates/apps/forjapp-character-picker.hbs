@@ -1,0 +1,20 @@
+<div class="forja-forjapp-picker">
+  {{#if isEmpty}}
+    <p class="forja-empty">{{localize "FORJA.ForjAppPicker.Empty"}}</p>
+  {{else}}
+    <p class="forja-forjapp-picker__hint">{{localize "FORJA.ForjAppPicker.Hint"}}</p>
+    <ul class="forja-forjapp-picker__list">
+      {{#each characters}}
+        <li class="forja-forjapp-picker__row"
+            data-action="selectCharacter"
+            data-character-id="{{id}}">
+          <div class="forja-forjapp-picker__info">
+            <span class="forja-forjapp-picker__name">{{name}}</span>
+            <span class="forja-forjapp-picker__meta">{{type}} · {{species}} · {{updatedAt}}</span>
+          </div>
+          <i class="fas fa-file-import forja-forjapp-picker__icon"></i>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>

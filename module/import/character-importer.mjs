@@ -150,23 +150,14 @@ export default class ForjaCharacterImporter {
             <div class="forja-import-auth">
               <div class="forja-import-auth__disconnected">
                 <p class="forja-import-dialog__hint">${i18n("FORJA.Import.ForjappHint")}</p>
-                <div class="forja-import-auth__steps">
-                  <div class="forja-import-auth__step">
-                    <span class="forja-import-auth__step-num">1</span>
-                    <button type="button" class="forja-import-auth__btn forja-import-auth__btn--google">
-                      <i class="fab fa-google"></i> ${i18n("FORJA.Import.ConnectGoogle")}
-                    </button>
-                  </div>
-                  <div class="forja-import-auth__step">
-                    <span class="forja-import-auth__step-num">2</span>
-                    <div class="forja-import-auth__code-input">
-                      <input type="text" name="authCode" placeholder="${i18n("FORJA.Import.PasteCode")}"
-                             class="forja-import-auth__code" />
-                      <button type="button" class="forja-import-auth__btn forja-import-auth__btn--connect">
-                        <i class="fas fa-plug"></i> ${i18n("FORJA.Import.Connect")}
-                      </button>
-                    </div>
-                  </div>
+                <button type="button" class="forja-import-auth__btn forja-import-auth__btn--google">
+                  <i class="fab fa-google"></i> ${i18n("FORJA.Import.ConnectGoogle")}
+                </button>
+                <div class="forja-import-auth__waiting" style="display:none;">
+                  <i class="fas fa-spinner fa-spin"></i> ${i18n("FORJA.Import.Loading")}…
+                  <button type="button" class="forja-import-auth__btn forja-import-auth__btn--cancel">
+                    ${i18n("Cancel")}
+                  </button>
                 </div>
               </div>
               <div class="forja-import-auth__connected" style="display:none;">
@@ -257,7 +248,7 @@ export default class ForjaCharacterImporter {
       render: (html) => {
         ForjaCharacterImporter._setupDialogEvents(html);
       }
-    }, { width: 580, height: "auto", classes: ["forja-import-wrapper"] }).render(true);
+    }, { width: 680, height: "auto", classes: ["forja-import-wrapper"] }).render(true);
   }
 
   /**
@@ -265,6 +256,11 @@ export default class ForjaCharacterImporter {
    */
   static _setupDialogEvents(html) {
     const i18n = (key, data) => data ? game.i18n.format(key, data) : game.i18n.localize(key);
+
+    // Pre-load Firebase SDK so it's ready when the user clicks Sign In.
+    // signInWithPopup must be called within a user-gesture tick; if the SDK
+    // is still loading (CDN fetch) at that point the browser blocks the popup.
+    ForjappService.preInitialize();
 
     // --- Tab switching ---
     html.find(".forja-import-tab").on("click", (ev) => {
@@ -294,49 +290,40 @@ export default class ForjaCharacterImporter {
       reader.readAsText(file);
     });
 
-    // --- Step 1: Open auth.html in a new window ---
-    // Pass the API key via URL param so no secret is hardcoded in auth.html.
-    html.find(".forja-import-auth__btn--google").on("click", () => {
-      const apiKey = game.settings.get("forja", "forjappApiKey") ?? "";
-      const authUrl = `/systems/forja/auth.html?key=${encodeURIComponent(apiKey)}`;
-      window.open(
-        authUrl,
-        "forjapp-auth",
-        "width=500,height=600,menubar=no,toolbar=no,location=no"
-      );
-      // Focus the code input after opening
-      html.find("input[name='authCode']").focus();
-    });
+    // --- Sign in via auth.html + Firestore polling ---
+    html.find(".forja-import-auth__btn--google").on("click", async () => {
+      const apiKey    = game.settings.get("forja", "forjappApiKey") ?? "";
+      const sessionId = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      const authUrl   = `/systems/forja/auth.html?key=${encodeURIComponent(apiKey)}&session=${encodeURIComponent(sessionId)}`;
 
-    // --- Step 2: Paste code and connect (Enter key support) ---
-    html.find("input[name='authCode']").on("keydown", (ev) => {
-      if (ev.key === "Enter") {
-        ev.preventDefault();
-        html.find(".forja-import-auth__btn--connect").trigger("click");
-      }
-    });
+      // "noopener" ensures window.opener is null inside auth.html, so Firebase's
+      // signInWithPopup uses auth.html as the popup parent (not Foundry's window).
+      // This works in both browser and Electron.
+      window.open(authUrl, "_blank", "noopener");
 
-    html.find(".forja-import-auth__btn--connect").on("click", async () => {
-      const code = html.find("input[name='authCode']").val()?.trim();
-      if (!code) {
-        ui.notifications.warn(i18n("FORJA.Import.NoData"));
-        return;
-      }
+      const googleBtn = html.find(".forja-import-auth__btn--google");
+      const waitingEl = html.find(".forja-import-auth__waiting");
+      googleBtn.hide();
+      waitingEl.show();
+
+      const cancelSignal = { cancelled: false };
+      html.find(".forja-import-auth__btn--cancel").one("click", () => {
+        cancelSignal.cancelled = true;
+        waitingEl.hide();
+        googleBtn.show();
+      });
+
       try {
-        html.find(".forja-import-auth__btn--connect").prop("disabled", true);
-        // Pre-init Firebase while processing
-        ForjappService.preload().catch(() => {});
-        console.log("FORJA | Processing auth code...");
-        const user = await ForjappService.signInWithCode(code);
-        console.log("FORJA | signIn resolved, user:", user?.displayName || user?.email);
+        const user = await ForjappService.authenticateViaPolling(sessionId, cancelSignal);
         ForjaCharacterImporter._showConnected(html, user);
-        console.log("FORJA | Loading characters...");
         await ForjaCharacterImporter._loadCharacters(html, "mine");
-        console.log("FORJA | Characters loaded.");
       } catch (err) {
-        console.error("FORJA | Firebase auth error:", err);
-        ui.notifications.error(`${i18n("FORJA.Import.ConnectionError")}: ${err.message}`);
-        html.find(".forja-import-auth__btn--connect").prop("disabled", false);
+        if (!cancelSignal.cancelled) {
+          console.error("FORJA | Firebase auth error:", err);
+          ui.notifications.error(`${i18n("FORJA.Import.ConnectionError")}: ${err.message}`);
+        }
+        waitingEl.hide();
+        googleBtn.show();
       }
     });
 
@@ -578,7 +565,7 @@ export default class ForjaCharacterImporter {
       name: actorName,
       type: actorType,
       system: systemData
-    });
+    }, { skipWizard: true });
 
     if (!actor) throw new Error("Failed to create actor");
 
@@ -835,6 +822,13 @@ export default class ForjaCharacterImporter {
               duration: e.duration ?? "",
               damageValue: e.damageValue ?? 0,
               damageType: e.damageType ?? "",
+              healingValue: e.healingValue ?? 0,
+              protection: e.protection ?? 0,
+              skillBonus: e.skillBonus ?? [],
+              statesApplied: e.statesApplied ?? [],
+              traitsGranted: e.traitsGranted ?? [],
+              mentalEffect: e.mentalEffect ?? "",
+              latencyMod: e.latencyMod ?? 0,
               notes: e.notes ?? ""
             }
           });

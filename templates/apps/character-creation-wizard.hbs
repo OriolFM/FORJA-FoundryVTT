@@ -1,0 +1,677 @@
+<div class="forja-wizard">
+
+  {{!-- ══ BARRA DE PASSOS ══ --}}
+  <nav class="forja-wizard__steps">
+    {{#each stepLabels}}
+      <button type="button"
+              class="forja-wizard__step-btn
+                     {{#if this.active}}forja-wizard__step-btn--active{{/if}}
+                     {{#if this.done}}forja-wizard__step-btn--done{{/if}}
+                     {{#if this.skipped}}forja-wizard__step-btn--skipped{{/if}}"
+              data-action="goToStep"
+              data-step="{{this.step}}">
+        <span class="forja-wizard__step-num">
+          {{#if this.done}}<i class="fas fa-check"></i>{{else}}{{this.step}}{{/if}}
+        </span>
+        <span class="forja-wizard__step-label">{{this.label}}</span>
+      </button>
+    {{/each}}
+  </nav>
+
+  {{!-- ══ BARRA DE PUNTS (sempre visible) ══ --}}
+  <div class="forja-wizard__budget {{#if costs.isOver}}forja-wizard__budget--over{{/if}}">
+    <span>{{localize "FORJA.Points.Total"}}: <strong>{{totalPoints}}</strong></span>
+    <span>{{localize "FORJA.Points.Spent"}}: <strong>{{costs.spent}}</strong></span>
+    <span class="{{#if costs.isOver}}forja-wizard__budget-over{{/if}}">
+      {{localize "FORJA.Points.Available"}}: <strong>{{costs.available}}</strong>
+    </span>
+  </div>
+
+  {{!-- ══ CONTINGUT DEL PAS ══ --}}
+  <div class="forja-wizard__content">
+
+    {{!── PAS 1: CONCEPTE ──}}
+    {{#ifeq currentStep 1}}
+    <div class="forja-wizard__step">
+      <div class="forja-wizard__form-grid">
+
+        <div class="forja-wizard__field forja-wizard__field--full">
+          <label class="forja-wizard__label--required">{{localize "FORJA.Name"}}</label>
+          <input type="text" name="wizard-name" value="{{name}}"
+                 placeholder="{{localize 'FORJA.CharacterName'}}" autofocus />
+          {{#unless name}}
+            <span class="forja-wizard__field-error">{{localize "FORJA.Wizard.NameRequired"}}</span>
+          {{/unless}}
+        </div>
+
+        <div class="forja-wizard__field forja-wizard__field--full">
+          <label>{{localize "FORJA.Concept"}}</label>
+          <input type="text" name="wizard-concept" value="{{concept}}"
+                 placeholder="{{localize 'FORJA.Wizard.ConceptHint'}}" />
+        </div>
+
+        <div class="forja-wizard__field">
+          <label>{{localize "FORJA.Origin"}}</label>
+          <input type="text" name="wizard-origin" value="{{origin}}" />
+        </div>
+
+        <div class="forja-wizard__field">
+          <label>{{localize "FORJA.Gender"}}</label>
+          <input type="text" name="wizard-gender" value="{{gender}}" />
+        </div>
+
+        <div class="forja-wizard__field forja-wizard__field--half">
+          <label>{{localize "FORJA.Age"}}</label>
+          <input type="number" name="wizard-age" value="{{age}}" min="0" />
+        </div>
+
+        <div class="forja-wizard__field forja-wizard__field--half">
+          <label>{{localize "FORJA.Points.Total"}}</label>
+          <input type="number" name="wizard-totalPoints" value="{{totalPoints}}" min="0" step="10" />
+          <span class="forja-wizard__field-hint">{{localize "FORJA.Wizard.TotalPointsHint"}}</span>
+        </div>
+
+      </div>
+    </div>
+    {{/ifeq}}
+
+    {{!── PAS 2: ESPÈCIE, ATRIBUTS I COS ──}}
+    {{#ifeq currentStep 2}}
+    <div class="forja-wizard__step forja-wizard__step--body">
+
+      {{!-- Espècie --}}
+      <div class="forja-wizard__section">
+        <h3 class="forja-wizard__section-title">{{localize "FORJA.Species.label"}}</h3>
+        <div class="forja-wizard__species-grid">
+          {{#each speciesOptions}}
+            <label class="forja-wizard__species-card {{#if selected}}forja-wizard__species-card--active{{/if}}">
+              <input type="radio" name="wizard-species" value="{{key}}" {{#if selected}}checked{{/if}} />
+              <span class="forja-wizard__species-name">{{label}}</span>
+              <span class="forja-wizard__cost-pill">{{signed cost}} PC</span>
+            </label>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="forja-wizard__body-lower">
+
+        {{!-- Atributs amb botons +/- --}}
+        <div class="forja-wizard__section">
+          <h3 class="forja-wizard__section-title">{{localize "FORJA.Wizard.Step.Attributes"}}
+            <span class="forja-wizard__cost-pill">{{signed costs.attributes}} PC</span>
+          </h3>
+          <div class="forja-wizard__attrs-list">
+            {{#each attributeRows}}
+              <div class="forja-wizard__attr-row">
+                <span class="forja-wizard__attr-key">{{key}}</span>
+                <span class="forja-wizard__attr-label">{{label}}</span>
+                <div class="forja-wizard__attr-controls">
+                  <button type="button" class="forja-wizard__attr-btn"
+                          data-action="attrDec" data-attr-key="{{key}}"
+                          {{#if atMin}}disabled{{/if}}>−</button>
+                  <span class="forja-wizard__attr-value">{{value}}</span>
+                  <button type="button" class="forja-wizard__attr-btn"
+                          data-action="attrInc" data-attr-key="{{key}}"
+                          {{#if atMax}}disabled{{/if}}>+</button>
+                </div>
+                <span class="forja-wizard__cost-pill">{{signed cost}} PC</span>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+
+        <div class="forja-wizard__body-cols">
+
+          {{!-- Mida --}}
+          <div class="forja-wizard__section">
+            <h3 class="forja-wizard__section-title">{{localize "FORJA.Size.label"}}</h3>
+            <div class="forja-wizard__range-list">
+              {{#each sizeOptions}}
+                <label class="forja-wizard__range-card {{#ifeq value ../size}}forja-wizard__range-card--active{{/ifeq}}">
+                  <input type="radio" name="wizard-size" value="{{value}}"
+                         {{#ifeq value ../size}}checked{{/ifeq}} />
+                  <span class="forja-wizard__range-label">{{label}}</span>
+                  <span class="forja-wizard__cost-pill">{{signed cost}} PC</span>
+                </label>
+              {{/each}}
+            </div>
+          </div>
+
+          {{!-- Constitució --}}
+          <div class="forja-wizard__section">
+            <h3 class="forja-wizard__section-title">{{localize "FORJA.Constitution.label"}}</h3>
+            <div class="forja-wizard__range-list">
+              {{#each constitutionOptions}}
+                <label class="forja-wizard__range-card {{#ifeq value ../constitution}}forja-wizard__range-card--active{{/ifeq}}">
+                  <input type="radio" name="wizard-constitution" value="{{value}}"
+                         {{#ifeq value ../constitution}}checked{{/ifeq}} />
+                  <span class="forja-wizard__range-label">{{label}}</span>
+                  <span class="forja-wizard__cost-pill">{{signed cost}} PC</span>
+                </label>
+              {{/each}}
+            </div>
+          </div>
+
+          {{!-- Stats derivats --}}
+          <div class="forja-wizard__section">
+            <h3 class="forja-wizard__section-title">{{localize "FORJA.Wizard.DerivedStats"}}</h3>
+            <dl class="forja-wizard__derived-list">
+              <dt>{{localize "FORJA.Derived.Defense"}}</dt>       <dd>{{derived.defense}}</dd>
+              <dt>{{localize "FORJA.Derived.Latency"}}</dt>       <dd>{{derived.latency}}</dd>
+              <dt>{{localize "FORJA.Derived.DamageReduction"}}</dt><dd>{{derived.damageReduction}}</dd>
+              <dt>{{localize "FORJA.Health.Wounds"}}</dt>         <dd>0 / {{derived.woundsMax}}</dd>
+              <dt>{{localize "FORJA.Health.Fatigue"}}</dt>        <dd>0 / {{derived.fatigueMax}}</dd>
+            </dl>
+          </div>
+
+        </div>{{!-- .forja-wizard__body-cols --}}
+      </div>{{!-- .forja-wizard__body-lower --}}
+    </div>
+    {{/ifeq}}
+
+    {{!── PAS 3: HABILITATS ──}}
+    {{#ifeq currentStep 3}}
+    <div class="forja-wizard__step forja-wizard__step--list">
+
+      <div class="forja-wizard__list-header">
+        <span class="forja-wizard__count-badge">{{selectedSkillCount}} {{localize "FORJA.Wizard.Step.Skills"}}</span>
+        <div class="forja-wizard__search">
+          <i class="fas fa-search"></i>
+          <input type="text" name="wizard-skill-filter" value="{{skillFilter}}"
+                 placeholder="{{localize 'FORJA.Search'}}" data-live-filter />
+        </div>
+      </div>
+
+      <div class="forja-wizard__list">
+        {{#each filteredSkills}}
+          <div class="forja-wizard__list-row {{#if isSelected}}forja-wizard__list-row--selected{{/if}}">
+            <span class="forja-wizard__list-name">{{name}}</span>
+            <span class="forja-wizard__list-attr forja-attr-badge">{{relatedAttribute}}</span>
+            {{#if isSelected}}
+              <input type="number" name="wizard-skill-level-{{skillId}}"
+                     value="{{level}}" min="1" max="{{maxLevel}}"
+                     class="forja-wizard__level-input" />
+              <span class="forja-wizard__cost-pill">{{cost}} PC</span>
+              <button type="button" class="forja-wizard__remove-btn"
+                      data-action="removeSkill" data-skill-id="{{skillId}}">
+                <i class="fas fa-times"></i>
+              </button>
+            {{else}}
+              <button type="button" class="forja-wizard__add-btn"
+                      data-action="addSkill" data-skill-id="{{skillId}}">
+                <i class="fas fa-plus"></i>
+              </button>
+            {{/if}}
+          </div>
+        {{/each}}
+        {{#unless filteredSkills.length}}
+          <div class="forja-wizard__empty">{{localize "FORJA.Wizard.NoSkills"}}</div>
+        {{/unless}}
+      </div>
+
+    </div>
+    {{/ifeq}}
+
+    {{!── PAS 4: TRETS ──}}
+    {{#ifeq currentStep 4}}
+    <div class="forja-wizard__step forja-wizard__step--list">
+
+      {{#if incompatibilityWarnings.length}}
+        <div class="forja-wizard__warnings">
+          {{#each incompatibilityWarnings}}
+            {{#ifeq type "incompatible"}}
+              <div class="forja-wizard__warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                {{localize "FORJA.Wizard.IncompatibleTraits"}}:
+                <strong>{{trait1}}</strong> + <strong>{{trait2}}</strong>
+              </div>
+            {{/ifeq}}
+            {{#ifeq type "species"}}
+              <div class="forja-wizard__warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                {{localize "FORJA.Wizard.TraitForbiddenWarning"}}:
+                <strong>{{trait1}}</strong> / <em>{{speciesLabel}}</em>
+              </div>
+            {{/ifeq}}
+          {{/each}}
+        </div>
+      {{/if}}
+
+      <div class="forja-wizard__list-header">
+        <span class="forja-wizard__count-badge">{{selectedTraitCount}} {{localize "FORJA.Wizard.Step.Traits"}}</span>
+        <div class="forja-wizard__filters">
+          <div class="forja-wizard__search">
+            <i class="fas fa-search"></i>
+            <input type="text" name="wizard-trait-filter" value="{{traitFilter}}"
+                   placeholder="{{localize 'FORJA.Search'}}" data-live-filter />
+          </div>
+          <select name="wizard-trait-category" class="forja-wizard__cat-select">
+            {{#each traitCategories}}
+              <option value="{{key}}"
+                {{#ifeq key ../traitCategoryFilter}}selected{{/ifeq}}>{{label}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+
+      <div class="forja-wizard__list">
+        {{#each filteredTraits}}
+          <div class="forja-wizard__list-row
+               {{#if isSelected}}forja-wizard__list-row--selected{{/if}}
+               {{#if isForbidden}}forja-wizard__list-row--forbidden{{/if}}
+               {{#if isIncompatible}}forja-wizard__list-row--incompatible{{/if}}">
+            <span class="forja-wizard__list-name forja-trait-{{traitType}}">{{name}}</span>
+            {{#if isSelected}}
+              {{#if isParametric}}
+                <input type="number" name="wizard-trait-level-{{traitId}}"
+                       value="{{level}}" min="1" max="{{maxLevel}}"
+                       class="forja-wizard__level-input" />
+              {{/if}}
+              {{#if isVariable}}
+                <input type="number" name="wizard-trait-variantcost-{{traitId}}"
+                       value="{{variantCost}}"
+                       class="forja-wizard__level-input" />
+              {{/if}}
+              <span class="forja-wizard__cost-pill">{{computedCost}} PC</span>
+              <button type="button" class="forja-wizard__remove-btn"
+                      data-action="removeTrait" data-trait-id="{{traitId}}">
+                <i class="fas fa-times"></i>
+              </button>
+            {{else}}
+              <span class="forja-wizard__list-cost">{{displayCost}}</span>
+              <button type="button" class="forja-wizard__add-btn"
+                      data-action="addTrait" data-trait-id="{{traitId}}"
+                      {{#unless canAdd}}disabled{{/unless}}
+                      {{#if isForbidden}}title="{{localize 'FORJA.Wizard.ForbiddenForSpecies'}}"{{/if}}
+                      {{#if isIncompatible}}title="{{localize 'FORJA.Wizard.IncompatibleWithSelected'}}"{{/if}}>
+                <i class="fas fa-plus"></i>
+              </button>
+            {{/if}}
+          </div>
+        {{/each}}
+        {{#unless filteredTraits.length}}
+          <div class="forja-wizard__empty">{{localize "FORJA.Wizard.NoTraits"}}</div>
+        {{/unless}}
+      </div>
+
+    </div>
+    {{/ifeq}}
+
+    {{!── PAS 5: EQUIPAMENT ──}}
+    {{#ifeq currentStep 5}}
+    <div class="forja-wizard__step forja-wizard__step--equip">
+
+      {{!-- Armes automàtiques --}}
+      {{#if autoWeapons.length}}
+        <div class="forja-wizard__auto-section">
+          <span class="forja-wizard__auto-label">
+            <i class="fas fa-bolt"></i> {{localize "FORJA.Wizard.AutoItems"}}
+          </span>
+          {{#each autoWeapons}}
+            <span class="forja-wizard__auto-item">{{name}}</span>
+          {{/each}}
+        </div>
+      {{/if}}
+
+      <div class="forja-wizard__equip-cols">
+
+        {{!-- Columna armes --}}
+        <div class="forja-wizard__equip-col">
+          <div class="forja-wizard__list-header">
+            <span class="forja-wizard__count-badge">{{selectedWeaponCount}} {{localize "FORJA.Wizard.Weapons"}}</span>
+            <div class="forja-wizard__search">
+              <i class="fas fa-search"></i>
+              <input type="text" name="wizard-weapon-filter" value="{{weaponFilter}}"
+                     placeholder="{{localize 'FORJA.Search'}}" data-live-filter />
+            </div>
+          </div>
+          <select name="wizard-weapon-type" class="forja-wizard__cat-select">
+            <option value="all"   {{#ifeq weaponTypeFilter "all"}}selected{{/ifeq}}>{{localize "FORJA.Wizard.AllTypes"}}</option>
+            <option value="melee" {{#ifeq weaponTypeFilter "melee"}}selected{{/ifeq}}>{{localize "FORJA.Wizard.Melee"}}</option>
+            <option value="ranged" {{#ifeq weaponTypeFilter "ranged"}}selected{{/ifeq}}>{{localize "FORJA.Wizard.Ranged"}}</option>
+          </select>
+          <div class="forja-wizard__list forja-wizard__list--compact">
+            {{#each filteredWeapons}}
+              <div class="forja-wizard__list-row {{#if isSelected}}forja-wizard__list-row--selected{{/if}}">
+                <span class="forja-wizard__list-name">{{name}}</span>
+                {{#if isSelected}}
+                  <button type="button" class="forja-wizard__remove-btn"
+                          data-action="removeWeapon" data-weapon-id="{{id}}">
+                    <i class="fas fa-times"></i>
+                  </button>
+                {{else}}
+                  <button type="button" class="forja-wizard__add-btn"
+                          data-action="addWeapon" data-weapon-id="{{id}}">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                {{/if}}
+              </div>
+            {{/each}}
+            {{#unless filteredWeapons.length}}
+              <div class="forja-wizard__empty">{{localize "FORJA.Wizard.NoWeapons"}}</div>
+            {{/unless}}
+          </div>
+        </div>
+
+        {{!-- Columna armadures --}}
+        <div class="forja-wizard__equip-col">
+          <div class="forja-wizard__list-header">
+            <span class="forja-wizard__count-badge">{{selectedArmorCount}} {{localize "FORJA.Wizard.Armor"}}</span>
+            <div class="forja-wizard__search">
+              <i class="fas fa-search"></i>
+              <input type="text" name="wizard-armor-filter" value="{{armorFilter}}"
+                     placeholder="{{localize 'FORJA.Search'}}" data-live-filter />
+            </div>
+          </div>
+          <div class="forja-wizard__list forja-wizard__list--compact">
+            {{#each filteredArmors}}
+              <div class="forja-wizard__list-row {{#if isSelected}}forja-wizard__list-row--selected{{/if}}">
+                <span class="forja-wizard__list-name">{{name}}</span>
+                {{#if isSelected}}
+                  <button type="button" class="forja-wizard__remove-btn"
+                          data-action="removeArmor" data-armor-id="{{id}}">
+                    <i class="fas fa-times"></i>
+                  </button>
+                {{else}}
+                  <button type="button" class="forja-wizard__add-btn"
+                          data-action="addArmor" data-armor-id="{{id}}">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                {{/if}}
+              </div>
+            {{/each}}
+            {{#unless filteredArmors.length}}
+              <div class="forja-wizard__empty">{{localize "FORJA.Wizard.NoArmor"}}</div>
+            {{/unless}}
+          </div>
+        </div>
+
+      </div>{{!-- .forja-wizard__equip-cols --}}
+
+      {{!-- Artefactes (full width) --}}
+      <div class="forja-wizard__section">
+        <div class="forja-wizard__list-header">
+          <span class="forja-wizard__count-badge">{{selectedArtifactCount}} {{localize "FORJA.Wizard.Artifacts"}}</span>
+          <div class="forja-wizard__search">
+            <i class="fas fa-search"></i>
+            <input type="text" name="wizard-artifact-filter" value="{{artifactFilter}}"
+                   placeholder="{{localize 'FORJA.Search'}}" data-live-filter />
+          </div>
+        </div>
+        <div class="forja-wizard__list forja-wizard__list--compact">
+          {{#each filteredArtifacts}}
+            <div class="forja-wizard__list-row {{#if isSelected}}forja-wizard__list-row--selected{{/if}}">
+              <span class="forja-wizard__list-name">{{name}}</span>
+              <span class="forja-wizard__list-cost">{{cost}} PC</span>
+              {{#if isSelected}}
+                <button type="button" class="forja-wizard__remove-btn"
+                        data-action="removeArtifact" data-artifact-id="{{id}}">
+                  <i class="fas fa-times"></i>
+                </button>
+              {{else}}
+                <button type="button" class="forja-wizard__add-btn"
+                        data-action="addArtifact" data-artifact-id="{{id}}">
+                  <i class="fas fa-plus"></i>
+                </button>
+              {{/if}}
+            </div>
+          {{/each}}
+          {{#unless filteredArtifacts.length}}
+            <div class="forja-wizard__empty">{{localize "FORJA.Wizard.NoArtifacts"}}</div>
+          {{/unless}}
+        </div>
+      </div>
+
+    </div>
+    {{/ifeq}}
+
+    {{!── PAS 6: EFECTES SOBRENATURALS (només si hi ha do) ──}}
+    {{#ifeq currentStep 6}}
+    <div class="forja-wizard__step forja-wizard__step--list">
+
+      <div class="forja-wizard__list-header">
+        <span class="forja-wizard__count-badge">{{selectedEffectCount}} {{localize "FORJA.Wizard.Step.Supernatural"}}</span>
+        <div class="forja-wizard__search">
+          <i class="fas fa-search"></i>
+          <input type="text" name="wizard-effect-filter" value="{{effectFilter}}"
+                 placeholder="{{localize 'FORJA.Search'}}" data-live-filter />
+        </div>
+      </div>
+
+      <div class="forja-wizard__list">
+        {{#each filteredEffects}}
+          <div class="forja-wizard__list-row {{#if isSelected}}forja-wizard__list-row--selected{{/if}}">
+            <span class="forja-wizard__list-name">{{name}}</span>
+            {{#if requiredGift}}
+              <span class="forja-wizard__gift-badge">{{requiredGift}}</span>
+            {{/if}}
+            {{#if isSelected}}
+              <span class="forja-wizard__cost-pill">{{cost}} PC</span>
+              <button type="button" class="forja-wizard__remove-btn"
+                      data-action="removeEffect" data-effect-id="{{id}}">
+                <i class="fas fa-times"></i>
+              </button>
+            {{else}}
+              <span class="forja-wizard__list-cost">{{cost}} PC</span>
+              <button type="button" class="forja-wizard__add-btn"
+                      data-action="addEffect" data-effect-id="{{id}}">
+                <i class="fas fa-plus"></i>
+              </button>
+            {{/if}}
+          </div>
+        {{/each}}
+        {{#unless filteredEffects.length}}
+          <div class="forja-wizard__empty">{{localize "FORJA.Wizard.NoEffects"}}</div>
+        {{/unless}}
+      </div>
+
+    </div>
+    {{/ifeq}}
+
+    {{!── PAS 7: RESUM ──}}
+    {{#ifeq currentStep 7}}
+    <div class="forja-wizard__step forja-wizard__step--summary">
+
+      <div class="forja-wizard__summary-grid">
+
+        {{!-- Identitat --}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.Step.Concept"}}</h3>
+          <dl>
+            <dt>{{localize "FORJA.Name"}}</dt>    <dd>{{name}}</dd>
+            <dt>{{localize "FORJA.Concept"}}</dt> <dd>{{#if concept}}{{concept}}{{else}}—{{/if}}</dd>
+            <dt>{{localize "FORJA.Origin"}}</dt>  <dd>{{#if origin}}{{origin}}{{else}}—{{/if}}</dd>
+            <dt>{{localize "FORJA.Gender"}}</dt>  <dd>{{#if gender}}{{gender}}{{else}}—{{/if}}</dd>
+            <dt>{{localize "FORJA.Age"}}</dt>     <dd>{{age}}</dd>
+          </dl>
+        </section>
+
+        {{!-- Cos --}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.Step.Body"}}</h3>
+          <dl>
+            {{#each speciesOptions}}{{#if selected}}
+              <dt>{{localize "FORJA.Species.label"}}</dt>
+              <dd>{{label}} <span class="forja-wizard__cost-pill">{{signed cost}} PC</span></dd>
+            {{/if}}{{/each}}
+            {{#each sizeOptions}}{{#ifeq value ../size}}
+              <dt>{{localize "FORJA.Size.label"}}</dt>
+              <dd>{{label}} <span class="forja-wizard__cost-pill">{{signed cost}} PC</span></dd>
+            {{/ifeq}}{{/each}}
+            {{#each constitutionOptions}}{{#ifeq value ../constitution}}
+              <dt>{{localize "FORJA.Constitution.label"}}</dt>
+              <dd>{{label}} <span class="forja-wizard__cost-pill">{{signed cost}} PC</span></dd>
+            {{/ifeq}}{{/each}}
+          </dl>
+        </section>
+
+        {{!-- Atributs --}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.Step.Attributes"}}
+            <span class="forja-wizard__cost-pill">{{signed costs.attributes}} PC</span>
+          </h3>
+          <dl>
+            {{#each attributeRows}}
+              <dt>{{key}} — {{label}}</dt>
+              <dd>{{value}}</dd>
+            {{/each}}
+          </dl>
+        </section>
+
+        {{!-- Stats derivats --}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.DerivedStats"}}</h3>
+          <dl>
+            <dt>{{localize "FORJA.Derived.Defense"}}</dt>        <dd>{{derived.defense}}</dd>
+            <dt>{{localize "FORJA.Derived.Latency"}}</dt>        <dd>{{derived.latency}}</dd>
+            <dt>{{localize "FORJA.Derived.DamageReduction"}}</dt><dd>{{derived.damageReduction}}</dd>
+            <dt>{{localize "FORJA.Health.Wounds"}}</dt>          <dd>0 / {{derived.woundsMax}}</dd>
+            <dt>{{localize "FORJA.Health.Fatigue"}}</dt>         <dd>0 / {{derived.fatigueMax}}</dd>
+          </dl>
+        </section>
+
+        {{!-- Habilitats --}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.Step.Skills"}}
+            <span class="forja-wizard__cost-pill">{{costs.skills}} PC</span>
+          </h3>
+          {{#if summarySkills.length}}
+            <ul class="forja-wizard__summary-list">
+              {{#each summarySkills}}
+                <li>{{name}} — {{localize "FORJA.Level"}} {{level}}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <p class="forja-wizard__empty">{{localize "FORJA.Wizard.NoSkills"}}</p>
+          {{/if}}
+        </section>
+
+        {{!-- Trets --}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.Step.Traits"}}
+            <span class="forja-wizard__cost-pill">{{costs.traits}} PC</span>
+          </h3>
+          {{#if summaryTraits.length}}
+            <ul class="forja-wizard__summary-list">
+              {{#each summaryTraits}}
+                <li>
+                  {{name}}
+                  {{#if isParametric}} ({{localize "FORJA.Level"}} {{level}}){{/if}}
+                  {{#if isVariable}} ({{variantCost}} PC){{/if}}
+                  — <span class="forja-wizard__cost-pill">{{computedCost}} PC</span>
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <p class="forja-wizard__empty">{{localize "FORJA.Wizard.NoTraits"}}</p>
+          {{/if}}
+        </section>
+
+        {{!-- Equipament --}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.Step.Equipment"}}
+            {{#if costs.artifacts}}<span class="forja-wizard__cost-pill">{{costs.artifacts}} PC</span>{{/if}}
+          </h3>
+          {{#if summaryWeapons.length}}
+            <ul class="forja-wizard__summary-list">
+              {{#each summaryWeapons}}
+                <li>{{name}}{{#if isAuto}} <em>(auto)</em>{{/if}}</li>
+              {{/each}}
+            </ul>
+          {{/if}}
+          {{#if summaryArmors.length}}
+            <ul class="forja-wizard__summary-list">
+              {{#each summaryArmors}}<li>{{name}}</li>{{/each}}
+            </ul>
+          {{/if}}
+          {{#if summaryArtifacts.length}}
+            <ul class="forja-wizard__summary-list">
+              {{#each summaryArtifacts}}
+                <li>{{name}} — <span class="forja-wizard__cost-pill">{{cost}} PC</span></li>
+              {{/each}}
+            </ul>
+          {{/if}}
+          {{#unless summaryWeapons.length}}
+            {{#unless summaryArmors.length}}
+              {{#unless summaryArtifacts.length}}
+                <p class="forja-wizard__empty">—</p>
+              {{/unless}}
+            {{/unless}}
+          {{/unless}}
+        </section>
+
+        {{!-- Efectes sobrenaturals --}}
+        {{#if hasGift}}
+        <section class="forja-wizard__summary-section">
+          <h3>{{localize "FORJA.Wizard.Step.Supernatural"}}
+            {{#if costs.effects}}<span class="forja-wizard__cost-pill">{{costs.effects}} PC</span>{{/if}}
+          </h3>
+          {{#if summaryEffects.length}}
+            <ul class="forja-wizard__summary-list">
+              {{#each summaryEffects}}
+                <li>{{name}} — <span class="forja-wizard__cost-pill">{{cost}} PC</span></li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <p class="forja-wizard__empty">{{localize "FORJA.Wizard.NoEffects"}}</p>
+          {{/if}}
+        </section>
+        {{/if}}
+
+        {{!-- Desglossament de punts --}}
+        <section class="forja-wizard__summary-section forja-wizard__summary-section--full">
+          <h3>{{localize "FORJA.Wizard.PointBreakdown"}}</h3>
+          <table class="forja-wizard__breakdown">
+            <tr><td>{{localize "FORJA.Species.label"}}</td>        <td>{{signed costs.species}}</td></tr>
+            <tr><td>{{localize "FORJA.Size.label"}}</td>           <td>{{signed costs.size}}</td></tr>
+            <tr><td>{{localize "FORJA.Constitution.label"}}</td>   <td>{{signed costs.constitution}}</td></tr>
+            <tr><td>{{localize "FORJA.Tabs.Attributes"}}</td>      <td>{{signed costs.attributes}}</td></tr>
+            <tr><td>{{localize "FORJA.Tabs.Skills"}}</td>          <td>{{costs.skills}}</td></tr>
+            <tr><td>{{localize "FORJA.Tabs.Traits"}}</td>          <td>{{costs.traits}}</td></tr>
+            {{#if costs.artifacts}}<tr><td>{{localize "FORJA.Wizard.Artifacts"}}</td><td>{{costs.artifacts}}</td></tr>{{/if}}
+            {{#if costs.effects}}<tr><td>{{localize "FORJA.Wizard.Step.Supernatural"}}</td><td>{{costs.effects}}</td></tr>{{/if}}
+            <tr class="forja-wizard__breakdown-total">
+              <td><strong>{{localize "FORJA.Points.Spent"}}</strong></td>
+              <td><strong>{{costs.spent}}</strong></td>
+            </tr>
+            <tr class="{{#if costs.isOver}}forja-wizard__breakdown-over{{/if}}">
+              <td><strong>{{localize "FORJA.Points.Available"}}</strong></td>
+              <td><strong>{{costs.available}}</strong></td>
+            </tr>
+          </table>
+        </section>
+
+      </div>{{!-- .forja-wizard__summary-grid --}}
+
+      {{#if incompatibilityWarnings.length}}
+        <div class="forja-wizard__warnings">
+          <p>{{localize "FORJA.Wizard.ResolveWarnings"}}</p>
+        </div>
+      {{/if}}
+
+    </div>
+    {{/ifeq}}
+
+  </div>{{!-- .forja-wizard__content --}}
+
+  {{!-- ══ FOOTER DE NAVEGACIÓ ══ --}}
+  <div class="forja-wizard__footer">
+    <button type="button" class="forja-wizard__btn forja-wizard__btn--prev"
+            data-action="prevStep" {{#unless canPrev}}disabled{{/unless}}>
+      <i class="fas fa-chevron-left"></i> {{localize "FORJA.Wizard.Prev"}}
+    </button>
+
+    {{#ifeq currentStep 7}}
+      <button type="button" class="forja-wizard__btn forja-wizard__btn--create"
+              data-action="createCharacter" {{#unless canFinish}}disabled{{/unless}}>
+        <i class="fas fa-user-plus"></i> {{localize "FORJA.Wizard.Create"}}
+      </button>
+    {{else}}
+      <button type="button" class="forja-wizard__btn forja-wizard__btn--next"
+              data-action="nextStep" {{#unless canNext}}disabled{{/unless}}>
+        {{localize "FORJA.Wizard.Next"}} <i class="fas fa-chevron-right"></i>
+      </button>
+    {{/ifeq}}
+  </div>
+
+</div>{{!-- .forja-wizard --}}

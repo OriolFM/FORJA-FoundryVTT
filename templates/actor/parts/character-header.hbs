@@ -152,6 +152,22 @@
     </div>
   </div>
 
+  {{!-- FORJApp sync buttons (only for characters) --}}
+  {{#if (eq actorType "character")}}
+    <div class="forja-header__forjapp-sync">
+      <button type="button" class="forja-forjapp-btn" data-action="saveToForjApp"
+              title="{{localize 'FORJA.Sheet.SaveToForjApp'}}">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <span>{{localize "FORJA.Sheet.SaveToForjApp"}}</span>
+      </button>
+      <button type="button" class="forja-forjapp-btn" data-action="loadFromForjApp"
+              title="{{localize 'FORJA.Sheet.LoadFromForjApp'}}">
+        <i class="fas fa-cloud-download-alt"></i>
+        <span>{{localize "FORJA.Sheet.LoadFromForjApp"}}</span>
+      </button>
+    </div>
+  {{/if}}
+
   {{!-- Row 5: Points bar --}}
   <div class="forja-header__points">
     <div class="forja-points-bar">

@@ -87,6 +87,14 @@ export function registerHandlebarsHelpers() {
   });
 
   /**
+   * Concatenate strings. Useful for dynamic i18n keys.
+   * {{localize (concat "FORJA.TraitCategory." category)}}
+   */
+  Handlebars.registerHelper("concat", function (...args) {
+    return args.slice(0, -1).join(""); // last arg is Handlebars options object
+  });
+
+  /**
    * Sign a number with + or - prefix.
    * {{signed 3}} -> "+3"
    */

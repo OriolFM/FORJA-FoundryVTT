@@ -4062,6 +4062,33 @@
   display: none;
 }
 
+/* --- Import Dialog Wrapper (suppress Foundry default red borders) --- */
+
+.forja-import-wrapper .window-content,
+.forja-import-wrapper .dialog-content {
+  background: var(--forja-bg-900);
+  color: var(--forja-text-primary);
+}
+
+.forja-import-wrapper input[type="text"],
+.forja-import-wrapper input[type="search"],
+.forja-import-wrapper textarea,
+.forja-import-wrapper select {
+  background: var(--forja-bg-800);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  outline: none;
+}
+
+.forja-import-wrapper input[type="text"]:focus,
+.forja-import-wrapper input[type="search"]:focus,
+.forja-import-wrapper textarea:focus,
+.forja-import-wrapper select:focus {
+  border-color: var(--forja-primary);
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.25);
+}
+
 /* --- Import Dialog Tabs --- */
 
 .forja-import-tabs {
@@ -4080,12 +4107,13 @@
   margin-bottom: -2px;
   cursor: pointer;
   font-size: var(--forja-font-size-sm);
-  color: var(--forja-text-muted);
+  color: var(--forja-text-secondary);
   transition: all var(--forja-transition);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--forja-space-xs);
+  font-weight: 500;
 }
 
 .forja-import-tab:hover {
@@ -4276,7 +4304,7 @@
 /* --- Character List --- */
 
 .forja-import-charlist {
-  max-height: 300px;
+  max-height: 420px;
   overflow-y: auto;
   border: 1px solid var(--forja-border-color);
   border-radius: var(--forja-radius-md);
@@ -4330,7 +4358,7 @@
 
 .forja-import-charlist__meta {
   font-size: var(--forja-font-size-xs);
-  color: var(--forja-text-muted);
+  color: var(--forja-text-secondary);
 }
 
 .forja-import-charlist__type {
@@ -4359,7 +4387,7 @@
   align-items: center;
   gap: var(--forja-space-xs);
   font-size: var(--forja-font-size-sm);
-  color: var(--forja-text-muted);
+  color: var(--forja-text-secondary);
   cursor: pointer;
 }
 
@@ -4628,4 +4656,1152 @@
 
 .forja-artifact-pick:hover .forja-artifact-pick__add {
   opacity: 1;
+}
+
+/* ─── Array field rows (skillBonus, statesApplied, traitsGranted) ─── */
+.forja-array-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.forja-array-header label {
+  font-size: 0.78em;
+  font-weight: 600;
+  color: var(--forja-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.forja-array-add {
+  background: transparent;
+  border: 1px solid var(--forja-primary);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-primary);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.12s, color 0.12s;
+}
+
+.forja-array-add:hover {
+  background: var(--forja-primary);
+  color: #fff;
+}
+
+.forja-array-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.forja-array-row input.forja-array-row__id {
+  flex: 2;
+  width: auto;
+}
+
+.forja-array-row input.forja-array-row__num {
+  flex: 1;
+  width: auto;
+  min-width: 50px;
+}
+
+.forja-array-row input.forja-array-row__full {
+  flex: 1;
+  width: auto;
+}
+
+.forja-array-remove {
+  background: transparent;
+  border: none;
+  color: var(--forja-text-secondary);
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.12s;
+  flex-shrink: 0;
+}
+
+.forja-array-remove:hover {
+  color: #ef4444;
+}
+
+
+/* ─── ForjApp sync buttons (character header) ─────────────────────── */
+.forja-header__forjapp-sync {
+  display: flex;
+  gap: 8px;
+  padding: 6px 12px;
+  justify-content: flex-end;
+}
+
+.forja-forjapp-btn {
+  background: transparent;
+  border: 1px solid var(--forja-primary);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-primary);
+  padding: 4px 10px;
+  font-size: 0.82em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.forja-forjapp-btn:hover {
+  background: var(--forja-primary);
+  color: #fff;
+}
+
+.forja-forjapp-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── ForjApp Character Picker ────────────────────────────────────── */
+.forja-forjapp-picker {
+  padding: 12px;
+}
+
+.forja-forjapp-picker__hint {
+  font-size: 0.85em;
+  color: var(--forja-text-secondary);
+  margin-bottom: 10px;
+}
+
+.forja-forjapp-picker__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.forja-forjapp-picker__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: var(--forja-radius-sm);
+  border: 1px solid var(--forja-border-color);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.forja-forjapp-picker__row:hover {
+  background: rgba(13, 148, 136, 0.12);
+  border-color: var(--forja-primary);
+}
+
+.forja-forjapp-picker__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.forja-forjapp-picker__name {
+  font-weight: 600;
+  color: var(--forja-text-primary);
+  font-size: 0.95em;
+}
+
+.forja-forjapp-picker__meta {
+  font-size: 0.76em;
+  color: var(--forja-text-secondary);
+}
+
+.forja-forjapp-picker__icon {
+  color: var(--forja-primary);
+  font-size: 0.9em;
+  opacity: 0.6;
+  transition: opacity 0.12s;
+}
+
+.forja-forjapp-picker__row:hover .forja-forjapp-picker__icon {
+  opacity: 1;
+}
+
+/* ─── Antagonist Quick Creator ────────────────────────────────────── */
+.forja-antagonist-creator {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px;
+  height: 100%;
+}
+
+.forja-antagonist-creator__group-title {
+  font-size: 0.78em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--forja-primary);
+  margin: 0 0 6px 0;
+}
+
+.forja-antagonist-creator__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.forja-antagonist-creator__tpl-btn {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-primary);
+  padding: 5px 10px;
+  font-size: 0.84em;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.forja-antagonist-creator__tpl-btn:hover {
+  border-color: var(--forja-primary);
+  color: var(--forja-primary-light);
+}
+
+.forja-antagonist-creator__tpl-btn--selected {
+  background: var(--forja-primary);
+  border-color: var(--forja-primary);
+  color: #fff;
+}
+
+.forja-antagonist-creator__preview {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: 10px 12px;
+  font-size: 0.88em;
+}
+
+.forja-antagonist-creator__preview-title {
+  font-weight: 700;
+  color: var(--forja-text-primary);
+  margin: 0 0 6px 0;
+  font-size: 1em;
+}
+
+.forja-antagonist-creator__preview-attrs {
+  color: var(--forja-primary-light);
+  font-family: monospace;
+  font-size: 0.85em;
+  margin-bottom: 6px;
+}
+
+.forja-antagonist-creator__preview-row {
+  display: flex;
+  gap: 6px;
+  color: var(--forja-text-secondary);
+  font-size: 0.85em;
+  margin-bottom: 3px;
+}
+
+.forja-antagonist-creator__preview-label {
+  font-weight: 600;
+  color: var(--forja-text-primary);
+}
+
+.forja-antagonist-creator__empty-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  color: var(--forja-text-secondary);
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+.forja-antagonist-creator__options {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.forja-antagonist-creator__option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  color: var(--forja-text-primary);
+}
+
+.forja-antagonist-creator__qty {
+  width: 60px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-primary);
+  padding: 3px 6px;
+  text-align: center;
+}
+
+.forja-antagonist-creator__footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.forja-antagonist-creator__create-btn {
+  background: var(--forja-primary);
+  border: none;
+  border-radius: var(--forja-radius-sm);
+  color: #fff;
+  padding: 8px 20px;
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.forja-antagonist-creator__create-btn:hover:not(:disabled) {
+  background: var(--forja-primary-light);
+}
+
+.forja-antagonist-creator__create-btn:disabled {
+  background: var(--forja-bg-800);
+  color: var(--forja-text-secondary);
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  CHARACTER CREATION WIZARD                                                  */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.character-creation-wizard .window-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.forja-wizard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--forja-bg-900);
+  color: var(--forja-text-primary);
+}
+
+/* ── Step nav ── */
+
+.forja-wizard__steps {
+  display: flex;
+  gap: 4px;
+  padding: 10px 12px 8px;
+  background: var(--forja-bg-darkest);
+  border-bottom: 1px solid var(--forja-border-color);
+  flex-shrink: 0;
+}
+
+.forja-wizard__step-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 4px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-secondary);
+  font-size: 0.75em;
+  cursor: default;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.forja-wizard__step-btn--active {
+  border-color: var(--forja-primary);
+  color: var(--forja-primary-light);
+  background: rgba(13, 148, 136, 0.1);
+}
+
+.forja-wizard__step-btn--done {
+  border-color: var(--forja-success, #22c55e);
+  color: var(--forja-success, #22c55e);
+  cursor: pointer;
+}
+
+.forja-wizard__step-btn--done:hover {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.forja-wizard__step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--forja-bg-700, #374151);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.forja-wizard__step-btn--active .forja-wizard__step-num {
+  background: var(--forja-primary);
+  color: white;
+}
+
+.forja-wizard__step-btn--done .forja-wizard__step-num {
+  background: var(--forja-success, #22c55e);
+  color: white;
+}
+
+.forja-wizard__step-label {
+  font-size: 0.78em;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ── Budget bar ── */
+
+.forja-wizard__budget {
+  display: flex;
+  gap: 24px;
+  padding: 6px 16px;
+  background: var(--forja-bg-800);
+  border-bottom: 1px solid var(--forja-border-color);
+  font-size: 0.85em;
+  flex-shrink: 0;
+}
+
+.forja-wizard__budget strong { font-weight: 600; }
+
+.forja-wizard__budget--over {
+  background: rgba(239, 68, 68, 0.12);
+  border-bottom-color: rgba(239, 68, 68, 0.4);
+}
+
+.forja-wizard__budget-over { color: #ef4444; font-weight: 700; }
+
+/* ── Content ── */
+
+.forja-wizard__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+.forja-wizard__step { }
+
+.forja-wizard__section {
+  margin-bottom: 16px;
+}
+
+.forja-wizard__section-title {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--forja-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--forja-border-color);
+}
+
+/* ── Form grid (pas 1) ── */
+
+.forja-wizard__form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.forja-wizard__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.forja-wizard__field--full { grid-column: 1 / -1; }
+.forja-wizard__field--half { }
+
+.forja-wizard__label--required::after {
+  content: " *";
+  color: #ef4444;
+}
+
+.forja-wizard__field label {
+  font-size: 0.82em;
+  color: var(--forja-text-secondary);
+  font-weight: 500;
+}
+
+.forja-wizard__field input[type="text"],
+.forja-wizard__field input[type="number"] {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-primary);
+  padding: 6px 8px;
+  font-size: 0.9em;
+}
+
+.forja-wizard__field input:focus {
+  border-color: var(--forja-primary);
+  outline: none;
+}
+
+.forja-wizard__field-error {
+  font-size: 0.78em;
+  color: #ef4444;
+}
+
+.forja-wizard__field-hint {
+  font-size: 0.78em;
+  color: var(--forja-text-muted, #6b7280);
+}
+
+/* ── Species grid (pas 2) ── */
+
+.forja-wizard__species-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.forja-wizard__species-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: center;
+}
+
+.forja-wizard__species-card input[type="radio"] { display: none; }
+
+.forja-wizard__species-card--active {
+  border-color: var(--forja-primary);
+  background: rgba(13, 148, 136, 0.12);
+}
+
+.forja-wizard__species-card:hover:not(.forja-wizard__species-card--active) {
+  border-color: var(--forja-primary-light);
+}
+
+.forja-wizard__species-name {
+  font-size: 0.83em;
+  font-weight: 500;
+  color: var(--forja-text-primary);
+}
+
+/* ── Body cols (pas 2) ── */
+
+.forja-wizard__body-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.forja-wizard__range-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.forja-wizard__range-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  cursor: pointer;
+  transition: border-color 0.12s;
+}
+
+.forja-wizard__range-card input[type="radio"] { display: none; }
+
+.forja-wizard__range-card--active {
+  border-color: var(--forja-primary);
+  background: rgba(13, 148, 136, 0.12);
+}
+
+.forja-wizard__range-label {
+  flex: 1;
+  font-size: 0.84em;
+}
+
+/* ── Derived stats preview ── */
+
+.forja-wizard__derived-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.forja-wizard__derived-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: 6px 12px;
+  min-width: 70px;
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.forja-wizard__derived-stat strong {
+  font-size: 1.3em;
+  color: var(--forja-primary-light);
+}
+
+/* ── Attributes layout (pas 3) ── */
+
+.forja-wizard__attrs-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+
+.forja-wizard__attrs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.forja-wizard__attr-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.forja-wizard__attr-key {
+  font-weight: 700;
+  font-size: 0.9em;
+  color: var(--forja-primary-light);
+  min-width: 32px;
+}
+
+.forja-wizard__attr-label {
+  min-width: 110px;
+  font-size: 0.88em;
+  color: var(--forja-text-secondary);
+}
+
+/* +/- attribute buttons (replaces slider) */
+.forja-wizard__attr-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.forja-wizard__attr-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--forja-border);
+  border-radius: 4px;
+  background: var(--forja-bg-800);
+  color: var(--forja-text-primary);
+  font-size: 1.1em;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.forja-wizard__attr-btn:hover:not(:disabled) {
+  background: var(--forja-primary);
+  border-color: var(--forja-primary);
+}
+
+.forja-wizard__attr-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.forja-wizard__attr-value {
+  font-weight: 700;
+  min-width: 22px;
+  text-align: center;
+  font-size: 1.05em;
+  color: var(--forja-text-primary);
+}
+
+.forja-wizard__attrs-derived {
+  min-width: 170px;
+}
+
+.forja-wizard__derived-list {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 4px 12px;
+  font-size: 0.84em;
+}
+
+.forja-wizard__derived-list dt {
+  color: var(--forja-text-secondary);
+}
+
+.forja-wizard__derived-list dd {
+  font-weight: 600;
+  color: var(--forja-primary-light);
+  text-align: right;
+  margin: 0;
+}
+
+/* ── List steps (passos 4 i 5) ── */
+
+.forja-wizard__step--list {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 20px);
+}
+
+.forja-wizard__list-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.forja-wizard__count-badge {
+  background: var(--forja-primary);
+  color: white;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 0.8em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.forja-wizard__search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: 0 8px;
+}
+
+.forja-wizard__search i { color: var(--forja-text-secondary); font-size: 0.85em; }
+
+.forja-wizard__search input {
+  background: transparent;
+  border: none;
+  color: var(--forja-text-primary);
+  padding: 6px 4px;
+  font-size: 0.88em;
+  width: 100%;
+}
+
+.forja-wizard__search input:focus { outline: none; }
+
+.forja-wizard__filters {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+}
+
+.forja-wizard__cat-select {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  color: var(--forja-text-primary);
+  border-radius: var(--forja-radius-sm);
+  padding: 5px 8px;
+  font-size: 0.85em;
+  min-width: 120px;
+}
+
+.forja-wizard__list {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  max-height: 340px;
+}
+
+.forja-wizard__list-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--forja-border-color);
+  transition: background 0.1s;
+}
+
+.forja-wizard__list-row:last-child { border-bottom: none; }
+
+.forja-wizard__list-row:hover { background: var(--forja-bg-800); }
+
+.forja-wizard__list-row--selected {
+  background: rgba(13, 148, 136, 0.08);
+  border-left: 3px solid var(--forja-primary);
+}
+
+.forja-wizard__list-row--forbidden {
+  opacity: 0.5;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.forja-wizard__list-row--incompatible {
+  background: rgba(245, 158, 11, 0.07);
+}
+
+.forja-wizard__list-name {
+  flex: 1;
+  font-size: 0.88em;
+}
+
+.forja-trait-positive .forja-wizard__list-name,
+.forja-wizard__list-name.forja-trait-positive { color: var(--forja-text-primary); }
+
+.forja-wizard__list-name.forja-trait-negative { color: #f87171; }
+
+.forja-wizard__list-attr,
+.forja-attr-badge {
+  font-size: 0.75em;
+  background: var(--forja-bg-700, #374151);
+  color: var(--forja-primary-light);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-weight: 600;
+}
+
+.forja-wizard__list-cost {
+  font-size: 0.8em;
+  color: var(--forja-text-secondary);
+  min-width: 60px;
+  text-align: right;
+}
+
+.forja-wizard__level-input {
+  width: 52px;
+  background: var(--forja-bg-700, #374151);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-primary);
+  padding: 3px 6px;
+  font-size: 0.85em;
+  text-align: center;
+}
+
+.forja-wizard__add-btn,
+.forja-wizard__remove-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--forja-radius-sm);
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8em;
+  flex-shrink: 0;
+  transition: background 0.12s;
+}
+
+.forja-wizard__add-btn {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #22c55e;
+}
+
+.forja-wizard__add-btn:hover:not(:disabled) {
+  background: rgba(34, 197, 94, 0.25);
+}
+
+.forja-wizard__add-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.forja-wizard__remove-btn {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.forja-wizard__remove-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+/* ── Cost pill ── */
+
+.forja-wizard__cost-pill {
+  font-size: 0.75em;
+  background: var(--forja-bg-700, #374151);
+  border-radius: 10px;
+  padding: 1px 7px;
+  color: var(--forja-text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Warnings ── */
+
+.forja-wizard__warnings {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: var(--forja-radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.forja-wizard__warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85em;
+  color: #f59e0b;
+  line-height: 1.4;
+}
+
+.forja-wizard__warning + .forja-wizard__warning { margin-top: 4px; }
+
+.forja-wizard__warning strong { color: var(--forja-text-primary); }
+.forja-wizard__warning em { color: var(--forja-text-secondary); font-style: normal; }
+
+/* ── Summary (pas 6) ── */
+
+.forja-wizard__step--summary { }
+
+.forja-wizard__summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.forja-wizard__summary-section {
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: 12px 14px;
+}
+
+.forja-wizard__summary-section h3 {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--forja-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--forja-border-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.forja-wizard__summary-section--full {
+  grid-column: 1 / -1;
+}
+
+.forja-wizard__summary-section dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 10px;
+  font-size: 0.84em;
+}
+
+.forja-wizard__summary-section dt { color: var(--forja-text-secondary); }
+.forja-wizard__summary-section dd { margin: 0; font-weight: 500; }
+
+.forja-wizard__summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.84em;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.forja-wizard__summary-list li { color: var(--forja-text-primary); }
+
+.forja-wizard__breakdown {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85em;
+}
+
+.forja-wizard__breakdown td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--forja-border-color);
+}
+
+.forja-wizard__breakdown td:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.forja-wizard__breakdown-total td {
+  border-top: 2px solid var(--forja-border-color);
+  font-weight: bold;
+}
+
+.forja-wizard__breakdown-over td { color: #ef4444; }
+
+/* ── Step 2: Body lower layout ── */
+
+.forja-wizard__body-lower {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* ── Step 5: Equipment layout ── */
+
+.forja-wizard__step--body {
+  overflow-y: auto;
+}
+
+.forja-wizard__step--equip {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.forja-wizard__equip-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.forja-wizard__equip-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.forja-wizard__list--compact .forja-wizard__list-row {
+  padding: 4px 8px;
+  min-height: 28px;
+}
+
+/* Auto-weapons row */
+.forja-wizard__auto-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-primary);
+  border-radius: var(--forja-radius-sm);
+  font-size: 0.82em;
+}
+
+.forja-wizard__auto-label {
+  color: var(--forja-primary-light);
+  font-weight: 600;
+}
+
+.forja-wizard__auto-item {
+  background: var(--forja-primary);
+  color: white;
+  border-radius: 3px;
+  padding: 2px 6px;
+}
+
+/* Gift badge */
+.forja-wizard__gift-badge {
+  font-size: 0.72em;
+  background: #7c3aed;
+  color: white;
+  border-radius: 3px;
+  padding: 2px 5px;
+  text-transform: capitalize;
+}
+
+/* Skipped step in nav */
+.forja-wizard__step-btn--skipped {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.forja-wizard__empty {
+  color: var(--forja-text-muted, #6b7280);
+  font-size: 0.84em;
+  font-style: italic;
+}
+
+/* ── Footer ── */
+
+.forja-wizard__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--forja-bg-darkest);
+  border-top: 1px solid var(--forja-border-color);
+  flex-shrink: 0;
+}
+
+.forja-wizard__btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  border-radius: var(--forja-radius-sm);
+  border: 1px solid var(--forja-border-color);
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.forja-wizard__btn--prev {
+  background: var(--forja-bg-800);
+  color: var(--forja-text-secondary);
+}
+
+.forja-wizard__btn--prev:hover:not(:disabled) {
+  background: var(--forja-bg-700, #374151);
+  color: var(--forja-text-primary);
+}
+
+.forja-wizard__btn--next,
+.forja-wizard__btn--create {
+  background: var(--forja-primary);
+  border-color: var(--forja-primary);
+  color: white;
+}
+
+.forja-wizard__btn--next:hover:not(:disabled),
+.forja-wizard__btn--create:hover:not(:disabled) {
+  background: var(--forja-primary-light);
+  border-color: var(--forja-primary-light);
+}
+
+.forja-wizard__btn--create {
+  background: var(--forja-primary);
+  font-weight: 600;
+}
+
+.forja-wizard__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
