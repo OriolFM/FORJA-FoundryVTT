@@ -1,0 +1,72 @@
+[
+  {
+    "id": "combinacio",
+    "nom": "Combinació",
+    "dificultat": 1,
+    "estat": "",
+    "descripcio": "L'atacant clava 2 cops al seu oponent. Els cops impacten en torns consecutius, i l'acció no s'acaba fins que ja s'han fet tots."
+  },
+  {
+    "id": "contraatac",
+    "nom": "Contraatac",
+    "dificultat": 1,
+    "estat": "",
+    "descripcio": "L'atacant es posa en guàrdia i espera un atac. Si el pot parar o blocar, contraataca immediatament, fora de seqüència, i l'oponent no pot parar ni blocar el contraatac. Quan arriba al torn del seu marcador, declara la següent acció (ja ha actuat)."
+  },
+  {
+    "id": "cop-penetrant",
+    "nom": "Cop penetrant",
+    "dificultat": 1,
+    "estat": "",
+    "descripcio": "Aquest cop apunta a parts vulnerables i ignora les armadures naturals i flexibles (la reducció de dany funciona normalment)."
+  },
+  {
+    "id": "dim-mak",
+    "nom": "Dim Mak",
+    "dificultat": 1,
+    "estat": "",
+    "descripcio": "Atacant un punt sense armadura, l'atacant pot causar el dany normal de ferides, o duplicar el dany de fatiga causat (després de la reducció de dany)."
+  },
+  {
+    "id": "dislocar",
+    "nom": "Dislocar",
+    "dificultat": 1,
+    "estat": "esguerrat",
+    "descripcio": "L'atacant ataca una articulació de l'objectiu i li aplica l'estat esguerrat."
+  },
+  {
+    "id": "engrapar",
+    "nom": "Engrapar",
+    "dificultat": 1,
+    "estat": "atrapat",
+    "descripcio": "L'atacant aferra l'objectiu pel coll o diverses extremitats, atrapant-lo i immobilitzant-lo."
+  },
+  {
+    "id": "giragonsa",
+    "nom": "Giragonsa",
+    "dificultat": 1,
+    "estat": "",
+    "descripcio": "L'atacant fa un seguit de giragonses, i clava una puntada de peu al seu objectiu en algun punt del moviment (mou, ataca, i acaba de moure)."
+  },
+  {
+    "id": "interrupcio",
+    "nom": "Interrupció",
+    "dificultat": 1,
+    "estat": "atordit",
+    "descripcio": "Atacant el cap de l'oponent (o el lloc on hi tingui el cervell), l'objectiu queda atordit i rep un +2 de latència a la següent acció."
+  },
+  {
+    "id": "llancament",
+    "nom": "Llançament",
+    "dificultat": 1,
+    "estat": "",
+    "descripcio": "L'atacant agafa el seu oponent i el llança pels aires."
+  },
+  {
+    "id": "puntada-de-peu-giratoria",
+    "nom": "Puntada de peu giratòria",
+    "dificultat": 1,
+    "estat": "",
+    "descripcio": "L'atacant gira sobre si mateix, podent colpejar fins a 6 enemics de la seva mida adjacents (més si són de mida inferior, menys si són més grans). Continua impactant fins que no quedin enemics o li parin o bloquin el cop."
+  }
+]

@@ -171,26 +171,6 @@
     </div>
   </div>
 
-  <!-- ═══ RECURSOS I GUANXI ═══ -->
-  <div class="forja-seccio" data-seccio="recursos">
-    <div class="forja-seccio-cap" data-action="toggleSection">
-      <i class="fas fa-chevron-down forja-chevron"></i>
-      {{localize "FORJA.Section.Recursos"}}
-    </div>
-    <div class="forja-seccio-cos">
-      <div class="forja-recursos-grid">
-        <div class="forja-camp">
-          <label>{{localize "FORJA.Actor.Recursos"}}</label>
-          <input type="text" name="system.recursos" value="{{sys.recursos}}"/>
-        </div>
-        <div class="forja-camp">
-          <label>{{localize "FORJA.Actor.Guanxi"}}</label>
-          <input type="text" name="system.guanxi" value="{{sys.guanxi}}"/>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ═══ HABILITATS ═══ -->
   <div class="forja-seccio" data-seccio="habilitats">
     <div class="forja-seccio-cap" data-action="toggleSection">
@@ -320,7 +300,7 @@
     </div>
   </div>
 
-  <!-- ═══ COMBAT — ARMES ═══ -->
+  <!-- ═══ ARMES ═══ -->
   <div class="forja-seccio" data-seccio="armes">
     <div class="forja-seccio-cap" data-action="toggleSection">
       <i class="fas fa-chevron-down forja-chevron"></i>
@@ -354,7 +334,7 @@
     </div>
   </div>
 
-  <!-- ═══ COMBAT — ARMADURES ═══ -->
+  <!-- ═══ ARMADURES ═══ -->
   <div class="forja-seccio" data-seccio="armadures">
     <div class="forja-seccio-cap" data-action="toggleSection">
       <i class="fas fa-chevron-down forja-chevron"></i>
@@ -388,14 +368,14 @@
     </div>
   </div>
 
-  <!-- ═══ DONS I EFECTES ═══ -->
-  <div class="forja-seccio" data-seccio="dons">
+  <!-- ═══ NOTES ═══ -->
+  <div class="forja-seccio" data-seccio="notes">
     <div class="forja-seccio-cap" data-action="toggleSection">
       <i class="fas fa-chevron-down forja-chevron"></i>
-      {{localize "FORJA.Tab.Dons"}}
+      {{localize "FORJA.Section.Notes"}}
     </div>
-    <div class="forja-seccio-cos forja-placeholder-cos">
-      <p class="placeholder-msg"><i class="fas fa-star"></i>Aviat disponible</p>
+    <div class="forja-seccio-cos">
+      {{editor sys.notes target="system.notes" button=true engine="prosemirror" collaborate=false}}
     </div>
   </div>
 

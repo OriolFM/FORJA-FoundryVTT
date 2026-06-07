@@ -1,0 +1,83 @@
+<div class="forja-dialeg-declarar-accio">
+  <p>
+    {{localize "FORJA.Combat.MarcadorActual"}}: <strong>{{marcador}}</strong>
+    — {{localize "FORJA.Combat.PosicioActual"}}: <strong>{{posicioActual}}</strong>
+    — {{localize "FORJA.Combat.LatenciaBase"}}: <strong>{{latenciaBase}}</strong>
+  </p>
+
+  <div class="form-group dda-tipus">
+    <label>{{localize "FORJA.Combat.TipusAccio"}}</label>
+    <label class="dda-radio">
+      <input type="radio" name="tipus" value="atac" {{#if (eq tipus "atac")}}checked{{/if}} {{#unless armes.length}}disabled{{/unless}}>
+      {{localize "FORJA.Combat.Accio.Atac"}}
+    </label>
+    <label class="dda-radio">
+      <input type="radio" name="tipus" value="defensa" {{#if (eq tipus "defensa")}}checked{{/if}}>
+      {{localize "FORJA.Combat.Accio.Defensa"}}
+    </label>
+    <label class="dda-radio">
+      <input type="radio" name="tipus" value="altra" {{#if (eq tipus "altra")}}checked{{/if}}>
+      {{localize "FORJA.Combat.Accio.Altra"}}
+    </label>
+  </div>
+
+  {{#if (eq tipus "atac")}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.Arma"}}</label>
+    {{#if armes.length}}
+    <select name="armaId">
+      {{#each armes as |a|}}
+      <option value="{{a.id}}" {{#if (eq a.id ../armaId)}}selected{{/if}}>{{a.nom}} ({{a.latenciaTotal}})</option>
+      {{/each}}
+    </select>
+    {{else}}
+    <p class="dda-avis">{{localize "FORJA.Combat.SenseArmes"}}</p>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if (eq tipus "defensa")}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.DefensaTipus"}}</label>
+    <select name="defensaId">
+      {{#each defenses as |dfn|}}
+      <option value="{{dfn.id}}" {{#if (eq dfn.id ../defensaId)}}selected{{/if}}>
+        {{dfn.nom}}
+        {{#if dfn.senseTirada}} — {{localize "FORJA.Combat.SenseTirada"}}{{else}} — {{dfn.atribut}} {{dfn.atributVal}} + {{dfn.habId}} {{dfn.habNivell}} = {{dfn.pool}} daus{{/if}}
+      </option>
+      {{/each}}
+    </select>
+  </div>
+  {{#each defenses as |dfn|}}
+  {{#if (eq dfn.id ../defensaId)}}
+  <p class="dda-avis">
+    {{dfn.descripcio}}
+    {{#if dfn.senseTirada}}
+      {{#if dfn.reduccioExtra}}<br>{{localize "FORJA.Combat.ReduccioExtra" valor=dfn.reduccioExtra}}{{/if}}
+    {{/if}}
+  </p>
+  {{/if}}
+  {{/each}}
+  {{/if}}
+
+  {{#if (eq tipus "altra")}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.Modificador"}}</label>
+    <input type="number" name="modificador" value="0" step="1">
+  </div>
+  {{/if}}
+
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.Latencia"}}</label>
+    <input type="number" name="latencia" value="{{latencia}}" min="1" step="1">
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.Descripcio"}}</label>
+    <textarea name="descripcio" rows="2" placeholder="{{localize 'FORJA.Combat.DescripcioPlaceholder'}}"></textarea>
+  </div>
+
+  <button type="submit">
+    <i class="fas fa-stopwatch"></i> {{localize "FORJA.Combat.Declarar"}}
+  </button>
+</div>

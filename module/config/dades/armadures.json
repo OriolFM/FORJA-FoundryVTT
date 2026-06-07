@@ -1,0 +1,47 @@
+[
+  {
+    "id": "lleugera-flexible",
+    "nom": "Armadura lleugera, flexible",
+    "tipus": "flexible",
+    "modLatencia": 0,
+    "reduccio": 1,
+    "egida": { "activa": false, "absorcio": 0, "tornsInactiva": 0 },
+    "descripcio": "Roba reforçada o similar. Manual: Lat +0, Protecció bàsica 1, mod. per mida ±0."
+  },
+  {
+    "id": "lleugera-rigida",
+    "nom": "Armadura lleugera, rígida",
+    "tipus": "fisica",
+    "modLatencia": 1,
+    "reduccio": 2,
+    "egida": { "activa": false, "absorcio": 0, "tornsInactiva": 0 },
+    "descripcio": "Manual: Lat +1, Protecció bàsica 2, mod. per mida ±1."
+  },
+  {
+    "id": "mitjana-flexible",
+    "nom": "Armadura mitjana, flexible",
+    "tipus": "flexible",
+    "modLatencia": 1,
+    "reduccio": 3,
+    "egida": { "activa": false, "absorcio": 0, "tornsInactiva": 0 },
+    "descripcio": "Manual: Lat +1, Protecció bàsica 3, mod. per mida ±1."
+  },
+  {
+    "id": "mitjana-rigida",
+    "nom": "Armadura mitjana, rígida",
+    "tipus": "fisica",
+    "modLatencia": 2,
+    "reduccio": 4,
+    "egida": { "activa": false, "absorcio": 0, "tornsInactiva": 0 },
+    "descripcio": "Manual: Lat +2, Protecció bàsica 4, mod. per mida ±2."
+  },
+  {
+    "id": "pesant",
+    "nom": "Armadura pesant",
+    "tipus": "fisica",
+    "modLatencia": 3,
+    "reduccio": 5,
+    "egida": { "activa": false, "absorcio": 0, "tornsInactiva": 0 },
+    "descripcio": "Pràcticament sempre rígida. Manual: Lat +3, Protecció bàsica 5, mod. per mida ±2."
+  }
+]

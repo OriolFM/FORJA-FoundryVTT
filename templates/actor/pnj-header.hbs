@@ -1,0 +1,26 @@
+<header class="forja-sheet-header">
+  <img class="actor-portrait" src="{{actor.img}}" alt="{{actor.name}}"
+       data-action="editImage" data-edit="img" data-tooltip="{{localize 'FORJA.Sheet.EditImage'}}"/>
+  <div class="header-fields">
+    <input class="actor-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'FORJA.Actor.Name'}}"/>
+    <div class="header-meta">
+      <label>{{localize "FORJA.PNJ.TierLabel"}}</label>
+      <select name="system.tier">
+        {{#each tiers as |t|}}
+        <option value="{{t}}" {{#if (eq t ../sys.tier)}}selected{{/if}}>
+          {{localize (concat "FORJA.TierOpcio." t)}}
+        </option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  <button type="button" class="btn-mode-edicio {{#if modeEdicio}}actiu{{/if}}"
+          data-action="toggleModeEdicio"
+          title="{{#if modeEdicio}}{{localize 'FORJA.ModeJoc'}}{{else}}{{localize 'FORJA.ModeEdicio'}}{{/if}}">
+    {{#if modeEdicio}}
+      <i class="fas fa-dice-d10"></i>
+    {{else}}
+      <i class="fas fa-pen-to-square"></i>
+    {{/if}}
+  </button>
+</header>

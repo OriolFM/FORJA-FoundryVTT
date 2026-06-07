@@ -1,0 +1,26 @@
+<div class="forja-dialeg-equipament">
+  <div class="de-cap">
+    <h3>{{localize titol}}</h3>
+    <input type="text" class="de-cerca-input" placeholder="{{localize 'FORJA.Equip.Cerca'}}" value="{{cercaText}}"/>
+  </div>
+  <div class="de-llista">
+    {{#each entrades as |e|}}
+    <div class="de-fila" data-action="seleccionar" data-id="{{e.id}}">
+      <div class="de-fila-info">
+        <span class="de-nom">{{e.nom}}</span>
+        {{#if e.danyBase}}
+        <span class="de-meta">Lat. {{e.modLatencia}} · Abast {{e.abast}} · Dany {{e.danyBase}}</span>
+        {{else}}
+        <span class="de-meta">Lat. {{e.modLatencia}} · Reducció {{e.reduccio}} · {{localize (concat "FORJA.Armadura.Tipus." e.tipus)}}</span>
+        {{/if}}
+      </div>
+      <p class="de-descripcio">{{{e.descripcio}}}</p>
+    </div>
+    {{else}}
+    <p class="de-buit">{{localize "FORJA.Tret.SenseResultats"}}</p>
+    {{/each}}
+  </div>
+  <footer class="de-peu">
+    <button type="button" data-action="tancar">{{localize "FORJA.Tancar"}}</button>
+  </footer>
+</div>

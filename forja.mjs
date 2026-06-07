@@ -7,10 +7,16 @@ import { FORJA }          from "./module/config/constants.mjs";
 import ActorPersonatge     from "./module/data/actor-personatge.mjs";
 import ActorPNJ            from "./module/data/actor-pnj.mjs";
 import ItemTret            from "./module/data/item-tret.mjs";
+import ItemArma            from "./module/data/item-arma.mjs";
+import ItemArmadura        from "./module/data/item-armadura.mjs";
 import ForjaActor          from "./module/documents/actor.mjs";
+import ForjaCombat         from "./module/documents/combat.mjs";
+import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
 import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
+import { reiniciarReaccions } from "./module/combat/reaccions.mjs";
+import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -23,6 +29,8 @@ Hooks.once("init", () => {
 
   // Document classes
   CONFIG.Actor.documentClass = ForjaActor;
+  CONFIG.Combat.documentClass = ForjaCombat;
+  CONFIG.ui.combat = ForjaCombatTracker;
 
   // DataModels
   CONFIG.Actor.dataModels = {
@@ -30,7 +38,9 @@ Hooks.once("init", () => {
     pnj:        ActorPNJ
   };
   CONFIG.Item.dataModels = {
-    tret: ItemTret
+    tret:     ItemTret,
+    arma:     ItemArma,
+    armadura: ItemArmadura
   };
 
   // Atributs de token
@@ -68,6 +78,33 @@ Hooks.once("init", () => {
 
 Hooks.once("ready", () => {
   console.log("FORJA RPG | Sistema llest");
+});
+
+// Tot personatge/PNJ disposa de l'atac bàsic "Cop", i de l'atac corresponent
+// a cada tret d'"Armament Natural" que tingui (manual): s'afegeixen sols.
+Hooks.on("createActor", async (actor) => {
+  await assegurarAtacsAutomatics(actor);
+});
+
+Hooks.on("createItem", async (item) => {
+  const actor = item.parent;
+  if (!actor || item.type !== "tret") return;
+  await assegurarAtacsAutomatics(actor);
+});
+
+// Reaccions i concentració (S-11): qui acaba el seu torn recupera reaccions.
+// Cal capturar el combatent SORTINT abans que l'update canviï el torn.
+Hooks.on("preUpdateCombat", (combat, changes) => {
+  if (("turn" in changes) || ("round" in changes)) {
+    combat._forjaCombatentSortint = combat.combatant ?? null;
+  }
+});
+
+Hooks.on("updateCombat", async (combat, changes) => {
+  if (!(("turn" in changes) || ("round" in changes))) return;
+  const actor = combat._forjaCombatentSortint?.actor;
+  combat._forjaCombatentSortint = null;
+  if (actor) await reiniciarReaccions(actor);
 });
 
 /* ---- Helpers Handlebars ---- */

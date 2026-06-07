@@ -91,6 +91,23 @@ FORJA.LLISTA_TRETS = await fetch("systems/forja/module/config/dades/trets.json")
   .then(r => r.json())
   .catch(err => { console.error("FORJA | No s'ha pogut carregar trets.json", err); return []; });
 
+/* ---------- Catàleg d'equipament (S-18) ---------- */
+// Igual que els trets: dades en JSON editable, sense res hard-codejat.
+// Serveixen com a base per generar Items (i, més endavant, des d'una interfície externa).
+FORJA.CATALEG_ARMES = await fetch("systems/forja/module/config/dades/armes.json")
+  .then(r => r.json())
+  .catch(err => { console.error("FORJA | No s'ha pogut carregar armes.json", err); return []; });
+
+FORJA.CATALEG_ARMADURES = await fetch("systems/forja/module/config/dades/armadures.json")
+  .then(r => r.json())
+  .catch(err => { console.error("FORJA | No s'ha pogut carregar armadures.json", err); return []; });
+
+// Maniobres d'arts marcials (manual): seleccionables en declarar un atac de "Cop"
+// amb la maniobra "Arts Marcials" (+1 dificultat, escull un moviment de la taula).
+FORJA.LLISTA_MANIOBRES = await fetch("systems/forja/module/config/dades/maniobres-arts-marcials.json")
+  .then(r => r.json())
+  .catch(err => { console.error("FORJA | No s'ha pogut carregar maniobres-arts-marcials.json", err); return []; });
+
 /* ---------- Salut ---------- */
 // Penalització per nivell efectiu de salut (1–6→0/0/0/1/2/4, 7→null=fora de combat)
 FORJA.SALUT_PENALITZACIO = { 1: 0, 2: 0, 3: 0, 4: 1, 5: 2, 6: 4, 7: null };

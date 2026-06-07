@@ -11,10 +11,12 @@ export default class ActorPNJ extends foundry.abstract.TypeDataModel {
     const fields = foundry.data.fields;
     return {
       ...campsBase(fields),
-      // Tier narratiu del PNJ (per gestió de DJ)
+      // Classificació narrativa (manual, cap. 6: PNJ -figurant/antagonista/nèmesi-,
+      // o Animal/Criatura — mecànicament tots comparteixen el mateix motor;
+      // només els figurants tendeixen a fugir/rendir-se després d'un primer impacte).
       tier: new fields.StringField({
         initial: "extra",
-        choices: ["extra", "antagonista", "nemesis"]
+        choices: ["extra", "antagonista", "nemesis", "criatura", "animal"]
       }),
       notes: new fields.HTMLField({ initial: "" })
     };

@@ -1,11 +1,20 @@
 import { ferTirada }  from "../dice/tirada.mjs";
 import DiategTrets    from "./dialeg-trets.mjs";
+import DiategEquipament from "./dialeg-equipament.mjs";
+import { resoldreDanyArma } from "../combat/dany.mjs";
+import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
+
+const HAB_PER_CATEGORIA = {
+  natural:   "barallar-se",
+  cosAcos:   "armes-cos-a-cos",
+  distancia: "armes-distancia"
+};
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
 
   _acordio    = new Map();
-  _seleccio   = { atribut: null, habId: null };
+  _seleccio   = { atribut: null, habId: null, armaId: null };
   _modeEdicio = false;
 
   static DEFAULT_OPTIONS = {
@@ -20,13 +29,20 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       // Mode joc
       selectAtribut:   FullPersonatge._onSelectAtribut,
       selectHabilitat: FullPersonatge._onSelectHabilitat,
+      selectArma:      FullPersonatge._onSelectArma,
       // Mode edició
       ajustarAtribut:  FullPersonatge._onAjustarAtribut,
       ajustarHabilitat: FullPersonatge._onAjustarHabilitat,
       // Trets
       crearTret:       FullPersonatge._onCrearTret,
       eliminarTret:    FullPersonatge._onEliminarTret,
-      editarTret:      FullPersonatge._onEditarTret
+      editarTret:      FullPersonatge._onEditarTret,
+      // Equipament
+      crearArma:       FullPersonatge._onCrearArma,
+      eliminarArma:    FullPersonatge._onEliminarItem,
+      crearArmadura:   FullPersonatge._onCrearArmadura,
+      eliminarArmadura: FullPersonatge._onEliminarItem,
+      editarItem:      FullPersonatge._onEditarItem
     },
     form: { submitOnChange: true }
   };
@@ -61,6 +77,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       salut:      _prepSalut(sys),
       habilitats: _prepHabilitats(sys, cfg),
       trets:      _prepTrets(this.actor),
+      armes:      _prepItems(this.actor, "arma"),
+      armadures:  _prepItems(this.actor, "armadura"),
       pc: {
         total:   sys.pc,
         gastats: sys.pcGastats ?? 0,
@@ -95,7 +113,10 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
 
   static async _onToggleModeEdicio(event, target) {
     this._modeEdicio = !this._modeEdicio;
-    if (this._modeEdicio) this._clearSeleccio();
+    if (this._modeEdicio) {
+      this._clearSeleccio();
+      await assegurarAtacsAutomatics(this.actor);
+    }
     await this.render();
   }
 
@@ -133,6 +154,35 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     }
   }
 
+  static async _onSelectArma(event, target) {
+    if (this._modeEdicio) return;
+    if (event.target.closest("button")) return;
+    const id  = target.dataset.itemId;
+    const sel = this._seleccio;
+    if (sel.armaId === id) {
+      await this._ferAtacArma(id);
+    } else {
+      this._clearSeleccio();
+      sel.armaId = id;
+      this._aplicarSeleccioVisual();
+    }
+  }
+
+  async _ferAtacArma(id) {
+    const item   = this.actor.items.get(id);
+    const dades  = _prepItems(this.actor, "arma").find(a => a.id === id);
+    this._clearSeleccio();
+    if (!item || !dades) return;
+    await ferTirada({
+      actor:      this.actor,
+      atribut:    dades.tirada.atribut,
+      atributVal: dades.tirada.atributVal,
+      habId:      dades.tirada.habId,
+      habNivell:  dades.tirada.habNivell,
+      label:      item.name
+    });
+  }
+
   async _obrarDialeg() {
     const sel        = this._seleccio;
     const sys        = this.actor.system;
@@ -150,14 +200,14 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
   }
 
   _clearSeleccio() {
-    this._seleccio = { atribut: null, habId: null };
+    this._seleccio = { atribut: null, habId: null, armaId: null };
     this._aplicarSeleccioVisual();
   }
 
   _aplicarSeleccioVisual() {
     const el = this.element;
     if (!el) return;
-    const teSel = this._seleccio.atribut || this._seleccio.habId;
+    const teSel = this._seleccio.atribut || this._seleccio.habId || this._seleccio.armaId;
     el.querySelectorAll(".forja-attr-box[data-attr]").forEach(box => {
       box.classList.toggle("seleccionat", box.dataset.attr === this._seleccio.atribut);
       box.classList.toggle("sel-activa",  !!teSel && box.dataset.attr !== this._seleccio.atribut);
@@ -165,6 +215,10 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     el.querySelectorAll(".forja-hab-fila[data-hab-id]").forEach(fila => {
       fila.classList.toggle("seleccionat", fila.dataset.habId === this._seleccio.habId);
       fila.classList.toggle("sel-activa",  !!teSel && fila.dataset.habId !== this._seleccio.habId);
+    });
+    el.querySelectorAll(".forja-equip-fila[data-item-id]").forEach(fila => {
+      fila.classList.toggle("seleccionat", fila.dataset.itemId === this._seleccio.armaId);
+      fila.classList.toggle("sel-activa",  !!teSel && fila.dataset.itemId !== this._seleccio.armaId);
     });
   }
 
@@ -212,6 +266,55 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     item?.sheet?.render(true);
   }
 
+  // ── Equipament ───────────────────────────────────────────────────────────
+
+  static async _onCrearArma(event, target) {
+    const sel = await DiategEquipament.obrir("arma");
+    if (!sel) return;
+    const e = sel.entrada;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: e.nom,
+      type: "arma",
+      system: {
+        categoria:   e.categoria,
+        modLatencia: e.modLatencia,
+        abast:       e.abast,
+        danyBase:    e.danyBase,
+        maniobra:    e.maniobra ?? "",
+        rangExtrem:  e.rangExtrem ?? false,
+        descripcio:  e.descripcio ?? ""
+      }
+    }]);
+  }
+
+  static async _onCrearArmadura(event, target) {
+    const sel = await DiategEquipament.obrir("armadura");
+    if (!sel) return;
+    const e = sel.entrada;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: e.nom,
+      type: "armadura",
+      system: {
+        tipus:       e.tipus,
+        reduccio:    e.reduccio,
+        modLatencia: e.modLatencia,
+        egida:       e.egida ?? { activa: false, absorcio: 0, tornsInactiva: 0 },
+        descripcio:  e.descripcio ?? ""
+      }
+    }]);
+  }
+
+  static async _onEliminarItem(event, target) {
+    const id = target.dataset.itemId;
+    await this.actor.deleteEmbeddedDocuments("Item", [id]);
+  }
+
+  static async _onEditarItem(event, target) {
+    const id   = target.dataset.itemId;
+    const item = this.actor.items.get(id);
+    item?.sheet?.render(true);
+  }
+
   // ── Salut / Marca ────────────────────────────────────────────────────────
 
   static async _onToggleSection(event, target) {
@@ -240,14 +343,14 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
 
-function _opcionsNumeriques(prefix, min, max) {
+export function _opcionsNumeriques(prefix, min, max) {
   const opts = [];
   for (let i = min; i <= max; i++)
     opts.push({ val: i, nom: game.i18n.localize(`${prefix}.${i}`) });
   return opts;
 }
 
-function _prepSalut(sys) {
+export function _prepSalut(sys) {
   const cfg = CONFIG.FORJA;
   const constitucio = sys.constitucio ?? 3;
   const mida        = sys.mida        ?? 3;
@@ -285,7 +388,7 @@ function _prepSalut(sys) {
   return { taula, nivellEfectiu: sys.salut.nivellEfectiu ?? 1, penalitzacio: sys.salut.penalitzacio ?? 0 };
 }
 
-function _prepHabilitats(sys, cfg) {
+export function _prepHabilitats(sys, cfg) {
   const tots = cfg.LLISTA_HABILITATS.map(h => ({
     id:           h.id,
     nom:          game.i18n.localize(h.nom),
@@ -300,7 +403,42 @@ function _prepHabilitats(sys, cfg) {
   return { esquerra: tots.slice(0, meitat), dreta: tots.slice(meitat) };
 }
 
-function _prepTrets(actor) {
+export function _prepItems(actor, type) {
+  const sys = actor.system;
+  return actor.items
+    .filter(i => i.type === type)
+    .map(i => {
+      const dades = {
+        id:          i.id,
+        nom:         i.name,
+        categoria:   i.system?.categoria,
+        tipus:       i.system?.tipus,
+        modLatencia: i.system?.modLatencia ?? 0,
+        abast:       i.system?.abast,
+        danyBase:    i.system?.danyBase,
+        reduccio:    i.system?.reduccio,
+        maniobra:    i.system?.maniobra ?? "",
+        descripcio:  i.system?.descripcio ?? ""
+      };
+      if (type === "arma") {
+        const habId    = HAB_PER_CATEGORIA[dades.categoria] ?? "barallar-se";
+        const atribut  = dades.categoria === "distancia" ? "DES" : "FOR";
+        const atributVal = sys.atributs?.[atribut] ?? 0;
+        const habNivell  = sys.habilitats?.[habId]?.nivell ?? 0;
+        const { valor: dany } = resoldreDanyArma(dades.danyBase, actor);
+        dades.tirada = {
+          atribut, atributVal, habId, habNivell,
+          pool: atributVal + habNivell
+        };
+        dades.danyValor = dany;
+        dades.latenciaTotal = (sys.latenciaBase ?? 0) + dades.modLatencia;
+      }
+      return dades;
+    })
+    .sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
+}
+
+export function _prepTrets(actor) {
   return actor.items
     .filter(i => i.type === "tret")
     .map(i => ({

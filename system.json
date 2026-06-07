@@ -19,17 +19,12 @@
   "documentTypes": {
     "Actor": {
       "personatge": {},
-      "pnj": {},
-      "character": {},
-      "npc": {}
+      "pnj": {}
     },
     "Item": {
       "tret": {},
-      "skill": {},
-      "trait": {},
-      "weapon": {},
-      "armor": {},
-      "supernaturalEffect": {}
+      "arma": {},
+      "armadura": {}
     }
   },
   "primaryTokenAttribute":   "salut.nivellEfectiu",

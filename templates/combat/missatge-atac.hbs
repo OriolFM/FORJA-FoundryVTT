@@ -1,0 +1,58 @@
+<div class="forja-missatge-atac {{#if pifia}}missatge-pifia{{else}}{{#if exit}}missatge-exit{{else}}missatge-fallada{{/if}}{{/if}}">
+
+  <!-- Capçalera -->
+  <div class="mt-cap">
+    <span class="mt-label">{{nomAtacant}} ataca {{nomObjectiu}} amb {{nomArma}}</span>
+    <span class="mt-dif">def. {{dificultat}}</span>
+  </div>
+
+  {{#if maniobra}}
+  <div class="mt-maniobra" title="{{maniobra.descripcio}}">
+    <i class="fas fa-hand-fist"></i> {{maniobra.nom}} <span class="mt-mod">(+{{maniobra.dificultat}} dif.)</span>
+  </div>
+  {{/if}}
+
+  <!-- Daus -->
+  <div class="mt-daus">
+    {{#each dice as |d|}}
+    <span class="mt-dau {{dieClass d}}">{{d}}</span>
+    {{/each}}
+  </div>
+
+  <!-- Resultat de l'atac -->
+  <div class="mt-resultat">
+    {{#if pifia}}
+      <span class="mt-badge badge-pifia"><i class="fas fa-skull"></i> PÍFIA</span>
+    {{else if exit}}
+      <span class="mt-badge badge-exit">
+        <i class="fas fa-bullseye"></i> {{localize "FORJA.Combat.Impacta"}}
+        {{#if excedent}}<span class="mt-excedent">+{{excedent}} exc.</span>{{/if}}
+      </span>
+    {{else}}
+      <span class="mt-badge badge-fallada">
+        <i class="fas fa-xmark"></i> {{localize "FORJA.Combat.Falla"}}
+      </span>
+    {{/if}}
+  </div>
+
+  <!-- Resultat del dany -->
+  {{#if dany}}
+  <div class="mt-dany">
+    {{#if dany.danyFinal}}
+      <span class="mt-badge badge-dany">
+        <i class="fas fa-droplet"></i> {{dany.danyFinal}} {{localize (concat "FORJA.Salut." pista)}}
+      </span>
+    {{else}}
+      <span class="mt-badge badge-sense-dany">
+        <i class="fas fa-shield"></i> {{localize "FORJA.Combat.SenseDany"}}
+      </span>
+    {{/if}}
+    {{#if dany.egidaTrencada}}
+      <span class="mt-mod mt-mod-penal">
+        {{localize "FORJA.Combat.EgidaTrencada"}} ({{dany.tornsInactivaEgida}} {{localize "FORJA.Combat.Torns"}})
+      </span>
+    {{/if}}
+  </div>
+  {{/if}}
+
+</div>

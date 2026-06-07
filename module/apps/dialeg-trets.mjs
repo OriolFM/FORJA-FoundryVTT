@@ -95,6 +95,10 @@ export default class DiategTrets extends HandlebarsApplicationMixin(ApplicationV
         this.#cerca = ev.target.value;
         this.render(false);
       });
+      // Recuperem el focus i la posició del cursor després de cada re-render.
+      cercaInput.focus();
+      const pos = cercaInput.value.length;
+      cercaInput.setSelectionRange(pos, pos);
     }
 
     const xInput = this.element.querySelector(".dt-valor-x");

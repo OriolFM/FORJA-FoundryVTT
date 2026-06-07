@@ -6514,6 +6514,23 @@
 
 .forja-hab-fila.sel-activa { opacity: 0.45; }
 
+.forja-equip-fila[data-action="selectArma"] { cursor: pointer; }
+
+.forja-equip-fila[data-action="selectArma"]:hover .equip-nom {
+  color: var(--forja-primary-light);
+}
+
+.forja-equip-fila.seleccionat {
+  background: rgba(13,148,136,0.2) !important;
+}
+
+.forja-equip-fila.seleccionat .equip-nom {
+  color: var(--forja-primary-light);
+  font-weight: 700;
+}
+
+.forja-equip-fila.sel-activa { opacity: 0.45; }
+
 /* --- Diàleg de tirada --- */
 .dialeg-tirada .window-content { padding: 0; }
 
@@ -7238,3 +7255,122 @@
   background: rgba(255,255,255,0.12);
   color: #e2e8f0;
 }
+
+/* ==== ONADA 2 — COMBAT (estils temporals, a refinar) ==== */
+
+/* -- Tracker: controls FORJA per combatent -- */
+.forja-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 6px;
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+.forja-controls .forja-posicio {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #7dd3fc;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.forja-controls a {
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.12s;
+  font-size: 1.15rem;
+}
+.forja-controls a:hover { color: #7dd3fc; }
+.forja-controls .forja-emboscada:hover { color: #f87171; }
+
+/* -- Diàleg declarar acció -- */
+.forja-dialeg-declarar-accio { display: flex; flex-direction: column; gap: 8px; padding: 8px; }
+.forja-dialeg-declarar-accio .form-group { display: flex; flex-direction: column; gap: 2px; }
+.forja-dialeg-declarar-accio button {
+  margin-top: 6px;
+  background: rgba(56,189,248,0.18);
+  border: 1px solid rgba(56,189,248,0.45);
+  color: #7dd3fc;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.forja-dialeg-declarar-accio button:hover { background: rgba(56,189,248,0.3); color: #e0f2fe; }
+.forja-dialeg-declarar-accio .dda-tipus { gap: 4px; }
+.forja-dialeg-declarar-accio .dda-radio {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.forja-dialeg-declarar-accio .dda-radio input { cursor: pointer; }
+.forja-dialeg-declarar-accio .dda-avis { font-size: 0.85rem; color: #94a3b8; font-style: italic; margin: 0; }
+.forja-dialeg-declarar-accio textarea { resize: vertical; }
+
+/* -- Missatge de xat d'atac -- */
+.forja-missatge-atac { display: flex; flex-direction: column; gap: 6px; }
+.forja-missatge-atac .mt-dany {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.badge-dany {
+  background: rgba(248,113,113,0.18);
+  border: 1px solid rgba(248,113,113,0.45);
+  color: #fca5a5;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+}
+.badge-sense-dany {
+  background: rgba(148,163,184,0.12);
+  border: 1px solid rgba(148,163,184,0.3);
+  color: #94a3b8;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+}
+
+/* ==== ONADA 2 — EQUIPAMENT (estils temporals, a refinar) ==== */
+.forja-equip-llista { display: flex; flex-direction: column; gap: 4px; }
+.forja-equip-fila {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+}
+.forja-equip-fila:hover { background: rgba(255,255,255,0.07); }
+.forja-equip-fila .equip-nom { font-weight: 600; }
+.forja-equip-fila .equip-meta { color: #94a3b8; font-size: 0.8rem; }
+
+.forja-dialeg-equipament { display: flex; flex-direction: column; height: 100%; padding: 8px; gap: 8px; }
+.forja-dialeg-equipament .de-cap { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.forja-dialeg-equipament .de-llista { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+.forja-dialeg-equipament .de-fila {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.forja-dialeg-equipament .de-fila:hover { background: rgba(255,255,255,0.06); }
+.forja-dialeg-equipament .de-fila-info { display: flex; justify-content: space-between; gap: 8px; }
+.forja-dialeg-equipament .de-nom { font-weight: 600; }
+.forja-dialeg-equipament .de-meta { color: #94a3b8; font-size: 0.8rem; }
+.forja-dialeg-equipament .de-descripcio { margin: 4px 0 0; font-size: 0.8rem; color: #cbd5e1; }
+.forja-dialeg-equipament .de-peu { display: flex; justify-content: flex-end; }
+
+.forja-missatge-atac .mt-maniobra {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+}
+.forja-missatge-atac .mt-maniobra .mt-mod { color: #94a3b8; }

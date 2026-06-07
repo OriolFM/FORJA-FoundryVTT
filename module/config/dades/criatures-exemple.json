@@ -1,0 +1,67 @@
+[
+  {
+    "_comentari": "Gólem de carn — estadístiques completes del manual (FORJA_03_SISTEMES.md, exemple Yoko vs gólems). Cost manual: 98PC; el calculat amb les regles actuals dona 113PC (probablement el manual aplica un cost diferent per a 'armament natural', no inclòs explícitament a la taula de trets).",
+    "name": "Gólem de carn",
+    "type": "pnj",
+    "system": {
+      "tier": "antagonista",
+      "atributs": { "FOR": 3, "DES": 2, "AGI": 1, "PER": 1, "INT": 1, "APL": 1 },
+      "especie": "constructe",
+      "constitucio": 5,
+      "mida": 4,
+      "habilitats": {
+        "barallar-se":  { "nivell": 4 },
+        "forca-bruta":  { "nivell": 4 },
+        "resistencia":  { "nivell": 4 }
+      },
+      "notes": "<p>Trets (manual): armament natural/urpes, efímer, impediment de la parla, no-mort, repulsiu.</p><p>Derivats verificats: latència 12, defensa 0, reducció de dany 3 — coincideixen amb el manual.</p>"
+    },
+    "items": [
+      {
+        "name": "Urpes",
+        "type": "arma",
+        "system": {
+          "categoria": "natural",
+          "modLatencia": 1,
+          "abast": 1,
+          "danyBase": "FOR+2",
+          "maniobra": "",
+          "rangExtrem": false,
+          "descripcio": "Armament natural del gólem (manual: +1 a la latència)."
+        }
+      }
+    ]
+  },
+  {
+    "_comentari": "Aràcnid territorial — el manual només dona dades parcials (FOR 4, barallar-se 2, latència bàsica 8, ullals +1 latència). La resta (DES, AGI, PER, INT, APL, mida, constitució, habilitats addicionals, trets) és una EXTRAPOLACIÓ pròpia, dissenyada perquè AGI 3 + mida gran (4) reprodueixin la latència bàsica 8 indicada al manual (10 + mida - 2×AGI = 8). Cost estimat ~136PC.",
+    "name": "Aràcnid territorial",
+    "type": "pnj",
+    "system": {
+      "tier": "antagonista",
+      "atributs": { "FOR": 4, "DES": 2, "AGI": 3, "PER": 2, "INT": 1, "APL": 1 },
+      "especie": "artropode",
+      "constitucio": 4,
+      "mida": 4,
+      "habilitats": {
+        "barallar-se":   { "nivell": 2 },
+        "esquitllar-se": { "nivell": 2 }
+      },
+      "notes": "<p>Dades del manual: FOR 4, barallar-se 2, latència bàsica 8, arma natural 'ullals' (+1 latència).</p><p>Resta de dades EXTRAPOLADES per l'IA (no apareixen al manual): DES 2, AGI 3, PER 2, INT 1, APL 1, espècie artròpode, constitució ferma (4), mida gran (4), esquitllar-se 2.</p><p>Derivats: latència 8 (coincideix amb el manual), defensa 2, reducció de dany 4.</p>"
+    },
+    "items": [
+      {
+        "name": "Ullals",
+        "type": "arma",
+        "system": {
+          "categoria": "natural",
+          "modLatencia": 1,
+          "abast": 1,
+          "danyBase": "FOR+1",
+          "maniobra": "",
+          "rangExtrem": false,
+          "descripcio": "Mossegada verinosa de l'aràcnid (manual: +1 a la latència, latència total 9)."
+        }
+      }
+    ]
+  }
+]

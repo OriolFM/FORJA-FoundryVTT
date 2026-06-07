@@ -1,0 +1,302 @@
+[
+  {
+    "id": "cop",
+    "nom": "Cop",
+    "categoria": "natural",
+    "modLatencia": 0,
+    "abast": 0,
+    "danyBase": "FOR+1",
+    "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+    "rangExtrem": false,
+    "basic": true,
+    "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+  },
+  {
+    "id": "tentacles",
+    "nom": "Tentacles",
+    "categoria": "natural",
+    "modLatencia": 0,
+    "abast": 0,
+    "danyBase": "FOR+2",
+    "maniobra": "Agafar (+1 dif.) — Envolta l'enemic i li aplica l'estat presa. L'atacant obté +1 FOR per cada parell de tentacles que faci servir.",
+    "rangExtrem": false,
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  {
+    "id": "urpes",
+    "nom": "Urpes",
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 0,
+    "danyBase": "FOR+2",
+    "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+    "rangExtrem": false,
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  {
+    "id": "ullals",
+    "nom": "Ullals",
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 0,
+    "danyBase": "FOR+2",
+    "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+    "rangExtrem": false,
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  {
+    "id": "banyes",
+    "nom": "Banyes",
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 1,
+    "danyBase": "FOR+3",
+    "maniobra": "Empalar (+2 dif.) — Empala l'objectiu amb les banyes i el deixa sagnant/2.",
+    "rangExtrem": false,
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  {
+    "id": "pinces",
+    "nom": "Pinces",
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 0,
+    "danyBase": "FOR+3",
+    "maniobra": "Fracturar (+2 dif.) — Provoca una fractura òssia que deixa el membre mutilat fins que es curi (no afecta gelatinosos ni invertebrats; no es poden fer servir per manipular amb delicadesa).",
+    "rangExtrem": false,
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  {
+    "id": "fiblons-i-espines",
+    "nom": "Fiblons i espines",
+    "categoria": "natural",
+    "modLatencia": 0,
+    "abast": 0,
+    "danyBase": "FOR+2",
+    "maniobra": "Inocular (+1 dif.) — Injecta una toxina que canvia l'estat a lent/1 i malaltia/toxina (acumulable). Sense efecte en mecanoides, plantes, constructes inorgànics o no-morts.",
+    "rangExtrem": false,
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+
+  {
+    "id": "armes-improvisades-cac",
+    "nom": "Armes improvisades (cos a cos)",
+    "categoria": "cosAcos",
+    "modLatencia": 0,
+    "abast": 0,
+    "danyBase": "FOR+2",
+    "maniobra": "Flexibilitat — Segons el tipus d'objecte, el DJ pot aplicar modificadors a latència i abast a discreció.",
+    "rangExtrem": false,
+    "descripcio": "Latència i abast variables ('+abast +variable' al manual). Dany FOR+2."
+  },
+  {
+    "id": "contundents",
+    "nom": "Contundents",
+    "categoria": "cosAcos",
+    "modLatencia": 2,
+    "abast": 1,
+    "danyBase": "FOR+2",
+    "maniobra": "Empènyer — Aplica l'estat Empès. Si l'objectiu és més gran, +1 dificultat per cada nivell de diferència de mida.",
+    "rangExtrem": false,
+    "descripcio": "Armes contundents (manual: Lat +2, Abast +1, Dany FOR+2)."
+  },
+  {
+    "id": "de-ma",
+    "nom": "De mà",
+    "categoria": "cosAcos",
+    "modLatencia": 0,
+    "abast": 0,
+    "danyBase": "FOR+1",
+    "maniobra": "Atac a traïció — Ataca un punt vulnerable de l'oponent: ignora l'armadura però no la reducció de dany.",
+    "rangExtrem": false,
+    "descripcio": "Armes de mà petites (manual: Lat +0, Abast a tocar, Dany FOR+1)."
+  },
+  {
+    "id": "destrals",
+    "nom": "Destrals",
+    "categoria": "cosAcos",
+    "modLatencia": 2,
+    "abast": 1,
+    "danyBase": "FOR+3",
+    "maniobra": "Tall de gran abast — Gira sobre si mateix i ataca fins a 6 objectius adjacents amb una sola tirada, en seqüència, fins que el paren/bloquen o no en quedin.",
+    "rangExtrem": false,
+    "descripcio": "Destrals (manual: Lat +2, Abast +1, Dany FOR+3)."
+  },
+  {
+    "id": "escuts",
+    "nom": "Escuts",
+    "categoria": "cosAcos",
+    "modLatencia": 1,
+    "abast": 0,
+    "danyBase": "FOR+2",
+    "maniobra": "Llançament — Si està equilibrat, es pot llançar com a arma. Defensa amb escut — +1 a la defensa bàsica si no s'usa per atacar; integritat estructural 10 si es fa servir per blocar.",
+    "rangExtrem": false,
+    "descripcio": "Escuts (manual: Lat +1, Abast +0, Dany FOR+2)."
+  },
+  {
+    "id": "espases",
+    "nom": "Espases",
+    "categoria": "cosAcos",
+    "modLatencia": 1,
+    "abast": 1,
+    "danyBase": "FOR+2",
+    "maniobra": "Desarmar — Si l'objectiu no supera FOR+resistència, perd l'arma; si la necessitava per a la propera acció, queda atordit i ha de tornar a declarar.",
+    "rangExtrem": false,
+    "descripcio": "Espases (manual: Lat +1, Abast +1, Dany FOR+2)."
+  },
+  {
+    "id": "fulla-curta",
+    "nom": "Fulla curta",
+    "categoria": "cosAcos",
+    "modLatencia": 0,
+    "abast": 0,
+    "danyBase": "FOR+1",
+    "maniobra": "Finta — Si no es bloca, l'atac no fa dany però redueix a la meitat la latència del proper atac (amb qualsevol arma).",
+    "rangExtrem": false,
+    "descripcio": "Fulla curta (manual: Lat +0, Abast a tocar, Dany FOR+1)."
+  },
+  {
+    "id": "fulla-llarga",
+    "nom": "Fulla llarga",
+    "categoria": "cosAcos",
+    "modLatencia": 2,
+    "abast": 1,
+    "danyBase": "FOR+3",
+    "maniobra": "Tall — Aplica l'estat sagnar/+1 a l'objectiu.",
+    "rangExtrem": false,
+    "descripcio": "Fulla llarga (manual: Lat +2, Abast +1, Dany FOR+3)."
+  },
+  {
+    "id": "llances-i-armes-de-pal",
+    "nom": "Llances i armes de pal",
+    "categoria": "cosAcos",
+    "modLatencia": 3,
+    "abast": 2,
+    "danyBase": "FOR+3",
+    "maniobra": "Escombrada — Fa la traveta als enemics adjacents; s'aplica l'estat abatut si no superen AGI+Equilibri.",
+    "rangExtrem": false,
+    "descripcio": "Llances i armes de pal (manual: Lat +3, Abast +2, Dany FOR+3)."
+  },
+  {
+    "id": "pics",
+    "nom": "Pics",
+    "categoria": "cosAcos",
+    "modLatencia": 3,
+    "abast": 1,
+    "danyBase": "FOR+3",
+    "maniobra": "Destrossar — Malmet armadures físiques: redueix la protecció en 2 per cada atac de Destrossar que en superi el valor (s'aplica després de l'atac).",
+    "rangExtrem": false,
+    "descripcio": "Pics (manual: Lat +3, Abast +1, Dany FOR+3)."
+  },
+
+  {
+    "id": "armes-improvisades-distancia",
+    "nom": "Armes improvisades (a distància)",
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 0,
+    "danyBase": "FOR+1",
+    "maniobra": "Rang limitat — El rang curt és la FOR del personatge, en metres. Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "descripcio": "Classe llancívola improvisada (manual: Lat +2, Rang FOR, Dany FOR+1, sense munició)."
+  },
+  {
+    "id": "mecaniques-arc-fona",
+    "nom": "Mecàniques: arcs i fones",
+    "categoria": "distancia",
+    "modLatencia": 1,
+    "abast": 0,
+    "danyBase": "DES+3",
+    "maniobra": "Rang limitat — El rang curt és FOR x5, en metres. Fiables — No s'encallen mai. Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "descripcio": "Manual: Lat +1, Rang FORx5, Dany DES+3, sense munició."
+  },
+  {
+    "id": "mecaniques-ballestes",
+    "nom": "Mecàniques: ballestes",
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 20,
+    "danyBase": "DES+4",
+    "maniobra": "Fiables — No s'encallen mai. Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "descripcio": "Manual: Lat +2, Rang 20, Dany DES+4, munició 1."
+  },
+  {
+    "id": "llancivoles",
+    "nom": "Llancívoles",
+    "categoria": "distancia",
+    "modLatencia": 0,
+    "abast": 0,
+    "danyBase": "AGI+1",
+    "maniobra": "Rang limitat — El rang curt és FOR x3, en metres. Carambola — No fa dany a objectes i només la meitat de ferides als PJ; pot afectar diversos objectius (+1 dif./objectiu addicional). Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "descripcio": "Manual: Lat +0, Rang FORx3, Dany AGI+1, sense munició."
+  },
+  {
+    "id": "pistoles",
+    "nom": "Pistoles",
+    "categoria": "distancia",
+    "modLatencia": 0,
+    "abast": 15,
+    "danyBase": "DES+2",
+    "maniobra": "Desenfundar — Si van en una beina adequada, es desenfunden sense afegir latència.",
+    "rangExtrem": false,
+    "descripcio": "Manual: Lat +0, Rang 15, Dany DES+2, munició 10."
+  },
+  {
+    "id": "subfusells",
+    "nom": "Subfusells",
+    "categoria": "distancia",
+    "modLatencia": 1,
+    "abast": 20,
+    "danyBase": "DES+2",
+    "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets com un sol atac, +1 latència i +1 a impactar o al dany (cal declarar-ho).",
+    "rangExtrem": false,
+    "descripcio": "Manual: Lat +1, Rang 20, Dany DES+2, munició 30."
+  },
+  {
+    "id": "armes-dassalt",
+    "nom": "Armes d'assalt",
+    "categoria": "distancia",
+    "modLatencia": 1,
+    "abast": 30,
+    "danyBase": "DES+3",
+    "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets, +1 latència i +1 impactar/dany. Automàtic — 10 trets, +2 latència, +1 dany; impacta tots els objectius al descobert dins l'àrea si supera la defensa bàsica.",
+    "rangExtrem": false,
+    "descripcio": "Manual: Lat +1, Rang 30, Dany DES+3, munició 30."
+  },
+  {
+    "id": "rifles",
+    "nom": "Rifles",
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 100,
+    "danyBase": "DES+4",
+    "maniobra": "Abast extrem — Poden disparar a rang extrem (8x el rang curt).",
+    "rangExtrem": true,
+    "descripcio": "Manual: Lat +2, Rang 100, Dany DES+4, munició 5."
+  },
+  {
+    "id": "escopetes",
+    "nom": "Escopetes",
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 10,
+    "danyBase": "DES+3",
+    "maniobra": "Dispersió — Inefectives a més de rang mitjà, però l'objectiu sempre té defensa bàsica 1 (modificada per distància). Poca penetració — Les armadures rígides ofereixen el doble de protecció contra escopetes.",
+    "rangExtrem": true,
+    "descripcio": "Manual: Lat +2, Rang 10 (abast extrem), Dany DES+3, munició 6."
+  },
+  {
+    "id": "armes-pesants",
+    "nom": "Armes pesants",
+    "categoria": "distancia",
+    "modLatencia": 6,
+    "abast": 0,
+    "danyBase": "DES+4",
+    "maniobra": "Feixugues — Només es poden disparar sense moure's i amb posició estable, o muntades en un vehicle. Destrucció massiva — Doble dany contra objectes inanimats o PJ amb armadura rígida; destrueixen 2 punts d'armadura o integritat estructural per atac.",
+    "rangExtrem": false,
+    "descripcio": "Manual: Lat +6, Rang variable, Dany DES+4, munició variable."
+  }
+]
