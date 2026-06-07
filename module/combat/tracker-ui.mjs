@@ -1,4 +1,12 @@
 import DiategDeclararAccio from "../apps/dialeg-declarar-accio.mjs";
+import { ferTirada } from "../dice/tirada.mjs";
+import { ferAtac }  from "./atac.mjs";
+
+const HAB_PER_CATEGORIA = {
+  natural:   "barallar-se",
+  cosAcos:   "armes-cos-a-cos",
+  distancia: "armes-distancia"
+};
 
 /**
  * Extensió del Combat Tracker natiu (S-10): mostra la posició/tick de cada
@@ -10,7 +18,8 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
   static DEFAULT_OPTIONS = {
     actions: {
       forjaDeclararAccio: ForjaCombatTracker.#onDeclararAccio,
-      forjaMarcarEmboscada: ForjaCombatTracker.#onMarcarEmboscada
+      forjaMarcarEmboscada: ForjaCombatTracker.#onMarcarEmboscada,
+      forjaResoldreAccio: ForjaCombatTracker.#onResoldreAccio
     }
   };
 
@@ -60,6 +69,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
            title="${game.i18n.localize("FORJA.Combat.Declarar")}">
           <i class="fas fa-stopwatch"></i>
         </a>
+        <a class="forja-resoldre" data-action="forjaResoldreAccio" data-combatant-id="${combatantId}"
+           title="${game.i18n.localize("FORJA.Combat.Resoldre")}">
+          <i class="fas fa-dice-d10"></i>
+        </a>
         <a class="forja-emboscada" data-action="forjaMarcarEmboscada" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.MarcarEmboscada")}">
           <i class="fas fa-user-ninja"></i>
@@ -82,15 +95,22 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     if (!combatant?.actor) return;
 
     const sys   = combatant.actor.system;
+    const habilitat = (id) => sys.habilitats?.[id]?.nivell ?? 0;
     const armes = combatant.actor.items
       .filter(i => i.type === "arma")
-      .map(i => ({
-        id:            i.id,
-        nom:           i.name,
-        latenciaTotal: (sys.latenciaBase ?? 0) + (i.system.modLatencia ?? 0)
-      }));
+      .map(i => {
+        const habId      = HAB_PER_CATEGORIA[i.system.categoria] ?? "barallar-se";
+        const atribut    = i.system.categoria === "distancia" ? "DES" : "FOR";
+        const atributVal = sys.atributs?.[atribut] ?? 0;
+        return {
+          id:            i.id,
+          nom:           i.name,
+          latenciaTotal: (sys.latenciaBase ?? 0) + (i.system.modLatencia ?? 0),
+          atribut, atributVal,
+          habId, habNivell: habilitat(habId)
+        };
+      });
 
-    const habilitat = (id) => sys.habilitats?.[id]?.nivell ?? 0;
     const defenses = [
       {
         id: "esquivar", nom: game.i18n.localize("FORJA.Combat.Defensa.Esquivar"),
@@ -126,12 +146,85 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     await combat.declararAccio(combatantId, config.latencia);
 
+    // Desa l'acció declarada com a "pendent de resoldre" (DA-?): el botó de
+    // resoldre obrirà directament la tirada corresponent, ja preseleccionada.
+    let pendent = { tipus: config.tipus, etiqueta: config.etiqueta, descripcio: config.descripcio };
+    if (config.tipus === "atac") {
+      const arma = armes.find(a => a.id === config.armaId);
+      if (arma) pendent = { ...pendent, ...arma, label: arma.nom };
+    } else if (config.tipus === "defensa") {
+      const def = defenses.find(d => d.id === config.defensa?.id);
+      if (def) pendent = { ...pendent, ...def, label: def.nom };
+    }
+    await combatant.setFlag("forja", "accioPendent", pendent);
+
     if (config.descripcio || config.etiqueta) {
       await ChatMessage.create({
         speaker: ChatMessage.getSpeaker({ actor: combatant.actor }),
         content: `<div class="forja-missatge-accio"><strong>${config.etiqueta ?? ""}</strong>${config.descripcio ? `<p>${config.descripcio}</p>` : ""}</div>`
       });
     }
+  }
+
+  /**
+   * Resol l'acció prèviament declarada: si té una tirada associada (atac o
+   * defensa esquivar/parar), obre directament el diàleg simplificat de tirada
+   * (DiategTirada via ferTirada) amb l'opció ja seleccionada. Si és "blocar"
+   * (sense tirada) o "altra acció", no hi ha tirada precalculada — per a
+   * "altra acció" cal fer servir la fitxa del personatge.
+   */
+  static async #onResoldreAccio(event, target) {
+    const combat = this.viewed;
+    if (!combat) return;
+    const combatantId = target.dataset.combatantId;
+    const combatant   = combat.combatants.get(combatantId);
+    if (!combatant?.actor) return;
+
+    const pendent = combatant.getFlag("forja", "accioPendent");
+
+    if (!pendent || pendent.tipus === "altra" || (pendent.tipus === "defensa" && pendent.senseTirada)) {
+      if (pendent?.senseTirada) {
+        ui.notifications?.info(game.i18n.format("FORJA.Combat.BlocarSenseAccio", { nom: combatant.name }));
+      }
+      combatant.actor.sheet?.render(true);
+      return;
+    }
+
+    const poolFinal = (pendent.atributVal ?? 0) + (pendent.habNivell ?? 0);
+
+    if (pendent.tipus === "atac") {
+      const arma     = combatant.actor.items.get(pendent.id);
+      const objectiu = [...game.user.targets][0]?.actor;
+
+      if (arma && objectiu) {
+        // Flux complet d'atac contra un objectiu (S-12): tira, compara amb la
+        // seva defensa BÀSICA (passiva) i resol el dany. La defensa ACTIVA
+        // (esquivar/parar com a reacció enfrontada) encara no s'orquestra
+        // automàticament — caldrà fer-ho a banda fins que hi hagi aquest flux.
+        await ferAtac({
+          actor:      combatant.actor,
+          objectiu,
+          arma,
+          poolFinal,
+          dificultat: objectiu.system.defensa ?? 0,
+          label:      pendent.label
+        });
+        return;
+      }
+
+      if (!objectiu) ui.notifications?.warn(game.i18n.localize("FORJA.Combat.SenseObjectiu"));
+    }
+
+    // Defensa activa (esquivar/parar) o atac sense objectiu seleccionat:
+    // tirada simple, preseleccionada amb les dades de l'acció declarada.
+    await ferTirada({
+      actor:      combatant.actor,
+      atribut:    pendent.atribut,
+      atributVal: pendent.atributVal,
+      habId:      pendent.habId,
+      habNivell:  pendent.habNivell,
+      label:      pendent.label
+    });
   }
 
   /** Marca el combatent com a part de l'emboscada (acció simultània a la primera casella). */
