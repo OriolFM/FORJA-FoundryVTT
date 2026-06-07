@@ -5012,13 +5012,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 6px 4px;
+  gap: 4px;
+  padding: 10px 4px;
   background: var(--forja-bg-800);
   border: 1px solid var(--forja-border-color);
   border-radius: var(--forja-radius-sm);
   color: var(--forja-text-secondary);
-  font-size: 0.75em;
+  font-size: 0.82em;
   cursor: default;
   transition: border-color 0.15s, color 0.15s;
 }
@@ -5040,14 +5040,14 @@
 }
 
 .forja-wizard__step-num {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: var(--forja-bg-700, #374151);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9em;
+  font-size: 0.95em;
   font-weight: bold;
 }
 
@@ -5062,7 +5062,7 @@
 }
 
 .forja-wizard__step-label {
-  font-size: 0.78em;
+  font-size: 0.86em;
   text-align: center;
   line-height: 1.2;
 }
@@ -5203,6 +5203,16 @@
   font-size: 0.83em;
   font-weight: 500;
   color: var(--forja-text-primary);
+}
+
+.forja-wizard__species-desc {
+  margin: 6px 0 0;
+  padding: 6px 10px;
+  font-size: 0.82em;
+  color: var(--forja-text-secondary);
+  background: rgba(255,255,255,0.04);
+  border-left: 2px solid var(--forja-primary);
+  border-radius: 0 4px 4px 0;
 }
 
 /* ── Body cols (pas 2) ── */
@@ -5424,13 +5434,13 @@
 }
 
 .forja-wizard__cat-select {
+  flex: 1;
   background: var(--forja-bg-800);
   border: 1px solid var(--forja-border-color);
   color: var(--forja-text-primary);
   border-radius: var(--forja-radius-sm);
   padding: 5px 8px;
   font-size: 0.85em;
-  min-width: 120px;
 }
 
 .forja-wizard__list {
@@ -5438,12 +5448,25 @@
   overflow-y: auto;
   border: 1px solid var(--forja-border-color);
   border-radius: var(--forja-radius-sm);
-  max-height: 340px;
+  max-height: 300px;
+}
+
+.forja-wizard__skill-summary {
+  padding: 8px 12px;
+  font-size: 0.83em;
+  color: var(--forja-text-secondary);
+  font-style: italic;
+  border: 1px solid var(--forja-border-color);
+  border-top: none;
+  border-radius: 0 0 var(--forja-radius-sm) var(--forja-radius-sm);
+  min-height: 34px;
+  background: var(--forja-bg-darkest);
+  line-height: 1.4;
 }
 
 .forja-wizard__list-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   padding: 7px 12px;
   border-bottom: 1px solid var(--forja-border-color);
@@ -5544,6 +5567,39 @@
 
 .forja-wizard__remove-btn:hover {
   background: rgba(239, 68, 68, 0.25);
+}
+
+.forja-wizard__attr-btn--remove {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.forja-wizard__attr-btn--remove:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+/* ── Name block (name + inline notes/cost) ── */
+
+.forja-wizard__list-name-block {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 2px;
+}
+
+.forja-wizard__list-name-block .forja-wizard__list-name {
+  flex: unset;
+}
+
+.forja-wizard__item-notes {
+  margin: 0;
+  font-size: 0.78em;
+  color: var(--forja-text-secondary);
+  line-height: 1.35;
+  font-style: italic;
 }
 
 /* ── Cost pill ── */
@@ -5726,6 +5782,17 @@
   padding: 2px 6px;
 }
 
+.forja-wizard__auto-label--secondary {
+  margin-left: 8px;
+  border-left: 1px solid var(--forja-border-color);
+  padding-left: 8px;
+}
+
+.forja-wizard__auto-dmg {
+  opacity: 0.8;
+  font-size: 0.85em;
+}
+
 /* Gift badge */
 .forja-wizard__gift-badge {
   font-size: 0.72em;
@@ -5804,4 +5871,1370 @@
 .forja-wizard__btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+
+/* ============================================================================
+   ONADA 0 — Layout fitxa personatge v2 (tema fosc, bandes de color)
+   ============================================================================ */
+
+/* window-content de la fitxa: scroll únic vertical */
+.forja.full-personatge .window-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Cos acordió */
+.forja-body {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* --- Seccions: cos + capçalera banda --- */
+.forja-seccio {
+  margin-bottom: 8px;
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  overflow: hidden;
+}
+
+.forja-seccio-cap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--forja-primary-dark);
+  color: #e2f8f5;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 5px 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.forja-seccio-cap:hover {
+  background: var(--forja-primary);
+}
+
+/* Chevron acordió */
+.forja-chevron {
+  font-size: 0.6rem;
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.forja-seccio.tancada .forja-chevron {
+  transform: rotate(-90deg);
+}
+
+/* Cos de la secció: animació tancament */
+.forja-seccio-cos {
+  overflow: hidden;
+  transition: max-height 0.2s ease;
+}
+
+.forja-seccio.tancada .forja-seccio-cos {
+  display: none;
+}
+
+/* Placeholder interior */
+.forja-placeholder-cos {
+  padding: 16px 10px;
+  text-align: center;
+  color: var(--forja-text-muted);
+}
+
+.forja-placeholder-cos .placeholder-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--forja-text-muted);
+  font-size: 0.82rem;
+}
+
+.forja-placeholder-cos .placeholder-msg i {
+  font-size: 1.6rem;
+  color: var(--forja-primary-border);
+}
+
+/* Padding intern de totes les seccions via .forja-seccio-cos */
+.forja-seccio-cos:not(.salut-cos):not(.forja-placeholder-cos) {
+  padding: 8px 10px;
+  background: var(--forja-bg-800);
+}
+
+.salut-cos {
+  background: var(--forja-bg-800);
+}
+
+/* --- Camps genèrics --- */
+.forja-camp {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fc-ampli { grid-column: 1 / -1; }
+
+.forja-camp label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.forja-camp input,
+.forja-camp select {
+  width: 100%;
+  font-size: 0.8rem;
+  padding: 3px 6px;
+  background: var(--forja-bg-700);
+  color: var(--forja-text-primary);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+}
+
+.forja-camp input[type="number"] { text-align: center; }
+
+/* --- Identitat --- */
+.forja-identitat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+/* --- Atributs 6-grid --- */
+.forja-atributs-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
+
+.forja-attr-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  background: var(--forja-bg-900);
+  border: 1px solid var(--forja-primary-border);
+  border-radius: var(--forja-radius-sm);
+  padding: 4px 2px;
+}
+
+.attr-codi {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--forja-primary-light);
+  text-transform: uppercase;
+}
+
+.forja-attr-box input {
+  width: 38px;
+  height: 38px;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.forja-attr-box input:focus {
+  outline: 2px solid var(--forja-primary);
+  border-radius: 50%;
+}
+
+.attr-nom {
+  font-size: 0.58rem;
+  color: var(--forja-text-muted);
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* --- Derivats --- */
+.forja-derivats-fila {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.forja-derivat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.derivat-nom {
+  font-size: 0.58rem;
+  color: var(--forja-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+}
+
+.derivat-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  font-family: var(--forja-font-mono);
+}
+
+/* --- Taula de salut (ESTAT | FATIGA | FERIDES) --- */
+.forja-salut-taula {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+  background: var(--forja-bg-800);
+}
+
+.forja-salut-taula thead tr {
+  background: var(--forja-bg-700);
+}
+
+.forja-salut-taula thead th {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--forja-text-secondary);
+  letter-spacing: 0.5px;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--forja-primary-border);
+  text-align: left;
+}
+
+.forja-salut-taula thead th.col-estat {
+  width: 50px;
+  text-align: center;
+}
+
+.salut-fila td {
+  padding: 2px 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+}
+
+.salut-fila:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+.salut-fila.fila-activa td { background: rgba(13,148,136,0.15) !important; }
+
+.col-estat {
+  text-align: center;
+  width: 50px;
+}
+
+.nivell-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--forja-text-secondary);
+  font-family: var(--forja-font-mono);
+  display: block;
+  line-height: 1.1;
+}
+
+.penal-str {
+  font-size: 0.58rem;
+  color: var(--forja-text-muted);
+  display: block;
+  line-height: 1;
+}
+
+.col-pista {
+  display: table-cell;
+}
+
+.col-pista > * { vertical-align: middle; }
+
+.nivell-nom {
+  font-size: 0.66rem;
+  color: var(--forja-text-secondary);
+  display: inline-block;
+  min-width: 62px;
+  margin-right: 4px;
+}
+
+/* Caselles de salut */
+.casella-salut {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--forja-bg-500);
+  border-radius: 2px;
+  background: var(--forja-bg-600);
+  cursor: pointer;
+  padding: 0;
+  margin: 1px;
+  vertical-align: middle;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.casella-salut:hover { border-color: var(--forja-primary-light); background: var(--forja-primary-bg); }
+.casella-salut.marcada { background: var(--forja-primary); border-color: var(--forja-primary-light); }
+
+/* Nivell 5 (exhaurit/malferit): taronja */
+.salut-fila:nth-child(5) .casella-salut.marcada {
+  background: var(--forja-warning);
+  border-color: var(--forja-warning);
+}
+/* Nivell 6 (rebentat/crític): vermell */
+.salut-fila:nth-child(6) .casella-salut.marcada {
+  background: var(--forja-danger);
+  border-color: var(--forja-danger);
+}
+
+/* Fila terminal 7 */
+.fila-terminal .col-pista.terminal-cell { padding: 3px 6px; }
+
+.casella-terminal {
+  display: inline-block;
+  width: 100%;
+  height: 22px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #ff6b6b;
+  background: rgba(185,28,28,0.2);
+  border: 1px solid rgba(185,28,28,0.5);
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: all 0.1s;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.casella-terminal:hover { background: rgba(185,28,28,0.35); }
+.casella-terminal.marcada { background: #b91c1c; color: white; border-color: #991b1b; }
+
+/* Badge penalització */
+.forja-penal-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--forja-danger);
+  background: var(--forja-danger-bg);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: var(--forja-radius-sm);
+  padding: 1px 6px;
+  margin-left: auto;
+}
+
+.forja-penal-incap { color: #ff4444; background: rgba(185,28,28,0.2); }
+
+/* --- Recursos --- */
+.forja-recursos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* --- PC/PX --- */
+.forja-pcpx-fila {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.forja-pcpx-fila .forja-camp { flex: 1; align-items: center; }
+
+.forja-val-ro {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  text-align: center;
+  padding: 3px 0;
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  width: 100%;
+}
+
+.val-negatiu .forja-val-ro { color: var(--forja-danger); }
+
+/* --- Habilitats (2 col) --- */
+.forja-habs-cos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  padding: 8px 10px;
+  /* sense height ni overflow — scroll al window-content */
+}
+
+.forja-habs-columna { display: flex; flex-direction: column; }
+
+.forja-habs-cap-fila {
+  display: grid;
+  grid-template-columns: 20px 1fr 40px 36px;
+  gap: 2px;
+  padding: 4px 4px;
+  background: var(--forja-primary-dark);
+  border-radius: var(--forja-radius-sm) var(--forja-radius-sm) 0 0;
+  margin-bottom: 1px;
+}
+
+.hcap-nom, .hcap-esp, .hcap-niv {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #e2f8f5;
+  letter-spacing: 0.5px;
+}
+
+.hcap-niv { text-align: center; }
+
+.forja-hab-fila {
+  display: grid;
+  grid-template-columns: 20px 1fr 40px 36px;
+  gap: 2px;
+  align-items: center;
+  padding: 2px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.1s;
+}
+
+.forja-hab-fila:hover { background: rgba(13,148,136,0.08); }
+.forja-hab-fila.hab-restringida .hab-nom { color: var(--forja-warning); font-style: italic; }
+
+.hab-marca {
+  width: 18px;
+  height: 18px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: 2px;
+  color: var(--forja-text-muted);
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+  line-height: 16px;
+  flex-shrink: 0;
+}
+
+.hab-marca.marca-B { background: rgba(59,130,246,0.25); border-color: #3b82f6; color: #93c5fd; }
+.hab-marca.marca-R { background: rgba(249,115,22,0.25); border-color: #f97316; color: #fdba74; }
+
+.hab-nom {
+  font-size: 0.76rem;
+  color: var(--forja-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hab-esp {
+  font-size: 0.62rem;
+  color: var(--forja-text-muted);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* quan és input */
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  padding: 1px 2px;
+  width: 100%;
+  min-width: 0;
+}
+
+.hab-esp:focus {
+  outline: none;
+  border-bottom-color: var(--forja-primary);
+  color: var(--forja-text-secondary);
+}
+
+.hab-esp::placeholder { color: var(--forja-text-disabled); font-style: italic; }
+
+.hab-niv-input {
+  width: 100%;
+  height: 22px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: 2px;
+  padding: 0;
+}
+
+/* (placeholders de tabs eliminats — ara s'usen forja-placeholder-cos) */
+
+/* --- Header fitxa --- */
+.forja-sheet-header {
+  display: grid;
+  grid-template-columns: 72px 1fr 34px auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--forja-bg-darkest);
+  border-bottom: 2px solid var(--forja-primary-dark);
+  flex-shrink: 0;
+}
+
+.actor-portrait {
+  width: 72px; height: 72px;
+  object-fit: cover;
+  border-radius: var(--forja-radius-md);
+  border: 2px solid var(--forja-primary);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.actor-portrait:hover { border-color: var(--forja-primary-light); }
+
+.header-fields { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+
+.actor-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--forja-text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--forja-border-color);
+  padding: 2px 0;
+  width: 100%;
+}
+
+.actor-name:focus { outline: none; border-bottom-color: var(--forja-primary); }
+
+.header-meta { display: flex; align-items: center; gap: 6px; }
+
+.header-meta label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--forja-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.header-meta input {
+  flex: 1;
+  font-size: 0.78rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--forja-border-color);
+  color: var(--forja-text-secondary);
+  padding: 1px 2px;
+}
+
+.header-pc {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: stretch;
+  min-width: 76px;
+}
+
+.pc-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  padding: 3px 8px;
+}
+
+.pc-label { font-size: 0.58rem; text-transform: uppercase; color: var(--forja-text-muted); }
+
+.pc-input, .pc-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  text-align: center;
+  width: 100%;
+  background: transparent;
+  border: none;
+}
+
+.pc-negatius .pc-value { color: var(--forja-danger); }
+
+
+
+/* ============================================================================
+   ONADA 1 — Diàleg de tirada + missatge de xat
+   ============================================================================ */
+
+/* ── Selecció de tirada: atributs ── */
+.forja-attr-box[data-action="selectAtribut"] {
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.forja-attr-box[data-action="selectAtribut"]:hover {
+  border-color: var(--forja-primary);
+  background: rgba(13,148,136,0.1);
+}
+
+/* Estat seleccionat (atribut triat) */
+.forja-attr-box.seleccionat {
+  border-color: var(--forja-primary-light) !important;
+  background: rgba(13,148,136,0.25) !important;
+  box-shadow: 0 0 0 2px var(--forja-primary);
+}
+
+.forja-attr-box.seleccionat .attr-codi,
+.forja-attr-box.seleccionat .attr-nom { color: #e2f8f5; }
+
+/* Atenuat quan hi ha una selecció activa però no és aquest */
+.forja-attr-box.sel-activa { opacity: 0.45; }
+
+/* ── Selecció de tirada: habilitats ── */
+.forja-hab-fila[data-action="selectHabilitat"] { cursor: pointer; }
+
+.forja-hab-fila[data-action="selectHabilitat"]:hover .hab-nom {
+  color: var(--forja-primary-light);
+}
+
+.forja-hab-fila.seleccionat {
+  background: rgba(13,148,136,0.2) !important;
+}
+
+.forja-hab-fila.seleccionat .hab-nom {
+  color: var(--forja-primary-light);
+  font-weight: 700;
+}
+
+.forja-hab-fila.sel-activa { opacity: 0.45; }
+
+/* --- Diàleg de tirada --- */
+.dialeg-tirada .window-content { padding: 0; }
+
+.dialeg-tirada-cos {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--forja-bg-900);
+  color: var(--forja-text-primary);
+}
+
+.tirada-titol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  border-bottom: 1px solid var(--forja-primary-border);
+  padding-bottom: 6px;
+}
+
+.tirada-titol i { font-size: 1.1rem; }
+
+.tirada-pool-fila {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.tirada-camp {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.tirada-camp-petit { flex: 0 0 70px; }
+.tirada-camp-ampli { flex: 2; }
+
+.tirada-camp label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--forja-text-muted);
+  letter-spacing: 0.4px;
+}
+
+.tirada-camp input,
+.tirada-camp select {
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-sm);
+  color: var(--forja-text-primary);
+  font-size: 0.85rem;
+  padding: 4px 8px;
+}
+
+.tirada-camp input[type="number"] { text-align: center; }
+.tirada-camp input[readonly] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.tirada-camp input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+}
+
+.tirada-hint {
+  font-size: 0.62rem;
+  color: var(--forja-text-muted);
+}
+
+.tirada-pool-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--forja-bg-800);
+  border: 1px solid var(--forja-primary-border);
+  border-radius: var(--forja-radius-md);
+  padding: 8px 14px;
+}
+
+.pool-components {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pool-comp-attr, .pool-comp-hab {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--forja-text-primary);
+}
+
+.pool-comp-attr em, .pool-comp-hab em {
+  font-style: normal;
+  color: var(--forja-primary-light);
+}
+
+.pool-comp-sep {
+  color: var(--forja-text-muted);
+  font-size: 1rem;
+}
+
+.pool-total {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.pool-valor {
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  line-height: 1;
+}
+
+.pool-daus {
+  font-size: 0.9rem;
+  color: var(--forja-text-secondary);
+}
+
+.tirada-camp-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.tirada-camp-check label { white-space: nowrap; }
+
+.tirada-mod-bloc,
+.tirada-dif-bloc {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.tirada-sep {
+  border: none;
+  border-top: 1px solid var(--forja-border-color);
+  margin: 0;
+}
+
+.tirada-penal-avís {
+  font-size: 0.72rem;
+  color: var(--forja-danger);
+  background: rgba(185,28,28,0.1);
+  border: 1px solid rgba(185,28,28,0.3);
+  border-radius: var(--forja-radius-sm);
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tirada-botons {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2px;
+}
+
+.btn-tirar {
+  background: var(--forja-primary-dark);
+  color: #e2f8f5;
+  border: 1px solid var(--forja-primary);
+  border-radius: var(--forja-radius-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 7px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.btn-tirar:hover { background: var(--forja-primary); }
+
+/* --- Missatge de xat --- */
+.forja-missatge-tirada {
+  font-size: 0.82rem;
+  color: var(--forja-text-primary);
+  padding: 4px 0;
+}
+
+.mt-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.mt-label {
+  font-weight: 700;
+  color: var(--forja-primary-light);
+  font-size: 0.85rem;
+}
+
+.mt-dif {
+  font-size: 0.68rem;
+  color: var(--forja-text-muted);
+  background: var(--forja-bg-700);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+.mt-daus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.mt-dau {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: var(--forja-font-mono);
+  border: 2px solid transparent;
+}
+
+.dau-pifia  { background: rgba(185,28,28,0.25); border-color: #b91c1c; color: #ff6b6b; }
+.dau-doble  { background: rgba(234,179,8,0.25);  border-color: #ca8a04; color: #fde047; }
+.dau-fita   { background: rgba(13,148,136,0.25); border-color: var(--forja-primary); color: var(--forja-primary-light); }
+.dau-neutre { background: var(--forja-bg-700);   border-color: var(--forja-border-color); color: var(--forja-text-muted); }
+
+.mt-resultat { margin-bottom: 4px; }
+
+.mt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: var(--forja-radius-sm);
+  padding: 3px 10px;
+}
+
+.badge-pifia   { background: rgba(185,28,28,0.2); color: #ff6b6b; border: 1px solid rgba(185,28,28,0.4); }
+.badge-exit    { background: rgba(13,148,136,0.2); color: var(--forja-primary-light); border: 1px solid var(--forja-primary-border); }
+.badge-fallada { background: var(--forja-bg-700); color: var(--forja-text-muted); border: 1px solid var(--forja-border-color); }
+
+.mt-excedent {
+  font-size: 0.72rem;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+.mt-nota {
+  font-size: 0.65rem;
+  color: var(--forja-text-muted);
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ============================================================================
+   ONADA 1 addicions — mode edició, trets, xat fosc
+   ============================================================================ */
+
+/* ── Botó mode edició al header ── */
+.btn-mode-edicio {
+  width: 34px; height: 34px;
+  background: var(--forja-bg-700);
+  border: 1px solid var(--forja-border-color);
+  border-radius: var(--forja-radius-md);
+  color: var(--forja-text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.btn-mode-edicio:hover { border-color: var(--forja-primary); color: var(--forja-primary-light); }
+.btn-mode-edicio.actiu {
+  background: var(--forja-primary-dark);
+  border-color: var(--forja-primary);
+  color: #e2f8f5;
+}
+
+/* Indicador de mode al body */
+.forja.full-personatge.mode-edicio-actiu .forja-body::before {
+  content: "✏ MODE EDICIÓ";
+  display: block;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--forja-primary-light);
+  background: rgba(13,148,136,0.1);
+  border: 1px dashed var(--forja-primary-border);
+  border-radius: 3px;
+  padding: 3px;
+  margin-bottom: 6px;
+}
+
+/* ── Atributs mode edició ── */
+.forja-attr-box.mode-edicio {
+  cursor: default;
+  border-color: var(--forja-border-color);
+}
+
+.attr-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 2px 0;
+}
+
+.attr-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  min-width: 20px;
+  text-align: center;
+}
+
+.btn-stepper {
+  width: 20px; height: 20px;
+  background: var(--forja-bg-600);
+  border: 1px solid var(--forja-border-color);
+  border-radius: 3px;
+  color: var(--forja-text-secondary);
+  font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.btn-stepper:hover { background: var(--forja-primary-dark); color: #e2f8f5; border-color: var(--forja-primary); }
+
+/* ── Habilitats mode edició ── */
+.forja-hab-fila.mode-edicio { cursor: default; }
+.forja-hab-fila.mode-edicio:hover { background: transparent; }
+
+.hab-stepper {
+  display: flex; align-items: center; justify-content: center; gap: 2px;
+}
+
+.hab-niv-val {
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: var(--forja-font-mono);
+  color: var(--forja-primary-light);
+  min-width: 16px;
+  text-align: center;
+}
+
+.btn-stepper-sm {
+  width: 16px; height: 16px;
+  background: var(--forja-bg-600);
+  border: 1px solid var(--forja-border-color);
+  border-radius: 2px;
+  color: var(--forja-text-muted);
+  font-size: 0.75rem; font-weight: 700;
+  cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.btn-stepper-sm:hover { background: var(--forja-primary-dark); color: #e2f8f5; border-color: var(--forja-primary); }
+
+/* ── Botó afegir a la capçalera de secció ── */
+.btn-cap-afegir {
+  margin-left: auto;
+  width: 20px; height: 20px;
+  background: rgba(13,148,136,0.25);
+  border: 1px solid var(--forja-primary);
+  border-radius: 3px;
+  color: #e2f8f5;
+  font-size: 0.65rem;
+  cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.btn-cap-afegir:hover { background: var(--forja-primary); }
+
+/* ── Trets ── */
+.forja-trets-llista { display: flex; flex-direction: column; gap: 2px; }
+
+.forja-tret-fila {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: var(--forja-radius-sm);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.forja-tret-fila:hover { background: rgba(255,255,255,0.03); }
+
+.tret-nom {
+  flex: 1;
+  font-size: 0.82rem;
+  color: var(--forja-text-primary);
+}
+
+.tret-cost {
+  font-size: 0.68rem;
+  color: var(--forja-primary-light);
+  font-family: var(--forja-font-mono);
+  background: rgba(13,148,136,0.1);
+  border-radius: 3px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+.btn-tret-editar, .btn-tret-eliminar {
+  width: 22px; height: 22px;
+  background: transparent;
+  border: 1px solid var(--forja-border-color);
+  border-radius: 3px;
+  color: var(--forja-text-muted);
+  font-size: 0.65rem;
+  cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.btn-tret-editar:hover { color: var(--forja-primary-light); border-color: var(--forja-primary); }
+.btn-tret-eliminar:hover { color: #ff6b6b; border-color: rgba(185,28,28,0.5); }
+
+.trets-buits {
+  color: var(--forja-text-disabled);
+  font-size: 0.78rem;
+  text-align: center;
+  padding: 8px;
+  margin: 0;
+}
+
+/* ── Xat: fons fosc forçat ── */
+.forja-missatge-tirada {
+  background: #1a1f2e;
+  color: #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--forja-primary-border);
+}
+
+.forja-missatge-tirada.missatge-exit  { border-left-color: #0d9488; }
+.forja-missatge-tirada.missatge-pifia { border-left-color: #b91c1c; }
+.forja-missatge-tirada.missatge-fallada { border-left-color: #4b5563; }
+
+/* Dau daurat: fons fosc, text llegible */
+.dau-doble {
+  background: rgba(120, 80, 0, 0.5) !important;
+  border-color: #b45309 !important;
+  color: #fcd34d !important;
+}
+
+/* Modificadors al xat */
+.mt-mods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.mt-mod {
+  font-size: 0.62rem;
+  color: #94a3b8;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.mt-mod-penal {
+  color: #fca5a5;
+  background: rgba(185,28,28,0.15);
+}
+
+/* ============================================================================
+   DIÀLEG SELECTOR DE TRETS
+   ============================================================================ */
+
+.dialeg-trets {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #1a1f2e;
+  color: #e2e8f0;
+  padding: 8px 10px;
+  gap: 8px;
+}
+
+/* Cerca */
+.dt-cerca {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+.dt-cerca-icon {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.dt-cerca-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e2e8f0;
+  font-size: 0.82rem;
+}
+
+.dt-cerca-input::placeholder {
+  color: #64748b;
+}
+
+/* Grups */
+.dt-grup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dt-grup-cap {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+  padding: 2px 2px 4px;
+  border-bottom: 1px solid rgba(56,189,248,0.2);
+  margin-bottom: 2px;
+}
+
+.dt-llista {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* Fila de tret */
+.dt-tret-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+  text-align: left;
+  width: 100%;
+  color: #e2e8f0;
+  font-size: 0.8rem;
+}
+
+.dt-tret-fila:hover {
+  background: rgba(56,189,248,0.12);
+  border-color: rgba(56,189,248,0.35);
+}
+
+.dt-tret-nom {
+  flex: 1;
+}
+
+.dt-tret-cost {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.dt-cost-positiu {
+  background: rgba(16,185,129,0.15);
+  color: #6ee7b7;
+}
+
+.dt-cost-negatiu {
+  background: rgba(239,68,68,0.15);
+  color: #fca5a5;
+}
+
+.dt-cost-variable {
+  background: rgba(245,158,11,0.15);
+  color: #fcd34d;
+}
+
+/* Pantalla de detall / confirmació */
+.dt-detall {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.dt-detall-cap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 8px;
+}
+
+.dt-detall-nom {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.dt-detall-descripcio {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.dt-sense-descripcio {
+  color: #64748b;
+  font-style: italic;
+}
+
+.dt-detall-x {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dt-detall-x label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.dt-valor-x {
+  width: 70px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  padding: 3px 6px;
+  text-align: center;
+}
+
+.dt-detall-peu {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.dt-btn-secundari, .dt-btn-principal {
+  border-radius: 4px;
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: background 0.12s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dt-btn-secundari {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #94a3b8;
+}
+.dt-btn-secundari:hover { background: rgba(255,255,255,0.12); color: #e2e8f0; }
+
+.dt-btn-principal {
+  background: rgba(56,189,248,0.18);
+  border: 1px solid rgba(56,189,248,0.45);
+  color: #7dd3fc;
+}
+.dt-btn-principal:hover { background: rgba(56,189,248,0.3); color: #e0f2fe; }
+
+/* Sense resultats */
+.dt-sense-resultats {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.78rem;
+  padding: 16px 0;
+}
+
+/* Peu */
+.dt-peu {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: auto;
+}
+
+.dt-peu button {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  padding: 4px 14px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.dt-peu button:hover {
+  background: rgba(255,255,255,0.12);
+  color: #e2e8f0;
 }

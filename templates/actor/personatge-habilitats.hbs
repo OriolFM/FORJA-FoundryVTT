@@ -1,0 +1,51 @@
+<section class="tab" data-group="sheet" data-tab="habilitats">
+  <div class="forja-habs-cos">
+
+    <div class="forja-habs-columna">
+      <div class="forja-habs-cap-fila">
+        <span></span>
+        <span class="hcap-nom">{{localize "FORJA.Hab.Nom"}}</span>
+        <span class="hcap-esp">Esp.</span>
+        <span class="hcap-niv">{{localize "FORJA.Hab.Nivell"}}</span>
+      </div>
+      {{#each habilitats.esquerra as |h|}}
+      <div class="forja-hab-fila {{#if (eq h.tipus "restringida")}}hab-restringida{{/if}}">
+        <button type="button" class="hab-marca marca-{{h.marca}}"
+                data-action="toggleMarca" data-hab-id="{{h.id}}"
+                title="{{localize 'FORJA.Hab.ToggleMarca'}}">{{h.marca}}</button>
+        <span class="hab-nom">{{h.nom}}</span>
+        <input type="text" class="hab-esp"
+               name="system.habilitats.{{h.id}}.especialitat"
+               value="{{h.especialitat}}" placeholder="esp."/>
+        <input type="number" class="hab-niv-input"
+               name="system.habilitats.{{h.id}}.nivell"
+               value="{{h.nivell}}" min="0" max="10"/>
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="forja-habs-columna">
+      <div class="forja-habs-cap-fila">
+        <span></span>
+        <span class="hcap-nom">{{localize "FORJA.Hab.Nom"}}</span>
+        <span class="hcap-esp">Esp.</span>
+        <span class="hcap-niv">{{localize "FORJA.Hab.Nivell"}}</span>
+      </div>
+      {{#each habilitats.dreta as |h|}}
+      <div class="forja-hab-fila {{#if (eq h.tipus "restringida")}}hab-restringida{{/if}}">
+        <button type="button" class="hab-marca marca-{{h.marca}}"
+                data-action="toggleMarca" data-hab-id="{{h.id}}"
+                title="{{localize 'FORJA.Hab.ToggleMarca'}}">{{h.marca}}</button>
+        <span class="hab-nom">{{h.nom}}</span>
+        <input type="text" class="hab-esp"
+               name="system.habilitats.{{h.id}}.especialitat"
+               value="{{h.especialitat}}" placeholder="esp."/>
+        <input type="number" class="hab-niv-input"
+               name="system.habilitats.{{h.id}}.nivell"
+               value="{{h.nivell}}" min="0" max="10"/>
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+</section>

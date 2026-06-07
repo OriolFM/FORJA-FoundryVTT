@@ -1,0 +1,104 @@
+<section class="tab-content" data-group="sheet" data-tab="stats">
+
+  <!-- Atributs primaris -->
+  <div class="forja-section">
+    <h3>{{localize "FORJA.Section.Atributs"}}</h3>
+    <div class="atributs-grid">
+      {{#each campos.atributs as |attr|}}
+      <div class="atribut-box">
+        <label>{{localize (concat "FORJA.Attr." attr)}}</label>
+        <input type="number" name="system.atributs.{{attr}}" value="{{lookup ../sys.atributs attr}}"
+               min="0" max="5" class="atribut-input"/>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <!-- Atributs secundaris -->
+  <div class="forja-section">
+    <h3>{{localize "FORJA.Section.AtributsSecundaris"}}</h3>
+    <div class="secundaris-grid">
+      <div class="secundari-box">
+        <label>{{localize "FORJA.Attr.Especie"}}</label>
+        <select name="system.especie">
+          {{#each campos.especie as |esp|}}
+          <option value="{{esp}}" {{#if (eq esp ../sys.especie)}}selected{{/if}}>
+            {{localize (concat "FORJA.Especie." esp)}}
+          </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="secundari-box">
+        <label>{{localize "FORJA.Attr.Mida"}}</label>
+        <input type="number" name="system.mida" value="{{sys.mida}}" min="1" max="5" class="secundari-input"/>
+      </div>
+      <div class="secundari-box">
+        <label>{{localize "FORJA.Attr.Constitucio"}}</label>
+        <input type="number" name="system.constitucio" value="{{sys.constitucio}}" min="1" max="5" class="secundari-input"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Derivats -->
+  <div class="forja-section">
+    <h3>{{localize "FORJA.Section.Derivats"}}</h3>
+    <div class="derivats-grid">
+      <div class="derivat-box">
+        <label>{{localize "FORJA.Derivat.Latencia"}}</label>
+        <span class="derivat-value">{{derivats.latenciaBase}}</span>
+      </div>
+      <div class="derivat-box">
+        <label>{{localize "FORJA.Derivat.Defensa"}}</label>
+        <span class="derivat-value">{{derivats.defensa}}</span>
+      </div>
+      <div class="derivat-box">
+        <label>{{localize "FORJA.Derivat.Reduccio"}}</label>
+        <span class="derivat-value">{{derivats.reduccioDany}}</span>
+      </div>
+      <div class="derivat-box">
+        <label>{{localize "FORJA.Derivat.Reaccions"}}</label>
+        <span class="derivat-value">{{derivats.reaccionsMax}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Salut -->
+  <div class="forja-section">
+    <h3>{{localize "FORJA.Section.Salut"}}
+      {{#if salut.penalitzacio}}
+        <span class="penalitzacio-badge">−{{salut.penalitzacio}} {{localize "FORJA.Salut.Penalitzacio"}}</span>
+      {{/if}}
+      {{#unless salut.penalitzacio}}
+        {{#if (eq salut.nivellEfectiu 7)}}
+          <span class="penalitzacio-badge penal-incap">{{localize "FORJA.Salut.Incapacitat"}}</span>
+        {{/if}}
+      {{/unless}}
+    </h3>
+    <div class="salut-pistes">
+      {{> forja-pista-salut track="ferides" pista=salut.ferides labelKey="FORJA.Salut.Ferides"}}
+      {{> forja-pista-salut track="fatiga"  pista=salut.fatiga  labelKey="FORJA.Salut.Fatiga"}}
+    </div>
+  </div>
+
+</section>
+
+{{!-- Partial de pista de salut --}}
+{{#*inline "forja-pista-salut"}}
+<div class="salut-pista">
+  <div class="pista-label">{{localize labelKey}}</div>
+  <div class="pista-nivells">
+    {{#each pista.nivells as |n|}}
+    <div class="pista-nivell {{#if (eq n.num 7)}}nivell-terminal{{/if}} {{#if (eq n.num ../pista.nivellActiu)}}nivell-actiu{{/if}}">
+      <span class="nivell-num">{{n.num}}</span>
+      {{#each n.caselles as |c|}}
+      <button type="button" class="casella-salut {{#if c.marcat}}marcada{{/if}}"
+              data-action="toggleSalut"
+              data-track="{{../../track}}"
+              data-idx="{{c.idx}}"
+              aria-label="{{../../track}} {{c.idx}}"></button>
+      {{/each}}
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{/inline}}

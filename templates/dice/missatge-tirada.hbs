@@ -1,0 +1,51 @@
+<div class="forja-missatge-tirada {{#if pifia}}missatge-pifia{{else}}{{#if exit}}missatge-exit{{else}}missatge-fallada{{/if}}{{/if}}">
+
+  <!-- Capçalera -->
+  <div class="mt-cap">
+    <span class="mt-label">{{label}}</span>
+    <span class="mt-dif">dif. {{dificultat}}</span>
+  </div>
+
+  <!-- Daus -->
+  <div class="mt-daus">
+    {{#each dice as |d|}}
+    <span class="mt-dau {{dieClass d}}">{{d}}</span>
+    {{/each}}
+  </div>
+
+  <!-- Resultat -->
+  <div class="mt-resultat">
+    {{#if pifia}}
+      <span class="mt-badge badge-pifia"><i class="fas fa-skull"></i> PÍFIA</span>
+    {{else if exit}}
+      <span class="mt-badge badge-exit">
+        <i class="fas fa-check"></i>
+        {{fites}} {{localize "FORJA.Dice.Fites"}}
+        {{#if excedent}}<span class="mt-excedent">+{{excedent}} exc.</span>{{/if}}
+      </span>
+    {{else}}
+      <span class="mt-badge badge-fallada">
+        <i class="fas fa-xmark"></i>
+        {{fites}} {{localize "FORJA.Dice.Fites"}}
+      </span>
+    {{/if}}
+  </div>
+
+  <!-- Modificadors aplicats -->
+  {{#if (add modDaus modDificultat)}}
+  <div class="mt-mods">
+    {{#if modDaus}}<span class="mt-mod">daus {{#if (lt modDaus 0)}}{{modDaus}}{{else}}+{{modDaus}}{{/if}}</span>{{/if}}
+    {{#if modDificultat}}<span class="mt-mod">dif. {{#if (lt modDificultat 0)}}{{modDificultat}}{{else}}+{{modDificultat}}{{/if}}</span>{{/if}}
+    {{#if concentrat}}<span class="mt-mod">concentrat +1d</span>{{/if}}
+    {{#if penalSalut}}<span class="mt-mod mt-mod-penal">salut +{{penalSalut}} dif.</span>{{/if}}
+  </div>
+  {{else}}
+  {{#if (add concentrat penalSalut)}}
+  <div class="mt-mods">
+    {{#if concentrat}}<span class="mt-mod">concentrat +1d</span>{{/if}}
+    {{#if penalSalut}}<span class="mt-mod mt-mod-penal">salut +{{penalSalut}} dif.</span>{{/if}}
+  </div>
+  {{/if}}
+  {{/if}}
+
+</div>

@@ -1,0 +1,345 @@
+<div class="forja-body">
+
+  <!-- ═══ IDENTITAT ═══ -->
+  <div class="forja-seccio" data-seccio="identitat">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Identitat"}}
+    </div>
+    <div class="forja-seccio-cos">
+      <div class="forja-identitat-grid">
+        <div class="forja-camp">
+          <label>{{localize "FORJA.Attr.Especie"}}</label>
+          <select name="system.especie">
+            {{#each campos.especie as |esp|}}
+            <option value="{{esp}}" {{#if (eq esp ../sys.especie)}}selected{{/if}}>
+              {{localize (concat "FORJA.Especie." esp)}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="forja-camp">
+          <label>{{localize "FORJA.Attr.Constitucio"}}</label>
+          <select name="system.constitucio">
+            {{#each campos.constitucio as |opt|}}
+            <option value="{{opt.val}}" {{#if (eq opt.val ../sys.constitucio)}}selected{{/if}}>
+              {{opt.nom}} ({{opt.val}})
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="forja-camp">
+          <label>{{localize "FORJA.Attr.Mida"}}</label>
+          <select name="system.mida">
+            {{#each campos.mida as |opt|}}
+            <option value="{{opt.val}}" {{#if (eq opt.val ../sys.mida)}}selected{{/if}}>
+              {{opt.nom}} ({{opt.val}})
+            </option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ATRIBUTS ═══ -->
+  <div class="forja-seccio" data-seccio="atributs">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Atributs"}}
+    </div>
+    <div class="forja-seccio-cos">
+      <div class="forja-atributs-grid">
+        {{#each campos.atributs as |attr|}}
+        {{#if ../modeEdicio}}
+        <div class="forja-attr-box mode-edicio">
+          <span class="attr-codi">{{attr}}</span>
+          <div class="attr-stepper">
+            <button type="button" class="btn-stepper" data-action="ajustarAtribut"
+                    data-attr="{{attr}}" data-delta="-1">−</button>
+            <span class="attr-val">{{lookup ../sys.atributs attr}}</span>
+            <button type="button" class="btn-stepper" data-action="ajustarAtribut"
+                    data-attr="{{attr}}" data-delta="1">+</button>
+          </div>
+          <span class="attr-nom">{{localize (concat "FORJA.Attr." attr)}}</span>
+        </div>
+        {{else}}
+        <div class="forja-attr-box" data-action="selectAtribut" data-attr="{{attr}}"
+             title="{{localize 'FORJA.Dice.TirarAtribut'}}">
+          <span class="attr-codi">{{attr}}</span>
+          <span class="attr-val">{{lookup ../sys.atributs attr}}</span>
+          <span class="attr-nom">{{localize (concat "FORJA.Attr." attr)}}</span>
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DERIVATS ═══ -->
+  <div class="forja-seccio" data-seccio="derivats">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Derivats"}}
+    </div>
+    <div class="forja-seccio-cos">
+      <div class="forja-derivats-fila">
+        <div class="forja-derivat">
+          <span class="derivat-nom">{{localize "FORJA.Derivat.Latencia"}}</span>
+          <span class="derivat-val">{{derivats.latenciaBase}}</span>
+        </div>
+        <div class="forja-derivat">
+          <span class="derivat-nom">{{localize "FORJA.Derivat.Defensa"}}</span>
+          <span class="derivat-val">{{derivats.defensa}}</span>
+        </div>
+        <div class="forja-derivat">
+          <span class="derivat-nom">{{localize "FORJA.Derivat.Reduccio"}}</span>
+          <span class="derivat-val">{{derivats.reduccioDany}}</span>
+        </div>
+        <div class="forja-derivat">
+          <span class="derivat-nom">{{localize "FORJA.Derivat.Reaccions"}}</span>
+          <span class="derivat-val">{{derivats.reaccionsMax}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SALUT ═══ -->
+  <div class="forja-seccio" data-seccio="salut">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Salut"}}
+      {{#if salut.penalitzacio}}
+        <span class="forja-penal-badge">−{{salut.penalitzacio}} {{localize "FORJA.Salut.Penalitzacio"}}</span>
+      {{/if}}
+      {{#if (eq salut.nivellEfectiu 7)}}{{#unless salut.penalitzacio}}
+        <span class="forja-penal-badge forja-penal-incap">{{localize "FORJA.Salut.Incapacitat"}}</span>
+      {{/unless}}{{/if}}
+    </div>
+    <div class="forja-seccio-cos salut-cos">
+      <table class="forja-salut-taula">
+        <thead>
+          <tr>
+            <th class="col-estat">ESTAT<br><small>(+dif.)</small></th>
+            <th>{{localize "FORJA.Salut.Fatiga"}}</th>
+            <th>{{localize "FORJA.Salut.Ferides"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each salut.taula as |fila|}}
+          {{#unless fila.terminal}}
+          <tr class="salut-fila {{#if (eq fila.num ../salut.nivellEfectiu)}}fila-activa{{/if}}">
+            <td class="col-estat">
+              <span class="nivell-num">{{fila.num}}</span>
+              <span class="penal-str">{{fila.penalStr}}</span>
+            </td>
+            <td class="col-pista">
+              <span class="nivell-nom">{{fila.fatiga.nom}}</span>
+              {{#each fila.fatiga.caselles as |c|}}
+              <button type="button" class="casella-salut {{#if c.marcat}}marcada{{/if}}"
+                      data-action="toggleSalut" data-track="fatiga" data-idx="{{c.idx}}"></button>
+              {{/each}}
+            </td>
+            <td class="col-pista">
+              <span class="nivell-nom">{{fila.ferides.nom}}</span>
+              {{#each fila.ferides.caselles as |c|}}
+              <button type="button" class="casella-salut {{#if c.marcat}}marcada{{/if}}"
+                      data-action="toggleSalut" data-track="ferides" data-idx="{{c.idx}}"></button>
+              {{/each}}
+            </td>
+          </tr>
+          {{else}}
+          <tr class="salut-fila fila-terminal {{#if (eq 7 ../salut.nivellEfectiu)}}fila-activa{{/if}}">
+            <td class="col-estat"><span class="nivell-num">7</span></td>
+            <td class="col-pista terminal-cell">
+              <button type="button" class="casella-salut casella-terminal {{#if fila.fatiga.casella.marcat}}marcada{{/if}}"
+                      data-action="toggleSalut" data-track="fatiga" data-idx="{{fila.fatiga.casella.idx}}">
+                {{localize "FORJA.NivellFatiga.7"}}
+              </button>
+            </td>
+            <td class="col-pista terminal-cell">
+              <button type="button" class="casella-salut casella-terminal {{#if fila.ferides.casella.marcat}}marcada{{/if}}"
+                      data-action="toggleSalut" data-track="ferides" data-idx="{{fila.ferides.casella.idx}}">
+                {{localize "FORJA.NivellFerides.7"}}
+              </button>
+            </td>
+          </tr>
+          {{/unless}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ RECURSOS I GUANXI ═══ -->
+  <div class="forja-seccio" data-seccio="recursos">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Recursos"}}
+    </div>
+    <div class="forja-seccio-cos">
+      <div class="forja-recursos-grid">
+        <div class="forja-camp">
+          <label>{{localize "FORJA.Actor.Recursos"}}</label>
+          <input type="text" name="system.recursos" value="{{sys.recursos}}"/>
+        </div>
+        <div class="forja-camp">
+          <label>{{localize "FORJA.Actor.Guanxi"}}</label>
+          <input type="text" name="system.guanxi" value="{{sys.guanxi}}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ HABILITATS ═══ -->
+  <div class="forja-seccio" data-seccio="habilitats">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Tab.Habilitats"}}
+    </div>
+    <div class="forja-seccio-cos">
+      <div class="forja-habs-cos">
+
+        <!-- Columna esquerra -->
+        <div class="forja-habs-columna">
+          <div class="forja-habs-cap-fila">
+            <span></span>
+            <span class="hcap-nom">{{localize "FORJA.Hab.Nom"}}</span>
+            <span class="hcap-esp">Esp.</span>
+            <span class="hcap-niv">{{localize "FORJA.Hab.Nivell"}}</span>
+          </div>
+          {{#each habilitats.esquerra as |h|}}
+          {{#if ../modeEdicio}}
+          <div class="forja-hab-fila mode-edicio {{#if (eq h.tipus 'restringida')}}hab-restringida{{/if}}">
+            <button type="button" class="hab-marca marca-{{h.marca}}"
+                    data-action="toggleMarca" data-hab-id="{{h.id}}">{{h.marca}}</button>
+            <span class="hab-nom">{{h.nom}}</span>
+            <input type="text" class="hab-esp"
+                   name="system.habilitats.{{h.id}}.especialitat"
+                   value="{{h.especialitat}}" placeholder="esp."/>
+            <div class="hab-stepper">
+              <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
+                      data-hab-id="{{h.id}}" data-delta="-1">−</button>
+              <span class="hab-niv-val">{{h.nivell}}</span>
+              <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
+                      data-hab-id="{{h.id}}" data-delta="1">+</button>
+            </div>
+          </div>
+          {{else}}
+          <div class="forja-hab-fila {{#if (eq h.tipus 'restringida')}}hab-restringida{{/if}}"
+               data-action="selectHabilitat" data-hab-id="{{h.id}}"
+               title="{{h.nom}} — {{localize 'FORJA.Dice.TirarHabilitat'}}">
+            <button type="button" class="hab-marca marca-{{h.marca}}"
+                    data-action="toggleMarca" data-hab-id="{{h.id}}">{{h.marca}}</button>
+            <span class="hab-nom">{{h.nom}}</span>
+            <span class="hab-esp">{{#if h.especialitat}}{{h.especialitat}}{{/if}}</span>
+            <span class="hab-niv-val">{{h.nivell}}</span>
+          </div>
+          {{/if}}
+          {{/each}}
+        </div>
+
+        <!-- Columna dreta -->
+        <div class="forja-habs-columna">
+          <div class="forja-habs-cap-fila">
+            <span></span>
+            <span class="hcap-nom">{{localize "FORJA.Hab.Nom"}}</span>
+            <span class="hcap-esp">Esp.</span>
+            <span class="hcap-niv">{{localize "FORJA.Hab.Nivell"}}</span>
+          </div>
+          {{#each habilitats.dreta as |h|}}
+          {{#if ../modeEdicio}}
+          <div class="forja-hab-fila mode-edicio {{#if (eq h.tipus 'restringida')}}hab-restringida{{/if}}">
+            <button type="button" class="hab-marca marca-{{h.marca}}"
+                    data-action="toggleMarca" data-hab-id="{{h.id}}">{{h.marca}}</button>
+            <span class="hab-nom">{{h.nom}}</span>
+            <input type="text" class="hab-esp"
+                   name="system.habilitats.{{h.id}}.especialitat"
+                   value="{{h.especialitat}}" placeholder="esp."/>
+            <div class="hab-stepper">
+              <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
+                      data-hab-id="{{h.id}}" data-delta="-1">−</button>
+              <span class="hab-niv-val">{{h.nivell}}</span>
+              <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
+                      data-hab-id="{{h.id}}" data-delta="1">+</button>
+            </div>
+          </div>
+          {{else}}
+          <div class="forja-hab-fila {{#if (eq h.tipus 'restringida')}}hab-restringida{{/if}}"
+               data-action="selectHabilitat" data-hab-id="{{h.id}}"
+               title="{{h.nom}} — {{localize 'FORJA.Dice.TirarHabilitat'}}">
+            <button type="button" class="hab-marca marca-{{h.marca}}"
+                    data-action="toggleMarca" data-hab-id="{{h.id}}">{{h.marca}}</button>
+            <span class="hab-nom">{{h.nom}}</span>
+            <span class="hab-esp">{{#if h.especialitat}}{{h.especialitat}}{{/if}}</span>
+            <span class="hab-niv-val">{{h.nivell}}</span>
+          </div>
+          {{/if}}
+          {{/each}}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TRETS ═══ -->
+  <div class="forja-seccio" data-seccio="trets">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Trets"}}
+      {{#if modeEdicio}}
+      <button type="button" class="btn-cap-afegir" data-action="crearTret"
+              title="{{localize 'FORJA.Tret.Nou'}}">
+        <i class="fas fa-plus"></i>
+      </button>
+      {{/if}}
+    </div>
+    <div class="forja-seccio-cos">
+      {{#if trets.length}}
+      <div class="forja-trets-llista">
+        {{#each trets as |t|}}
+        <div class="forja-tret-fila">
+          <span class="tret-nom">{{t.nom}}</span>
+          <span class="tret-cost">{{t.cost}} PC</span>
+          {{#if ../modeEdicio}}
+          <button type="button" class="btn-tret-editar" data-action="editarTret"
+                  data-tret-id="{{t.id}}" title="Editar">
+            <i class="fas fa-pen"></i>
+          </button>
+          <button type="button" class="btn-tret-eliminar" data-action="eliminarTret"
+                  data-tret-id="{{t.id}}" title="{{localize 'FORJA.Tret.Eliminar'}}">
+            <i class="fas fa-trash"></i>
+          </button>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="trets-buits">—</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- ═══ COMBAT ═══ -->
+  <div class="forja-seccio" data-seccio="combat">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Tab.Combat"}}
+    </div>
+    <div class="forja-seccio-cos forja-placeholder-cos">
+      <p class="placeholder-msg"><i class="fas fa-shield-halved"></i>Aviat disponible</p>
+    </div>
+  </div>
+
+  <!-- ═══ DONS I EFECTES ═══ -->
+  <div class="forja-seccio" data-seccio="dons">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Tab.Dons"}}
+    </div>
+    <div class="forja-seccio-cos forja-placeholder-cos">
+      <p class="placeholder-msg"><i class="fas fa-star"></i>Aviat disponible</p>
+    </div>
+  </div>
+
+</div>

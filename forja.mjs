@@ -1,333 +1,87 @@
 /**
- * FORJA RPG - Foundry VTT System
- * Main entry point. Registers all data models, documents, sheets, and configuration.
+ * FORJA RPG — Foundry VTT v14
+ * Bootstrap principal. Registra tot via CONFIG (DA-2).
  */
 
-// Configuration
-import { FORJA } from "./module/helpers/config.mjs";
-import { registerHandlebarsHelpers } from "./module/helpers/templates.mjs";
-
-// Data Models - Actors
-import CharacterData from "./module/data-models/actor/character.mjs";
-import NPCData from "./module/data-models/actor/npc.mjs";
-import CreatureData from "./module/data-models/actor/creature.mjs";
-import AnimalData from "./module/data-models/actor/animal.mjs";
-
-// Data Models - Items
-import SkillData from "./module/data-models/item/skill.mjs";
-import TraitData from "./module/data-models/item/trait.mjs";
-import WeaponData from "./module/data-models/item/weapon.mjs";
-import ArmorData from "./module/data-models/item/armor.mjs";
-import ArtifactData from "./module/data-models/item/artifact.mjs";
-import SupernaturalEffectData from "./module/data-models/item/supernatural-effect.mjs";
-
-// Document classes
-import ForjaActor from "./module/documents/actor.mjs";
-import ForjaItem from "./module/documents/item.mjs";
-import ForjaCombat from "./module/documents/combat.mjs";
-import ForjaCombatant from "./module/documents/combatant.mjs";
-
-// Dice
-import ForjaRoll from "./module/dice/forja-roll.mjs";
-
-// Combat UI (hook-based injection)
-import { registerCombatHooks } from "./module/combat/combat-tracker.mjs";
-
-// Import
-import ForjaCharacterImporter from "./module/import/character-importer.mjs";
-
-// Apps
-import { AntagonistQuickCreator } from "./module/apps/antagonist-quick-creator.mjs";
-import { CharacterCreationWizard } from "./module/apps/character-creation-wizard.mjs";
-
-// Actor Sheets
-import ForjaCharacterSheet from "./module/sheets/actor/character-sheet.mjs";
-import ForjaNPCSheet from "./module/sheets/actor/npc-sheet.mjs";
-import ForjaCreatureSheet from "./module/sheets/actor/creature-sheet.mjs";
-import ForjaAnimalSheet from "./module/sheets/actor/animal-sheet.mjs";
-
-// Item Sheets
-import ForjaSkillSheet from "./module/sheets/item/skill-sheet.mjs";
-import ForjaTraitSheet from "./module/sheets/item/trait-sheet.mjs";
-import ForjaWeaponSheet from "./module/sheets/item/weapon-sheet.mjs";
-import ForjaArmorSheet from "./module/sheets/item/armor-sheet.mjs";
-import ForjaArtifactSheet from "./module/sheets/item/artifact-sheet.mjs";
-import ForjaSupernaturalEffectSheet from "./module/sheets/item/supernatural-effect-sheet.mjs";
-
-/* -------------------------------------------- */
-/*  Init Hook                                   */
-/* -------------------------------------------- */
+import { FORJA }          from "./module/config/constants.mjs";
+import ActorPersonatge     from "./module/data/actor-personatge.mjs";
+import ActorPNJ            from "./module/data/actor-pnj.mjs";
+import ItemTret            from "./module/data/item-tret.mjs";
+import ForjaActor          from "./module/documents/actor.mjs";
+import FullPersonatge      from "./module/apps/full-personatge.mjs";
+import FullPNJ             from "./module/apps/full-pnj.mjs";
+import ForjaRoll           from "./module/dice/forja-roll.mjs";
 
 Hooks.once("init", () => {
-  console.log("FORJA RPG | Initializing FORJA RPG system");
+  console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
 
-  // Store system config on the global CONFIG object
+  // Taules de constants globals
   CONFIG.FORJA = FORJA;
 
-  // Register document classes
-  CONFIG.Actor.documentClass = ForjaActor;
-  CONFIG.Item.documentClass = ForjaItem;
-  CONFIG.Combat.documentClass = ForjaCombat;
-  CONFIG.Combatant.documentClass = ForjaCombatant;
-
-  // Register custom Roll class
+  // Classe de tirada personalitzada
   CONFIG.Dice.rolls.push(ForjaRoll);
 
-  // Register FORJA combat tracker hooks (inject UI into default tracker)
-  registerCombatHooks();
+  // Document classes
+  CONFIG.Actor.documentClass = ForjaActor;
 
-  // Register data models
+  // DataModels
   CONFIG.Actor.dataModels = {
-    character: CharacterData,
-    npc: NPCData,
-    creature: CreatureData,
-    animal: AnimalData
+    personatge: ActorPersonatge,
+    pnj:        ActorPNJ
   };
-
   CONFIG.Item.dataModels = {
-    skill: SkillData,
-    trait: TraitData,
-    weapon: WeaponData,
-    armor: ArmorData,
-    artifact: ArtifactData,
-    supernaturalEffect: SupernaturalEffectData
+    tret: ItemTret
   };
 
-  // Configure trackable attributes for token bars
+  // Atributs de token
   CONFIG.Actor.trackableAttributes = {
-    character: {
-      bar: ["health.wounds", "health.fatigue"],
-      value: ["latency", "defense"]
+    personatge: {
+      bar:   ["salut.fatiga", "salut.ferides"],
+      value: ["latenciaBase", "defensa"]
     },
-    npc: {
-      bar: ["health.wounds", "health.fatigue"],
-      value: ["latency", "defense"]
-    },
-    creature: {
-      bar: ["health.wounds", "health.fatigue"],
-      value: ["latency", "defense"]
-    },
-    animal: {
-      bar: ["health.wounds", "health.fatigue"],
-      value: ["latency", "defense"]
+    pnj: {
+      bar:   ["salut.fatiga", "salut.ferides"],
+      value: ["latenciaBase", "defensa"]
     }
   };
 
-  // Register Actor sheets (makeDefault: true overrides core sheets)
+  // Fulls d'actor (ApplicationV2)
   const { DocumentSheetConfig } = foundry.applications.apps;
 
-  DocumentSheetConfig.registerSheet(Actor, "forja", ForjaCharacterSheet, {
-    types: ["character"],
+  DocumentSheetConfig.registerSheet(Actor, "forja", FullPersonatge, {
+    types:       ["personatge"],
     makeDefault: true,
-    label: "FORJA.Sheet.Character"
+    label:       "FORJA.Sheet.Personatge"
   });
 
-  DocumentSheetConfig.registerSheet(Actor, "forja", ForjaNPCSheet, {
-    types: ["npc"],
+  DocumentSheetConfig.registerSheet(Actor, "forja", FullPNJ, {
+    types:       ["pnj"],
     makeDefault: true,
-    label: "FORJA.Sheet.NPC"
+    label:       "FORJA.Sheet.PNJ"
   });
 
-  DocumentSheetConfig.registerSheet(Actor, "forja", ForjaCreatureSheet, {
-    types: ["creature"],
-    makeDefault: true,
-    label: "FORJA.Sheet.Creature"
-  });
+  // Handlebars helpers
+  _registrarHelpers();
 
-  DocumentSheetConfig.registerSheet(Actor, "forja", ForjaAnimalSheet, {
-    types: ["animal"],
-    makeDefault: true,
-    label: "FORJA.Sheet.Animal"
-  });
-
-  // Register Item sheets (makeDefault: true overrides core sheets)
-  DocumentSheetConfig.registerSheet(Item, "forja", ForjaSkillSheet, {
-    types: ["skill"],
-    makeDefault: true,
-    label: "FORJA.Sheet.Skill"
-  });
-
-  DocumentSheetConfig.registerSheet(Item, "forja", ForjaTraitSheet, {
-    types: ["trait"],
-    makeDefault: true,
-    label: "FORJA.Sheet.Trait"
-  });
-
-  DocumentSheetConfig.registerSheet(Item, "forja", ForjaWeaponSheet, {
-    types: ["weapon"],
-    makeDefault: true,
-    label: "FORJA.Sheet.Weapon"
-  });
-
-  DocumentSheetConfig.registerSheet(Item, "forja", ForjaArmorSheet, {
-    types: ["armor"],
-    makeDefault: true,
-    label: "FORJA.Sheet.Armor"
-  });
-
-  DocumentSheetConfig.registerSheet(Item, "forja", ForjaArtifactSheet, {
-    types: ["artifact"],
-    makeDefault: true,
-    label: "FORJA.Sheet.Artifact"
-  });
-
-  DocumentSheetConfig.registerSheet(Item, "forja", ForjaSupernaturalEffectSheet, {
-    types: ["supernaturalEffect"],
-    makeDefault: true,
-    label: "FORJA.Sheet.SupernaturalEffect"
-  });
-
-  // Register world settings
-  game.settings.register("forja", "forjappApiKey", {
-    name: "FORJA.Settings.ForjappApiKey",
-    hint: "FORJA.Settings.ForjappApiKeyHint",
-    scope: "world",
-    config: true,
-    type: String,
-    default: ""
-  });
-
-  game.settings.register("forja", "forjappProjectId", {
-    name: "FORJA.Settings.ForjAppProjectId",
-    hint: "FORJA.Settings.ForjAppProjectIdHint",
-    scope: "world",
-    config: true,
-    type: String,
-    default: "forjapp"
-  });
-
-  game.settings.register("forja", "forjappUserId", {
-    name: "FORJA.Settings.ForjAppUserId",
-    hint: "FORJA.Settings.ForjAppUserIdHint",
-    scope: "client",
-    config: true,
-    type: String,
-    default: ""
-  });
-
-  // Register Handlebars helpers
-  registerHandlebarsHelpers();
-
-  // Preload Handlebars templates
-  _preloadHandlebarsTemplates();
-
-  console.log("FORJA RPG | System initialization complete");
+  console.log("FORJA RPG | Sistema inicialitzat");
 });
-
-/* -------------------------------------------- */
-/*  Ready Hook                                  */
-/* -------------------------------------------- */
 
 Hooks.once("ready", () => {
-  console.log("FORJA RPG | System ready");
+  console.log("FORJA RPG | Sistema llest");
 });
 
-/* -------------------------------------------- */
-/*  Actor Directory - Import Button             */
-/* -------------------------------------------- */
-
-Hooks.on("getActorDirectoryEntryContext", () => {});
-Hooks.on("renderActorDirectory", (app, html) => {
-  const root = html[0] ?? html;
-
-  // Avoid duplicating buttons on re-renders
-  if (root.querySelector?.(".forja-import-btn")) return;
-
-  // Import button
-  const importBtn = document.createElement("button");
-  importBtn.classList.add("forja-import-btn");
-  importBtn.type = "button";
-  importBtn.innerHTML = `<i class="fas fa-file-import"></i> ${game.i18n.localize("FORJA.Import.Title")}`;
-  importBtn.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    ForjaCharacterImporter.showImportDialog();
+/* ---- Helpers Handlebars ---- */
+function _registrarHelpers() {
+  Handlebars.registerHelper("add",     (a, b) => (a ?? 0) + (b ?? 0));
+  Handlebars.registerHelper("lt",      (a, b) => a < b);
+  Handlebars.registerHelper("eq",      (a, b) => a === b);
+  Handlebars.registerHelper("concat",  (...args) => args.slice(0, -1).join(""));
+  Handlebars.registerHelper("lookup",  (obj, key) => obj?.[key]);
+  Handlebars.registerHelper("or",  (a, b) => !!a || !!b);
+  Handlebars.registerHelper("dieClass", (val) => {
+    if (val === 1)  return "dau-pifia";
+    if (val >= 10)  return "dau-doble";
+    if (val >= 6)   return "dau-fita";
+    return "dau-neutre";
   });
-
-  // Antagonist quick creator button (GM only)
-  const antagonistBtn = document.createElement("button");
-  antagonistBtn.classList.add("forja-antagonist-btn");
-  antagonistBtn.type = "button";
-  antagonistBtn.innerHTML = `<i class="fas fa-user-secret"></i> ${game.i18n.localize("FORJA.Antagonist.QuickCreate")}`;
-  antagonistBtn.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    new AntagonistQuickCreator().render(true);
-  });
-
-  // Try multiple selectors for v13 compatibility
-  const container = root.querySelector?.(".header-actions")
-    ?? root.querySelector?.(".action-buttons")
-    ?? root.querySelector?.(".directory-header")
-    ?? html.find?.(".header-actions")?.[0]
-    ?? html.find?.(".directory-header")?.[0];
-
-  if (container) {
-    container.appendChild(importBtn);
-    if (game.user.isGM) container.appendChild(antagonistBtn);
-  } else {
-    console.warn("FORJA | Could not find header container in ActorDirectory, appending to root");
-    const target = root.querySelector?.(".directory") ?? root;
-    target.prepend(antagonistBtn);
-    target.prepend(importBtn);
-  }
-});
-
-/* -------------------------------------------- */
-/*  Character Creation Wizard Hook              */
-/* -------------------------------------------- */
-
-Hooks.on("preCreateActor", (doc, data, options, userId) => {
-  if (data.type !== "character") return true;
-  if (options.skipWizard) return true;
-  if (userId !== game.user.id) return true;
-  new CharacterCreationWizard({ actorName: data.name ?? "" }).render(true);
-  return false;
-});
-
-/* -------------------------------------------- */
-/*  Handlebars Templates                        */
-/* -------------------------------------------- */
-
-async function _preloadHandlebarsTemplates() {
-  const templatePaths = [
-    // Actor partials
-    "systems/forja/templates/actor/parts/character-header.hbs",
-    "systems/forja/templates/actor/parts/attributes.hbs",
-    "systems/forja/templates/actor/parts/derived-stats.hbs",
-    "systems/forja/templates/actor/parts/skills-list.hbs",
-    "systems/forja/templates/actor/parts/traits-list.hbs",
-    "systems/forja/templates/actor/parts/weapons-list.hbs",
-    "systems/forja/templates/actor/parts/armor-display.hbs",
-    "systems/forja/templates/actor/parts/combat-info.hbs",
-    "systems/forja/templates/actor/parts/equipment-tab.hbs",
-    "systems/forja/templates/actor/parts/effects-list.hbs",
-    "systems/forja/templates/actor/parts/wound-fatigue-tracker.hbs",
-    "systems/forja/templates/actor/parts/biography-tab.hbs",
-
-    // Item sheets
-    "systems/forja/templates/item/skill-sheet.hbs",
-    "systems/forja/templates/item/trait-sheet.hbs",
-    "systems/forja/templates/item/weapon-sheet.hbs",
-    "systems/forja/templates/item/armor-sheet.hbs",
-    "systems/forja/templates/item/artifact-sheet.hbs",
-    "systems/forja/templates/item/supernatural-effect-sheet.hbs",
-
-    // Dice
-    "systems/forja/templates/dice/roll-dialog.hbs",
-    "systems/forja/templates/dice/roll-result.hbs",
-
-    // Apps
-    "systems/forja/templates/apps/forjapp-character-picker.hbs",
-    "systems/forja/templates/apps/antagonist-quick-creator.hbs",
-    "systems/forja/templates/apps/character-creation-wizard.hbs",
-
-    // Combat
-    "systems/forja/templates/combat/combat-tracker.hbs",
-    "systems/forja/templates/combat/start-combat-dialog.hbs",
-    "systems/forja/templates/combat/declare-action-dialog.hbs",
-    "systems/forja/templates/combat/defense-dialog.hbs",
-    "systems/forja/templates/combat/damage-confirm-dialog.hbs",
-    "systems/forja/templates/combat/area-damage-confirm-dialog.hbs"
-  ];
-
-  return foundry.applications.handlebars.loadTemplates(templatePaths);
 }

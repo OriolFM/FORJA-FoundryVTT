@@ -1,0 +1,58 @@
+<div class="dialeg-tirada-cos">
+
+  <!-- Pool i daus -->
+  <div class="tirada-pool-display">
+    <div class="pool-components">
+      <span class="pool-comp-attr">{{atribut}} <em>({{atributVal}})</em></span>
+      {{#if habId}}
+        <span class="pool-comp-sep">+</span>
+        <span class="pool-comp-hab">{{habId}} <em>({{habNivell}})</em></span>
+      {{/if}}
+    </div>
+    <div class="pool-total">
+      <span class="pool-valor" id="tirada-pool-val">{{poolBase}}</span>
+      <span class="pool-daus">d10</span>
+    </div>
+  </div>
+
+  <!-- Modificadors (DA-5) -->
+  <div class="tirada-mod-bloc">
+    <div class="tirada-camp">
+      <label>{{localize "FORJA.Dice.ModDaus"}}</label>
+      <input type="number" name="modDaus" value="0" min="-10" max="10"/>
+    </div>
+    <div class="tirada-camp tirada-camp-check">
+      <label>{{localize "FORJA.Dice.Concentrat"}} <small>(+1d)</small></label>
+      <input type="checkbox" name="concentrat" {{#if concentrat}}checked{{/if}}/>
+    </div>
+  </div>
+
+  <hr class="tirada-sep"/>
+
+  <!-- Dificultat -->
+  <div class="tirada-dif-bloc">
+    <div class="tirada-camp tirada-camp-ampli">
+      <label>{{localize "FORJA.Dice.Dificultat"}}</label>
+      <input type="number" name="dificultat" value="1" min="1" max="20"/>
+    </div>
+    <div class="tirada-camp">
+      <label>{{localize "FORJA.Dice.ModDificultat"}}</label>
+      <input type="number" name="modDificultat" value="0" min="-10" max="10"/>
+    </div>
+  </div>
+
+  {{#if penalSalut}}
+  <div class="tirada-penal-avis">
+    <i class="fas fa-heart-crack"></i>
+    {{localize "FORJA.Dice.PenalSalut"}}: +{{penalSalut}} {{localize "FORJA.Dice.ADificultat"}}
+  </div>
+  {{/if}}
+
+  <!-- Botó -->
+  <div class="tirada-botons">
+    <button type="submit" class="btn-tirar">
+      <i class="fas fa-dice-d10"></i> {{localize "FORJA.Dice.Tirar"}}
+    </button>
+  </div>
+
+</div>

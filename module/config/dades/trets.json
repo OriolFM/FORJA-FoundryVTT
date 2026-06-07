@@ -1,0 +1,685 @@
+[
+  {
+    "id": "adepte-for",
+    "nom": "Adepte (FOR)",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "Repeteix els 1s en tirades de FOR."
+  },
+  {
+    "id": "adepte-des",
+    "nom": "Adepte (DES)",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "Repeteix els 1s en tirades de DES."
+  },
+  {
+    "id": "adepte-agi",
+    "nom": "Adepte (AGI)",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "Repeteix els 1s en tirades de AGI."
+  },
+  {
+    "id": "adepte-per",
+    "nom": "Adepte (PER)",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "Repeteix els 1s en tirades de PER."
+  },
+  {
+    "id": "adepte-int",
+    "nom": "Adepte (INT)",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "Repeteix els 1s en tirades de INT."
+  },
+  {
+    "id": "adepte-apl",
+    "nom": "Adepte (APL)",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "Repeteix els 1s en tirades de APL."
+  },
+  {
+    "id": "afortunat",
+    "nom": "Afortunat",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "amfibi",
+    "nom": "Amfibi",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": "Pot respirar sota l'aigua."
+  },
+  {
+    "id": "aparenca-agradable",
+    "nom": "Aparença Estranya (agradable)",
+    "cost": 2,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "aparenca-neutra",
+    "nom": "Aparença Estranya (neutra)",
+    "cost": 0,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "aquatic",
+    "nom": "Aquàtic",
+    "cost": 5,
+    "positiu": true,
+    "descripcio": "Neda a velocitat normal."
+  },
+  {
+    "id": "armadura-nat-1",
+    "nom": "Armadura Natural /1",
+    "cost": 2,
+    "positiu": true,
+    "descripcio": "Reducció de dany natural +1."
+  },
+  {
+    "id": "armadura-nat-2",
+    "nom": "Armadura Natural /2",
+    "cost": 6,
+    "positiu": true,
+    "descripcio": "Reducció de dany natural +2."
+  },
+  {
+    "id": "armadura-nat-3",
+    "nom": "Armadura Natural /3",
+    "cost": 12,
+    "positiu": true,
+    "descripcio": "Reducció de dany natural +3."
+  },
+  {
+    "id": "armadura-nat-4",
+    "nom": "Armadura Natural /4",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": "Reducció de dany natural +4."
+  },
+  {
+    "id": "armadura-nat-5",
+    "nom": "Armadura Natural /5",
+    "cost": 30,
+    "positiu": true,
+    "descripcio": "Reducció de dany natural +5."
+  },
+  {
+    "id": "armament-urpes",
+    "nom": "Armament Natural (urpes)",
+    "cost": 5,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "armament-mossegada",
+    "nom": "Armament Natural (mossegada/bec)",
+    "cost": 5,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "armament-banyes",
+    "nom": "Armament Natural (banyes grans)",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "armament-pinces",
+    "nom": "Armament Natural (pinces)",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "armament-fiblons",
+    "nom": "Armament Natural (fiblons)",
+    "cost": 5,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "arrauxat",
+    "nom": "Arrauxat",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "atribut-titanic",
+    "nom": "Atribut Titànic",
+    "cost": 30,
+    "positiu": true,
+    "descripcio": "4+ compta com fita, ignora 1s en un atribut."
+  },
+  {
+    "id": "bracos-addicionals",
+    "nom": "Braços Addicionals",
+    "cost": 5,
+    "positiu": true,
+    "costVariable": true,
+    "multiplicador": 5,
+    "etiquetaX": "Parells addicionals",
+    "descripcio": "5 PC per parell addicional."
+  },
+  {
+    "id": "canalitzador",
+    "nom": "Canalitzador",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": "Permet usar l'habilitat Canalització."
+  },
+  {
+    "id": "company",
+    "nom": "Company",
+    "cost": 0,
+    "positiu": true,
+    "costVariable": true,
+    "divisor": 4,
+    "etiquetaX": "Cost en PC del PNJ",
+    "descripcio": "Cost = cost del PNJ/4."
+  },
+  {
+    "id": "contactes",
+    "nom": "Contactes",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "control-qi",
+    "nom": "Control del Qi",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": "Permet usar l'habilitat Qi."
+  },
+  {
+    "id": "coordinacio-millorada",
+    "nom": "Coordinació Millorada",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "cua",
+    "nom": "Cua",
+    "cost": 5,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "curacio-rapida",
+    "nom": "Curació Ràpida",
+    "cost": 15,
+    "positiu": true,
+    "costVariable": true,
+    "multiplicador": 15,
+    "etiquetaX": "Punts de curació",
+    "descripcio": "15 PC per punt de curació."
+  },
+  {
+    "id": "dur-de-pelar",
+    "nom": "Dur de Pelar",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "Modifica o exempta la penalització de salut."
+  },
+  {
+    "id": "empata",
+    "nom": "Èmpata",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "encantador",
+    "nom": "Encantador",
+    "cost": 2,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "especialista",
+    "nom": "Especialista",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": "Ignora 1s; 9–10 compten doble."
+  },
+  {
+    "id": "estatus",
+    "nom": "Estatus",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "etern",
+    "nom": "Etern",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": "No envelleix."
+  },
+  {
+    "id": "familiar",
+    "nom": "Familiar",
+    "cost": 0,
+    "positiu": true,
+    "costVariable": true,
+    "divisor": 3,
+    "etiquetaX": "Cost en PC del PNJ",
+    "descripcio": "Cost = cost del PNJ/3."
+  },
+  {
+    "id": "feromones",
+    "nom": "Feromones",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "flexible",
+    "nom": "Flexible",
+    "cost": 5,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "gelatinos",
+    "nom": "Gelatinós",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "incansable",
+    "nom": "Incansable",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "levitar",
+    "nom": "Levitar",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "linguista-natural",
+    "nom": "Lingüista Natural",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "longeu",
+    "nom": "Longeu",
+    "cost": 6,
+    "positiu": true,
+    "descripcio": "Envelleix molt lentament."
+  },
+  {
+    "id": "magus",
+    "nom": "Magus",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": "Permet usar l'habilitat Màgia."
+  },
+  {
+    "id": "no-mort",
+    "nom": "No-Mort",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "oracle",
+    "nom": "Oracle",
+    "cost": 30,
+    "positiu": true,
+    "descripcio": "Permet usar l'habilitat Psi."
+  },
+  {
+    "id": "potes-addicionals",
+    "nom": "Potes Addicionals",
+    "cost": 5,
+    "positiu": true,
+    "costVariable": true,
+    "multiplicador": 5,
+    "etiquetaX": "Parells addicionals",
+    "descripcio": "5 PC per parell addicional."
+  },
+  {
+    "id": "processador-cortical",
+    "nom": "Processador Cortical",
+    "cost": 40,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "psiquic",
+    "nom": "Psíquic",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": "Permet usar l'habilitat Psi."
+  },
+  {
+    "id": "recursos-acomodat",
+    "nom": "Recursos (acomodat)",
+    "cost": 25,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "recursos-elit",
+    "nom": "Recursos (elit)",
+    "cost": 50,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "reflexos-rapids",
+    "nom": "Reflexos Ràpids",
+    "cost": 30,
+    "positiu": true,
+    "descripcio": "+1 reacció màxima per torn."
+  },
+  {
+    "id": "regeneracio",
+    "nom": "Regeneració",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-agut-un",
+    "nom": "Sentit Agut (un sentit)",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-agut-tots",
+    "nom": "Sentit Agut (tots)",
+    "cost": 30,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-del-perill",
+    "nom": "Sentit del Perill",
+    "cost": 20,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "sonar",
+    "nom": "Sonar",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "tentacles",
+    "nom": "Tentacles",
+    "cost": 5,
+    "positiu": true,
+    "costVariable": true,
+    "multiplicador": 5,
+    "etiquetaX": "Parells de tentacles",
+    "descripcio": "5 PC per parell."
+  },
+  {
+    "id": "visio-nocturna",
+    "nom": "Visió Nocturna",
+    "cost": 10,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "visio-periferica",
+    "nom": "Visió Perifèrica",
+    "cost": 15,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "volador",
+    "nom": "Volador",
+    "cost": 25,
+    "positiu": true,
+    "descripcio": ""
+  },
+  {
+    "id": "addiccio-lleu",
+    "nom": "Addicció (lleu)",
+    "cost": -2,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "addiccio-moderada",
+    "nom": "Addicció (moderada)",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "addiccio-severa",
+    "nom": "Addicció (severa)",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "alergia-lleu",
+    "nom": "Al·lèrgia (lleu)",
+    "cost": -2,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "alergia-moderada",
+    "nom": "Al·lèrgia (moderada)",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "alergia-severa",
+    "nom": "Al·lèrgia (severa)",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "aparenca-desagradable",
+    "nom": "Aparença Estranya (desagradable)",
+    "cost": -2,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "discapacitat",
+    "nom": "Discapacitat",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "dron",
+    "nom": "Dron",
+    "cost": -30,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "efimer",
+    "nom": "Efímer",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": "Envelleix ràpidament."
+  },
+  {
+    "id": "esguerrat-ma",
+    "nom": "Esguerrat (mà)",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "esguerrat-brac",
+    "nom": "Esguerrat (braç)",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "esguerrat-cama",
+    "nom": "Esguerrat (cama)",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "figaflor",
+    "nom": "Figaflor",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "foraster",
+    "nom": "Foraster",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "hemofilic",
+    "nom": "Hemofílic",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "impediment-parla",
+    "nom": "Impediment de la Parla",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "inepte-for",
+    "nom": "Inepte (FOR)",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": "10 no compta doble; cada 1 resta una fita."
+  },
+  {
+    "id": "inepte-des",
+    "nom": "Inepte (DES)",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": "10 no compta doble; cada 1 resta una fita."
+  },
+  {
+    "id": "inepte-agi",
+    "nom": "Inepte (AGI)",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": "10 no compta doble; cada 1 resta una fita."
+  },
+  {
+    "id": "inepte-per",
+    "nom": "Inepte (PER)",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": "10 no compta doble; cada 1 resta una fita."
+  },
+  {
+    "id": "inepte-int",
+    "nom": "Inepte (INT)",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": "10 no compta doble; cada 1 resta una fita."
+  },
+  {
+    "id": "inepte-apl",
+    "nom": "Inepte (APL)",
+    "cost": -15,
+    "positiu": false,
+    "descripcio": "10 no compta doble; cada 1 resta una fita."
+  },
+  {
+    "id": "lent",
+    "nom": "Lent",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": "+2 a la latència base."
+  },
+  {
+    "id": "poca-traca",
+    "nom": "Poca-Traça",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "repulsiu",
+    "nom": "Repulsiu",
+    "cost": -2,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "recursos-pobre",
+    "nom": "Recursos (pobre de solemnitat)",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-atrofiat-borni",
+    "nom": "Sentit Atrofiat (borni)",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-atrofiat-cec",
+    "nom": "Sentit Atrofiat (cec)",
+    "cost": -25,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-atrofiat-sord",
+    "nom": "Sentit Atrofiat (sord)",
+    "cost": -10,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-atrofiat-gust-olfacte",
+    "nom": "Sentit Atrofiat (gust+olfacte)",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  },
+  {
+    "id": "sentit-atrofiat-tacte",
+    "nom": "Sentit Atrofiat (tacte)",
+    "cost": -5,
+    "positiu": false,
+    "descripcio": ""
+  }
+]

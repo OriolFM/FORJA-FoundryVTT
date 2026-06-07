@@ -1,0 +1,82 @@
+<div class="dialeg-trets">
+
+{{#if detall}}
+  <!-- ── Pantalla de detall / confirmació ───────────────────────────── -->
+  <div class="dt-detall">
+    <div class="dt-detall-cap">
+      <span class="dt-detall-nom">{{detall.nom}}</span>
+      <span class="dt-tret-cost {{#if detall.positiu}}dt-cost-positiu{{else}}dt-cost-negatiu{{/if}}">{{costCalculatText}}</span>
+    </div>
+
+    {{#if detall.descripcio}}
+    <div class="dt-detall-descripcio">{{{detall.descripcio}}}</div>
+    {{else}}
+    <div class="dt-detall-descripcio dt-sense-descripcio">{{localize "FORJA.Tret.SenseDescripcio"}}</div>
+    {{/if}}
+
+    {{#if detall.costVariable}}
+    <div class="dt-detall-x">
+      <label>{{detall.etiquetaX}}</label>
+      <input class="dt-valor-x" type="number" min="0" step="1" value="{{valorX}}" />
+    </div>
+    {{/if}}
+
+    <div class="dt-detall-peu">
+      <button type="button" class="dt-btn-secundari" data-action="tornar">
+        <i class="fas fa-arrow-left"></i> {{localize "FORJA.Tornar"}}
+      </button>
+      <button type="button" class="dt-btn-principal" data-action="confirmarTret">
+        <i class="fas fa-plus"></i> {{localize "FORJA.Tret.Afegir"}}
+      </button>
+    </div>
+  </div>
+
+{{else}}
+  <!-- ── Llista filtrable ────────────────────────────────────────────── -->
+  <div class="dt-cerca">
+    <i class="fas fa-search dt-cerca-icon"></i>
+    <input class="dt-cerca-input" type="text" placeholder="{{localize 'FORJA.Tret.Cerca'}}" value="{{cercaText}}" />
+  </div>
+
+  {{#if positius.length}}
+  <div class="dt-grup">
+    <div class="dt-grup-cap">{{localize "FORJA.Tret.Positius"}}</div>
+    <div class="dt-llista">
+      {{#each positius as |t|}}
+      <button class="dt-tret-fila" type="button" data-action="seleccionarTret" data-tret-id="{{t.id}}">
+        <span class="dt-tret-nom">{{t.nom}}</span>
+        {{#if t.costVariable}}
+          <span class="dt-tret-cost dt-cost-variable">var.</span>
+        {{else}}
+          <span class="dt-tret-cost dt-cost-positiu">+{{t.cost}} PC</span>
+        {{/if}}
+      </button>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{#if negatius.length}}
+  <div class="dt-grup">
+    <div class="dt-grup-cap">{{localize "FORJA.Tret.Negatius"}}</div>
+    <div class="dt-llista">
+      {{#each negatius as |t|}}
+      <button class="dt-tret-fila" type="button" data-action="seleccionarTret" data-tret-id="{{t.id}}">
+        <span class="dt-tret-nom">{{t.nom}}</span>
+        <span class="dt-tret-cost dt-cost-negatiu">{{t.cost}} PC</span>
+      </button>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{#unless positius.length}}{{#unless negatius.length}}
+  <div class="dt-sense-resultats">{{localize "FORJA.Tret.SenseResultats"}}</div>
+  {{/unless}}{{/unless}}
+
+  <div class="dt-peu">
+    <button type="button" data-action="tancar">{{localize "FORJA.Tancar"}}</button>
+  </div>
+{{/if}}
+
+</div>

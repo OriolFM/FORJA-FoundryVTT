@@ -1,0 +1,34 @@
+<header class="forja-sheet-header">
+  <img class="actor-portrait" src="{{actor.img}}" alt="{{actor.name}}"
+       data-action="editImage" data-edit="img" data-tooltip="{{localize 'FORJA.Sheet.EditImage'}}"/>
+  <div class="header-fields">
+    <input class="actor-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'FORJA.Actor.Name'}}"/>
+    <div class="header-meta">
+      <label>{{localize "FORJA.Actor.Concepte"}}</label>
+      <input type="text" name="system.concepte" value="{{sys.concepte}}" placeholder="…"/>
+    </div>
+    <div class="header-meta">
+      <label>{{localize "FORJA.Actor.Origen"}}</label>
+      <input type="text" name="system.origen" value="{{sys.origen}}" placeholder="…"/>
+    </div>
+  </div>
+  <button type="button" class="btn-mode-edicio {{#if modeEdicio}}actiu{{/if}}"
+          data-action="toggleModeEdicio"
+          title="{{#if modeEdicio}}{{localize 'FORJA.ModeJoc'}}{{else}}{{localize 'FORJA.ModeEdicio'}}{{/if}}">
+    {{#if modeEdicio}}
+      <i class="fas fa-dice-d10"></i>
+    {{else}}
+      <i class="fas fa-pen-to-square"></i>
+    {{/if}}
+  </button>
+  <div class="header-pc">
+    <div class="pc-block">
+      <span class="pc-label">{{localize "FORJA.PC.Total"}}</span>
+      <input type="number" name="system.pc" value="{{pc.total}}" min="0" class="pc-input"/>
+    </div>
+    <div class="pc-block {{#if (lt pc.lliures 0)}}pc-negatius{{/if}}">
+      <span class="pc-label">{{localize "FORJA.PC.Lliures"}}</span>
+      <span class="pc-value">{{pc.lliures}}</span>
+    </div>
+  </div>
+</header>
