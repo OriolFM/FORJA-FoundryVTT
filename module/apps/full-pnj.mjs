@@ -2,7 +2,7 @@ import { ferTirada }  from "../dice/tirada.mjs";
 import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
 import DiategCuracio  from "./dialeg-curacio.mjs";
-import { _opcionsNumeriques, _prepSalut, _prepHabilitats, _prepTrets, _prepItems } from "./full-personatge.mjs";
+import { _opcionsNumeriques, _prepSalut, _prepHabilitats, _prepTrets, _prepItems, _prepArtefactes } from "./full-personatge.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
 import { ferCuracio, habilitatCuracio, aplicarReposNatural, potReferSePerSiSol } from "../combat/curacio.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -43,6 +43,8 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       eliminarArma:     FullPNJ._onEliminarItem,
       crearArmadura:    FullPNJ._onCrearArmadura,
       eliminarArmadura: FullPNJ._onEliminarItem,
+      crearArtefacte:   FullPNJ._onCrearArtefacte,
+      eliminarArtefacte: FullPNJ._onEliminarItem,
       editarItem:       FullPNJ._onEditarItem,
       // Curació (S-17)
       forjaObrirCuracio: FullPNJ._onObrirCuracio,
@@ -83,7 +85,8 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       habilitats: _prepHabilitats(sys, cfg),
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
-      armadures:  _prepItems(this.actor, "armadura")
+      armadures:  _prepItems(this.actor, "armadura"),
+      artefactes: _prepArtefactes(this.actor)
     };
   }
 
@@ -302,6 +305,25 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
         modLatencia: e.modLatencia,
         egida:       e.egida ?? { activa: false, absorcio: 0, tornsInactiva: 0 },
         descripcio:  e.descripcio ?? ""
+      }
+    }]);
+  }
+
+  static async _onCrearArtefacte(event, target) {
+    const sel = await DiategEquipament.obrir("artefacte");
+    if (!sel) return;
+    const e = sel.entrada;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: e.nom,
+      type: "artefacte",
+      system: {
+        cost:       e.cost,
+        categoria:  e.categoria,
+        activacio:  e.activacio ?? {},
+        us:         e.us ?? {},
+        carrega:    e.carrega ?? {},
+        mecanica:   e.mecanica ?? "",
+        descripcio: e.descripcio ?? ""
       }
     }]);
   }

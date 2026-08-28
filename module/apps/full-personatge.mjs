@@ -50,6 +50,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       eliminarArma:    FullPersonatge._onEliminarItem,
       crearArmadura:   FullPersonatge._onCrearArmadura,
       eliminarArmadura: FullPersonatge._onEliminarItem,
+      crearArtefacte:   FullPersonatge._onCrearArtefacte,
+      eliminarArtefacte: FullPersonatge._onEliminarItem,
       editarItem:      FullPersonatge._onEditarItem,
       // Curació (S-17)
       forjaObrirCuracio: FullPersonatge._onObrirCuracio,
@@ -92,6 +94,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
       armadures:  _prepItems(this.actor, "armadura"),
+      artefactes: _prepArtefactes(this.actor),
       pc: {
         total:   sys.pc,
         gastats: sys.pcGastats ?? 0,
@@ -321,6 +324,25 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
         modLatencia: e.modLatencia,
         egida:       e.egida ?? { activa: false, absorcio: 0, tornsInactiva: 0 },
         descripcio:  e.descripcio ?? ""
+      }
+    }]);
+  }
+
+  static async _onCrearArtefacte(event, target) {
+    const sel = await DiategEquipament.obrir("artefacte");
+    if (!sel) return;
+    const e = sel.entrada;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: e.nom,
+      type: "artefacte",
+      system: {
+        cost:       e.cost,
+        categoria:  e.categoria,
+        activacio:  e.activacio ?? {},
+        us:         e.us ?? {},
+        carrega:    e.carrega ?? {},
+        mecanica:   e.mecanica ?? "",
+        descripcio: e.descripcio ?? ""
       }
     }]);
   }
@@ -568,6 +590,23 @@ export function _prepItems(actor, type) {
       }
       return dades;
     })
+    .sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
+}
+
+export function _prepArtefactes(actor) {
+  return actor.items
+    .filter(i => i.type === "artefacte")
+    .map(i => ({
+      id:         i.id,
+      nom:        i.name,
+      cost:       i.system?.cost ?? 0,
+      categoria:  i.system?.categoria ?? "dispositiu",
+      activacio:  i.system?.activacio ?? {},
+      us:         i.system?.us ?? {},
+      carrega:    i.system?.carrega ?? {},
+      mecanica:   i.system?.mecanica ?? "",
+      descripcio: i.system?.descripcio ?? ""
+    }))
     .sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
 }
 

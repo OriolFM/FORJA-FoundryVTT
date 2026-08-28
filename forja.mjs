@@ -9,6 +9,7 @@ import ActorPNJ            from "./module/data/actor-pnj.mjs";
 import ItemTret            from "./module/data/item-tret.mjs";
 import ItemArma            from "./module/data/item-arma.mjs";
 import ItemArmadura        from "./module/data/item-armadura.mjs";
+import ItemArtefacte       from "./module/data/item-artefacte.mjs";
 import ForjaActor          from "./module/documents/actor.mjs";
 import ForjaCombat         from "./module/documents/combat.mjs";
 import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
@@ -39,9 +40,10 @@ Hooks.once("init", () => {
     pnj:        ActorPNJ
   };
   CONFIG.Item.dataModels = {
-    tret:     ItemTret,
-    arma:     ItemArma,
-    armadura: ItemArmadura
+    tret:      ItemTret,
+    arma:      ItemArma,
+    armadura:  ItemArmadura,
+    artefacte: ItemArtefacte
   };
 
   // Atributs de token

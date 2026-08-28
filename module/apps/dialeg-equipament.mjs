@@ -10,7 +10,7 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
   /** @type {function(object|null):void} */
   #resolve = null;
 
-  /** @type {"arma"|"armadura"} */
+  /** @type {"arma"|"armadura"|"artefacte"} */
   #tipus = "arma";
 
   /** @type {string} */
@@ -33,7 +33,7 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
 
   /**
    * Obre el diàleg per a un tipus d'equipament concret.
-   * @param {"arma"|"armadura"} tipus
+   * @param {"arma"|"armadura"|"artefacte"} tipus
    * @returns {Promise<object|null>} entrada del catàleg seleccionada, o null
    */
   static async obrir(tipus = "arma") {
@@ -45,8 +45,20 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
     });
   }
 
+  #cataleg() {
+    if (this.#tipus === "armadura")  return FORJA.CATALEG_ARMADURES;
+    if (this.#tipus === "artefacte") return FORJA.CATALEG_ARTEFACTES;
+    return FORJA.CATALEG_ARMES;
+  }
+
+  #titol() {
+    if (this.#tipus === "armadura")  return "FORJA.Equip.Armadures";
+    if (this.#tipus === "artefacte") return "FORJA.Equip.Artefactes";
+    return "FORJA.Equip.Armes";
+  }
+
   async _prepareContext(options) {
-    const cataleg = this.#tipus === "armadura" ? FORJA.CATALEG_ARMADURES : FORJA.CATALEG_ARMES;
+    const cataleg = this.#cataleg();
     const cerca = this.#cerca.toLowerCase().trim();
     const entrades = (cerca ? cataleg.filter(e => e.nom.toLowerCase().includes(cerca)) : cataleg)
       .slice()
@@ -54,7 +66,7 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
 
     return {
       tipus: this.#tipus,
-      titol: this.#tipus === "armadura" ? "FORJA.Equip.Armadures" : "FORJA.Equip.Armes",
+      titol: this.#titol(),
       cerca,
       cercaText: this.#cerca,
       entrades
@@ -78,8 +90,7 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
 
   static async _onSeleccionar(event, target) {
     const id = target.dataset.id;
-    const cataleg = this.#tipus === "armadura" ? FORJA.CATALEG_ARMADURES : FORJA.CATALEG_ARMES;
-    const entrada = cataleg.find(e => e.id === id);
+    const entrada = this.#cataleg().find(e => e.id === id);
     if (!entrada) return;
     this.#resolve({ tipus: this.#tipus, entrada });
     this.#resolve = null;

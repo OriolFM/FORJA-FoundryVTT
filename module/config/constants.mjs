@@ -99,14 +99,15 @@ async function _carregarJSON(fitxer) {
 
 const [
   llistaTrets, catalegArmes, catalegArmadures, llistaManiobres,
-  llistaIncompatibilitats, catalegEstats
+  llistaIncompatibilitats, catalegEstats, catalegArtefactes
 ] = await Promise.all([
   _carregarJSON("trets.json"),
   _carregarJSON("armes.json"),
   _carregarJSON("armadures.json"),
   _carregarJSON("maniobres-arts-marcials.json"),
   _carregarJSON("incompatibilitats.json"),
-  _carregarJSON("estats.json")
+  _carregarJSON("estats.json"),
+  _carregarJSON("artefactes.json")
 ]);
 
 // Format de cada entrada de trets: { id, nom, cost, positiu, descripcio, costVariable?, multiplicador?, divisor?, etiquetaX? }
@@ -137,6 +138,12 @@ FORJA.TRETS_SOBRENATURALS = ["magus", "psiquic", "control-qi", "canalitzador", "
 // informatius (visuals) al tracker/fitxa; l'automatització mecànica és fora
 // d'abast de l'Onada 3 (vegeu 09_CONTEXT_SESSIONS.md, secció "Onada 3 — Estats").
 FORJA.CATALEG_ESTATS = catalegEstats;
+
+/* ---------- Catàleg d'artefactes (S-24) ---------- */
+// Plantilles d'artefacte del manual (cap. 4, "Plantilles d'artefacte"), com
+// a dades estàtiques de referència — vegeu justificació de l'abast a
+// item-artefacte.mjs.
+FORJA.CATALEG_ARTEFACTES = catalegArtefactes;
 
 /* ---------- Salut ---------- */
 // Penalització per nivell efectiu de salut (1–6→0/0/0/1/2/4, 7→null=fora de combat)

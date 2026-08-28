@@ -1,0 +1,200 @@
+[
+  {
+    "id": "autometge",
+    "nom": "Autometge",
+    "cost": 15,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "normal", "dificultat": 2 },
+    "us": { "narratiu": true, "actiu": false, "modLatencia": 0 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Es pot fer servir només en temps narratiu. Afecta un objectiu individual a tocar durant una escena. Simula una tirada de l'habilitat medicina amb un resultat de 5 fites.",
+    "descripcio": "Autoeina amb sensors per analitzar l'estat del cos del pacient i una base de dades mèdiques que determina el tractament més efectiu, donant instruccions precises a l'usuari."
+  },
+  {
+    "id": "baston-neural",
+    "nom": "Bastó neural",
+    "cost": 10,
+    "categoria": "arma",
+    "activacio": { "tipus": "cap", "dificultat": null },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 2 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Arma contundent amb latència +2, abast a tocar, i +2 al dany. Aplica els estats atordit (mod. +0) i lent/2.",
+    "descripcio": "Una de les eines favorites dels magistrats per reduir algú sense causar danys permanents."
+  },
+  {
+    "id": "botes-antigravetat",
+    "nom": "Botes antigravetat",
+    "cost": 13,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "trivial", "dificultat": 1 },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 2 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Afecta només l'usuari durant una escena. Aplica el tret levitar.",
+    "descripcio": "Donen una llibertat de moviments útil per moure's sense pertorbar restes arqueològiques o sense fer soroll."
+  },
+  {
+    "id": "ciberbrac",
+    "nom": "Ciberbraç",
+    "cost": 23,
+    "categoria": "permanent",
+    "activacio": { "tipus": "permanent", "dificultat": null },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 1 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Afecta només l'usuari durant un torn. Dóna l'equivalent a una armadura natural de protecció 2. Dóna un modificador de +3 a l'habilitat armes cos a cos.",
+    "descripcio": "Pròtesi cibernètica de combat feta a mida de l'usuari; s'autorepara a la velocitat normal de curació i té les característiques físiques de l'usuari."
+  },
+  {
+    "id": "cibermodem",
+    "nom": "Cibermòdem",
+    "cost": 9,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "normal", "dificultat": 1 },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 1 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +3 a l'habilitat informàtica. Genera fatiga a raó d'un punt per hora d'ús.",
+    "descripcio": "Ulleres i auriculars de realitat virtual que fan d'interfície entre l'usuari i un sistema informàtic o la ment d'un mecanoide."
+  },
+  {
+    "id": "cibermodem-neural",
+    "nom": "Cibermòdem d'interfície neural directa",
+    "cost": 15,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "normal", "dificultat": 1 },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 1 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +5 a l'habilitat informàtica. Mentre s'usa, l'usuari no pot percebre el seu entorn excepte estímuls molt potents, i encara així amb un modificador de -5.",
+    "descripcio": "Evolució dels primers cibermòdems: submergeix l'usuari en una realitat immersiva, traducció del sistema informàtic, la IA o el mecanoide que la genera."
+  },
+  {
+    "id": "espasa-energia",
+    "nom": "Espasa d'energia",
+    "cost": 21,
+    "categoria": "arma",
+    "activacio": { "tipus": "cap", "dificultat": null },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 1 },
+    "carrega": { "usosPerCarrega": 5, "tornsRecarrega": 10, "modeEspera": true },
+    "mecanica": "Espasa amb latència +1, abast a tocar, i 8 de dany directe de ferides. Pot fer-se servir 5 vegades per cada càrrega completa; triga 10 torns a recuperar una càrrega parcial (vàlida per un ús). El mode d'espera permet fer una activació prèvia a l'ús.",
+    "descripcio": "Vestigi de la tecnologia dels aesirs: la fulla és un conducte de plasma que sublima la matèria, ignorant armadures i causant dany directe."
+  },
+  {
+    "id": "espasa-pretoriana-de-terra",
+    "nom": "Espasa pretoriana de Terra",
+    "cost": 40,
+    "categoria": "arma",
+    "activacio": { "tipus": "cap", "dificultat": null },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 3 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Espasa llarga amb latència +3, abast a tocar, i +3 al dany. Dóna un modificador de +3 a l'habilitat armes cos a cos i genera una ègida de protecció 4 per a l'usuari. Aplica l'estat sagnant/2 a l'objectiu dels atacs.",
+    "descripcio": "Indicador de rang de la guàrdia pretoriana de l'imperi romà de Terra; un pretor mai no se'n separa."
+  },
+  {
+    "id": "espasa-serra",
+    "nom": "Espasa serra",
+    "cost": 11,
+    "categoria": "arma",
+    "activacio": { "tipus": "cap", "dificultat": null },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 2 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Espasa amb latència +2, abast a tocar, i +4 de dany indirecte de ferides. Aplica l'estat sagnant/3 a l'objectiu.",
+    "descripcio": "D'extrema utilitat per desgastar contrincants durs de pelar; les dents de la fulla giren a gran velocitat provocant hemorràgies difícils d'aturar."
+  },
+  {
+    "id": "generador-compacte-de-bretxa",
+    "nom": "Generador compacte de bretxa",
+    "cost": 53,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "complexa", "dificultat": 3 },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 10 },
+    "carrega": { "usosPerCarrega": 1, "tornsRecarrega": 36, "modeEspera": true },
+    "mecanica": "Crea un parell de portals transitables (àrea d'efecte circular) entre dos punts del multivers, amb una durada d'una escena. Triga 36 torns a recuperar una càrrega parcial (vàlida per un ús). El mode d'espera permet fer una activació prèvia a l'ús.",
+    "descripcio": "Exclusiu del Cos de Bretxers de l'Aliança i extremadament controlat; tenir-ne un sense ser-ne membre és delicte."
+  },
+  {
+    "id": "guant-de-forca",
+    "nom": "Guant de Força",
+    "cost": 11,
+    "categoria": "arma",
+    "activacio": { "tipus": "cap", "dificultat": null },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 0 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Arma de mà amb latència +0, abast a tocar, i +5 de dany indirecte d'electricitat. Aplica l'estat atordit amb un modificador de +2.",
+    "descripcio": "Serveix com a protecció i com a dispositiu d'atac; el generador integrat descarrega arcs voltaics amb un cop de puny."
+  },
+  {
+    "id": "holocapa",
+    "nom": "Holocapa",
+    "cost": 21,
+    "categoria": "armadura",
+    "activacio": { "tipus": "normal", "dificultat": 1 },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 2 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Armadura lleugera flexible amb latència +2 i protecció 3 (±0 per mida superior o inferior a mitjana). Dóna un modificador de +2 a les habilitats d'amagar-se i esquitllar-se.",
+    "descripcio": "Un entramat de fibres de conducció òptica permet «doblegar» la llum al voltant de l'usuari que s'hi embolica."
+  },
+  {
+    "id": "martell-de-descarrega",
+    "nom": "Martell de descàrrega",
+    "cost": 14,
+    "categoria": "arma",
+    "activacio": { "tipus": "cap", "dificultat": null },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 2 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Arma contundent amb latència +2, abast a tocar, i causa +5 de dany indirecte d'electricitat. Aplica els estats atordit i llançat amb un modificador de +2.",
+    "descripcio": "Acumula una càrrega elèctrica considerable i l'allibera en impactar, amb prou força per llançar l'objectiu pels aires."
+  },
+  {
+    "id": "servoarmadura-dassalt",
+    "nom": "Servoarmadura d'assalt",
+    "cost": 62,
+    "categoria": "armadura",
+    "activacio": { "tipus": "permanent", "dificultat": null },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 2 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Armadura pesant amb latència +2 i protecció 10 (±2 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +2 a FOR, i +2 a les habilitats de força bruta i resistència.",
+    "descripcio": "Permet als operatius de l'ANM moure's ràpidament pel camp de batalla ben protegits per acomplir els seus objectius."
+  },
+  {
+    "id": "sonda-neural",
+    "nom": "Sonda neural",
+    "cost": 20,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "complexa", "dificultat": 1 },
+    "us": { "narratiu": true, "actiu": false, "modLatencia": 0 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Es pot fer servir només en temps narratiu. Afecta un o més objectius individuals a tocar durant una escena. Permet llegir o sondar, projectar pensaments i suggestionar la ment de l'objectiu.",
+    "descripcio": "Terminals neurals que s'adhereixen a les temples de l'usuari i l'objectiu, submergint-los en una representació onírica de la ment d'aquest darrer."
+  },
+  {
+    "id": "tornavis-sonic",
+    "nom": "Tornavís sònic",
+    "cost": 31,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "normal", "dificultat": 2 },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 4 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Autoeina d'activació INT + enginyeria. Simula una tirada d'INT + enginyeria amb un resultat de 8 fites, per reparar o modificar dispositius mecànics i electrònics com si fos una eina multiusos.",
+    "descripcio": "Cilindre ple de sensors i actuadors remots que fa servir una forma limitada de teletracció per manipular peces mecàniques, amb una IA limitada de diagnòstic."
+  },
+  {
+    "id": "ulleres-intelligents",
+    "nom": "Ulleres intel·ligents",
+    "cost": 12,
+    "categoria": "dispositiu",
+    "activacio": { "tipus": "trivial", "dificultat": 2 },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 4 },
+    "carrega": { "usosPerCarrega": 1, "tornsRecarrega": 10, "modeEspera": false },
+    "mecanica": "Aplica un modificador de +1 a l'atribut PER. Dóna un modificador de +2 a les habilitats armes a distància i cercar.",
+    "descripcio": "Detecten quan el PJ enfoca la seva atenció i contribueixen a millorar la seva percepció amb pistes visuals i auditives."
+  },
+  {
+    "id": "vestit-lleuger-de-reconeixement",
+    "nom": "Vestit Lleuger de Reconeixement",
+    "cost": 59,
+    "categoria": "armadura",
+    "activacio": { "tipus": "permanent", "dificultat": null },
+    "us": { "narratiu": true, "actiu": true, "modLatencia": 1 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "Armadura lleugera rígida amb latència +1 i protecció 3 (±1 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +2 a l'habilitat amagar-se, +2 a esquitllar-se, i AGI +1. Aplica el tret levitar.",
+    "descripcio": "Vestit d'infiltració de l'ANM, molt menys voluminós que una servoarmadura, amb musculatura sintètica que permet moure's de manera àgil i discreta."
+  }
+]

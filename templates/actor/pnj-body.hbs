@@ -376,6 +376,44 @@
     </div>
   </div>
 
+  <!-- ═══ ARTEFACTES (S-24) ═══ -->
+  <div class="forja-seccio" data-seccio="artefactes">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Artefactes"}}
+      {{#if modeEdicio}}
+      <button type="button" class="btn-cap-afegir" data-action="crearArtefacte"
+              title="{{localize 'FORJA.Equip.AfegirArtefacte'}}">
+        <i class="fas fa-plus"></i>
+      </button>
+      {{/if}}
+    </div>
+    <div class="forja-seccio-cos">
+      {{#if artefactes.length}}
+      <div class="forja-equip-llista">
+        {{#each artefactes as |a|}}
+        <div class="forja-equip-fila" data-action="editarItem" data-item-id="{{a.id}}" title="{{a.mecanica}}">
+          <span class="equip-nom">{{a.nom}}</span>
+          <span class="equip-meta">
+            {{a.cost}} PC · {{localize (concat "FORJA.Artefacte.Categoria." a.categoria)}}
+            {{#if a.activacio.dificultat}} · {{localize (concat "FORJA.Artefacte.Activacio." a.activacio.tipus)}} (dif. {{a.activacio.dificultat}}){{/if}}
+            {{#if a.us.modLatencia}} · Lat. +{{a.us.modLatencia}}{{/if}}
+          </span>
+          {{#if ../modeEdicio}}
+          <button type="button" class="btn-tret-eliminar" data-action="eliminarArtefacte"
+                  data-item-id="{{a.id}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
+            <i class="fas fa-trash"></i>
+          </button>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="trets-buits">{{localize "FORJA.Equip.SenseArtefactes"}}</p>
+      {{/if}}
+    </div>
+  </div>
+
   <!-- ═══ NOTES ═══ -->
   <div class="forja-seccio" data-seccio="notes">
     <div class="forja-seccio-cap" data-action="toggleSection">
