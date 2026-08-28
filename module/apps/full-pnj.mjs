@@ -1,8 +1,10 @@
 import { ferTirada }  from "../dice/tirada.mjs";
 import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
+import DiategCuracio  from "./dialeg-curacio.mjs";
 import { _opcionsNumeriques, _prepSalut, _prepHabilitats, _prepTrets, _prepItems } from "./full-personatge.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
+import { ferCuracio, habilitatCuracio, aplicarReposNatural, potReferSePerSiSol } from "../combat/curacio.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -41,7 +43,10 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       eliminarArma:     FullPNJ._onEliminarItem,
       crearArmadura:    FullPNJ._onCrearArmadura,
       eliminarArmadura: FullPNJ._onEliminarItem,
-      editarItem:       FullPNJ._onEditarItem
+      editarItem:       FullPNJ._onEditarItem,
+      // Curació (S-17)
+      forjaObrirCuracio: FullPNJ._onObrirCuracio,
+      forjaDescansar:    FullPNJ._onDescansar
     },
     form: { submitOnChange: true }
   };
@@ -335,5 +340,44 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
     const actual  = this.actor.system.habilitats[habId]?.marca ?? "";
     const seguent = { "": "B", "B": "R", "R": "" }[actual] ?? "";
     await this.actor.update({ [`system.habilitats.${habId}.marca`]: seguent });
+  }
+
+  // ── Curació (S-17) ───────────────────────────────────────────────────────
+
+  static async _onObrirCuracio(event, target) {
+    const guaridor = this.actor;
+    const objectiu = [...game.user.targets][0]?.actor ?? guaridor;
+
+    const pistaPerDefecte = (objectiu.system.salut.ferides.nivellActiu ?? 1) >= (objectiu.system.salut.fatiga.nivellActiu ?? 1)
+      ? "ferides" : "fatiga";
+    const hab = habilitatCuracio(guaridor, objectiu.system.especie);
+
+    const eleccio = await DiategCuracio.obrir({
+      nomGuaridor: guaridor.name,
+      nomObjectiu: objectiu.name,
+      habNom: game.i18n.localize(CONFIG.FORJA.LLISTA_HABILITATS.find(h => h.id === hab.id)?.nom ?? hab.id),
+      poolFinal: (guaridor.system.atributs?.INT ?? 0) + hab.nivell,
+      pistaPerDefecte
+    });
+    if (!eleccio) return;
+
+    await ferCuracio({ guaridor, objectiu, tipus: eleccio.tipus, pista: eleccio.pista });
+  }
+
+  static async _onDescansar(event, target) {
+    const objectiu = this.actor;
+    const resultats = [];
+    for (const pista of ["fatiga", "ferides"]) {
+      if (!potReferSePerSiSol(objectiu, pista)) continue;
+      const recuperats = await aplicarReposNatural(objectiu, pista);
+      if (recuperats > 0) resultats.push(game.i18n.format("FORJA.Curacio.DescansResultat", {
+        punts: recuperats, pista: game.i18n.localize(`FORJA.Salut.${pista}`)
+      }));
+    }
+    if (resultats.length) {
+      ui.notifications?.info(`${objectiu.name}: ${resultats.join(" — ")}`);
+    } else {
+      ui.notifications?.warn(game.i18n.format("FORJA.Curacio.DescansBloquejat", { nom: objectiu.name }));
+    }
   }
 }

@@ -1,0 +1,36 @@
+<div class="forja-dialeg-curacio">
+  <p class="dc-intro">{{localize "FORJA.Curacio.Intro" guaridor=nomGuaridor objectiu=nomObjectiu}}</p>
+
+  <div class="form-group dc-tipus">
+    <label class="dc-radio">
+      <input type="radio" name="tipus" value="primers-auxilis" {{#if (eq tipus "primers-auxilis")}}checked{{/if}}>
+      {{localize "FORJA.Curacio.PrimersAuxilis"}}
+    </label>
+    <label class="dc-radio">
+      <input type="radio" name="tipus" value="tractament-medic" {{#if (eq tipus "tractament-medic")}}checked{{/if}}>
+      {{localize "FORJA.Curacio.TractamentMedic"}}
+    </label>
+  </div>
+  <p class="dc-desc">
+    {{#if (eq tipus "tractament-medic")}}{{localize "FORJA.Curacio.TractamentMedicDesc"}}{{else}}{{localize "FORJA.Curacio.PrimersAuxilisDesc"}}{{/if}}
+  </p>
+
+  <div class="form-group dc-pista">
+    <label class="dc-radio">
+      <input type="radio" name="pista" value="ferides" {{#if (eq pista "ferides")}}checked{{/if}}>
+      {{localize "FORJA.Salut.Ferides"}}
+    </label>
+    <label class="dc-radio">
+      <input type="radio" name="pista" value="fatiga" {{#if (eq pista "fatiga")}}checked{{/if}}>
+      {{localize "FORJA.Salut.Fatiga"}}
+    </label>
+  </div>
+
+  <p class="dc-pool">
+    {{localize "FORJA.Curacio.Tirada" hab=habNom pool=poolFinal dificultat=dificultat}}
+  </p>
+
+  <button type="submit">
+    <i class="fas fa-kit-medical"></i> {{localize "FORJA.Curacio.Resoldre"}}
+  </button>
+</div>

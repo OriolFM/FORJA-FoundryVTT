@@ -7363,6 +7363,45 @@ li.combatant:has(> .forja-controls) {
 }
 .forja-dialeg-defensa button:hover { background: rgba(56,189,248,0.3); color: #e0f2fe; }
 
+/* -- Diàleg de curació (S-17) -- */
+.forja-dialeg-curacio { display: flex; flex-direction: column; gap: 8px; padding: 8px; }
+.forja-dialeg-curacio .dc-intro { margin: 0 0 2px; font-size: 0.9rem; color: #cbd5e1; }
+.forja-dialeg-curacio .dc-tipus,
+.forja-dialeg-curacio .dc-pista { display: flex; flex-direction: row; gap: 14px; }
+.forja-dialeg-curacio .dc-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.forja-dialeg-curacio .dc-radio input { cursor: pointer; }
+.forja-dialeg-curacio .dc-desc,
+.forja-dialeg-curacio .dc-pool { font-size: 0.85rem; color: #94a3b8; font-style: italic; margin: 0; }
+.forja-dialeg-curacio button {
+  margin-top: 6px;
+  background: rgba(74,222,128,0.18);
+  border: 1px solid rgba(74,222,128,0.45);
+  color: #86efac;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.forja-dialeg-curacio button:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
+
+/* -- Accions de la secció Salut (Curar/Descansar, S-17) -- */
+.forja-salut-accions { display: flex; gap: 8px; margin-top: 8px; }
+.forja-salut-accions button {
+  background: rgba(74,222,128,0.12);
+  border: 1px solid rgba(74,222,128,0.35);
+  color: #86efac;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.forja-salut-accions button:hover { background: rgba(74,222,128,0.25); color: #dcfce7; }
+
 /* -- Missatge de xat d'atac -- */
 .forja-missatge-atac { display: flex; flex-direction: column; gap: 6px; }
 .forja-missatge-atac .mt-dany {
