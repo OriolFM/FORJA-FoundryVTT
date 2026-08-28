@@ -31,4 +31,18 @@
       <span class="pc-value">{{pc.lliures}}</span>
     </div>
   </div>
+  <div class="header-pc header-px">
+    <div class="pc-block">
+      <span class="pc-label">{{localize "FORJA.Millora.PXTotal"}}</span>
+      <input type="number" name="system.px.total" value="{{px.total}}" min="0" class="pc-input"/>
+    </div>
+    <div class="pc-block {{#if (lt px.lliures 0)}}pc-negatius{{/if}}">
+      <span class="pc-label">{{localize "FORJA.Millora.PXLliures"}}</span>
+      <span class="pc-value">{{px.lliures}}</span>
+    </div>
+    <button type="button" class="btn-millora" data-action="forjaObrirMillora"
+            title="{{localize 'FORJA.Millora.Boto'}}">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+  </div>
 </header>

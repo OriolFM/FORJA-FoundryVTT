@@ -66,6 +66,9 @@ export function _prepararDerivats(sys) {
 
   // --- PC gastats ---
   _calcularPunts(sys, cfg);
+
+  // --- PX lliures (S-28) ---
+  sys.px.lliures = (sys.px.total ?? 0) - (sys.px.gastats ?? 0);
 }
 
 /** Stats derivats que un tret pot modificar amb `efecte.stat`/`efecte.delta`. */

@@ -2,10 +2,15 @@ import { ferTirada }  from "../dice/tirada.mjs";
 import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
 import DiategCuracio  from "./dialeg-curacio.mjs";
+import DiategMillora  from "./dialeg-millora.mjs";
 import { resoldreDanyArma } from "../combat/dany.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
 import { avisosCoherencia } from "../validacio/coherencia.mjs";
 import { ferCuracio, habilitatCuracio, aplicarReposNatural, potReferSePerSiSol } from "../combat/curacio.mjs";
+import {
+  costSeguentAtribut, costSeguentHabilitat,
+  millorarAtribut, millorarHabilitat, afegirTretPositiuAmbPX, treureTretNegatiuAmbPX
+} from "../progressio/millora.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -48,7 +53,9 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       editarItem:      FullPersonatge._onEditarItem,
       // Curació (S-17)
       forjaObrirCuracio: FullPersonatge._onObrirCuracio,
-      forjaDescansar:    FullPersonatge._onDescansar
+      forjaDescansar:    FullPersonatge._onDescansar,
+      // Millora amb PX (S-28)
+      forjaObrirMillora: FullPersonatge._onObrirMillora
     },
     form: { submitOnChange: true }
   };
@@ -89,6 +96,11 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
         total:   sys.pc,
         gastats: sys.pcGastats ?? 0,
         lliures: sys.pcLliures ?? 0
+      },
+      px: {
+        total:   sys.px.total,
+        gastats: sys.px.gastats ?? 0,
+        lliures: sys.px.lliures ?? 0
       },
       avisos: avisosCoherencia(this.actor)
     };
@@ -395,6 +407,69 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       ui.notifications?.info(`${objectiu.name}: ${resultats.join(" — ")}`);
     } else {
       ui.notifications?.warn(game.i18n.format("FORJA.Curacio.DescansBloquejat", { nom: objectiu.name }));
+    }
+  }
+
+  // ── Millora amb PX (S-28) ────────────────────────────────────────────────
+
+  static async _onObrirMillora(event, target) {
+    const actor = this.actor;
+    const sys   = actor.system;
+    const cfg   = CONFIG.FORJA;
+
+    const atributs = cfg.ATRIBUTS.map(attr => {
+      const actual = sys.atributs[attr] ?? 0;
+      return {
+        id: attr, nom: game.i18n.localize(`FORJA.Attr.${attr}`),
+        actual, seguent: actual + 1, cost: costSeguentAtribut(actual)
+      };
+    });
+
+    const habilitats = cfg.LLISTA_HABILITATS.map(h => {
+      const actual = sys.habilitats[h.id]?.nivell ?? 0;
+      return {
+        id: h.id, nom: game.i18n.localize(h.nom),
+        actual, seguent: actual + 1, cost: costSeguentHabilitat(actual)
+      };
+    }).sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
+
+    const tretsNegatius = actor.items
+      .filter(i => i.type === "tret" && (i.system.cost ?? 0) < 0)
+      .map(i => ({ id: i.id, nom: i.name, cost: -(i.system.cost ?? 0) }));
+
+    const eleccio = await DiategMillora.obrir({
+      nomActor: actor.name,
+      pxLliures: sys.px?.lliures ?? 0,
+      atributs, habilitats, tretsNegatius
+    });
+    if (!eleccio) return;
+
+    let resultat = null;
+    if (eleccio.categoria === "atribut") {
+      resultat = await millorarAtribut(actor, eleccio.attrId);
+    } else if (eleccio.categoria === "habilitat") {
+      resultat = await millorarHabilitat(actor, eleccio.habId);
+    } else if (eleccio.categoria === "tret-afegir") {
+      const tret = await DiategTrets.obrir();
+      if (!tret) return;
+      resultat = await afegirTretPositiuAmbPX(actor, tret);
+    } else if (eleccio.categoria === "tret-treure") {
+      const item = actor.items.get(eleccio.tretNegatiuId);
+      if (!item) return;
+      resultat = await treureTretNegatiuAmbPX(actor, item);
+    }
+
+    if (!resultat) return;
+    if (resultat.error === "max") {
+      ui.notifications?.warn(game.i18n.localize("FORJA.Millora.JaAlMaxim"));
+    } else if (resultat.error === "px") {
+      ui.notifications?.warn(game.i18n.localize("FORJA.Millora.PXInsuficients"));
+    } else if (resultat.error === "negatiu") {
+      ui.notifications?.warn(game.i18n.localize("FORJA.Millora.NomesTretsPositius"));
+    } else if (resultat.error === "positiu") {
+      ui.notifications?.warn(game.i18n.localize("FORJA.Millora.NomesTretsNegatius"));
+    } else {
+      ui.notifications?.info(game.i18n.format("FORJA.Millora.Aplicada", { nom: actor.name, cost: resultat.cost }));
     }
   }
 }

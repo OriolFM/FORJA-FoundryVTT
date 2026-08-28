@@ -6466,6 +6466,18 @@
 
 .pc-negatius .pc-value { color: var(--forja-danger); }
 
+.header-px { flex-direction: row; align-items: center; gap: 6px; min-width: unset; }
+.btn-millora {
+  background: rgba(74,222,128,0.12);
+  border: 1px solid rgba(74,222,128,0.35);
+  color: #86efac;
+  border-radius: var(--forja-radius-sm);
+  padding: 6px 8px;
+  cursor: pointer;
+  align-self: stretch;
+}
+.btn-millora:hover { background: rgba(74,222,128,0.25); color: #dcfce7; }
+
 /* -- Avisos de coherència (S-05) -- */
 .forja-avisos {
   margin: 8px 0;
@@ -7388,6 +7400,33 @@ li.combatant:has(> .forja-controls) {
   cursor: pointer;
 }
 .forja-dialeg-curacio button:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
+
+/* -- Diàleg de millora amb PX (S-28) -- */
+.forja-dialeg-millora { display: flex; flex-direction: column; gap: 8px; padding: 8px; }
+.forja-dialeg-millora .dm-intro { margin: 0 0 2px; font-size: 0.9rem; color: #cbd5e1; }
+.forja-dialeg-millora .dm-categoria { display: flex; flex-direction: column; gap: 4px; }
+.forja-dialeg-millora .dm-llista { display: flex; flex-direction: column; gap: 4px; max-height: 220px; overflow-y: auto; }
+.forja-dialeg-millora .dm-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.forja-dialeg-millora .dm-radio input { cursor: pointer; }
+.forja-dialeg-millora .dm-radio.dm-disabled { opacity: 0.45; cursor: not-allowed; }
+.forja-dialeg-millora .dm-desc { font-size: 0.85rem; color: #94a3b8; font-style: italic; margin: 0; }
+.forja-dialeg-millora select { width: 100%; }
+.forja-dialeg-millora button[type="submit"] {
+  margin-top: 6px;
+  background: rgba(74,222,128,0.18);
+  border: 1px solid rgba(74,222,128,0.45);
+  color: #86efac;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.forja-dialeg-millora button[type="submit"]:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
 
 /* -- Accions de la secció Salut (Curar/Descansar, S-17) -- */
 .forja-salut-accions { display: flex; gap: 8px; margin-top: 8px; }

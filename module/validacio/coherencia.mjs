@@ -29,6 +29,10 @@ export function avisosCoherencia(actor) {
     avisos.push(game.i18n.format("FORJA.Avis.PressupostExcedit", { valor: -sys.pcLliures }));
   }
 
+  if ((sys.px?.lliures ?? 0) < 0) {
+    avisos.push(game.i18n.format("FORJA.Avis.PXExcedit", { valor: -sys.px.lliures }));
+  }
+
   const idsTrets = new Set(
     actor.items
       .filter(i => i.type === "tret")

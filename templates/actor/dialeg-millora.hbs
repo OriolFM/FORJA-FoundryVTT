@@ -1,0 +1,69 @@
+<div class="forja-dialeg-millora">
+  <p class="dm-intro">{{localize "FORJA.Millora.PXDisponibles" px=pxLliures}}</p>
+
+  <div class="form-group dm-categoria">
+    <label class="dm-radio">
+      <input type="radio" name="categoria" value="atribut" {{#if (eq categoria "atribut")}}checked{{/if}}>
+      {{localize "FORJA.Millora.Atribut"}}
+    </label>
+    <label class="dm-radio">
+      <input type="radio" name="categoria" value="habilitat" {{#if (eq categoria "habilitat")}}checked{{/if}}>
+      {{localize "FORJA.Millora.Habilitat"}}
+    </label>
+    <label class="dm-radio">
+      <input type="radio" name="categoria" value="tret-afegir" {{#if (eq categoria "tret-afegir")}}checked{{/if}}>
+      {{localize "FORJA.Millora.TretAfegir"}}
+    </label>
+    <label class="dm-radio">
+      <input type="radio" name="categoria" value="tret-treure" {{#if (eq categoria "tret-treure")}}checked{{/if}}>
+      {{localize "FORJA.Millora.TretTreure"}}
+    </label>
+  </div>
+
+  {{#if (eq categoria "atribut")}}
+  <div class="form-group dm-llista">
+    {{#each atributs as |a|}}
+    <label class="dm-radio {{#unless a.cost}}dm-disabled{{/unless}}">
+      <input type="radio" name="attrId" value="{{a.id}}" {{#if (eq a.id ../attrId)}}checked{{/if}} {{#unless a.cost}}disabled{{/unless}}>
+      {{a.nom}} ({{a.actual}}
+      {{#if a.cost}} → {{a.seguent}}, {{a.cost}} PX{{else}} — {{localize "FORJA.Millora.Maxim"}}{{/if}})
+    </label>
+    {{/each}}
+  </div>
+  {{/if}}
+
+  {{#if (eq categoria "habilitat")}}
+  <div class="form-group dm-camp">
+    <select name="habId">
+      {{#each habilitats as |h|}}
+      <option value="{{h.id}}" {{#if (eq h.id ../habId)}}selected{{/if}} {{#unless h.cost}}disabled{{/unless}}>
+        {{h.nom}} ({{h.actual}}{{#if h.cost}} → {{h.seguent}}, {{h.cost}} PX{{else}} — {{localize "FORJA.Millora.Maxim"}}{{/if}})
+      </option>
+      {{/each}}
+    </select>
+  </div>
+  {{/if}}
+
+  {{#if (eq categoria "tret-afegir")}}
+  <p class="dm-desc">{{localize "FORJA.Millora.TretAfegirDesc"}}</p>
+  {{/if}}
+
+  {{#if (eq categoria "tret-treure")}}
+  <div class="form-group dm-llista">
+    {{#if tretsNegatius.length}}
+    {{#each tretsNegatius as |t|}}
+    <label class="dm-radio">
+      <input type="radio" name="tretNegatiuId" value="{{t.id}}" {{#if (eq t.id ../tretNegatiuId)}}checked{{/if}}>
+      {{t.nom}} ({{t.cost}} PX)
+    </label>
+    {{/each}}
+    {{else}}
+    <p class="dm-desc">{{localize "FORJA.Millora.SenseTretsNegatius"}}</p>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  <button type="submit">
+    <i class="fas fa-arrow-up"></i> {{localize "FORJA.Millora.Confirmar"}}
+  </button>
+</div>
