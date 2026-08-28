@@ -1,0 +1,28 @@
+<div class="forja-dialeg-defensa">
+  <p class="dd-intro">{{localize "FORJA.Combat.DefensaIntro" atacant=nomAtacant defensor=nomDefensor}}</p>
+
+  <div class="form-group dd-opcions">
+    {{#each opcions as |op|}}
+    <label class="dd-radio {{#unless op.disponible}}dd-disabled{{/unless}}">
+      <input type="radio" name="opcioId" value="{{op.id}}" {{#if (eq op.id ../opcioId)}}checked{{/if}} {{#unless op.disponible}}disabled{{/unless}}>
+      {{op.nom}}
+      {{#if op.gastaReaccio}}<i class="fas fa-bolt" title="{{localize 'FORJA.Combat.GastaReaccio'}}"></i>{{/if}}
+      {{#unless op.senseTirada}} — {{op.atribut}} {{op.atributVal}} + {{op.habId}} {{op.habNivell}} = {{op.pool}} daus{{/unless}}
+    </label>
+    {{/each}}
+  </div>
+
+  {{#each opcions as |op|}}
+  {{#if (eq op.id ../opcioId)}}
+  <p class="dd-avis">
+    {{op.descripcio}}
+    {{#unless op.disponible}}<br><strong>{{localize "FORJA.Combat.SenseReaccioDisponibleAvis"}}</strong>{{/unless}}
+    {{#if op.reduccioExtra}}<br>{{localize "FORJA.Combat.ReduccioExtra" valor=op.reduccioExtra}}{{/if}}
+  </p>
+  {{/if}}
+  {{/each}}
+
+  <button type="submit">
+    <i class="fas fa-shield-halved"></i> {{localize "FORJA.Combat.ResoldreDefensa"}}
+  </button>
+</div>

@@ -41,7 +41,7 @@ export async function ferTirada({ actor, atribut, atributVal, habId = null, habN
   await roll.evaluate();
 
   // Missatge de xat
-  const content = await renderTemplate(ForjaRoll.CHAT_TEMPLATE, {
+  const content = await foundry.applications.handlebars.renderTemplate(ForjaRoll.CHAT_TEMPLATE, {
     label,
     atribut,
     habId,

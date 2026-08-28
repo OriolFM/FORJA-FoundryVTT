@@ -1,6 +1,8 @@
 import DiategDeclararAccio from "../apps/dialeg-declarar-accio.mjs";
+import DiategDefensa from "../apps/dialeg-defensa.mjs";
 import { ferTirada } from "../dice/tirada.mjs";
 import { ferAtac }  from "./atac.mjs";
+import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -197,16 +199,33 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       const objectiu = [...game.user.targets][0]?.actor;
 
       if (arma && objectiu) {
-        // Flux complet d'atac contra un objectiu (S-12): tira, compara amb la
-        // seva defensa BÀSICA (passiva) i resol el dany. La defensa ACTIVA
-        // (esquivar/parar com a reacció enfrontada) encara no s'orquestra
-        // automàticament — caldrà fer-ho a banda fins que hi hagi aquest flux.
+        // Flux complet d'atac contra un objectiu (S-12/S-13): primer es
+        // resol la reacció defensiva de l'objectiu (passiva / esquivar /
+        // parar / blocar — gastant reacció i, si escau, tirant), i després
+        // es tira l'atac contra la dificultat resultant.
+        const opcions = opcionsDefensa(objectiu);
+        const eleccio = await DiategDefensa.obrir({
+          nomAtacant:  combatant.name,
+          nomDefensor: objectiu.name,
+          opcions
+        });
+        if (!eleccio) return;
+
+        const resolucio = await resoldreOpcioDefensa(objectiu, eleccio);
+        if (!resolucio) {
+          ui.notifications?.warn(game.i18n.format("FORJA.Combat.SenseReaccioDisponible", { nom: objectiu.name }));
+          return;
+        }
+
         await ferAtac({
           actor:      combatant.actor,
           objectiu,
           arma,
           poolFinal,
-          dificultat: objectiu.system.defensa ?? 0,
+          dificultat:      resolucio.dificultat,
+          exigirSuperar:   resolucio.exigirSuperar,
+          reduccioExtra:   resolucio.reduccioExtra,
+          etiquetaDefensa: eleccio.nom,
           label:      pendent.label
         });
         return;

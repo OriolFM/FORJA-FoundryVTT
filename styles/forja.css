@@ -7258,12 +7258,21 @@
 
 /* ==== ONADA 2 — COMBAT (estils temporals, a refinar) ==== */
 
-/* -- Tracker: controls FORJA per combatent -- */
+/* -- Tracker: controls FORJA per combatent --
+   La fila nativa del combatent (v13) és flex+nowrap i just amb l'amplada
+   pel retrat+nom: cal permetre que faci wrap perquè els nostres controls
+   (posició/declarar/resoldre/emboscada) caiguin a una segona línia en
+   lloc de desbordar-se fora de la finestra (invisibles, sense scroll). */
+li.combatant:has(> .forja-controls) {
+  flex-wrap: wrap;
+}
 .forja-controls {
   display: flex;
+  flex: 1 0 100%;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
-  margin-left: 6px;
+  padding-top: 2px;
   font-size: 0.95rem;
   color: #94a3b8;
 }
@@ -7308,6 +7317,32 @@
 .forja-dialeg-declarar-accio .dda-radio input { cursor: pointer; }
 .forja-dialeg-declarar-accio .dda-avis { font-size: 0.85rem; color: #94a3b8; font-style: italic; margin: 0; }
 .forja-dialeg-declarar-accio textarea { resize: vertical; }
+
+/* -- Diàleg de defensa (S-13) -- */
+.forja-dialeg-defensa { display: flex; flex-direction: column; gap: 8px; padding: 8px; }
+.forja-dialeg-defensa .dd-intro { margin: 0 0 2px; font-size: 0.9rem; color: #cbd5e1; }
+.forja-dialeg-defensa .dd-opcions { display: flex; flex-direction: column; gap: 6px; }
+.forja-dialeg-defensa .dd-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.forja-dialeg-defensa .dd-radio input { cursor: pointer; }
+.forja-dialeg-defensa .dd-radio.dd-disabled { opacity: 0.45; cursor: not-allowed; }
+.forja-dialeg-defensa .dd-radio.dd-disabled input { cursor: not-allowed; }
+.forja-dialeg-defensa .dd-avis { font-size: 0.85rem; color: #94a3b8; font-style: italic; margin: 0; }
+.forja-dialeg-defensa button {
+  margin-top: 6px;
+  background: rgba(56,189,248,0.18);
+  border: 1px solid rgba(56,189,248,0.45);
+  color: #7dd3fc;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.forja-dialeg-defensa button:hover { background: rgba(56,189,248,0.3); color: #e0f2fe; }
 
 /* -- Missatge de xat d'atac -- */
 .forja-missatge-atac { display: flex; flex-direction: column; gap: 6px; }
