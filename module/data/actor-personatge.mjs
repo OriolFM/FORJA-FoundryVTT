@@ -98,10 +98,16 @@ function _aplicarEfectesTrets(sys) {
 /**
  * Retorna el nivell actiu (1–7) donats els marcats i els punts per nivell.
  * Nivell 1 si no hi ha cap casella marcada.
+ *
+ * Als múltiples EXACTES de `perNivell` (haver omplert un nivell sencer),
+ * es considera que ja s'ha passat al nivell següent (pitjor) — floor+1
+ * enlloc de ceil. Decisió confirmada contra l'exemple "Yoko vs gólems"
+ * (09_CONTEXT_SESSIONS.md): 4 ferides amb perNivell=4 dona nivell 2
+ * (masegat), no nivell 1; 16 dona nivell 5 (malferit), no nivell 4.
  */
 function _nivellActiu(marcats, perNivell) {
   if (marcats <= 0 || perNivell <= 0) return 1;
-  return Math.min(7, Math.ceil(marcats / perNivell));
+  return Math.min(7, Math.floor(marcats / perNivell) + 1);
 }
 
 function _calcularPunts(sys, cfg) {
