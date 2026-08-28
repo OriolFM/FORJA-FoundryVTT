@@ -6466,6 +6466,25 @@
 
 .pc-negatius .pc-value { color: var(--forja-danger); }
 
+/* -- Avisos de coherència (S-05) -- */
+.forja-avisos {
+  margin: 8px 0;
+  padding: 6px 10px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid var(--forja-warning);
+  border-radius: 4px;
+}
+.forja-avisos-cap {
+  color: var(--forja-warning);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.forja-avisos ul { margin: 4px 0 0; padding-left: 20px; }
+.forja-avisos li { font-size: 0.85rem; color: #e2e8f0; }
+
 
 
 /* ============================================================================

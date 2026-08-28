@@ -131,7 +131,7 @@ export default class DiategTrets extends HandlebarsApplicationMixin(ApplicationV
     const cost = this.#calcularCost(t);
     let nom = t.nom;
     if (t.multiplicador || t.divisor) nom = `${t.nom} (${this.#valorX})`;
-    this.#resolve({ nom, cost, descripcio: t.descripcio ?? "", efecte: t.efecte ?? null });
+    this.#resolve({ id: t.id, nom, cost, descripcio: t.descripcio ?? "", efecte: t.efecte ?? null });
     this.#resolve = null;
     this.close();
   }

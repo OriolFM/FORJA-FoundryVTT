@@ -1,5 +1,16 @@
 <div class="forja-body">
 
+  {{#if avisos}}
+  <div class="forja-avisos">
+    <div class="forja-avisos-cap"><i class="fas fa-triangle-exclamation"></i> {{localize "FORJA.Avis.Titol"}}</div>
+    <ul>
+      {{#each avisos as |avis|}}
+      <li>{{avis}}</li>
+      {{/each}}
+    </ul>
+  </div>
+  {{/if}}
+
   <!-- ═══ IDENTITAT ═══ -->
   <div class="forja-seccio" data-seccio="identitat">
     <div class="forja-seccio-cap" data-action="toggleSection">

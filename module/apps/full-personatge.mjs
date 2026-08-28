@@ -3,6 +3,7 @@ import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
 import { resoldreDanyArma } from "../combat/dany.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
+import { avisosCoherencia } from "../validacio/coherencia.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -83,7 +84,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
         total:   sys.pc,
         gastats: sys.pcGastats ?? 0,
         lliures: sys.pcLliures ?? 0
-      }
+      },
+      avisos: avisosCoherencia(this.actor)
     };
   }
 
@@ -252,7 +254,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
         cost:      tret.cost,
         descripcio: tret.descripcio ?? "",
         efecte:    tret.efecte ?? null
-      }
+      },
+      flags: { forja: { catalegId: tret.id } }
     }]);
   }
 

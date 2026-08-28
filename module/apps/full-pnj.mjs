@@ -247,7 +247,8 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
         cost:      tret.cost,
         descripcio: tret.descripcio ?? "",
         efecte:    tret.efecte ?? null
-      }
+      },
+      flags: { forja: { catalegId: tret.id } }
     }]);
   }
 

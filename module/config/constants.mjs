@@ -83,30 +83,52 @@ FORJA.LLISTA_HABILITATS = [
   { id: "qi",              nom: "FORJA.Hab.qi",              attr: "APL", tipus: "restringida" }
 ];
 
-/* ---------- Trets ---------- */
-// Dades carregades des d'un fitxer JSON editable, perquè es pugui ampliar/corregir
-// sense tocar codi (i, més endavant, des d'una interfície d'edició).
-// Format de cada entrada: { id, nom, cost, positiu, descripcio, costVariable?, multiplicador?, divisor?, etiquetaX? }
-FORJA.LLISTA_TRETS = await fetch("systems/forja/module/config/dades/trets.json")
-  .then(r => r.json())
-  .catch(err => { console.error("FORJA | No s'ha pogut carregar trets.json", err); return []; });
+/* ---------- Dades del manual (JSON editable) ----------
+   Externalitzades perquè es puguin ampliar/corregir sense tocar codi (i, més
+   endavant, des d'una interfície d'edició). Es carreguen totes en paral·lel
+   (Promise.all) enlloc de N await seqüencials — amb prou fitxers, la suma de
+   round-trips seqüencials pot arribar a retardar l'evaluació del mòdul més
+   enllà del que Foundry espera abans de disparar el hook "init" (vist en
+   viu: amb 6 fetches seqüencials, `Hooks.once("init")` de forja.mjs a vegades
+   no arribava a registrar-se a temps — vegeu 09_CONTEXT_SESSIONS.md). */
+async function _carregarJSON(fitxer) {
+  return fetch(`systems/forja/module/config/dades/${fitxer}`)
+    .then(r => r.json())
+    .catch(err => { console.error(`FORJA | No s'ha pogut carregar ${fitxer}`, err); return []; });
+}
+
+const [
+  llistaTrets, catalegArmes, catalegArmadures, llistaManiobres,
+  llistaIncompatibilitats, catalegEstats
+] = await Promise.all([
+  _carregarJSON("trets.json"),
+  _carregarJSON("armes.json"),
+  _carregarJSON("armadures.json"),
+  _carregarJSON("maniobres-arts-marcials.json"),
+  _carregarJSON("incompatibilitats.json"),
+  _carregarJSON("estats.json")
+]);
+
+// Format de cada entrada de trets: { id, nom, cost, positiu, descripcio, costVariable?, multiplicador?, divisor?, etiquetaX? }
+FORJA.LLISTA_TRETS = llistaTrets;
 
 /* ---------- Catàleg d'equipament (S-18) ---------- */
-// Igual que els trets: dades en JSON editable, sense res hard-codejat.
-// Serveixen com a base per generar Items (i, més endavant, des d'una interfície externa).
-FORJA.CATALEG_ARMES = await fetch("systems/forja/module/config/dades/armes.json")
-  .then(r => r.json())
-  .catch(err => { console.error("FORJA | No s'ha pogut carregar armes.json", err); return []; });
-
-FORJA.CATALEG_ARMADURES = await fetch("systems/forja/module/config/dades/armadures.json")
-  .then(r => r.json())
-  .catch(err => { console.error("FORJA | No s'ha pogut carregar armadures.json", err); return []; });
+FORJA.CATALEG_ARMES     = catalegArmes;
+FORJA.CATALEG_ARMADURES = catalegArmadures;
 
 // Maniobres d'arts marcials (manual): seleccionables en declarar un atac de "Cop"
 // amb la maniobra "Arts Marcials" (+1 dificultat, escull un moviment de la taula).
-FORJA.LLISTA_MANIOBRES = await fetch("systems/forja/module/config/dades/maniobres-arts-marcials.json")
-  .then(r => r.json())
-  .catch(err => { console.error("FORJA | No s'ha pogut carregar maniobres-arts-marcials.json", err); return []; });
+FORJA.LLISTA_MANIOBRES = llistaManiobres;
+
+/* ---------- Incompatibilitats de trets (S-05) ---------- */
+// Parelles [idA, idB] mútuament excloents (font: CORRECCIO_skill_forja-creator_regles.md,
+// secció "Incompatibilitats de trets"). No inclou les parelles paramètriques on l'incompatible
+// depèn d'un valor lliure encara no modelat (p. ex. Sentit Agut/Atrofiat del mateix sentit,
+// quan "un sentit" no queda registrat a l'ítem) — es descarten per evitar falsos positius.
+FORJA.LLISTA_INCOMPATIBILITATS = llistaIncompatibilitats;
+
+// Trets que pressuposen un do actiu — incompatibles amb l'espècie Mecanoide (regles.md).
+FORJA.TRETS_SOBRENATURALS = ["magus", "psiquic", "control-qi", "canalitzador", "oracle"];
 
 /* ---------- Estats (S-16) ---------- */
 // Catàleg dels estats del manual (cap. 3, p. 96-99). Format de cada entrada:
@@ -114,9 +136,7 @@ FORJA.LLISTA_MANIOBRES = await fetch("systems/forja/module/config/dades/maniobre
 // amb valor X (Lent/X, Ràpid/X, Recuperació/X, Sagnant/X) — de moment només
 // informatius (visuals) al tracker/fitxa; l'automatització mecànica és fora
 // d'abast de l'Onada 3 (vegeu 09_CONTEXT_SESSIONS.md, secció "Onada 3 — Estats").
-FORJA.CATALEG_ESTATS = await fetch("systems/forja/module/config/dades/estats.json")
-  .then(r => r.json())
-  .catch(err => { console.error("FORJA | No s'ha pogut carregar estats.json", err); return []; });
+FORJA.CATALEG_ESTATS = catalegEstats;
 
 /* ---------- Salut ---------- */
 // Penalització per nivell efectiu de salut (1–6→0/0/0/1/2/4, 7→null=fora de combat)

@@ -22,6 +22,11 @@
   "FORJA.PC.Lliures": "PC Lliures",
   "FORJA.PC.Gastats": "PC Gastats",
 
+  "FORJA.Avis.Titol": "Avisos de coherència",
+  "FORJA.Avis.PressupostExcedit": "Pressupost de PC excedit per {valor} punts.",
+  "FORJA.Avis.TretsIncompatibles": "Trets incompatibles: {a} i {b}.",
+  "FORJA.Avis.MecanoideSobrenatural": "Un Mecanoide no pot tenir el tret sobrenatural \"{nom}\".",
+
   "FORJA.Section.Identitat": "Identitat",
   "FORJA.Section.Atributs": "Atributs",
   "FORJA.Section.AtributsSecundaris": "Atributs secundaris",
