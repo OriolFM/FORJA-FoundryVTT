@@ -1,0 +1,116 @@
+[
+  {
+    "id": "abatut",
+    "nom": "Abatut",
+    "parametritzat": false,
+    "descripcio": "Ha caigut a terra. Qualsevol acció des de terra (incl. aixecar-se) té +2 a la latència; no pot córrer, saltar ni esquivar. S'acaba en aixecar-se."
+  },
+  {
+    "id": "acovardit",
+    "nom": "Acovardit",
+    "parametritzat": false,
+    "descripcio": "Només pot fer accions defensives o allunyar-se d'allò que li fa por. Acaba en superar una tirada d'APL + resistència o APL + Psi."
+  },
+  {
+    "id": "atordit",
+    "nom": "Atordit",
+    "parametritzat": false,
+    "descripcio": "Perd la següent acció declarada; s'ha de tornar a declarar amb la latència habitual."
+  },
+  {
+    "id": "atrapat",
+    "nom": "Atrapat",
+    "parametritzat": false,
+    "descripcio": "No es pot moure ni esquivar (pot parar/blocar si té els braços lliures). Pot provar d'escapar-se (FOR+Força Bruta o FOR/DES+Arts Marcials) contra la tirada de qui atrapa."
+  },
+  {
+    "id": "berserc",
+    "nom": "Berserc",
+    "parametritzat": false,
+    "descripcio": "Es considera dur de pelar i incansable, però no pot fer accions defensives ni de concentració (excepte concentrar-se en atac). Dura fins al final de l'escena o fins quedar incapacitat."
+  },
+  {
+    "id": "concentrat",
+    "nom": "Concentrat",
+    "parametritzat": false,
+    "descripcio": "+1 dau a la propera acció declarada, però no pot defensar-se ni gastar reaccions fins que acabi o s'interrompi. Si rep més dany que la seva FOR, queda atordit i l'acció fracassa."
+  },
+  {
+    "id": "empes",
+    "nom": "Empès",
+    "parametritzat": false,
+    "descripcio": "Retrocedeix una distància segons el dany rebut; ha de tirar AGI+acrobàcies o AGI+equilibri per mantenir-se dempeus, o queda abatut."
+  },
+  {
+    "id": "immobilitzat",
+    "nom": "Immobilitzat",
+    "parametritzat": false,
+    "descripcio": "No es pot moure de la seva posició (per subjecció física o por), tot i que pot canviar d'orientació, atacar i parar/blocar."
+  },
+  {
+    "id": "incapacitat",
+    "nom": "Incapacitat",
+    "parametritzat": false,
+    "descripcio": "Conscient però només pot demanar ajuda (o ni això, segons gravetat). Persisteix fins a rebre atenció mèdica o guarir-se (Refer-se, p. 97)."
+  },
+  {
+    "id": "inconscient",
+    "nom": "Inconscient",
+    "parametritzat": false,
+    "descripcio": "No pot actuar ni declarar cap acció. Persisteix fins a rebre atenció mèdica, descansar, o recuperar fatiga."
+  },
+  {
+    "id": "lent",
+    "nom": "Lent/X",
+    "parametritzat": true,
+    "descripcio": "Modificador de +X a la latència. Persisteix fins que la causa desaparegui o fins al final de l'escena."
+  },
+  {
+    "id": "llancat",
+    "nom": "Llançat",
+    "parametritzat": false,
+    "descripcio": "Un efecte o maniobra el llança uns metres (habitualment FOR+2 de l'atacant, més la seva mida). Pot rebre dany addicional si impacta contra una superfície dura."
+  },
+  {
+    "id": "malaltia-toxina",
+    "nom": "Malaltia / Toxina",
+    "parametritzat": false,
+    "descripcio": "Conseqüències variables segons la malaltia/toxina (dany periòdic, +dificultat, altres estats). Dura fins que es cura per si mateix o amb atenció mèdica."
+  },
+  {
+    "id": "marejat",
+    "nom": "Marejat",
+    "parametritzat": false,
+    "descripcio": "No pot actuar i perd totes les accions declarades. Per actuar igualment, ha de superar amb FOR o APL + resistència la dificultat de la causa. Acaba en superar la tirada un cop la causa desapareix."
+  },
+  {
+    "id": "esguerrat",
+    "nom": "Esguerrat",
+    "parametritzat": false,
+    "descripcio": "Una extremitat (braç/mà/cama) deixa de ser funcional fins guarir-se. Es pot forçar el seu ús (FOR+resistència) a canvi d'un punt de fatiga."
+  },
+  {
+    "id": "rapid",
+    "nom": "Ràpid/X",
+    "parametritzat": true,
+    "descripcio": "Modificador de −X a la latència. Es manté mentre la causa que el provoca segueixi activa."
+  },
+  {
+    "id": "recuperacio",
+    "nom": "Recuperació/X",
+    "parametritzat": true,
+    "descripcio": "Recupera +X punts de fatiga o ferides (la condició més greu primer) cada 8 torns de temps actiu. Permanent si ve d'un tret; temporal si ve d'una influència externa."
+  },
+  {
+    "id": "sagnant",
+    "nom": "Sagnant/X",
+    "parametritzat": true,
+    "descripcio": "Perd X punts de fatiga cada cop que li toca actuar (temps actiu) o s'acumula en temps narratiu. Sovint s'atura amb primers auxilis; els greus necessiten tractament mèdic."
+  },
+  {
+    "id": "vigilant",
+    "nom": "Vigilant",
+    "parametritzat": false,
+    "descripcio": "Té un comptador de reacció addicional mentre l'estat sigui actiu. S'acaba quan ho fa la causa que el provoca."
+  }
+]

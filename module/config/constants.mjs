@@ -108,6 +108,16 @@ FORJA.LLISTA_MANIOBRES = await fetch("systems/forja/module/config/dades/maniobre
   .then(r => r.json())
   .catch(err => { console.error("FORJA | No s'ha pogut carregar maniobres-arts-marcials.json", err); return []; });
 
+/* ---------- Estats (S-16) ---------- */
+// Catàleg dels estats del manual (cap. 3, p. 96-99). Format de cada entrada:
+// { id, nom, parametritzat, descripcio }. "parametritzat" marca els estats
+// amb valor X (Lent/X, Ràpid/X, Recuperació/X, Sagnant/X) — de moment només
+// informatius (visuals) al tracker/fitxa; l'automatització mecànica és fora
+// d'abast de l'Onada 3 (vegeu 09_CONTEXT_SESSIONS.md, secció "Onada 3 — Estats").
+FORJA.CATALEG_ESTATS = await fetch("systems/forja/module/config/dades/estats.json")
+  .then(r => r.json())
+  .catch(err => { console.error("FORJA | No s'ha pogut carregar estats.json", err); return []; });
+
 /* ---------- Salut ---------- */
 // Penalització per nivell efectiu de salut (1–6→0/0/0/1/2/4, 7→null=fora de combat)
 FORJA.SALUT_PENALITZACIO = { 1: 0, 2: 0, 3: 0, 4: 1, 5: 2, 6: 4, 7: null };

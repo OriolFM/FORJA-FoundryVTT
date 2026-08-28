@@ -17,6 +17,7 @@ import FullPNJ             from "./module/apps/full-pnj.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
 import { reiniciarReaccions } from "./module/combat/reaccions.mjs";
 import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
+import { registrarEstats } from "./module/estats/estats.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -69,6 +70,9 @@ Hooks.once("init", () => {
     makeDefault: true,
     label:       "FORJA.Sheet.PNJ"
   });
+
+  // Estats (S-16): catàleg com a CONFIG.statusEffects (HUD del token / fitxa)
+  registrarEstats();
 
   // Handlebars helpers
   _registrarHelpers();
