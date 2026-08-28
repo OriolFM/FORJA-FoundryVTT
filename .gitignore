@@ -12,14 +12,5 @@ Thumbs.db
 # Claude Code
 .claude/
 
-# Foundry VTT packs (generated, not committed)
-# Uncomment if you want to regenerate from build script:
-# packs/skills/*.db
-# packs/traits/*.db
-# packs/weapons/*.db
-# packs/armor/*.db
-# packs/artifacts/*.db
-# packs/supernatural-effects/*.db
-
 # Build artifacts
 dist/
