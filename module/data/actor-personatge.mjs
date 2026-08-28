@@ -41,7 +41,12 @@ export function _prepararDerivats(sys) {
   sys.latenciaBase = Math.max(1, 10 + mida - atributs.AGI * 2);
   sys.defensa      = atributs.AGI + (cfg.MIDA_DEFENSA[mida] ?? 0);
   sys.reduccioDany = atributs.FOR;
-  sys.reaccionsMax = 1; // modificat per trets (Onada 3)
+  sys.reaccionsMax = 1;
+
+  // --- Efectes mecànics dels trets (S-04, Onada 3) ---
+  const flagsEfecte = _aplicarEfectesTrets(sys);
+  sys.latenciaBase = Math.max(1, sys.latenciaBase);
+  sys.reaccionsMax = Math.max(0, sys.reaccionsMax);
 
   // --- Salut: derivats (S-15) ---
   salut.fatiga.perNivell  = constitucio;
@@ -50,10 +55,44 @@ export function _prepararDerivats(sys) {
   salut.fatiga.nivellActiu  = _nivellActiu(salut.fatiga.marcats,  constitucio);
   salut.ferides.nivellActiu = _nivellActiu(salut.ferides.marcats, mida);
   salut.nivellEfectiu       = Math.max(salut.fatiga.nivellActiu, salut.ferides.nivellActiu);
-  salut.penalitzacio        = cfg.SALUT_PENALITZACIO[salut.nivellEfectiu];
+
+  // "Dur de pelar" (ignoraPenalitzacioFerides): la pista de ferides no
+  // contribueix a la penalització de dificultat, tot i que segueix comptant
+  // per a nivellEfectiu (visual/estat terminal) — no és invulnerabilitat.
+  const nivellPerPenalitzacio = flagsEfecte.has("ignoraPenalitzacioFerides")
+    ? salut.fatiga.nivellActiu
+    : salut.nivellEfectiu;
+  salut.penalitzacio = cfg.SALUT_PENALITZACIO[nivellPerPenalitzacio];
 
   // --- PC gastats ---
   _calcularPunts(sys, cfg);
+}
+
+/** Stats derivats que un tret pot modificar amb `efecte.stat`/`efecte.delta`. */
+const STATS_MODIFICABLES_PER_TRETS = new Set(["reaccionsMax", "latenciaBase", "defensa", "reduccioDany"]);
+
+/**
+ * Aplica els efectes mecànics (`system.efecte`) dels trets de l'actor als
+ * stats derivats ja calculats. Vegeu la documentació a `item-tret.mjs`.
+ * @param {TypeDataModel} sys
+ * @returns {Set<string>} flags actius (`efecte.flag`) entre els trets de l'actor
+ */
+function _aplicarEfectesTrets(sys) {
+  const flags = new Set();
+  const items = sys.parent?.items;
+  if (!items) return flags;
+
+  for (const item of items) {
+    if (item.type !== "tret") continue;
+    const efecte = item.system?.efecte;
+    if (!efecte) continue;
+
+    if (efecte.stat && STATS_MODIFICABLES_PER_TRETS.has(efecte.stat) && Number.isFinite(efecte.delta)) {
+      sys[efecte.stat] = (sys[efecte.stat] ?? 0) + efecte.delta;
+    }
+    if (efecte.flag) flags.add(efecte.flag);
+  }
+  return flags;
 }
 
 /**

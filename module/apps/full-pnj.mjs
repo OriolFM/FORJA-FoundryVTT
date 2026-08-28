@@ -245,7 +245,8 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       type: "tret",
       system: {
         cost:      tret.cost,
-        descripcio: tret.descripcio ?? ""
+        descripcio: tret.descripcio ?? "",
+        efecte:    tret.efecte ?? null
       }
     }]);
   }

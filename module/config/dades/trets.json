@@ -230,7 +230,8 @@
     "nom": "Dur de Pelar",
     "cost": 15,
     "positiu": true,
-    "descripcio": "Modifica o exempta la penalització de salut."
+    "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+    "efecte": { "flag": "ignoraPenalitzacioFerides" }
   },
   {
     "id": "empata",
@@ -390,7 +391,8 @@
     "nom": "Reflexos Ràpids",
     "cost": 30,
     "positiu": true,
-    "descripcio": "+1 reacció màxima per torn."
+    "descripcio": "+1 reacció màxima per torn.",
+    "efecte": { "stat": "reaccionsMax", "delta": 1 }
   },
   {
     "id": "regeneracio",
@@ -624,7 +626,8 @@
     "nom": "Lent",
     "cost": -10,
     "positiu": false,
-    "descripcio": "+2 a la latència base."
+    "descripcio": "+2 a la latència base.",
+    "efecte": { "stat": "latenciaBase", "delta": 2 }
   },
   {
     "id": "poca-traca",

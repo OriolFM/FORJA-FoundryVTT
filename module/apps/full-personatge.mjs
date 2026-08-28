@@ -250,7 +250,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       type: "tret",
       system: {
         cost:      tret.cost,
-        descripcio: tret.descripcio ?? ""
+        descripcio: tret.descripcio ?? "",
+        efecte:    tret.efecte ?? null
       }
     }]);
   }
