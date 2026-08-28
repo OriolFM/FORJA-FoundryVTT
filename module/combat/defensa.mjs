@@ -15,9 +15,13 @@ import { gastarReaccio, potReaccionar } from "./reaccions.mjs";
  *     dany del defensor — fins a duplicar-la com a màxim (manual p. 817).
  *
  * @param {ForjaActor} objectiu
+ * @param {number} [defensaBasica]  Defensa bàsica a fer servir com a base per a
+ *   passiva/blocar i com a mínim d'esquivar/parar. Per defecte `objectiu.system.defensa`;
+ *   els atacs a distància hi passen la dificultat ja resolta per rang (S-12,
+ *   `combat/abast.mjs`) enlloc de la defensa bàsica sense modificar.
  * @returns {Array<object>} opcions amb `id`, `nom`, `descripcio`, `disponible`, etc.
  */
-export function opcionsDefensa(objectiu) {
+export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa ?? 0) {
   const sys = objectiu.system;
   const habilitat = (id) => sys.habilitats?.[id]?.nivell ?? 0;
   const reduccioNatural = sys.reduccioDany ?? 0;
@@ -28,7 +32,7 @@ export function opcionsDefensa(objectiu) {
       id: "passiva", gastaReaccio: false, disponible: true, senseTirada: true,
       nom:        game.i18n.localize("FORJA.Combat.Defensa.Passiva"),
       descripcio: game.i18n.localize("FORJA.Combat.Defensa.PassivaReaccioDesc"),
-      dificultat: sys.defensa ?? 0,
+      dificultat: defensaBasica,
       exigirSuperar: false
     },
     {
@@ -39,7 +43,7 @@ export function opcionsDefensa(objectiu) {
       habId: "esquivar", habNivell: habilitat("esquivar"),
       pool: (sys.atributs?.AGI ?? 0) + habilitat("esquivar"),
       exigirSuperar: true,
-      dificultatMinima: (sys.defensa ?? 0) + 1
+      dificultatMinima: defensaBasica + 1
     },
     {
       id: "parar", gastaReaccio: true, disponible: potReacc, senseTirada: false,
@@ -49,13 +53,13 @@ export function opcionsDefensa(objectiu) {
       habId: "armes-cos-a-cos", habNivell: habilitat("armes-cos-a-cos"),
       pool: (sys.atributs?.DES ?? 0) + habilitat("armes-cos-a-cos"),
       exigirSuperar: true,
-      dificultatMinima: (sys.defensa ?? 0) + 1
+      dificultatMinima: defensaBasica + 1
     },
     {
       id: "blocar", gastaReaccio: true, disponible: potReacc, senseTirada: true,
       nom:        game.i18n.localize("FORJA.Combat.Defensa.Blocar"),
       descripcio: game.i18n.localize("FORJA.Combat.Defensa.BlocarReaccioDesc"),
-      dificultat: sys.defensa ?? 0,
+      dificultat: defensaBasica,
       exigirSuperar: true,
       reduccioExtra: Math.min(habilitat("resistencia"), reduccioNatural)
     }

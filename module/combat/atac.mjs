@@ -25,8 +25,9 @@ import { calcularDany, resoldreDanyArma, aplicarDanyAPista } from "./dany.mjs";
  * @param {object}  [p.maniobra]     Maniobra d'arts marcials triada (de FORJA.LLISTA_MANIOBRES, manual p. 640):
  *   afegeix la seva dificultat a la tirada d'atac i s'anota a l'estat/xat resultant.
  * @param {string}  [p.etiquetaDefensa]  Nom de l'opció de defensa resolta (S-13), només per al xat.
+ * @param {string}  [p.etiquetaRang]      Nom de la banda de rang resolta (S-12), només per al xat.
  */
-export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null }) {
+export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null }) {
   const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0);
   const roll = new ForjaRoll(`${Math.max(1, poolFinal)}d10`, {}, {
     forja: { dificultat: dificultatFinal }
@@ -77,6 +78,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     nomArma:     arma.name,
     dificultat: dificultatFinal,
     etiquetaDefensa,
+    etiquetaRang,
     maniobra,
     dany: resultatDany,
     pista,

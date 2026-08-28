@@ -3,6 +3,7 @@ import DiategDefensa from "../apps/dialeg-defensa.mjs";
 import { ferTirada } from "../dice/tirada.mjs";
 import { ferAtac }  from "./atac.mjs";
 import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
+import { distanciaEntreTokens, bandaDistancia, estaAlAbastCosACos } from "./abast.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -199,11 +200,43 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       const objectiu = [...game.user.targets][0]?.actor;
 
       if (arma && objectiu) {
+        // Rang i abast (S-12): es llegeix la posició ACTUAL dels tokens al
+        // canvas (el moviment el fa el DJ/jugador arrossegant el token,
+        // Foundry ja ho gestiona nativament) i es tradueix a les regles de
+        // FORJA. Si l'objectiu és fora d'abast, l'acció s'anul·la aquí —
+        // sense tirada ni conseqüències — fins que es mogui el token i es
+        // torni a resoldre, o es doni per perduda i es declari una de nova.
+        const tokenAtacant  = combatant.token?.object;
+        const tokenObjectiu = [...game.user.targets][0];
+        let defensaBasica = objectiu.system.defensa ?? 0;
+        let etiquetaRang = null;
+
+        if (tokenAtacant && tokenObjectiu) {
+          const distancia = distanciaEntreTokens(tokenAtacant, tokenObjectiu);
+
+          if (arma.system.categoria === "distancia") {
+            if (arma.system.abast > 0) {
+              const banda = bandaDistancia(distancia, arma, defensaBasica);
+              if (!banda) {
+                ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaAbast", { nom: objectiu.name }));
+                return;
+              }
+              defensaBasica = banda.dificultat;
+              etiquetaRang = game.i18n.localize(`FORJA.Combat.Rang.${banda.banda}`);
+            }
+            // Si l'abast és variable (Rang limitat: FOR/FORx3/FORx5, abast=0),
+            // no es calcula banda automàticament — es manté la defensa bàsica.
+          } else if (!estaAlAbastCosACos(distancia)) {
+            ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaAbastCosACos", { nom: objectiu.name }));
+            return;
+          }
+        }
+
         // Flux complet d'atac contra un objectiu (S-12/S-13): primer es
         // resol la reacció defensiva de l'objectiu (passiva / esquivar /
         // parar / blocar — gastant reacció i, si escau, tirant), i després
         // es tira l'atac contra la dificultat resultant.
-        const opcions = opcionsDefensa(objectiu);
+        const opcions = opcionsDefensa(objectiu, defensaBasica);
         const eleccio = await DiategDefensa.obrir({
           nomAtacant:  combatant.name,
           nomDefensor: objectiu.name,
@@ -226,6 +259,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           exigirSuperar:   resolucio.exigirSuperar,
           reduccioExtra:   resolucio.reduccioExtra,
           etiquetaDefensa: eleccio.nom,
+          etiquetaRang,
           label:      pendent.label
         });
         return;
