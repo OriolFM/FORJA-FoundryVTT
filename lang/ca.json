@@ -221,7 +221,7 @@
   "FORJA.Combat.Defensa.Passiva":    "Passiva",
   "FORJA.Combat.Defensa.PassivaReaccioDesc": "Defensa bàsica, sense cost ni tirada: l'atacant necessita igualar-la o superar-la.",
   "FORJA.Combat.Defensa.EsquivarReaccioDesc": "AGI + esquivar (mínim defensa+1): la tirada fixa la dificultat que l'atacant ha de SUPERAR (empat = falla l'atac).",
-  "FORJA.Combat.Defensa.PararReaccioDesc":    "DES + armes cos a cos (mínim defensa+1): la tirada fixa la dificultat que l'atacant ha de SUPERAR (empat = falla l'atac).",
+  "FORJA.Combat.Defensa.PararReaccioDesc":    "DES + la millor habilitat de combat cos a cos disponible (mínim defensa+1): la tirada fixa la dificultat que l'atacant ha de SUPERAR (empat = falla l'atac).",
   "FORJA.Combat.Defensa.BlocarReaccioDesc":   "Sense tirada; cal superar (no igualar) la defensa bàsica. Si l'atac impacta, suma resistència a la reducció de dany (fins a duplicar-la).",
 
   "FORJA.Combat.Modificador":        "Modificador de latència",

@@ -27,6 +27,16 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
   const reduccioNatural = sys.reduccioDany ?? 0;
   const potReacc = potReaccionar(objectiu);
 
+  // Parar (manual p. 805): "DES + Armes cos a cos (si porta armes) o DES +
+  // Arts Marcials/Barallar-se (si no en porta)". No es guarda enlloc quina
+  // arma es porta "equipada" en aquest sistema, així que es fa servir la
+  // millor de les tres habilitats de combat de l'objectiu — coincideix amb
+  // l'exemple del manual (el gólem sense armes-cos-a-cos ni arts-marcials
+  // para amb barallar-se, p. 1348 de l'exemple de combat).
+  const parar = ["armes-cos-a-cos", "arts-marcials", "barallar-se"]
+    .map(id => ({ id, nivell: habilitat(id) }))
+    .sort((a, b) => b.nivell - a.nivell)[0];
+
   return [
     {
       id: "passiva", gastaReaccio: false, disponible: true, senseTirada: true,
@@ -50,8 +60,8 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
       nom:        game.i18n.localize("FORJA.Combat.Defensa.Parar"),
       descripcio: game.i18n.localize("FORJA.Combat.Defensa.PararReaccioDesc"),
       atribut: "DES", atributVal: sys.atributs?.DES ?? 0,
-      habId: "armes-cos-a-cos", habNivell: habilitat("armes-cos-a-cos"),
-      pool: (sys.atributs?.DES ?? 0) + habilitat("armes-cos-a-cos"),
+      habId: parar.id, habNivell: parar.nivell,
+      pool: (sys.atributs?.DES ?? 0) + parar.nivell,
       exigirSuperar: true,
       dificultatMinima: defensaBasica + 1
     },
