@@ -1,0 +1,61 @@
+{
+  "_id": "LDHimIb2SeXQuTus",
+  "_key": "!journal!LDHimIb2SeXQuTus",
+  "name": "FORJA",
+  "pages": [
+    {
+      "_id": "w10ZxKp0fGEFWzOe",
+      "_key": "!journal.pages!LDHimIb2SeXQuTus.w10ZxKp0fGEFWzOe",
+      "name": "Introducció",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<p><em>joc de rol multiversal</em></p>\n<p>Edició Revisada</p>\n<p>Per:</p>\n<p>Asimov, Atkinson,\nBradbury, Brom, Brooks, Burroughs, Buscema, Busiek, Byrne,\nCameron, Claremont,\nDavis, De La Iglesia, Del Toro,\nEls Germans Marx, Ende,\nFrazzeta, Gibson,\nHeinlein, Herbert, Hitch, Hitchcock, Jackson, Jiménez, Jodorowski,\nKing, Lovecraft,\nMartin, Mignola, Millar, Miyazaki,\nMoebius, Moorcock, Moore,\nOtomo, Pacheco,\nPoe, Pratchett,\nRobinson, Roddenberry,\nSagan, Scott, Sienkiewicz,\nSimonson, Spielberg, Stevenson, Straczynski, Struzan,\nTolkien, Verne, Waid, i Wells.</p>\n<p>Gràcies de tot cor per totes les aventures que ens heu donat,</p>\n<p>i per totes aquelles que la vostra feina ens ha inspirat a crear.</p>\n<p>I per la Laia i el Han-Kai, els meus fills.</p>\n<p>FORJA, joc de rol multiversal ©2023 Oriol Ferrerons Manich.</p>\n<p>Concepte original, sistema de joc, disseny i il·lustracions: Oriol Ferrerons. Agraïments: Arnau Ferrerons, Nathan James, Lluc Potrony, Juan Antonio Ramos, Frank Remley, Charles Spitzig. Betatesters: Arnau Ferrerons, Nathan James, Noemí Prieto, Juan Antonio Ramos, Peter Singer-Towns.</p>\n<p>Queda totalment prohibida la reproducció, distribució o modificació, total o parcial d’aquest llibre\nsense autorització expressa per escrit de l’autor.</p>\n<p>Iä! Iä! Cthulhu fhtagn! Ph&#39;nglui mglw&#39;nafh Cthulhu R&#39;lyeh wgah-nagl fhtagn</p>\n<p>Oriol Ferrerons</p>\n"
+      },
+      "sort": 100000,
+      "flags": {}
+    },
+    {
+      "_id": "KhTDn8l5T8ACq6Iv",
+      "_key": "!journal.pages!LDHimIb2SeXQuTus.KhTDn8l5T8ACq6Iv",
+      "name": "Índex",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<p><strong>La forja</strong>\t16</p>\n<p>Plantilles\t<strong>Error! Bookmark not defined.</strong></p>\n"
+      },
+      "sort": 200000,
+      "flags": {}
+    },
+    {
+      "_id": "6Vxtz2aJ49m17apf",
+      "_key": "!journal.pages!LDHimIb2SeXQuTus.6Vxtz2aJ49m17apf",
+      "name": "Prefaci",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<p>“Aquests són els meus principis.</p>\n<p>Si no li agraden, en tinc d’altres.&quot;</p>\n<p>–Atribuït a Groucho Marx.</p>\n<p>Han passat ja onze anys des que vaig posar-me a escriure el llibre que teniu entre mans. Més d’una dècada on he invertit gran part del meu temps lliure, condensant la meva experiència com a jugador i narrador/director de joc en aquest grapat de fulls.</p>\n<p>FORJA no pretén ser un joc perfecte, perquè, com m’ha costat anys descobrir i acceptar, la perfecció no existeix. En tot cas, va camí de ser tot el que m’hauria agradat tenir en un joc de rol durant aquells anys en els que em podia permetre invertir una pila d’hores un o dos cops per setmana, de manera regular i ininterrompuda, a jugar amb la colla del barri o de l’institut.</p>\n<p>Aquest manual és la versió revisada del joc, i conté tot el que cal per poder jugar. Pels que n’heu conegut la versió primigènia, veureu que hi ha hagut una sèrie de canvis:</p>\n<p>He liquidat el capítol introductori, perquè crec que tothom qui agafi el llibre ja és força conscient que un joc de rol és un joc fictici sense arrels en la realitat, i que un cop seieu a jugar, cal que tothom es comporti adequadament i no faci sentir incòmodes a la resta de jugadors, que esperen gaudir d’una bona estona i desconnectar de la rutina.</p>\n<p>Tot i que l’anterior paràgraf és de sentit comú, crec que cal incloure’l com a avís per a navegants. Recordeu, també, que si passa res o hi ha actituds a la taula que us fan sentir malament, no dubteu a demanar un temps mort, aturar la partida, i solucionar la situació abans que s’agreugi. Hem creat FORJA perquè sigui un entreteniment sa, i no per fer passar males estones a ningú.</p>\n<p>Pel que fa al sistema, s’ha revisat la creació de personatges, els punts de creació i experiència, s’ha canviat la manera de fer tirades per millorar la distribució de probabilitats, i agilitzat el sistema de resoldre escenes d’acció.</p>\n<p>Notareu la falta d’il·lustracions interiors (només alguns marcs) y la maquetació provisional. Més endavant hi haurà una versió ben maquetada, hi estic treballant.</p>\n<p>Si heu agafat aquest llibre, us demano que el llegiu i el feu servir. Proveu-lo amb la vostra colla. Mireu què us agrada i què no. Qualsevol crítica constructiva que se us acudeixi, feu-me-la saber a <a href=\"mailto:demiurg@forja-rpg.com\">demiurg@forja-rpg.com</a>.</p>\n<p>Espero que gaudiu del joc!</p>\n<p>Kevelaer, setembre de 2023</p>\n<p>Oriol Ferrerons Manich.</p>\n"
+      },
+      "sort": 300000,
+      "flags": {}
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

@@ -1,0 +1,61 @@
+{
+  "_id": "shUbghdD3kZkICFY",
+  "_key": "!journal!shUbghdD3kZkICFY",
+  "name": "FORJA — Joc de Rol Multiversal",
+  "pages": [
+    {
+      "_id": "A5pBRjYwTV3ESxj6",
+      "_key": "!journal.pages!shUbghdD3kZkICFY.A5pBRjYwTV3ESxj6",
+      "name": "Manual Bàsic, Edició Revisada",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<blockquote>\n<p><em>© 2023–2024 Oriol Ferrerons Manich. Tots els drets reservats.</em></p>\n</blockquote>\n<hr>\n"
+      },
+      "sort": 100000,
+      "flags": {}
+    },
+    {
+      "_id": "0dAFPGqMX1bn5mQQ",
+      "_key": "!journal.pages!shUbghdD3kZkICFY.0dAFPGqMX1bn5mQQ",
+      "name": "Estructura del manual",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<table>\n<thead>\n<tr>\n<th>Fitxer</th>\n<th>Contingut</th>\n<th>Capítol</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><a href=\"FORJA_00_PORTADA_PREFACI.md\">FORJA_00_PORTADA_PREFACI.md</a></td>\n<td>Portada, agraïments, índex i prefaci</td>\n<td>—</td>\n</tr>\n<tr>\n<td><a href=\"FORJA_01_EL_MULTIVERS.md\">FORJA_01_EL_MULTIVERS.md</a></td>\n<td>Ambientació, cronologia, el món Forja, l&#39;ANM, el Multivers i les realitats</td>\n<td>Cap. 1</td>\n</tr>\n<tr>\n<td><a href=\"FORJA_02_PERSONATGE.md\">FORJA_02_PERSONATGE.md</a></td>\n<td>Gènesi, atributs, habilitats, trets, creació de PJ, exemples</td>\n<td>Cap. 2</td>\n</tr>\n<tr>\n<td><a href=\"FORJA_03_SISTEMES.md\">FORJA_03_SISTEMES.md</a></td>\n<td>Tirades, combat, salut, estats, gestió del temps, exemple de combat</td>\n<td>Cap. 3</td>\n</tr>\n<tr>\n<td><a href=\"FORJA_04_CIENCIA_SOBRENATURAL.md\">FORJA_04_CIENCIA_SOBRENATURAL.md</a></td>\n<td>Ciència, artefactes, sobrenaturals, dons, efectes, plantilles</td>\n<td>Cap. 4</td>\n</tr>\n<tr>\n<td><a href=\"FORJA_05_MODERN_DEMIURG.md\">FORJA_05_MODERN_DEMIURG.md</a></td>\n<td>Preparació, campanya, experiència, gestió de problemes</td>\n<td>Cap. 5</td>\n</tr>\n<tr>\n<td><a href=\"FORJA_06_PNJ.md\">FORJA_06_PNJ.md</a></td>\n<td>Figurants, secundaris, nèmesis, animals, criatures</td>\n<td>Cap. 6</td>\n</tr>\n<tr>\n<td><a href=\"FORJA_07_EPILOG.md\">FORJA_07_EPILOG.md</a></td>\n<td>Epíleg i properes publicacions</td>\n<td>—</td>\n</tr>\n</tbody></table>\n<hr>\n"
+      },
+      "sort": 200000,
+      "flags": {}
+    },
+    {
+      "_id": "FD6qnvaM0mhyjDgg",
+      "_key": "!journal.pages!shUbghdD3kZkICFY.FD6qnvaM0mhyjDgg",
+      "name": "Resum de continguts per capítol",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<h3>Capítol 1 · El Multivers de FORJA</h3>\n<p>Cronologia del món, el Punt Bretxa, la Forja, l&#39;Aliança del Nou Món (ANM), i les realitats paral·leles: Realitat Prima, Erde, Takama-ga-hara, Terra Obscura, Harmagedon, Confederació Solar, Rrrrth i Aztlan.</p>\n<h3>Capítol 2 · Personatge</h3>\n<p>Creació de personatges jugadors (PJ): atributs primaris i secundaris, espècies, constitució, mida, habilitats, trets (positius i negatius), punts de creació (PC), i exemples de PJ complets.</p>\n<h3>Capítol 3 · Sistemes</h3>\n<p>El motor de joc: pool de D10, fites, doble fita, pífies. Accions simples, complexes i enfrontades. Interpretació, percepció, interacció social, força bruta, moviment. Temps narratiu i temps actiu. Combat complet (atacar, defensar, dany, armadures, salut, estats). Exemple de combat pas a pas.</p>\n<h3>Capítol 4 · Ciència, Tecnologia i el Món Sobrenatural</h3>\n<p>Nivells tecnològics, artefactes i les seves plantilles. El sobrenatural: dotats, ressonància, equilibri, dons. Efectes sobrenaturals i els seus paràmetres. Plantilles d&#39;efecte per canalització, màgia, psíquic i Qi.</p>\n<h3>Capítol 5 · El Modern Demiürg</h3>\n<p>Guia per al Director de Joc (DJ): preparació, disseny de campanya, equilibri, rerefons sobrenatural, plantilles personalitzades, execució de partides. Experiència, millora personal, investigació i desenvolupament. Gestió de problemes i ajustos al sistema.</p>\n<h3>Capítol 6 · Personatges No Jugadors</h3>\n<p>Figurants, secundaris i antagonistes, nèmesis. Animals i criatures del multivers.</p>\n<hr>\n<p><em>Contacte: <a href=\"mailto:demiurg@forja-rpg.com\">demiurg@forja-rpg.com</a></em></p>\n"
+      },
+      "sort": 300000,
+      "flags": {}
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

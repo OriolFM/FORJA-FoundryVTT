@@ -31,5 +31,15 @@
   "primaryTokenAttribute":   "salut.nivellEfectiu",
   "secondaryTokenAttribute": null,
   "grid": { "distance": 1, "units": "m" },
-  "socket": false
+  "socket": false,
+  "packs": [
+    {
+      "name": "manual",
+      "label": "Manual FORJA",
+      "path": "packs/manual",
+      "type": "JournalEntry",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    }
+  ]
 }
