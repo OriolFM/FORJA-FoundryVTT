@@ -399,6 +399,16 @@
   "FORJA.Construccio.Crear":       "Crear efecte",
   "FORJA.Construccio.EfecteSenseNom": "Efecte sense nom",
 
+  "FORJA.Progressio.Boto":         "Progressió sobrenatural",
+  "FORJA.Progressio.TitolTria":    "Progressió sobrenatural",
+  "FORJA.Progressio.Nou":          "Aprendre un efecte nou",
+  "FORJA.Progressio.Millorar":     "Millorar un efecte existent",
+  "FORJA.Progressio.Continuar":    "Continuar",
+  "FORJA.Progressio.AvisRecerca":  "Un cop definit l'objectiu amb el constructor, recorda que el DJ ha d'aprovar la intenció i que cal invertir temps de joc en recerca abans de provar de manifestar-lo (manual, cap. 5) — aquí només es calcula el cost en PX i es resol la tirada de prova.",
+  "FORJA.Progressio.TitolFallada": "Prova de manifestació fallida",
+  "FORJA.Progressio.TextFallada":  "La tirada no ha superat la dificultat. Segons el manual, cal pagar 2 PX addicionals i invertir una setmana més de recerca abans de tornar-ho a provar. Vols pagar la penalització i tornar a provar?",
+  "FORJA.Progressio.Aplicat":      "{nom}: progressió aplicada (−{cost} PX).",
+
   "FORJA.PNJ.TierLabel": "Tier",
   "FORJA.TierOpcio.extra": "Extra",
   "FORJA.TierOpcio.antagonista": "Antagonista",

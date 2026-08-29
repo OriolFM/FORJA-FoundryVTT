@@ -12,7 +12,7 @@
     <label>{{localize "FORJA.Construccio.Do"}}</label>
     <select name="do">
       {{#each dons as |d|}}
-      <option value="{{d.id}}">{{d.nom}}</option>
+      <option value="{{d.id}}" {{#if (eq d.id ../do)}}selected{{/if}}>{{d.nom}}</option>
       {{/each}}
     </select>
   </div>

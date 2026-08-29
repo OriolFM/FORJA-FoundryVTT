@@ -32,6 +32,7 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
 
   #resolve = null;
   #nom = "";
+  #do = "canalitzacio";
   #seleccio = {
     tipus: "efecte", abast: "toc", objectius: "individuals", durada: "instantania",
     usTemps: "ambdos", usAccio: "accio",
@@ -61,6 +62,7 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
 
     return {
       nom: this.#nom,
+      do: this.#do,
       s,
       resultat,
       P,
@@ -79,6 +81,7 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     const reRender = () => this.render(false);
 
     el.querySelector("input[name='nom']")?.addEventListener("change", ev => { this.#nom = ev.target.value; });
+    el.querySelector("select[name='do']")?.addEventListener("change", ev => { this.#do = ev.target.value; });
 
     const camps = ["tipus", "abast", "objectius", "durada", "usTemps", "usAccio"];
     for (const camp of camps) {

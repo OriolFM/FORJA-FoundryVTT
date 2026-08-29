@@ -18,6 +18,9 @@ import {
   costSeguentAtribut, costSeguentHabilitat,
   millorarAtribut, millorarHabilitat, afegirTretPositiuAmbPX, treureTretNegatiuAmbPX
 } from "../progressio/millora.mjs";
+import {
+  provarManifestacio, aplicarPenalitzacioFallada, aplicarEfecteProgressio
+} from "../progressio/progressio-sobrenatural.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -73,6 +76,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       // Sobrenatural (S-20/S-21)
       toggleEquilibri:      FullPersonatge._onToggleEquilibri,
       forjaObrirManifestar: FullPersonatge._onObrirManifestar,
+      forjaObrirProgressio: FullPersonatge._onObrirProgressio,
       // Artefactes: càrrega (S-26)
       forjaActivarArtefacte:    FullPersonatge._onActivarArtefacte,
       forjaRecarregarArtefacte: FullPersonatge._onRecarregarArtefacte
@@ -409,6 +413,81 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
         descripcio:  ""
       }
     }]);
+  }
+
+  // ── Progressió sobrenatural (S-29) ───────────────────────────────────────
+
+  static async _onObrirProgressio(event, target) {
+    const actor = this.actor;
+    if (!potManifestar(actor)) return;
+
+    const efectesActor = actor.items.filter(i => i.type === "efecte");
+    let itemExistent = null;
+
+    if (efectesActor.length) {
+      const opcions = efectesActor
+        .map(i => `<option value="${i.id}">${i.name} (${i.system.cost} PC)</option>`)
+        .join("");
+      const content = `
+        <form class="forja-progressio-tria">
+          <div class="form-group">
+            <label><input type="radio" name="mode" value="nou" checked> ${game.i18n.localize("FORJA.Progressio.Nou")}</label>
+          </div>
+          <div class="form-group">
+            <label><input type="radio" name="mode" value="millorar"> ${game.i18n.localize("FORJA.Progressio.Millorar")}</label>
+            <select name="itemId">${opcions}</select>
+          </div>
+          <p class="dm-desc">${game.i18n.localize("FORJA.Progressio.AvisRecerca")}</p>
+        </form>`;
+      const tria = await foundry.applications.api.DialogV2.prompt({
+        window: { title: game.i18n.localize("FORJA.Progressio.TitolTria") },
+        content,
+        ok: {
+          label: game.i18n.localize("FORJA.Progressio.Continuar"),
+          callback: (ev, button) => ({
+            mode:   button.form.elements.mode.value,
+            itemId: button.form.elements.itemId.value
+          })
+        }
+      });
+      if (!tria) return;
+      if (tria.mode === "millorar") itemExistent = actor.items.get(tria.itemId) ?? null;
+    } else {
+      const continuar = await foundry.applications.api.DialogV2.confirm({
+        window: { title: game.i18n.localize("FORJA.Progressio.TitolTria") },
+        content: `<p class="dm-desc">${game.i18n.localize("FORJA.Progressio.AvisRecerca")}</p>`
+      });
+      if (!continuar) return;
+    }
+
+    const construit = await DiategConstructor.obrir();
+    if (!construit) return;
+
+    let exit = false;
+    while (!exit) {
+      const resultat = await provarManifestacio(actor, construit.dificultat, construit.nom);
+      if (!resultat) return;
+      exit = resultat.exit;
+      if (!exit) {
+        const continuar = await foundry.applications.api.DialogV2.confirm({
+          window: { title: game.i18n.localize("FORJA.Progressio.TitolFallada") },
+          content: `<p>${game.i18n.localize("FORJA.Progressio.TextFallada")}</p>`
+        });
+        if (!continuar) return;
+        const penalitzacio = await aplicarPenalitzacioFallada(actor);
+        if (penalitzacio.error === "px") {
+          ui.notifications?.warn(game.i18n.localize("FORJA.Millora.PXInsuficients"));
+          return;
+        }
+      }
+    }
+
+    const aplicat = await aplicarEfecteProgressio(actor, construit, itemExistent);
+    if (aplicat.error === "px") {
+      ui.notifications?.warn(game.i18n.localize("FORJA.Millora.PXInsuficients"));
+      return;
+    }
+    ui.notifications?.info(game.i18n.format("FORJA.Progressio.Aplicat", { nom: construit.nom, cost: aplicat.cost }));
   }
 
   static async _onEditarItem(event, target) {
