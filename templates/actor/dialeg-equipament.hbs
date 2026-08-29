@@ -10,6 +10,8 @@
         <span class="de-nom">{{e.nom}}</span>
         {{#if (eq ../tipus "artefacte")}}
         <span class="de-meta">{{e.cost}} PC · {{localize (concat "FORJA.Artefacte.Categoria." e.categoria)}}</span>
+        {{else if (eq ../tipus "efecte")}}
+        <span class="de-meta">{{e.cost}} PC · {{localize (concat "FORJA.Sobrenatural.Do." e.do)}} · {{localize (concat "FORJA.Sobrenatural.Tipus." e.tipus)}} · dif. {{e.dificultat}}</span>
         {{else if e.danyBase}}
         <span class="de-meta">Lat. {{e.modLatencia}} · Abast {{e.abast}} · Dany {{e.danyBase}}</span>
         {{else}}

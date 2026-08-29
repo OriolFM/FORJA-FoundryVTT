@@ -57,6 +57,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       eliminarArmadura: FullPersonatge._onEliminarItem,
       crearArtefacte:   FullPersonatge._onCrearArtefacte,
       eliminarArtefacte: FullPersonatge._onEliminarItem,
+      crearEfecte:      FullPersonatge._onCrearEfecte,
+      eliminarEfecte:   FullPersonatge._onEliminarItem,
       editarItem:      FullPersonatge._onEditarItem,
       // Curació (S-17)
       forjaObrirCuracio: FullPersonatge._onObrirCuracio,
@@ -106,6 +108,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       armes:      _prepItems(this.actor, "arma"),
       armadures:  _prepItems(this.actor, "armadura"),
       artefactes: _prepArtefactes(this.actor),
+      efectes:    _prepEfectes(this.actor),
       pc: {
         total:   sys.pc,
         gastats: sys.pcGastats ?? 0,
@@ -358,6 +361,26 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     }]);
   }
 
+  static async _onCrearEfecte(event, target) {
+    const sel = await DiategEquipament.obrir("efecte");
+    if (!sel) return;
+    const e = sel.entrada;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: e.nom,
+      type: "efecte",
+      system: {
+        cost:        e.cost,
+        do:          e.do,
+        tipus:       e.tipus,
+        dificultat:  e.dificultat,
+        modLatencia: e.modLatencia ?? 0,
+        us:          e.us ?? {},
+        mecanica:    e.mecanica ?? "",
+        descripcio:  e.descripcio ?? ""
+      }
+    }]);
+  }
+
   static async _onEliminarItem(event, target) {
     const id = target.dataset.itemId;
     await this.actor.deleteEmbeddedDocuments("Item", [id]);
@@ -532,7 +555,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       donNom:   game.i18n.localize(`FORJA.Sobrenatural.Do.${sys.dotat}`),
       eqActual: sys.equilibri.actual,
       eqMax:    sys.equilibri.max,
-      nomObjectiu: objectiu?.name ?? null
+      nomObjectiu: objectiu?.name ?? null,
+      efectes:  _prepEfectes(actor)
     });
     if (!eleccio) return;
 
@@ -704,6 +728,24 @@ export function _prepArtefactes(actor) {
       carrega:    i.system?.carrega ?? {},
       mecanica:   i.system?.mecanica ?? "",
       descripcio: i.system?.descripcio ?? ""
+    }))
+    .sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
+}
+
+export function _prepEfectes(actor) {
+  return actor.items
+    .filter(i => i.type === "efecte")
+    .map(i => ({
+      id:          i.id,
+      nom:         i.name,
+      cost:        i.system?.cost ?? 0,
+      do:          i.system?.do,
+      tipus:       i.system?.tipus ?? "efecte",
+      dificultat:  i.system?.dificultat ?? 1,
+      modLatencia: i.system?.modLatencia ?? 0,
+      us:          i.system?.us ?? {},
+      mecanica:    i.system?.mecanica ?? "",
+      descripcio:  i.system?.descripcio ?? ""
     }))
     .sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
 }

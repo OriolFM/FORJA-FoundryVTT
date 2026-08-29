@@ -25,7 +25,8 @@
       "tret": {},
       "arma": {},
       "armadura": {},
-      "artefacte": {}
+      "artefacte": {},
+      "efecte": {}
     }
   },
   "primaryTokenAttribute":   "salut.nivellEfectiu",

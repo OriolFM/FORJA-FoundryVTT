@@ -2,10 +2,12 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 /**
  * Diàleg per declarar la manifestació d'un efecte sobrenatural (S-21).
- * Sense catàleg d'efectes encara (S-25, pendent), la dificultat bàsica i la
- * descripció s'introdueixen a mà — mateix criteri que "Altra acció" al
- * diàleg de declarar acció de combat (DA-5: automatitza el càlcul, mai la
- * decisió/contingut).
+ * Si l'actor té efectes après (S-25, `system.efectes` a la fitxa), es pot
+ * triar-ne un del desplegable perquè precarregui la dificultat bàsica i la
+ * descripció — sempre editables després (DA-5: automatitza el càlcul, mai
+ * la decisió). Sense triar-ne cap (o si l'actor no en té cap après), la
+ * dificultat i la descripció s'introdueixen a mà, mateix criteri que "Altra
+ * acció" al diàleg de declarar acció de combat.
  */
 export default class DiategManifestar extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -25,6 +27,7 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
   #config  = null;
   #resolve = null;
   #usPuntsExtra = "cap";
+  #efecteId = "";
 
   constructor(config, options = {}) {
     super(options);
@@ -43,6 +46,8 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
       eqActual: c.eqActual,
       eqMax:    c.eqMax,
       nomObjectiu: c.nomObjectiu ?? null,
+      efectes:  c.efectes ?? [],
+      efecteId: this.#efecteId,
       usPuntsExtra: this.#usPuntsExtra
     };
   }
@@ -51,6 +56,16 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
     super._onRender?.(context, options);
     this.element.querySelectorAll("input[name='usPuntsExtra']").forEach(radio => {
       radio.addEventListener("change", ev => { this.#usPuntsExtra = ev.target.value; });
+    });
+    this.element.querySelector("select[name='efecteId']")?.addEventListener("change", ev => {
+      this.#efecteId = ev.target.value;
+      const efecte = (this.#config.efectes ?? []).find(e => e.id === this.#efecteId);
+      if (efecte) {
+        const dificultatInput  = this.element.querySelector("input[name='dificultatBase']");
+        const descripcioInput  = this.element.querySelector("input[name='descripcio']");
+        if (dificultatInput) dificultatInput.value = efecte.dificultat;
+        if (descripcioInput && !descripcioInput.value) descripcioInput.value = efecte.nom;
+      }
     });
   }
 

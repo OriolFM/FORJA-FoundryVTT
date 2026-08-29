@@ -63,5 +63,20 @@ export function avisosCoherencia(actor) {
     avisos.push(game.i18n.format("FORJA.Avis.MesDunDo", { dons: [...dons].join(", ") }));
   }
 
+  // Efectes (S-25) d'un do diferent del propi: només els dotats d'un cert
+  // tipus poden fer servir els seus efectes (manual p. 646) — el selector no
+  // filtra pel do de l'actor (es mostra tot el catàleg), així que cal avisar
+  // aquí si s'ha afegit algun efecte que no li pertoca.
+  const donPropi = sys.dotat;
+  for (const item of actor.items) {
+    if (item.type !== "efecte") continue;
+    if (donPropi && item.system.do && item.system.do !== donPropi) {
+      avisos.push(game.i18n.format("FORJA.Avis.EfecteDoIncorrecte", {
+        nom: item.name,
+        do:  game.i18n.localize(`FORJA.Sobrenatural.Do.${item.system.do}`)
+      }));
+    }
+  }
+
   return avisos;
 }

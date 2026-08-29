@@ -7627,6 +7627,9 @@ li.combatant:has(> .forja-controls) {
 
 .forja-qi-atribut { margin-bottom: 8px; }
 
+.forja-efectes-cap { display: flex; align-items: center; gap: 6px; margin: 10px 0 4px; }
+.forja-efectes-cap .eq-nom { font-size: 0.8rem; }
+
 .badge-equilibri {
   display: inline-flex;
   align-items: center;

@@ -4,6 +4,18 @@
     {{#if nomObjectiu}}<br>{{localize "FORJA.Sobrenatural.ManifestarObjectiu" nom=nomObjectiu}}{{/if}}
   </p>
 
+  {{#if efectes.length}}
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Sobrenatural.TrieuEfecte"}}</label>
+    <select name="efecteId">
+      <option value="">{{localize "FORJA.Sobrenatural.EfecteLliure"}}</option>
+      {{#each efectes as |e|}}
+      <option value="{{e.id}}" {{#if (eq e.id ../efecteId)}}selected{{/if}}>{{e.nom}} (dif. {{e.dificultat}})</option>
+      {{/each}}
+    </select>
+  </div>
+  {{/if}}
+
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Sobrenatural.DificultatBase"}}</label>
     <input type="number" name="dificultatBase" value="1" min="1"/>

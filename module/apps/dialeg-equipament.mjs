@@ -10,7 +10,7 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
   /** @type {function(object|null):void} */
   #resolve = null;
 
-  /** @type {"arma"|"armadura"|"artefacte"} */
+  /** @type {"arma"|"armadura"|"artefacte"|"efecte"} */
   #tipus = "arma";
 
   /** @type {string} */
@@ -33,7 +33,7 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
 
   /**
    * Obre el diàleg per a un tipus d'equipament concret.
-   * @param {"arma"|"armadura"|"artefacte"} tipus
+   * @param {"arma"|"armadura"|"artefacte"|"efecte"} tipus
    * @returns {Promise<object|null>} entrada del catàleg seleccionada, o null
    */
   static async obrir(tipus = "arma") {
@@ -48,12 +48,14 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
   #cataleg() {
     if (this.#tipus === "armadura")  return FORJA.CATALEG_ARMADURES;
     if (this.#tipus === "artefacte") return FORJA.CATALEG_ARTEFACTES;
+    if (this.#tipus === "efecte")    return FORJA.CATALEG_EFECTES;
     return FORJA.CATALEG_ARMES;
   }
 
   #titol() {
     if (this.#tipus === "armadura")  return "FORJA.Equip.Armadures";
     if (this.#tipus === "artefacte") return "FORJA.Equip.Artefactes";
+    if (this.#tipus === "efecte")    return "FORJA.Equip.Efectes";
     return "FORJA.Equip.Armes";
   }
 

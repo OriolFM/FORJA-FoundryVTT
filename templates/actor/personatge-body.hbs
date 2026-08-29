@@ -226,6 +226,32 @@
           <i class="fas fa-hand-sparkles"></i> {{localize "FORJA.Sobrenatural.BotoManifestar"}}
         </button>
       </div>
+
+      <div class="forja-efectes-cap">
+        <span class="eq-nom">{{localize "FORJA.Section.Efectes"}}</span>
+        {{#if modeEdicio}}
+        <button type="button" class="btn-cap-afegir" data-action="crearEfecte" title="{{localize 'FORJA.Equip.AfegirEfecte'}}">
+          <i class="fas fa-plus"></i>
+        </button>
+        {{/if}}
+      </div>
+      {{#if efectes.length}}
+      <div class="forja-equip-llista">
+        {{#each efectes as |e|}}
+        <div class="forja-equip-fila" data-action="editarItem" data-item-id="{{e.id}}" title="{{e.descripcio}}">
+          <span class="equip-nom">{{e.nom}}</span>
+          <span class="equip-meta">{{e.cost}} PC · {{localize (concat "FORJA.Sobrenatural.Tipus." e.tipus)}} · dif. {{e.dificultat}}</span>
+          {{#if ../modeEdicio}}
+          <button type="button" class="btn-tret-eliminar" data-action="eliminarEfecte" data-item-id="{{e.id}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
+            <i class="fas fa-trash"></i>
+          </button>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="trets-buits">{{localize "FORJA.Equip.SenseEfectes"}}</p>
+      {{/if}}
     </div>
   </div>
   {{/if}}
@@ -482,17 +508,6 @@
       {{else}}
       <p class="trets-buits">{{localize "FORJA.Equip.SenseArtefactes"}}</p>
       {{/if}}
-    </div>
-  </div>
-
-  <!-- ═══ DONS I EFECTES ═══ -->
-  <div class="forja-seccio" data-seccio="dons">
-    <div class="forja-seccio-cap" data-action="toggleSection">
-      <i class="fas fa-chevron-down forja-chevron"></i>
-      {{localize "FORJA.Tab.Dons"}}
-    </div>
-    <div class="forja-seccio-cos forja-placeholder-cos">
-      <p class="placeholder-msg"><i class="fas fa-star"></i>Aviat disponible</p>
     </div>
   </div>
 

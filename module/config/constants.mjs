@@ -99,7 +99,7 @@ async function _carregarJSON(fitxer) {
 
 const [
   llistaTrets, catalegArmes, catalegArmadures, llistaManiobres,
-  llistaIncompatibilitats, catalegEstats, catalegArtefactes
+  llistaIncompatibilitats, catalegEstats, catalegArtefactes, catalegEfectes
 ] = await Promise.all([
   _carregarJSON("trets.json"),
   _carregarJSON("armes.json"),
@@ -107,7 +107,8 @@ const [
   _carregarJSON("maniobres-arts-marcials.json"),
   _carregarJSON("incompatibilitats.json"),
   _carregarJSON("estats.json"),
-  _carregarJSON("artefactes.json")
+  _carregarJSON("artefactes.json"),
+  _carregarJSON("efectes.json")
 ]);
 
 // Format de cada entrada de trets: { id, nom, cost, positiu, descripcio, costVariable?, multiplicador?, divisor?, etiquetaX? }
@@ -144,6 +145,12 @@ FORJA.CATALEG_ESTATS = catalegEstats;
 // a dades estàtiques de referència — vegeu justificació de l'abast a
 // item-artefacte.mjs.
 FORJA.CATALEG_ARTEFACTES = catalegArtefactes;
+
+/* ---------- Catàleg d'efectes sobrenaturals (S-25) ---------- */
+// Plantilles d'efecte del manual (cap. 4, "Plantilles d'efecte"), com a
+// dades estàtiques de referència — vegeu justificació de l'abast a
+// item-efecte.mjs.
+FORJA.CATALEG_EFECTES = catalegEfectes;
 
 /* ---------- Sobrenatural: dotats / equilibri (S-20, Onada 4) ---------- */
 // Mapeig tret sobrenatural → "do" (mútuament excloents, manual p. 148-168).
