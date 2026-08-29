@@ -67,6 +67,14 @@ export function campsBase(fields) {
       gastats: new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false })
     }),
 
+    // --- Sobrenatural (S-20): "do" es deriva dels trets (FORJA.TRETS_DO), no
+    // es desa aquí. Només calen els camps que depenen d'una tria del jugador
+    // o de l'ús en joc.
+    qiAtribut: new fields.StringField({ initial: "", blank: true, choices: ["", "FOR", "DES", "AGI"] }),
+    equilibri: new fields.SchemaField({
+      gastat: new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false })
+    }),
+
     // --- Biografia ---
     biografia: new fields.HTMLField({ initial: "" })
   };

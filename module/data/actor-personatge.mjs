@@ -69,6 +69,65 @@ export function _prepararDerivats(sys) {
 
   // --- PX lliures (S-28) ---
   sys.px.lliures = (sys.px.total ?? 0) - (sys.px.gastats ?? 0);
+
+  // --- Sobrenatural: dotat / equilibri (S-20, Onada 4) ---
+  _prepararSobrenatural(sys, cfg);
+}
+
+/**
+ * Determina el "do" del PJ a partir dels trets sobrenaturals que posseeix
+ * (FORJA.TRETS_DO) i, si n'és dotat, calcula el seu Equilibri (EQ = atribut
+ * principal del do + habilitat del do, manual p. 250). L'equilibri actual
+ * es guarda com a "gastat" (caselles marcades, 0 = ple), exactament amb el
+ * mateix patró que `salut.fatiga`/`salut.ferides` — permet reaprofitar la
+ * mateixa UI de pista clicable. Zones (manual p. 260-264):
+ *   - `actual > 0`: normal, sense conseqüència.
+ *   - `0 >= actual > -max`: 1 punt de dany directe de fatiga en manifestar.
+ *   - `actual <= -max`: 1 punt de dany directe de ferides en manifestar.
+ * (L'aplicació del dany és responsabilitat de qui invoca `manifestarEfecte`,
+ * no d'aquí — aquesta funció només calcula l'estat, mai en muta res.)
+ */
+function _prepararSobrenatural(sys, cfg) {
+  const items = sys.parent?.items;
+  const idsTrets = new Set();
+  if (items) {
+    for (const item of items) {
+      if (item.type !== "tret") continue;
+      const catalegId = item.getFlag("forja", "catalegId");
+      if (catalegId) idsTrets.add(catalegId);
+    }
+  }
+
+  const dons = new Set();
+  for (const id of idsTrets) {
+    const don = cfg.TRETS_DO[id];
+    if (don) dons.add(don);
+  }
+  // Mútuament excloents (manual p. 168) — si n'hi ha més d'un per error de
+  // creació, es fa servir el primer per calcular l'equilibri; avisosCoherencia
+  // (S-05) ja n'avisa per separat.
+  const dotatDo = dons.size ? [...dons][0] : null;
+  sys.dotat = dotatDo;
+
+  if (!dotatDo) {
+    sys.equilibri.max = 0;
+    sys.equilibri.actual = 0;
+    sys.equilibri.zona = "normal";
+    return;
+  }
+
+  const donCfg = cfg.DONS[dotatDo];
+  const atributDo = donCfg.atribut ?? sys.qiAtribut ?? "FOR";
+  const habNivell = sys.habilitats[donCfg.habilitat]?.nivell ?? 0;
+  const max = (sys.atributs[atributDo] ?? 0) + habNivell;
+
+  sys.equilibri.max       = max;
+  sys.equilibri.atribut   = atributDo;
+  sys.equilibri.habilitat = donCfg.habilitat;
+
+  const actual = max - (sys.equilibri.gastat ?? 0);
+  sys.equilibri.actual = actual;
+  sys.equilibri.zona = actual > 0 ? "normal" : actual > -max ? "fatiga" : "ferides";
 }
 
 /** Stats derivats que un tret pot modificar amb `efecte.stat`/`efecte.delta`. */

@@ -1,0 +1,49 @@
+<div class="forja-dialeg-manifestar">
+  <p class="dm-intro">
+    {{localize "FORJA.Sobrenatural.ManifestarIntro" don=donNom eq=eqActual max=eqMax}}
+    {{#if nomObjectiu}}<br>{{localize "FORJA.Sobrenatural.ManifestarObjectiu" nom=nomObjectiu}}{{/if}}
+  </p>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Sobrenatural.DificultatBase"}}</label>
+    <input type="number" name="dificultatBase" value="1" min="1"/>
+  </div>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Dice.ModDaus"}}</label>
+    <input type="number" name="modDaus" value="0"/>
+  </div>
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Dice.ModDificultat"}}</label>
+    <input type="number" name="modDificultat" value="0"/>
+  </div>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Sobrenatural.PuntsExtra"}}</label>
+    <input type="number" name="puntsExtra" value="0" min="0"/>
+  </div>
+  <div class="form-group dm-categoria">
+    <label class="dm-radio">
+      <input type="radio" name="usPuntsExtra" value="cap" {{#if (eq usPuntsExtra "cap")}}checked{{/if}}>
+      {{localize "FORJA.Sobrenatural.PuntsExtraCap"}}
+    </label>
+    <label class="dm-radio">
+      <input type="radio" name="usPuntsExtra" value="reduirDificultat" {{#if (eq usPuntsExtra "reduirDificultat")}}checked{{/if}}>
+      {{localize "FORJA.Sobrenatural.PuntsExtraReduir"}}
+    </label>
+    <label class="dm-radio">
+      <input type="radio" name="usPuntsExtra" value="afegirDau" {{#if (eq usPuntsExtra "afegirDau")}}checked{{/if}}>
+      {{localize "FORJA.Sobrenatural.PuntsExtraDau"}}
+    </label>
+  </div>
+  <p class="dm-desc">{{localize "FORJA.Sobrenatural.PuntsExtraNota"}}</p>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Combat.Descripcio"}}</label>
+    <input type="text" name="descripcio" placeholder="{{localize 'FORJA.Combat.DescripcioPlaceholder'}}"/>
+  </div>
+
+  <button type="submit">
+    <i class="fas fa-hand-sparkles"></i> {{localize "FORJA.Sobrenatural.Manifestar"}}
+  </button>
+</div>

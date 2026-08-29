@@ -2,9 +2,13 @@ import { ferTirada }  from "../dice/tirada.mjs";
 import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
 import DiategCuracio  from "./dialeg-curacio.mjs";
-import { _opcionsNumeriques, _prepSalut, _prepHabilitats, _prepTrets, _prepItems, _prepArtefactes } from "./full-personatge.mjs";
+import { _opcionsNumeriques, _prepSalut, _prepSobrenatural, _prepHabilitats, _prepTrets, _prepItems, _prepArtefactes } from "./full-personatge.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
 import { ferCuracio, habilitatCuracio, aplicarReposNatural, potReferSePerSiSol } from "../combat/curacio.mjs";
+import DiategManifestar from "./dialeg-manifestar.mjs";
+import DiategResistir  from "./dialeg-resistir.mjs";
+import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
+import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -48,7 +52,10 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       editarItem:       FullPNJ._onEditarItem,
       // Curació (S-17)
       forjaObrirCuracio: FullPNJ._onObrirCuracio,
-      forjaDescansar:    FullPNJ._onDescansar
+      forjaDescansar:    FullPNJ._onDescansar,
+      // Sobrenatural (S-20/S-21)
+      toggleEquilibri:      FullPNJ._onToggleEquilibri,
+      forjaObrirManifestar: FullPNJ._onObrirManifestar
     },
     form: { submitOnChange: true }
   };
@@ -82,6 +89,7 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
         reaccionsMax: sys.reaccionsMax
       },
       salut:      _prepSalut(sys),
+      sobrenatural: _prepSobrenatural(sys),
       habilitats: _prepHabilitats(sys, cfg),
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
@@ -401,5 +409,56 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
     } else {
       ui.notifications?.warn(game.i18n.format("FORJA.Curacio.DescansBloquejat", { nom: objectiu.name }));
     }
+  }
+
+  // ── Sobrenatural (S-20/S-21) ─────────────────────────────────────────────
+
+  static async _onToggleEquilibri(event, target) {
+    const idx      = parseInt(target.dataset.idx);
+    const actual   = this.actor.system.equilibri.gastat;
+    const nouValor = actual === idx ? idx - 1 : idx;
+    await this.actor.update({ "system.equilibri.gastat": Math.max(0, nouValor) });
+  }
+
+  static async _onObrirManifestar(event, target) {
+    const actor = this.actor;
+    if (!potManifestar(actor)) return;
+    const sys = actor.system;
+    const objectiu = [...game.user.targets][0]?.actor ?? null;
+
+    const eleccio = await DiategManifestar.obrir({
+      nomActor: actor.name,
+      donNom:   game.i18n.localize(`FORJA.Sobrenatural.Do.${sys.dotat}`),
+      eqActual: sys.equilibri.actual,
+      eqMax:    sys.equilibri.max,
+      nomObjectiu: objectiu?.name ?? null
+    });
+    if (!eleccio) return;
+
+    let resistencia = null;
+    if (objectiu) {
+      const opcioResistirId = await DiategResistir.obrir({
+        nomActor: actor.name,
+        nomObjectiu: objectiu.name,
+        mental: opcioResistir(objectiu, "mental"),
+        fisic:  opcioResistir(objectiu, "fisic")
+      });
+      if (opcioResistirId === null) return;
+      if (opcioResistirId === "mental" || opcioResistirId === "fisic") {
+        resistencia = await resoldreResistir(objectiu, opcioResistirId);
+      }
+    }
+
+    await manifestarEfecte({
+      actor,
+      dificultatBase: eleccio.dificultatBase,
+      modDaus:        eleccio.modDaus,
+      modDificultat:  eleccio.modDificultat,
+      puntsExtra:     eleccio.puntsExtra,
+      usPuntsExtra:   eleccio.usPuntsExtra,
+      resistencia,
+      label:    eleccio.descripcio,
+      objectiu
+    });
   }
 }

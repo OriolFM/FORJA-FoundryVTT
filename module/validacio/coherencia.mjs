@@ -56,5 +56,12 @@ export function avisosCoherencia(actor) {
     }
   }
 
+  // Dons mútuament excloents (S-20, manual p. 168): un PJ només pot fer
+  // servir un sol do — si té trets de més d'un, és un error de creació.
+  const dons = new Set([...idsTrets].map(id => FORJA.TRETS_DO[id]).filter(Boolean));
+  if (dons.size > 1) {
+    avisos.push(game.i18n.format("FORJA.Avis.MesDunDo", { dons: [...dons].join(", ") }));
+  }
+
   return avisos;
 }

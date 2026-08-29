@@ -179,6 +179,46 @@
     </div>
   </div>
 
+  <!-- ═══ SOBRENATURAL (S-20/S-21) ═══ -->
+  {{#if sobrenatural}}
+  <div class="forja-seccio" data-seccio="sobrenatural">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Sobrenatural"}}
+      <span class="forja-penal-badge">{{sobrenatural.donNom}}</span>
+    </div>
+    <div class="forja-seccio-cos">
+      {{#if (eq sobrenatural.don "qi")}}
+      {{#if modeEdicio}}
+      <div class="forja-camp forja-qi-atribut">
+        <label>{{localize "FORJA.Sobrenatural.QiAtribut"}}</label>
+        <select name="system.qiAtribut">
+          <option value="FOR" {{#if (eq sys.qiAtribut "FOR")}}selected{{/if}}>{{localize "FORJA.Attr.FOR"}}</option>
+          <option value="DES" {{#if (eq sys.qiAtribut "DES")}}selected{{/if}}>{{localize "FORJA.Attr.DES"}}</option>
+          <option value="AGI" {{#if (eq sys.qiAtribut "AGI")}}selected{{/if}}>{{localize "FORJA.Attr.AGI"}}</option>
+        </select>
+      </div>
+      {{/if}}
+      {{/if}}
+      <div class="forja-equilibri-cap">
+        <span class="eq-nom">{{localize "FORJA.Sobrenatural.Equilibri"}}</span>
+        <span class="eq-valor eq-zona-{{sobrenatural.zona}}">{{sobrenatural.actual}} / {{sobrenatural.max}}</span>
+      </div>
+      <div class="forja-equilibri-pista">
+        {{#each sobrenatural.caselles as |c|}}
+        <button type="button" class="casella-equilibri zona-{{c.zona}} {{#if c.marcat}}marcada{{/if}}"
+                data-action="toggleEquilibri" data-idx="{{c.idx}}" title="{{c.idx}}"></button>
+        {{/each}}
+      </div>
+      <div class="forja-salut-accions">
+        <button type="button" data-action="forjaObrirManifestar">
+          <i class="fas fa-hand-sparkles"></i> {{localize "FORJA.Sobrenatural.BotoManifestar"}}
+        </button>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
   <!-- ═══ HABILITATS ═══ -->
   <div class="forja-seccio" data-seccio="habilitats">
     <div class="forja-seccio-cap" data-action="toggleSection">

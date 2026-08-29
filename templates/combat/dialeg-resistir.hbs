@@ -1,0 +1,24 @@
+<div class="forja-dialeg-resistir">
+  <p class="dd-intro">{{localize "FORJA.Sobrenatural.ResistirIntro" actor=nomActor objectiu=nomObjectiu}}</p>
+
+  <div class="form-group dd-opcions">
+    <label class="dd-radio">
+      <input type="radio" name="opcioId" value="cap" {{#if (eq opcioId "cap")}}checked{{/if}}>
+      {{localize "FORJA.Sobrenatural.NoResistir"}}
+    </label>
+    <label class="dd-radio {{#unless mental.disponible}}dd-disabled{{/unless}}">
+      <input type="radio" name="opcioId" value="mental" {{#if (eq opcioId "mental")}}checked{{/if}} {{#unless mental.disponible}}disabled{{/unless}}>
+      {{localize "FORJA.Sobrenatural.ResistirMental"}} — {{mental.atribut}} {{mental.atributVal}} + {{localize "FORJA.Hab.resistencia"}} {{mental.habNivell}} = {{mental.pool}} daus
+      <i class="fas fa-bolt" title="{{localize 'FORJA.Combat.GastaReaccio'}}"></i>
+    </label>
+    <label class="dd-radio {{#unless fisic.disponible}}dd-disabled{{/unless}}">
+      <input type="radio" name="opcioId" value="fisic" {{#if (eq opcioId "fisic")}}checked{{/if}} {{#unless fisic.disponible}}disabled{{/unless}}>
+      {{localize "FORJA.Sobrenatural.ResistirFisic"}} — {{fisic.atribut}} {{fisic.atributVal}} + {{localize "FORJA.Hab.resistencia"}} {{fisic.habNivell}} = {{fisic.pool}} daus
+      <i class="fas fa-bolt" title="{{localize 'FORJA.Combat.GastaReaccio'}}"></i>
+    </label>
+  </div>
+
+  <button type="submit">
+    <i class="fas fa-shield-halved"></i> {{localize "FORJA.Sobrenatural.ResoldreResistir"}}
+  </button>
+</div>

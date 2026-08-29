@@ -4,6 +4,10 @@ import DiategEquipament from "./dialeg-equipament.mjs";
 import DiategCuracio  from "./dialeg-curacio.mjs";
 import DiategMillora  from "./dialeg-millora.mjs";
 import AssistentCreacio from "./assistent-creacio.mjs";
+import DiategManifestar from "./dialeg-manifestar.mjs";
+import DiategResistir  from "./dialeg-resistir.mjs";
+import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
+import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { resoldreDanyArma } from "../combat/dany.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
 import { avisosCoherencia } from "../validacio/coherencia.mjs";
@@ -60,7 +64,10 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       // Millora amb PX (S-28)
       forjaObrirMillora: FullPersonatge._onObrirMillora,
       // Assistent de creació (M-03)
-      forjaObrirAssistent: FullPersonatge._onObrirAssistent
+      forjaObrirAssistent: FullPersonatge._onObrirAssistent,
+      // Sobrenatural (S-20/S-21)
+      toggleEquilibri:      FullPersonatge._onToggleEquilibri,
+      forjaObrirManifestar: FullPersonatge._onObrirManifestar
     },
     form: { submitOnChange: true }
   };
@@ -93,6 +100,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
         reaccionsMax: sys.reaccionsMax
       },
       salut:      _prepSalut(sys),
+      sobrenatural: _prepSobrenatural(sys),
       habilitats: _prepHabilitats(sys, cfg),
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
@@ -503,6 +511,57 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
   static async _onObrirAssistent(event, target) {
     AssistentCreacio.obrir(this.actor);
   }
+
+  // ── Sobrenatural (S-20/S-21) ─────────────────────────────────────────────
+
+  static async _onToggleEquilibri(event, target) {
+    const idx      = parseInt(target.dataset.idx);
+    const actual   = this.actor.system.equilibri.gastat;
+    const nouValor = actual === idx ? idx - 1 : idx;
+    await this.actor.update({ "system.equilibri.gastat": Math.max(0, nouValor) });
+  }
+
+  static async _onObrirManifestar(event, target) {
+    const actor = this.actor;
+    if (!potManifestar(actor)) return;
+    const sys = actor.system;
+    const objectiu = [...game.user.targets][0]?.actor ?? null;
+
+    const eleccio = await DiategManifestar.obrir({
+      nomActor: actor.name,
+      donNom:   game.i18n.localize(`FORJA.Sobrenatural.Do.${sys.dotat}`),
+      eqActual: sys.equilibri.actual,
+      eqMax:    sys.equilibri.max,
+      nomObjectiu: objectiu?.name ?? null
+    });
+    if (!eleccio) return;
+
+    let resistencia = null;
+    if (objectiu) {
+      const opcioResistirId = await DiategResistir.obrir({
+        nomActor: actor.name,
+        nomObjectiu: objectiu.name,
+        mental: opcioResistir(objectiu, "mental"),
+        fisic:  opcioResistir(objectiu, "fisic")
+      });
+      if (opcioResistirId === null) return; // diàleg cancel·lat
+      if (opcioResistirId === "mental" || opcioResistirId === "fisic") {
+        resistencia = await resoldreResistir(objectiu, opcioResistirId);
+      }
+    }
+
+    await manifestarEfecte({
+      actor,
+      dificultatBase: eleccio.dificultatBase,
+      modDaus:        eleccio.modDaus,
+      modDificultat:  eleccio.modDificultat,
+      puntsExtra:     eleccio.puntsExtra,
+      usPuntsExtra:   eleccio.usPuntsExtra,
+      resistencia,
+      label:    eleccio.descripcio,
+      objectiu
+    });
+  }
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
@@ -550,6 +609,36 @@ export function _prepSalut(sys) {
     ferides: { casella: { idx: idxW7, marcat: ferMarcats >= idxW7 } }
   });
   return { taula, nivellEfectiu: sys.salut.nivellEfectiu ?? 1, penalitzacio: sys.salut.penalitzacio ?? 0 };
+}
+
+/**
+ * Prepara la pista d'Equilibri (S-20) per a la fitxa. Mateix patró que
+ * `_prepSalut`: caselles clicables 1..N que representen `equilibri.gastat`
+ * (0 = ple). Es mostren com a mínim `max*2` caselles (tram normal + tram de
+ * fatiga, manual p. 256-258) i més si el gastat ja les supera (tram de
+ * ferides, sense límit fix al manual).
+ * @returns {object|null} `null` si l'actor no és dotat (secció amagada).
+ */
+export function _prepSobrenatural(sys) {
+  if (!sys.dotat) return null;
+  const max    = sys.equilibri.max ?? 0;
+  const gastat = sys.equilibri.gastat ?? 0;
+  const total  = Math.max(gastat, max * 2, 1);
+
+  const caselles = [];
+  for (let i = 1; i <= total; i++) {
+    const zona = i > max * 2 ? "ferides" : i > max ? "fatiga" : "normal";
+    caselles.push({ idx: i, marcat: i <= gastat, zona });
+  }
+
+  return {
+    don:    sys.dotat,
+    donNom: game.i18n.localize(`FORJA.Sobrenatural.Do.${sys.dotat}`),
+    max, gastat,
+    actual: sys.equilibri.actual,
+    zona:   sys.equilibri.zona,
+    caselles
+  };
 }
 
 export function _prepHabilitats(sys, cfg) {

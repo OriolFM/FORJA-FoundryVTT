@@ -1,0 +1,47 @@
+<div class="forja-missatge-atac forja-missatge-manifestar {{#if pifia}}missatge-pifia{{else}}{{#if exit}}missatge-exit{{else}}missatge-fallada{{/if}}{{/if}}">
+
+  <div class="mt-cap">
+    <span class="mt-label">
+      {{nomActor}} {{localize "FORJA.Sobrenatural.Manifesta"}} ({{don}}){{#if label}}: {{label}}{{/if}}
+      {{#if nomObjectiu}} → {{nomObjectiu}}{{/if}}
+    </span>
+    <span class="mt-dif">dif. {{dificultat}}{{#if resistit}} ({{localize "FORJA.Sobrenatural.Resistit"}}){{/if}}</span>
+  </div>
+
+  <div class="mt-daus">
+    {{#each dice as |d|}}
+    <span class="mt-dau {{dieClass d}}">{{d}}</span>
+    {{/each}}
+  </div>
+
+  <div class="mt-resultat">
+    {{#if pifia}}
+      <span class="mt-badge badge-pifia"><i class="fas fa-skull"></i> PÍFIA</span>
+    {{else if exit}}
+      <span class="mt-badge badge-exit">
+        <i class="fas fa-hand-sparkles"></i> {{localize "FORJA.Sobrenatural.EfecteReeixit"}}
+        {{#if excedent}}<span class="mt-excedent">+{{excedent}} exc.</span>{{/if}}
+      </span>
+    {{else}}
+      <span class="mt-badge badge-fallada">
+        <i class="fas fa-xmark"></i> {{localize "FORJA.Combat.Falla"}}
+      </span>
+    {{/if}}
+  </div>
+
+  <div class="mt-dany">
+    <span class="mt-badge badge-equilibri">
+      <i class="fas fa-scale-balanced"></i> {{localize "FORJA.Sobrenatural.CostEquilibri" cost=cost}} — {{localize "FORJA.Sobrenatural.EquilibriResultant" actual=nouActual max=eqMax}}
+    </span>
+    {{#if dany}}
+    <span class="mt-badge badge-dany">
+      <i class="fas fa-droplet"></i> {{dany.quantitat}} {{localize (concat "FORJA.Salut." dany.pista)}} {{localize "FORJA.Sobrenatural.DanyEquilibri"}}
+    </span>
+    {{/if}}
+  </div>
+
+  {{#if jaEraNegatiu}}
+  <p class="mt-mod mt-mod-penal">{{localize "FORJA.Sobrenatural.AvisEquilibriNegatiu"}}</p>
+  {{/if}}
+
+</div>

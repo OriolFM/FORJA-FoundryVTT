@@ -17,6 +17,7 @@ import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
 import { reiniciarReaccions } from "./module/combat/reaccions.mjs";
+import { recuperarEquilibri } from "./module/combat/manifestar.mjs";
 import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 
@@ -110,7 +111,10 @@ Hooks.on("updateCombat", async (combat, changes) => {
   if (!(("turn" in changes) || ("round" in changes))) return;
   const actor = combat._forjaCombatentSortint?.actor;
   combat._forjaCombatentSortint = null;
-  if (actor) await reiniciarReaccions(actor);
+  if (actor) {
+    await reiniciarReaccions(actor);
+    await recuperarEquilibri(actor);
+  }
 });
 
 /* ---- Helpers Handlebars ---- */

@@ -145,6 +145,28 @@ FORJA.CATALEG_ESTATS = catalegEstats;
 // item-artefacte.mjs.
 FORJA.CATALEG_ARTEFACTES = catalegArtefactes;
 
+/* ---------- Sobrenatural: dotats / equilibri (S-20, Onada 4) ---------- */
+// Mapeig tret sobrenatural → "do" (mútuament excloents, manual p. 148-168).
+// Oracle i Psíquic són mecànicament equivalents (ambdós donen accés a l'habilitat
+// "psi"; el manual no en documenta cap diferència mecànica més enllà del cost en PC).
+FORJA.TRETS_DO = {
+  magus:        "magia",
+  canalitzador: "canalitzacio",
+  "control-qi": "qi",
+  psiquic:      "psi",
+  oracle:       "psi"
+};
+
+// Atribut+habilitat de cada do (manual p. 250, 314, 374, 410). El Qi no té
+// atribut fix: es tria FOR/DES/AGI a la creació ("Versatilitat", manual p. 434)
+// i es desa a `system.qiAtribut`.
+FORJA.DONS = {
+  magia:        { atribut: "PER", habilitat: "magia" },
+  canalitzacio: { atribut: "APL", habilitat: "canalitzacio" },
+  psi:          { atribut: "INT", habilitat: "psi" },
+  qi:           { atribut: null,  habilitat: "qi" }
+};
+
 /* ---------- Salut ---------- */
 // Penalització per nivell efectiu de salut (1–6→0/0/0/1/2/4, 7→null=fora de combat)
 FORJA.SALUT_PENALITZACIO = { 1: 0, 2: 0, 3: 0, 4: 1, 5: 2, 6: 4, 7: null };
