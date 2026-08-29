@@ -132,6 +132,8 @@ function _registrarHelpers() {
   Handlebars.registerHelper("lookup",  (obj, key) => obj?.[key]);
   Handlebars.registerHelper("or",  (a, b) => !!a || !!b);
   Handlebars.registerHelper("range", (n) => Array.from({ length: n }, (_, i) => i));
+  Handlebars.registerHelper("includes", (arr, val) => Array.isArray(arr) && arr.includes(val));
+  Handlebars.registerHelper("lookupNom", (llista, id) => llista?.find?.(e => e.id === id)?.nom ?? id);
   Handlebars.registerHelper("dieClass", (val) => {
     if (val === 1)  return "dau-pifia";
     if (val >= 10)  return "dau-doble";

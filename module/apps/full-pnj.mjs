@@ -10,6 +10,7 @@ import DiategResistir  from "./dialeg-resistir.mjs";
 import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
+import DiategConstructor from "./dialeg-constructor.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -52,6 +53,7 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       eliminarArtefacte: FullPNJ._onEliminarItem,
       crearEfecte:      FullPNJ._onCrearEfecte,
       eliminarEfecte:   FullPNJ._onEliminarItem,
+      forjaObrirConstructor: FullPNJ._onObrirConstructor,
       editarItem:       FullPNJ._onEditarItem,
       // Curació (S-17)
       forjaObrirCuracio: FullPNJ._onObrirCuracio,
@@ -366,6 +368,25 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
   static async _onEliminarItem(event, target) {
     const id = target.dataset.itemId;
     await this.actor.deleteEmbeddedDocuments("Item", [id]);
+  }
+
+  static async _onObrirConstructor(event, target) {
+    const construit = await DiategConstructor.obrir();
+    if (!construit) return;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: construit.nom,
+      type: "efecte",
+      system: {
+        cost:        construit.cost,
+        do:          construit.do,
+        tipus:       construit.tipus,
+        dificultat:  construit.dificultat,
+        modLatencia: construit.modLatencia,
+        us:          construit.us,
+        mecanica:    construit.mecanica,
+        descripcio:  ""
+      }
+    }]);
   }
 
   static async _onEditarItem(event, target) {

@@ -7619,6 +7619,47 @@ li.combatant:has(> .forja-controls) {
 }
 .btn-artefacte-carrega:hover { background: var(--forja-primary-bg); border-color: var(--forja-primary-light); color: #e2f8f5; }
 
+/* ==== S-23 — CONSTRUCTOR DE PARÀMETRES ==== */
+.forja-dialeg-constructor { display: flex; flex-direction: column; height: 100%; gap: 8px; padding: 8px; }
+.forja-dialeg-constructor .dc-cos { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; }
+.forja-dialeg-constructor .dm-camp { display: flex; flex-direction: column; gap: 3px; }
+.forja-dialeg-constructor .dm-camp label { font-size: 0.8rem; color: #94a3b8; }
+.forja-dialeg-constructor select, .forja-dialeg-constructor input[type="text"], .forja-dialeg-constructor input[type="number"] { width: 100%; }
+.forja-dialeg-constructor .dm-desc { font-size: 0.85rem; color: #94a3b8; font-style: italic; margin: 0; }
+.forja-dialeg-constructor .dm-categoria { display: flex; gap: 12px; }
+.forja-dialeg-constructor .dm-radio { display: flex; align-items: center; gap: 6px; font-weight: normal; cursor: pointer; }
+.forja-dialeg-constructor hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2px 0; }
+
+.dc-graella { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+
+.dc-seccio { display: flex; flex-direction: column; gap: 6px; padding: 6px; border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; }
+.dc-toggle { font-size: 0.9rem; }
+
+.dc-llista-triats { display: flex; flex-direction: column; gap: 4px; }
+.dc-fila-triat { display: grid; grid-template-columns: 1fr 60px auto; align-items: center; gap: 6px; font-size: 0.85rem; }
+.dc-fila-triat input[type="number"] { width: 100%; }
+
+.dc-afegir-fila { display: flex; gap: 6px; align-items: center; }
+.dc-afegir-fila select { flex: 1; }
+
+.dc-total { display: flex; justify-content: space-around; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 8px; }
+.dc-total-xifra { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 0.8rem; color: #94a3b8; }
+.dc-total-xifra strong { font-size: 1.1rem; color: #e2f8f5; }
+
+.dc-desglossament { margin: 0; padding-left: 18px; font-size: 0.78rem; color: #94a3b8; max-height: 100px; overflow-y: auto; }
+
+.forja-dialeg-constructor button[type="submit"] {
+  margin-top: 0;
+  background: rgba(74,222,128,0.18);
+  border: 1px solid rgba(74,222,128,0.45);
+  color: #86efac;
+  border-radius: 4px;
+  padding: 8px 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.forja-dialeg-constructor button[type="submit"]:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
+
 .badge-equilibri {
   display: inline-flex;
   align-items: center;

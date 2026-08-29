@@ -99,7 +99,8 @@ async function _carregarJSON(fitxer) {
 
 const [
   llistaTrets, catalegArmes, catalegArmadures, llistaManiobres,
-  llistaIncompatibilitats, catalegEstats, catalegArtefactes, catalegEfectes
+  llistaIncompatibilitats, catalegEstats, catalegArtefactes, catalegEfectes,
+  parametresConstruccio
 ] = await Promise.all([
   _carregarJSON("trets.json"),
   _carregarJSON("armes.json"),
@@ -108,7 +109,8 @@ const [
   _carregarJSON("incompatibilitats.json"),
   _carregarJSON("estats.json"),
   _carregarJSON("artefactes.json"),
-  _carregarJSON("efectes.json")
+  _carregarJSON("efectes.json"),
+  _carregarJSON("parametres.json")
 ]);
 
 // Format de cada entrada de trets: { id, nom, cost, positiu, descripcio, costVariable?, multiplicador?, divisor?, etiquetaX? }
@@ -151,6 +153,13 @@ FORJA.CATALEG_ARTEFACTES = catalegArtefactes;
 // dades estàtiques de referència — vegeu justificació de l'abast a
 // item-efecte.mjs.
 FORJA.CATALEG_EFECTES = catalegEfectes;
+
+/* ---------- Motor de paràmetres (S-23) ---------- */
+// Taules de cost/dificultat/latència de cada categoria de paràmetre del
+// manual (cap. 4, "Paràmetres", p. 642-1160) — vegeu justificació de
+// l'abast ("nucli" de les categories més freqüents, no les 25 senceres)
+// a `module/progressio/construccio.mjs`.
+FORJA.PARAMETRES = parametresConstruccio;
 
 /* ---------- Sobrenatural: dotats / equilibri (S-20, Onada 4) ---------- */
 // Mapeig tret sobrenatural → "do" (mútuament excloents, manual p. 148-168).

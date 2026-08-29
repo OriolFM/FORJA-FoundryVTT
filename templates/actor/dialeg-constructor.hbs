@@ -1,0 +1,198 @@
+<div class="forja-dialeg-constructor">
+  <div class="dc-cos">
+
+  <p class="dm-desc">{{localize "FORJA.Construccio.Intro"}}</p>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Construccio.Nom"}}</label>
+    <input type="text" name="nom" value="{{nom}}" placeholder="{{localize 'FORJA.Construccio.NomPlaceholder'}}"/>
+  </div>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Construccio.Do"}}</label>
+    <select name="do">
+      {{#each dons as |d|}}
+      <option value="{{d.id}}">{{d.nom}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group dm-categoria">
+    <label class="dm-radio"><input type="radio" name="tipus" value="efecte" {{#if (eq s.tipus "efecte")}}checked{{/if}}> {{localize "FORJA.Sobrenatural.Tipus.efecte"}}</label>
+    <label class="dm-radio"><input type="radio" name="tipus" value="ritual" {{#if (eq s.tipus "ritual")}}checked{{/if}}> {{localize "FORJA.Sobrenatural.Tipus.ritual"}}</label>
+  </div>
+
+  <div class="dc-graella">
+    <div class="form-group dm-camp">
+      <label>{{localize "FORJA.Construccio.Abast"}}</label>
+      <select name="abast">
+        {{#each P.abast as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.abast)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="form-group dm-camp">
+      <label>{{localize "FORJA.Construccio.Objectius"}}</label>
+      <select name="objectius">
+        {{#each P.objectius as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.objectius)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="form-group dm-camp">
+      <label>{{localize "FORJA.Construccio.Durada"}}</label>
+      <select name="durada">
+        {{#each P.durada as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.durada)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="form-group dm-camp">
+      <label>{{localize "FORJA.Construccio.UsTemps"}}</label>
+      <select name="usTemps">
+        {{#each P.usTemps as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.usTemps)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="form-group dm-camp">
+      <label>{{localize "FORJA.Construccio.UsAccio"}}</label>
+      <select name="usAccio">
+        {{#each P.usAccio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.usAccio)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      </select>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- Dany -->
+  <div class="dc-seccio">
+    <label class="dm-radio dc-toggle"><input type="checkbox" name="danyActiu" {{#if s.danyActiu}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Dany"}}</strong></label>
+    {{#if s.danyActiu}}
+    <div class="dc-graella">
+      <div class="form-group dm-camp">
+        <label>{{localize "FORJA.Construccio.Categoria"}}</label>
+        <select name="dany.categoria">
+          {{#each P.danyCategoria as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.dany.categoria)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+        </select>
+      </div>
+      <div class="form-group dm-camp">
+        <label>{{localize "FORJA.Construccio.TipusDany"}}</label>
+        <select name="dany.tipus">
+          {{#each P.danyTipus as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.dany.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+        </select>
+      </div>
+      <div class="form-group dm-camp">
+        <label>{{localize "FORJA.Construccio.Nivell"}}</label>
+        <input type="number" name="dany.nivell" value="{{s.dany.nivell}}" min="1"/>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+
+  <!-- Curació -->
+  <div class="dc-seccio">
+    <label class="dm-radio dc-toggle"><input type="checkbox" name="curacioActiva" {{#if s.curacioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Curacio"}}</strong></label>
+    {{#if s.curacioActiva}}
+    <div class="dc-graella">
+      <div class="form-group dm-camp">
+        <label>{{localize "FORJA.Construccio.TipusCuracio"}}</label>
+        <select name="curacio.tipus">
+          {{#each P.curacio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.curacio.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+        </select>
+      </div>
+      <div class="form-group dm-camp">
+        <label>{{localize "FORJA.Construccio.Nivell"}}</label>
+        <input type="number" name="curacio.nivell" value="{{s.curacio.nivell}}" min="1"/>
+      </div>
+    </div>
+    <div class="dc-graella">
+      {{#each P.curacioExtra as |o|}}
+      <label class="dm-radio"><input type="checkbox" name="curacio.extra" value="{{o.id}}" {{#if (includes ../s.curacio.extra o.id)}}checked{{/if}}> {{o.nom}}</label>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+
+  <!-- Protecció -->
+  <div class="dc-seccio">
+    <label class="dm-radio dc-toggle"><input type="checkbox" name="proteccioActiva" {{#if s.proteccioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Proteccio"}}</strong></label>
+    {{#if s.proteccioActiva}}
+    <div class="dc-graella">
+      <div class="form-group dm-camp">
+        <label>{{localize "FORJA.Construccio.TipusProteccio"}}</label>
+        <select name="proteccio.tipus">
+          {{#each P.proteccio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.proteccio.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+        </select>
+      </div>
+      <div class="form-group dm-camp">
+        <label>{{localize "FORJA.Construccio.Nivell"}}</label>
+        <input type="number" name="proteccio.nivell" value="{{s.proteccio.nivell}}" min="1"/>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+
+  <!-- Estats -->
+  <div class="dc-seccio">
+    <strong>{{localize "FORJA.Construccio.Estats"}}</strong>
+    {{#if s.estats.length}}
+    <div class="dc-llista-triats">
+      {{#each s.estats as |e|}}
+      <div class="dc-fila-triat">
+        <span>{{lookupNom ../P.estats e.id}}</span>
+        <input type="number" class="dc-nivell-estat" data-id="{{e.id}}" value="{{e.nivell}}" min="1"/>
+        <button type="button" class="btn-tret-eliminar" data-action="treureEstat" data-id="{{e.id}}"><i class="fas fa-trash"></i></button>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+    {{#if estatsDisponibles.length}}
+    <div class="dc-afegir-fila">
+      <select name="novEstat">
+        {{#each estatsDisponibles as |o|}}<option value="{{o.id}}">{{o.nom}}</option>{{/each}}
+      </select>
+      <button type="button" class="as-boto-afegir" data-action="afegirEstat"><i class="fas fa-plus"></i></button>
+    </div>
+    {{/if}}
+  </div>
+
+  <!-- Habilitats -->
+  <div class="dc-seccio">
+    <strong>{{localize "FORJA.Construccio.Habilitats"}}</strong>
+    {{#if s.habilitats.length}}
+    <div class="dc-llista-triats">
+      {{#each s.habilitats as |h|}}
+      <div class="dc-fila-triat">
+        <span>{{lookupNom ../habilitatsTotes h.id}}</span>
+        <input type="number" class="dc-nivell-habilitat" data-id="{{h.id}}" value="{{h.nivell}}" min="1"/>
+        <button type="button" class="btn-tret-eliminar" data-action="treureHabilitat" data-id="{{h.id}}"><i class="fas fa-trash"></i></button>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+    {{#if habilitatsDisponibles.length}}
+    {{#if (lt s.habilitats.length 2)}}
+    <div class="dc-afegir-fila">
+      <select name="novaHabilitat">
+        {{#each habilitatsDisponibles as |o|}}<option value="{{o.id}}">{{o.nom}}</option>{{/each}}
+      </select>
+      <button type="button" class="as-boto-afegir" data-action="afegirHabilitat"><i class="fas fa-plus"></i></button>
+    </div>
+    {{/if}}
+    {{/if}}
+  </div>
+
+  <hr/>
+
+  <div class="dc-total">
+    <div class="dc-total-xifra"><span>{{localize "FORJA.PC.Total"}}</span><strong>{{resultat.cost}} PC</strong></div>
+    <div class="dc-total-xifra"><span>{{localize "FORJA.Sobrenatural.DificultatBase"}}</span><strong>{{resultat.dificultat}}</strong></div>
+    <div class="dc-total-xifra"><span>{{localize "FORJA.Combat.Modificador"}} (lat.)</span><strong>{{resultat.latencia}}</strong></div>
+  </div>
+  {{#if resultat.desglossament.length}}
+  <ul class="dc-desglossament">
+    {{#each resultat.desglossament as |l|}}
+    <li>{{l.etiqueta}}: {{l.cost}} PC{{#if l.dificultat}}, {{l.dificultat}} dif.{{/if}}{{#if l.latencia}}, +{{l.latencia}} lat.{{/if}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+
+  </div>
+
+  <button type="submit">
+    <i class="fas fa-flask"></i> {{localize "FORJA.Construccio.Crear"}}
+  </button>
+</div>

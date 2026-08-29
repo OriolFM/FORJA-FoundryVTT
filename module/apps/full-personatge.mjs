@@ -5,6 +5,7 @@ import DiategCuracio  from "./dialeg-curacio.mjs";
 import DiategMillora  from "./dialeg-millora.mjs";
 import AssistentCreacio from "./assistent-creacio.mjs";
 import DiategManifestar from "./dialeg-manifestar.mjs";
+import DiategConstructor from "./dialeg-constructor.mjs";
 import DiategResistir  from "./dialeg-resistir.mjs";
 import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
@@ -60,6 +61,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       eliminarArtefacte: FullPersonatge._onEliminarItem,
       crearEfecte:      FullPersonatge._onCrearEfecte,
       eliminarEfecte:   FullPersonatge._onEliminarItem,
+      forjaObrirConstructor: FullPersonatge._onObrirConstructor,
       editarItem:      FullPersonatge._onEditarItem,
       // Curació (S-17)
       forjaObrirCuracio: FullPersonatge._onObrirCuracio,
@@ -388,6 +390,25 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
   static async _onEliminarItem(event, target) {
     const id = target.dataset.itemId;
     await this.actor.deleteEmbeddedDocuments("Item", [id]);
+  }
+
+  static async _onObrirConstructor(event, target) {
+    const construit = await DiategConstructor.obrir();
+    if (!construit) return;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: construit.nom,
+      type: "efecte",
+      system: {
+        cost:        construit.cost,
+        do:          construit.do,
+        tipus:       construit.tipus,
+        dificultat:  construit.dificultat,
+        modLatencia: construit.modLatencia,
+        us:          construit.us,
+        mecanica:    construit.mecanica,
+        descripcio:  ""
+      }
+    }]);
   }
 
   static async _onEditarItem(event, target) {
