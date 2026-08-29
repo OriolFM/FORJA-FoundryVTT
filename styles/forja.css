@@ -6238,31 +6238,6 @@
   gap: 8px;
 }
 
-/* --- PC/PX --- */
-.forja-pcpx-fila {
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.forja-pcpx-fila .forja-camp { flex: 1; align-items: center; }
-
-.forja-val-ro {
-  display: block;
-  font-size: 1.1rem;
-  font-weight: 700;
-  font-family: var(--forja-font-mono);
-  color: var(--forja-primary-light);
-  text-align: center;
-  padding: 3px 0;
-  background: var(--forja-bg-700);
-  border: 1px solid var(--forja-border-color);
-  border-radius: var(--forja-radius-sm);
-  width: 100%;
-}
-
-.val-negatiu .forja-val-ro { color: var(--forja-danger); }
-
 /* --- Habilitats (2 col) --- */
 .forja-habs-cos {
   display: grid;
