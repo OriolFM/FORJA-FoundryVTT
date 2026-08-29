@@ -11,6 +11,24 @@ import { aplicarDanyAPista } from "./dany.mjs";
  * propi (control en disputa entre dos dotats, concentració especial) que
  * mereixen la seva pròpia peça — es documenten com a pendents.
  *
+ * **S-22 (Rituals)**: no hi ha cap camí de codi separat per a
+ * `tipus === "ritual"` — el manual (p. 616-624) diu explícitament que TOT
+ * el que aporta un ritual (modificadors per ressonància, assistents,
+ * materials/sacrificis) és "a discreció del DJ", sense cap fórmula a
+ * calcular (S-22 és "A1" a `04_AUTOMATITZACIO.md`, no "A2"). Els camps
+ * `modDaus`/`modDificultat` que ja existien per a S-21 cobreixen exactament
+ * això; l'únic afegit de S-22 és un avís a `DiategManifestar` que apunta el
+ * DJ cap a aquests camps quan tria un efecte de tipus ritual. **No** s'ha
+ * afegit cap automatització de `system.concentrat` per a rituals: aquest
+ * flag ja té un significat propi i consumit (bonus de +1 dau a la
+ * PROPERA tirada, `tirada.mjs`) que no s'ha de confondre amb "aquest PJ és
+ * al mig d'un ritual" — fer-ho automàticament donaria un +1 dau no guanyat
+ * a la següent tirada no relacionada. Com que `manifestarEfecte` resol la
+ * tirada de manera síncrona i instantània, marcar-lo concentrat abans i
+ * desmarcar-lo després no tindria cap efecte observable de totes maneres
+ * (cap altra acció es pot intercalar enmig d'una sola crida de funció).
+ *
+
  * Interpretacions preses on el manual és ambigu (elevades implícitament,
  * documentades aquí en lloc de decidir-les en silenci):
  *   - **Cost d'equilibri en cas de fallada**: el manual diu "quan un PJ

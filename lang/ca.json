@@ -355,6 +355,7 @@
   "FORJA.Sobrenatural.PuntsExtraReduir": "Abaixar la dificultat (1 punt = -1 dificultat)",
   "FORJA.Sobrenatural.PuntsExtraDau":    "Afegir daus (1 punt = +1 dau)",
   "FORJA.Sobrenatural.PuntsExtraNota":   "Estendre la durada o afegir objectius/àrees (altres usos del manual) es resolen narrativament — el cost en equilibri és el mateix per punt.",
+  "FORJA.Sobrenatural.AvisRitual":       "Ritual: suma aquí els daus/dificultat per ressonància, assistents i materials o sacrificis que el DJ decideixi (Mod. daus / Mod. dificultat, a dalt).",
   "FORJA.Sobrenatural.ResistirTitol":    "Resistència — {nom}",
   "FORJA.Sobrenatural.ResistirIntro":    "{actor} manifesta un efecte sobre {objectiu}. Vol resistir-s'hi?",
   "FORJA.Sobrenatural.NoResistir":       "No resistir-se",

@@ -10,11 +10,12 @@
     <select name="efecteId">
       <option value="">{{localize "FORJA.Sobrenatural.EfecteLliure"}}</option>
       {{#each efectes as |e|}}
-      <option value="{{e.id}}" {{#if (eq e.id ../efecteId)}}selected{{/if}}>{{e.nom}} (dif. {{e.dificultat}})</option>
+      <option value="{{e.id}}" data-tipus="{{e.tipus}}" {{#if (eq e.id ../efecteId)}}selected{{/if}}>{{e.nom}} (dif. {{e.dificultat}})</option>
       {{/each}}
     </select>
   </div>
   {{/if}}
+  <p class="dm-desc dm-ritual-avis" hidden>{{localize "FORJA.Sobrenatural.AvisRitual"}}</p>
 
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Sobrenatural.DificultatBase"}}</label>

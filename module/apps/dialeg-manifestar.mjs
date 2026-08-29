@@ -60,12 +60,20 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
     this.element.querySelector("select[name='efecteId']")?.addEventListener("change", ev => {
       this.#efecteId = ev.target.value;
       const efecte = (this.#config.efectes ?? []).find(e => e.id === this.#efecteId);
+      const avisRitual = this.element.querySelector(".dm-ritual-avis");
       if (efecte) {
         const dificultatInput  = this.element.querySelector("input[name='dificultatBase']");
         const descripcioInput  = this.element.querySelector("input[name='descripcio']");
         if (dificultatInput) dificultatInput.value = efecte.dificultat;
         if (descripcioInput && !descripcioInput.value) descripcioInput.value = efecte.nom;
       }
+      // S-22 (Rituals): l'automatització real (modificadors per ressonància,
+      // assistents i materials/sacrificis) és, segons el propi manual
+      // (p. 616-624), sempre a discreció del DJ — no hi ha res a calcular.
+      // L'única aportació sensata aquí és recordar-ho i apuntar als camps
+      // que ja existeixen (Mod. daus / Mod. dificultat) perquè el DJ hi
+      // sumi el que decideixi, en lloc d'inventar un mecanisme nou.
+      if (avisRitual) avisRitual.hidden = efecte?.tipus !== "ritual";
     });
   }
 
