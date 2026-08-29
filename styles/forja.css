@@ -7605,6 +7605,20 @@ li.combatant:has(> .forja-controls) {
 .forja-efectes-cap { display: flex; align-items: center; gap: 6px; margin: 10px 0 4px; }
 .forja-efectes-cap .eq-nom { font-size: 0.8rem; }
 
+/* ==== S-26 — ARTEFACTES: CÀRREGA ==== */
+.forja-artefacte-accions { display: flex; gap: 4px; }
+.btn-artefacte-carrega {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #cbd5e1;
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+.btn-artefacte-carrega:hover { background: var(--forja-primary-bg); border-color: var(--forja-primary-light); color: #e2f8f5; }
+
 .badge-equilibri {
   display: inline-flex;
   align-items: center;

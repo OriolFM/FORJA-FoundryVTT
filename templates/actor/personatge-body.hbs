@@ -495,13 +495,26 @@
             {{a.cost}} PC · {{localize (concat "FORJA.Artefacte.Categoria." a.categoria)}}
             {{#if a.activacio.dificultat}} · {{localize (concat "FORJA.Artefacte.Activacio." a.activacio.tipus)}} (dif. {{a.activacio.dificultat}}){{/if}}
             {{#if a.us.modLatencia}} · Lat. +{{a.us.modLatencia}}{{/if}}
+            {{#if a.teCarrega}} · {{localize "FORJA.Artefacte.Carrega"}} {{a.carregaActual}}/{{a.carrega.usosPerCarrega}}{{/if}}
           </span>
-          {{#if ../modeEdicio}}
-          <button type="button" class="btn-tret-eliminar" data-action="eliminarArtefacte"
-                  data-item-id="{{a.id}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
-            <i class="fas fa-trash"></i>
-          </button>
-          {{/if}}
+          <div class="forja-artefacte-accions">
+            {{#if a.teCarrega}}
+            <button type="button" class="btn-artefacte-carrega" data-action="forjaActivarArtefacte"
+                    data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.Activar'}}">
+              <i class="fas fa-bolt"></i>
+            </button>
+            <button type="button" class="btn-artefacte-carrega" data-action="forjaRecarregarArtefacte"
+                    data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.Recarregar'}}">
+              <i class="fas fa-battery-full"></i>
+            </button>
+            {{/if}}
+            {{#if ../modeEdicio}}
+            <button type="button" class="btn-tret-eliminar" data-action="eliminarArtefacte"
+                    data-item-id="{{a.id}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
+              <i class="fas fa-trash"></i>
+            </button>
+            {{/if}}
+          </div>
         </div>
         {{/each}}
       </div>

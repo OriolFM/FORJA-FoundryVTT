@@ -204,6 +204,12 @@
   "FORJA.Artefacte.Activacio.normal":     "Activació normal",
   "FORJA.Artefacte.Activacio.complexa":   "Activació complexa",
   "FORJA.Artefacte.Activacio.permanent":  "Permanent",
+  "FORJA.Artefacte.Carrega":     "Càrrega",
+  "FORJA.Artefacte.Activar":     "Activar (gasta 1 càrrega)",
+  "FORJA.Artefacte.Recarregar":  "Recarregar (+1 càrrega)",
+  "FORJA.Artefacte.SenseCarrega": "{nom} no té cap càrrega disponible.",
+  "FORJA.Artefacte.Activat":     "{nom} activat: {restant}/{max} càrregues restants.",
+  "FORJA.Artefacte.Recarregat":  "{nom} recarregat: {actual}/{max} càrregues.",
 
   "FORJA.Combat.Impacta":       "Impacta",
   "FORJA.Combat.Falla":         "Falla",

@@ -9,6 +9,7 @@ import DiategManifestar from "./dialeg-manifestar.mjs";
 import DiategResistir  from "./dialeg-resistir.mjs";
 import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
+import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -57,7 +58,10 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       forjaDescansar:    FullPNJ._onDescansar,
       // Sobrenatural (S-20/S-21)
       toggleEquilibri:      FullPNJ._onToggleEquilibri,
-      forjaObrirManifestar: FullPNJ._onObrirManifestar
+      forjaObrirManifestar: FullPNJ._onObrirManifestar,
+      // Artefactes: càrrega (S-26)
+      forjaActivarArtefacte:    FullPNJ._onActivarArtefacte,
+      forjaRecarregarArtefacte: FullPNJ._onRecarregarArtefacte
     },
     form: { submitOnChange: true }
   };
@@ -484,5 +488,33 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       label:    eleccio.descripcio,
       objectiu
     });
+  }
+
+  // ── Artefactes: càrrega (S-26) ───────────────────────────────────────────
+
+  static async _onActivarArtefacte(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const resultat = await activarArtefacte(item);
+    if (!resultat.ok) {
+      ui.notifications?.warn(game.i18n.format("FORJA.Artefacte.SenseCarrega", { nom: item.name }));
+      return;
+    }
+    if (resultat.restant !== null) {
+      ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Activat", {
+        nom: item.name, restant: resultat.restant, max: item.system.carrega.usosPerCarrega
+      }));
+    }
+  }
+
+  static async _onRecarregarArtefacte(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const nou = await recarregarArtefacte(item, 1);
+    if (nou !== null) {
+      ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Recarregat", {
+        nom: item.name, actual: nou, max: item.system.carrega.usosPerCarrega
+      }));
+    }
   }
 }

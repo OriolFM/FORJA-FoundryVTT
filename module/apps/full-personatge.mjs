@@ -9,6 +9,7 @@ import DiategResistir  from "./dialeg-resistir.mjs";
 import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { resoldreDanyArma } from "../combat/dany.mjs";
+import { teCarrega, carregaActual, activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
 import { avisosCoherencia } from "../validacio/coherencia.mjs";
 import { ferCuracio, habilitatCuracio, aplicarReposNatural, potReferSePerSiSol } from "../combat/curacio.mjs";
@@ -69,7 +70,10 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       forjaObrirAssistent: FullPersonatge._onObrirAssistent,
       // Sobrenatural (S-20/S-21)
       toggleEquilibri:      FullPersonatge._onToggleEquilibri,
-      forjaObrirManifestar: FullPersonatge._onObrirManifestar
+      forjaObrirManifestar: FullPersonatge._onObrirManifestar,
+      // Artefactes: càrrega (S-26)
+      forjaActivarArtefacte:    FullPersonatge._onActivarArtefacte,
+      forjaRecarregarArtefacte: FullPersonatge._onRecarregarArtefacte
     },
     form: { submitOnChange: true }
   };
@@ -586,6 +590,34 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       objectiu
     });
   }
+
+  // ── Artefactes: càrrega (S-26) ───────────────────────────────────────────
+
+  static async _onActivarArtefacte(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const resultat = await activarArtefacte(item);
+    if (!resultat.ok) {
+      ui.notifications?.warn(game.i18n.format("FORJA.Artefacte.SenseCarrega", { nom: item.name }));
+      return;
+    }
+    if (resultat.restant !== null) {
+      ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Activat", {
+        nom: item.name, restant: resultat.restant, max: item.system.carrega.usosPerCarrega
+      }));
+    }
+  }
+
+  static async _onRecarregarArtefacte(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const nou = await recarregarArtefacte(item, 1);
+    if (nou !== null) {
+      ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Recarregat", {
+        nom: item.name, actual: nou, max: item.system.carrega.usosPerCarrega
+      }));
+    }
+  }
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
@@ -726,6 +758,8 @@ export function _prepArtefactes(actor) {
       activacio:  i.system?.activacio ?? {},
       us:         i.system?.us ?? {},
       carrega:    i.system?.carrega ?? {},
+      teCarrega:  teCarrega(i),
+      carregaActual: carregaActual(i),
       mecanica:   i.system?.mecanica ?? "",
       descripcio: i.system?.descripcio ?? ""
     }))

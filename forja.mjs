@@ -19,6 +19,7 @@ import FullPNJ             from "./module/apps/full-pnj.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
 import { reiniciarReaccions } from "./module/combat/reaccions.mjs";
 import { recuperarEquilibri } from "./module/combat/manifestar.mjs";
+import { avancarRecarregaActor } from "./module/combat/artefactes.mjs";
 import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 
@@ -104,18 +105,21 @@ Hooks.on("createItem", async (item) => {
 // Reaccions i concentració (S-11): qui acaba el seu torn recupera reaccions.
 // Cal capturar el combatent SORTINT abans que l'update canviï el torn.
 Hooks.on("preUpdateCombat", (combat, changes) => {
-  if (("turn" in changes) || ("round" in changes)) {
+  // `changes` pot arribar buit/indefinit en cicles interns de Foundry (p. ex.
+  // en eliminar un combat) — sense guarda, "turn" in undefined llança.
+  if (changes && (("turn" in changes) || ("round" in changes))) {
     combat._forjaCombatentSortint = combat.combatant ?? null;
   }
 });
 
 Hooks.on("updateCombat", async (combat, changes) => {
-  if (!(("turn" in changes) || ("round" in changes))) return;
+  if (!changes || !(("turn" in changes) || ("round" in changes))) return;
   const actor = combat._forjaCombatentSortint?.actor;
   combat._forjaCombatentSortint = null;
   if (actor) {
     await reiniciarReaccions(actor);
     await recuperarEquilibri(actor);
+    await avancarRecarregaActor(actor);
   }
 });
 
