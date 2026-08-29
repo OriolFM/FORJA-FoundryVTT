@@ -7505,4 +7505,91 @@ li.combatant:has(> .forja-controls) {
   gap: 6px;
   margin: 2px 0;
 }
+
+/* ==== M-03 — ASSISTENT DE CREACIÓ ==== */
+.forja-assistent-cos { display: flex; flex-direction: column; height: 100%; padding: 10px; gap: 10px; }
+
+.as-progres { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+.as-progres-text { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; }
+.as-progres-barra { display: flex; gap: 4px; }
+.as-progres-punt {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.1);
+}
+.as-progres-punt.fet   { background: var(--forja-primary); }
+.as-progres-punt.actiu { background: var(--forja-primary-light, var(--forja-primary)); box-shadow: 0 0 4px var(--forja-primary); }
+.as-pc-resum { font-size: 0.85rem; color: #cbd5e1; }
+.as-pc-resum.pc-negatius strong { color: var(--forja-danger); }
+
+.as-cos { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.as-intro { margin: 0; font-size: 0.85rem; color: #94a3b8; font-style: italic; }
+
+.as-camp { display: flex; flex-direction: column; gap: 3px; }
+.as-camp label { font-size: 0.8rem; color: #94a3b8; }
+
+.as-cost-taula { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.78rem; color: #94a3b8; }
+.as-cost-badge {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.as-subtotal { margin: 0; font-size: 0.85rem; font-weight: 600; color: #e2e8f0; text-align: right; }
+
+.as-atributs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.as-atributs-grid .forja-attr-box { gap: 4px; }
+
+.as-stepper-fila { display: flex; align-items: center; gap: 8px; }
+.as-stepper-label { flex: 1; font-size: 0.85rem; color: #cbd5e1; }
+
+.as-habs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+.as-hab-fila { grid-template-columns: 1fr auto auto; }
+
+.as-boto-afegir {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: rgba(74,222,128,0.15);
+  border: 1px solid rgba(74,222,128,0.4);
+  color: #86efac;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.as-boto-afegir:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
+.as-equip-botons { display: flex; flex-wrap: wrap; gap: 8px; }
+.as-equip-fila { grid-template-columns: 1fr auto; }
+
+.as-resum-grid { display: flex; flex-direction: column; gap: 4px; }
+.as-resum-fila { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 2px 0; }
+.as-resum-fila.pc-negatius strong { color: var(--forja-danger); }
+.as-avisos { margin-top: 4px; }
+.as-sense-avisos { color: #86efac; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+
+.as-peu { display: flex; justify-content: flex-end; flex-shrink: 0; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08); }
+.as-boto-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #e2e8f0;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.as-boto-nav:hover { background: rgba(255,255,255,0.12); }
+.as-boto-enrere { margin-right: auto; }
+.as-boto-seguent, .as-boto-finalitzar {
+  background: rgba(74,222,128,0.2);
+  border-color: rgba(74,222,128,0.5);
+  color: #dcfce7;
+}
+.as-boto-seguent:hover, .as-boto-finalitzar:hover { background: rgba(74,222,128,0.35); }
 .forja-missatge-atac .mt-maniobra .mt-mod { color: #94a3b8; }

@@ -1,0 +1,211 @@
+<div class="forja-assistent-cos">
+
+  <div class="as-progres">
+    <span class="as-progres-text">{{localize "FORJA.Assistent.PasN" actual=(add pasIdx 1) total=pasTotal nom=pasTitol}}</span>
+    <div class="as-progres-barra">
+      {{#each (range pasTotal) as |i|}}
+      <span class="as-progres-punt {{#if (lt i (add pasIdx 1))}}fet{{/if}} {{#if (eq i pasIdx)}}actiu{{/if}}"></span>
+      {{/each}}
+    </div>
+    <div class="as-pc-resum {{#if (lt pc.lliures 0)}}pc-negatius{{/if}}">
+      {{localize "FORJA.PC.Lliures"}}: <strong>{{pc.lliures}}</strong> / {{pc.total}}
+    </div>
+  </div>
+
+  <div class="as-cos">
+
+    {{#if (eq pas "identitat")}}
+    <p class="as-intro">{{localize "FORJA.Assistent.IntroIdentitat"}}</p>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Actor.Name"}}</label>
+      <input type="text" name="nom" value="{{nom}}"/>
+    </div>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Actor.Concepte"}}</label>
+      <input type="text" name="system.concepte" value="{{sys.concepte}}"/>
+    </div>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Actor.Origen"}}</label>
+      <input type="text" name="system.origen" value="{{sys.origen}}"/>
+    </div>
+    {{/if}}
+
+    {{#if (eq pas "atributs")}}
+    <p class="as-intro">{{localize "FORJA.Assistent.IntroAtributs"}}</p>
+    <div class="as-cost-taula">
+      {{#each tramsAtribut as |t|}}
+      <span>{{t.val}} = {{t.cost}} PC</span>
+      {{/each}}
+    </div>
+    <div class="forja-atributs-grid as-atributs-grid">
+      {{#each atributs as |a|}}
+      <div class="forja-attr-box mode-edicio">
+        <span class="attr-codi">{{a.id}}</span>
+        <div class="attr-stepper">
+          <button type="button" class="btn-stepper" data-action="ajustarAtribut"
+                  data-attr="{{a.id}}" data-delta="-1">−</button>
+          <span class="attr-val">{{a.val}}</span>
+          <button type="button" class="btn-stepper" data-action="ajustarAtribut"
+                  data-attr="{{a.id}}" data-delta="1">+</button>
+        </div>
+        <span class="attr-nom">{{a.nom}}</span>
+        <span class="as-cost-badge">{{a.cost}} PC</span>
+      </div>
+      {{/each}}
+    </div>
+    <p class="as-subtotal">{{localize "FORJA.Assistent.CostSeccio" cost=costAtributs}}</p>
+    {{/if}}
+
+    {{#if (eq pas "cos")}}
+    <p class="as-intro">{{localize "FORJA.Assistent.IntroCos"}}</p>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Attr.Especie"}}</label>
+      <select name="system.especie">
+        {{#each especies as |esp|}}
+        <option value="{{esp.id}}" {{#if (eq esp.id ../sys.especie)}}selected{{/if}}>
+          {{esp.nom}} ({{esp.cost}} PC)
+        </option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="as-stepper-fila">
+      <span class="as-stepper-label">{{localize "FORJA.Attr.Mida"}}</span>
+      <button type="button" class="btn-stepper" data-action="ajustarMida" data-delta="-1">−</button>
+      <span class="attr-val">{{mida.nom}} ({{mida.val}})</span>
+      <button type="button" class="btn-stepper" data-action="ajustarMida" data-delta="1">+</button>
+      <span class="as-cost-badge">{{mida.cost}} PC</span>
+    </div>
+    <div class="as-stepper-fila">
+      <span class="as-stepper-label">{{localize "FORJA.Attr.Constitucio"}}</span>
+      <button type="button" class="btn-stepper" data-action="ajustarConstitucio" data-delta="-1">−</button>
+      <span class="attr-val">{{constitucio.nom}} ({{constitucio.val}})</span>
+      <button type="button" class="btn-stepper" data-action="ajustarConstitucio" data-delta="1">+</button>
+      <span class="as-cost-badge">{{constitucio.cost}} PC</span>
+    </div>
+    <p class="as-subtotal">{{localize "FORJA.Assistent.CostSeccio" cost=(add costEspecie (add mida.cost constitucio.cost))}}</p>
+    {{/if}}
+
+    {{#if (eq pas "habilitats")}}
+    <p class="as-intro">{{localize "FORJA.Assistent.IntroHabilitats"}}</p>
+    <div class="as-habs-grid">
+      {{#each habilitats as |h|}}
+      <div class="forja-hab-fila mode-edicio as-hab-fila {{#if (eq h.tipus 'restringida')}}hab-restringida{{/if}}">
+        <span class="hab-nom">{{h.nom}}</span>
+        <div class="hab-stepper">
+          <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
+                  data-hab-id="{{h.id}}" data-delta="-1">−</button>
+          <span class="hab-niv-val">{{h.nivell}}</span>
+          <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
+                  data-hab-id="{{h.id}}" data-delta="1">+</button>
+        </div>
+        <span class="as-cost-badge">{{h.cost}} PC</span>
+      </div>
+      {{/each}}
+    </div>
+    <p class="as-subtotal">{{localize "FORJA.Assistent.CostSeccio" cost=costHabilitats}}</p>
+    {{/if}}
+
+    {{#if (eq pas "trets")}}
+    <p class="as-intro">{{localize "FORJA.Assistent.IntroTrets"}}</p>
+    <button type="button" class="as-boto-afegir" data-action="crearTret">
+      <i class="fas fa-plus"></i> {{localize "FORJA.Tret.Seleccionar"}}
+    </button>
+    {{#if trets.length}}
+    <div class="forja-trets-llista">
+      {{#each trets as |t|}}
+      <div class="forja-tret-fila">
+        <span class="tret-nom">{{t.nom}}</span>
+        <span class="tret-cost">{{t.cost}} PC</span>
+        <button type="button" class="btn-tret-eliminar" data-action="eliminarTret"
+                data-tret-id="{{t.id}}" title="{{localize 'FORJA.Tret.Eliminar'}}">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p class="trets-buits">{{localize "FORJA.Assistent.SenseTrets"}}</p>
+    {{/if}}
+    <p class="as-subtotal">{{localize "FORJA.Assistent.CostSeccio" cost=costTrets}}</p>
+    {{/if}}
+
+    {{#if (eq pas "equipament")}}
+    <p class="as-intro">{{localize "FORJA.Assistent.IntroEquipament"}}</p>
+    <div class="as-equip-botons">
+      <button type="button" class="as-boto-afegir" data-action="crearArma">
+        <i class="fas fa-plus"></i> {{localize "FORJA.Equip.AfegirArma"}}
+      </button>
+      <button type="button" class="as-boto-afegir" data-action="crearArmadura">
+        <i class="fas fa-plus"></i> {{localize "FORJA.Equip.AfegirArmadura"}}
+      </button>
+      <button type="button" class="as-boto-afegir" data-action="crearArtefacte">
+        <i class="fas fa-plus"></i> {{localize "FORJA.Equip.AfegirArtefacte"}}
+      </button>
+    </div>
+    {{#if (or armes.length (or armadures.length artefactes.length))}}
+    <div class="forja-equip-llista">
+      {{#each armes as |e|}}
+      <div class="forja-equip-fila as-equip-fila">
+        <span class="equip-nom">{{e.nom}}</span>
+        <button type="button" class="btn-tret-eliminar" data-action="eliminarItem" data-item-id="{{e.id}}"><i class="fas fa-trash"></i></button>
+      </div>
+      {{/each}}
+      {{#each armadures as |e|}}
+      <div class="forja-equip-fila as-equip-fila">
+        <span class="equip-nom">{{e.nom}}</span>
+        <button type="button" class="btn-tret-eliminar" data-action="eliminarItem" data-item-id="{{e.id}}"><i class="fas fa-trash"></i></button>
+      </div>
+      {{/each}}
+      {{#each artefactes as |e|}}
+      <div class="forja-equip-fila as-equip-fila">
+        <span class="equip-nom">{{e.nom}}</span>
+        <button type="button" class="btn-tret-eliminar" data-action="eliminarItem" data-item-id="{{e.id}}"><i class="fas fa-trash"></i></button>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p class="trets-buits">{{localize "FORJA.Assistent.SenseEquipament"}}</p>
+    {{/if}}
+    {{/if}}
+
+    {{#if (eq pas "resum")}}
+    <p class="as-intro">{{localize "FORJA.Assistent.IntroResum"}}</p>
+    <div class="as-resum-grid">
+      <div class="as-resum-fila"><span>{{localize "FORJA.PC.Total"}}</span><strong>{{pc.total}}</strong></div>
+      <div class="as-resum-fila"><span>{{localize "FORJA.PC.Gastats"}}</span><strong>{{pc.gastats}}</strong></div>
+      <div class="as-resum-fila {{#if (lt pc.lliures 0)}}pc-negatius{{/if}}"><span>{{localize "FORJA.PC.Lliures"}}</span><strong>{{pc.lliures}}</strong></div>
+    </div>
+    {{#if avisos.length}}
+    <div class="forja-avisos as-avisos">
+      <div class="forja-avisos-cap"><i class="fas fa-triangle-exclamation"></i> {{localize "FORJA.Avis.Titol"}}</div>
+      <ul>
+        {{#each avisos as |avis|}}
+        <li>{{avis}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    {{else}}
+    <p class="as-sense-avisos"><i class="fas fa-circle-check"></i> {{localize "FORJA.Assistent.SenseAvisos"}}</p>
+    {{/if}}
+    {{/if}}
+
+  </div>
+
+  <div class="as-peu">
+    {{#unless esPrimer}}
+    <button type="button" class="as-boto-nav as-boto-enrere" data-action="pasEnrere">
+      <i class="fas fa-arrow-left"></i> {{localize "FORJA.Assistent.Enrere"}}
+    </button>
+    {{/unless}}
+    {{#if esDarrer}}
+    <button type="button" class="as-boto-nav as-boto-finalitzar" data-action="finalitzar">
+      <i class="fas fa-check"></i> {{localize "FORJA.Assistent.Finalitzar"}}
+    </button>
+    {{else}}
+    <button type="button" class="as-boto-nav as-boto-seguent" data-action="pasSeguent">
+      {{localize "FORJA.Assistent.Seguent"}} <i class="fas fa-arrow-right"></i>
+    </button>
+    {{/if}}
+  </div>
+
+</div>

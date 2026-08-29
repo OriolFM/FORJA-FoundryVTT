@@ -3,6 +3,7 @@ import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
 import DiategCuracio  from "./dialeg-curacio.mjs";
 import DiategMillora  from "./dialeg-millora.mjs";
+import AssistentCreacio from "./assistent-creacio.mjs";
 import { resoldreDanyArma } from "../combat/dany.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
 import { avisosCoherencia } from "../validacio/coherencia.mjs";
@@ -57,7 +58,9 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       forjaObrirCuracio: FullPersonatge._onObrirCuracio,
       forjaDescansar:    FullPersonatge._onDescansar,
       // Millora amb PX (S-28)
-      forjaObrirMillora: FullPersonatge._onObrirMillora
+      forjaObrirMillora: FullPersonatge._onObrirMillora,
+      // Assistent de creació (M-03)
+      forjaObrirAssistent: FullPersonatge._onObrirAssistent
     },
     form: { submitOnChange: true }
   };
@@ -493,6 +496,12 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     } else {
       ui.notifications?.info(game.i18n.format("FORJA.Millora.Aplicada", { nom: actor.name, cost: resultat.cost }));
     }
+  }
+
+  // ── Assistent de creació (M-03) ──────────────────────────────────────────
+
+  static async _onObrirAssistent(event, target) {
+    AssistentCreacio.obrir(this.actor);
   }
 }
 
