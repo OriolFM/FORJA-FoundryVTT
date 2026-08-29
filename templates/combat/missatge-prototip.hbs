@@ -1,0 +1,36 @@
+<div class="forja-missatge-atac forja-missatge-prototip {{#if pifia}}missatge-pifia{{else}}{{#if exit}}missatge-exit{{else}}missatge-fallada{{/if}}{{/if}}">
+
+  <div class="mt-cap">
+    <span class="mt-label">
+      {{nomActor}} {{localize "FORJA.Artefacte.ProvaPrototipEtiqueta"}}: {{nomArtefacte}} ({{label}})
+    </span>
+    <span class="mt-dif">dif. {{dificultat}}</span>
+  </div>
+
+  <div class="mt-daus">
+    {{#each dice as |d|}}
+    <span class="mt-dau {{dieClass d}}">{{d}}</span>
+    {{/each}}
+  </div>
+
+  <div class="mt-resultat">
+    {{#if pifia}}
+      <span class="mt-badge badge-pifia"><i class="fas fa-skull"></i> {{localize "FORJA.Artefacte.PifiaPrototip"}}</span>
+    {{else if exit}}
+      <span class="mt-badge badge-exit"><i class="fas fa-check"></i> {{localize "FORJA.Combat.Impacta"}}</span>
+    {{else}}
+      <span class="mt-badge badge-fallada"><i class="fas fa-xmark"></i> {{localize "FORJA.Combat.Falla"}}</span>
+    {{/if}}
+  </div>
+
+  {{#if pifia}}
+  <p class="mt-mod mt-mod-penal">
+    {{#if (eq fase "prototip1")}}
+      {{localize "FORJA.Artefacte.PifiaPrototip1"}}
+    {{else}}
+      {{localize "FORJA.Artefacte.PifiaPrototip2"}}
+    {{/if}}
+  </p>
+  {{/if}}
+
+</div>

@@ -45,7 +45,20 @@ export default class ItemArtefacte extends foundry.abstract.TypeDataModel {
         tornsAcumulats: new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false })
       }),
       mecanica:   new fields.HTMLField({ initial: "" }),
-      descripcio: new fields.HTMLField({ initial: "" })
+      descripcio: new fields.HTMLField({ initial: "" }),
+      // S-30 (R+D d'artefactes, manual p. 592-604): estat de prototipatge.
+      // "produccio" (per defecte, retrocompatible amb tots els artefactes
+      // ja creats des del catàleg via S-19/S-24) es comporta exactament
+      // com fins ara. Un artefacte dissenyat de nou amb el constructor
+      // (`rd-artefactes.mjs`) neix en "prototip1": fràgil (una pífia el
+      // "trenca"), fins que el DJ el marca manualment com a superat el
+      // temps de prova — no hi ha cap temporitzador numèric al manual per
+      // automatitzar aquest pas, vegeu `rd-artefactes.mjs`.
+      fase: new fields.StringField({
+        initial: "produccio",
+        choices: ["prototip1", "prototip2", "produccio"]
+      }),
+      trencat: new fields.BooleanField({ initial: false })
     };
   }
 }

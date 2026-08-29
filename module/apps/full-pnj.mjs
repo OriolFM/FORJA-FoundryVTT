@@ -11,6 +11,8 @@ import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
 import DiategConstructor from "./dialeg-constructor.mjs";
+import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
+import DiategProvarPrototip from "./dialeg-provar-prototip.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -63,7 +65,12 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       forjaObrirManifestar: FullPNJ._onObrirManifestar,
       // Artefactes: càrrega (S-26)
       forjaActivarArtefacte:    FullPNJ._onActivarArtefacte,
-      forjaRecarregarArtefacte: FullPNJ._onRecarregarArtefacte
+      forjaRecarregarArtefacte: FullPNJ._onRecarregarArtefacte,
+      // Artefactes: R+D (S-30)
+      forjaObrirDissenyArtefacte: FullPNJ._onObrirDissenyArtefacte,
+      forjaProvarPrototip:        FullPNJ._onProvarPrototip,
+      forjaRepararPrototip:       FullPNJ._onRepararPrototip,
+      forjaMarcarProduccio:       FullPNJ._onMarcarProduccio
     },
     form: { submitOnChange: true }
   };
@@ -537,5 +544,62 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
         nom: item.name, actual: nou, max: item.system.carrega.usosPerCarrega
       }));
     }
+  }
+
+  // ── Artefactes: R+D (S-30) ───────────────────────────────────────────────
+
+  static async _onObrirDissenyArtefacte(event, target) {
+    const construit = await DiategConstructor.obrir({ esArtefacte: true });
+    if (!construit) return;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: construit.nom,
+      type: "artefacte",
+      system: {
+        cost:       construit.cost,
+        categoria:  "dispositiu",
+        activacio:  { tipus: construit.activacioId, dificultat: construit.dificultat },
+        us:         construit.us,
+        mecanica:   construit.mecanica,
+        descripcio: "",
+        fase:       "prototip1"
+      }
+    }]);
+  }
+
+  static async _onProvarPrototip(event, target) {
+    const actor = this.actor;
+    const item  = actor.items.get(target.dataset.itemId);
+    if (!item || !esPrototip(item)) return;
+
+    const eleccio = await DiategProvarPrototip.obrir({ nomArtefacte: item.name, cost: item.system.cost });
+    if (!eleccio) return;
+
+    const atributVal = actor.system.atributs[eleccio.atribut] ?? 0;
+    const habNivell   = eleccio.habId ? (actor.system.habilitats[eleccio.habId]?.nivell ?? 0) : 0;
+
+    await provarPrototip(actor, item, {
+      atribut: eleccio.atribut, atributVal,
+      habId: eleccio.habId, habNivell,
+      modDaus: eleccio.modDaus, modDificultat: eleccio.modDificultat
+    });
+  }
+
+  static async _onRepararPrototip(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    await repararPrototip(item);
+    ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Reparat", { nom: item.name }));
+  }
+
+  static async _onMarcarProduccio(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const confirmat = await foundry.applications.api.DialogV2.confirm({
+      window: { title: game.i18n.format("FORJA.Artefacte.MarcarProduccioTitol", { nom: item.name }) },
+      content: `<p>${game.i18n.localize("FORJA.Artefacte.MarcarProduccioText")}</p>`
+    });
+    if (!confirmat) return;
+    await marcarProduccio(item);
+    ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Produccio", { nom: item.name }));
   }
 }

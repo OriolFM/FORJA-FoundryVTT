@@ -1,0 +1,36 @@
+<div class="forja-dialeg-provar-prototip">
+  <p class="dm-desc">{{localize "FORJA.Artefacte.ProvarPrototipIntro" cost=cost}}</p>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Dice.Atribut"}}</label>
+    <select name="atribut">
+      {{#each atributs as |a|}}
+      <option value="{{a}}" {{#if (eq a ../atribut)}}selected{{/if}}>{{localize (concat "FORJA.Attr." a)}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Artefacte.Habilitat"}}</label>
+    <select name="habId">
+      <option value="">{{localize "FORJA.Artefacte.CapHabilitat"}}</option>
+      {{#each habilitats as |h|}}
+      <option value="{{h.id}}" {{#if (eq h.id ../habId)}}selected{{/if}}>{{localize h.nom}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Dice.ModDaus"}}</label>
+    <input type="number" name="modDaus" value="0"/>
+  </div>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Dice.ModDificultat"}}</label>
+    <input type="number" name="modDificultat" value="0"/>
+  </div>
+
+  <button type="submit">
+    <i class="fas fa-screwdriver-wrench"></i> {{localize "FORJA.Artefacte.ProvarPrototip"}}
+  </button>
+</div>

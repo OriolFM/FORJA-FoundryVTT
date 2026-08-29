@@ -3,11 +3,20 @@ import { calcularConstruccio } from "../progressio/construccio.mjs";
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 /**
- * Constructor d'efectes sobrenaturals a mida (S-23, "nucli" — vegeu
- * `progressio/construccio.mjs` per l'abast exacte de categories cobertes).
- * Recalcula cost/dificultat/latència en directe a cada canvi (re-render
- * complet: hi ha massa camps interdependents per pedaçar el DOM a mà, a
- * diferència dels diàlegs més petits com `DiategManifestar`).
+ * Constructor d'efectes sobrenaturals i artefactes a mida (S-23/S-30,
+ * "nucli" — vegeu `progressio/construccio.mjs` per l'abast exacte de
+ * categories cobertes). Recalcula cost/dificultat/latència en directe a
+ * cada canvi (re-render complet: hi ha massa camps interdependents per
+ * pedaçar el DOM a mà, a diferència dels diàlegs més petits com
+ * `DiategManifestar`).
+ *
+ * `obrir({ esArtefacte: true })` (S-30) canvia el mode: s'amaga "Do" i
+ * "Efecte/Ritual" (no apliquen a un artefacte, que és tecnologia, no un
+ * do sobrenatural) i es mostren els paràmetres exclusius d'artefacte
+ * (Activació, Mode d'espera). El mode es fixa en obrir el diàleg — no hi
+ * ha manera de canviar-lo a mig formulari, cada mode té la seva pròpia
+ * entrada des de la fitxa ("Construir efecte nou" / "Dissenyar artefacte
+ * nou").
  */
 export default class DiategConstructor extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -31,8 +40,11 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
   };
 
   #resolve = null;
+  #esArtefacte = false;
   #nom = "";
   #do = "canalitzacio";
+  #activacioId = "normal";
+  #modeEsperaId = "cap";
   #seleccio = {
     tipus: "efecte", abast: "toc", objectius: "individuals", durada: "instantania",
     usTemps: "ambdos", usAccio: "accio",
@@ -43,8 +55,13 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     habilitats: []
   };
 
+  constructor(config = {}, options = {}) {
+    super(options);
+    this.#esArtefacte = !!config.esArtefacte;
+  }
+
   get title() {
-    return game.i18n.localize("FORJA.Construccio.Titol");
+    return game.i18n.localize(this.#esArtefacte ? "FORJA.Construccio.TitolArtefacte" : "FORJA.Construccio.Titol");
   }
 
   async _prepareContext(options) {
@@ -56,13 +73,17 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
       ...s,
       dany:      s.danyActiu ? s.dany : null,
       curacio:   s.curacioActiva ? s.curacio : null,
-      proteccio: s.proteccioActiva ? s.proteccio : null
+      proteccio: s.proteccioActiva ? s.proteccio : null,
+      artefacte: this.#esArtefacte ? { activacioId: this.#activacioId, modeEsperaId: this.#modeEsperaId } : null
     };
     const resultat = calcularConstruccio(perCalcul);
 
     return {
+      esArtefacte: this.#esArtefacte,
       nom: this.#nom,
       do: this.#do,
+      activacioId: this.#activacioId,
+      modeEsperaId: this.#modeEsperaId,
       s,
       resultat,
       P,
@@ -82,6 +103,8 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
 
     el.querySelector("input[name='nom']")?.addEventListener("change", ev => { this.#nom = ev.target.value; });
     el.querySelector("select[name='do']")?.addEventListener("change", ev => { this.#do = ev.target.value; });
+    el.querySelector("select[name='activacioId']")?.addEventListener("change", ev => { this.#activacioId = ev.target.value; reRender(); });
+    el.querySelector("select[name='modeEsperaId']")?.addEventListener("change", ev => { this.#modeEsperaId = ev.target.value; reRender(); });
 
     const camps = ["tipus", "abast", "objectius", "durada", "usTemps", "usAccio"];
     for (const camp of camps) {
@@ -160,11 +183,29 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
       ...s,
       dany:      s.danyActiu ? s.dany : null,
       curacio:   s.curacioActiva ? s.curacio : null,
-      proteccio: s.proteccioActiva ? s.proteccio : null
+      proteccio: s.proteccioActiva ? s.proteccio : null,
+      artefacte: this.#esArtefacte ? { activacioId: this.#activacioId, modeEsperaId: this.#modeEsperaId } : null
     };
     const resultat = calcularConstruccio(perCalcul);
-    const nom = this.#nom?.trim() || game.i18n.localize("FORJA.Construccio.EfecteSenseNom");
+    const nom = this.#nom?.trim() || game.i18n.localize(
+      this.#esArtefacte ? "FORJA.Construccio.ArtefacteSenseNom" : "FORJA.Construccio.EfecteSenseNom"
+    );
     const mecanica = resultat.desglossament.map(l => l.etiqueta).join(". ") + ".";
+    const us = { narratiu: s.usTemps !== "actiu-nomes", actiu: s.usTemps !== "narratiu" };
+
+    if (this.#esArtefacte) {
+      this.#resolve?.({
+        esArtefacte: true,
+        nom,
+        activacioId: this.#activacioId,
+        dificultat: resultat.dificultat,
+        modLatencia: resultat.latencia,
+        cost: resultat.cost,
+        us,
+        mecanica
+      });
+      return;
+    }
 
     this.#resolve?.({
       nom,
@@ -173,7 +214,7 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
       dificultat: resultat.dificultat,
       modLatencia: resultat.latencia,
       cost: resultat.cost,
-      us: { narratiu: s.usTemps !== "actiu-nomes", actiu: s.usTemps !== "narratiu" },
+      us,
       mecanica
     });
   }
@@ -183,9 +224,9 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     return super.close(options);
   }
 
-  static obrir() {
+  static obrir(config = {}) {
     return new Promise(resolve => {
-      const dlg = new DiategConstructor();
+      const dlg = new DiategConstructor(config);
       dlg.#resolve = resolve;
       dlg.render(true);
     });

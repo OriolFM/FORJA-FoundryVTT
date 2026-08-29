@@ -1,13 +1,33 @@
 <div class="forja-dialeg-constructor">
   <div class="dc-cos">
 
+  {{#if esArtefacte}}
+  <p class="dm-desc">{{localize "FORJA.Construccio.IntroArtefacte"}}</p>
+  {{else}}
   <p class="dm-desc">{{localize "FORJA.Construccio.Intro"}}</p>
+  {{/if}}
 
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Construccio.Nom"}}</label>
     <input type="text" name="nom" value="{{nom}}" placeholder="{{localize 'FORJA.Construccio.NomPlaceholder'}}"/>
   </div>
 
+  {{#if esArtefacte}}
+  <div class="dc-graella">
+    <div class="form-group dm-camp">
+      <label>{{localize "FORJA.Construccio.Activacio"}}</label>
+      <select name="activacioId">
+        {{#each P.artefacteActivacio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../activacioId)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      </select>
+    </div>
+    <div class="form-group dm-camp">
+      <label>{{localize "FORJA.Construccio.ModeEspera"}}</label>
+      <select name="modeEsperaId">
+        {{#each P.artefacteModeEspera as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../modeEsperaId)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      </select>
+    </div>
+  </div>
+  {{else}}
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Construccio.Do"}}</label>
     <select name="do">
@@ -21,6 +41,7 @@
     <label class="dm-radio"><input type="radio" name="tipus" value="efecte" {{#if (eq s.tipus "efecte")}}checked{{/if}}> {{localize "FORJA.Sobrenatural.Tipus.efecte"}}</label>
     <label class="dm-radio"><input type="radio" name="tipus" value="ritual" {{#if (eq s.tipus "ritual")}}checked{{/if}}> {{localize "FORJA.Sobrenatural.Tipus.ritual"}}</label>
   </div>
+  {{/if}}
 
   <div class="dc-graella">
     <div class="form-group dm-camp">
@@ -193,6 +214,10 @@
   </div>
 
   <button type="submit">
+    {{#if esArtefacte}}
+    <i class="fas fa-microchip"></i> {{localize "FORJA.Construccio.CrearArtefacte"}}
+    {{else}}
     <i class="fas fa-flask"></i> {{localize "FORJA.Construccio.Crear"}}
+    {{/if}}
   </button>
 </div>

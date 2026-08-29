@@ -19,11 +19,17 @@
  * `parametres.json` amb la taula corresponent i un bloc més aquí, seguint
  * exactament el mateix patró que les cinc ja fetes.
  *
- * Només construeix **efectes** (no artefactes): és el camí que alimenta
- * directament `manifestarEfecte` (S-21), l'ús més freqüent. El constructor
- * d'artefactes (paràmetres d'activació/càrrega/acumulador, ja modelats a
- * `parametres.json` com `artefacteActivacio`/`artefacteModeEspera` per quan
- * es faci) queda pendent — mateix criteri de "nucli abans que exhaustivitat".
+ * **Artefactes (S-30)**: el mateix motor de paràmetres es reutilitza per
+ * dissenyar artefactes — es construeixen amb els mateixos blocs bàsics
+ * (abast/objectius/durada/dany/curació/protecció/estats/habilitats) més dos
+ * paràmetres exclusius d'artefacte (`seleccio.artefacte`, opcional):
+ * `activacioId` (`FORJA.PARAMETRES.artefacteActivacio` — normal/trivial) i
+ * `modeEsperaId` (`FORJA.PARAMETRES.artefacteModeEspera` — si cal invertir
+ * temps mantenint-lo preparat perquè l'activació sigui trivial). **No
+ * confondre amb el `carrega.modeEspera` de S-26** (`combat/artefactes.mjs`):
+ * aquell és un booleà d'estat en joc (recàrrega manual vs. automàtica per
+ * torn); aquest és un paràmetre de disseny (cost en PC), conceptes diferents
+ * que el manual només comparteix de nom.
  */
 
 /**
@@ -39,6 +45,7 @@
  * @property {{tipus:string, nivell:number}|null} proteccio
  * @property {Array<{id:string, nivell:number}>} estats
  * @property {Array<{id:string, nivell:number}>} habilitats
+ * @property {{activacioId:string, modeEsperaId:string}|null} [artefacte]
  */
 
 function _buscar(llista, id) {
@@ -77,6 +84,14 @@ export function calcularConstruccio(seleccio) {
 
   const usAccio = _buscar(P.usAccio, seleccio.usAccio ?? "accio");
   if (usAccio) afegir(usAccio.nom, usAccio.cost);
+
+  // ── Artefacte (S-30) ──
+  if (seleccio.artefacte) {
+    const activacio = _buscar(P.artefacteActivacio, seleccio.artefacte.activacioId ?? "normal");
+    if (activacio) afegir(`Activació: ${activacio.nom}`, activacio.cost);
+    const modeEspera = _buscar(P.artefacteModeEspera, seleccio.artefacte.modeEsperaId ?? "cap");
+    if (modeEspera) afegir(modeEspera.nom, modeEspera.cost);
+  }
 
   // ── Dany ──
   if (seleccio.dany) {

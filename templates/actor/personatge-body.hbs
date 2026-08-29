@@ -489,6 +489,10 @@
               title="{{localize 'FORJA.Equip.AfegirArtefacte'}}">
         <i class="fas fa-plus"></i>
       </button>
+      <button type="button" class="btn-cap-afegir" data-action="forjaObrirDissenyArtefacte"
+              title="{{localize 'FORJA.Construccio.CrearArtefacte'}}">
+        <i class="fas fa-microchip"></i>
+      </button>
       {{/if}}
     </div>
     <div class="forja-seccio-cos">
@@ -496,7 +500,11 @@
       <div class="forja-equip-llista">
         {{#each artefactes as |a|}}
         <div class="forja-equip-fila" data-action="editarItem" data-item-id="{{a.id}}" title="{{a.mecanica}}">
-          <span class="equip-nom">{{a.nom}}</span>
+          <span class="equip-nom">
+            {{a.nom}}
+            {{#if a.esPrototip}}<span class="forja-badge-prototip" title="{{localize (concat 'FORJA.Artefacte.Fase.' a.fase)}}">{{localize (concat "FORJA.Artefacte.Fase." a.fase)}}</span>{{/if}}
+            {{#if a.trencat}}<span class="forja-badge-trencat" title="{{localize 'FORJA.Artefacte.Trencat'}}"><i class="fas fa-triangle-exclamation"></i></span>{{/if}}
+          </span>
           <span class="equip-meta">
             {{a.cost}} PC · {{localize (concat "FORJA.Artefacte.Categoria." a.categoria)}}
             {{#if a.activacio.dificultat}} · {{localize (concat "FORJA.Artefacte.Activacio." a.activacio.tipus)}} (dif. {{a.activacio.dificultat}}){{/if}}
@@ -513,6 +521,24 @@
                     data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.Recarregar'}}">
               <i class="fas fa-battery-full"></i>
             </button>
+            {{/if}}
+            {{#if a.esPrototip}}
+            <button type="button" class="btn-artefacte-carrega" data-action="forjaProvarPrototip"
+                    data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.ProvarPrototip'}}">
+              <i class="fas fa-screwdriver-wrench"></i>
+            </button>
+            {{#if ../modeEdicio}}
+            {{#if a.trencat}}
+            <button type="button" class="btn-artefacte-carrega" data-action="forjaRepararPrototip"
+                    data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.RepararPrototip'}}">
+              <i class="fas fa-check"></i>
+            </button>
+            {{/if}}
+            <button type="button" class="btn-artefacte-carrega" data-action="forjaMarcarProduccio"
+                    data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.MarcarProduccio'}}">
+              <i class="fas fa-flag-checkered"></i>
+            </button>
+            {{/if}}
             {{/if}}
             {{#if ../modeEdicio}}
             <button type="button" class="btn-tret-eliminar" data-action="eliminarArtefacte"

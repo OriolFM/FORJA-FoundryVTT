@@ -21,6 +21,8 @@ import {
 import {
   provarManifestacio, aplicarPenalitzacioFallada, aplicarEfecteProgressio
 } from "../progressio/progressio-sobrenatural.mjs";
+import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
+import DiategProvarPrototip from "./dialeg-provar-prototip.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -79,7 +81,12 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       forjaObrirProgressio: FullPersonatge._onObrirProgressio,
       // Artefactes: càrrega (S-26)
       forjaActivarArtefacte:    FullPersonatge._onActivarArtefacte,
-      forjaRecarregarArtefacte: FullPersonatge._onRecarregarArtefacte
+      forjaRecarregarArtefacte: FullPersonatge._onRecarregarArtefacte,
+      // Artefactes: R+D (S-30)
+      forjaObrirDissenyArtefacte: FullPersonatge._onObrirDissenyArtefacte,
+      forjaProvarPrototip:        FullPersonatge._onProvarPrototip,
+      forjaRepararPrototip:       FullPersonatge._onRepararPrototip,
+      forjaMarcarProduccio:       FullPersonatge._onMarcarProduccio
     },
     form: { submitOnChange: true }
   };
@@ -718,6 +725,63 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       }));
     }
   }
+
+  // ── Artefactes: R+D (S-30) ───────────────────────────────────────────────
+
+  static async _onObrirDissenyArtefacte(event, target) {
+    const construit = await DiategConstructor.obrir({ esArtefacte: true });
+    if (!construit) return;
+    await this.actor.createEmbeddedDocuments("Item", [{
+      name: construit.nom,
+      type: "artefacte",
+      system: {
+        cost:       construit.cost,
+        categoria:  "dispositiu",
+        activacio:  { tipus: construit.activacioId, dificultat: construit.dificultat },
+        us:         construit.us,
+        mecanica:   construit.mecanica,
+        descripcio: "",
+        fase:       "prototip1"
+      }
+    }]);
+  }
+
+  static async _onProvarPrototip(event, target) {
+    const actor = this.actor;
+    const item  = actor.items.get(target.dataset.itemId);
+    if (!item || !esPrototip(item)) return;
+
+    const eleccio = await DiategProvarPrototip.obrir({ nomArtefacte: item.name, cost: item.system.cost });
+    if (!eleccio) return;
+
+    const atributVal = actor.system.atributs[eleccio.atribut] ?? 0;
+    const habNivell   = eleccio.habId ? (actor.system.habilitats[eleccio.habId]?.nivell ?? 0) : 0;
+
+    await provarPrototip(actor, item, {
+      atribut: eleccio.atribut, atributVal,
+      habId: eleccio.habId, habNivell,
+      modDaus: eleccio.modDaus, modDificultat: eleccio.modDificultat
+    });
+  }
+
+  static async _onRepararPrototip(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    await repararPrototip(item);
+    ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Reparat", { nom: item.name }));
+  }
+
+  static async _onMarcarProduccio(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const confirmat = await foundry.applications.api.DialogV2.confirm({
+      window: { title: game.i18n.format("FORJA.Artefacte.MarcarProduccioTitol", { nom: item.name }) },
+      content: `<p>${game.i18n.localize("FORJA.Artefacte.MarcarProduccioText")}</p>`
+    });
+    if (!confirmat) return;
+    await marcarProduccio(item);
+    ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Produccio", { nom: item.name }));
+  }
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
@@ -861,7 +925,10 @@ export function _prepArtefactes(actor) {
       teCarrega:  teCarrega(i),
       carregaActual: carregaActual(i),
       mecanica:   i.system?.mecanica ?? "",
-      descripcio: i.system?.descripcio ?? ""
+      descripcio: i.system?.descripcio ?? "",
+      fase:       i.system?.fase ?? "produccio",
+      trencat:    i.system?.trencat ?? false,
+      esPrototip: esPrototip(i)
     }))
     .sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
 }

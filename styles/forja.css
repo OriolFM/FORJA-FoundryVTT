@@ -7619,6 +7619,24 @@ li.combatant:has(> .forja-controls) {
 }
 .btn-artefacte-carrega:hover { background: var(--forja-primary-bg); border-color: var(--forja-primary-light); color: #e2f8f5; }
 
+/* ==== S-30 — R+D D'ARTEFACTES: PROTOTIPS ==== */
+.forja-badge-prototip {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--forja-warning);
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.35);
+  border-radius: var(--forja-radius-sm);
+  padding: 1px 6px;
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+.forja-badge-trencat {
+  font-size: 0.7rem;
+  color: var(--forja-danger);
+  margin-left: 4px;
+}
+
 /* ==== S-23 — CONSTRUCTOR DE PARÀMETRES ==== */
 .forja-dialeg-constructor { display: flex; flex-direction: column; height: 100%; gap: 8px; padding: 8px; }
 .forja-dialeg-constructor .dc-cos { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; }
