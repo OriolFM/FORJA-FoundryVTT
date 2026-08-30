@@ -78,11 +78,29 @@ export function bandaDistancia(distancia, arma, defensaBasica, atacant = null) {
  * Comprova si un atac cos a cos o d'armament natural pot arribar a
  * l'objectiu: cal que la distància actual no superi una casella de graella
  * (manual: "a tocar").
+ *
+ * S'arrodoneix `distancia` cap avall abans de comparar-la: en una graella
+ * HEXAGONAL, `canvas.grid.measurePath` fa una mesura contínua (centre a
+ * centre en línia recta), no un recompte discret de caselles — dues
+ * caselles genuïnament veïnes poden mesurar fins a 2/√3 ≈ 1,1547 cops la
+ * mida de graella segons la direcció (files/columnes alineades vs. la
+ * resta de veïnes), no exactament 1. Sense arrodonir, aquestes últimes
+ * queden per sota del llindar "a tocar" per error. Arrodonir cap avall
+ * agrupa correctament totes les veïnes genuïnes (1,0–1,1547) a 1 caserna,
+ * sense arriscar-se a acceptar-ne cap a 2 caselles (que sempre mesuren
+ * per sobre d'aquest marge, com a mínim ~2,0). En graella quadrada o
+ * sense graella no canvia res (les distàncies ja hi surten exactes).
+ *
+ * Només afecta aquesta comprovació d'adjacència — les bandes de rang a
+ * distància (`bandaDistancia`) no s'han tocat: per a distàncies llargues
+ * concretes, una correcció equivalent exigiria comptar caselles de
+ * veritat (pathfinding sobre la graella hexagonal), no un arrodoniment
+ * senzill, i queda fora d'abast per ara.
  * @param {number} distancia
  * @returns {boolean}
  */
 export function estaAlAbastCosACos(distancia) {
-  return distancia <= (canvas.grid?.distance ?? 1);
+  return Math.floor(distancia) <= (canvas.grid?.distance ?? 1);
 }
 
 /**
