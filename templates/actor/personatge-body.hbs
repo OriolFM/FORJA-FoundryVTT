@@ -243,6 +243,30 @@
         </button>
       </div>
 
+      {{#if disputaControl}}
+      <div class="forja-disputa-control">
+        <div class="dc-cap">
+          <i class="fas fa-hand-fist"></i>
+          {{localize "FORJA.Sobrenatural.DisputaTitol" nom=disputaControl.oponentNom efecte=disputaControl.efecteNom}}
+        </div>
+        <p class="dc-fites">
+          {{localize "FORJA.Sobrenatural.DisputaFites" propies=disputaControl.fitesPropies oponent=disputaControl.fitesOponent marge=disputaControl.dificultatBase}}
+        </p>
+        {{#if disputaControl.esElSeuTorn}}
+        <div class="dc-botons">
+          <button type="button" data-action="forjaContinuarDisputa">
+            <i class="fas fa-dice-d20"></i> {{localize "FORJA.Sobrenatural.DisputaContinuar"}}
+          </button>
+          <button type="button" class="dc-renunciar" data-action="forjaRenunciarDisputa">
+            <i class="fas fa-flag"></i> {{localize "FORJA.Sobrenatural.DisputaRenunciar"}}
+          </button>
+        </div>
+        {{else}}
+        <p class="dc-espera">{{localize "FORJA.Sobrenatural.DisputaEspera"}}</p>
+        {{/if}}
+      </div>
+      {{/if}}
+
       <div class="forja-efectes-cap">
         <span class="eq-nom">{{localize "FORJA.Section.Efectes"}}</span>
         {{#if modeEdicio}}

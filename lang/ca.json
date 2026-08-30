@@ -428,6 +428,15 @@
   "FORJA.Sobrenatural.EquilibriResultant": "{actual} / {max}",
   "FORJA.Sobrenatural.DanyEquilibri":    "directe per equilibri",
   "FORJA.Sobrenatural.AvisEquilibriNegatiu": "Ja estava en equilibri negatiu abans de manifestar: el DJ pot aplicar algun efecte negatiu addicional (a discreció).",
+
+  "FORJA.Sobrenatural.OferirControlTitol": "Prendre el control de l'efecte?",
+  "FORJA.Sobrenatural.OferirControlText":  "{nom} ha contrarestat l'efecte \"{efecte}\" i l'ha desviat. En lloc de deixar-lo desviar-se, {nom} pot intentar prendre'n el control: l'efecte quedarà en disputa, tots dos dotats entraran en concentració (sense reaccions, +1 dau) i s'aniran acumulant fites torn a torn fins que un guanyi o renunciï. Vols intentar-ho?",
+  "FORJA.Sobrenatural.ControlGuanyat":     "<strong>{nom}</strong> ha pres el control de l'efecte \"{efecte}\" — el DJ decideix com es manifesta o es dirigeix ara.",
+  "FORJA.Sobrenatural.DisputaTitol":       "Disputa pel control de \"{efecte}\" amb {nom}",
+  "FORJA.Sobrenatural.DisputaFites":       "Fites acumulades: {propies} contra {oponent} (cal superar per {marge}).",
+  "FORJA.Sobrenatural.DisputaContinuar":   "Seguir provant",
+  "FORJA.Sobrenatural.DisputaRenunciar":   "Renunciar (cedir el control)",
+  "FORJA.Sobrenatural.DisputaEspera":      "Esperant que et toqui declarar per continuar o renunciar.",
   "FORJA.Avis.MesDunDo": "Aquest personatge té trets de més d'un do sobrenatural ({dons}): els dons són mútuament excloents.",
   "FORJA.Avis.EfecteDoIncorrecte": "L'efecte \"{nom}\" és de {do}, un do diferent del propi: només els dotats d'un cert tipus poden fer-lo servir.",
 

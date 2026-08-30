@@ -1,6 +1,7 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { calcularDany, resoldreDanyArma, aplicarDanyAPista } from "./dany.mjs";
 import { trencarConcentracio } from "./reaccions.mjs";
+import { resoldrePerRupturaConcentracio } from "./control-efecte.mjs";
 
 /**
  * Flux d'atac (S-12): tira, compara amb la defensa de l'objectiu, i si
@@ -66,6 +67,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       // a criteri del DJ, com la resta d'estats — vegeu estats.mjs).
       if (objectiu.system.concentrat && resultatDany.danyFinal > (objectiu.system.atributs?.FOR ?? 0)) {
         concentracioTrencada = await trencarConcentracio(objectiu);
+        if (concentracioTrencada) await resoldrePerRupturaConcentracio(game.combat, objectiu);
       }
     }
 

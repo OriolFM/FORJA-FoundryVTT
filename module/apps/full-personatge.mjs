@@ -12,6 +12,10 @@ import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { opcioContrarestar, resoldreContrarestar } from "../combat/contrarestar.mjs";
 import { desferEfecte } from "../combat/desfer.mjs";
 import { concentrar, trencarConcentracio } from "../combat/reaccions.mjs";
+import {
+  oferirControlSiEscau, disputaActor, esElSeuTorn,
+  continuarDisputaControl, renunciarDisputaControl, resoldrePerRupturaConcentracio
+} from "../combat/control-efecte.mjs";
 import DiategDesfer from "./dialeg-desfer.mjs";
 import { resoldreDanyArma } from "../combat/dany.mjs";
 import { teCarrega, carregaActual, activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
@@ -102,7 +106,10 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       // Accions complexes (S-08)
       forjaObrirAccionsComplexes: FullPersonatge._onObrirAccionsComplexes,
       // Desfer un efecte (S-21)
-      forjaObrirDesfer: FullPersonatge._onObrirDesfer
+      forjaObrirDesfer: FullPersonatge._onObrirDesfer,
+      // Prendre el control de l'efecte (S-21)
+      forjaContinuarDisputa: FullPersonatge._onContinuarDisputa,
+      forjaRenunciarDisputa: FullPersonatge._onRenunciarDisputa
     },
     form: { submitOnChange: true }
   };
@@ -136,6 +143,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       },
       salut:      _prepSalut(sys),
       sobrenatural: _prepSobrenatural(sys),
+      disputaControl: _prepDisputaControl(this.actor),
       habilitats: _prepHabilitats(sys, cfg),
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
@@ -703,6 +711,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     const actor = this.actor;
     if (actor.system.concentrat) {
       await trencarConcentracio(actor);
+      await resoldrePerRupturaConcentracio(game.combat, actor);
     } else {
       await concentrar(actor);
     }
@@ -742,7 +751,7 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       }
     }
 
-    await manifestarEfecte({
+    const resultat = await manifestarEfecte({
       actor,
       dificultatBase: eleccio.dificultatBase,
       modDaus:        eleccio.modDaus,
@@ -753,6 +762,37 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       label:    eleccio.descripcio,
       objectiu
     });
+
+    await oferirControlSiEscau({
+      resultat, resistencia, dificultatBase: eleccio.dificultatBase,
+      atacant: actor, defensor: objectiu, label: eleccio.descripcio
+    });
+  }
+
+  // ── Prendre el control de l'efecte (S-21) ────────────────────────────────
+
+  static async _onContinuarDisputa() {
+    const actor = this.actor;
+    const combat = game.combat;
+    if (!disputaActor(combat, actor) || !esElSeuTorn(combat, actor)) return;
+    const resultat = await continuarDisputaControl(combat, actor);
+    if (resultat) {
+      await combat.declararAccio(
+        combat.combatants.find(c => c.actor?.id === actor.id)?.id,
+        actor.system.latenciaBase
+      );
+    }
+  }
+
+  static async _onRenunciarDisputa() {
+    const actor = this.actor;
+    const combat = game.combat;
+    if (!disputaActor(combat, actor) || !esElSeuTorn(combat, actor)) return;
+    await renunciarDisputaControl(combat, actor);
+    await combat.declararAccio(
+      combat.combatants.find(c => c.actor?.id === actor.id)?.id,
+      actor.system.latenciaBase
+    );
   }
 
   // ── Artefactes: càrrega (S-26) ───────────────────────────────────────────
@@ -937,6 +977,31 @@ export function _prepSobrenatural(sys) {
     actual: sys.equilibri.actual,
     zona:   sys.equilibri.zona,
     caselles
+  };
+}
+
+/**
+ * Context per al panell de "Prendre el control de l'efecte" (S-21):
+ * `null` si aquest actor no és part de cap disputa activa al combat
+ * actiu. Vegeu `control-efecte.mjs`.
+ * @param {ForjaActor} actor
+ */
+export function _prepDisputaControl(actor) {
+  const combat = game.combat;
+  const estat  = disputaActor(combat, actor);
+  if (!estat) return null;
+
+  const esRival = estat.atacantId === actor.id;
+  const oponentId  = esRival ? estat.defensorId  : estat.atacantId;
+  const oponentNom = esRival ? estat.defensorNom : estat.atacantNom;
+
+  return {
+    efecteNom: estat.efecteNom,
+    dificultatBase: estat.dificultatBase,
+    fitesPropies:  estat.fites[actor.id] ?? 0,
+    fitesOponent:  estat.fites[oponentId] ?? 0,
+    oponentNom,
+    esElSeuTorn: esElSeuTorn(combat, actor)
   };
 }
 

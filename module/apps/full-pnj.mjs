@@ -2,7 +2,7 @@ import { ferTirada }  from "../dice/tirada.mjs";
 import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
 import DiategCuracio  from "./dialeg-curacio.mjs";
-import { _opcionsNumeriques, _prepSalut, _prepSobrenatural, _prepHabilitats, _prepTrets, _prepItems, _prepArtefactes, _prepEfectes } from "./full-personatge.mjs";
+import { _opcionsNumeriques, _prepSalut, _prepSobrenatural, _prepDisputaControl, _prepHabilitats, _prepTrets, _prepItems, _prepArtefactes, _prepEfectes } from "./full-personatge.mjs";
 import { assegurarAtacsAutomatics } from "../combat/equipament-automatic.mjs";
 import { ferCuracio, habilitatCuracio, aplicarReposNatural, potReferSePerSiSol } from "../combat/curacio.mjs";
 import DiategManifestar from "./dialeg-manifestar.mjs";
@@ -12,6 +12,10 @@ import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { opcioContrarestar, resoldreContrarestar } from "../combat/contrarestar.mjs";
 import { desferEfecte } from "../combat/desfer.mjs";
 import { concentrar, trencarConcentracio } from "../combat/reaccions.mjs";
+import {
+  oferirControlSiEscau, disputaActor, esElSeuTorn,
+  continuarDisputaControl, renunciarDisputaControl, resoldrePerRupturaConcentracio
+} from "../combat/control-efecte.mjs";
 import DiategDesfer from "./dialeg-desfer.mjs";
 import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
 import DiategConstructor from "./dialeg-constructor.mjs";
@@ -86,7 +90,10 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       // Accions complexes (S-08)
       forjaObrirAccionsComplexes: FullPNJ._onObrirAccionsComplexes,
       // Desfer un efecte (S-21)
-      forjaObrirDesfer: FullPNJ._onObrirDesfer
+      forjaObrirDesfer: FullPNJ._onObrirDesfer,
+      // Prendre el control de l'efecte (S-21)
+      forjaContinuarDisputa: FullPNJ._onContinuarDisputa,
+      forjaRenunciarDisputa: FullPNJ._onRenunciarDisputa
     },
     form: { submitOnChange: true }
   };
@@ -121,6 +128,7 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       },
       salut:      _prepSalut(sys),
       sobrenatural: _prepSobrenatural(sys),
+      disputaControl: _prepDisputaControl(this.actor),
       habilitats: _prepHabilitats(sys, cfg),
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
@@ -488,6 +496,7 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
     const actor = this.actor;
     if (actor.system.concentrat) {
       await trencarConcentracio(actor);
+      await resoldrePerRupturaConcentracio(game.combat, actor);
     } else {
       await concentrar(actor);
     }
@@ -536,7 +545,7 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       }
     }
 
-    await manifestarEfecte({
+    const resultat = await manifestarEfecte({
       actor,
       dificultatBase: eleccio.dificultatBase,
       modDaus:        eleccio.modDaus,
@@ -547,6 +556,37 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       label:    eleccio.descripcio,
       objectiu
     });
+
+    await oferirControlSiEscau({
+      resultat, resistencia, dificultatBase: eleccio.dificultatBase,
+      atacant: actor, defensor: objectiu, label: eleccio.descripcio
+    });
+  }
+
+  // ── Prendre el control de l'efecte (S-21) ────────────────────────────────
+
+  static async _onContinuarDisputa() {
+    const actor = this.actor;
+    const combat = game.combat;
+    if (!disputaActor(combat, actor) || !esElSeuTorn(combat, actor)) return;
+    const resultat = await continuarDisputaControl(combat, actor);
+    if (resultat) {
+      await combat.declararAccio(
+        combat.combatants.find(c => c.actor?.id === actor.id)?.id,
+        actor.system.latenciaBase
+      );
+    }
+  }
+
+  static async _onRenunciarDisputa() {
+    const actor = this.actor;
+    const combat = game.combat;
+    if (!disputaActor(combat, actor) || !esElSeuTorn(combat, actor)) return;
+    await renunciarDisputaControl(combat, actor);
+    await combat.declararAccio(
+      combat.combatants.find(c => c.actor?.id === actor.id)?.id,
+      actor.system.latenciaBase
+    );
   }
 
   // ── Artefactes: càrrega (S-26) ───────────────────────────────────────────

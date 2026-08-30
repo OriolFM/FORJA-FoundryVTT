@@ -6659,3 +6659,38 @@ li.combatant:has(> .forja-controls) {
 .forja-missatge-atac.missatge-exit    { border-left-color: #0d9488; }
 .forja-missatge-atac.missatge-pifia   { border-left-color: #b91c1c; }
 .forja-missatge-atac.missatge-fallada { border-left-color: #4b5563; }
+
+/* ==== S-21: Prendre el control de l'efecte ==== */
+.forja-disputa-control {
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.35);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.forja-disputa-control .dc-cap { font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+.forja-disputa-control .dc-fites { margin: 0; font-size: 0.8rem; color: #cbd5e1; }
+.forja-disputa-control .dc-espera { margin: 0; font-size: 0.78rem; color: #94a3b8; font-style: italic; }
+.forja-disputa-control .dc-botons { display: flex; gap: 8px; margin-top: 2px; }
+.forja-disputa-control .dc-botons button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(74,222,128,0.15);
+  border: 1px solid rgba(74,222,128,0.4);
+  color: #86efac;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.forja-disputa-control .dc-botons button:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
+.forja-disputa-control .dc-botons button.dc-renunciar {
+  background: rgba(248,113,113,0.15);
+  border-color: rgba(248,113,113,0.4);
+  color: #fca5a5;
+}
+.forja-disputa-control .dc-botons button.dc-renunciar:hover { background: rgba(248,113,113,0.3); color: #fecaca; }
