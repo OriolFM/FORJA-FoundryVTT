@@ -71,12 +71,20 @@ export default class ForjaCombat extends Combat {
   /**
    * Declara una acció: suma la latència calculada (DA-5, editable) a la
    * posició actual del combatent i reordena el rellotge.
+   *
+   * Aquí és on la identitat del combatent que "acaba el seu torn" és
+   * inequívoca (ve donada per l'argument `combatantId`, no cal inferir-la).
+   * Es guarda a `_forjaCombatentDeclarant` perquè `setupTurns()` reordena
+   * `this.turns` tot seguit — si es dedueix més tard via `this.combatant`
+   * (índex `this.turn` contra `this.turns`), el reordenament ja ha fet que
+   * l'índex apunti a un altre combatent (forja.mjs, hook `updateCombat`).
    * @param {string} combatantId
    * @param {number} latencia
    */
   async declararAccio(combatantId, latencia) {
     const combatant = this.combatants.get(combatantId);
     if (!combatant) return;
+    this._forjaCombatentDeclarant = combatantId;
     const novaPosicio = (combatant.initiative ?? this.marcador) + latencia;
     await combatant.update({ initiative: novaPosicio });
     return this.setupTurns();
@@ -129,6 +137,7 @@ export default class ForjaCombat extends Combat {
 
   /** @override — comença el rellotge amb el marcador a zero. */
   async startCombat() {
+    this._forjaCombatentDeclarant = null;
     await this.setFlag("forja", "marcador", 0);
     return super.startCombat();
   }

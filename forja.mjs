@@ -103,19 +103,16 @@ Hooks.on("createItem", async (item) => {
 });
 
 // Reaccions i concentració (S-11): qui acaba el seu torn recupera reaccions.
-// Cal capturar el combatent SORTINT abans que l'update canviï el torn.
-Hooks.on("preUpdateCombat", (combat, changes) => {
-  // `changes` pot arribar buit/indefinit en cicles interns de Foundry (p. ex.
-  // en eliminar un combat) — sense guarda, "turn" in undefined llança.
-  if (changes && (("turn" in changes) || ("round" in changes))) {
-    combat._forjaCombatentSortint = combat.combatant ?? null;
-  }
-});
-
+// El combatent SORTINT es captura a `ForjaCombat#declararAccio` (l'únic punt
+// on la identitat és inequívoca), no aquí: en el moment en què arriba aquest
+// update de `turn`/`round`, `setupTurns()` ja pot haver reordenat `this.turns`
+// (declararAccio el crida abans de `nextTurn`), de manera que `combat.combatant`
+// (índex `this.turn` contra `this.turns`) ja no és fiable.
 Hooks.on("updateCombat", async (combat, changes) => {
   if (!changes || !(("turn" in changes) || ("round" in changes))) return;
-  const actor = combat._forjaCombatentSortint?.actor;
-  combat._forjaCombatentSortint = null;
+  const combatantId = combat._forjaCombatentDeclarant;
+  combat._forjaCombatentDeclarant = null;
+  const actor = combatantId ? combat.combatants.get(combatantId)?.actor : null;
   if (actor) {
     await reiniciarReaccions(actor);
     await recuperarEquilibri(actor);
