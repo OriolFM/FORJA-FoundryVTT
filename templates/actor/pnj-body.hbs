@@ -101,6 +101,19 @@
           <span class="derivat-val">{{derivats.reaccionsMax}}</span>
         </div>
       </div>
+      <div class="forja-salut-accions">
+        {{#if sys.concentrat}}
+        <button type="button" class="forja-btn-concentrat actiu" data-action="forjaToggleConcentracio"
+                title="{{localize 'FORJA.Concentracio.HintActiu'}}">
+          <i class="fas fa-brain"></i> {{localize "FORJA.Concentracio.Trencar"}}
+        </button>
+        {{else}}
+        <button type="button" class="forja-btn-concentrat" data-action="forjaToggleConcentracio"
+                title="{{localize 'FORJA.Concentracio.HintInactiu'}}">
+          <i class="fas fa-brain"></i> {{localize "FORJA.Concentracio.Concentrar"}}
+        </button>
+        {{/if}}
+      </div>
     </div>
   </div>
 

@@ -7431,6 +7431,8 @@ li.combatant:has(> .forja-controls) {
   font-size: 0.85rem;
 }
 .forja-salut-accions button:hover { background: rgba(74,222,128,0.25); color: #dcfce7; }
+.forja-btn-concentrat.actiu { background: var(--forja-primary-bg); border-color: var(--forja-primary-light); color: #e2f8f5; }
+.forja-btn-concentrat.actiu:hover { background: var(--forja-primary-bg); }
 
 /* -- Missatge de xat d'atac -- */
 .forja-missatge-atac { display: flex; flex-direction: column; gap: 6px; }

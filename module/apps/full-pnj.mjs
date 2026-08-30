@@ -11,6 +11,7 @@ import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { opcioContrarestar, resoldreContrarestar } from "../combat/contrarestar.mjs";
 import { desferEfecte } from "../combat/desfer.mjs";
+import { concentrar, trencarConcentracio } from "../combat/reaccions.mjs";
 import DiategDesfer from "./dialeg-desfer.mjs";
 import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
 import DiategConstructor from "./dialeg-constructor.mjs";
@@ -65,6 +66,8 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       // Curació (S-17)
       forjaObrirCuracio: FullPNJ._onObrirCuracio,
       forjaDescansar:    FullPNJ._onDescansar,
+      // Concentració (S-11)
+      forjaToggleConcentracio: FullPNJ._onToggleConcentracio,
       // Sobrenatural (S-20/S-21)
       toggleEquilibri:      FullPNJ._onToggleEquilibri,
       forjaObrirManifestar: FullPNJ._onObrirManifestar,
@@ -476,6 +479,17 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       ui.notifications?.info(`${objectiu.name}: ${resultats.join(" — ")}`);
     } else {
       ui.notifications?.warn(game.i18n.format("FORJA.Curacio.DescansBloquejat", { nom: objectiu.name }));
+    }
+  }
+
+  // ── Concentració (S-11) ──────────────────────────────────────────────────
+
+  static async _onToggleConcentracio(event, target) {
+    const actor = this.actor;
+    if (actor.system.concentrat) {
+      await trencarConcentracio(actor);
+    } else {
+      await concentrar(actor);
     }
   }
 

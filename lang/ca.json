@@ -91,6 +91,12 @@
   "FORJA.Derivat.Reduccio": "Reducció de dany",
   "FORJA.Derivat.Reaccions": "Reaccions màx.",
 
+  "FORJA.Concentracio.Concentrar":  "Concentrar-se",
+  "FORJA.Concentracio.Trencar":     "Trencar concentració",
+  "FORJA.Concentracio.HintInactiu": "Concentrar-se: +1 dau a la propera acció, però no es podrà reaccionar fins que s'acabi o es trenqui.",
+  "FORJA.Concentracio.HintActiu":   "Concentrat: sense reaccions. Fes clic per trencar la concentració voluntàriament.",
+  "FORJA.Concentracio.Trencada":    "Concentració trencada",
+
   "FORJA.Salut.Ferides": "Ferides",
   "FORJA.Salut.Fatiga": "Fatiga",
   "FORJA.Salut.Penalitzacio": "pen. a tirades",

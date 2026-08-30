@@ -1,5 +1,6 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { calcularDany, resoldreDanyArma, aplicarDanyAPista } from "./dany.mjs";
+import { trencarConcentracio } from "./reaccions.mjs";
 
 /**
  * Flux d'atac (S-12): tira, compara amb la defensa de l'objectiu, i si
@@ -39,6 +40,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
   const excedent = exit ? Math.max(0, fites - dificultatFinal) : 0;
 
   let resultatDany = null;
+  let concentracioTrencada = false;
   if (exit) {
     const { valor: danyBaseArma, bonificador: bonificadorArma } = resoldreDanyArma(arma.system.danyBase, actor);
 
@@ -58,6 +60,13 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       const marcatsActuals = objectiu.system.salut[pista].marcats;
       const nous = aplicarDanyAPista({ [pista]: { marcats: marcatsActuals } }, pista, resultatDany.danyFinal);
       await objectiu.update({ [`system.salut.${pista}.marcats`]: nous });
+
+      // Concentració (S-11, manual "Concentrat"): un cop de dany superior a la
+      // FOR de l'objectiu trenca la concentració (l'atordiment resultant queda
+      // a criteri del DJ, com la resta d'estats — vegeu estats.mjs).
+      if (objectiu.system.concentrat && resultatDany.danyFinal > (objectiu.system.atributs?.FOR ?? 0)) {
+        concentracioTrencada = await trencarConcentracio(objectiu);
+      }
     }
 
     if (resultatDany.egidaTrencada) {
@@ -82,6 +91,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     maniobra,
     dany: resultatDany,
     pista,
+    concentracioTrencada,
     ...roll.forjaResults,
     exit, excedent
   });
@@ -93,7 +103,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     sound:   CONFIG.sounds.dice
   });
 
-  return { roll, dany: resultatDany, exit, excedent, maniobra };
+  return { roll, dany: resultatDany, exit, excedent, maniobra, concentracioTrencada };
 }
 
 /**

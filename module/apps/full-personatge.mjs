@@ -11,6 +11,7 @@ import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
 import { opcioContrarestar, resoldreContrarestar } from "../combat/contrarestar.mjs";
 import { desferEfecte } from "../combat/desfer.mjs";
+import { concentrar, trencarConcentracio } from "../combat/reaccions.mjs";
 import DiategDesfer from "./dialeg-desfer.mjs";
 import { resoldreDanyArma } from "../combat/dany.mjs";
 import { teCarrega, carregaActual, activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
@@ -80,6 +81,8 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       forjaObrirMillora: FullPersonatge._onObrirMillora,
       // Assistent de creació (M-03)
       forjaObrirAssistent: FullPersonatge._onObrirAssistent,
+      // Concentració (S-11)
+      forjaToggleConcentracio: FullPersonatge._onToggleConcentracio,
       // Sobrenatural (S-20/S-21)
       toggleEquilibri:      FullPersonatge._onToggleEquilibri,
       forjaObrirManifestar: FullPersonatge._onObrirManifestar,
@@ -692,6 +695,17 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     const actual   = this.actor.system.equilibri.gastat;
     const nouValor = actual === idx ? idx - 1 : idx;
     await this.actor.update({ "system.equilibri.gastat": Math.max(0, nouValor) });
+  }
+
+  // ── Concentració (S-11) ──────────────────────────────────────────────────
+
+  static async _onToggleConcentracio(event, target) {
+    const actor = this.actor;
+    if (actor.system.concentrat) {
+      await trencarConcentracio(actor);
+    } else {
+      await concentrar(actor);
+    }
   }
 
   static async _onObrirManifestar(event, target) {
