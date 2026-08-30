@@ -16,6 +16,13 @@
       {{localize "FORJA.Sobrenatural.ResistirFisic"}} — {{fisic.atribut}} {{fisic.atributVal}} + {{localize "FORJA.Hab.resistencia"}} {{fisic.habNivell}} = {{fisic.pool}} daus
       <i class="fas fa-bolt" title="{{localize 'FORJA.Combat.GastaReaccio'}}"></i>
     </label>
+    {{#if contrarestar}}
+    <label class="dd-radio {{#unless contrarestar.disponible}}dd-disabled{{/unless}}">
+      <input type="radio" name="opcioId" value="contrarestar" {{#if (eq opcioId "contrarestar")}}checked{{/if}} {{#unless contrarestar.disponible}}disabled{{/unless}}>
+      {{localize "FORJA.Sobrenatural.Contrarestar"}} — {{contrarestar.atribut}} {{contrarestar.atributVal}} + {{localize (concat "FORJA.Hab." contrarestar.habilitat)}} {{contrarestar.habNivell}} = {{contrarestar.pool}} daus
+      <i class="fas fa-bolt" title="{{localize 'FORJA.Combat.GastaReaccio'}}"></i>
+    </label>
+    {{/if}}
   </div>
 
   <button type="submit">

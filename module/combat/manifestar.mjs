@@ -4,12 +4,23 @@ import { aplicarDanyAPista } from "./dany.mjs";
 /**
  * Manifestar un efecte sobrenatural (S-21, manual p. 508-608).
  *
- * Abast d'aquesta implementació: **manifestar** i **resistir** (`resistencia.mjs`)
- * — el nucli de com un dotat fa servir el seu do i com un objectiu s'hi pot
- * oposar. **Contrarestar** i **desfer** (manual p. 568-600) queden
- * deliberadament fora d'abast per ara: són fluxos multi-tirada amb estat
- * propi (control en disputa entre dos dotats, concentració especial) que
- * mereixen la seva pròpia peça — es documenten com a pendents.
+ * Abast d'aquesta implementació: **manifestar**, **resistir**
+ * (`resistencia.mjs`) i el nucli de **contrarestar** (`contrarestar.mjs`,
+ * afegit després) — com un dotat fa servir el seu do i com un objectiu s'hi
+ * pot oposar, ja sigui resistint-s'hi (skill de resistència) o
+ * contrarestant-lo (mateix do). Mecànicament, contrarestar reutilitza
+ * exactament aquest mateix paràmetre `resistencia` (mateixa forma
+ * `{dificultat, exigirSuperar, roll}`) — la funció no ha calgut tocar-la,
+ * només s'hi ha afegit `contrarestat` al context de la plantilla de xat per
+ * distingir-ho visualment de "resistit".
+ *
+ * **"Prendre el control de l'efecte"** (manual p. 580-588, la part de
+ * contrarestar on els dos dotats poden allargar la disputa varis torns)
+ * queda deliberadament fora d'abast: és un flux multi-tirada amb estat
+ * propi (concentració especial +1 dau sense reaccions, condició de ruptura
+ * per dany) que mereix la seva pròpia peça — documentat com a pendent.
+ * **Desfer un efecte** (p. 590-601) també queda fora d'aquí — té la seva
+ * pròpia implementació nucli a `desfer.mjs`.
  *
  * **S-22 (Rituals)**: no hi ha cap camí de codi separat per a
  * `tipus === "ritual"` — el manual (p. 616-624) diu explícitament que TOT
@@ -124,6 +135,7 @@ export async function manifestarEfecte({
     don: game.i18n.localize(`FORJA.Sobrenatural.Do.${don}`),
     dificultat: dificultatTirada,
     resistit: !!resistencia,
+    contrarestat: resistencia?.tipus === "contrarestar",
     cost, nouActual, eqMax: eq.max,
     dany, jaEraNegatiu,
     ...roll.forjaResults,

@@ -9,6 +9,9 @@ import DiategManifestar from "./dialeg-manifestar.mjs";
 import DiategResistir  from "./dialeg-resistir.mjs";
 import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
 import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
+import { opcioContrarestar, resoldreContrarestar } from "../combat/contrarestar.mjs";
+import { desferEfecte } from "../combat/desfer.mjs";
+import DiategDesfer from "./dialeg-desfer.mjs";
 import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
 import DiategConstructor from "./dialeg-constructor.mjs";
 import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
@@ -73,7 +76,9 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       forjaRepararPrototip:       FullPNJ._onRepararPrototip,
       forjaMarcarProduccio:       FullPNJ._onMarcarProduccio,
       // Accions complexes (S-08)
-      forjaObrirAccionsComplexes: FullPNJ._onObrirAccionsComplexes
+      forjaObrirAccionsComplexes: FullPNJ._onObrirAccionsComplexes,
+      // Desfer un efecte (S-21)
+      forjaObrirDesfer: FullPNJ._onObrirDesfer
     },
     form: { submitOnChange: true }
   };
@@ -496,15 +501,19 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
 
     let resistencia = null;
     if (objectiu) {
+      const contrarestarOpcio = opcioContrarestar(objectiu, sys.dotat);
       const opcioResistirId = await DiategResistir.obrir({
         nomActor: actor.name,
         nomObjectiu: objectiu.name,
         mental: opcioResistir(objectiu, "mental"),
-        fisic:  opcioResistir(objectiu, "fisic")
+        fisic:  opcioResistir(objectiu, "fisic"),
+        contrarestar: contrarestarOpcio.atribut !== "-" ? contrarestarOpcio : null
       });
       if (opcioResistirId === null) return;
       if (opcioResistirId === "mental" || opcioResistirId === "fisic") {
         resistencia = await resoldreResistir(objectiu, opcioResistirId);
+      } else if (opcioResistirId === "contrarestar") {
+        resistencia = await resoldreContrarestar(objectiu, sys.dotat);
       }
     }
 
@@ -610,5 +619,25 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
 
   static async _onObrirAccionsComplexes(event, target) {
     DiategAccionsComplexes.obrir();
+  }
+
+  // ── Desfer un efecte (S-21) ──────────────────────────────────────────────
+
+  static async _onObrirDesfer(event, target) {
+    const actor = this.actor;
+    const eleccio = await DiategDesfer.obrir();
+    if (!eleccio) return;
+
+    const atributVal = actor.system.atributs[eleccio.atribut] ?? 0;
+    const habNivell   = eleccio.habId ? (actor.system.habilitats[eleccio.habId]?.nivell ?? 0) : 0;
+
+    await desferEfecte({
+      actor,
+      dificultat: eleccio.dificultat,
+      label: eleccio.label,
+      atribut: eleccio.atribut, atributVal,
+      habId: eleccio.habId, habNivell,
+      modDaus: eleccio.modDaus, modDificultat: eleccio.modDificultat
+    });
   }
 }

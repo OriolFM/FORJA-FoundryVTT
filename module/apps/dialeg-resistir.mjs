@@ -3,7 +3,9 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 /**
  * Diàleg de resistència (S-21): quan es manifesta un efecte contra un
  * objectiu, el DJ tria en nom seu si resisteix (mental o físic, gasta
- * reacció) o no — mateix patró que `DiategDefensa` (S-13).
+ * reacció) o no — mateix patró que `DiategDefensa` (S-13). Si l'objectiu
+ * és dotat del mateix do que qui manifesta, també ofereix "contrarestar"
+ * (S-21, `combat/contrarestar.mjs`) com a quarta opció mútuament exclusiva.
  */
 export default class DiategResistir extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -40,6 +42,7 @@ export default class DiategResistir extends HandlebarsApplicationMixin(Applicati
       nomObjectiu: c.nomObjectiu,
       mental:      c.mental,
       fisic:       c.fisic,
+      contrarestar: c.contrarestar,
       opcioId:     this.#opcioId
     };
   }
