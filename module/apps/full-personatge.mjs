@@ -25,6 +25,7 @@ import {
   provarManifestacio, aplicarPenalitzacioFallada, aplicarEfecteProgressio
 } from "../progressio/progressio-sobrenatural.mjs";
 import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
+import { costTotalModular, afegirModul, treureModul } from "../progressio/modular.mjs";
 import DiategProvarPrototip from "./dialeg-provar-prototip.mjs";
 import DiategAccionsComplexes from "./dialeg-accions-complexes.mjs";
 
@@ -91,6 +92,10 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       forjaProvarPrototip:        FullPersonatge._onProvarPrototip,
       forjaRepararPrototip:       FullPersonatge._onRepararPrototip,
       forjaMarcarProduccio:       FullPersonatge._onMarcarProduccio,
+      // Artefactes: modulars (S-30)
+      forjaToggleModular: FullPersonatge._onToggleModular,
+      forjaAfegirModul:   FullPersonatge._onAfegirModul,
+      forjaTreureModul:   FullPersonatge._onTreureModul,
       // Accions complexes (S-08)
       forjaObrirAccionsComplexes: FullPersonatge._onObrirAccionsComplexes,
       // Desfer un efecte (S-21)
@@ -820,6 +825,28 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     await marcarProduccio(item);
     ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Produccio", { nom: item.name }));
   }
+
+  // ── Artefactes: modulars (S-30) ──────────────────────────────────────────
+
+  static async _onToggleModular(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    await item.update({ "system.modular": !item.system.modular });
+  }
+
+  static async _onAfegirModul(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const construit = await DiategConstructor.obrir({ esArtefacte: true });
+    if (!construit) return;
+    await afegirModul(item, construit);
+  }
+
+  static async _onTreureModul(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    await treureModul(item, parseInt(target.dataset.idx));
+  }
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
@@ -966,7 +993,10 @@ export function _prepArtefactes(actor) {
       descripcio: i.system?.descripcio ?? "",
       fase:       i.system?.fase ?? "produccio",
       trencat:    i.system?.trencat ?? false,
-      esPrototip: esPrototip(i)
+      esPrototip: esPrototip(i),
+      modular:    i.system?.modular ?? false,
+      moduls:     (i.system?.moduls ?? []).map((m, idx) => ({ ...m, idx })),
+      totalModular: costTotalModular(i)
     }))
     .sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
 }

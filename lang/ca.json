@@ -230,6 +230,10 @@
   "FORJA.Artefacte.Reparat":        "{nom} reparat: ja es pot tornar a fer servir.",
   "FORJA.Artefacte.Produccio":      "{nom} passa a producció: fiabilitat normal.",
 
+  "FORJA.Artefacte.Modular":     "modular",
+  "FORJA.Artefacte.FerModular":  "Fer modular / treure modularitat",
+  "FORJA.Artefacte.AfegirModul": "Afegir mòdul",
+
   "FORJA.Combat.Impacta":       "Impacta",
   "FORJA.Combat.Falla":         "Falla",
   "FORJA.Combat.SenseDany":     "Sense dany",

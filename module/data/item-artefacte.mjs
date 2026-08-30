@@ -58,7 +58,24 @@ export default class ItemArtefacte extends foundry.abstract.TypeDataModel {
         initial: "produccio",
         choices: ["prototip1", "prototip2", "produccio"]
       }),
-      trencat: new fields.BooleanField({ initial: false })
+      trencat: new fields.BooleanField({ initial: false }),
+      // S-30 (artefactes modulars, manual p. 576-588): "cada mòdul agrupa
+      // algunes de les característiques de l'artefacte... i té un cost en
+      // punts determinat" — el manual no dona cap fórmula de quant "menys"
+      // costa un mòdul respecte l'artefacte sencer ("acostumen a tenir un
+      // cost baix", sense xifra), així que cada mòdul es construeix amb el
+      // mateix motor de paràmetres que qualsevol altre artefacte (mode
+      // `esArtefacte` del constructor, S-23) i el cost total de l'artefacte
+      // modular és la suma del xassís (`cost`, de dalt) més tots els mòduls
+      // instal·lats — vegeu `progressio/modular.mjs`.
+      modular: new fields.BooleanField({ initial: false }),
+      moduls: new fields.ArrayField(new fields.SchemaField({
+        nom:         new fields.StringField({ initial: "" }),
+        cost:        new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false }),
+        dificultat:  new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false }),
+        modLatencia: new fields.NumberField({ integer: true, initial: 0, nullable: false }),
+        mecanica:    new fields.StringField({ initial: "" })
+      }), { initial: [] })
     };
   }
 }

@@ -7647,6 +7647,10 @@ li.combatant:has(> .forja-controls) {
   color: var(--forja-danger);
   margin-left: 4px;
 }
+.forja-moduls-llista { display: flex; flex-direction: column; gap: 2px; margin: 4px 0; padding-left: 10px; border-left: 2px solid rgba(255,255,255,0.1); }
+.forja-modul-fila { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; color: #94a3b8; gap: 6px; }
+.forja-modul-afegir { align-self: flex-start; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; width: auto; padding: 2px 6px; }
+.forja-modular-actiu { background: var(--forja-primary-bg); border-color: var(--forja-primary-light); color: #e2f8f5; }
 
 /* ==== S-23 — CONSTRUCTOR DE PARÀMETRES ==== */
 .forja-dialeg-constructor { display: flex; flex-direction: column; height: 100%; gap: 8px; padding: 8px; }

@@ -506,11 +506,30 @@
             {{#if a.trencat}}<span class="forja-badge-trencat" title="{{localize 'FORJA.Artefacte.Trencat'}}"><i class="fas fa-triangle-exclamation"></i></span>{{/if}}
           </span>
           <span class="equip-meta">
-            {{a.cost}} PC · {{localize (concat "FORJA.Artefacte.Categoria." a.categoria)}}
+            {{#if a.modular}}{{a.totalModular.cost}} PC ({{localize "FORJA.Artefacte.Modular"}}){{else}}{{a.cost}} PC{{/if}} · {{localize (concat "FORJA.Artefacte.Categoria." a.categoria)}}
             {{#if a.activacio.dificultat}} · {{localize (concat "FORJA.Artefacte.Activacio." a.activacio.tipus)}} (dif. {{a.activacio.dificultat}}){{/if}}
             {{#if a.us.modLatencia}} · Lat. +{{a.us.modLatencia}}{{/if}}
             {{#if a.teCarrega}} · {{localize "FORJA.Artefacte.Carrega"}} {{a.carregaActual}}/{{a.carrega.usosPerCarrega}}{{/if}}
           </span>
+          {{#if a.modular}}
+          <div class="forja-moduls-llista">
+            {{#each a.moduls as |m|}}
+            <div class="forja-modul-fila">
+              <span>{{m.nom}} ({{m.cost}} PC{{#if m.dificultat}}, {{m.dificultat}} dif.{{/if}})</span>
+              {{#if ../../modeEdicio}}
+              <button type="button" class="btn-tret-eliminar" data-action="forjaTreureModul" data-item-id="{{a.id}}" data-idx="{{m.idx}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
+                <i class="fas fa-trash"></i>
+              </button>
+              {{/if}}
+            </div>
+            {{/each}}
+            {{#if ../modeEdicio}}
+            <button type="button" class="btn-cap-afegir forja-modul-afegir" data-action="forjaAfegirModul" data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.AfegirModul'}}">
+              <i class="fas fa-plus"></i> {{localize "FORJA.Artefacte.AfegirModul"}}
+            </button>
+            {{/if}}
+          </div>
+          {{/if}}
           <div class="forja-artefacte-accions">
             {{#if a.teCarrega}}
             <button type="button" class="btn-artefacte-carrega" data-action="forjaActivarArtefacte"
@@ -541,6 +560,10 @@
             {{/if}}
             {{/if}}
             {{#if ../modeEdicio}}
+            <button type="button" class="btn-artefacte-carrega {{#if a.modular}}forja-modular-actiu{{/if}}" data-action="forjaToggleModular"
+                    data-item-id="{{a.id}}" title="{{localize 'FORJA.Artefacte.FerModular'}}">
+              <i class="fas fa-puzzle-piece"></i>
+            </button>
             <button type="button" class="btn-tret-eliminar" data-action="eliminarArtefacte"
                     data-item-id="{{a.id}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
               <i class="fas fa-trash"></i>

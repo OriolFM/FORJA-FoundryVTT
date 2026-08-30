@@ -15,6 +15,7 @@ import DiategDesfer from "./dialeg-desfer.mjs";
 import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
 import DiategConstructor from "./dialeg-constructor.mjs";
 import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
+import { costTotalModular, afegirModul, treureModul } from "../progressio/modular.mjs";
 import DiategProvarPrototip from "./dialeg-provar-prototip.mjs";
 import DiategAccionsComplexes from "./dialeg-accions-complexes.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -75,6 +76,10 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       forjaProvarPrototip:        FullPNJ._onProvarPrototip,
       forjaRepararPrototip:       FullPNJ._onRepararPrototip,
       forjaMarcarProduccio:       FullPNJ._onMarcarProduccio,
+      // Artefactes: modulars (S-30)
+      forjaToggleModular: FullPNJ._onToggleModular,
+      forjaAfegirModul:   FullPNJ._onAfegirModul,
+      forjaTreureModul:   FullPNJ._onTreureModul,
       // Accions complexes (S-08)
       forjaObrirAccionsComplexes: FullPNJ._onObrirAccionsComplexes,
       // Desfer un efecte (S-21)
@@ -613,6 +618,28 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
     if (!confirmat) return;
     await marcarProduccio(item);
     ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Produccio", { nom: item.name }));
+  }
+
+  // ── Artefactes: modulars (S-30) ──────────────────────────────────────────
+
+  static async _onToggleModular(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    await item.update({ "system.modular": !item.system.modular });
+  }
+
+  static async _onAfegirModul(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    const construit = await DiategConstructor.obrir({ esArtefacte: true });
+    if (!construit) return;
+    await afegirModul(item, construit);
+  }
+
+  static async _onTreureModul(event, target) {
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item) return;
+    await treureModul(item, parseInt(target.dataset.idx));
   }
 
   // ── Accions complexes (S-08) ─────────────────────────────────────────────
