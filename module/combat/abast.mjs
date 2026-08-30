@@ -39,17 +39,25 @@ export function distanciaEntreTokens(tokenA, tokenB) {
  * a distància, segons l'abast curt de l'arma (`item.system.abast`, en
  * metres) i si té rang extrem (`rangExtrem`).
  *
+ * Rang limitat (manual p. 725-731, armes improvisades a distància,
+ * mecàniques —arcs/fones— i llancívoles): el rang curt no és un valor fix
+ * sinó "la FOR del personatge" ×1/×3/×5 — `abast` es queda a 0 i
+ * `rangMultFor` (1/3/5) ho fa calculable a partir de la FOR de l'atacant.
+ *
  * @param {number} distancia      Distància actual entre atacant i objectiu
- * @param {Item}   arma           Arma a distància (`system.abast`, `system.rangExtrem`)
+ * @param {Item}   arma           Arma a distància (`system.abast`, `system.rangExtrem`, `system.rangMultFor`)
  * @param {number} defensaBasica  Defensa bàsica de l'objectiu
+ * @param {ForjaActor} [atacant]  Necessari només si l'arma té rang limitat
+ *   (`rangMultFor > 0`), per llegir-ne la FOR.
  * @returns {{banda:string, dificultat:number}|null}
- *   `null` si l'abast de l'arma és variable (Rang limitat: FOR/FORx3/FORx5,
- *   `abast === 0`) — no es pot calcular automàticament, cal dificultat
- *   manual — o si l'objectiu és fora d'abast (més enllà del rang llarg, o
- *   de l'extrem si l'arma en té).
+ *   `null` si l'abast és 0 i l'arma no té `rangMultFor` (rang realment
+ *   desconegut, p. ex. "Armes pesants" — "varia" segons l'arma concreta,
+ *   cal dificultat manual), o si l'objectiu és fora d'abast (més enllà del
+ *   rang llarg, o de l'extrem si l'arma en té).
  */
-export function bandaDistancia(distancia, arma, defensaBasica) {
-  const curt = arma.system.abast;
+export function bandaDistancia(distancia, arma, defensaBasica, atacant = null) {
+  const multFor = arma.system.rangMultFor ?? 0;
+  const curt = multFor > 0 ? (atacant?.system?.atributs?.FOR ?? 0) * multFor : arma.system.abast;
   if (!curt) return null;
 
   if (distancia <= 0) {
@@ -75,4 +83,35 @@ export function bandaDistancia(distancia, arma, defensaBasica) {
  */
 export function estaAlAbastCosACos(distancia) {
   return distancia <= (canvas.grid?.distance ?? 1);
+}
+
+/**
+ * Avantatge d'abast en cos a cos (manual p. 609-613): "la puntuació
+ * d'abast... és irrellevant quan els dos contrincants fan servir armes del
+ * mateix abast. Si els abasts són diferents, el contendent amb l'abast més
+ * gros... rep +1 a les tirades d'atac i defensa." Com que aquest sistema
+ * no guarda quina arma concreta té cada PJ "equipada" (mateixa limitació
+ * ja documentada a `defensa.mjs` per a Parar/Blocar), es compara l'arma
+ * que l'atacant fa servir per atacar contra la millor (major abast) de les
+ * armes cos a cos/naturals que el defensor posseeix.
+ *
+ * **Simplificació deliberada**: el manual permet "recuperar l'avantatge"
+ * declarant un moviment per retallar distàncies — no s'intenta seguir
+ * aquest estat persistent (qui té l'avantatge "ara mateix" segons quin
+ * bàndol s'ha mogut últim); es recalcula de zero a cada atac, comparant
+ * només les armes en joc en aquell moment.
+ *
+ * @param {Item} armaAtacant           Arma que fa servir l'atacant
+ * @param {ForjaActor} defensor
+ * @returns {{atacantAvantatge:boolean, defensorAvantatge:boolean}}
+ */
+export function avantatgeAbastCosACos(armaAtacant, defensor) {
+  const abastAtacant = armaAtacant?.system?.abast ?? 0;
+  const abastDefensor = Math.max(0, ...(defensor?.items ?? [])
+    .filter(i => i.type === "arma" && i.system.categoria !== "distancia")
+    .map(i => i.system.abast ?? 0));
+  return {
+    atacantAvantatge:  abastAtacant  > abastDefensor,
+    defensorAvantatge: abastDefensor > abastAtacant
+  };
 }

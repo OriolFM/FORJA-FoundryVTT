@@ -12,6 +12,15 @@ export default class ItemArma extends foundry.abstract.TypeDataModel {
       }),
       modLatencia:  new fields.NumberField({ integer: true, initial: 0, nullable: false }),
       abast:        new fields.NumberField({ integer: true, initial: 1, nullable: false }),
+      // Rang limitat (manual p. 725-731): per a armes improvisades a
+      // distància, mecàniques (arcs/fones) i llancívoles, el rang curt no
+      // és un valor fix sinó "la FOR del personatge" ×1/×3/×5 — `abast`
+      // es queda a 0 (variable) i aquest multiplicador ho fa calculable
+      // (vegeu `combat/abast.mjs`). 0 = no aplica (rang fix o cos a cos).
+      rangMultFor:  new fields.NumberField({ integer: true, initial: 0, nullable: false }),
+      // Blocar (manual p. 815): amb escut fa servir armes cos a cos, no
+      // resistència — vegeu `combat/defensa.mjs`.
+      esEscut:      new fields.BooleanField({ initial: false }),
       danyBase:     new fields.StringField({ initial: "FOR" }),
       maniobra:     new fields.StringField({ initial: "" }),
       rangExtrem:   new fields.BooleanField({ initial: false }),

@@ -308,6 +308,7 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
       name: e.nom, type: "arma",
       system: {
         categoria: e.categoria, modLatencia: e.modLatencia, abast: e.abast,
+        rangMultFor: e.rangMultFor ?? 0, esEscut: e.esEscut ?? false,
         danyBase: e.danyBase, maniobra: e.maniobra ?? "", rangExtrem: e.rangExtrem ?? false,
         descripcio: e.descripcio ?? ""
       }

@@ -51,6 +51,8 @@ async function afegirArmaDelCatalegSenseCua(actor, catalegId, { basic = false } 
       categoria:   entrada.categoria,
       modLatencia: entrada.modLatencia,
       abast:       entrada.abast,
+      rangMultFor: entrada.rangMultFor ?? 0,
+      esEscut:     entrada.esEscut ?? false,
       danyBase:    entrada.danyBase,
       maniobra:    entrada.maniobra ?? "",
       rangExtrem:  entrada.rangExtrem ?? false,

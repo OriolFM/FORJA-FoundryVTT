@@ -2,8 +2,8 @@ import DiategDeclararAccio from "../apps/dialeg-declarar-accio.mjs";
 import DiategDefensa from "../apps/dialeg-defensa.mjs";
 import { ferTirada } from "../dice/tirada.mjs";
 import { ferAtac }  from "./atac.mjs";
-import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
-import { distanciaEntreTokens, bandaDistancia, estaAlAbastCosACos } from "./abast.mjs";
+import { opcionsDefensa, resoldreOpcioDefensa, opcionsInterposar } from "./defensa.mjs";
+import { distanciaEntreTokens, bandaDistancia, estaAlAbastCosACos, avantatgeAbastCosACos } from "./abast.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -210,13 +210,23 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         const tokenObjectiu = [...game.user.targets][0];
         let defensaBasica = objectiu.system.defensa ?? 0;
         let etiquetaRang = null;
+        let poolFinalAtac = poolFinal;
+        let bonusDauDefensa = 0;
+
+        // Avantatge d'abast en cos a cos (manual p. 611, S-12): qui té
+        // l'arma de major abast rep +1 dau tant a atacar com a defensar-se.
+        if (arma.system.categoria !== "distancia") {
+          const { atacantAvantatge, defensorAvantatge } = avantatgeAbastCosACos(arma, objectiu);
+          if (atacantAvantatge) poolFinalAtac += 1;
+          if (defensorAvantatge) bonusDauDefensa = 1;
+        }
 
         if (tokenAtacant && tokenObjectiu) {
           const distancia = distanciaEntreTokens(tokenAtacant, tokenObjectiu);
 
           if (arma.system.categoria === "distancia") {
-            if (arma.system.abast > 0) {
-              const banda = bandaDistancia(distancia, arma, defensaBasica);
+            if (arma.system.abast > 0 || arma.system.rangMultFor > 0) {
+              const banda = bandaDistancia(distancia, arma, defensaBasica, combatant.actor);
               if (!banda) {
                 ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaAbast", { nom: objectiu.name }));
                 return;
@@ -224,19 +234,37 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
               defensaBasica = banda.dificultat;
               etiquetaRang = game.i18n.localize(`FORJA.Combat.Rang.${banda.banda}`);
             }
-            // Si l'abast és variable (Rang limitat: FOR/FORx3/FORx5, abast=0),
-            // no es calcula banda automàticament — es manté la defensa bàsica.
+            // Rang realment desconegut (abast=0 i rangMultFor=0, p. ex.
+            // "Armes pesants" — "varia" segons l'arma concreta): no es
+            // calcula banda automàticament, es manté la defensa bàsica.
           } else if (!estaAlAbastCosACos(distancia)) {
             ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaAbastCosACos", { nom: objectiu.name }));
             return;
           }
         }
 
+        // Defensar els altres (manual p. 821-829, S-12): qualsevol altre
+        // combatent a tocar de l'objectiu (no l'atacant, no l'objectiu
+        // mateix) pot interposar-s'hi parant o blocant — reaprofita
+        // `opcionsInterposar`, que ja filtra a parar/blocar únicament i
+        // marca `interposant` amb l'actor que s'hi interposa.
+        const opcionsProtectors = [];
+        if (tokenObjectiu) {
+          for (const altre of combat.combatants) {
+            if (altre.id === combatant.id || altre.actor?.id === objectiu.id) continue;
+            const tokenAltre = altre.token?.object;
+            if (!tokenAltre) continue;
+            if (!estaAlAbastCosACos(distanciaEntreTokens(tokenAltre, tokenObjectiu))) continue;
+            opcionsProtectors.push(...opcionsInterposar(altre.actor));
+          }
+        }
+
         // Flux complet d'atac contra un objectiu (S-12/S-13): primer es
         // resol la reacció defensiva de l'objectiu (passiva / esquivar /
-        // parar / blocar — gastant reacció i, si escau, tirant), i després
-        // es tira l'atac contra la dificultat resultant.
-        const opcions = opcionsDefensa(objectiu, defensaBasica);
+        // parar / blocar / algú altre s'interposa — gastant reacció i, si
+        // escau, tirant), i després es tira l'atac contra la dificultat
+        // resultant.
+        const opcions = [...opcionsDefensa(objectiu, defensaBasica, bonusDauDefensa), ...opcionsProtectors];
         const eleccio = await DiategDefensa.obrir({
           nomAtacant:  combatant.name,
           nomDefensor: objectiu.name,
@@ -244,17 +272,21 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         });
         if (!eleccio) return;
 
-        const resolucio = await resoldreOpcioDefensa(objectiu, eleccio);
+        // Si s'ha triat interposar-se, qui rep la tirada/reacció I el dany
+        // és el protector, no l'objectiu original.
+        const qui = eleccio.interposant ?? objectiu;
+
+        const resolucio = await resoldreOpcioDefensa(qui, eleccio);
         if (!resolucio) {
-          ui.notifications?.warn(game.i18n.format("FORJA.Combat.SenseReaccioDisponible", { nom: objectiu.name }));
+          ui.notifications?.warn(game.i18n.format("FORJA.Combat.SenseReaccioDisponible", { nom: qui.name }));
           return;
         }
 
         await ferAtac({
           actor:      combatant.actor,
-          objectiu,
+          objectiu:   qui,
           arma,
-          poolFinal,
+          poolFinal:  poolFinalAtac,
           dificultat:      resolucio.dificultat,
           exigirSuperar:   resolucio.exigirSuperar,
           reduccioExtra:   resolucio.reduccioExtra,

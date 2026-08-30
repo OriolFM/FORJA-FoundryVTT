@@ -279,6 +279,7 @@
   "FORJA.Combat.Defensa.PararDesc":  "Atura l'arma abans de l'impacte; fixa la dificultat de l'atacant.",
   "FORJA.Combat.Defensa.Blocar":     "Blocar",
   "FORJA.Combat.Defensa.BlocarDesc": "Sense tirada; cal superar (no igualar) la defensa bàsica, però suma resistència a la reducció de dany.",
+  "FORJA.Combat.Defensa.Interposar": "{nom} s'interposa: {accio}",
   "FORJA.Combat.SenseTirada":        "Sense tirada",
   "FORJA.Combat.ReduccioExtra":      "+{valor} reducció de dany si l'atac impacta",
 
