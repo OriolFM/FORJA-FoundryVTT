@@ -28,6 +28,22 @@
       <label>{{localize "FORJA.Actor.Origen"}}</label>
       <input type="text" name="system.origen" value="{{sys.origen}}"/>
     </div>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Actor.Genere"}}</label>
+      <input type="text" name="system.genere" value="{{sys.genere}}"/>
+    </div>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Actor.Edat"}}</label>
+      <input type="number" name="system.edat" value="{{sys.edat}}" min="0" step="1"/>
+    </div>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Actor.Recursos"}}</label>
+      <input type="text" name="system.recursos" value="{{sys.recursos}}"/>
+    </div>
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Actor.Guanxi"}}</label>
+      <input type="text" name="system.guanxi" value="{{sys.guanxi}}"/>
+    </div>
     {{/if}}
 
     {{#if (eq pas "atributs")}}
@@ -35,6 +51,13 @@
     <div class="as-cost-taula">
       {{#each tramsAtribut as |t|}}
       <span>{{t.val}} = {{t.cost}} PC</span>
+      {{/each}}
+    </div>
+    <div class="as-paquets">
+      {{#each distribucionsAtribut as |d|}}
+      <button type="button" class="as-boto-paquet" data-action="aplicarDistribucioAtributs" data-distribucio="{{d.id}}">
+        {{d.nom}} <span class="as-cost-badge">{{d.cost}} PC</span>
+      </button>
       {{/each}}
     </div>
     <div class="forja-atributs-grid as-atributs-grid">
@@ -87,6 +110,14 @@
 
     {{#if (eq pas "habilitats")}}
     <p class="as-intro">{{localize "FORJA.Assistent.IntroHabilitats"}}</p>
+    <div class="as-paquets">
+      {{#each paquetsHabilitat as |p|}}
+      <button type="button" class="as-boto-paquet" data-action="aplicarPaquetHabilitats" data-paquet="{{p.id}}">
+        {{p.nom}} <span class="as-cost-badge">{{p.cost}} PC</span>
+      </button>
+      {{/each}}
+    </div>
+    <p class="as-intro as-paquets-nota">{{localize "FORJA.Assistent.NotaPaquets"}}</p>
     <div class="as-habs-grid">
       {{#each habilitats as |h|}}
       <div class="forja-hab-fila mode-edicio as-hab-fila {{#if (eq h.tipus 'restringida')}}hab-restringida{{/if}}">
@@ -110,6 +141,16 @@
     <button type="button" class="as-boto-afegir" data-action="crearTret">
       <i class="fas fa-plus"></i> {{localize "FORJA.Tret.Seleccionar"}}
     </button>
+    {{#if esDotatQi}}
+    <div class="form-group as-camp">
+      <label>{{localize "FORJA.Sobrenatural.QiAtribut"}}</label>
+      <select name="system.qiAtribut">
+        <option value="FOR" {{#if (eq qiAtribut "FOR")}}selected{{/if}}>{{localize "FORJA.Attr.FOR"}}</option>
+        <option value="DES" {{#if (eq qiAtribut "DES")}}selected{{/if}}>{{localize "FORJA.Attr.DES"}}</option>
+        <option value="AGI" {{#if (eq qiAtribut "AGI")}}selected{{/if}}>{{localize "FORJA.Attr.AGI"}}</option>
+      </select>
+    </div>
+    {{/if}}
     {{#if trets.length}}
     <div class="forja-trets-llista">
       {{#each trets as |t|}}

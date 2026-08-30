@@ -6478,6 +6478,22 @@ li.combatant:has(> .forja-controls) {
 }
 .as-boto-afegir:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
 .as-equip-botons { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.as-paquets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+.as-boto-paquet {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #e2e8f0;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.as-boto-paquet:hover { background: rgba(255,255,255,0.12); }
+.as-paquets-nota { margin-bottom: 6px; }
 .as-equip-fila { grid-template-columns: 1fr auto; }
 
 .as-resum-grid { display: flex; flex-direction: column; gap: 4px; }

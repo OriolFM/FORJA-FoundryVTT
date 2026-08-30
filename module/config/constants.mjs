@@ -28,9 +28,37 @@ FORJA.MIDA_DEFENSA = { 1: 2, 2: 1, 3: 0, 4: -1, 5: -2 };
 /* ---------- Constitució ---------- */
 FORJA.COST_CONSTITUCIO = { 1: -20, 2: -10, 3: 0, 4: 10, 5: 20 };
 
+/* ---------- Distribucions ràpides (manual p. 354-421) ----------
+   Dreceres de creació: cada llista de valors, un cop assignada als 6
+   atributs (o a les primeres habilitats bàsiques a 0), té exactament el
+   cost indicat pel manual quan es passa per COST_ATRIBUT/COST_HABILITAT
+   — no es guarda un "cost" redundant aquí per no arriscar-se a divergir
+   de la taula base si mai canvia. Purament un punt de partida ràpid: la
+   UI aplica els valors i el jugador els pot reassignar amb els steppers
+   normals després, exactament igual que si els hagués triat un a un. */
+FORJA.DISTRIBUCIONS_ATRIBUT = {
+  minima:         { nom: "FORJA.Assistent.Distribucio.Minima",         valors: [2, 2, 2, 1, 1, 1] },
+  mitjana:        { nom: "FORJA.Assistent.Distribucio.Mitjana",        valors: [2, 2, 2, 2, 2, 2] },
+  equilibrada:    { nom: "FORJA.Assistent.Distribucio.Equilibrada",    valors: [3, 3, 3, 2, 2, 2] },
+  especialitzada: { nom: "FORJA.Assistent.Distribucio.Especialitzada", valors: [4, 3, 3, 2, 2, 1] },
+  superior:       { nom: "FORJA.Assistent.Distribucio.Superior",       valors: [4, 3, 3, 2, 2, 2] }
+};
+
 /* ---------- Habilitats ---------- */
 // Cost acumulat per nivell (índex = nivell 0–10)
 FORJA.COST_HABILITAT = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55];
+
+// Paquets ràpids (manual p. 400-421): valors a assignar a habilitats
+// BÀSIQUES sense tocar (nivell 0) — les restringides en queden sempre
+// fora perquè exigeixen un tret/formació previs (manual p. 128), que cap
+// paquet ràpid pot donar per suposat.
+FORJA.PAQUETS_HABILITAT = {
+  novell:       { nom: "FORJA.Assistent.Paquet.Novell",       valors: [1, 1, 1, 1, 2, 2] },
+  autodidacta:  { nom: "FORJA.Assistent.Paquet.Autodidacta",  valors: [1, 1, 1, 2, 2, 3] },
+  professional: { nom: "FORJA.Assistent.Paquet.Professional", valors: [1, 2, 3, 4] },
+  expert:       { nom: "FORJA.Assistent.Paquet.Expert",       valors: [1, 1, 2, 2, 3, 3, 4] },
+  especialista: { nom: "FORJA.Assistent.Paquet.Especialista", valors: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4] }
+};
 
 FORJA.LLISTA_HABILITATS = [
   // Bàsiques

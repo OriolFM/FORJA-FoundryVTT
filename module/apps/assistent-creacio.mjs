@@ -43,9 +43,11 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
       pasSeguent:       AssistentCreacio._onPasSeguent,
       pasEnrere:        AssistentCreacio._onPasEnrere,
       ajustarAtribut:   AssistentCreacio._onAjustarAtribut,
+      aplicarDistribucioAtributs: AssistentCreacio._onAplicarDistribucioAtributs,
       ajustarMida:      AssistentCreacio._onAjustarMida,
       ajustarConstitucio: AssistentCreacio._onAjustarConstitucio,
       ajustarHabilitat: AssistentCreacio._onAjustarHabilitat,
+      aplicarPaquetHabilitats: AssistentCreacio._onAplicarPaquetHabilitats,
       crearTret:        AssistentCreacio._onCrearTret,
       eliminarTret:     AssistentCreacio._onEliminarTret,
       crearArma:        AssistentCreacio._onCrearArma,
@@ -106,6 +108,10 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
       })),
       costAtributs: Object.values(sys.atributs).reduce((s, v) => s + (cfg.COST_ATRIBUT[v] ?? 0), 0),
       tramsAtribut: [0, 1, 2, 3, 4, 5].map(v => ({ val: v, cost: cfg.COST_ATRIBUT[v] })),
+      distribucionsAtribut: Object.entries(cfg.DISTRIBUCIONS_ATRIBUT).map(([id, d]) => ({
+        id, nom: game.i18n.localize(d.nom),
+        cost: d.valors.reduce((s, v) => s + (cfg.COST_ATRIBUT[v] ?? 0), 0)
+      })),
 
       // Pas: cos (espècie / mida / constitució)
       especies: Object.keys(cfg.COST_ESPECIE).map(id => ({
@@ -118,10 +124,16 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
       // Pas: habilitats
       habilitats: _prepHabilitatsAssistent(sys, cfg),
       costHabilitats: Object.values(sys.habilitats).reduce((s, h) => s + (cfg.COST_HABILITAT[h.nivell] ?? 0), 0),
+      paquetsHabilitat: Object.entries(cfg.PAQUETS_HABILITAT).map(([id, p]) => ({
+        id, nom: game.i18n.localize(p.nom),
+        cost: p.valors.reduce((s, v) => s + (cfg.COST_HABILITAT[v] ?? 0), 0)
+      })),
 
       // Pas: trets
       trets: _prepTretsAssistent(actor),
       costTrets: actor.items.filter(i => i.type === "tret").reduce((s, i) => s + (i.system.cost ?? 0), 0),
+      esDotatQi: sys.dotat === "qi",
+      qiAtribut: sys.qiAtribut,
 
       // Pas: equipament
       armes:      actor.items.filter(i => i.type === "arma").map(_prepItemSimple),
@@ -148,10 +160,30 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
     origenInput?.addEventListener("change", async ev => {
       await this.#actor.update({ "system.origen": ev.target.value });
     });
+    const genereInput = this.element.querySelector("input[name='system.genere']");
+    genereInput?.addEventListener("change", async ev => {
+      await this.#actor.update({ "system.genere": ev.target.value });
+    });
+    const edatInput = this.element.querySelector("input[name='system.edat']");
+    edatInput?.addEventListener("change", async ev => {
+      await this.#actor.update({ "system.edat": parseInt(ev.target.value) || 0 });
+    });
+    const recursosInput = this.element.querySelector("input[name='system.recursos']");
+    recursosInput?.addEventListener("change", async ev => {
+      await this.#actor.update({ "system.recursos": ev.target.value });
+    });
+    const guanxiInput = this.element.querySelector("input[name='system.guanxi']");
+    guanxiInput?.addEventListener("change", async ev => {
+      await this.#actor.update({ "system.guanxi": ev.target.value });
+    });
     const especieSelect = this.element.querySelector("select[name='system.especie']");
     especieSelect?.addEventListener("change", async ev => {
       await this.#actor.update({ "system.especie": ev.target.value });
       this.render(false);
+    });
+    const qiAtributSelect = this.element.querySelector("select[name='system.qiAtribut']");
+    qiAtributSelect?.addEventListener("change", async ev => {
+      await this.#actor.update({ "system.qiAtribut": ev.target.value });
     });
   }
 
@@ -182,6 +214,24 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
     this.render(false);
   }
 
+  /**
+   * Drecera de creació (manual p. 354-361): aplica d'un cop els 6 valors
+   * d'una distribució predefinida, en l'ordre de `FORJA.ATRIBUTS`. Punt de
+   * partida ràpid, no una assignació definitiva — el jugador els pot seguir
+   * reassignant amb els steppers normals, exactament igual que si els
+   * hagués triat un a un.
+   */
+  static async _onAplicarDistribucioAtributs(event, target) {
+    const dist = CONFIG.FORJA.DISTRIBUCIONS_ATRIBUT[target.dataset.distribucio];
+    if (!dist) return;
+    const updates = {};
+    CONFIG.FORJA.ATRIBUTS.forEach((attr, i) => {
+      updates[`system.atributs.${attr}`] = dist.valors[i] ?? 0;
+    });
+    await this.#actor.update(updates);
+    this.render(false);
+  }
+
   static async _onAjustarMida(event, target) {
     const delta  = parseInt(target.dataset.delta);
     const actual = this.#actor.system.mida ?? 3;
@@ -204,6 +254,28 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
     const actual = this.#actor.system.habilitats[habId]?.nivell ?? 0;
     const nou    = Math.max(0, Math.min(10, actual + delta));
     await this.#actor.update({ [`system.habilitats.${habId}.nivell`]: nou });
+    this.render(false);
+  }
+
+  /**
+   * Drecera de creació (manual p. 400-421): aplica els valors d'un paquet
+   * a les primeres habilitats BÀSIQUES encara a 0 (mateix ordre alfabètic
+   * que mostra la UI). Només toca habilitats a 0 perquè es puguin combinar
+   * diversos paquets sense sumar mai sobre la mateixa habilitat (regla del
+   * manual: "sempre que no sumeu valors d'habilitat"). Les restringides
+   * queden sempre fora — exigeixen tret/formació previs (manual p. 128).
+   */
+  static async _onAplicarPaquetHabilitats(event, target) {
+    const pkg = CONFIG.FORJA.PAQUETS_HABILITAT[target.dataset.paquet];
+    if (!pkg) return;
+    const disponibles = _prepHabilitatsAssistent(this.#actor.system, CONFIG.FORJA)
+      .filter(h => h.tipus === "basica" && h.nivell === 0);
+    const updates = {};
+    pkg.valors.forEach((val, i) => {
+      const h = disponibles[i];
+      if (h) updates[`system.habilitats.${h.id}.nivell`] = val;
+    });
+    if (Object.keys(updates).length) await this.#actor.update(updates);
     this.render(false);
   }
 
