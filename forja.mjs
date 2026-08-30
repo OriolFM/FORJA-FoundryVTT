@@ -22,6 +22,7 @@ import { recuperarEquilibri } from "./module/combat/manifestar.mjs";
 import { avancarRecarregaActor } from "./module/combat/artefactes.mjs";
 import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
+import { potMoureToken } from "./module/combat/restriccio-moviment.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -117,6 +118,19 @@ Hooks.on("updateCombat", async (combat, changes) => {
     await reiniciarReaccions(actor);
     await recuperarEquilibri(actor);
     await avancarRecarregaActor(actor);
+  }
+});
+
+// Restricció de moviment en temps actiu (manual p. 359-361, 483-487):
+// només es pot moure el combatent que el rellotge té actiu ara mateix.
+// El DJ n'és sempre exempt. Vegeu `combat/restriccio-moviment.mjs`.
+Hooks.on("preUpdateToken", (tokenDocument, changes) => {
+  if (game.user.isGM) return;
+  const esMoviment = ("x" in changes) || ("y" in changes) || ("elevation" in changes);
+  if (!esMoviment) return;
+  if (!potMoureToken(tokenDocument)) {
+    ui.notifications?.warn(game.i18n.format("FORJA.Combat.NoEsElTeuTorn", { nom: tokenDocument.name }));
+    return false;
   }
 });
 

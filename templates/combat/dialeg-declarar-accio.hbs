@@ -16,10 +16,18 @@
       {{localize "FORJA.Combat.Accio.Defensa"}}
     </label>
     <label class="dda-radio">
+      <input type="radio" name="tipus" value="moviment" {{#if (eq tipus "moviment")}}checked{{/if}}>
+      {{localize "FORJA.Combat.Accio.Moviment"}}
+    </label>
+    <label class="dda-radio">
       <input type="radio" name="tipus" value="altra" {{#if (eq tipus "altra")}}checked{{/if}}>
       {{localize "FORJA.Combat.Accio.Altra"}}
     </label>
   </div>
+
+  {{#if (eq tipus "moviment")}}
+  <p class="dda-avis">{{localize "FORJA.Combat.AvisMoviment"}}</p>
+  {{/if}}
 
   {{#if (eq tipus "atac")}}
   <div class="form-group">

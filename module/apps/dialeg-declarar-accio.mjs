@@ -60,7 +60,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       const arma = c.armes?.find(a => a.id === this.#armaId);
       return arma?.latenciaTotal ?? c.latenciaBase;
     }
-    if (this.#tipus === "defensa") return c.latenciaBase;
+    // Moviment i defensa completa: latència bàsica (manual p. 483-487,
+    // "els moviments bàsics i ràpids es fan amb la latència bàsica del PJ").
     return c.latenciaBase;
   }
 
@@ -104,9 +105,10 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     const defensa = tipus === "defensa" ? this.#config.defenses?.find(x => x.id === d.defensaId) : null;
 
     let etiqueta;
-    if (tipus === "atac")         etiqueta = arma?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Atac");
-    else if (tipus === "defensa") etiqueta = defensa?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Defensa");
-    else                          etiqueta = game.i18n.localize("FORJA.Combat.Accio.Altra");
+    if (tipus === "atac")           etiqueta = arma?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Atac");
+    else if (tipus === "defensa")   etiqueta = defensa?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Defensa");
+    else if (tipus === "moviment")  etiqueta = game.i18n.localize("FORJA.Combat.Accio.Moviment");
+    else                            etiqueta = game.i18n.localize("FORJA.Combat.Accio.Altra");
 
     this.#resolve?.({
       latencia:   Math.max(1, parseInt(d.latencia) || 1),
