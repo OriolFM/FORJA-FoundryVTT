@@ -59,7 +59,7 @@
     "id": "llancament",
     "nom": "Llançament",
     "dificultat": 1,
-    "estat": "",
+    "estat": "llancat",
     "descripcio": "L'atacant agafa el seu oponent i el llança pels aires."
   },
   {

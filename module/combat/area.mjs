@@ -83,6 +83,19 @@ export function hiHaMurEntre(origen, desti) {
 }
 
 /**
+ * Punt exacte (píxels) on el segment origen->desti topa amb el primer mur,
+ * o `null` si no n'hi ha cap (S-12, Llançament: cal saber ON parar el
+ * token, no només SI hi ha un mur pel mig).
+ * @param {{x:number,y:number}} origen
+ * @param {{x:number,y:number}} desti
+ * @returns {{x:number,y:number}|null}
+ */
+export function puntColisio(origen, desti) {
+  const r = foundry.canvas.geometry.ClockwiseSweepPolygon.testCollision(origen, desti, { type: "move", mode: "closest" });
+  return r ? { x: r.x, y: r.y } : null;
+}
+
+/**
  * Tokens del canvas el centre dels quals cau dins alguna de les
  * `offsets` donades.
  * @param {Array<{i:number,j:number}>} offsets

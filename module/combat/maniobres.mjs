@@ -1,6 +1,7 @@
 import { ferAtac } from "./atac.mjs";
 import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
-import { objectiusEsferic } from "./area.mjs";
+import { objectiusEsferic, puntColisio, tokensEnCaselles } from "./area.mjs";
+import { aplicarDanyAPista } from "./dany.mjs";
 
 /**
  * Maniobres d'Arts Marcials (S-12, manual p. 631-651). Només disponibles
@@ -26,8 +27,12 @@ import { objectiusEsferic } from "./area.mjs";
  *   - Combinació (2 cops en 2 torns consecutius): estat entre activacions.
  *   - Contraatac (reacció fora de seqüència): s'ha d'enganxar al flux
  *     de `resoldreOpcioDefensa`, no al de declarar.
- *   - Llançament (moviment del token + xoc amb murs/altres tokens):
- *     peça pròpia, no una maniobra d'atac normal.
+ *
+ * Llançament SÍ és en aquest fitxer (`resoldreLlancament`, més avall):
+ * un cop l'atac normal ja ha impactat, només cal moure el token de
+ * l'objectiu i, si topa amb un mur o un altre combatent, preguntar al DJ
+ * quant dany addicional vol aplicar-hi — no toca el pipeline de dany de
+ * `ferAtac`.
  */
 
 /** Maniobres que apliquen un estat senzill en impactar (Dislocar, Engrapar, Interrupció). */
@@ -119,4 +124,106 @@ export async function resoldrePuntadaDePeuGiratoria({ actor, tokenAtacant, arma,
   }
 
   return { resultats, aturat };
+}
+
+/**
+ * Llançament (manual p. 649, estat "Llançat"): un cop l'atac normal ja ha
+ * impactat, mou el token de l'objectiu `distancia` caselles lluny de
+ * l'atacant, en línia recta a través seu. Si topa amb un mur o un altre
+ * combatent pel camí — "cosa dura", segons l'Oriol, s'interpreta com a
+ * murs o altres PJs — es queda just abans de l'obstacle, i es demana al
+ * DJ per popup si vol aplicar-hi dany addicional (DA-5/G-3: mai es
+ * calcula automàticament el dany d'impacte contra un obstacle no
+ * especificat).
+ *
+ * Simplificació deliberada: només es comprova el mur al llarg de tot el
+ * trajecte (precís, `puntColisio`) i l'ocupació de la casella final
+ * d'aterratge — no cada casella intermèdia. Amb tokens estàndard (no en
+ * fila davant d'una trajectòria de llançament) és el cas pràctic més
+ * habitual, i evita geometria de segment-contra-múltiples-caselles
+ * addicional per a un maniobra ja marcada com "a discreció del DJ".
+ *
+ * Distància = FOR(atacant) + 2 + mida(atacant). El manual diu "en metres"
+ * però no defineix cap taula mida->metres — s'utilitza directament el
+ * valor numèric de `mida` (1-5), la mateixa escala que ja fan servir
+ * MIDA_DEFENSA/COST_MIDA (constants.mjs). Assumpció documentada, fàcil
+ * d'ajustar si cal.
+ *
+ * @param {object} p
+ * @param {ForjaActor} p.actorAtacant
+ * @param {Token} p.tokenAtacant
+ * @param {Token} p.tokenObjectiu  Token de qui es llança (ja pot ser un
+ *   interposant, no necessàriament l'objectiu original de l'atac).
+ */
+export async function resoldreLlancament({ actorAtacant, tokenAtacant, tokenObjectiu }) {
+  const distanciaCaselles = (actorAtacant.system.atributs?.FOR ?? 0) + 2 + (actorAtacant.system.mida ?? 3);
+  const pixelsPerCasella  = canvas.grid.size / (canvas.grid.distance || 1);
+
+  const origen = tokenObjectiu.center;
+  const angle  = Math.atan2(origen.y - tokenAtacant.center.y, origen.x - tokenAtacant.center.x);
+  const destiIdeal = {
+    x: origen.x + Math.cos(angle) * distanciaCaselles * pixelsPerCasella,
+    y: origen.y + Math.sin(angle) * distanciaCaselles * pixelsPerCasella
+  };
+
+  const xocMur = puntColisio(origen, destiIdeal);
+  const destiOffset = xocMur ? null : canvas.grid.getOffset(destiIdeal);
+  const xocToken = destiOffset ? tokensEnCaselles([destiOffset], [tokenObjectiu, tokenAtacant])[0] : null;
+
+  let puntFinal = destiIdeal;
+  let obstacle  = null;
+  if (xocMur) {
+    obstacle = { tipus: "mur" };
+    const recular = pixelsPerCasella * 0.5;
+    puntFinal = { x: xocMur.x - Math.cos(angle) * recular, y: xocMur.y - Math.sin(angle) * recular };
+  } else if (xocToken) {
+    obstacle = { tipus: "token", nom: xocToken.name };
+    puntFinal = { x: destiIdeal.x - Math.cos(angle) * pixelsPerCasella, y: destiIdeal.y - Math.sin(angle) * pixelsPerCasella };
+  }
+
+  const tlFinal = canvas.grid.getTopLeftPoint(canvas.grid.getOffset(puntFinal));
+  // {animate:false}: un llançament reposiciona el token a l'instant (com
+  // qualsevol altre efecte de joc que el mou), no com un arrossegament
+  // manual del jugador — no té sentit una animació de lliscament.
+  await tokenObjectiu.document.update({ x: tlFinal.x, y: tlFinal.y }, { animate: false });
+
+  if (obstacle) {
+    const dany = await demanarDanyColisio(tokenObjectiu.name);
+    if (dany > 0) {
+      const marcatsActuals = tokenObjectiu.actor.system.salut.ferides.marcats;
+      const nous = aplicarDanyAPista({ ferides: { marcats: marcatsActuals } }, "ferides", dany, {
+        noMort: !!tokenObjectiu.actor.system.noMort
+      });
+      await tokenObjectiu.actor.update({ "system.salut.ferides.marcats": nous });
+    }
+    const clau = obstacle.tipus === "mur" ? "FORJA.Combat.LlancamentXocMur" : "FORJA.Combat.LlancamentXocObjecte";
+    const content = `<div class="forja-missatge-atac">`
+      + `<strong>${game.i18n.format(clau, { nom: tokenObjectiu.name, obstacle: obstacle.nom ?? "" })}</strong>`
+      + (dany > 0 ? `<p>${game.i18n.format("FORJA.Combat.LlancamentDanyAfegit", { dany })}</p>` : "")
+      + `</div>`;
+    await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: actorAtacant }), content });
+  }
+}
+
+/** Demana al DJ, per popup, quant dany addicional vol aplicar per un xoc de Llançament. */
+async function demanarDanyColisio(nom) {
+  return new Promise(resolve => {
+    let resolt = false;
+    foundry.applications.api.DialogV2.wait({
+      window: { title: game.i18n.format("FORJA.Combat.LlancamentColisioTitol", { nom }) },
+      content: `<div class="form-group"><label>${game.i18n.localize("FORJA.Combat.LlancamentColisioDany")}</label>
+                 <input type="number" name="dany" value="0" min="0" step="1" autofocus></div>`,
+      buttons: [{
+        action: "ok",
+        label: game.i18n.localize("FORJA.Combat.LlancamentColisioConfirmar"),
+        default: true,
+        callback: (event, button) => {
+          resolt = true;
+          resolve(Math.max(0, parseInt(button.form.elements.dany.value) || 0));
+        }
+      }],
+      rejectClose: false,
+      close: () => { if (!resolt) resolve(0); }
+    });
+  });
 }
