@@ -7703,3 +7703,19 @@ li.combatant:has(> .forja-controls) {
   padding: 2px 8px;
   font-size: 0.78rem;
 }
+
+/* Xat: fons fosc forçat — mateix motiu que .forja-missatge-tirada:
+   els badges/textos de dins (mt-mod, badge-dany, eq-valor, etc.) fan
+   servir colors clars pensats per a un fons fosc; sense forçar-lo,
+   el card hereta el fons clar/pergamí per defecte de Foundry i el
+   contrast queda trencat. */
+.forja-missatge-atac {
+  background: #1a1f2e;
+  color: #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--forja-primary-border);
+}
+.forja-missatge-atac.missatge-exit    { border-left-color: #0d9488; }
+.forja-missatge-atac.missatge-pifia   { border-left-color: #b91c1c; }
+.forja-missatge-atac.missatge-fallada { border-left-color: #4b5563; }
