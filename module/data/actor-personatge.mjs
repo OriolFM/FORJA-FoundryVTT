@@ -64,6 +64,11 @@ export function _prepararDerivats(sys) {
     : salut.nivellEfectiu;
   salut.penalitzacio = cfg.SALUT_PENALITZACIO[nivellPerPenalitzacio];
 
+  // No-Mort (manual p. 244): "no pateix cap mena de limitació per dany" —
+  // exempció total (no només de ferides), a diferència de "Dur de pelar".
+  sys.noMort = flagsEfecte.has("noMort");
+  if (sys.noMort) salut.penalitzacio = 0;
+
   // --- PC gastats ---
   _calcularPunts(sys, cfg);
 
@@ -106,7 +111,17 @@ function _prepararSobrenatural(sys, cfg) {
   // Mútuament excloents (manual p. 168) — si n'hi ha més d'un per error de
   // creació, es fa servir el primer per calcular l'equilibri; avisosCoherencia
   // (S-05) ja n'avisa per separat.
-  const dotatDo = dons.size ? [...dons][0] : null;
+  //
+  // Mecanoide (manual p. 88): "no poden tenir cap tret sobrenatural" — es
+  // bloqueja aquí, al càlcul de `dotat`, en lloc de només avisar (com fa
+  // `validacio/coherencia.mjs`, que és no-bloquejant per disseny, DA-5/G-3):
+  // aquesta regla no és cap judici del DJ sobre si el tret és adequat, és
+  // una incompatibilitat categòrica d'espècie — el mateix tipus de regla
+  // dura que ja aplica INEPTE/ADEPTE. El tret pot seguir comprat i pagat
+  // (l'avís de coherència ho continua senyalant), però no dona `dotat`:
+  // no es pot manifestar ni contrarestar (ambdós consulten `sys.dotat`),
+  // i la secció Sobrenatural de la fitxa queda oculta (`_prepSobrenatural`).
+  const dotatDo = (sys.especie !== "mecanoide" && dons.size) ? [...dons][0] : null;
   sys.dotat = dotatDo;
 
   if (!dotatDo) {

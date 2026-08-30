@@ -97,11 +97,18 @@ export function calcularDany({
  *
  * @param {object} salut       `system.salut` de l'actor objectiu
  * @param {"fatiga"|"ferides"} pista
- * @param {number} quantitat   Caselles a marcar
+ * @param {number} quantitat   Caselles a marcar (negatiu per curar)
+ * @param {object} [opcions]
+ * @param {boolean} [opcions.noMort=false]  Manual p. 244: un No-Mort només
+ *   guanya la meitat de fatiga (arrodonint cap amunt) per atacs o efectes.
+ *   No afecta ferides ni curació (quantitat negativa).
  * @returns {number} Total de caselles marcades després d'aplicar el dany
  */
-export function aplicarDanyAPista(salut, pista, quantitat) {
+export function aplicarDanyAPista(salut, pista, quantitat, { noMort = false } = {}) {
   const linia = salut[pista];
-  linia.marcats = Math.max(0, linia.marcats + quantitat);
+  const quantitatFinal = (noMort && pista === "fatiga" && quantitat > 0)
+    ? Math.ceil(quantitat / 2)
+    : quantitat;
+  linia.marcats = Math.max(0, linia.marcats + quantitatFinal);
   return linia.marcats;
 }

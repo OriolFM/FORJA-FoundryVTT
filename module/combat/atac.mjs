@@ -58,7 +58,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
 
     if (resultatDany.danyFinal > 0) {
       const marcatsActuals = objectiu.system.salut[pista].marcats;
-      const nous = aplicarDanyAPista({ [pista]: { marcats: marcatsActuals } }, pista, resultatDany.danyFinal);
+      const nous = aplicarDanyAPista({ [pista]: { marcats: marcatsActuals } }, pista, resultatDany.danyFinal, { noMort: !!objectiu.system.noMort });
       await objectiu.update({ [`system.salut.${pista}.marcats`]: nous });
 
       // Concentració (S-11, manual "Concentrat"): un cop de dany superior a la

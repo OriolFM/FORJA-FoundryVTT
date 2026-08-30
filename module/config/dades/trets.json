@@ -339,7 +339,8 @@
     "nom": "No-Mort",
     "cost": 20,
     "positiu": true,
-    "descripcio": ""
+    "descripcio": "",
+    "efecte": { "flag": "noMort" }
   },
   {
     "id": "oracle",

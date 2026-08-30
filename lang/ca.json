@@ -23,7 +23,7 @@
   "FORJA.Avis.Titol": "Avisos de coherència",
   "FORJA.Avis.PressupostExcedit": "Pressupost de PC excedit per {valor} punts.",
   "FORJA.Avis.TretsIncompatibles": "Trets incompatibles: {a} i {b}.",
-  "FORJA.Avis.MecanoideSobrenatural": "Un Mecanoide no pot tenir el tret sobrenatural \"{nom}\".",
+  "FORJA.Avis.MecanoideSobrenatural": "Un Mecanoide no pot tenir el tret sobrenatural \"{nom}\": queda pagat però sense efecte (no dona dotat, no es pot manifestar).",
   "FORJA.Avis.PXExcedit": "PX gastats per sobre dels disponibles per {valor} punts.",
 
   "FORJA.Millora.Boto":            "Millorar amb PX",

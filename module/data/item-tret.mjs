@@ -9,6 +9,9 @@
  *     numèric (whitelist: reaccionsMax, latenciaBase, defensa, reduccioDany).
  *   - `{ flag: "ignoraPenalitzacioFerides" }` — activa un indicador booleà
  *     consultat explícitament al càlcul de derivats.
+ *   - `{ flag: "noMort" }` — mateix mecanisme, per al tret No-Mort (manual
+ *     p. 244): exempció total de penalització per dany i fatiga a meitat
+ *     per atacs/efectes (vegeu `_prepararDerivats`, actor-personatge.mjs).
  * Un tret sense `efecte` (o `null`) és purament descriptiu — la majoria.
  */
 export default class ItemTret extends foundry.abstract.TypeDataModel {
