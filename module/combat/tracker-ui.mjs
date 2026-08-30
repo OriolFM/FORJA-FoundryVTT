@@ -1,10 +1,12 @@
 import DiategDeclararAccio from "../apps/dialeg-declarar-accio.mjs";
 import DiategDefensa from "../apps/dialeg-defensa.mjs";
+import DiategManiobra from "../apps/dialeg-maniobra.mjs";
 import { ferTirada } from "../dice/tirada.mjs";
 import { ferAtac }  from "./atac.mjs";
 import { opcionsDefensa, resoldreOpcioDefensa, opcionsInterposar } from "./defensa.mjs";
 import { distanciaEntreTokens, bandaDistancia, estaAlAbastCosACos, avantatgeAbastCosACos } from "./abast.mjs";
 import { modificadorLatenciaEstats } from "../estats/estats-parametritzats.mjs";
+import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria } from "./maniobres.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -103,6 +105,14 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // Lent/X i Ràpid/X (M-05, estats-parametritzats.mjs): modificador net
     // (+Lent -Ràpid) sobre qualsevol llatència d'aquest combatent.
     const modEstats = modificadorLatenciaEstats(combatant.actor);
+    // Interrupció (maniobra d'Arts Marcials, maniobres.mjs): el Lent/2 que
+    // aplica es "autoconsum" — un cop ja ha comptat per a AQUESTA
+    // declaració (inclòs a `modEstats` de dalt), es retira perquè no
+    // afecti la següent.
+    const efectesAutoconsum = combatant.actor.effects?.filter(e => e.getFlag("forja", "autoconsum")) ?? [];
+    if (efectesAutoconsum.length) {
+      await combatant.actor.deleteEmbeddedDocuments("ActiveEffect", efectesAutoconsum.map(e => e.id));
+    }
     const armes = combatant.actor.items
       .filter(i => i.type === "arma")
       .map(i => {
@@ -203,6 +213,45 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       const arma     = combatant.actor.items.get(pendent.id);
       const objectiu = [...game.user.targets][0]?.actor;
 
+      // Maniobres d'Arts Marcials (S-12, maniobres.mjs): només amb "Cop"
+      // (única arma natural que la taula del manual llista amb l'opció
+      // d'Arts Marcials). Es demana ABANS de mirar l'objectiu perquè
+      // Puntada de peu giratòria no en necessita cap (és autocentrada).
+      let maniobra = null;
+      let poolFinalManiobra = poolFinal;
+      if (arma?.getFlag("forja", "catalegId") === "cop") {
+        maniobra = await DiategManiobra.obrir({
+          nom: combatant.name,
+          maniobres: CONFIG.FORJA.LLISTA_MANIOBRES
+        });
+        if (maniobra === undefined) return; // diàleg cancel·lat
+        if (maniobra) {
+          const sysM = combatant.actor.system;
+          poolFinalManiobra = (sysM.atributs?.DES ?? 0) + (sysM.habilitats?.["arts-marcials"]?.nivell ?? 0);
+        }
+      }
+
+      if (maniobra?.id === "puntada-de-peu-giratoria") {
+        const tokenAtacant = combatant.token?.object;
+        if (!tokenAtacant) return;
+        // Nota: a diferència d'un atac normal, aquí NO s'ofereix la
+        // opció d'interposar-se — combinar-la amb una puntada de peu
+        // giratòria contra diversos objectius alhora és un cas que el
+        // manual no contempla; es queda com a simplificació deliberada.
+        const { resultats } = await resoldrePuntadaDePeuGiratoria({
+          actor: combatant.actor, tokenAtacant, arma, poolFinal: poolFinalManiobra, maniobra,
+          demanarDefensa: async (obj) => DiategDefensa.obrir({
+            nomAtacant: combatant.name,
+            nomDefensor: obj.name,
+            opcions: opcionsDefensa(obj)
+          })
+        });
+        for (const { objectiu: qui, eleccio, resultat } of resultats) {
+          if (resultat.exit) await aplicarEfecteManiobra(maniobra, eleccio.interposant ?? qui);
+        }
+        return;
+      }
+
       if (arma && objectiu) {
         // Rang i abast (S-12): es llegeix la posició ACTUAL dels tokens al
         // canvas (el moviment el fa el DJ/jugador arrossegant el token,
@@ -214,7 +263,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         const tokenObjectiu = [...game.user.targets][0];
         let defensaBasica = objectiu.system.defensa ?? 0;
         let etiquetaRang = null;
-        let poolFinalAtac = poolFinal;
+        let poolFinalAtac = poolFinalManiobra;
         let bonusDauDefensa = 0;
 
         // Avantatge d'abast en cos a cos (manual p. 611, S-12): qui té
@@ -286,7 +335,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           return;
         }
 
-        await ferAtac({
+        const resultatAtac = await ferAtac({
           actor:      combatant.actor,
           objectiu:   qui,
           arma,
@@ -294,10 +343,12 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           dificultat:      resolucio.dificultat,
           exigirSuperar:   resolucio.exigirSuperar,
           reduccioExtra:   resolucio.reduccioExtra,
+          maniobra,
           etiquetaDefensa: eleccio.nom,
           etiquetaRang,
           label:      pendent.label
         });
+        if (maniobra && resultatAtac.exit) await aplicarEfecteManiobra(maniobra, qui);
         return;
       }
 
