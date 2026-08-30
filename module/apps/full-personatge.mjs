@@ -23,6 +23,7 @@ import {
 } from "../progressio/progressio-sobrenatural.mjs";
 import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
 import DiategProvarPrototip from "./dialeg-provar-prototip.mjs";
+import DiategAccionsComplexes from "./dialeg-accions-complexes.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -86,7 +87,9 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
       forjaObrirDissenyArtefacte: FullPersonatge._onObrirDissenyArtefacte,
       forjaProvarPrototip:        FullPersonatge._onProvarPrototip,
       forjaRepararPrototip:       FullPersonatge._onRepararPrototip,
-      forjaMarcarProduccio:       FullPersonatge._onMarcarProduccio
+      forjaMarcarProduccio:       FullPersonatge._onMarcarProduccio,
+      // Accions complexes (S-08)
+      forjaObrirAccionsComplexes: FullPersonatge._onObrirAccionsComplexes
     },
     form: { submitOnChange: true }
   };
@@ -644,6 +647,12 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
 
   static async _onObrirAssistent(event, target) {
     AssistentCreacio.obrir(this.actor);
+  }
+
+  // ── Accions complexes (S-08) ─────────────────────────────────────────────
+
+  static async _onObrirAccionsComplexes(event, target) {
+    DiategAccionsComplexes.obrir();
   }
 
   // ── Sobrenatural (S-20/S-21) ─────────────────────────────────────────────

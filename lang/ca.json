@@ -439,5 +439,14 @@
   "FORJA.TierOpcio.antagonista": "Antagonista",
   "FORJA.TierOpcio.nemesis": "Nèmesi",
   "FORJA.TierOpcio.criatura": "Criatura",
-  "FORJA.TierOpcio.animal": "Animal"
+  "FORJA.TierOpcio.animal": "Animal",
+
+  "FORJA.AccionsComplexes.Boto":  "Accions complexes",
+  "FORJA.AccionsComplexes.Titol": "Calculadora d'accions complexes (S-08)",
+  "FORJA.AccionsComplexes.Intro": "Per a tasques massa difícils per resoldre's en una sola tirada: cada cop que es duplica el temps dedicat, la dificultat es divideix a la meitat (arrodonint amunt), fins que sigui assequible. El DJ té sempre l'última paraula sobre si hi ha temps disponible per arribar a un graó concret.",
+  "FORJA.AccionsComplexes.DificultatBase": "Dificultat original",
+  "FORJA.AccionsComplexes.Grao": "Graó",
+  "FORJA.AccionsComplexes.Temps": "Temps",
+  "FORJA.AccionsComplexes.DivisorExcedent": "Divisor d'excedent",
+  "FORJA.AccionsComplexes.NotaExcedent": "Si la tirada final té excedent, cal dividir-lo pel mateix divisor del graó triat abans d'interpretar-lo."
 }

@@ -7407,6 +7407,17 @@ li.combatant:has(> .forja-controls) {
 }
 .forja-dialeg-millora button[type="submit"]:hover, .forja-dialeg-manifestar button[type="submit"]:hover { background: rgba(74,222,128,0.3); color: #dcfce7; }
 
+/* ==== S-08 — CALCULADORA D'ACCIONS COMPLEXES ==== */
+.forja-dialeg-accions-complexes { display: flex; flex-direction: column; gap: 8px; padding: 8px; }
+.forja-dialeg-accions-complexes .dm-desc { font-size: 0.85rem; color: #94a3b8; font-style: italic; margin: 0; }
+.forja-dialeg-accions-complexes .dm-camp { display: flex; flex-direction: column; gap: 3px; }
+.forja-dialeg-accions-complexes .dm-camp label { font-size: 0.8rem; color: #94a3b8; }
+.forja-dialeg-accions-complexes .dm-camp input[type="number"] { width: 100%; }
+.ac-taula { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.ac-taula th, .ac-taula td { padding: 4px 8px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.ac-taula th { color: #94a3b8; font-weight: 600; }
+.ac-taula .ac-fila-final { background: rgba(74,222,128,0.12); color: #86efac; font-weight: 600; }
+
 
 /* -- Accions de la secció Salut (Curar/Descansar, S-17) -- */
 .forja-salut-accions { display: flex; gap: 8px; margin-top: 8px; }

@@ -1,0 +1,31 @@
+<div class="forja-dialeg-accions-complexes">
+  <p class="dm-desc">{{localize "FORJA.AccionsComplexes.Intro"}}</p>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.AccionsComplexes.DificultatBase"}}</label>
+    <input type="number" name="dificultatBase" value="{{dificultatBase}}" min="1"/>
+  </div>
+
+  <table class="ac-taula">
+    <thead>
+      <tr>
+        <th>{{localize "FORJA.AccionsComplexes.Grao"}}</th>
+        <th>{{localize "FORJA.AccionsComplexes.Temps"}}</th>
+        <th>{{localize "FORJA.Dice.Dificultat"}}</th>
+        <th>{{localize "FORJA.AccionsComplexes.DivisorExcedent"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each graons as |g|}}
+      <tr class="{{#if (eq g.dificultat 1)}}ac-fila-final{{/if}}">
+        <td>{{g.n}}</td>
+        <td>×{{g.multiplicadorTemps}}</td>
+        <td>{{g.dificultat}}</td>
+        <td>÷{{g.divisorExcedent}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <p class="dm-desc">{{localize "FORJA.AccionsComplexes.NotaExcedent"}}</p>
+</div>

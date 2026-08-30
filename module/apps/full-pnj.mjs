@@ -13,6 +13,7 @@ import { activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs"
 import DiategConstructor from "./dialeg-constructor.mjs";
 import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
 import DiategProvarPrototip from "./dialeg-provar-prototip.mjs";
+import DiategAccionsComplexes from "./dialeg-accions-complexes.mjs";
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -70,7 +71,9 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
       forjaObrirDissenyArtefacte: FullPNJ._onObrirDissenyArtefacte,
       forjaProvarPrototip:        FullPNJ._onProvarPrototip,
       forjaRepararPrototip:       FullPNJ._onRepararPrototip,
-      forjaMarcarProduccio:       FullPNJ._onMarcarProduccio
+      forjaMarcarProduccio:       FullPNJ._onMarcarProduccio,
+      // Accions complexes (S-08)
+      forjaObrirAccionsComplexes: FullPNJ._onObrirAccionsComplexes
     },
     form: { submitOnChange: true }
   };
@@ -601,5 +604,11 @@ export default class FullPNJ extends HandlebarsApplicationMixin(foundry.applicat
     if (!confirmat) return;
     await marcarProduccio(item);
     ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Produccio", { nom: item.name }));
+  }
+
+  // ── Accions complexes (S-08) ─────────────────────────────────────────────
+
+  static async _onObrirAccionsComplexes(event, target) {
+    DiategAccionsComplexes.obrir();
   }
 }
