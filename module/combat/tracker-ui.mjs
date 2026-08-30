@@ -4,6 +4,7 @@ import { ferTirada } from "../dice/tirada.mjs";
 import { ferAtac }  from "./atac.mjs";
 import { opcionsDefensa, resoldreOpcioDefensa, opcionsInterposar } from "./defensa.mjs";
 import { distanciaEntreTokens, bandaDistancia, estaAlAbastCosACos, avantatgeAbastCosACos } from "./abast.mjs";
+import { modificadorLatenciaEstats } from "../estats/estats-parametritzats.mjs";
 
 const HAB_PER_CATEGORIA = {
   natural:   "barallar-se",
@@ -99,6 +100,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     const sys   = combatant.actor.system;
     const habilitat = (id) => sys.habilitats?.[id]?.nivell ?? 0;
+    // Lent/X i Ràpid/X (M-05, estats-parametritzats.mjs): modificador net
+    // (+Lent -Ràpid) sobre qualsevol llatència d'aquest combatent.
+    const modEstats = modificadorLatenciaEstats(combatant.actor);
     const armes = combatant.actor.items
       .filter(i => i.type === "arma")
       .map(i => {
@@ -108,7 +112,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         return {
           id:            i.id,
           nom:           i.name,
-          latenciaTotal: (sys.latenciaBase ?? 0) + (i.system.modLatencia ?? 0),
+          latenciaTotal: Math.max(1, (sys.latenciaBase ?? 0) + (i.system.modLatencia ?? 0) + modEstats),
           atribut, atributVal,
           habId, habNivell: habilitat(habId)
         };
@@ -141,7 +145,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       nom:          combatant.name,
       marcador:     combat.marcador ?? 0,
       posicioActual: combatant.initiative ?? "—",
-      latenciaBase: sys.latenciaBase ?? 0,
+      latenciaBase: Math.max(1, (sys.latenciaBase ?? 0) + modEstats),
       armes,
       defenses
     });

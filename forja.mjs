@@ -22,6 +22,7 @@ import { recuperarEquilibri } from "./module/combat/manifestar.mjs";
 import { avancarRecarregaActor } from "./module/combat/artefactes.mjs";
 import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
+import { registrarHookValorX, aplicarTicsEstats } from "./module/estats/estats-parametritzats.mjs";
 import { potMoureToken } from "./module/combat/restriccio-moviment.mjs";
 
 Hooks.once("init", () => {
@@ -80,6 +81,9 @@ Hooks.once("init", () => {
 
   // Estats (S-16): catàleg com a CONFIG.statusEffects (HUD del token / fitxa)
   registrarEstats();
+  // Tics d'estats parametritzats (M-05): demana X en marcar Lent/Ràpid/
+  // Recuperació/Sagnant des del HUD del token.
+  registrarHookValorX();
 
   // Handlebars helpers
   _registrarHelpers();
@@ -119,6 +123,14 @@ Hooks.on("updateCombat", async (combat, changes) => {
     await recuperarEquilibri(actor);
     await avancarRecarregaActor(actor);
   }
+
+  // Tics d'estats parametritzats (M-05, Sagnant/Recuperació): a diferència
+  // del bloc de dalt, aquí SÍ interessa el combatent ENTRANT — "cada cop
+  // que li toca actuar" — i `combat.combatant` ja és fiable en aquest punt
+  // perquè `this.turns`/`this.turn` ja reflecteixen el nou torn (és
+  // exactament per això que no ho és per identificar el SORTINT, de dalt).
+  const actorEntrant = combat.combatant?.actor;
+  if (actorEntrant) await aplicarTicsEstats(actorEntrant);
 });
 
 // Restricció de moviment en temps actiu (manual p. 359-361, 483-487):

@@ -8,12 +8,12 @@ import { FORJA } from "../config/constants.mjs";
  * la pestanya "Efectes" de la fitxa (Active Effects del nucli, tal com marca
  * 05_ESPECIFICACIONS.md §7 per als estats sense paràmetre).
  *
- * Abast d'aquesta Onada 3 ("versió bàsica"): els estats són purament
- * informatius/visuals — cap efecte mecànic automàtic (ni tan sols els que
- * semblen un simple +/-latència, com Lent/X o Ràpid/X). L'automatització
- * (aplicar l'efecte, decrementar-lo cada tick, autoeliminar-se) és feina de
- * M-05 i requereix abans decidir com s'evita la col·lisió de flags quan hi ha
- * més d'un estat parametritzat actiu alhora (vegeu 09_CONTEXT_SESSIONS.md).
+ * Els estats SENSE paràmetre (aquest fitxer) continuen sent purament
+ * informatius/visuals — cap efecte mecànic automàtic, tal com marca
+ * 05_ESPECIFICACIONS.md §7. Els 4 estats PARAMETRITZATS (Lent/X, Ràpid/X,
+ * Recuperació/X, Sagnant/X) sí tenen automatització (M-05): demanar X en
+ * marcar-los, tic per torn, i modificador de latència — vegeu
+ * `estats-parametritzats.mjs`.
  */
 const ICONES = {
   abatut:           "icons/svg/falling.svg",

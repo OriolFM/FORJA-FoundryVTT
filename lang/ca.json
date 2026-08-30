@@ -99,6 +99,12 @@
   "FORJA.Concentracio.HintActiu":   "Concentrat: sense reaccions. Fes clic per trencar la concentració voluntàriament.",
   "FORJA.Concentracio.Trencada":    "Concentració trencada",
 
+  "FORJA.Estats.ValorXTitol": "Valor de {nom}",
+  "FORJA.Estats.ValorX":      "Valor de X",
+  "FORJA.Estats.Confirmar":   "Confirmar",
+  "FORJA.Estats.SagnantTic":  "{nom} sagna: +{x} fatiga.",
+  "FORJA.Estats.RecuperacioTic": "{nom} recupera {x} {pista} (Recuperació).",
+
   "FORJA.Salut.Ferides": "Ferides",
   "FORJA.Salut.Fatiga": "Fatiga",
   "FORJA.Salut.Penalitzacio": "pen. a tirades",
