@@ -13,10 +13,34 @@ export const ARMAMENT_NATURAL_PER_TRET = {
 };
 
 /**
+ * Cua d'execució per actor: serialitza les crides concurrents a
+ * `afegirArmaDelCataleg` per al mateix actor perquè el "comprova si ja
+ * existeix + crea-la" no es pugui intercalar entre dues crides (p. ex. dos
+ * hooks `createItem` disparats gairebé alhora), cosa que duplicaria l'arma.
+ */
+const cuesPerActor = new Map();
+
+function encuarPerActor(actor, tasca) {
+  const clau = actor.uuid ?? actor.id;
+  const anterior = cuesPerActor.get(clau) ?? Promise.resolve();
+  const seguent = anterior.then(tasca, tasca);
+  cuesPerActor.set(clau, seguent);
+  const netejar = () => {
+    if (cuesPerActor.get(clau) === seguent) cuesPerActor.delete(clau);
+  };
+  seguent.then(netejar, netejar);
+  return seguent;
+}
+
+/**
  * Afegeix a l'actor l'arma `catalegId` del catàleg si encara no la té
  * (es marca amb el flag `forja.catalegId` per evitar duplicats).
  */
 export async function afegirArmaDelCataleg(actor, catalegId, { basic = false } = {}) {
+  return encuarPerActor(actor, () => afegirArmaDelCatalegSenseCua(actor, catalegId, { basic }));
+}
+
+async function afegirArmaDelCatalegSenseCua(actor, catalegId, { basic = false } = {}) {
   if (actor.items.some(i => i.type === "arma" && i.getFlag("forja", "catalegId") === catalegId)) return;
   const entrada = FORJA.CATALEG_ARMES.find(a => a.id === catalegId);
   if (!entrada) return;
