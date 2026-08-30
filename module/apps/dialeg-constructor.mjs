@@ -52,7 +52,16 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     curacioActiva: false, curacio: { tipus: "fatiga", nivell: 1, extra: [] },
     proteccioActiva: false, proteccio: { tipus: "armadura", nivell: 1 },
     estats: [],
-    habilitats: []
+    habilitats: [],
+    // ── Categories exòtiques (afegides després del nucli original) ──
+    percepcioActiva:     false, percepcio:     { tipus: "alterar", nivell: 1 },
+    alteracioActiva:     false, alteracio:     { mode: "atribut", nivellAtribut: 1, costTret: 0 },
+    transformacioActiva: false, transformacio: { costAlterEgo: 0 },
+    translocacioActiva:  false, translocacio:  { tipus: "translocacio", distancia: "curta" },
+    mentalsActiu:        false, mentals:       { tipus: "llegir" },
+    telecinesiActiva:    false, telecinesi:    { categoria: "alfa" },
+    replicacioActiva:    false, replicacio:    { massa: "menys-1kg", complexitat: "materia-primera" },
+    invocacioActiva:     false, invocacio:     { costCriatura: 0 }
   };
 
   constructor(config = {}, options = {}) {
@@ -68,13 +77,21 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     const P = CONFIG.FORJA.PARAMETRES;
     const s = this.#seleccio;
 
-    // Selecció efectiva per calcular (només inclou dany/curació/protecció si estan actius)
+    // Selecció efectiva per calcular (només inclou cada bloc si està actiu)
     const perCalcul = {
       ...s,
-      dany:      s.danyActiu ? s.dany : null,
-      curacio:   s.curacioActiva ? s.curacio : null,
-      proteccio: s.proteccioActiva ? s.proteccio : null,
-      artefacte: this.#esArtefacte ? { activacioId: this.#activacioId, modeEsperaId: this.#modeEsperaId } : null
+      dany:          s.danyActiu ? s.dany : null,
+      curacio:       s.curacioActiva ? s.curacio : null,
+      proteccio:     s.proteccioActiva ? s.proteccio : null,
+      artefacte:     this.#esArtefacte ? { activacioId: this.#activacioId, modeEsperaId: this.#modeEsperaId } : null,
+      percepcio:     s.percepcioActiva ? s.percepcio : null,
+      alteracio:     s.alteracioActiva ? s.alteracio : null,
+      transformacio: s.transformacioActiva ? s.transformacio : null,
+      translocacio:  s.translocacioActiva ? s.translocacio : null,
+      mentals:       s.mentalsActiu ? s.mentals : null,
+      telecinesi:    s.telecinesiActiva ? s.telecinesi : null,
+      replicacio:    s.replicacioActiva ? s.replicacio : null,
+      invocacio:     s.invocacioActiva ? s.invocacio : null
     };
     const resultat = calcularConstruccio(perCalcul);
 
@@ -148,6 +165,38 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
         reRender();
       });
     });
+
+    // ── Categories exòtiques ──
+    el.querySelector("input[name='percepcioActiva']")?.addEventListener("change", ev => { this.#seleccio.percepcioActiva = ev.target.checked; reRender(); });
+    el.querySelector("select[name='percepcio.tipus']")?.addEventListener("change", ev => { this.#seleccio.percepcio.tipus = ev.target.value; reRender(); });
+    el.querySelector("input[name='percepcio.nivell']")?.addEventListener("change", ev => { this.#seleccio.percepcio.nivell = Math.max(1, parseInt(ev.target.value) || 1); reRender(); });
+
+    el.querySelector("input[name='alteracioActiva']")?.addEventListener("change", ev => { this.#seleccio.alteracioActiva = ev.target.checked; reRender(); });
+    el.querySelectorAll("input[name='alteracio.mode']").forEach(radio => {
+      radio.addEventListener("change", ev => { this.#seleccio.alteracio.mode = ev.target.value; reRender(); });
+    });
+    el.querySelector("input[name='alteracio.nivellAtribut']")?.addEventListener("change", ev => { this.#seleccio.alteracio.nivellAtribut = Math.max(1, parseInt(ev.target.value) || 1); reRender(); });
+    el.querySelector("input[name='alteracio.costTret']")?.addEventListener("change", ev => { this.#seleccio.alteracio.costTret = parseInt(ev.target.value) || 0; reRender(); });
+
+    el.querySelector("input[name='transformacioActiva']")?.addEventListener("change", ev => { this.#seleccio.transformacioActiva = ev.target.checked; reRender(); });
+    el.querySelector("input[name='transformacio.costAlterEgo']")?.addEventListener("change", ev => { this.#seleccio.transformacio.costAlterEgo = Math.max(0, parseInt(ev.target.value) || 0); reRender(); });
+
+    el.querySelector("input[name='translocacioActiva']")?.addEventListener("change", ev => { this.#seleccio.translocacioActiva = ev.target.checked; reRender(); });
+    el.querySelector("select[name='translocacio.tipus']")?.addEventListener("change", ev => { this.#seleccio.translocacio.tipus = ev.target.value; reRender(); });
+    el.querySelector("select[name='translocacio.distancia']")?.addEventListener("change", ev => { this.#seleccio.translocacio.distancia = ev.target.value; reRender(); });
+
+    el.querySelector("input[name='mentalsActiu']")?.addEventListener("change", ev => { this.#seleccio.mentalsActiu = ev.target.checked; reRender(); });
+    el.querySelector("select[name='mentals.tipus']")?.addEventListener("change", ev => { this.#seleccio.mentals.tipus = ev.target.value; reRender(); });
+
+    el.querySelector("input[name='telecinesiActiva']")?.addEventListener("change", ev => { this.#seleccio.telecinesiActiva = ev.target.checked; reRender(); });
+    el.querySelector("select[name='telecinesi.categoria']")?.addEventListener("change", ev => { this.#seleccio.telecinesi.categoria = ev.target.value; reRender(); });
+
+    el.querySelector("input[name='replicacioActiva']")?.addEventListener("change", ev => { this.#seleccio.replicacioActiva = ev.target.checked; reRender(); });
+    el.querySelector("select[name='replicacio.massa']")?.addEventListener("change", ev => { this.#seleccio.replicacio.massa = ev.target.value; reRender(); });
+    el.querySelector("select[name='replicacio.complexitat']")?.addEventListener("change", ev => { this.#seleccio.replicacio.complexitat = ev.target.value; reRender(); });
+
+    el.querySelector("input[name='invocacioActiva']")?.addEventListener("change", ev => { this.#seleccio.invocacioActiva = ev.target.checked; reRender(); });
+    el.querySelector("input[name='invocacio.costCriatura']")?.addEventListener("change", ev => { this.#seleccio.invocacio.costCriatura = Math.max(0, parseInt(ev.target.value) || 0); reRender(); });
   }
 
   static _onAfegirEstat(event, target) {
@@ -181,10 +230,18 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     const s = this.#seleccio;
     const perCalcul = {
       ...s,
-      dany:      s.danyActiu ? s.dany : null,
-      curacio:   s.curacioActiva ? s.curacio : null,
-      proteccio: s.proteccioActiva ? s.proteccio : null,
-      artefacte: this.#esArtefacte ? { activacioId: this.#activacioId, modeEsperaId: this.#modeEsperaId } : null
+      dany:          s.danyActiu ? s.dany : null,
+      curacio:       s.curacioActiva ? s.curacio : null,
+      proteccio:     s.proteccioActiva ? s.proteccio : null,
+      artefacte:     this.#esArtefacte ? { activacioId: this.#activacioId, modeEsperaId: this.#modeEsperaId } : null,
+      percepcio:     s.percepcioActiva ? s.percepcio : null,
+      alteracio:     s.alteracioActiva ? s.alteracio : null,
+      transformacio: s.transformacioActiva ? s.transformacio : null,
+      translocacio:  s.translocacioActiva ? s.translocacio : null,
+      mentals:       s.mentalsActiu ? s.mentals : null,
+      telecinesi:    s.telecinesiActiva ? s.telecinesi : null,
+      replicacio:    s.replicacioActiva ? s.replicacio : null,
+      invocacio:     s.invocacioActiva ? s.invocacio : null
     };
     const resultat = calcularConstruccio(perCalcul);
     const nom = this.#nom?.trim() || game.i18n.localize(

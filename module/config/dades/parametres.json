@@ -92,5 +92,45 @@
   "artefacteModeEspera": [
     { "id": "cap",     "nom": "Cap",                          "cost": 0 },
     { "id": "espera",  "nom": "Mode d'espera (preparat abans)", "cost": 5 }
+  ],
+  "percepcio": [
+    { "id": "alterar",  "nom": "Alterar percepció", "costBase": 3, "costPerNivell": 2, "dificultat": 0 },
+    { "id": "illusio",  "nom": "Il·lusions",        "costBase": 5, "costPerNivell": 1, "dificultat": 1 }
+  ],
+  "translocacioTipus": [
+    { "id": "translocacio", "nom": "Translocació", "cost": 5, "dificultat": 0, "latencia": 0 },
+    { "id": "portals",      "nom": "Portals",       "cost": 0, "dificultat": 1, "latencia": 5 }
+  ],
+  "translocacioDistancia": [
+    { "id": "curta",       "nom": "Curta",       "cost": 10,  "dificultat": 0, "latencia": 1 },
+    { "id": "mitjana",     "nom": "Mitjana",     "cost": 20,  "dificultat": 1, "latencia": 2 },
+    { "id": "llarga",      "nom": "Llarga",      "cost": 30,  "dificultat": 1, "latencia": 3 },
+    { "id": "extrema",     "nom": "Extrema",     "cost": 50,  "dificultat": 1, "latencia": 4 },
+    { "id": "multiversal", "nom": "Multiversal", "cost": 100, "dificultat": 2, "latencia": 5 }
+  ],
+  "mentals": [
+    { "id": "llegir",           "nom": "Llegir/sondar",      "cost": 10, "dificultat": 0 },
+    { "id": "projectar",        "nom": "Projectar",          "cost": 10, "dificultat": 0 },
+    { "id": "control-emocional","nom": "Control emocional",  "cost": 15, "dificultat": 1 },
+    { "id": "suggestio",        "nom": "Suggestió",          "cost": 15, "dificultat": 1 },
+    { "id": "control-mental",   "nom": "Control mental",     "cost": 25, "dificultat": 2 }
+  ],
+  "telecinesi": [
+    { "id": "alfa",  "nom": "Alfa",  "cost": 10, "dificultat": 0, "danyBasic": "x1" },
+    { "id": "beta",  "nom": "Beta",  "cost": 10, "dificultat": 1, "danyBasic": "x2" },
+    { "id": "gamma", "nom": "Gamma", "cost": 15, "dificultat": 2, "danyBasic": "x4" }
+  ],
+  "replicacioMassa": [
+    { "id": "menys-1kg",       "nom": "Inferior a 1kg",    "cost": 5,  "dificultat": 0, "latencia": 5 },
+    { "id": "fins-100kg",      "nom": "Fins a 100kg",      "cost": 10, "dificultat": 1, "latencia": 10 },
+    { "id": "qualsevol-massa", "nom": "Qualsevol massa",   "cost": 15, "dificultat": 2, "latencia": 15 }
+  ],
+  "replicacioComplexitat": [
+    { "id": "materia-primera", "nom": "Matèria primera",              "cost": 0,  "dificultat": 0, "latencia": 0 },
+    { "id": "monomaterial",    "nom": "Monomaterial, forma definida", "cost": 5,  "dificultat": 1, "latencia": 1 },
+    { "id": "sense-parts",     "nom": "Objecte sense parts mòbils",   "cost": 5,  "dificultat": 1, "latencia": 1 },
+    { "id": "amb-parts",       "nom": "Objecte amb parts mòbils",     "cost": 10, "dificultat": 2, "latencia": 1 },
+    { "id": "electronic",      "nom": "Aparell electrònic",           "cost": 10, "dificultat": 3, "latencia": 2 },
+    { "id": "nanomaquinaria",  "nom": "Nanomaquinària",               "cost": 15, "dificultat": 4, "latencia": 2 }
   ]
 }

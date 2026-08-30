@@ -6,18 +6,28 @@
  * rellevants... la dificultat es calcula afegint el cost acumulat de la
  * dificultat per cadascun dels paràmetres rellevants").
  *
- * **Abast d'aquesta implementació ("nucli")**: només les categories base
- * (abast, objectius, durada, ús, tipus efecte/ritual) i les cinc categories
- * d'efecte més freqüents al catàleg real (S-25): Dany, Curació, Protecció,
- * Estats, Habilitats. El manual en descriu ~20 més (Alteració,
- * Transformació, Translocació, Mentals, Teletracció/telecinesi,
- * Replicació/Conjuració, Creació de constructes/Invocació, Percepció i
- * il·lusions...) — cadascuna prou diferent i específica com per merèixer la
- * seva pròpia secció de UI i el seu propi tros de validació; queden
- * documentades com a pendents (`09_CONTEXT_SESSIONS.md`) enlloc
- * d'implementar-se de pressa i malament. Afegir-ne una de nova és estendre
- * `parametres.json` amb la taula corresponent i un bloc més aquí, seguint
- * exactament el mateix patró que les cinc ja fetes.
+ * **Categories cobertes**: les bàsiques (abast, objectius, durada, ús, tipus
+ * efecte/ritual), les cinc més freqüents al catàleg real (S-25): Dany,
+ * Curació, Protecció, Estats, Habilitats — i les vuit "exòtiques" que
+ * faltaven (afegides en una sessió posterior, mateix patró exacte):
+ * Percepció i il·lusions, Alteració, Transformació, Translocació, Mentals,
+ * Teletracció/telecinesi, Replicació/Conjuració, Creació de
+ * constructes/Invocació. Amb això, el motor cobreix totes les categories de
+ * paràmetres del manual (cap. 4, p. 642-1160).
+ *
+ * Tres d'aquestes vuit no encaixen en el patró de "taula amb id a triar"
+ * de la resta perquè depenen d'un número extern que el manual demana
+ * consultar en un altre document (el cost en PC d'un tret, d'un alter ego,
+ * o d'una criatura invocada) — es demana a l'usuari que l'introdueixi a mà
+ * (DA-5), no s'intenta enllaçar amb cap catàleg/fitxa real:
+ *   - **Alteració**: "Tret" — cost = valor absolut del cost del tret
+ *     (manual p. 987, sempre positiu, tant per afegir com per treure'n un).
+ *   - **Transformació**: cost = 0,25 PC per cada PC de cost de l'alter ego
+ *     (manual p. 1001) — caldria "un full de PJ completament separat" que
+ *     aquest constructor no gestiona.
+ *   - **Creació de constructes/Invocació**: cost = 15 + (0,25 PC per cada
+ *     PC de cost de la criatura invocada), dificultat 4, latència 15
+ *     (manual p. 1156-1158).
  *
  * **Artefactes (S-30)**: el mateix motor de paràmetres es reutilitza per
  * dissenyar artefactes — es construeixen amb els mateixos blocs bàsics
@@ -46,6 +56,14 @@
  * @property {Array<{id:string, nivell:number}>} estats
  * @property {Array<{id:string, nivell:number}>} habilitats
  * @property {{activacioId:string, modeEsperaId:string}|null} [artefacte]
+ * @property {{tipus:string, nivell:number}|null} [percepcio]
+ * @property {{mode:"atribut"|"tret", nivellAtribut:number, costTret:number}|null} [alteracio]
+ * @property {{costAlterEgo:number}|null} [transformacio]
+ * @property {{tipus:string, distancia:string}|null} [translocacio]
+ * @property {{tipus:string}|null} [mentals]
+ * @property {{categoria:string}|null} [telecinesi]
+ * @property {{massa:string, complexitat:string}|null} [replicacio]
+ * @property {{costCriatura:number}|null} [invocacio]
  */
 
 function _buscar(llista, id) {
@@ -136,6 +154,64 @@ export function calcularConstruccio(seleccio) {
     if (!hab) continue;
     const nivell = Math.max(1, h.nivell ?? 1);
     afegir(`${hab.nom} (nivell ${nivell})`, hab.costBase + hab.costPerNivell * nivell, hab.dificultat, hab.latencia);
+  }
+
+  // ── Percepció i il·lusions (manual p. 938-946) ──
+  if (seleccio.percepcio) {
+    const tip = _buscar(P.percepcio, seleccio.percepcio.tipus);
+    const nivell = Math.max(1, seleccio.percepcio.nivell ?? 1);
+    if (tip) afegir(`${tip.nom} (nivell ${nivell})`, tip.costBase + tip.costPerNivell * nivell, tip.dificultat);
+  }
+
+  // ── Alteració (manual p. 976-988) ──
+  if (seleccio.alteracio) {
+    if (seleccio.alteracio.mode === "tret") {
+      const cost = Math.abs(seleccio.alteracio.costTret ?? 0);
+      if (cost) afegir("Alteració: tret (afegir/treure)", cost);
+    } else {
+      const nivell = Math.max(1, seleccio.alteracio.nivellAtribut ?? 1);
+      afegir(`Alteració: atribut (${nivell} punt${nivell > 1 ? "s" : ""})`, 5 + 5 * nivell);
+    }
+  }
+
+  // ── Transformació (manual p. 989-1003) ──
+  if (seleccio.transformacio) {
+    const costAlterEgo = Math.max(0, seleccio.transformacio.costAlterEgo ?? 0);
+    if (costAlterEgo) afegir(`Transformació (alter ego ${costAlterEgo} PC)`, 0.25 * costAlterEgo);
+  }
+
+  // ── Translocació (manual p. 1004-1028) ──
+  if (seleccio.translocacio) {
+    const tip = _buscar(P.translocacioTipus, seleccio.translocacio.tipus);
+    if (tip) afegir(tip.nom, tip.cost, tip.dificultat, tip.latencia);
+    const dist = _buscar(P.translocacioDistancia, seleccio.translocacio.distancia);
+    if (dist) afegir(`Distància: ${dist.nom}`, dist.cost, dist.dificultat, dist.latencia);
+  }
+
+  // ── Mentals (manual p. 1029-1064) ──
+  if (seleccio.mentals) {
+    const tip = _buscar(P.mentals, seleccio.mentals.tipus);
+    if (tip) afegir(tip.nom, tip.cost, tip.dificultat);
+  }
+
+  // ── Teletracció/telecinesi (manual p. 1065-1108) ──
+  if (seleccio.telecinesi) {
+    const cat = _buscar(P.telecinesi, seleccio.telecinesi.categoria);
+    if (cat) afegir(`Telecinesi: ${cat.nom} (dany ${cat.danyBasic})`, cat.cost, cat.dificultat);
+  }
+
+  // ── Replicació/Conjuració (manual p. 1109-1133) ──
+  if (seleccio.replicacio) {
+    const massa = _buscar(P.replicacioMassa, seleccio.replicacio.massa);
+    if (massa) afegir(`Massa: ${massa.nom}`, massa.cost, massa.dificultat, massa.latencia);
+    const complexitat = _buscar(P.replicacioComplexitat, seleccio.replicacio.complexitat);
+    if (complexitat) afegir(`Complexitat: ${complexitat.nom}`, complexitat.cost, complexitat.dificultat, complexitat.latencia);
+  }
+
+  // ── Creació de constructes/Invocació (manual p. 1134-1158) ──
+  if (seleccio.invocacio) {
+    const costCriatura = Math.max(0, seleccio.invocacio.costCriatura ?? 0);
+    afegir(`Invocació (criatura ${costCriatura} PC)`, 15 + 0.25 * costCriatura, 4, 15);
   }
 
   const total = linies.reduce((acc, l) => ({
