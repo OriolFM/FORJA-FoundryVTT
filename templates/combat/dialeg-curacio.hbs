@@ -1,6 +1,7 @@
 <div class="forja-dialeg-curacio">
   <p class="dc-intro">{{localize "FORJA.Curacio.Intro" guaridor=nomGuaridor objectiu=nomObjectiu}}</p>
 
+  {{#unless esMecanoide}}
   <div class="form-group dc-tipus">
     <label class="dc-radio">
       <input type="radio" name="tipus" value="primers-auxilis" {{#if (eq tipus "primers-auxilis")}}checked{{/if}}>
@@ -14,6 +15,9 @@
   <p class="dc-desc">
     {{#if (eq tipus "tractament-medic")}}{{localize "FORJA.Curacio.TractamentMedicDesc"}}{{else}}{{localize "FORJA.Curacio.PrimersAuxilisDesc"}}{{/if}}
   </p>
+  {{else}}
+  <p class="dc-desc">{{localize "FORJA.Curacio.AssistenciaTecnicaDesc"}}</p>
+  {{/unless}}
 
   <div class="form-group dc-pista">
     <label class="dc-radio">
@@ -25,6 +29,13 @@
       {{localize "FORJA.Salut.Fatiga"}}
     </label>
   </div>
+
+  {{#if esMecanoide}}
+  <div class="form-group dc-punts">
+    <label>{{localize "FORJA.Curacio.PuntsAReparar" marcats=marcatsPista}}</label>
+    <input type="number" name="puntsDeclarats" value="{{puntsDeclarats}}" min="0" max="{{marcatsPista}}" step="1">
+  </div>
+  {{/if}}
 
   <p class="dc-pool">
     {{localize "FORJA.Curacio.Tirada" hab=habNom pool=poolFinal dificultat=dificultat}}

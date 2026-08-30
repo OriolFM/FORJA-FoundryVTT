@@ -568,17 +568,24 @@ export default class FullPersonatge extends HandlebarsApplicationMixin(foundry.a
     const pistaPerDefecte = (objectiu.system.salut.ferides.nivellActiu ?? 1) >= (objectiu.system.salut.fatiga.nivellActiu ?? 1)
       ? "ferides" : "fatiga";
     const hab = habilitatCuracio(guaridor, objectiu.system.especie);
+    const marcatsPerPista = {
+      ferides: objectiu.system.salut.ferides.marcats ?? 0,
+      fatiga:  objectiu.system.salut.fatiga.marcats ?? 0
+    };
 
     const eleccio = await DiategCuracio.obrir({
       nomGuaridor: guaridor.name,
       nomObjectiu: objectiu.name,
       habNom: game.i18n.localize(CONFIG.FORJA.LLISTA_HABILITATS.find(h => h.id === hab.id)?.nom ?? hab.id),
       poolFinal: (guaridor.system.atributs?.INT ?? 0) + hab.nivell,
-      pistaPerDefecte
+      pistaPerDefecte,
+      esMecanoide: objectiu.system.especie === "mecanoide",
+      marcatsPerDefecte: marcatsPerPista[pistaPerDefecte],
+      marcatsPerPista
     });
     if (!eleccio) return;
 
-    await ferCuracio({ guaridor, objectiu, tipus: eleccio.tipus, pista: eleccio.pista });
+    await ferCuracio({ guaridor, objectiu, tipus: eleccio.tipus, pista: eleccio.pista, puntsDeclarats: eleccio.puntsDeclarats });
   }
 
   /**

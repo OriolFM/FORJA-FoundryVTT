@@ -3,7 +3,8 @@
   <div class="mt-cap">
     <span class="mt-label">
       {{nomGuaridor}}
-      {{#if (eq tipus "tractament-medic")}}{{localize "FORJA.Curacio.TractamentMedic"}}{{else}}{{localize "FORJA.Curacio.PrimersAuxilis"}}{{/if}}
+      {{#if esMecanoide}}{{localize "FORJA.Curacio.AssistenciaTecnica"}}
+      {{else if (eq tipus "tractament-medic")}}{{localize "FORJA.Curacio.TractamentMedic"}}{{else}}{{localize "FORJA.Curacio.PrimersAuxilis"}}{{/if}}
       a {{nomObjectiu}} ({{habNom}})
     </span>
     <span class="mt-dif">dif. {{dificultat}}</span>
@@ -30,12 +31,16 @@
     {{/if}}
   </div>
 
-  {{#if excedent}}
+  {{#if curat}}
   <div class="mt-dany">
     <span class="mt-badge badge-dany">
-      <i class="fas fa-heart"></i> {{excedent}} {{localize (concat "FORJA.Salut." pista)}} {{localize "FORJA.Curacio.Guarits"}}
+      <i class="fas fa-heart"></i> {{curat}} {{localize (concat "FORJA.Salut." pista)}} {{localize "FORJA.Curacio.Guarits"}}
     </span>
   </div>
+  {{/if}}
+
+  {{#if esMecanoide}}
+  <p class="mt-maniobra">{{localize "FORJA.Curacio.AssistenciaTecnicaDificultat" punts=puntsDeclarats}}</p>
   {{/if}}
 
 </div>

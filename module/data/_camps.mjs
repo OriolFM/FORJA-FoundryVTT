@@ -60,6 +60,11 @@ export function campsBase(fields) {
     }),
     concentrat: new fields.BooleanField({ initial: false }),
 
+    // Mecanoides (S-17, manual p. 1148): una reparació d'urgència amb
+    // "nyaps" (enlloc d'enginyeria) trenca l'autoreparació de ferides —
+    // vegeu `combat/curacio.mjs`, `potReferSePerSiSol`.
+    nyapsActiu: new fields.BooleanField({ initial: false }),
+
     // --- Progressió ---
     pc: new fields.NumberField({ integer: true, min: 0, initial: 200, nullable: false }),
     px: new fields.SchemaField({

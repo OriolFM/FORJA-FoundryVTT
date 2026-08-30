@@ -23,11 +23,13 @@ export default class DiategCuracio extends HandlebarsApplicationMixin(Applicatio
   #resolve = null;
   #tipus   = "primers-auxilis";
   #pista   = "ferides";
+  #puntsDeclarats = 1;
 
   constructor(config, options = {}) {
     super(options);
     this.#config = config;
     this.#pista  = config.pistaPerDefecte ?? "ferides";
+    this.#puntsDeclarats = Math.max(1, config.marcatsPerDefecte ?? 1);
   }
 
   get title() {
@@ -36,12 +38,20 @@ export default class DiategCuracio extends HandlebarsApplicationMixin(Applicatio
 
   async _prepareContext(options) {
     const c = this.#config;
-    const dificultat = this.#tipus === "tractament-medic" ? 2 : 1;
+    // Mecanoides (manual p. 1138): dificultat = 2 + punts declarats a
+    // reparar, no la dificultat fixa 1/2 de primers auxilis/tractament
+    // mèdic (que només s'aplica a espècies orgàniques).
+    const dificultat = c.esMecanoide
+      ? 2 + this.#puntsDeclarats
+      : (this.#tipus === "tractament-medic" ? 2 : 1);
     return {
       nomGuaridor: c.nomGuaridor,
       nomObjectiu: c.nomObjectiu,
       habNom:      c.habNom,
       poolFinal:   c.poolFinal,
+      esMecanoide: c.esMecanoide,
+      marcatsPista: c.marcatsPerPista?.[this.#pista] ?? 0,
+      puntsDeclarats: this.#puntsDeclarats,
       tipus:       this.#tipus,
       pista:       this.#pista,
       dificultat
@@ -54,13 +64,25 @@ export default class DiategCuracio extends HandlebarsApplicationMixin(Applicatio
       radio.addEventListener("change", ev => { this.#tipus = ev.target.value; this.render(false); });
     });
     this.element.querySelectorAll("input[name='pista']").forEach(radio => {
-      radio.addEventListener("change", ev => { this.#pista = ev.target.value; this.render(false); });
+      radio.addEventListener("change", ev => {
+        this.#pista = ev.target.value;
+        this.#puntsDeclarats = Math.max(1, this.#config.marcatsPerPista?.[this.#pista] ?? 1);
+        this.render(false);
+      });
+    });
+    this.element.querySelector("input[name='puntsDeclarats']")?.addEventListener("input", ev => {
+      this.#puntsDeclarats = Math.max(0, parseInt(ev.target.value) || 0);
+      this.render(false);
     });
   }
 
   static async _onSubmit(event, form, formData) {
     const d = formData.object;
-    this.#resolve?.({ tipus: d.tipus ?? this.#tipus, pista: d.pista ?? this.#pista });
+    this.#resolve?.({
+      tipus: d.tipus ?? this.#tipus,
+      pista: d.pista ?? this.#pista,
+      puntsDeclarats: this.#puntsDeclarats
+    });
   }
 
   async close(options = {}) {
