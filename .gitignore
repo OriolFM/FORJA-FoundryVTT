@@ -19,3 +19,6 @@ dist/
 packs/*/LOCK
 packs/*/LOG
 packs/*/LOG.old
+
+# graphify (graf de coneixement del codi, es genera localment)
+graphify-out/
