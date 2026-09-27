@@ -27,4 +27,6 @@ export async function unirse(p, usuari, contrasenya = "") {
   if (contrasenya) await p.fill('input[name="password"]', contrasenya);
   await p.locator('button[name="join"]').click();
   await p.waitForFunction(() => window.game?.ready === true, null, { timeout: 120000 });
+  // En la primera entrada d'un jugador, Foundry obre la tria de personatge (UserConfig): es tanca.
+  await p.evaluate(() => { for (const a of foundry.applications.instances.values()) if (a.constructor.name === "UserConfig") a.close(); });
 }

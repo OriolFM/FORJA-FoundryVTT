@@ -12,6 +12,24 @@ export default class ForjaActor extends Actor {
   }
 
   /**
+   * @override Els personatges jugadors neixen amb el token ENLLAÇAT a l'actor
+   * (i amigable): el dany, la concentració o les ègides que el combat aplica a
+   * l'actor del token han de ser els de la fitxa. Per defecte Foundry crea
+   * tokens no enllaçats, i el combat escrivia en una còpia del token (trobat a
+   * les proves de joc). Els PNJ es mantenen no enllaçats (cada token, una
+   * instància). Només si qui crea l'actor no ho ha especificat.
+   */
+  async _preCreate(data, options, user) {
+    if ((await super._preCreate(data, options, user)) === false) return false;
+    if (this.type !== "personatge") return;
+    const proto = data.prototypeToken ?? {};
+    const canvis = {};
+    if (proto.actorLink === undefined)   canvis["prototypeToken.actorLink"]   = true;
+    if (proto.disposition === undefined) canvis["prototypeToken.disposition"] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+    if (Object.keys(canvis).length) this.updateSource(canvis);
+  }
+
+  /**
    * Aplica dany a la pista indicada i actualitza el document (via el DJ si
    * l'usuari no n'és propietari, A2).
    * @param {number} quantitat

@@ -5,6 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "node --test \"tests/unitaris/*.test.mjs\"",
     "build:manual": "node scripts/build-manual.mjs && npx @foundryvtt/foundryvtt-cli package pack --type System --id forja -n manual --compendiumType JournalEntry --in packs/_source/manual --out packs",
     "test:joc": "node tests/joc/proves.mjs"
   },

@@ -10,7 +10,7 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
    - Els agents no fan commits: el coordinador revisa cada onada, torna a passar les proves i en fa un sol commit.
    - Model per tasca: Opus per al que és crític (multijugador, torns, combat), Sonnet per a feina ben especificada que demana criteri, i Haiku per a canvis mecànics.
 4. **Verificació.**
-   - A cada onada: `node --check` de tots els `.mjs`, proves de Node de la lògica pura (a l'scratchpad, fora del repo) i comprovació que les plantilles i les `data-action` existeixen.
+   - A cada onada: `node --check` de tots els `.mjs`, proves de Node de la lògica pura i comprovació que les plantilles i les `data-action` existeixen. Les proves unitàries són a `tests/unitaris/` i s'executen amb `npm test`: unes 180 comprovacions en 6 fitxers.
    - Proves de joc en un Foundry v13.351 real, sense pantalla (vegeu "Proves de joc" i `tests/joc/README.md`).
 
 ## Commits
@@ -67,6 +67,37 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
   - cap clau sense traduir en ca, es ni en.
 - **Error trobat i corregit:** la icona de l'estat *sagnant* (`icons/svg/bleeding-wound.svg`) no existeix a Foundry i donava un 404. Ara és `icons/svg/blood.svg`.
 - **Observació:** les barres del token no s'hi poden editar (`editable: false`), perquè són valors derivats. Per canviar la salut cal fer servir la fitxa.
+
+### Segona bateria: combat (`tests/joc/proves-combat.mjs`)
+
+**Interfície, amb clics reals als diàlegs, en dues sessions (DJ i Jugador):**
+- **Tracker:** el jugador només veu els controls del seu combatent, i tothom veu el marcador de temps.
+- **Declarar:** declarar un atac amb "Cop" i concentració des del tracker.
+- **Resoldre:** resoldre l'atac contra el PNJ marcat. S'obre el diàleg de defensa, l'atac surt al xat i la concentració es gasta (5 daus = 2 + 2 + 1).
+- **Curació:** el diàleg de curació des de la fitxa.
+- **Tirada:** el diàleg de tirada (AGI + Esquivar, 5 daus).
+
+**Regles, amb daus forçats:** totes les proves passen.
+- Escopeta contra armadura rígida (dany 4).
+- Dues armadures (3 + ⌈3/2⌉).
+- Pífia en esquivar (+2).
+- Concentració trencada i estat *atordit*.
+- Maniobra amb el seu estat.
+- Mitjans de blocar.
+- Retard de barallar-se (+2 daus).
+- Penalització de salut i bloqueig a nivell 7.
+- Ègida trencada i reactivada al tick.
+- Abast amb tokens de 2×2.
+
+**Observacions d'entorn (no són errors del sistema):**
+- Amb el canvas renderitzat per programari, Foundry va molt lent. L'espera de Playwright, basada en `requestAnimationFrame`, gairebé no avança, i per això les proves comproven l'estat per polling.
+- Per forçar daus, Foundry calcula la cara com `ceil((1 − r) · 10)`.
+
+**Error trobat i corregit: els PJ neixen amb el token no enllaçat.** Foundry crea els tokens no enllaçats per defecte. En combat, la concentració, el dany i les ègides d'un PJ s'escrivien en una còpia del token i no a la seva fitxa: la fitxa deia "no concentrat" mentre el combat tirava amb concentració. Ara `ForjaActor#_preCreate` crea els personatges amb el token enllaçat (`actorLink`) i amistós, tret que s'especifiqui una altra cosa. Els PNJ continuen no enllaçats: cada token és una instància. **Els PJ creats abans del canvi** s'han d'enllaçar a mà (Configurar token prototip → "Enllaçar dades de l'actor").
+
+**Troballa de disseny — pendent de decidir:**
+- **Qui tria la defensa del PNJ.** Quan un jugador resol el seu atac, el diàleg de defensa del PNJ s'obre a la pantalla **del jugador** (confirmat per la prova U3). Per tant, és el jugador qui tria si el PNJ esquiva, para o bloca. El codi diu que el DJ tria "en nom seu", però el diàleg s'obre al client que resol l'acció. Solució proposada: enviar la tria de defensa al DJ pel socket quan el defensor no és del jugador.
+- **Actor del món i actor del token.** Els PNJ tenen tokens no enllaçats. L'ègida, la concentració i el dany s'han d'aplicar a l'actor del token, que és el que fa servir el tracker. Una macro que passi l'actor del món escriuria en un actor diferent del que usa el combat.
 
 ## Graf de coneixement (graphify)
 

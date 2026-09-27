@@ -364,6 +364,10 @@ existeixi **abans** d'esborrar res de `packs/_source/manual`. Cal
   (què s'ha fet, per què, què queda pendent) — és el registre de referència
   per a qui continuï el treball, humà o agent.
 
+## Proves unitàries
+
+`npm test` executa `tests/unitaris/*.test.mjs` amb el runner de Node: lògica pura de combat, torns, relé del DJ, derivats i paritat de traduccions. Són ràpides i no necessiten Foundry. Cal executar-les abans de cada commit que toqui `module/`. Vegeu `tests/unitaris/README.md`.
+
 ## Proves de joc automàtiques
 
-A `tests/joc/` hi ha proves amb un Foundry real sense pantalla (Playwright, sessions de DJ i de Jugador). S'executen amb `npm run test:joc`. La preparació és a `tests/joc/README.md`. Cap credencial va al repo.
+A `tests/joc/` hi ha proves amb un Foundry real (`proves.mjs`, general; `proves-combat.mjs`, diàlegs de combat i regles amb daus forçats) sense pantalla (Playwright, sessions de DJ i de Jugador). S'executen amb `npm run test:joc`. La preparació és a `tests/joc/README.md`. Cap credencial va al repo.
