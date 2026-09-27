@@ -19,6 +19,10 @@
       <input type="radio" name="tipus" value="altra" {{#if (eq tipus "altra")}}checked{{/if}}>
       {{localize "FORJA.Combat.Accio.Altra"}}
     </label>
+    <label class="dda-radio">
+      <input type="radio" name="tipus" value="moviment" {{#if (eq tipus "moviment")}}checked{{/if}}>
+      {{localize "FORJA.Combat.Accio.Moviment"}}
+    </label>
   </div>
 
   {{#if (eq tipus "atac")}}
@@ -87,6 +91,26 @@
     <input type="number" name="modificador" value="0" step="1">
   </div>
   {{/if}}
+
+  <div class="form-group dda-moviment">
+    <label>{{localize "FORJA.Moviment.Tipus"}}</label>
+    <select name="moviment">
+      {{#each moviments as |m|}}
+      <option value="{{m}}" {{#if (eq m ../moviment)}}selected{{/if}}>
+        {{#if (eq m "basic")}}{{localize "FORJA.Moviment.Basic"}}{{/if}}
+        {{#if (eq m "rapid")}}{{localize "FORJA.Moviment.Rapid"}}{{/if}}
+        {{#if (eq m "especial")}}{{localize "FORJA.Moviment.Especial"}}{{/if}}
+        {{#if (eq m "carrega")}}{{localize "FORJA.Moviment.Carrega"}}{{/if}}
+      </option>
+      {{/each}}
+    </select>
+  </div>
+  <p class="hint">
+    {{#if (eq moviment "basic")}}{{localize "FORJA.Moviment.BasicDesc" metres=metresMoviment}}{{/if}}
+    {{#if (eq moviment "rapid")}}{{localize "FORJA.Moviment.RapidDesc" metres=metresMoviment}}{{/if}}
+    {{#if (eq moviment "especial")}}{{localize "FORJA.Moviment.EspecialDesc" metres=metresMoviment}}{{/if}}
+    {{#if (eq moviment "carrega")}}{{localize "FORJA.Moviment.CarregaDesc" metres=metresMoviment}}{{/if}}
+  </p>
 
   <div class="form-group dda-concentrar">
     <label title="{{localize 'FORJA.Combat.ConcentrarDesc'}}">

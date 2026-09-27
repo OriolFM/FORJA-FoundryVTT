@@ -1,5 +1,6 @@
 import { campsBase } from "./_camps.mjs";
 import { FORJA } from "../config/constants.mjs";
+import { distanciesMoviment } from "../combat/moviment.mjs";
 
 /**
  * DataModel per a Personatges Jugadors (PJ).
@@ -62,6 +63,11 @@ export function _prepararDerivats(sys) {
 
   sys.latenciaBase = Math.max(1, sys.latenciaBase);
   sys.reaccionsMax = Math.max(0, sys.reaccionsMax);
+
+  // --- Moviment (WP-M): caminar / córrer / saltar, en metres ---
+  // Fórmules de l'Oriol FM (2026-09-27), no del manual (l. 2668: "el DJ
+  // decideix [...] en base a la seva mida i AGI"). Vegeu combat/moviment.mjs.
+  sys.moviment = distanciesMoviment(atributs.AGI, mida);
 
   // --- Salut: derivats (S-15) ---
   salut.fatiga.perNivell  = constitucio;

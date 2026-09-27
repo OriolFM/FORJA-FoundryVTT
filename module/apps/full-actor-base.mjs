@@ -86,7 +86,8 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
         latenciaBase: sys.latenciaBase,
         defensa:      sys.defensa,
         reduccioDany: sys.reduccioDany,
-        reaccionsMax: sys.reaccionsMax
+        reaccionsMax: sys.reaccionsMax,
+        moviment:     sys.moviment
       },
       salut:      _prepSalut(sys),
       habilitats: _prepHabilitats(sys, cfg),

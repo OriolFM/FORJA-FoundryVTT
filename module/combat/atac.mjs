@@ -35,6 +35,8 @@ import { teProprietat } from "./propietats.mjs";
  * @param {number}  [p.danyExtra=0]       Dany addicional si impacta (B14: pífia del defensor en esquivar).
  * @param {number}  [p.retardBarallarse=0] Ticks de latència extra declarats per barallar-se (B16):
  *   +1 dau a la tirada d'atac per cada tick.
+ * @param {{daus:number, dany:number}} [p.bonusCarrega]  Bonificació de càrrega (WP-M,
+ *   `bonificacioCarrega` de combat/moviment.mjs): +daus a l'atac i +dany si impacta.
  * @returns {Promise<object|null>}  `null` si l'atacant està fora de combat (nivell 7 de salut)
  *
  * Regles aplicades (manual FC001CA):
@@ -57,8 +59,12 @@ import { teProprietat } from "./propietats.mjs";
  *  - › Cos a cos, "Barallar-se" i taula d'armes naturals (Cop): cada +1 de
  *    latència afegida dona +1 a impactar — +1 dau, com els altres "+X a la
  *    tirada" del manual (B16, `retardBarallarse`).
+ *  - › Temps actiu › Moviment (l. 2794): la càrrega de 2 m o més dona "1 dau
+ *    addicional a la tirada d'atac i al dany (si l'atac impacta)". El dany de
+ *    FORJA no es tira, així que el dau "al dany" és +1 al dany de l'atac,
+ *    abans de l'ègida i l'armadura (WP-M, `bonusCarrega`).
  */
-export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null, danyExtra = 0, retardBarallarse = 0 }) {
+export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null, danyExtra = 0, retardBarallarse = 0, bonusCarrega = null }) {
   if (actor.system.salut?.foraDeCombat) {
     ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
     return null;
@@ -68,7 +74,9 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
   const dauConcentracio = await consumirConcentracio(actor);
   const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0) + penalSalut;
   const bonusRetard     = Math.max(0, retardBarallarse ?? 0);
-  const pool            = Math.max(1, poolFinal + dauConcentracio + bonusRetard);
+  const dausCarrega     = Math.max(0, bonusCarrega?.daus ?? 0);
+  const danyCarrega     = Math.max(0, bonusCarrega?.dany ?? 0);
+  const pool            = Math.max(1, poolFinal + dauConcentracio + bonusRetard + dausCarrega);
 
   const roll = new ForjaRoll(`${pool}d10`, {}, {
     forja: { dificultat: dificultatFinal }
@@ -81,6 +89,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
 
   let resultatDany = null;
   const notes = [];
+  if (dausCarrega > 0) notes.push(game.i18n.format("FORJA.Combat.CarregaBonus", { daus: dausCarrega, dany: danyCarrega }));
   if (exit) {
     const { valor: danyBaseArma, bonificador: bonificadorArma } = resoldreDanyArma(arma.system.danyBase, actor);
 
@@ -99,7 +108,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     const estavaConcentrat = !!objectiu.system.concentrat;
 
     resultatDany = calcularDany({
-      danyBaseArma,
+      danyBaseArma: danyBaseArma + danyCarrega,
       bonificadorArma,
       excedentAtac: excedent,
       reduccioDany: (objectiu.system.reduccioDany ?? 0) + reduccioExtra,

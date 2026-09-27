@@ -12,6 +12,8 @@ import ItemArmadura        from "./module/data/item-armadura.mjs";
 import ItemArtefacte       from "./module/data/item-artefacte.mjs";
 import ForjaActor          from "./module/documents/actor.mjs";
 import ForjaCombat         from "./module/documents/combat.mjs";
+import { crearTokenDocumentForja } from "./module/documents/token.mjs";
+import { crearTokenForja } from "./module/canvas/token.mjs";
 import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
 import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
@@ -35,6 +37,11 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = ForjaActor;
   CONFIG.Combat.documentClass = ForjaCombat;
   CONFIG.ui.combat = ForjaCombatTracker;
+
+  // Moviment (WP-M): bloqueig entre tokens, pathfinding (A*) i límit de
+  // moviment per torn. S'estenen les classes que Foundry fa servir per defecte.
+  CONFIG.Token.documentClass = crearTokenDocumentForja(CONFIG.Token.documentClass);
+  CONFIG.Token.objectClass   = crearTokenForja(CONFIG.Token.objectClass);
 
   // DataModels
   CONFIG.Actor.dataModels = {

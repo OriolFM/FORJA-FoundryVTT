@@ -10,12 +10,19 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 ## [Pendent]
 
 ### Afegit
-- Moviment en temps actiu (en curs):
-  - bloqueig entre tokens segons la mida i el bàndol;
-  - distàncies de caminar, córrer i saltar;
-  - moviment només en el propi torn, amb la distància acumulada;
-  - càrrega;
-  - camí que voreja parets i tokens.
+- **Moviment en temps actiu** (decisions de l'Oriol FM, 2026-09-27):
+  - **Distàncies**, a les fitxes de PJ i PNJ: caminar = AGI×2 + MID − 3; córrer = AGI×5 + (MID − 3)×2; saltar = AGI×3 + ⌈(MID − 3)/2⌉. En metres, amb un mínim d'1.
+  - **Bloqueig entre tokens:** la mida mitjana o més gran bloqueja sempre; la petita o diminuta només bloqueja si és enemiga. Els morts no bloquegen, i no es pot acabar sobre un altre token.
+  - **Camí:** el token voreja parets i tokens que bloquegen (A* sobre la quadrícula quadrada o hexagonal) en lloc d'anar en línia recta.
+  - **Moviment en el torn:** amb un combat començat, el jugador només mou el seu token quan el seu combatent actua. Sempre pot caminar amb l'acció declarada. La distància és acumulativa en tot el torn, repartida en tants trams com vulgui. El DJ no té límit.
+  - **Tipus de moviment al diàleg de declarar:**
+    - bàsic;
+    - ràpid (acció "Només moviment");
+    - especial, amb +2 de latència;
+    - càrrega, amb +2 de latència i, si s'ha mogut 2 m o més, +1 dau i +1 de dany (manual, l. 2794).
+
+### Corregit
+- En tornar a declarar una acció, les dades de l'acció anterior (maniobra, retard…) ja no es barregen amb les de la nova.
 
 ## [0.4.0] - 2026-09-27
 

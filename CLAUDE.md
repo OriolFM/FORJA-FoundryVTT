@@ -42,7 +42,10 @@ FORJA-FoundryVTT/
 │   │   └── item-artefacte.mjs
 │   ├── documents/
 │   │   ├── actor.mjs          # ForjaActor (helpers aplicarDany/curar)
-│   │   └── combat.mjs         # ForjaCombat: rellotge de temps, ègides
+│   │   ├── combat.mjs         # ForjaCombat: rellotge de temps, ègides
+│   │   └── token.mjs          # TokenDocument de FORJA: límit de moviment per torn (WP-M)
+│   ├── canvas/
+│   │   └── token.mjs          # Token (canvas) de FORJA: bloqueig entre tokens i pathfinding A* (WP-M)
 │   ├── apps/                  # Fitxes (ApplicationV2) i diàlegs
 │   │   ├── full-actor-base.mjs   # Classe base compartida per PJ i PNJ
 │   │   ├── full-personatge.mjs   # Fitxa de Personatge (extén la base)
@@ -56,6 +59,7 @@ FORJA-FoundryVTT/
 │   │   ├── curacio.mjs        # Primers auxilis / tractament mèdic / repòs natural
 │   │   ├── reaccions.mjs      # Reaccions per torn i concentració
 │   │   ├── abast.mjs          # Distàncies i bandes de rang (vora a vora)
+│   │   ├── moviment.mjs       # Moviment: distàncies, bloqueig, permís per torn, A* (funcions pures)
 │   │   ├── equipament-automatic.mjs  # Atacs automàtics (Cop, armament natural), atributIHabilitatAtac
 │   │   └── tracker-ui.mjs     # ForjaCombatTracker (extén el Combat Tracker natiu)
 │   ├── dice/
@@ -148,6 +152,10 @@ Calculat a `prepareDerivedData()`:
 - `defensa = AGI + MIDA_DEFENSA[mida]`
 - `reduccioDany = FOR`
 - `reaccionsMax = 1` (± efectes de trets)
+- `moviment.{caminar, correr, saltar}` en metres (`combat/moviment.mjs`,
+  `distanciesMoviment`): caminar = AGI×2 + MID − 3, córrer = AGI×5 +
+  (MID − 3)×2, saltar = AGI×3 + ⌈(MID − 3)/2⌉, mínim 1. Fórmules de l'Oriol
+  FM, no del manual. Es mostren a les dues fitxes, amb la resta de derivats.
 - Efectes mecànics de trets (`item.system.efecte`): `{stat, delta}` suma a un
   derivat de la whitelist (`reaccionsMax`, `latenciaBase`, `defensa`,
   `reduccioDany`); `{flag}` activa un indicador booleà (p. ex.
@@ -207,6 +215,40 @@ emboscada" — **només visibles** per al DJ o el propietari del combatent
 (`_potControlar`). Declarar acció obre `DiategDeclararAccio` amb la latència
 i les opcions d'atac/defensa/maniobres calculades; resoldre obre el diàleg de
 tirada (o el flux d'atac complet si hi ha un objectiu marcat al canvas).
+
+### Moviment (WP-M)
+
+Lògica pura a `module/combat/moviment.mjs` (sense globals de Foundry); la
+part de Foundry, a dues classes registrades a `forja.mjs` que estenen les
+que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
+`objectClass`, amb les factories `crearTokenDocumentForja` / `crearTokenForja`):
+
+- **Declarar** (`dialeg-declarar-accio.mjs`): tota acció porta implícit un
+  moviment bàsic (caminar). Es pot triar moviment especial (+2 latència,
+  tirada a càrrec del DJ) o, amb un atac cos a cos / natural, càrrega
+  (córrer + atac, +2 latència). El moviment ràpid (córrer) només amb el
+  tipus d'acció "Només moviment", perquè no es combina amb cap altra acció.
+  Es desa a `flags.forja.accioPendent.moviment`, amb `combatId`,
+  `declaradaAlMarcador` i `movimentEnCurs` (el moviment del torn que s'està
+  jugant, si es redeclara durant el propi torn; vegeu `movimentDelTorn`).
+- **Límit per torn** (`documents/token.mjs`, `_preUpdateMovement`, al client
+  que mou): en un combat començat i per als tokens combatents, un jugador
+  (el DJ mai) només pot moure el token del combatent actiu
+  (`flags.forja.actiu`), sense teletransport, fins al permís del moviment
+  del torn (caminar o córrer) **acumulat**: historial de moviment del torn
+  (Foundry el buida a l'inici de cada torn) + el tram nou. Cap token pot
+  acabar a l'espai d'un altre. Els tokens que no són al combat es mouen
+  lliurement.
+- **Bloqueig i pathfinding** (`canvas/token.mjs`): les caselles ocupades per
+  tokens que bloquegen (`bloquejaPas`: mida ≥ 3 sempre; mida ≤ 2 només si és
+  enemic; els morts i els que l'usuari no veu, mai) tenen cost infinit
+  (`_getMovementCostFunction`), i `findMovementPath` busca una ruta A* al
+  voltant de parets i tokens (quadrícula quadrada i hexagonal, tokens de
+  diverses caselles, límit de nodes). Sense quadrícula, el natiu. El DJ amb
+  "moviment sense restriccions" ho ignora tot.
+- **Càrrega**: en resoldre l'atac, si el token s'ha mogut 2 m o més aquest
+  torn (historial), +1 dau a l'atac i +1 al dany si impacta (manual l. 2794;
+  `ferAtac`, paràmetre `bonusCarrega`).
 
 ### Pipeline d'atac → defensa → dany
 
@@ -371,3 +413,9 @@ existeixi **abans** d'esborrar res de `packs/_source/manual`. Cal
 ## Proves de joc automàtiques
 
 A `tests/joc/` hi ha proves amb un Foundry real (`proves.mjs`, general; `proves-combat.mjs`, diàlegs de combat i regles amb daus forçats) sense pantalla (Playwright, sessions de DJ i de Jugador). S'executen amb `npm run test:joc`. La preparació és a `tests/joc/README.md`. Cap credencial va al repo.
+
+## Versions i registre de canvis
+
+- Versionat semàntic, amb la mateixa versió a `system.json` i `package.json` (ho comprova `tests/unitaris/versio.test.mjs`). Procediment complet: `docs/VERSIONS.md`.
+- **Cada canvi que notaria un usuari s'apunta a `## [Pendent]` de `CHANGELOG.md`**, a la subsecció que toqui (Afegit, Canviat, Corregit, Eliminat, Seguretat, Atenció). El detall tècnic i les decisions van a `docs/REGISTRE-TREBALL.md`.
+- Per tancar una versió: `npm run versio -- patch|minor|major`, i després commit i etiqueta anotada `vX.Y.Z`. En les MINOR i MAJOR l'script també actualitza el graf de graphify.

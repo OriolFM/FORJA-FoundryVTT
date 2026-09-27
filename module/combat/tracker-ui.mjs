@@ -8,6 +8,8 @@ import { establirConcentracio } from "./reaccions.mjs";
 // Combat › Cos a cos / A Distància): taula canònica de WP-G.
 import { atributIHabilitatAtac } from "./equipament-automatic.mjs";
 import { decidirDefensa } from "./decisio-defensa.mjs";
+import { movimentDelTorn, bonificacioCarrega, distanciesMoviment } from "./moviment.mjs";
+import { metresMogutsAquestTorn } from "../documents/token.mjs";
 
 /**
  * L'atac bàsic "Cop" (catàleg `cop`, `system.basic`), l'única arma natural
@@ -168,6 +170,8 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           // Arts marcials: només amb l'atac "Cop" i si l'actor en té l'habilitat
           // (manual › Cos a cos: "Arts Marcials (DES): el PJ fa servir moviments especials").
           permetManiobres: _esCop(i) && potArtsMarcials,
+          // WP-M: la càrrega només amb armes cos a cos o naturals (manual l. 2794).
+          categoria:     i.system.categoria ?? null,
           // B16: retard voluntari de barallar-se (fins al nivell d'habilitat).
           retardMax: retardMaximBarallarse({ habId }, habilitat("barallar-se"))
         };
@@ -184,16 +188,35 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       armes,
       defenses,
       maniobres:    CONFIG.FORJA?.LLISTA_MANIOBRES ?? [],
-      concentrat:   !!sys.concentrat
+      concentrat:   !!sys.concentrat,
+      distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3)
     });
     if (!config) return;
+
+    // WP-M: si el combatent declara durant el seu propi torn, la nova acció
+    // és per al proper torn; el moviment del torn en curs (el de l'acció que
+    // s'està resolent) es conserva a `movimentEnCurs` perquè el permís de
+    // moviment d'ara no canviï (vegeu `movimentDelTorn`, combat/moviment.mjs).
+    const anterior = combatant.getFlag("forja", "accioPendent") ?? null;
+    const actiuAra = (combat.combatentActiuId ?? combat.combatant?.id) === combatantId;
+    const marcadorDeclaracio = combat.marcador ?? 0;
 
     await combat.declararAccio(combatantId, config.latencia);
     await establirConcentracio(actor, config.concentrar);
 
     // Desa l'acció declarada com a "pendent de resoldre" (DA-?): el botó de
     // resoldre obrirà directament la tirada corresponent, ja preseleccionada.
-    let pendent = { tipus: config.tipus, etiqueta: config.etiqueta, descripcio: config.descripcio };
+    let pendent = {
+      tipus: config.tipus, etiqueta: config.etiqueta, descripcio: config.descripcio,
+      // WP-M: moviment declarat (basic/rapid/especial/carrega) i on es va declarar.
+      moviment: config.moviment ?? "basic",
+      combatId: combat.id,
+      declaradaAlMarcador: marcadorDeclaracio,
+      movimentEnCurs: null
+    };
+    if (actiuAra && combat.started) {
+      pendent.movimentEnCurs = movimentDelTorn(anterior, combat.id, marcadorDeclaracio);
+    }
     if (config.tipus === "atac") {
       const arma = armes.find(a => a.id === config.armaId);
       if (arma) pendent = { ...pendent, ...arma, label: arma.nom };
@@ -215,6 +238,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       const def = defenses.find(d => d.id === config.defensa?.id);
       if (def) pendent = { ...pendent, ...def, label: def.nom };
     }
+    // `setFlag` FUSIONA objectes: sense esborrar-la abans, claus d'una
+    // declaració anterior (maniobraId, retardBarallarse, movimentEnCurs...)
+    // quedarien a la nova acció.
+    if (anterior) await combatant.unsetFlag("forja", "accioPendent");
     await combatant.setFlag("forja", "accioPendent", pendent);
 
     if (config.descripcio || config.etiqueta) {
@@ -246,6 +273,12 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     if (sys.salut?.foraDeCombat) {
       ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
+      return;
+    }
+
+    // WP-M: una acció de només moviment no té tirada: es fa movent el token.
+    if (pendent?.tipus === "moviment") {
+      ui.notifications?.info(game.i18n.format("FORJA.Moviment.ResoldreMoviment", { nom: combatant.name }));
       return;
     }
 
@@ -334,6 +367,12 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           ? limitarRetardBarallarse(pendent.retardBarallarse, sys.habilitats?.["barallar-se"]?.nivell ?? 0)
           : 0;
 
+        // WP-M: càrrega (manual l. 2794) — si el token s'ha mogut 2 m o més
+        // aquest torn, +1 dau a l'atac i +1 al dany si impacta. Es mesura
+        // l'historial de moviment del token (buidat a l'inici del torn).
+        const movimentTorn = movimentDelTorn(pendent, combat.id, combat.marcador);
+        const bonusCarrega = bonificacioCarrega(movimentTorn, metresMogutsAquestTorn(combatant.token));
+
         await ferAtac({
           actor,
           objectiu,
@@ -344,6 +383,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           reduccioExtra:   resolucio.reduccioExtra,
           danyExtra:       resolucio.danyExtra ?? 0,
           retardBarallarse,
+          bonusCarrega,
           etiquetaDefensa: eleccio.nomMitja ? `${eleccio.nom} (${eleccio.nomMitja})` : eleccio.nom,
           etiquetaRang,
           maniobra,
