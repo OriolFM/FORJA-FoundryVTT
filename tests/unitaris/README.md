@@ -14,6 +14,7 @@ npm test     # node --test "tests/unitaris/*.test.mjs"  (Node ≥ 20)
 | `socket.test.mjs` | Relé del DJ: llista de camps permesos, rebuig de camps i estats no permesos, dany fora de combat, peticions del DJ. |
 | `derivats.test.mjs` | Derivats de l'actor: els PC no compten els PX, barres de salut `value`/`max`, `foraDeCombat` i latència de les armadures. |
 | `defensa-automatica.test.mjs` | Tria automàtica de la defensa dels PNJ (`system.defensaAutomatica`): preguntar, passiva, la millor activa, una opció concreta, i passiva si no té reacció. |
+| `versio.test.mjs` | Control de versions: `system.json` i `package.json` tenen la mateixa versió, que té entrada al `CHANGELOG.md` (ordenat de més nova a més antiga). Vegeu `docs/VERSIONS.md`. |
 | `i18n.test.mjs` | Els tres fitxers `lang/` tenen les mateixes claus; totes les claus que fa servir el codi (literals i famílies dinàmiques) existeixen; els `{placeholders}` coincideixen. |
 
 Els missatges `FORJA | No s'ha pogut carregar …` que surten en executar-les són esperats: `constants.mjs` intenta carregar els catàlegs JSON amb `fetch`, que en aquestes proves està desactivat.

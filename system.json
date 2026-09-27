@@ -3,7 +3,7 @@
   "title": "FORJA RPG",
   "type": "system",
   "description": "Sistema oficial de FORJA RPG per a Foundry VTT v13-v14. Pool de d10 amb combat basat en latència.",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "compatibility": {
     "minimum": "13",
     "verified": "14"

@@ -24,6 +24,19 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | `2660bc8` | **Onada 4a.** Identificadors de diàleg únics (`{id}`, D7) i textos fixos passats a claus de traducció (C1). |
 | `4c44401` | **Traduccions completes** (WP-D1): `ca.json`, `es.json` i `en.json` amb les mateixes 401 claus. Totes les 386 claus que fa servir el codi hi són. |
 
+## Versions
+
+Des del 2026-09-27 hi ha control de versions: versionat semàntic, `CHANGELOG.md` i etiquetes de git anotades. El procediment és a [`VERSIONS.md`](VERSIONS.md).
+
+| Versió | Etiqueta al commit | Contingut |
+|--------|--------------------|-----------|
+| 0.2.0 | `f972f65` | Estat inicial del repositori. |
+| 0.3.0 | `2b34cde` | Revisió de codi, onades 1–4. |
+| 0.4.0 | commit "Versió 0.4.0" | Regles segons el manual, proves de joc, token del PJ enllaçat i defensa decidida pel DJ. |
+| 0.5.0 (en curs) | — | Moviment. |
+
+En tancar cada versió MINOR o MAJOR, `npm run versio` també actualitza el graf de graphify.
+
 ## Decisions de disseny
 
 | Tema | Decisió | Font |
@@ -44,6 +57,7 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | Defensa automàtica (figurants) | Cada PNJ pot tenir un mode: pregunta-ho al DJ (per defecte), sempre passiva, la millor activa, esquivar, parar o blocar. Si el mode demana una defensa activa i no li queda reacció, es fa servir la passiva. | Oriol FM, 2026-09-27 ("com a mínim amb els minions") |
 | Moviment: bloqueig entre tokens | Els tokens de mida mitjana o més gran (mida ≥ 3) bloquegen el pas. Els de mida petita o diminuta (≤ 2) es poden travessar, tret que siguin enemics. | Oriol FM, 2026-09-27 |
 | Moviment: distàncies | Caminar = AGI×2 + MID − 3. Córrer (també càrrega) = AGI×5 + (MID − 3)×2. Saltar = AGI×3 + ⌈(MID − 3)/2⌉. En metres; el mínim es fixa a 1. Són fórmules de la versió antiga, no del manual (que només diu que "el DJ decideix segons mida i AGI"). | Oriol FM, 2026-09-27 |
+| Moviment en el torn | En el seu torn d'acció, un personatge sempre pot fer un moviment normal (caminar) a més de l'acció declarada. Si declara una defensa completa com a acció, també es pot moure; si es defensa com a reacció, no. La distància és acumulativa en tot el torn: es pot moure en diversos trams fins a esgotar-la (a la versió antiga cada tram comptava com un moviment sencer). | Oriol FM, 2026-09-27 |
 | Autoritat del DJ | Els canvis a documents aliens passen pel DJ (`module/xarxa/socket.mjs`), amb una llista de camps permesos (`CAMPS_PERMESOS_PER_TIPUS`). Fora de combat, un jugador només pot treure fatiga o ferides a un actor aliè, no afegir-n'hi. | Seguretat, onada 2 |
 
 ## Contractes entre mòduls (per a qui continuï)
