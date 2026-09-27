@@ -45,6 +45,22 @@ export function _prepararDerivats(sys) {
 
   // --- Efectes mecànics dels trets (S-04, Onada 3) ---
   const flagsEfecte = _aplicarEfectesTrets(sys);
+
+  // --- Modificador de latència de les armadures equipades (B2) ---
+  // Una armadura sense el camp `equipada` (encara no migrada per WP-G) es
+  // tracta com a equipada — `!== false`, no `=== true`. Si n'hi ha varies
+  // equipades alhora, les penalitzacions de latència s'apilen (se sumen);
+  // la protecció, en canvi, només la dona la millor (confirmat pel
+  // dissenyador, Q3 del pla de revisió).
+  const items = sys.parent?.items;
+  if (items) {
+    for (const item of items) {
+      if (item.type === "armadura" && item.system.equipada !== false) {
+        sys.latenciaBase += item.system.modLatencia ?? 0;
+      }
+    }
+  }
+
   sys.latenciaBase = Math.max(1, sys.latenciaBase);
   sys.reaccionsMax = Math.max(0, sys.reaccionsMax);
 
@@ -55,6 +71,18 @@ export function _prepararDerivats(sys) {
   salut.fatiga.nivellActiu  = _nivellActiu(salut.fatiga.marcats,  constitucio);
   salut.ferides.nivellActiu = _nivellActiu(salut.ferides.marcats, mida);
   salut.nivellEfectiu       = Math.max(salut.fatiga.nivellActiu, salut.ferides.nivellActiu);
+
+  // --- Salut: {value, max} per a les barres de token (A6) ---
+  // Derivats, no camps d'schema: `max` són les caselles totals de la pista
+  // (6 nivells complets + la casella terminal del nivell 7) i `value` són
+  // les caselles que queden per marcar (el que ha de mostrar la barra).
+  salut.fatiga.max    = 6 * salut.fatiga.perNivell + 1;
+  salut.fatiga.value  = Math.max(0, salut.fatiga.max - salut.fatiga.marcats);
+  salut.ferides.max   = 6 * salut.ferides.perNivell + 1;
+  salut.ferides.value = Math.max(0, salut.ferides.max - salut.ferides.marcats);
+
+  // Nivell 7 = "fora de combat" (manual): ja no pot actuar (vegeu B1, WP-F).
+  salut.foraDeCombat = salut.nivellEfectiu >= 7;
 
   // "Dur de pelar" (ignoraPenalitzacioFerides): la pista de ferides no
   // contribueix a la penalització de dificultat, tot i que segueix comptant
@@ -113,6 +141,41 @@ function _nivellActiu(marcats, perNivell) {
   return Math.min(7, Math.floor(marcats / perNivell) + 1);
 }
 
+/**
+ * Calcula el cost en PC de la construcció actual del personatge i en
+ * dedueix els PC gastats/lliures del pressupost de creació (S-05).
+ *
+ * A4 (pla de revisió): `costTotal` és el cost de TOT el que hi ha ara mateix
+ * al full (atributs, espècie, mida, constitució, habilitats, trets) —
+ * inclou tant el que es va triar a la creació com qualsevol millora
+ * comprada més tard amb PX (`millora.mjs` fa servir exactament les
+ * mateixes taules de cost). Com que aquell PX ja s'ha pagat amb
+ * `sys.px.gastats`, cal restar-lo de `costTotal` abans de comparar-lo amb
+ * el pressupost de PC (`sys.pc`) — si no, cada millora amb PX també
+ * consumiria pressupost de PC (comptat dues vegades) i l'avís de
+ * "pressupost excedit" saltaria sense que el jugador hagi tocat cap PC.
+ *
+ *   pcGastats = costTotal − px.gastats
+ *   pcLliures = pc − pcGastats
+ *
+ * Això cancel·la exactament les quatre operacions de `millora.mjs`:
+ *   - Pujar un atribut/habilitat: costTotal puja en `cost` PX i
+ *     `px.gastats` puja en el mateix `cost` → pcGastats no canvia.
+ *   - Afegir un tret positiu amb PX: costTotal puja en `tret.cost` i
+ *     `px.gastats` puja en el mateix `tret.cost` → pcGastats no canvia.
+ *   - Treure un tret negatiu amb PX (cost negatiu, p. ex. −10): costTotal
+ *     puja en −(−10) = 10 (desapareix el −10 de la suma) i `px.gastats`
+ *     puja en `cost = -costTret = 10` → pcGastats no canvia.
+ *
+ * Límit conegut: aquest càlcul no distingeix un canvi fet a mà en mode
+ * edició (p. ex. el DJ puja un atribut directament al full) d'una compra
+ * per punts de creació — qualsevol pujada de valor es compta com a "PC
+ * gastat" llevat que es compensi pujant `px.gastats` (que és exactament el
+ * que fa `millora.mjs`). Editar camps directament sense passar per
+ * `millora.mjs` es continua comptant com a despesa de PC.
+ * @param {TypeDataModel} sys
+ * @param {object} cfg CONFIG.FORJA
+ */
 function _calcularPunts(sys, cfg) {
   let cost = 0;
 
@@ -138,6 +201,7 @@ function _calcularPunts(sys, cfg) {
     }
   }
 
-  sys.pcGastats = cost;
-  sys.pcLliures = sys.pc - cost;
+  sys.costTotal = cost;
+  sys.pcGastats = cost - (sys.px?.gastats ?? 0);
+  sys.pcLliures = sys.pc - sys.pcGastats;
 }

@@ -1,5 +1,6 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { aplicarDanyAPista } from "./dany.mjs";
+import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
 
 /**
  * Curació i recuperació (S-17, manual p. 1049-1178).
@@ -73,7 +74,7 @@ export async function aplicarReposNatural(objectiu, pista) {
   const abans = objectiu.system.salut[pista].marcats;
   const salut = { [pista]: { marcats: abans } };
   const nous  = aplicarDanyAPista(salut, pista, -ritme);
-  await objectiu.update({ [`system.salut.${pista}.marcats`]: nous });
+  await actualitzarComGM(objectiu, { [`system.salut.${pista}.marcats`]: nous });
   return abans - nous;
 }
 
@@ -104,13 +105,13 @@ export async function ferCuracio({ guaridor, objectiu, tipus, pista }) {
     const abans = objectiu.system.salut[pista].marcats;
     const salut = { [pista]: { marcats: abans } };
     const nous  = aplicarDanyAPista(salut, pista, -excedent);
-    await objectiu.update({ [`system.salut.${pista}.marcats`]: nous });
+    await actualitzarComGM(objectiu, { [`system.salut.${pista}.marcats`]: nous });
   }
 
   if (exit) {
     const estats = tipus === "tractament-medic" ? ESTATS_TRACTAMENT_MEDIC : ESTATS_PRIMERS_AUXILIS;
     for (const id of estats) {
-      if (objectiu.statuses?.has(id)) await objectiu.toggleStatusEffect(id, { active: false });
+      if (objectiu.statuses?.has(id)) await alternarEstatComGM(objectiu, id, false);
     }
   }
 

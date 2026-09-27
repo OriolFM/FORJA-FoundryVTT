@@ -90,10 +90,17 @@ FORJA.LLISTA_HABILITATS = [
    round-trips seqüencials pot arribar a retardar l'evaluació del mòdul més
    enllà del que Foundry espera abans de disparar el hook "init" (vist en
    viu: amb 6 fetches seqüencials, `Hooks.once("init")` de forja.mjs a vegades
-   no arribava a registrar-se a temps — vegeu 09_CONTEXT_SESSIONS.md). */
+   no arribava a registrar-se a temps — vegeu 09_CONTEXT_SESSIONS.md). La URL
+   es construeix relativa a aquest mòdul (`import.meta.url`) enlloc d'un camí
+   fix `systems/forja/...`, perquè segueixi funcionant si Foundry serveix el
+   sistema sota un prefix de ruta diferent o la carpeta es renombra. */
 async function _carregarJSON(fitxer) {
-  return fetch(`systems/forja/module/config/dades/${fitxer}`)
-    .then(r => r.json())
+  const url = new URL(`./dades/${fitxer}`, import.meta.url);
+  return fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
+      return r.json();
+    })
     .catch(err => { console.error(`FORJA | No s'ha pogut carregar ${fitxer}`, err); return []; });
 }
 

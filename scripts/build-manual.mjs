@@ -14,6 +14,8 @@
  * Requereix: npm install (marked). El pas de compilació a LevelDB
  * (`npx @foundryvtt/foundryvtt-cli package pack ...`) és un pas separat,
  * encadenat a `npm run build:manual`.
+ * Variable d'entorn FORJA_MD_DIR: ruta personalitzada a la carpeta de Markdown
+ * (per defecte: ../../FOUNDRY/MD respecte al root del projecte).
  */
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from "node:fs";
 import { resolve, dirname, basename } from "node:path";
@@ -23,7 +25,7 @@ import { marked } from "marked";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT       = resolve(__dirname, "..");
-const MD_DIR     = resolve(ROOT, "../../FOUNDRY/MD");
+const MD_DIR     = process.env.FORJA_MD_DIR ? resolve(process.env.FORJA_MD_DIR) : resolve(ROOT, "../../FOUNDRY/MD");
 const OUT_DIR    = resolve(ROOT, "packs/_source/manual");
 
 marked.setOptions({ gfm: true, breaks: false });
@@ -106,10 +108,23 @@ function construirJournalEntry(fitxer) {
 }
 
 function main() {
+  // Check if MD_DIR exists and contains .md files BEFORE any deletion
+  if (!existsSync(MD_DIR)) {
+    console.error(`No s'ha trobat la carpeta de Markdown: ${MD_DIR}. Defineix FORJA_MD_DIR.`);
+    process.exit(1);
+  }
+
+  const fitxers = readdirSync(MD_DIR).filter(f => f.endsWith(".md")).sort();
+
+  if (fitxers.length === 0) {
+    console.error(`No s'ha trobat cap fitxer .md a: ${MD_DIR}. Defineix FORJA_MD_DIR.`);
+    process.exit(1);
+  }
+
+  // Now safe to delete and recreate OUT_DIR
   if (existsSync(OUT_DIR)) rmSync(OUT_DIR, { recursive: true });
   mkdirSync(OUT_DIR, { recursive: true });
 
-  const fitxers = readdirSync(MD_DIR).filter(f => f.endsWith(".md")).sort();
   let totalPagines = 0;
 
   for (const fitxer of fitxers) {

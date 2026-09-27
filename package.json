@@ -1,6 +1,6 @@
 {
   "name": "forja-foundryvtt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "FORJA RPG system for Foundry VTT v13",
   "private": true,
   "type": "module",

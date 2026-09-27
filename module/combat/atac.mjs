@@ -1,5 +1,6 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { calcularDany, resoldreDanyArma, aplicarDanyAPista } from "./dany.mjs";
+import { actualitzarComGM } from "../xarxa/socket.mjs";
 
 /**
  * Flux d'atac (S-12): tira, compara amb la defensa de l'objectiu, i si
@@ -57,13 +58,13 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     if (resultatDany.danyFinal > 0) {
       const marcatsActuals = objectiu.system.salut[pista].marcats;
       const nous = aplicarDanyAPista({ [pista]: { marcats: marcatsActuals } }, pista, resultatDany.danyFinal);
-      await objectiu.update({ [`system.salut.${pista}.marcats`]: nous });
+      await actualitzarComGM(objectiu, { [`system.salut.${pista}.marcats`]: nous });
     }
 
     if (resultatDany.egidaTrencada) {
       const armaduraObjectiu = objectiu.items.find(i => i.type === "armadura" && i.system.egida?.activa);
       if (armaduraObjectiu) {
-        await armaduraObjectiu.update({
+        await actualitzarComGM(armaduraObjectiu, {
           "system.egida.activa": false,
           "system.egida.tornsInactiva": resultatDany.tornsInactivaEgida
         });

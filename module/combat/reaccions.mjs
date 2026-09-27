@@ -1,3 +1,5 @@
+import { actualitzarComGM } from "../xarxa/socket.mjs";
+
 /**
  * Reaccions i concentració (S-11).
  *
@@ -5,6 +7,9 @@
  *   que recuperen reaccions els qui han actuat).
  * - `concentrat`: dona +1 dau a la propera acció però bloqueja reaccionar; rebre
  *   cert dany o estats trenca la concentració i cancel·la l'acció en curs.
+ *
+ * Les escriptures passen per `actualitzarComGM` (A2): p.ex. qui defensa un
+ * PNJ atacat per un jugador no n'és propietari.
  */
 
 /**
@@ -26,7 +31,7 @@ export function potReaccionar(actor) {
  */
 export async function gastarReaccio(actor) {
   if (!potReaccionar(actor)) return false;
-  await actor.update({ "system.reaccions.gastades": actor.system.reaccions.gastades + 1 });
+  await actualitzarComGM(actor, { "system.reaccions.gastades": actor.system.reaccions.gastades + 1 });
   return true;
 }
 
@@ -36,7 +41,7 @@ export async function gastarReaccio(actor) {
  */
 export async function reiniciarReaccions(actor) {
   if (actor.system.reaccions.gastades === 0) return;
-  await actor.update({ "system.reaccions.gastades": 0 });
+  await actualitzarComGM(actor, { "system.reaccions.gastades": 0 });
 }
 
 /**
@@ -45,7 +50,7 @@ export async function reiniciarReaccions(actor) {
  * @param {ForjaActor} actor
  */
 export async function concentrar(actor) {
-  await actor.update({ "system.concentrat": true });
+  await actualitzarComGM(actor, { "system.concentrat": true });
 }
 
 /**
@@ -56,6 +61,6 @@ export async function concentrar(actor) {
  */
 export async function trencarConcentracio(actor) {
   if (!actor.system.concentrat) return false;
-  await actor.update({ "system.concentrat": false });
+  await actualitzarComGM(actor, { "system.concentrat": false });
   return true;
 }

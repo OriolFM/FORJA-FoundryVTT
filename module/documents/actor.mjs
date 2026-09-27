@@ -1,3 +1,5 @@
+import { actualitzarComGM } from "../xarxa/socket.mjs";
+
 /**
  * Document Actor estès per al sistema FORJA.
  * Onada 0: només estructura base. Les tirades s'afegiran a l'Onada 1.
@@ -10,14 +12,15 @@ export default class ForjaActor extends Actor {
   }
 
   /**
-   * Aplica dany a la pista indicada i actualitza el document.
+   * Aplica dany a la pista indicada i actualitza el document (via el DJ si
+   * l'usuari no n'és propietari, A2).
    * @param {number} quantitat
    * @param {"ferides"|"fatiga"} pista
    */
   async aplicarDany(quantitat, pista = "ferides") {
     if (quantitat <= 0) return;
     const actual = this.system.salut[pista].marcats;
-    await this.update({ [`system.salut.${pista}.marcats`]: actual + quantitat });
+    await actualitzarComGM(this, { [`system.salut.${pista}.marcats`]: actual + quantitat });
   }
 
   /**
@@ -28,6 +31,6 @@ export default class ForjaActor extends Actor {
   async curar(quantitat, pista = "ferides") {
     if (quantitat <= 0) return;
     const actual = this.system.salut[pista].marcats;
-    await this.update({ [`system.salut.${pista}.marcats`]: Math.max(0, actual - quantitat) });
+    await actualitzarComGM(this, { [`system.salut.${pista}.marcats`]: Math.max(0, actual - quantitat) });
   }
 }

@@ -16,7 +16,7 @@ import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
 import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
-import { reiniciarReaccions } from "./module/combat/reaccions.mjs";
+import { registrarSocket } from "./module/xarxa/socket.mjs";
 import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 
@@ -83,44 +83,45 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
+  // Relé d'autoritat del DJ (A2): escriptures a documents d'altri.
+  registrarSocket();
   console.log("FORJA RPG | Sistema llest");
 });
 
 // Tot personatge/PNJ disposa de l'atac bàsic "Cop", i de l'atac corresponent
 // a cada tret d'"Armament Natural" que tingui (manual): s'afegeixen sols.
-Hooks.on("createActor", async (actor) => {
+// Només el client que ha creat el document ho fa (A1), per evitar duplicats.
+Hooks.on("createActor", async (actor, _options, userId) => {
+  if (userId !== game.user.id) return;
   await assegurarAtacsAutomatics(actor);
 });
 
-Hooks.on("createItem", async (item) => {
+Hooks.on("createItem", async (item, _options, userId) => {
+  if (userId !== game.user.id) return;
   const actor = item.parent;
   if (!actor || item.type !== "tret") return;
   await assegurarAtacsAutomatics(actor);
 });
 
 // Reaccions i concentració (S-11): qui acaba el seu torn recupera reaccions.
-// Cal capturar el combatent SORTINT abans que l'update canviï el torn.
-Hooks.on("preUpdateCombat", (combat, changes) => {
-  if (("turn" in changes) || ("round" in changes)) {
-    combat._forjaCombatentSortint = combat.combatant ?? null;
-  }
+// Només al DJ actiu (A1). El combatent que acaba el passa `ForjaCombat#nextTurn`
+// a les opcions de l'update (es difonen a tots els clients); per a canvis de
+// torn d'altres orígens, s'usa l'estat previ que Foundry desa a `combat.previous`.
+Hooks.on("updateCombat", async (combat, changes, options) => {
+  if (!game.users.activeGM?.isSelf) return;
+  const sortintId = options?.forja?.combatentSortint
+    ?? ((("turn" in changes) || ("round" in changes)) ? combat.previous?.combatantId : null);
+  if (!sortintId) return;
+  const combatant = combat.combatants.get(sortintId);
+  if (combatant && typeof combat.fiDeTorn === "function") await combat.fiDeTorn(combatant);
 });
 
-Hooks.on("updateCombat", async (combat, changes) => {
-  if (!(("turn" in changes) || ("round" in changes))) return;
-  const actor = combat._forjaCombatentSortint?.actor;
-  combat._forjaCombatentSortint = null;
-  if (actor) await reiniciarReaccions(actor);
-});
-
-/* ---- Helpers Handlebars ---- */
+/* ---- Helpers Handlebars ----
+ * `eq`, `lt`, `or` són de Foundry i `lookup` és nadiu de Handlebars (A7):
+ * no es tornen a registrar (el `or` de 2 arguments trencava plantilles del nucli). */
 function _registrarHelpers() {
   Handlebars.registerHelper("add",     (a, b) => (a ?? 0) + (b ?? 0));
-  Handlebars.registerHelper("lt",      (a, b) => a < b);
-  Handlebars.registerHelper("eq",      (a, b) => a === b);
   Handlebars.registerHelper("concat",  (...args) => args.slice(0, -1).join(""));
-  Handlebars.registerHelper("lookup",  (obj, key) => obj?.[key]);
-  Handlebars.registerHelper("or",  (a, b) => !!a || !!b);
   Handlebars.registerHelper("dieClass", (val) => {
     if (val === 1)  return "dau-pifia";
     if (val >= 10)  return "dau-doble";

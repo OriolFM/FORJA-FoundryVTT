@@ -67,8 +67,8 @@ Each finding has an ID. The plan section groups the IDs into work packages, each
 ### Open questions for the game designer
 
 - **Q1 (B8):** Do melee weapon attacks roll FOR or DES? The skill list says *armes cos a cos* uses DES.
-- **Q2 (B4):** Do an ègida's inactive turns count down on the wearer's own turns, or on every clock tick?
-- **Q3 (B3):** If several armours are equipped, is it the best one, or do they stack?
+- **Q2 (B4): answered by Oriol FM, 2026-09-27.** An ègida's inactive time counts in **clock ticks**, not the wearer's turns.
+- **Q3 (B3): answered by Oriol FM, 2026-09-27.** With several armours equipped, protection comes from the **best** one, while their **latency penalties stack**. This matches the plan and WP-B's implementation.
 
 ---
 
@@ -78,6 +78,7 @@ Each finding has an ID. The plan section groups the IDs into work packages, each
 
 - Work in `/home/bonnie/projectes/ForjaVTT/FORJA-FoundryVTT` on branch `Aw`. **Do not run git commands** (no commit, checkout, stash, reset). The coordinator commits after each wave.
 - Edit **only** the files your package owns. If you need a change elsewhere, write it under "Needs from others" in your report instead.
+- **Rules reference:** `docs/manual/FORJA_FC001CA_CORE.md` is the physical game manual (Catalan) and the source of truth for every rule. Search it (e.g. `grep -n`) before implementing or changing any game mechanic, and cite the section in comments.
 - Match the existing style: ES modules, Catalan identifiers and comments, JSDoc headers citing the manual/spec IDs.
 - New UI strings go in `lang/ca.json` only (`FORJA.*` keys). Package D1 translates them afterwards. **Exception:** only the owner of `lang/ca.json` in a wave edits it; others list the keys and Catalan text in their report.
 - Check every file you touch with `node --check <file>`. For pure functions, write a quick Node test in the scratchpad (`/tmp/claude-1000/-home-bonnie-projectes-ForjaVTT/ef039ca4-3800-4ff6-9c2d-e2341ab195a4/scratchpad`), not in the repo.
@@ -127,8 +128,8 @@ Delete the dead files and `ForjaRoll.getDieClass`. Use `grep` to confirm each ha
 **WP-F · Combat rules and tracker — Opus** (B1, B3, B4, B5, B6, B7, B9, B10, C2)
 Files: `module/combat/atac.mjs`, `defensa.mjs`, `abast.mjs`, `dany.mjs`, `curacio.mjs`, `tracker-ui.mjs`, `module/apps/dialeg-declarar-accio.mjs`, `module/apps/dialeg-defensa.mjs`, `module/dice/tirada.mjs`, `module/dice/dialeg-tirada.mjs`, `module/documents/combat.mjs`, `templates/combat/*`, `templates/dice/*`, `lang/ca.json`.
 1. Apply the health penalty to attack, defence and healing rolls; warn and block when `salut.foraDeCombat`.
-2. Armour: use equipped armours; if several, take the best (Q3), and note it in a comment.
-3. Ègida: count `tornsInactiva` down at the end of the wearer's turn (GM side, through the WP-A hook) and reactivate at 0 when `absorcio > 0` (Q2).
+2. Armour: use equipped armours; if several, the best one gives protection (Q3, confirmed). Latency penalties stack; WP-B already does this.
+3. Ègida: the inactive time is measured in **clock ticks** (Q2). When it breaks, record the tick at which it reactivates (current marker + `tornsInactiva`). Reactivate it on the GM side when the combat marker reaches that tick, and only if `absorcio > 0`.
 4. Concentration: a "concentrate" option when declaring an action sets `concentrat`; the next roll consumes it (+1 die, then clear); damage breaks it. Remove the free checkbox bonus.
 5. Offer martial-arts manoeuvres in the declare dialog for natural/"Cop" attacks and pass them to `ferAtac`.
 6. One source of truth for defence options: the declare dialog builds its list from `opcionsDefensa`.
