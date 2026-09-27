@@ -130,7 +130,7 @@ await prova("U3. El jugador resol l'atac contra el PNJ marcat: diàleg de defens
     const atac = nous.find(m => m.content.includes("forja-missatge-atac") || m.content.includes("mt-"));
     return { missatgesNous: nous.length, missatgeAtac: !!atac, concentratDespres: game.actors.get(pj).system.concentrat,
              daus: atac?.rolls?.[0]?.dice?.[0]?.results?.length ?? null };
-  }, { pj: ids.pj, abansMsg }, v => v.missatgeAtac && !v.concentratDespres);
+  }, { pj: ids.pj, abansMsg }, v => v.missatgeAtac && !v.concentratDespres, 200000);  // la resposta del DJ pot trigar molt en aquesta màquina
   r.dialegDefensaObertA = onEsObre;
   if (!r.missatgeAtac || r.concentratDespres || onEsObre !== "DJ") throw new Error(JSON.stringify(r));
   return r;
@@ -138,7 +138,9 @@ await prova("U3. El jugador resol l'atac contra el PNJ marcat: diàleg de defens
 
 await prova("U6. PNJ amb defensa automàtica: no pregunta a ningú i l'atac es resol sol", async () => {
   await dj.evaluate((pnj) => game.actors.get(pnj).update({ "system.defensaAutomatica": "passiva" }), ids.pnj);
-  await esperar(1500);
+  // Espera que el jugador vegi la configuració a l'actor del token (PNJ no enllaçat).
+  const vist = await esperarQue(jug, (tB) => canvas.tokens.get(tB)?.actor?.system?.defensaAutomatica, ids.tB, v => v === "passiva", 60000);
+  if (vist !== "passiva") throw new Error(`el jugador no veu la defensa automàtica (${vist})`);
   const abansMsg = await dj.evaluate(() => game.messages.size);
   await jug.locator(`#combat .forja-resoldre[data-combatant-id="${ids.cPJ}"]`).dispatchEvent("click");
   const r = await esperarQue(dj, (abansMsg) => ({ nous: game.messages.size - abansMsg,
