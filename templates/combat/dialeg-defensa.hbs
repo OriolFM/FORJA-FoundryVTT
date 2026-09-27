@@ -20,6 +20,16 @@
     {{op.descripcio}}
     {{#unless op.disponible}}<br><strong>{{localize "FORJA.Combat.SenseReaccioDisponibleAvis"}}</strong>{{/unless}}
     {{#if op.reduccioExtra}}<br>{{localize "FORJA.Combat.ReduccioExtra" valor=op.reduccioExtra}}{{/if}}
+    {{#if (eq op.id "blocar")}}{{#if op.disponible}}{{#if op.mitjans.length}}
+    <br><label>{{localize "FORJA.Combat.Blocar.MitjaTriar"}}
+      <select name="mitjaId">
+        {{#each op.mitjans as |m|}}
+        <option value="{{m.id}}" {{#if (eq m.id @root.mitjaId)}}selected{{/if}}>{{m.nom}} — {{m.habId}} {{m.nivell}} (+{{m.reduccioExtra}})</option>
+        {{/each}}
+      </select>
+    </label>
+    <br><small>{{localize "FORJA.Combat.Blocar.Limit"}}</small>
+    {{/if}}{{/if}}{{/if}}
     {{#if op.penalSalut}}<br>{{localize "FORJA.Combat.PenalSalutFites" valor=op.penalSalut}}{{/if}}
   </p>
   {{/if}}

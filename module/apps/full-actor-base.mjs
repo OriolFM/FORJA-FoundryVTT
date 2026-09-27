@@ -384,6 +384,8 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       nomObjectiu: objectiu.name,
       habNom: game.i18n.localize(CONFIG.FORJA.LLISTA_HABILITATS.find(h => h.id === hab.id)?.nom ?? hab.id),
       poolFinal: (guaridor.system.atributs?.INT ?? 0) + hab.nivell,
+      habNivell: hab.nivell,
+      autotractament: objectiu.uuid === guaridor.uuid,
       pistaPerDefecte
     });
     if (!eleccio) return;

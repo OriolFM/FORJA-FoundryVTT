@@ -53,6 +53,8 @@ export function resoldreDanyArma(formula, actor) {
  * @param {number}  config.reduccioDany   Reducció de dany del defensor (= FOR)
  * @param {number}  [config.armadura=0]   Protecció de l'armadura del defensor (si escau pel tipus)
  * @param {object}  [config.egida]        `{ activa, absorcio, tornsInactiva }` — ègida efectiva contra aquest tipus de dany
+ * @param {number}  [config.danyExtra=0]  Dany addicional que se suma al total abans de protecció
+ *   (B14: pífia en esquivar, +1 per cada 1 de la tirada espifiada — vegeu `danyExtraPifiaEsquivar`).
  * @returns {{danyTotal:number, danyFinal:number, egidaTrencada:boolean, tornsInactivaEgida:number}}
  */
 export function calcularDany({
@@ -61,9 +63,10 @@ export function calcularDany({
   excedentAtac,
   reduccioDany,
   armadura = 0,
-  egida = null
+  egida = null,
+  danyExtra = 0
 }) {
-  const danyTotal = danyBaseArma + excedentAtac;
+  const danyTotal = danyBaseArma + excedentAtac + Math.max(0, danyExtra ?? 0);
   const danyMinim = 1 + bonificadorArma;
 
   // 1. Ègida
@@ -134,19 +137,63 @@ export function esArmaduraEquipada(item) {
  * "Cop penetrant" ignora les armadures naturals i flexibles) — d'aquí
  * `ignorarTipus`.
  *
+ * B13 (FC001CA › Combat › A Distància, taula d'armes, Escopetes: "Poca
+ * penetració -- Les armadures rígides ofereixen el doble de protecció contra
+ * escopetes"): amb `dobleRigida`, les armadures rígides — `tipus: "fisica"` al
+ * model de dades (armadures.json: "lleugera-rigida", "mitjana-rigida" i
+ * "pesant" són `fisica`; el manual diu que les pesants són "gairebé
+ * exclusivament rígides") — compten el doble. La millor armadura es tria
+ * DESPRÉS de doblar (és la que més protegeix contra aquest atac). Les
+ * flexibles i les naturals no es doblen.
+ *
  * @param {Iterable<{type:string, system:object}>} items  Ítems de l'objectiu
  * @param {object} [opcions]
  * @param {string[]} [opcions.ignorarTipus=[]]  Tipus d'armadura (`fisica`/`flexible`/`natural`) que no compten
+ * @param {boolean}  [opcions.dobleRigida=false]  L'atac és d'escopeta (B13)
  * @returns {number}
  */
-export function proteccioArmadura(items, { ignorarTipus = [] } = {}) {
+export function proteccioArmadura(items, { ignorarTipus = [], dobleRigida = false } = {}) {
   let millor = 0;
   for (const item of items ?? []) {
     if (!esArmaduraEquipada(item)) continue;
     if (ignorarTipus.includes(item.system.tipus)) continue;
-    millor = Math.max(millor, item.system.reduccio ?? 0);
+    const base = item.system.reduccio ?? 0;
+    const proteccio = (dobleRigida && esArmaduraRigida(item)) ? base * 2 : base;
+    millor = Math.max(millor, proteccio);
   }
   return millor;
+}
+
+/**
+ * Armadura rígida (B13): al model de dades, `tipus === "fisica"` (vegeu
+ * `item-armadura.mjs`: `fisica` / `flexible` / `natural`).
+ * @param {{system:object}} item
+ * @returns {boolean}
+ */
+export function esArmaduraRigida(item) {
+  return item?.system?.tipus === "fisica";
+}
+
+/**
+ * Dany extra per una pífia en esquivar (B14, funció pura).
+ *
+ * Manual FC001CA › Exemple de combat › "Esquivar o defensa bàsica?": "Si la
+ * Yoko hagués espifiat la tirada, voldria dir que s'ha col·locat en la
+ * trajectòria de l'atac, i que rebria més mal (un punt més de dany per cada
+ * resultat de 1 a la tirada espifiada)". Pífia = cap fita i almenys un 1
+ * (› Tirades › Pífies).
+ *
+ * Lectura: només per a ESQUIVAR (el manual no ho diu de parar ni blocar);
+ * només s'aplica si l'atac impacta; el dany extra se suma al dany total
+ * abans d'ègida/armadura/reducció, com qualsevol altre "+X al dany" (p. ex.
+ * la ràfega de les armes d'assalt).
+ *
+ * @param {{pifia:boolean, dice:number[]}} resultats  `roll.forjaResults`
+ * @returns {number}
+ */
+export function danyExtraPifiaEsquivar(resultats) {
+  if (!resultats?.pifia) return 0;
+  return (resultats.dice ?? []).filter(d => d === 1).length;
 }
 
 /**

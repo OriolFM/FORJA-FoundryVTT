@@ -5,6 +5,7 @@ import {
 } from "./dany.mjs";
 import { consumirConcentracio, trencarConcentracio } from "./reaccions.mjs";
 import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
+import { teProprietat } from "./propietats.mjs";
 
 /**
  * Flux d'atac (S-12): tira, compara amb la defensa de l'objectiu, i si
@@ -31,6 +32,9 @@ import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
  *   afegeix la seva dificultat a la tirada d'atac i s'anota a l'estat/xat resultant.
  * @param {string}  [p.etiquetaDefensa]  Nom de l'opció de defensa resolta (S-13), només per al xat.
  * @param {string}  [p.etiquetaRang]      Nom de la banda de rang resolta (S-12), només per al xat.
+ * @param {number}  [p.danyExtra=0]       Dany addicional si impacta (B14: pífia del defensor en esquivar).
+ * @param {number}  [p.retardBarallarse=0] Ticks de latència extra declarats per barallar-se (B16):
+ *   +1 dau a la tirada d'atac per cada tick.
  * @returns {Promise<object|null>}  `null` si l'atacant està fora de combat (nivell 7 de salut)
  *
  * Regles aplicades (manual FC001CA):
@@ -46,8 +50,15 @@ import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
  *  - › Dany › Protecció + decisió Q3: protegeix la millor armadura equipada (B3).
  *  - › Dany › Protecció + decisió Q2: l'ègida trencada es reactiva al tick
  *    del rellotge `marcador + torns` (B4, vegeu `ForjaCombat#reactivarEgides`).
+ *  - › A Distància, taula (Escopetes, "Poca penetració"): contra una arma amb
+ *    la propietat `escopeta`, les armadures rígides protegeixen el doble (B13).
+ *  - › Exemple de combat › "Esquivar o defensa bàsica?": si el defensor ha
+ *    espifiat l'esquivada, +1 dany per cada 1 (B14, `danyExtra`).
+ *  - › Cos a cos, "Barallar-se" i taula d'armes naturals (Cop): cada +1 de
+ *    latència afegida dona +1 a impactar — +1 dau, com els altres "+X a la
+ *    tirada" del manual (B16, `retardBarallarse`).
  */
-export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null }) {
+export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null, danyExtra = 0, retardBarallarse = 0 }) {
   if (actor.system.salut?.foraDeCombat) {
     ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
     return null;
@@ -56,7 +67,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
   const penalSalut      = actor.system.salut?.penalitzacio ?? 0;
   const dauConcentracio = await consumirConcentracio(actor);
   const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0) + penalSalut;
-  const pool            = Math.max(1, poolFinal + dauConcentracio);
+  const bonusRetard     = Math.max(0, retardBarallarse ?? 0);
+  const pool            = Math.max(1, poolFinal + dauConcentracio + bonusRetard);
 
   const roll = new ForjaRoll(`${pool}d10`, {}, {
     forja: { dificultat: dificultatFinal }
@@ -74,7 +86,12 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
 
     // "Cop penetrant" (arts marcials) ignora les armadures naturals i flexibles.
     const ignorarTipus = maniobra?.id === "cop-penetrant" ? ["natural", "flexible"] : [];
-    const armadura  = proteccioArmadura(objectiu.items, { ignorarTipus });
+    // B13: "Poca penetració" de les escopetes — les rígides protegeixen el doble.
+    const escopeta  = teProprietat(arma, "escopeta");
+    const armadura  = proteccioArmadura(objectiu.items, { ignorarTipus, dobleRigida: escopeta });
+    if (escopeta && armadura > proteccioArmadura(objectiu.items, { ignorarTipus })) {
+      notes.push(game.i18n.format("FORJA.Combat.PocaPenetracio", { proteccio: armadura }));
+    }
     const itemEgida = itemEgidaActiva(objectiu.items);
     const egida     = itemEgida ? { activa: true, absorcio: itemEgida.system.egida.absorcio } : null;
 
@@ -87,8 +104,10 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       excedentAtac: excedent,
       reduccioDany: (objectiu.system.reduccioDany ?? 0) + reduccioExtra,
       armadura,
-      egida
+      egida,
+      danyExtra
     });
+    if (danyExtra > 0) notes.push(game.i18n.format("FORJA.Combat.PifiaEsquivarDanyAplicat", { nom: objectiu.name, valor: danyExtra }));
 
     if (resultatDany.danyFinal > 0) {
       const marcatsActuals = objectiu.system.salut[pista].marcats;
@@ -144,6 +163,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     maniobra,
     penalSalut,
     concentrat: dauConcentracio > 0,
+    bonusRetard,
     notes,
     dany: resultatDany,
     pista,
@@ -177,4 +197,44 @@ function _combatDe(actor) {
 /** @param {string} id  @returns {boolean} si l'estat existeix a CONFIG.statusEffects */
 function _estatExisteix(id) {
   return !!CONFIG.statusEffects?.some(e => e.id === id);
+}
+
+/* -------------------------------------------- */
+/*  Barallar-se: retard voluntari (B16)         */
+/* -------------------------------------------- */
+
+/**
+ * Màxim de ticks de retard que un atac de barallar-se admet (B16, funció pura).
+ *
+ * Manual FC001CA › SISTEMES › Combat › Cos a cos: "Barallar-se (FOR): el PJ
+ * fa servir les seves armes naturals sense reserves. El jugador pot retardar
+ * la seva acció (afegint latència) tants torns com punts d'habilitat tingui.
+ * Cada torn afegeix un +1 a impactar." Taula "Armes naturals", Cop:
+ * "Barallar-se -- Cada +1 addicional a latència dóna un +1 a impactar. El
+ * màxim nombre de torns que es pot retardar és el nivell d'habilitat del PJ."
+ *
+ * Lectura: aquí "torn" = +1 de latència = una casella (tick) del rellotge de
+ * temps actiu, com diu explícitament la taula del Cop. Només per a atacs que
+ * es tiren amb barallar-se (armes naturals, `habId === "barallar-se"`) i sense
+ * maniobra d'arts marcials (llavors la tirada és DES + Arts Marcials).
+ *
+ * @param {{habId:string}} arma   Entrada d'arma del diàleg de declarar
+ * @param {number} nivellBarallarse
+ * @param {boolean} [ambManiobra=false]
+ * @returns {number}
+ */
+export function retardMaximBarallarse(arma, nivellBarallarse, ambManiobra = false) {
+  if (!arma || arma.habId !== "barallar-se" || ambManiobra) return 0;
+  return Math.max(0, Math.floor(nivellBarallarse ?? 0));
+}
+
+/**
+ * Normalitza el retard triat al rang [0, màxim] (B16, funció pura).
+ * @param {number|string} retard
+ * @param {number} maxim
+ * @returns {number}
+ */
+export function limitarRetardBarallarse(retard, maxim) {
+  const n = Math.floor(Number(retard) || 0);
+  return Math.min(Math.max(0, n), Math.max(0, maxim ?? 0));
 }

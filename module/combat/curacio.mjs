@@ -24,6 +24,47 @@ import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
  */
 
 const ESTATS_PRIMERS_AUXILIS  = ["atordit", "marejat", "sagnant"];
+
+/**
+ * Nivell mínim de l'habilitat de curació per a cada tractament (B17).
+ * Manual FC001CA › SISTEMES › Salut › Primers auxilis: "pot ser atès per
+ * qualsevol PJ amb l'habilitat de medicina 1 o superior (enginyeria o nyaps,
+ * en el cas dels mecanoides)"; › Tractament mèdic: "Per tractar algú cal un
+ * mínim de 2 en l'habilitat de medicina (enginyeria o nyaps en el cas de
+ * mecanoides)".
+ */
+export const NIVELL_MINIM_CURACIO = Object.freeze({
+  "primers-auxilis":  1,
+  "tractament-medic": 2
+});
+
+/**
+ * Comprova si una acció de curació es pot fer (B17, funció pura).
+ *
+ *  - Habilitat: `nivell` ≥ `NIVELL_MINIM_CURACIO[tipus]` (la de
+ *    `habilitatCuracio`: medicina, o la millor d'enginyeria/nyaps si
+ *    l'objectiu és mecanoide).
+ *  - Autotractament (› Primers auxilis): "En casos extrems, i si el DJ ho
+ *    aprova, un PJ pot provar de fer-se primers auxilis a si mateix."
+ *    Decisió d'implementació: l'aprovació del DJ = que sigui el DJ qui
+ *    llança l'acció (`esGM`); un jugador rep un avís i l'acció es bloca. El
+ *    manual només ho preveu per als primers auxilis ("Per tractar algú" al
+ *    tractament mèdic): tractar-se a si mateix amb tractament mèdic queda
+ *    també reservat al DJ, com a excepció seva.
+ *
+ * @param {object} p
+ * @param {"primers-auxilis"|"tractament-medic"} p.tipus
+ * @param {number}  p.nivell          Nivell de l'habilitat de curació del guaridor
+ * @param {boolean} p.autotractament  Guaridor i objectiu són el mateix actor
+ * @param {boolean} p.esGM            L'usuari que fa l'acció és el DJ
+ * @returns {{permes:boolean, motiu:null|"habilitat"|"autotractament", minim:number}}
+ */
+export function comprovarRequisitsCuracio({ tipus, nivell, autotractament, esGM }) {
+  const minim = NIVELL_MINIM_CURACIO[tipus] ?? 1;
+  if ((nivell ?? 0) < minim) return { permes: false, motiu: "habilitat", minim };
+  if (autotractament && !esGM) return { permes: false, motiu: "autotractament", minim };
+  return { permes: true, motiu: null, minim };
+}
 const ESTATS_TRACTAMENT_MEDIC = ["inconscient", "incapacitat"];
 
 /**
@@ -91,20 +132,38 @@ export async function aplicarReposNatural(objectiu, pista) {
  * @param {"primers-auxilis"|"tractament-medic"} p.tipus
  * @param {"fatiga"|"ferides"} p.pista
  * @returns {Promise<{roll:ForjaRoll, exit:boolean, excedent:number, hab:{id:string,nivell:number}}|null>}
- *   `null` si el guaridor està fora de combat (nivell 7 de salut).
+ *   `null` si el guaridor està fora de combat (nivell 7 de salut) o no compleix
+ *   els requisits (B17).
  *
  * B1 (FC001CA › Salut › Fatiga i ferides): la penalització de salut del
  * GUARIDOR s'afegeix a la dificultat, i al nivell 7 no pot actuar. B5: si
- * s'havia concentrat, +1 dau (i es consumeix).
+ * s'havia concentrat, +1 dau (i es consumeix). B17: sense el nivell mínim
+ * d'habilitat, o si un jugador es vol tractar a si mateix sense el DJ, avisa
+ * i retorna `null` (vegeu `comprovarRequisitsCuracio`).
  */
 export async function ferCuracio({ guaridor, objectiu, tipus, pista }) {
   if (guaridor.system.salut?.foraDeCombat) {
     ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: guaridor.name }));
     return null;
   }
+  const hab = habilitatCuracio(guaridor, objectiu.system.especie);
+  const requisits = comprovarRequisitsCuracio({
+    tipus,
+    nivell: hab.nivell,
+    autotractament: _mateixActor(guaridor, objectiu),
+    esGM: !!game.user?.isGM
+  });
+  if (!requisits.permes) {
+    const habNom = game.i18n.localize(CONFIG.FORJA.LLISTA_HABILITATS.find(h => h.id === hab.id)?.nom ?? hab.id);
+    const tipusNom = game.i18n.localize(tipus === "tractament-medic" ? "FORJA.Curacio.TractamentMedic" : "FORJA.Curacio.PrimersAuxilis");
+    ui.notifications?.warn(requisits.motiu === "habilitat"
+      ? game.i18n.format("FORJA.Curacio.HabilitatInsuficient", { nom: guaridor.name, hab: habNom, minim: requisits.minim, tipus: tipusNom })
+      : game.i18n.format("FORJA.Curacio.AutotractamentDJ", { nom: guaridor.name }));
+    return null;
+  }
+
   const penalSalut = guaridor.system.salut?.penalitzacio ?? 0;
   const dificultat = (tipus === "tractament-medic" ? 2 : 1) + penalSalut;
-  const hab = habilitatCuracio(guaridor, objectiu.system.especie);
   const dauConcentracio = await consumirConcentracio(guaridor);
   const poolFinal = Math.max(1, (guaridor.system.atributs?.INT ?? 0) + hab.nivell + dauConcentracio);
 
@@ -145,4 +204,17 @@ export async function ferCuracio({ guaridor, objectiu, tipus, pista }) {
   });
 
   return { roll, exit, excedent, hab };
+}
+
+/**
+ * Guaridor i objectiu són el mateix actor (autotractament, B17). Es compara
+ * per `uuid` (els tokens sense enllaçar tenen un actor sintètic propi).
+ * @param {ForjaActor} a
+ * @param {ForjaActor} b
+ * @returns {boolean}
+ */
+function _mateixActor(a, b) {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  return !!a.uuid && a.uuid === b.uuid;
 }

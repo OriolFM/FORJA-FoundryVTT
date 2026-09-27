@@ -48,6 +48,7 @@ function _dadesSystemPerTipus(tipus, e) {
         danyBase:    e.danyBase,
         maniobra:    e.maniobra ?? "",
         rangExtrem:  e.rangExtrem ?? false,
+        propietats:  e.propietats ?? [],
         descripcio:  e.descripcio ?? ""
       };
     case "armadura":

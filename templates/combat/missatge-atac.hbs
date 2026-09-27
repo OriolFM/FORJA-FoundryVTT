@@ -19,6 +19,12 @@
   </div>
   {{/if}}
 
+  {{#if bonusRetard}}
+  <div class="mt-mods">
+    <span class="mt-mod">{{localize "FORJA.Combat.RetardBarallarseBonus" valor=bonusRetard}}</span>
+  </div>
+  {{/if}}
+
   <!-- Daus -->
   <div class="mt-daus">
     {{#each dice as |d|}}

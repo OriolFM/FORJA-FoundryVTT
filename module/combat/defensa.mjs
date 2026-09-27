@@ -1,5 +1,7 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { gastarReaccio, potReaccionar } from "./reaccions.mjs";
+import { mitjansBlocar } from "./propietats.mjs";
+import { danyExtraPifiaEsquivar } from "./dany.mjs";
 
 /**
  * Defensa (S-13, manual p. 703-817; FC001CA, SISTEMES › Combat › Defensar-se).
@@ -13,8 +15,14 @@ import { gastarReaccio, potReaccionar } from "./reaccions.mjs";
  *     esdevé la dificultat que ha de SUPERAR l'atacant (no només igualar-la;
  *     empat → guanya el defensor, manual p. 777).
  *   - **Blocar**: gasta una reacció, sense tirada (dificultat = defensa
- *     bàsica, també cal superar-la), i suma resistència a la reducció de
- *     dany del defensor — fins a duplicar-la com a màxim (manual p. 817).
+ *     bàsica, també cal superar-la), i suma a la reducció de dany del
+ *     defensor l'habilitat del mitjà triat — resistència (cos, atacs sense
+ *     armes), armes cos a cos (escut) o armes improvisades (altres objectes)
+ *     —, fins a duplicar-la com a màxim (B15, › Defensar-se › Blocar; vegeu
+ *     `mitjansBlocar` a `propietats.mjs`). `mitjans` porta les alternatives;
+ *     `reduccioExtra` és la del millor mitjà (per defecte).
+ *   - **Esquivar** espifiat (B14): +1 dany per cada 1 si l'atac impacta
+ *     (vegeu `danyExtraPifiaEsquivar`).
  *
  * Salut (B1; FC001CA › Salut › Fatiga i ferides): la penalització del
  * DEFENSOR s'aplica a la seva tirada d'esquivar/parar restant-la de les
@@ -33,9 +41,11 @@ import { gastarReaccio, potReaccionar } from "./reaccions.mjs";
  * @param {boolean} [opcions.declarada=false]  Opcions per a una acció defensiva
  *   DECLARADA (no reacció): sense "passiva", no gasten reacció i sempre disponibles
  *   (llevat que l'actor estigui fora de combat).
+ * @param {"natural"|"cosAcos"|"distancia"|null} [opcions.categoriaAtac=null]  Categoria
+ *   de l'arma atacant, per saber amb què es pot blocar (B15). `null` = desconeguda.
  * @returns {Array<object>} opcions amb `id`, `nom`, `descripcio`, `disponible`, etc.
  */
-export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa ?? 0, { declarada = false } = {}) {
+export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa ?? 0, { declarada = false, categoriaAtac = null } = {}) {
   const sys = objectiu.system;
   const habilitat = (id) => sys.habilitats?.[id]?.nivell ?? 0;
   const reduccioNatural = sys.reduccioDany ?? 0;
@@ -83,20 +93,51 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
       exigirSuperar: true,
       dificultatMinima: defensaBasica + 1
     },
-    {
-      id: "blocar", gastaReaccio: true, disponible: actiuDisponible, senseTirada: true,
-      nom:        game.i18n.localize("FORJA.Combat.Defensa.Blocar"),
-      descripcio: desc("Blocar"),
-      dificultat: defensaBasica,
-      exigirSuperar: true,
-      reduccioExtra: Math.min(habilitat("resistencia"), reduccioNatural)
-    }
+    _opcioBlocar({
+      disponible: actiuDisponible, descripcio: desc("Blocar"), dificultat: defensaBasica,
+      mitjans: mitjansBlocar({ items: objectiu.items ?? [], habilitat, reduccioNatural, categoriaAtac })
+    })
   ];
 
   if (!declarada) return opcions;
   return opcions
     .filter(o => o.id !== "passiva")
     .map(o => ({ ...o, gastaReaccio: false }));
+}
+
+/**
+ * Construeix l'opció "blocar" a partir dels mitjans disponibles (B15).
+ * @returns {object}
+ */
+function _opcioBlocar({ disponible, descripcio, dificultat, mitjans }) {
+  const mitjansAmbNom = mitjans.map(m => ({
+    ...m,
+    nom: game.i18n.format(`FORJA.Combat.Blocar.Mitja.${m.id}`, { arma: m.nomArma ?? "" })
+  }));
+  return {
+    id: "blocar", gastaReaccio: true, disponible, senseTirada: true,
+    nom: game.i18n.localize("FORJA.Combat.Defensa.Blocar"),
+    descripcio,
+    dificultat,
+    exigirSuperar: true,
+    mitjans: mitjansAmbNom,
+    mitjaId: mitjansAmbNom[0]?.id ?? null,
+    reduccioExtra: mitjansAmbNom[0]?.reduccioExtra ?? 0
+  };
+}
+
+/**
+ * Aplica a una opció "blocar" el mitjà triat pel defensor (B15, funció pura).
+ * Si l'opció no és blocar o el mitjà no és a la llista, la retorna igual.
+ * @param {object} opcio
+ * @param {string} mitjaId
+ * @returns {object}
+ */
+export function triarMitjaBlocar(opcio, mitjaId) {
+  if (opcio?.id !== "blocar" || !mitjaId) return opcio;
+  const m = opcio.mitjans?.find(x => x.id === mitjaId);
+  if (!m) return opcio;
+  return { ...opcio, mitjaId: m.id, reduccioExtra: m.reduccioExtra, nomMitja: m.nom };
 }
 
 /**
@@ -121,7 +162,9 @@ export function resultatDefensaActiva(fites, penalSalut, dificultatMinima) {
  * @param {object} opcio  Una de les entrades de `opcionsDefensa`
  * @param {object} [context]
  * @param {string} [context.nomAtacant]  Per al missatge de xat
- * @returns {Promise<{dificultat:number, exigirSuperar:boolean, reduccioExtra:number, roll:ForjaRoll|null}|null>}
+ * @returns {Promise<{dificultat:number, exigirSuperar:boolean, reduccioExtra:number, danyExtra:number, roll:ForjaRoll|null}|null>}
+ *   `danyExtra` (B14): dany addicional que rep el defensor si l'atac impacta
+ *   perquè ha espifiat la tirada d'esquivar.
  *   `null` si calia gastar una reacció i l'objectiu ja no en té disponible (concurrència).
  */
 export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null } = {}) {
@@ -135,6 +178,7 @@ export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null 
       dificultat:    opcio.dificultat,
       exigirSuperar: opcio.exigirSuperar,
       reduccioExtra: opcio.reduccioExtra ?? 0,
+      danyExtra:     0,
       roll: null
     };
   }
@@ -144,6 +188,7 @@ export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null 
 
   const penalSalut = opcio.penalSalut ?? 0;
   const dificultat = resultatDefensaActiva(roll.forjaResults.fites, penalSalut, opcio.dificultatMinima);
+  const danyExtra  = opcio.id === "esquivar" ? danyExtraPifiaEsquivar(roll.forjaResults) : 0;
 
   const content = await foundry.applications.handlebars.renderTemplate("systems/forja/templates/combat/missatge-defensa.hbs", {
     nomDefensor: objectiu.name,
@@ -155,6 +200,7 @@ export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null 
     dificultatMinima: opcio.dificultatMinima ?? 0,
     minimAplicat: (roll.forjaResults.fites - penalSalut) < (opcio.dificultatMinima ?? 0),
     dificultat,
+    danyExtra,
     ...roll.forjaResults
   });
   await ChatMessage.create({
@@ -168,6 +214,7 @@ export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null 
     dificultat,
     exigirSuperar: opcio.exigirSuperar,
     reduccioExtra: 0,
+    danyExtra,
     roll
   };
 }

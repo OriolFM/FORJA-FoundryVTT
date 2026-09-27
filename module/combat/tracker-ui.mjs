@@ -1,37 +1,13 @@
 import DiategDeclararAccio from "../apps/dialeg-declarar-accio.mjs";
 import DiategDefensa from "../apps/dialeg-defensa.mjs";
 import { ferTirada } from "../dice/tirada.mjs";
-import { ferAtac }  from "./atac.mjs";
-import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
+import { ferAtac, retardMaximBarallarse, limitarRetardBarallarse }  from "./atac.mjs";
+import { opcionsDefensa, resoldreOpcioDefensa, triarMitjaBlocar } from "./defensa.mjs";
 import { distanciaEntreTokens, bandaDistancia, tokensATocar } from "./abast.mjs";
 import { establirConcentracio } from "./reaccions.mjs";
-// Espai de noms (no import amb nom): `atributIHabilitatAtac` l'afegeix WP-G;
-// si encara no hi és, es fa servir `_atacPerDefecte` sense trencar el mòdul.
-import * as equipament from "./equipament-automatic.mjs";
-
-/** Reserva local si `CONFIG.FORJA.HAB_PER_CATEGORIA` encara no existeix (D3/WP-G). */
-const HAB_PER_CATEGORIA_LOCAL = {
-  natural:   "barallar-se",
-  cosAcos:   "armes-cos-a-cos",
-  distancia: "armes-distancia"
-};
-
-/**
- * Atribut + habilitat d'atac d'una arma (Q1, manual FC001CA › SISTEMES ›
- * Combat › Cos a cos / A Distància). La taula canònica és
- * `atributIHabilitatAtac` (WP-G, `equipament-automatic.mjs`); aquesta reserva
- * només s'usa si encara no existeix: barallar-se/naturals FOR, armes cos a cos
- * DES, a distància DES.
- * @param {Item} item
- * @returns {{atribut:string, habId:string}}
- */
-function _atributIHabilitat(item) {
-  const r = equipament.atributIHabilitatAtac?.(item);
-  if (r?.atribut) return r;
-  const taula = CONFIG.FORJA?.HAB_PER_CATEGORIA ?? HAB_PER_CATEGORIA_LOCAL;
-  const cat = item.system.categoria;
-  return { atribut: cat === "natural" ? "FOR" : "DES", habId: taula[cat] ?? "barallar-se" };
-}
+// Atribut + habilitat d'atac d'una arma (Q1, manual FC001CA › SISTEMES ›
+// Combat › Cos a cos / A Distància): taula canònica de WP-G.
+import { atributIHabilitatAtac } from "./equipament-automatic.mjs";
 
 /**
  * L'atac bàsic "Cop" (catàleg `cop`, `system.basic`), l'única arma natural
@@ -182,7 +158,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     const armes = actor.items
       .filter(i => i.type === "arma")
       .map(i => {
-        const { atribut, habId } = _atributIHabilitat(i);
+        const { atribut, habId } = atributIHabilitatAtac(i);
         return {
           id:            i.id,
           nom:           i.name,
@@ -191,7 +167,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           habId, habNivell: habilitat(habId),
           // Arts marcials: només amb l'atac "Cop" i si l'actor en té l'habilitat
           // (manual › Cos a cos: "Arts Marcials (DES): el PJ fa servir moviments especials").
-          permetManiobres: _esCop(i) && potArtsMarcials
+          permetManiobres: _esCop(i) && potArtsMarcials,
+          // B16: retard voluntari de barallar-se (fins al nivell d'habilitat).
+          retardMax: retardMaximBarallarse({ habId }, habilitat("barallar-se"))
         };
       });
 
@@ -219,6 +197,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     if (config.tipus === "atac") {
       const arma = armes.find(a => a.id === config.armaId);
       if (arma) pendent = { ...pendent, ...arma, label: arma.nom };
+      if (arma && config.retardBarallarse > 0 && !config.maniobraId) {
+        pendent = { ...pendent, retardBarallarse: config.retardBarallarse, label: config.etiqueta };
+      }
       if (arma && config.maniobraId) {
         // Maniobra d'arts marcials: la tirada és DES + Arts Marcials (manual ›
         // Cos a cos), no la de l'arma "Cop" (FOR + barallar-se).
@@ -324,14 +305,16 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // resol la reacció defensiva de l'objectiu (passiva / esquivar /
         // parar / blocar — gastant reacció i, si escau, tirant), i després
         // es tira l'atac contra la dificultat resultant.
-        const opcions = opcionsDefensa(objectiu, defensaBasica);
-        const eleccio = await DiategDefensa.obrir({
+        // B15: la categoria de l'arma atacant decideix amb què es pot blocar.
+        const opcions = opcionsDefensa(objectiu, defensaBasica, { categoriaAtac: arma.system.categoria ?? null });
+        const eleccioDialeg = await DiategDefensa.obrir({
           nomAtacant:  combatant.name,
           nomDefensor: objectiu.name,
           foraDeCombat: !!objectiu.system.salut?.foraDeCombat,
           opcions
         });
-        if (!eleccio) return;
+        if (!eleccioDialeg) return;
+        const eleccio = triarMitjaBlocar(eleccioDialeg, eleccioDialeg.mitjaId);
 
         const resolucio = await resoldreOpcioDefensa(objectiu, eleccio, { nomAtacant: combatant.name });
         if (!resolucio) {
@@ -343,6 +326,12 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           ? (CONFIG.FORJA?.LLISTA_MANIOBRES ?? []).find(m => m.id === pendent.maniobraId) ?? null
           : null;
 
+        // B16: retard de barallar-se declarat (ja pagat en latència), limitat
+        // al nivell ACTUAL de l'habilitat; no s'aplica amb maniobra.
+        const retardBarallarse = (pendent.habId === "barallar-se" && !pendent.maniobraId)
+          ? limitarRetardBarallarse(pendent.retardBarallarse, sys.habilitats?.["barallar-se"]?.nivell ?? 0)
+          : 0;
+
         await ferAtac({
           actor,
           objectiu,
@@ -351,7 +340,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           dificultat:      resolucio.dificultat,
           exigirSuperar:   resolucio.exigirSuperar,
           reduccioExtra:   resolucio.reduccioExtra,
-          etiquetaDefensa: eleccio.nom,
+          danyExtra:       resolucio.danyExtra ?? 0,
+          retardBarallarse,
+          etiquetaDefensa: eleccio.nomMitja ? `${eleccio.nom} (${eleccio.nomMitja})` : eleccio.nom,
           etiquetaRang,
           maniobra,
           label:      pendent.label

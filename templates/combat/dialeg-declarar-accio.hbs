@@ -48,6 +48,13 @@
   <p class="dda-avis">{{maniobra.descripcio}}<br>{{localize "FORJA.Combat.ManiobraTirada"}}</p>
   {{/if}}
   {{/if}}
+  {{#if retardMax}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.RetardBarallarse"}}</label>
+    <input type="number" name="retardBarallarse" value="{{retard}}" min="0" max="{{retardMax}}" step="1">
+  </div>
+  <p class="hint">{{localize "FORJA.Combat.RetardBarallarseDesc" max=retardMax}}</p>
+  {{/if}}
   {{/if}}
 
   {{#if (eq tipus "defensa")}}

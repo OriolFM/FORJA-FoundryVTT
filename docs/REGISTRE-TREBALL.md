@@ -21,6 +21,8 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | `76bfdbc` | **Onada 1.** Relé del DJ via socket (A2); hooks només al client que toca (A1); ordre de torns estable i `nextTurn` amb una sola escriptura (A3, D5); els PC ja no compten els PX (A4); barres de salut del token (A6); latència de les armadures (B2); càrrega de JSON robusta (D4); estat `dead` (A8); fora les sobreescriptures d'ajudants Handlebars (A7); codi mort eliminat (C4); fitxers LevelDB fora del repo (C7); `build-manual.mjs` ja no esborra les fonts (A5); manual del joc a `docs/manual/`. |
 | `01fa086` | **Onada 2.** Regles de combat (WP-F: B1, B3–B7, B9, B10, C2); fitxes amb classe base comuna i fitxa d'objectes (WP-G: D1–D3, D6, C3, C5, B11, B12); atributs d'atac segons el manual (Q1); llista blanca de camps del relé del DJ. |
 
+| *(onada 3)* | Les cinc regles pendents del manual (WP-I: B13–B17), la documentació (`CLAUDE.md`, README i `system.json`, WP-D3) i el camp `propietats` de les armes, editable a la fitxa d'objecte. |
+
 ## Decisions de disseny
 
 | Tema | Decisió | Font |
@@ -31,6 +33,11 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | Diverses armadures (Q3) | La protecció la dona **la millor**; les penalitzacions de latència **s'apilen**. | Oriol FM, 2026-09-27 |
 | Empat contra la defensa passiva | N'hi ha prou amb igualar-la (l. 3143). El manual es contradiu a la l. ~2904. | Manual |
 | PC gastats | PC gastats = cost total de la fitxa − PX gastats. Els canvis manuals en mode edició compten com a PC. | WP-B |
+| Escopetes (B13) | Les armadures rígides (`tipus: "fisica"`) protegeixen el doble contra les armes amb la propietat `escopeta`. La millor armadura es tria després de doblar-la. | Manual, l. 3091 |
+| Pífia en esquivar (B14) | +1 de dany per cada 1 de la tirada pifiada. Només en esquivar, només si l'atac impacta, i s'afegeix **abans** de l'ègida, l'armadura i la reducció. **Interpretació pròpia, pendent de confirmar.** | Manual, exemple de la l. 4018 |
+| Blocar (B15) | Amb el cos, fa servir resistència i només contra atacs naturals. Amb escut (una arma amb la propietat `escut`), armes cos a cos. Amb un altre objecte, armes improvisades. La bonificació no pot superar la reducció natural. | Manual, l. 3177–3185 |
+| Retard de barallar-se (B16) | Cada +1 de latència (un tick) dona +1 dau, fins al nivell de barallar-se. No es pot combinar amb una maniobra d'arts marcials. | Manual, l. 2902 i 2927 |
+| Requisits de curació (B17) | Primers auxilis, habilitat ≥ 1; tractament mèdic, ≥ 2. Curar-se un mateix només ho pot fer el DJ (que ja equival a la seva aprovació). | Manual, l. 3486–3502 |
 | Autoritat del DJ | Els canvis a documents aliens passen pel DJ (`module/xarxa/socket.mjs`), amb una llista de camps permesos (`CAMPS_PERMESOS_PER_TIPUS`). Fora de combat, un jugador només pot treure fatiga o ferides a un actor aliè, no afegir-n'hi. | Seguretat, onada 2 |
 
 ## Contractes entre mòduls (per a qui continuï)
@@ -46,10 +53,13 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 1. **Dues armadures.** El manual (l. 3337) permet una flexible sobre una de rígida, i la flexible suma **la meitat** de la seva protecció (arrodonint amunt). La resposta de l'Oriol va ser "la millor, i s'apilen les penalitzacions", que és el que està implementat. Quina de les dues val?
 2. **Armes improvisades:** l'habilitat i l'atribut que s'han suposat (vegeu la taula de decisions).
 3. **Empat contra la defensa passiva:** la contradicció entre les línies ~2904 i 3143.
+4. **Pífia en esquivar:** el dany extra s'aplica abans o després de l'armadura i la reducció?
 
 ## Pendent
 
-- **Onada 3.** WP-I (les cinc regles del manual que encara no estan automatitzades: B13–B17) i WP-D3 (documentació: `CLAUDE.md`, README i `system.json`).
+- **Releases a GitHub:** les adreces `manifest` i `download` de `system.json` no funcionaran fins que es publiqui una release amb `system.json` i `forja.zip`.
+- **Regles del manual detectades però no implementades:** l'escut dona +1 a la defensa bàsica (l. 2985/3153); la integritat estructural de l'escut en blocar; la pífia de les armes de dispersió ("Perilloses").
+- **Retard de barallar-se:** la tirada sense objectiu (`ferTirada`) no hi suma els daus del retard.
 - **Onada 4.** WP-D2 (identificadors dels diàlegs i textos fixos) i després WP-D1 (traduccions completes ca/es/en).
 - **Proves de joc** en un Foundry v13 sense pantalla en aquesta màquina, amb Playwright i dues sessions (DJ i jugador). Cal la clau de llicència i l'enllaç temporal de descàrrega.
 - **graphify** de tot el projecte, en acabar.

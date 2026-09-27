@@ -1,3 +1,5 @@
+import { triarMitjaBlocar } from "../combat/defensa.mjs";
+
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 /**
@@ -6,6 +8,12 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
  * reacció) o blocar (gasta reacció, sense tirada, suma resistència).
  * Les opcions arriben de `opcionsDefensa` (combat/defensa.mjs, font única, B7);
  * un defensor fora de combat (nivell 7) només té la defensa passiva a 1 (B1).
+ *
+ * B15 (FC001CA › Defensar-se › Blocar): si es tria blocar, el defensor tria
+ * amb què bloca — cos (resistència), escut (armes cos a cos) o un altre
+ * objecte (armes improvisades) — entre els mitjans que li ofereix
+ * `mitjansBlocar`; l'opció retornada porta `mitjaId` i la `reduccioExtra`
+ * d'aquell mitjà (`triarMitjaBlocar`).
  */
 export default class DiategDefensa extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -25,11 +33,13 @@ export default class DiategDefensa extends HandlebarsApplicationMixin(Applicatio
   #config  = null;
   #resolve = null;
   #opcioId = null;
+  #mitjaId = null;
 
   constructor(config, options = {}) {
     super(options);
     this.#config = config;
     this.#opcioId = config.opcions.find(o => o.disponible)?.id ?? config.opcions[0]?.id ?? null;
+    this.#mitjaId = config.opcions.find(o => o.id === "blocar")?.mitjaId ?? null;
   }
 
   get title() {
@@ -38,12 +48,15 @@ export default class DiategDefensa extends HandlebarsApplicationMixin(Applicatio
 
   async _prepareContext(options) {
     const c = this.#config;
+    // Les opcions es mostren amb el mitjà de blocar triat (reducció extra actualitzada).
+    const opcions = c.opcions.map(o => triarMitjaBlocar(o, this.#mitjaId));
     return {
       nomAtacant:  c.nomAtacant,
       nomDefensor: c.nomDefensor,
       foraDeCombat: !!c.foraDeCombat,
-      opcions:     c.opcions,
-      opcioId:     this.#opcioId
+      opcions,
+      opcioId:     this.#opcioId,
+      mitjaId:     this.#mitjaId
     };
   }
 
@@ -55,12 +68,17 @@ export default class DiategDefensa extends HandlebarsApplicationMixin(Applicatio
         this.render(false);
       });
     });
+    this.element.querySelector("[name='mitjaId']")?.addEventListener("change", ev => {
+      this.#mitjaId = ev.target.value;
+      this.render(false);
+    });
   }
 
   static async _onSubmit(event, form, formData) {
     const opcioId = formData.object.opcioId;
     const opcio = this.#config.opcions.find(o => o.id === opcioId);
-    this.#resolve?.(opcio ?? null);
+    this.#resolve?.(opcio ? triarMitjaBlocar(opcio, formData.object.mitjaId ?? this.#mitjaId) : null);
+    this.#resolve = null;
   }
 
   async close(options = {}) {

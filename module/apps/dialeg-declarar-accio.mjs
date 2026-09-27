@@ -1,3 +1,5 @@
+import { retardMaximBarallarse, limitarRetardBarallarse } from "../combat/atac.mjs";
+
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 /**
@@ -18,6 +20,11 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
  *   un jugador pot indicar que el seu PJ es concentra en la seva acció"):
  *   casella que fixa `system.concentrat` (+1 dau a la propera tirada, sense
  *   reaccions fins llavors).
+ * - Retard de barallar-se (B16; › Cos a cos, "Barallar-se" i taula "Armes
+ *   naturals", Cop): per als atacs amb armes naturals tirats amb
+ *   barallar-se (sense maniobra), es pot afegir fins a `nivell de
+ *   barallar-se` ticks de latència; cada tick dona +1 dau a l'atac. Cada arma
+ *   porta `retardMax` (0 = no s'hi pot retardar), calculat a `tracker-ui.mjs`.
  */
 export default class DiategDeclararAccio extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -42,6 +49,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   #maniobraId = "";
   #concentrar = false;
   #descripcio = "";
+  #retard     = 0;
 
   constructor(config, options = {}) {
     super(options);
@@ -59,6 +67,18 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   /** Arma triada (entrada de `config.armes`). */
   #arma() {
     return this.#config.armes?.find(a => a.id === this.#armaId) ?? null;
+  }
+
+  /** Màxim de ticks de retard de barallar-se per a l'atac triat (B16). */
+  #retardMax() {
+    if (this.#tipus !== "atac") return 0;
+    const arma = this.#arma();
+    return retardMaximBarallarse(arma, arma?.retardMax ?? 0, !!this.#maniobraId);
+  }
+
+  /** Retard efectiu, limitat al màxim actual (B16). */
+  #retardEfectiu() {
+    return limitarRetardBarallarse(this.#retard, this.#retardMax());
   }
 
   async _prepareContext(options) {
@@ -82,13 +102,15 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       maniobra:      maniobres.find(m => m.id === this.#maniobraId) ?? null,
       concentrar:    this.#concentrar,
       descripcio:    this.#descripcio,
+      retardMax:     this.#retardMax(),
+      retard:        this.#retardEfectiu(),
       latencia:      this.#calcularLatencia()
     };
   }
 
   #calcularLatencia() {
     const c = this.#config;
-    if (this.#tipus === "atac") return this.#arma()?.latenciaTotal ?? c.latenciaBase;
+    if (this.#tipus === "atac") return (this.#arma()?.latenciaTotal ?? c.latenciaBase) + this.#retardEfectiu();
     return c.latenciaBase;
   }
 
@@ -123,6 +145,11 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       this.render(false);
     });
 
+    el.querySelector("[name='retardBarallarse']")?.addEventListener("change", ev => {
+      this.#retard = limitarRetardBarallarse(ev.target.value, this.#retardMax());
+      this.render(false);
+    });
+
     el.querySelector("[name='defensaId']")?.addEventListener("change", ev => {
       this.#defensaId = ev.target.value;
       this.render(false);
@@ -154,12 +181,23 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     else                          etiqueta = game.i18n.localize("FORJA.Combat.Accio.Altra");
     if (maniobra) etiqueta = `${etiqueta} — ${maniobra.nom}`;
 
+    // B16: el retard només val per a atacs de barallar-se sense maniobra.
+    const retardBarallarse = arma
+      ? limitarRetardBarallarse(d.retardBarallarse, retardMaximBarallarse(arma, arma.retardMax ?? 0, !!maniobra))
+      : 0;
+    if (retardBarallarse > 0) {
+      etiqueta = `${etiqueta} — ${game.i18n.format("FORJA.Combat.RetardBarallarseEtiqueta", { n: retardBarallarse })}`;
+    }
+
     this.#resolve?.({
-      latencia:   Math.max(1, parseInt(d.latencia) || 1),
+      // B16: el retard declarat no es pot "desfer" editant la latència a mà.
+      latencia:   Math.max(1, parseInt(d.latencia) || 1,
+                           retardBarallarse > 0 ? (arma.latenciaTotal ?? 0) + retardBarallarse : 1),
       tipus,
       armaId:     arma?.id ?? null,
       defensa:    defensa ?? null,
       maniobraId: maniobra?.id ?? null,
+      retardBarallarse,
       concentrar: !!d.concentrar,
       etiqueta,
       descripcio: (d.descripcio ?? "").trim()

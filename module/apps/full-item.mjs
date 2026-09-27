@@ -36,7 +36,9 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
       fields: sys.schema.fields,
       // Camp avançat (ObjectField, només tret): es mostra/edita com a JSON
       // pla — vegeu `_processSubmitData` per com es reinterpreta en desar.
-      efecteJSON: item.type === "tret" ? JSON.stringify(sys.efecte ?? null, null, 2) : undefined
+      efecteJSON: item.type === "tret" ? JSON.stringify(sys.efecte ?? null, null, 2) : undefined,
+      // Propietats d'arma (ArrayField) com a text separat per comes.
+      propietatsText: item.type === "arma" ? (sys.propietats ?? []).join(", ") : undefined
     });
 
     return { ...ctx, item, sys, cosHtml };
@@ -58,6 +60,11 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
         ui.notifications?.error(game.i18n.localize("FORJA.Item.EfecteJSONInvalid"));
         delete submitData.system.efecte;
       }
+    }
+    // `system.propietats` (ItemArma) s'edita com a text separat per comes.
+    const props = submitData?.system?.propietats;
+    if (typeof props === "string") {
+      submitData.system.propietats = props.split(",").map(p => p.trim()).filter(Boolean);
     }
     return super._processSubmitData(event, form, submitData, options);
   }

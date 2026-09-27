@@ -1,8 +1,17 @@
+import { NIVELL_MINIM_CURACIO } from "../combat/curacio.mjs";
+
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 /**
  * Diàleg de curació (S-17): tria entre primers auxilis (dificultat 1) i
  * tractament mèdic (dificultat 2), i la pista de salut a guarir.
+ *
+ * B17 (FC001CA › Salut › Primers auxilis / Tractament mèdic): si el cridant
+ * passa `habNivell`, els tractaments que demanen més nivell (1 i 2) es
+ * mostren desactivats; si passa `autotractament: true` i l'usuari no és el
+ * DJ, s'avisa que cal l'aprovació del DJ. La comprovació definitiva la fa
+ * sempre `ferCuracio` (`comprovarRequisitsCuracio`), encara que el cridant no
+ * passi aquests camps.
  */
 export default class DiategCuracio extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -28,6 +37,16 @@ export default class DiategCuracio extends HandlebarsApplicationMixin(Applicatio
     super(options);
     this.#config = config;
     this.#pista  = config.pistaPerDefecte ?? "ferides";
+    // Si primers auxilis no està permès però tractament mèdic sí (no passa amb
+    // els mínims 1/2, però es manté genèric), comença pel permès.
+    if (!this.#permes("primers-auxilis") && this.#permes("tractament-medic")) this.#tipus = "tractament-medic";
+  }
+
+  /** B17: el tipus és permès pel nivell d'habilitat (si es coneix). */
+  #permes(tipus) {
+    const nivell = this.#config?.habNivell;
+    if (typeof nivell !== "number") return true;
+    return nivell >= (NIVELL_MINIM_CURACIO[tipus] ?? 1);
   }
 
   get title() {
@@ -44,7 +63,12 @@ export default class DiategCuracio extends HandlebarsApplicationMixin(Applicatio
       poolFinal:   c.poolFinal,
       tipus:       this.#tipus,
       pista:       this.#pista,
-      dificultat
+      dificultat,
+      permesPrimersAuxilis:  this.#permes("primers-auxilis"),
+      permesTractamentMedic: this.#permes("tractament-medic"),
+      minimTipus:            NIVELL_MINIM_CURACIO[this.#tipus] ?? 1,
+      tipusPermes:           this.#permes(this.#tipus),
+      avisAutotractament:    !!c.autotractament && !game.user?.isGM
     };
   }
 
@@ -61,6 +85,7 @@ export default class DiategCuracio extends HandlebarsApplicationMixin(Applicatio
   static async _onSubmit(event, form, formData) {
     const d = formData.object;
     this.#resolve?.({ tipus: d.tipus ?? this.#tipus, pista: d.pista ?? this.#pista });
+    this.#resolve = null;
   }
 
   async close(options = {}) {

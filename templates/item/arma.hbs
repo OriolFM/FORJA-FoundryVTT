@@ -27,6 +27,11 @@
     <label><input type="checkbox" name="system.rangExtrem" {{checked sys.rangExtrem}}/> {{localize "FORJA.Item.RangExtrem"}}</label>
     <label><input type="checkbox" name="system.basic" {{checked sys.basic}}/> {{localize "FORJA.Item.Basic"}}</label>
   </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Propietats"}}</label>
+    <input type="text" name="system.propietats" value="{{propietatsText}}" placeholder="escut, escopeta"/>
+    <p class="hint">{{localize "FORJA.Item.PropietatsAjuda"}}</p>
+  </div>
 
   <div class="form-group form-group-stacked">
     <label>{{localize "FORJA.Item.Descripcio"}}</label>
