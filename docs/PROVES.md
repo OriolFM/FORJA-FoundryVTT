@@ -116,7 +116,7 @@ Cada bateria escriu un JSON amb el resultat de cada prova (`ok`, `detall`) i els
 | U0 | El PJ neix amb el token enllaçat; el PNJ no | OK | OK |
 | U1 | Tracker: el jugador només veu els controls del seu combatent; tothom veu el marcador | OK | OK |
 | U2 | Declarar un atac amb "Cop" i concentració (diàleg real) | OK | OK |
-| U3 | Resoldre l'atac contra el PNJ: el diàleg de defensa s'obre **al DJ**; atac al xat; concentració gastada | **KO** | **KO** |
+| U3 | Resoldre l'atac contra el PNJ: el diàleg de defensa s'obre **al DJ**; atac al xat; concentració gastada | *(a repetir)* | OK |
 | U6 | PNJ amb defensa automàtica: no pregunta a ningú i l'atac es resol sol | OK | OK |
 | U4 | Diàleg de curació des de la fitxa | OK | OK |
 | U5 | Diàleg de tirada (atribut + habilitat) | OK | OK |
@@ -131,7 +131,7 @@ Cada bateria escriu un JSON amb el resultat de cada prova (`ok`, `detall`) i els
 | R9 | Ègida trencada i reactivada al tick | OK | OK |
 | R10 | Abast cos a cos amb tokens de 2×2 | OK | OK |
 
-**U3, en investigació:** el diàleg de defensa arriba al DJ i el DJ l'envia, però l'atac no apareix al xat dins l'espera de la prova. En una execució anterior la causa va ser que el DJ no confirmava a temps l'aplicació del dany, i per això l'atac ja no es perd (surt al xat amb una nota) i el temps d'espera del relé ha passat a 30 s. Ara s'està analitzant amb una prova dedicada amb registres complets.
+**U3, resolta (no era un error del sistema).** El diàleg arriba al DJ, el DJ tria i l'atac surt al xat amb 5 daus i la concentració gastada. En aquesta màquina, però, la resposta del DJ triga més dels 30 s que esperava la prova. Ara la prova espera fins a 200 s. U6 ara espera que el jugador vegi la configuració de defensa automàtica abans de resoldre. A la v14 dona 17/17; a la v13 s'ha de repetir la bateria amb aquestes esperes.
 
 #### Moviment (`proves-moviment.mjs`)
 
@@ -159,6 +159,8 @@ Escena quadrada, 100 px i 1 m per casella; PJ amb AGI 3 i MID 3 (caminar 6 m).
 | El diàleg de defensa del PNJ s'obria al jugador que ataca | `decisio-defensa.mjs` i preguntes pel socket |
 | El camí no vorejava una paret | Sense retallar cantonades en diagonal |
 | Un atac es perdia si el relé no responia | Nota al xat; espera de 30 s |
+
+**Historial de resultats:** v13 — general 10/10, combat 16/17 (U3 per l'espera), moviment 10/10. v14 — general 10/10, combat 17/17, moviment 10/10.
 
 ### Afegir una prova
 

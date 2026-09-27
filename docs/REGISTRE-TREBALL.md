@@ -51,6 +51,7 @@
 | `518c932` | | Proves a Foundry v14 i proves compatibles amb v13 i v14. |
 | `fd5f25b` | | Documentació: registre reescrit, `docs/PROVES.md`, README i `CLAUDE.md` al dia. |
 | `38a0328` | | Proves de combat: esperes adaptades a la lentitud de la màquina (U3, U6). **Primer push de la branca i de les etiquetes a GitHub.** |
+| *(aquest)* | | Resultats: combat a la v14, 17/17. |
 
 ## Versions
 
@@ -122,7 +123,7 @@ Errors que només es veien executant el sistema en un Foundry real (detall a [`P
 | El diàleg de defensa del PNJ s'obria al jugador que atacava. | Corregit (`18e104a`): el decideix el DJ. |
 | El camí no vorejava una paret (passos en diagonal per l'extrem de la paret). | Corregit (`4d36051`) |
 | Si el relé no responia, l'atac desapareixia sense deixar rastre. | Corregit (`4d36051`): surt al xat amb una nota. |
-| **U3:** després que el DJ triï la defensa, l'atac no apareix al xat dins l'espera de la prova (v13 i v14). | **En investigació** |
+| **U3:** després que el DJ triï la defensa, l'atac no apareixia al xat dins l'espera de la prova. | **No era un error del sistema:** en aquesta màquina la resposta del DJ triga més de 30 s. La prova ara espera fins a 200 s; a la v14, combat 17/17. |
 
 ## Graf de coneixement (graphify)
 
@@ -142,7 +143,7 @@ Contradiccions del manual o punts on no diu res:
 
 ## Pendent
 
-- **U3:** investigar per què l'atac no surt al xat després que el DJ triï la defensa (vegeu les troballes).
+- **Repetir la bateria de combat a la v13** amb les esperes noves (a la v14 ja dona 17/17).
 - **Pull request de `Aw` cap a `main`**, quan l'Oriol hagi validat els canvis. La branca i les etiquetes `v0.2.0`–`v0.4.0` ja són a GitHub (2026-09-27, `origin` = OriolFM/FORJA-FoundryVTT).
 - **Releases a GitHub:** les adreces `manifest` i `download` de `system.json` no funcionaran fins que es publiqui una release amb `system.json` i `forja.zip`.
 - **Tancar la versió 0.5.0** quan el moviment estigui validat per l'Oriol.
