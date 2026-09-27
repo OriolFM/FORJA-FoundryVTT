@@ -49,6 +49,8 @@
 | `0c3bcd0` | | Moviment en temps actiu (WP-M). |
 | `4d36051` | | Proves de moviment (10/10); camí sense retallar cantonades; l'atac no es perd si falla el relé. |
 | `518c932` | | Proves a Foundry v14 i proves compatibles amb v13 i v14. |
+| `fd5f25b` | | Documentació: registre reescrit, `docs/PROVES.md`, README i `CLAUDE.md` al dia. |
+| `38a0328` | | Proves de combat: esperes adaptades a la lentitud de la màquina (U3, U6). **Primer push de la branca i de les etiquetes a GitHub.** |
 
 ## Versions
 
@@ -141,7 +143,7 @@ Contradiccions del manual o punts on no diu res:
 ## Pendent
 
 - **U3:** investigar per què l'atac no surt al xat després que el DJ triï la defensa (vegeu les troballes).
-- **Pujar la branca a GitHub.** Ara és només local: `origin` és el repo de l'Oriol, i cal permís d'escriptura o un fork a `ArnauFerma`. També cal pujar les etiquetes (`git push origin --tags`).
+- **Pull request de `Aw` cap a `main`**, quan l'Oriol hagi validat els canvis. La branca i les etiquetes `v0.2.0`–`v0.4.0` ja són a GitHub (2026-09-27, `origin` = OriolFM/FORJA-FoundryVTT).
 - **Releases a GitHub:** les adreces `manifest` i `download` de `system.json` no funcionaran fins que es publiqui una release amb `system.json` i `forja.zip`.
 - **Tancar la versió 0.5.0** quan el moviment estigui validat per l'Oriol.
 - **Regles del manual detectades però no implementades:**
