@@ -29,7 +29,7 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 export default class DiategDeclararAccio extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
-    id: "forja-dialeg-declarar-accio",
+    id: "forja-dialeg-declarar-accio-{id}",
     classes: ["forja", "forja-dialog", "dialeg-declarar-accio"],
     tag: "form",
     position: { width: 380 },

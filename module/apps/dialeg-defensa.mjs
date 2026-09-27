@@ -18,7 +18,7 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 export default class DiategDefensa extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
-    id: "forja-dialeg-defensa",
+    id: "forja-dialeg-defensa-{id}",
     classes: ["forja", "forja-dialog", "dialeg-defensa"],
     tag: "form",
     position: { width: 380 },

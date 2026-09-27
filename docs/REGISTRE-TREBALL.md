@@ -20,8 +20,7 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | `156f185` | Revisió i pla (`docs/REVIEW-PLAN.md`); `system.json` amb `"socket": true`. |
 | `76bfdbc` | **Onada 1.** Relé del DJ via socket (A2); hooks només al client que toca (A1); ordre de torns estable i `nextTurn` amb una sola escriptura (A3, D5); els PC ja no compten els PX (A4); barres de salut del token (A6); latència de les armadures (B2); càrrega de JSON robusta (D4); estat `dead` (A8); fora les sobreescriptures d'ajudants Handlebars (A7); codi mort eliminat (C4); fitxers LevelDB fora del repo (C7); `build-manual.mjs` ja no esborra les fonts (A5); manual del joc a `docs/manual/`. |
 | `01fa086` | **Onada 2.** Regles de combat (WP-F: B1, B3–B7, B9, B10, C2); fitxes amb classe base comuna i fitxa d'objectes (WP-G: D1–D3, D6, C3, C5, B11, B12); atributs d'atac segons el manual (Q1); llista blanca de camps del relé del DJ. |
-
-| *(onada 3)* | Les cinc regles pendents del manual (WP-I: B13–B17), la documentació (`CLAUDE.md`, README i `system.json`, WP-D3) i el camp `propietats` de les armes, editable a la fitxa d'objecte. |
+| `ac8f587` | **Onada 3.** Les cinc regles pendents del manual (WP-I: B13–B17), la documentació (`CLAUDE.md`, README i `system.json`, WP-D3) i el camp `propietats` de les armes, editable a la fitxa d'objecte. |
 
 ## Decisions de disseny
 

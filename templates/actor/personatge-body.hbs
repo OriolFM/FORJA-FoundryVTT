@@ -366,7 +366,7 @@
         {{#each armes as |a|}}
         <div class="forja-equip-fila" data-action="{{#if ../modeEdicio}}editarItem{{else}}selectArma{{/if}}" data-item-id="{{a.id}}" title="{{a.descripcio}}">
           <span class="equip-nom">{{a.nom}}</span>
-          <span class="equip-meta">Lat. total {{a.latenciaTotal}} (base {{a.modLatencia}}) · Tirada {{a.tirada.atribut}} {{a.tirada.atributVal}} + {{a.tirada.habId}} {{a.tirada.habNivell}} = {{a.tirada.pool}} daus · Dany {{a.danyBase}} ({{a.danyValor}})</span>
+          <span class="equip-meta">{{localize "FORJA.Display.LatenciaTotal"}} {{a.latenciaTotal}} (base {{a.modLatencia}}) · Tirada {{a.tirada.atribut}} {{a.tirada.atributVal}} + {{a.tirada.habId}} {{a.tirada.habNivell}} = {{a.tirada.pool}} {{localize "FORJA.Display.DausModificador"}} · {{localize "FORJA.Display.Dany"}} {{a.danyBase}} ({{a.danyValor}})</span>
           {{#if ../modeEdicio}}
           <button type="button" class="btn-tret-eliminar" data-action="eliminarArma"
                   data-item-id="{{a.id}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
@@ -441,8 +441,8 @@
           <span class="equip-nom">{{a.nom}}</span>
           <span class="equip-meta">
             {{a.cost}} PC · {{localize (concat "FORJA.Artefacte.Categoria." a.categoria)}}
-            {{#if a.activacio.dificultat}} · {{localize (concat "FORJA.Artefacte.Activacio." a.activacio.tipus)}} (dif. {{a.activacio.dificultat}}){{/if}}
-            {{#if a.us.modLatencia}} · Lat. +{{a.us.modLatencia}}{{/if}}
+            {{#if a.activacio.dificultat}} · {{localize (concat "FORJA.Artefacte.Activacio." a.activacio.tipus)}} ({{localize "FORJA.Display.Dificultats"}} {{a.activacio.dificultat}}){{/if}}
+            {{#if a.us.modLatencia}} · {{localize "FORJA.Display.Latencia"}} +{{a.us.modLatencia}}{{/if}}
           </span>
           {{#if ../modeEdicio}}
           <button type="button" class="btn-tret-eliminar" data-action="eliminarArtefacte"

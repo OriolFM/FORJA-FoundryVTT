@@ -418,5 +418,16 @@
   "FORJA.Curacio.AutotractamentDJ": "{nom} no es pot tractar a si mateix sense l'aprovació del DJ: ho ha de fer el DJ.",
   "FORJA.Curacio.AutotractamentAvis": "Tractar-se a si mateix només es pot fer en casos extrems i amb l'aprovació del DJ: l'acció l'ha de llançar el DJ.",
   "FORJA.Item.Propietats": "Propietats de regla",
-  "FORJA.Item.PropietatsAjuda": "Separades per comes. Reconegudes: escut (blocar amb armes cos a cos), escopeta (poca penetració)."
+  "FORJA.Item.PropietatsAjuda": "Separades per comes. Reconegudes: escut (blocar amb armes cos a cos), escopeta (poca penetració).",
+
+  "FORJA.Display.Dificultats": "dif.",
+  "FORJA.Display.Defensa": "def.",
+  "FORJA.Display.Pifia": "PÍFIA",
+  "FORJA.Display.Excedent": "exc.",
+  "FORJA.Display.DausModificador": "daus",
+  "FORJA.Display.LatenciaTotal": "Lat. total",
+  "FORJA.Display.Latencia": "Lat.",
+  "FORJA.Display.Abast": "Abast",
+  "FORJA.Display.Dany": "Dany",
+  "FORJA.Display.Reduccio": "Reducció"
 }

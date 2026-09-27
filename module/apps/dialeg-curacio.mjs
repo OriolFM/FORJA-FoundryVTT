@@ -16,7 +16,7 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 export default class DiategCuracio extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
-    id: "forja-dialeg-curacio",
+    id: "forja-dialeg-curacio-{id}",
     classes: ["forja", "forja-dialog", "dialeg-curacio"],
     tag: "form",
     position: { width: 380 },

@@ -20,7 +20,7 @@ export default class DiategTrets extends HandlebarsApplicationMixin(ApplicationV
   #valorX = 1;
 
   static DEFAULT_OPTIONS = {
-    id:       "forja-dialeg-trets",
+    id:       "forja-dialeg-trets-{id}",
     tag:      "div",
     window: {
       title:     "FORJA.Tret.Seleccionar",

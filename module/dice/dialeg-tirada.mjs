@@ -9,7 +9,7 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 export default class DiategTirada extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
-    id: "forja-dialeg-tirada",
+    id: "forja-dialeg-tirada-{id}",
     classes: ["forja", "forja-dialog", "dialeg-tirada"],
     tag: "form",
     position: { width: 320 },

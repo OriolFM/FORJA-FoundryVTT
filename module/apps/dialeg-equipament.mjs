@@ -17,7 +17,7 @@ export default class DiategEquipament extends HandlebarsApplicationMixin(Applica
   #cerca = "";
 
   static DEFAULT_OPTIONS = {
-    id:   "forja-dialeg-equipament",
+    id:   "forja-dialeg-equipament-{id}",
     tag:  "div",
     window: { title: "FORJA.Equip.Seleccionar", resizable: true },
     position: { width: 520, height: 560 },
