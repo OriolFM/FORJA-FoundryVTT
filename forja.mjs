@@ -18,6 +18,7 @@ import FullPNJ             from "./module/apps/full-pnj.mjs";
 import FullItem            from "./module/apps/full-item.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
 import { registrarSocket } from "./module/xarxa/socket.mjs";
+import { registrarPreguntaDefensa } from "./module/combat/decisio-defensa.mjs";
 import { assegurarAtacsAutomatics, eliminarArmaNaturalDelTret } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 
@@ -95,6 +96,7 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   // Relé d'autoritat del DJ (A2): escriptures a documents d'altri.
   registrarSocket();
+  registrarPreguntaDefensa();
   console.log("FORJA RPG | Sistema llest");
 });
 

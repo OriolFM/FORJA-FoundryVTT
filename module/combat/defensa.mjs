@@ -218,3 +218,32 @@ export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null 
     roll
   };
 }
+
+/**
+ * Tria automàtica de la defensa d'un PNJ segons `system.defensaAutomatica`
+ * (petició de l'Oriol FM, 2026-09-27: "poder configurar models perquè puguin
+ * triar certes accions automàtiques, com a mínim amb els minions"). Funció pura.
+ *
+ *   - "" (o sense valor): no hi ha tria automàtica → `null` (cal preguntar-ho).
+ *   - "passiva": sempre la defensa passiva.
+ *   - "esquivar" / "parar" / "blocar": aquesta opció si està disponible (té
+ *     reacció i no està concentrat); si no, la passiva.
+ *   - "millor": l'esquiva o la parada amb més daus, si en té cap de disponible;
+ *     si no, la passiva. (No tria blocar: depèn del mitjà i és una decisió tàctica.)
+ *
+ * @param {Array<object>} opcions  Sortida d'`opcionsDefensa`
+ * @param {string} [mode]
+ * @returns {object|null}  L'opció triada, o `null` si cal preguntar
+ */
+export function triarDefensaAutomatica(opcions, mode) {
+  if (!mode) return null;
+  const passiva = opcions.find(o => o.id === "passiva") ?? null;
+  if (mode === "passiva") return passiva;
+  if (mode === "millor") {
+    const actives = opcions.filter(o => ["esquivar", "parar"].includes(o.id) && o.disponible);
+    if (!actives.length) return passiva;
+    return actives.reduce((a, b) => ((b.pool ?? 0) > (a.pool ?? 0) ? b : a));
+  }
+  const triada = opcions.find(o => o.id === mode && o.disponible);
+  return triada ?? passiva;
+}

@@ -20,7 +20,8 @@ export default class FullPNJ extends FullActorBase {
     const ctx = await super._prepareContext(options);
     return {
       ...ctx,
-      tiers: ["extra", "antagonista", "nemesis", "criatura", "animal"]
+      tiers: ["extra", "antagonista", "nemesis", "criatura", "animal"],
+      modesDefensa: ["", "passiva", "millor", "esquivar", "parar", "blocar"]
     };
   }
 }

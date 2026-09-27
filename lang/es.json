@@ -429,5 +429,16 @@
   "FORJA.Display.Latencia": "Lat.",
   "FORJA.Display.Abast": "Alcance",
   "FORJA.Display.Dany": "Daño",
-  "FORJA.Display.Reduccio": "Reducción"
+  "FORJA.Display.Reduccio": "Reducción",
+  "FORJA.PNJ.DefensaAutomatica": "Defensa",
+  "FORJA.PNJ.DefensaAutomaticaAjuda": "Cómo se defiende este PNJ cuando lo atacan. «Preguntar al DJ» abre un diálogo al DJ; el resto se aplican sin preguntar (útil para los figurantes).",
+  "FORJA.PNJ.ModeDefensa.preguntar": "Preguntar al DJ",
+  "FORJA.PNJ.ModeDefensa.passiva": "Siempre pasiva",
+  "FORJA.PNJ.ModeDefensa.millor": "La mejor activa (si tiene reacción)",
+  "FORJA.PNJ.ModeDefensa.esquivar": "Esquivar (si tiene reacción)",
+  "FORJA.PNJ.ModeDefensa.parar": "Parar (si tiene reacción)",
+  "FORJA.PNJ.ModeDefensa.blocar": "Bloquear (si tiene reacción)",
+  "FORJA.Combat.EsperantDefensa": "Esperando a que {nom} elija cómo se defiende {defensor}…",
+  "FORJA.Combat.DefensaSenseDecisor": "No hay nadie conectado para decidir la defensa de {nom}: se usa la defensa pasiva.",
+  "FORJA.Combat.DefensaSenseResposta": "{nom} no ha elegido la defensa de {defensor} a tiempo: se usa la defensa pasiva."
 }

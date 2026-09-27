@@ -40,6 +40,10 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | Retard de barallar-se (B16) | Cada +1 de latència (un tick) dona +1 dau, fins al nivell de barallar-se. No es pot combinar amb una maniobra d'arts marcials. | Manual, l. 2902 i 2927 |
 | Requisits de curació (B17) | Primers auxilis, habilitat ≥ 1; tractament mèdic, ≥ 2. Curar-se un mateix només ho pot fer el DJ (que ja equival a la seva aprovació). | Manual, l. 3486–3502 |
 | Glossari de traducció | fita → éxito / hit; pífia → pifia / botch; ègida → égida / aegis; latència → latencia / latency; PX → PX / XP; DJ → DJ / GM; PNJ → PNJ / NPC; guanxi no es tradueix; els codis d'atribut (FOR, DES…) es mantenen iguals en tots els idiomes. | WP-D1 |
+| Qui tria la defensa | La tria la configuració automàtica del PNJ (`system.defensaAutomatica`), si en té. Si no, el jugador propietari del defensor, si està connectat. Si no, el DJ, amb un diàleg que li arriba pel socket. Mai el jugador que ataca un PNJ. | Oriol FM, 2026-09-27 |
+| Defensa automàtica (figurants) | Cada PNJ pot tenir un mode: pregunta-ho al DJ (per defecte), sempre passiva, la millor activa, esquivar, parar o blocar. Si el mode demana una defensa activa i no li queda reacció, es fa servir la passiva. | Oriol FM, 2026-09-27 ("com a mínim amb els minions") |
+| Moviment: bloqueig entre tokens | Els tokens de mida mitjana o més gran (mida ≥ 3) bloquegen el pas. Els de mida petita o diminuta (≤ 2) es poden travessar, tret que siguin enemics. | Oriol FM, 2026-09-27 |
+| Moviment: distàncies | Caminar = AGI×2 + MID − 3. Córrer (també càrrega) = AGI×5 + (MID − 3)×2. Saltar = AGI×3 + ⌈(MID − 3)/2⌉. En metres; el mínim es fixa a 1. Són fórmules de la versió antiga, no del manual (que només diu que "el DJ decideix segons mida i AGI"). | Oriol FM, 2026-09-27 |
 | Autoritat del DJ | Els canvis a documents aliens passen pel DJ (`module/xarxa/socket.mjs`), amb una llista de camps permesos (`CAMPS_PERMESOS_PER_TIPUS`). Fora de combat, un jugador només pot treure fatiga o ferides a un actor aliè, no afegir-n'hi. | Seguretat, onada 2 |
 
 ## Contractes entre mòduls (per a qui continuï)

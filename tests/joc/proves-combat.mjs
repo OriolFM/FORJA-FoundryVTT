@@ -117,12 +117,11 @@ await prova("U3. El jugador resol l'atac contra el PNJ marcat: diàleg de defens
   await esperar(500);
   const abansMsg = await dj.evaluate(() => game.messages.size);
   await jug.locator(`#combat .forja-resoldre[data-combatant-id="${ids.cPJ}"]`).dispatchEvent("click");
-  const onEsObre = await Promise.race([
-    esperarElement(jug.locator("form.dialeg-defensa").last()).then(() => "Jugador"),
-    esperarElement(dj.locator("form.dialeg-defensa").last()).then(() => "DJ")
-  ]);
-  const p = onEsObre === "Jugador" ? jug : dj;
-  const form = p.locator("form.dialeg-defensa").last();
+  // El diàleg de defensa del PNJ l'ha de rebre el DJ, no el jugador que ataca (Oriol FM).
+  const alJugador = await esperarElement(jug.locator("form.dialeg-defensa").last(), 8000).then(() => true, () => false);
+  const form = await esperarElement(dj.locator("form.dialeg-defensa").last(), 30000);
+  const onEsObre = alJugador ? "Jugador (MALAMENT)" : "DJ";
+  const p = dj;
   await p.screenshot({ path: `${CAPTURES}/42-defensa.png`, timeout: 10000 }).catch(() => {});
   await form.locator('input[name="opcioId"][value="passiva"]').evaluate(e => { e.checked = true; e.dispatchEvent(new Event("change", { bubbles: true })); });
   await enviar(form);
@@ -133,8 +132,21 @@ await prova("U3. El jugador resol l'atac contra el PNJ marcat: diàleg de defens
              daus: atac?.rolls?.[0]?.dice?.[0]?.results?.length ?? null };
   }, { pj: ids.pj, abansMsg }, v => v.missatgeAtac && !v.concentratDespres);
   r.dialegDefensaObertA = onEsObre;
-  if (!r.missatgeAtac || r.concentratDespres) throw new Error(JSON.stringify(r));
+  if (!r.missatgeAtac || r.concentratDespres || onEsObre !== "DJ") throw new Error(JSON.stringify(r));
   return r;
+});
+
+await prova("U6. PNJ amb defensa automàtica: no pregunta a ningú i l'atac es resol sol", async () => {
+  await dj.evaluate((pnj) => game.actors.get(pnj).update({ "system.defensaAutomatica": "passiva" }), ids.pnj);
+  await esperar(1500);
+  const abansMsg = await dj.evaluate(() => game.messages.size);
+  await jug.locator(`#combat .forja-resoldre[data-combatant-id="${ids.cPJ}"]`).dispatchEvent("click");
+  const r = await esperarQue(dj, (abansMsg) => ({ nous: game.messages.size - abansMsg,
+    atac: game.messages.contents.slice(abansMsg).some(m => m.content.includes("forja-missatge-atac") || m.content.includes("mt-")) }), abansMsg, v => v.atac, 60000);
+  const dialegs = { dj: await dj.locator("form.dialeg-defensa").count(), jugador: await jug.locator("form.dialeg-defensa").count() };
+  await dj.evaluate((pnj) => game.actors.get(pnj).update({ "system.defensaAutomatica": "" }), ids.pnj);
+  if (!r.atac || dialegs.dj || dialegs.jugador) throw new Error(JSON.stringify({ ...r, dialegs }));
+  return { ...r, dialegs };
 });
 
 await prova("U4. Diàleg de curació des de la fitxa del jugador (primers auxilis al PNJ)", async () => {

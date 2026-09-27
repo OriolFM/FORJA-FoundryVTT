@@ -1,13 +1,13 @@
 import DiategDeclararAccio from "../apps/dialeg-declarar-accio.mjs";
-import DiategDefensa from "../apps/dialeg-defensa.mjs";
 import { ferTirada } from "../dice/tirada.mjs";
 import { ferAtac, retardMaximBarallarse, limitarRetardBarallarse }  from "./atac.mjs";
-import { opcionsDefensa, resoldreOpcioDefensa, triarMitjaBlocar } from "./defensa.mjs";
+import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
 import { distanciaEntreTokens, bandaDistancia, tokensATocar } from "./abast.mjs";
 import { establirConcentracio } from "./reaccions.mjs";
 // Atribut + habilitat d'atac d'una arma (Q1, manual FC001CA › SISTEMES ›
 // Combat › Cos a cos / A Distància): taula canònica de WP-G.
 import { atributIHabilitatAtac } from "./equipament-automatic.mjs";
+import { decidirDefensa } from "./decisio-defensa.mjs";
 
 /**
  * L'atac bàsic "Cop" (catàleg `cop`, `system.basic`), l'única arma natural
@@ -307,14 +307,16 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // es tira l'atac contra la dificultat resultant.
         // B15: la categoria de l'arma atacant decideix amb què es pot blocar.
         const opcions = opcionsDefensa(objectiu, defensaBasica, { categoriaAtac: arma.system.categoria ?? null });
-        const eleccioDialeg = await DiategDefensa.obrir({
-          nomAtacant:  combatant.name,
-          nomDefensor: objectiu.name,
-          foraDeCombat: !!objectiu.system.salut?.foraDeCombat,
-          opcions
+        // Qui tria la defensa: la configuració automàtica del PNJ, el jugador
+        // propietari del defensor o el DJ — mai el jugador que ataca un PNJ
+        // (decisio-defensa.mjs; Oriol FM, 2026-09-27).
+        const decisio = await decidirDefensa({
+          defensor: objectiu, opcions, defensaBasica,
+          categoriaAtac: arma.system.categoria ?? null,
+          nomAtacant: combatant.name
         });
-        if (!eleccioDialeg) return;
-        const eleccio = triarMitjaBlocar(eleccioDialeg, eleccioDialeg.mitjaId);
+        if (!decisio) return;
+        const eleccio = decisio.eleccio;
 
         const resolucio = await resoldreOpcioDefensa(objectiu, eleccio, { nomAtacant: combatant.name });
         if (!resolucio) {

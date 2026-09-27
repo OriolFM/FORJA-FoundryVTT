@@ -429,5 +429,16 @@
   "FORJA.Display.Latencia": "Lat.",
   "FORJA.Display.Abast": "Range",
   "FORJA.Display.Dany": "Damage",
-  "FORJA.Display.Reduccio": "Reduction"
+  "FORJA.Display.Reduccio": "Reduction",
+  "FORJA.PNJ.DefensaAutomatica": "Defence",
+  "FORJA.PNJ.DefensaAutomaticaAjuda": "How this NPC defends when attacked. “Ask the GM” opens a dialog for the GM; the others are applied without asking (useful for minions).",
+  "FORJA.PNJ.ModeDefensa.preguntar": "Ask the GM",
+  "FORJA.PNJ.ModeDefensa.passiva": "Always passive",
+  "FORJA.PNJ.ModeDefensa.millor": "Best active (if it has a reaction)",
+  "FORJA.PNJ.ModeDefensa.esquivar": "Dodge (if it has a reaction)",
+  "FORJA.PNJ.ModeDefensa.parar": "Parry (if it has a reaction)",
+  "FORJA.PNJ.ModeDefensa.blocar": "Block (if it has a reaction)",
+  "FORJA.Combat.EsperantDefensa": "Waiting for {nom} to choose how {defensor} defends…",
+  "FORJA.Combat.DefensaSenseDecisor": "Nobody is connected to decide how {nom} defends: passive defence is used.",
+  "FORJA.Combat.DefensaSenseResposta": "{nom} did not choose how {defensor} defends in time: passive defence is used."
 }

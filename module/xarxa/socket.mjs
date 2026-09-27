@@ -150,6 +150,75 @@ export async function alternarEstatComGM(actor, statusId, active) {
   return actor.statuses?.has(statusId) ?? active;
 }
 
+/* -------------------------------------------- */
+/*  Preguntes a un usuari concret                */
+/* -------------------------------------------- */
+
+/**
+ * A banda d'aplicar canvis, el canal serveix per PREGUNTAR una decisió a un
+ * altre usuari (p. ex. com es defensa un PNJ: ho decideix el DJ, no el jugador
+ * que ataca). Cada tipus de pregunta té un gestor registrat a tots els clients
+ * amb `registrarPregunta`; el destinatari l'executa (normalment obre un diàleg)
+ * i en retorna la resposta. No modifica documents: qui pregunta aplica el
+ * resultat pels camins habituals (i, si cal, pel relé del DJ).
+ */
+const _gestorsPreguntes = new Map();
+
+/** Temps màxim per respondre una pregunta: hi ha una persona davant d'un diàleg. */
+const TEMPS_PREGUNTA = 120000;
+
+/**
+ * @param {string} nom
+ * @param {(dades:object, usuari:User) => Promise<any>} gestor
+ */
+export function registrarPregunta(nom, gestor) {
+  _gestorsPreguntes.set(nom, gestor);
+}
+
+/**
+ * Pregunta `nom` a l'usuari `desti` i espera la resposta. Si el destinatari és
+ * l'usuari actual, s'executa localment. Rebutja si no respon a temps.
+ * @param {User} desti
+ * @param {string} nom
+ * @param {object} dades
+ * @returns {Promise<any>}
+ */
+export function preguntarA(desti, nom, dades) {
+  if (!desti?.active) return Promise.reject(new Error(`FORJA | Destinatari no connectat per a "${nom}".`));
+  if (desti.id === game.user.id) {
+    const gestor = _gestorsPreguntes.get(nom);
+    if (!gestor) return Promise.reject(new Error(`FORJA | Pregunta desconeguda "${nom}".`));
+    return gestor(dades, game.user);
+  }
+  const id = foundry.utils.randomID();
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      _pendents.delete(id);
+      reject(new Error(`FORJA | ${desti.name} no ha respost a temps ("${nom}").`));
+    }, TEMPS_PREGUNTA);
+    _pendents.set(id, { resolve, reject, timer, pregunta: true });
+    game.socket.emit(CANAL, { tipus: "pregunta", id, nom, dades, usuari: game.user.id, desti: desti.id });
+  });
+}
+
+async function _atendrePregunta(msg) {
+  if (msg.desti !== game.user.id) return;
+  const resposta = { tipus: "resposta", id: msg.id, usuari: msg.usuari };
+  try {
+    const gestor = _gestorsPreguntes.get(msg.nom);
+    const qui = game.users.get(msg.usuari);
+    if (!gestor) throw new Error(`pregunta desconeguda (${msg.nom})`);
+    if (!qui) throw new Error(`usuari desconegut (${msg.usuari})`);
+    resposta.resultat = await gestor(msg.dades ?? {}, qui);
+    resposta.ok = true;
+  } catch (err) {
+    console.error("FORJA | Error responent una pregunta del socket", msg, err);
+    resposta.ok = false;
+    resposta.error = err?.message ?? String(err);
+  }
+  game.socket.emit(CANAL, resposta);
+}
+
 /** Registra l'escoltador del canal. Cridar un sol cop a `ready`. */
 export function registrarSocket() {
   game.socket.on(CANAL, _rebre);
@@ -196,6 +265,7 @@ async function _rebre(msg) {
   if (!msg || typeof msg !== "object") return;
   if (msg.tipus === "resposta") return _rebreResposta(msg);
   if (msg.tipus === "peticio")  return _atendrePeticio(msg);
+  if (msg.tipus === "pregunta") return _atendrePregunta(msg);
 }
 
 function _rebreResposta(msg) {
@@ -205,6 +275,7 @@ function _rebreResposta(msg) {
   _pendents.delete(msg.id);
   clearTimeout(pendent.timer);
   if (msg.ok) pendent.resolve(msg.resultat);
+  else if (pendent.pregunta) pendent.reject(new Error(`FORJA | ${msg.error}`));
   else {
     ui.notifications.error(game.i18n.format("FORJA.Socket.Error", { error: msg.error ?? "" }));
     pendent.reject(new Error(`FORJA | El DJ no ha pogut aplicar el canvi: ${msg.error}`));

@@ -429,5 +429,16 @@
   "FORJA.Display.Latencia": "Lat.",
   "FORJA.Display.Abast": "Abast",
   "FORJA.Display.Dany": "Dany",
-  "FORJA.Display.Reduccio": "Reducció"
+  "FORJA.Display.Reduccio": "Reducció",
+  "FORJA.PNJ.DefensaAutomatica": "Defensa",
+  "FORJA.PNJ.DefensaAutomaticaAjuda": "Com es defensa aquest PNJ quan l’ataquen. «Pregunta-ho al DJ» obre un diàleg al DJ; la resta s’apliquen sense preguntar (útil per als figurants).",
+  "FORJA.PNJ.ModeDefensa.preguntar": "Pregunta-ho al DJ",
+  "FORJA.PNJ.ModeDefensa.passiva": "Sempre passiva",
+  "FORJA.PNJ.ModeDefensa.millor": "La millor activa (si té reacció)",
+  "FORJA.PNJ.ModeDefensa.esquivar": "Esquivar (si té reacció)",
+  "FORJA.PNJ.ModeDefensa.parar": "Parar (si té reacció)",
+  "FORJA.PNJ.ModeDefensa.blocar": "Blocar (si té reacció)",
+  "FORJA.Combat.EsperantDefensa": "Esperant que {nom} triï com es defensa {defensor}…",
+  "FORJA.Combat.DefensaSenseDecisor": "No hi ha ningú connectat per decidir la defensa de {nom}: es fa servir la defensa passiva.",
+  "FORJA.Combat.DefensaSenseResposta": "{nom} no ha triat la defensa de {defensor} a temps: es fa servir la defensa passiva."
 }

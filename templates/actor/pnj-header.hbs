@@ -12,6 +12,14 @@
         </option>
         {{/each}}
       </select>
+      <label title="{{localize 'FORJA.PNJ.DefensaAutomaticaAjuda'}}">{{localize "FORJA.PNJ.DefensaAutomatica"}}</label>
+      <select name="system.defensaAutomatica" title="{{localize 'FORJA.PNJ.DefensaAutomaticaAjuda'}}">
+        {{#each modesDefensa as |m|}}
+        <option value="{{m}}" {{#if (eq m ../sys.defensaAutomatica)}}selected{{/if}}>
+          {{localize (concat "FORJA.PNJ.ModeDefensa." (ifThen m m "preguntar"))}}
+        </option>
+        {{/each}}
+      </select>
     </div>
   </div>
   <button type="button" class="btn-mode-edicio {{#if modeEdicio}}actiu{{/if}}"
