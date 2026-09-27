@@ -31,7 +31,7 @@
   "primaryTokenAttribute":   "salut.nivellEfectiu",
   "secondaryTokenAttribute": null,
   "grid": { "distance": 1, "units": "m" },
-  "socket": false,
+  "socket": true,
   "packs": [
     {
       "name": "manual",
