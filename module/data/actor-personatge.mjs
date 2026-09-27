@@ -49,9 +49,8 @@ export function _prepararDerivats(sys) {
   // --- Modificador de latència de les armadures equipades (B2) ---
   // Una armadura sense el camp `equipada` (encara no migrada per WP-G) es
   // tracta com a equipada — `!== false`, no `=== true`. Si n'hi ha varies
-  // equipades alhora, les penalitzacions de latència s'apilen (se sumen);
-  // la protecció, en canvi, només la dona la millor (confirmat pel
-  // dissenyador, Q3 del pla de revisió).
+  // equipades alhora, les penalitzacions de latència s'apilen senceres
+  // (manual l. 3337); la protecció la calcula `proteccioArmadura` (dany.mjs).
   const items = sys.parent?.items;
   if (items) {
     for (const item of items) {

@@ -29,13 +29,13 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | Tema | Decisió | Font |
 |------|---------|------|
 | Atribut dels atacs (Q1) | Armes cos a cos: **DES** + armes cos a cos. Arts marcials: **DES**. Barallar-se i armes naturals: **FOR**. Distància: **DES**, excepte les armes llancívoles, que van amb **AGI**. | Manual, "Cos a cos" (l. ~2896) i "A distància" (l. 3024). Confirmat per l'Oriol FM (2026-09-27): cos a cos, DES per impactar i FOR per al dany (el `danyBase` de les armes, p. ex. `FOR+2`). |
-| Armes improvisades | Habilitat *armes improvisades*; si es llancen, AGI. **Interpretació pròpia, pendent de confirmar.** | — |
+| Armes improvisades | Habilitat *armes improvisades*; si es llancen, AGI. El manual no diu quin atribut fan servir: el llistat d'habilitats en diu el nom, les taules en donen el dany (FOR+2 cos a cos; FOR+1 i abast FOR a distància) i la regla de les armes llançades diu AGI. **Interpretació pròpia: el manual no ho especifica.** | Manual, l. 1295, 2975, 3024, 3055 |
 | Ègides (Q2) | El temps inactiu compta en **ticks del rellotge**. Fora de combat, s'avisa que cal reactivar-la a mà (és una acció lliure). Si el combat s'esborra, les ègides pendents es reactiven. | Oriol FM, 2026-09-27 |
-| Diverses armadures (Q3) | La protecció la dona **la millor**; les penalitzacions de latència **s'apilen**. | Oriol FM, 2026-09-27 |
-| Empat contra la defensa passiva | N'hi ha prou amb igualar-la (l. 3143). El manual es contradiu a la l. ~2904. | Manual |
+| Diverses armadures (Q3) | Com diu el manual: la base és la millor armadura rígida (o natural), i una flexible hi suma **la meitat** de la seva protecció (arrodonint amunt). Dues rígides no s'apilen. Les penalitzacions de latència s'apilen senceres. Reprodueix els exemples del manual (Von Blum 5 + ⌈3/2⌉ = 7; Bauer 1 + ⌈1/2⌉ = 2). No es comprova la restricció de categoria de pes, perquè les dades no la tenen. | Manual, l. 3337. L'Oriol FM havia dit "la millor", però el 2026-09-27 va establir que mana el manual. |
+| Empat contra la defensa passiva | N'hi ha prou amb igualar-la. El manual es contradiu: les l. 2354 (regla general: igual o superior és èxit) i 3143 diuen que un empat impacta, i la l. ~2904 diu que falla. S'ha seguit la majoria. **Contradicció pendent de l'Oriol.** | Manual |
 | PC gastats | PC gastats = cost total de la fitxa − PX gastats. Els canvis manuals en mode edició compten com a PC. | WP-B |
 | Escopetes (B13) | Les armadures rígides (`tipus: "fisica"`) protegeixen el doble contra les armes amb la propietat `escopeta`. La millor armadura es tria després de doblar-la. | Manual, l. 3091 |
-| Pífia en esquivar (B14) | +1 de dany per cada 1 de la tirada pifiada. Només en esquivar, només si l'atac impacta, i s'afegeix **abans** de l'ègida, l'armadura i la reducció. **Interpretació pròpia, pendent de confirmar.** | Manual, exemple de la l. 4018 |
+| Pífia en esquivar (B14) | +1 de dany per cada 1 de la tirada pifiada. Només en esquivar i només si l'atac impacta. Se suma al **dany final**, després de l'ègida, l'armadura i la reducció, fins i tot si l'armadura atura l'atac: el manual diu que el personatge "rebria més mal" perquè s'ha posat a la trajectòria de l'atac. | Manual, l. ~4018 |
 | Blocar (B15) | Amb el cos, fa servir resistència i només contra atacs naturals. Amb escut (una arma amb la propietat `escut`), armes cos a cos. Amb un altre objecte, armes improvisades. La bonificació no pot superar la reducció natural. | Manual, l. 3177–3185 |
 | Retard de barallar-se (B16) | Cada +1 de latència (un tick) dona +1 dau, fins al nivell de barallar-se. No es pot combinar amb una maniobra d'arts marcials. | Manual, l. 2902 i 2927 |
 | Requisits de curació (B17) | Primers auxilis, habilitat ≥ 1; tractament mèdic, ≥ 2. Curar-se un mateix només ho pot fer el DJ (que ja equival a la seva aprovació). | Manual, l. 3486–3502 |
@@ -59,12 +59,17 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 - El resultat és a `graphify-out/` (fora de git): `graph.html` (visualització interactiva), `GRAPH_REPORT.md` i `graph.json`.
 - Per actualitzar-lo després de canviar el codi: `graphify update .`.
 
+## Criteri general
+
+**Mana el manual**, tret que es contradigui (Oriol FM, 2026-09-27). Quan es contradiu o no diu res, es documenta aquí la interpretació triada i es pregunta.
+
 ## Preguntes obertes per a l'Oriol
 
-1. **Dues armadures.** El manual (l. 3337) permet una flexible sobre una de rígida, i la flexible suma **la meitat** de la seva protecció (arrodonint amunt). La resposta de l'Oriol va ser "la millor, i s'apilen les penalitzacions", que és el que està implementat. Quina de les dues val?
-2. **Armes improvisades:** l'habilitat i l'atribut que s'han suposat (vegeu la taula de decisions).
-3. **Empat contra la defensa passiva:** la contradicció entre les línies ~2904 i 3143.
-4. **Pífia en esquivar:** el dany extra s'aplica abans o després de l'armadura i la reducció?
+Totes són contradiccions del manual o punts on el manual no diu res:
+
+1. **Empat contra la defensa passiva:** les l. 2354 i 3143 diuen que un empat impacta, i la l. ~2904 que falla. Ara impacta.
+2. **Esquivar per sota de la defensa:** la l. 3159 diu que el resultat no pot ser inferior a la defensa bàsica +1, però l'exemple de la l. ~4016 fa servir la defensa bàsica sense el +1. Ara s'aplica el +1.
+3. **Armes improvisades:** el manual no diu quin atribut fan servir. Ara, DES a cos a cos i AGI si es llancen.
 
 ## Pendent
 

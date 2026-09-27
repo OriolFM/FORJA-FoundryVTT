@@ -74,7 +74,7 @@ Each finding has an ID. The plan section groups the IDs into work packages, each
   - Still to confirm with the designer: improvised weapons are assumed to use the *armes improvisades* skill, and improvised thrown objects AGI.
   - The manual contradicts itself on ties against passive defence: line ~2904 says a tie misses, line 3143 says a tie is enough. The code follows line 3143.
 - **Q2 (B4): answered by Oriol FM, 2026-09-27.** An ègida's inactive time counts in **clock ticks**, not the wearer's turns.
-- **Q3 (B3): answered by Oriol FM, 2026-09-27.** With several armours equipped, protection comes from the **best** one, while their **latency penalties stack**. This matches the plan and WP-B's implementation.
+- **Q3 (B3): superseded.** Oriol first said "the best armour". Later on 2026-09-27 he ruled that **the manual prevails** unless it contradicts itself. The manual (line 3337) says a flexible armour adds **half** its protection (rounded up) to a rigid one, and latency penalties stack in full. `proteccioArmadura` now implements that.
 
 ---
 

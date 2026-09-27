@@ -47,7 +47,7 @@ import { teProprietat } from "./propietats.mjs";
  *  - › Combat › Cos a cos (taula Arts Marcials): la maniobra suma +1 a la
  *    dificultat i, si l'atac impacta, aplica el seu estat (B6); "Cop
  *    penetrant" ignora les armadures naturals i flexibles.
- *  - › Dany › Protecció + decisió Q3: protegeix la millor armadura equipada (B3).
+ *  - › Dany › Protecció + manual l. 3337: millor armadura + meitat de la flexible (B3, `proteccioArmadura`).
  *  - › Dany › Protecció + decisió Q2: l'ègida trencada es reactiva al tick
  *    del rellotge `marcador + torns` (B4, vegeu `ForjaCombat#reactivarEgides`).
  *  - › A Distància, taula (Escopetes, "Poca penetració"): contra una arma amb

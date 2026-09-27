@@ -53,8 +53,10 @@ export function resoldreDanyArma(formula, actor) {
  * @param {number}  config.reduccioDany   Reducció de dany del defensor (= FOR)
  * @param {number}  [config.armadura=0]   Protecció de l'armadura del defensor (si escau pel tipus)
  * @param {object}  [config.egida]        `{ activa, absorcio, tornsInactiva }` — ègida efectiva contra aquest tipus de dany
- * @param {number}  [config.danyExtra=0]  Dany addicional que se suma al total abans de protecció
+ * @param {number}  [config.danyExtra=0]  Dany addicional que REP el defensor si l'atac impacta
  *   (B14: pífia en esquivar, +1 per cada 1 de la tirada espifiada — vegeu `danyExtraPifiaEsquivar`).
+ *   Manual l. ~4018: "rebria més mal (un punt més de dany per cada resultat de 1)": se suma al
+ *   dany final, DESPRÉS d'ègida, armadura i reducció (s'ha posat a la trajectòria de l'atac).
  * @returns {{danyTotal:number, danyFinal:number, egidaTrencada:boolean, tornsInactivaEgida:number}}
  */
 export function calcularDany({
@@ -66,7 +68,13 @@ export function calcularDany({
   egida = null,
   danyExtra = 0
 }) {
-  const danyTotal = danyBaseArma + excedentAtac + Math.max(0, danyExtra ?? 0);
+  const resultat = _calcularDanyBase({ danyBaseArma, bonificadorArma, excedentAtac, reduccioDany, armadura, egida });
+  const extra = Math.max(0, danyExtra ?? 0);
+  return extra ? { ...resultat, danyFinal: resultat.danyFinal + extra } : resultat;
+}
+
+function _calcularDanyBase({ danyBaseArma, bonificadorArma, excedentAtac, reduccioDany, armadura, egida }) {
+  const danyTotal = danyBaseArma + excedentAtac;
   const danyMinim = 1 + bonificadorArma;
 
   // 1. Ègida
@@ -127,24 +135,28 @@ export function esArmaduraEquipada(item) {
 /**
  * Protecció d'armadura efectiva d'un objectiu (B3, funció pura).
  *
- * Manual FC001CA, SISTEMES › Dany › Protecció i › Armadures i ègides ›
- * Armadures: la protecció es resta del dany total. Decisió del dissenyador
- * (Q3, Oriol FM): amb diverses armadures equipades, protegeix NOMÉS la
- * millor; les latències s'apilen (ja ho fa `actor-personatge.mjs`).
+ * Manual FC001CA, SISTEMES › Armadures (l. 3337): "Si un PJ vol portar dues
+ * armadures, pot combinar-ne una de flexible amb una de rígida [...]. La
+ * flexible suma la meitat de la protecció habitual a la rígida (arrodonint
+ * cap amunt), però afegeix la penalització completa a la latència". Per tant:
+ * la base és la millor armadura no flexible (rígida o natural) — o la millor
+ * flexible si no n'hi ha cap altra — i la millor flexible restant hi suma la
+ * meitat (amunt) de la seva protecció, encara que protegeixi més que la base. Exemples del manual:
+ * 5 (cuirassa) + ⌈3/2⌉ (capa) = 7; 1 + ⌈1/2⌉ = 2. Dues rígides no s'apilen.
+ * Les latències s'apilen senceres (ja ho fa `actor-personatge.mjs`).
+ * La restricció "flexible de la mateixa categoria o més lleugera" no es
+ * comprova: el model de dades no té categoria de pes.
+ * (Substitueix la decisió provisional Q3 "només la millor": l'Oriol FM va
+ * confirmar el 2026-09-27 que mana el manual.)
  *
  * El manual no lliga el tipus d'armadura a la categoria de l'arma; només
  * alguns moviments especials en fan cas (p.ex. la maniobra d'arts marcials
  * "Cop penetrant" ignora les armadures naturals i flexibles) — d'aquí
  * `ignorarTipus`.
  *
- * B13 (FC001CA › Combat › A Distància, taula d'armes, Escopetes: "Poca
- * penetració -- Les armadures rígides ofereixen el doble de protecció contra
- * escopetes"): amb `dobleRigida`, les armadures rígides — `tipus: "fisica"` al
- * model de dades (armadures.json: "lleugera-rigida", "mitjana-rigida" i
- * "pesant" són `fisica`; el manual diu que les pesants són "gairebé
- * exclusivament rígides") — compten el doble. La millor armadura es tria
- * DESPRÉS de doblar (és la que més protegeix contra aquest atac). Les
- * flexibles i les naturals no es doblen.
+ * B13 (Escopetes, "Poca penetració -- Les armadures rígides ofereixen el
+ * doble de protecció contra escopetes"): amb `dobleRigida`, les armadures
+ * rígides (`tipus: "fisica"`) compten el doble abans de triar la millor.
  *
  * @param {Iterable<{type:string, system:object}>} items  Ítems de l'objectiu
  * @param {object} [opcions]
@@ -153,15 +165,23 @@ export function esArmaduraEquipada(item) {
  * @returns {number}
  */
 export function proteccioArmadura(items, { ignorarTipus = [], dobleRigida = false } = {}) {
-  let millor = 0;
+  const peces = [];
   for (const item of items ?? []) {
     if (!esArmaduraEquipada(item)) continue;
     if (ignorarTipus.includes(item.system.tipus)) continue;
     const base = item.system.reduccio ?? 0;
-    const proteccio = (dobleRigida && esArmaduraRigida(item)) ? base * 2 : base;
-    millor = Math.max(millor, proteccio);
+    peces.push({
+      flexible:  item.system.tipus === "flexible",
+      proteccio: (dobleRigida && esArmaduraRigida(item)) ? base * 2 : base
+    });
   }
-  return millor;
+  if (!peces.length) return 0;
+  peces.sort((a, b) => b.proteccio - a.proteccio);
+  // La base és la millor armadura no flexible (rígida o natural); si només
+  // n'hi ha de flexibles, la millor d'elles. Una altra flexible hi suma la meitat.
+  const principal = peces.find(p => !p.flexible) ?? peces[0];
+  const flexible  = peces.find(p => p.flexible && p !== principal);
+  return principal.proteccio + (flexible ? Math.ceil(flexible.proteccio / 2) : 0);
 }
 
 /**
