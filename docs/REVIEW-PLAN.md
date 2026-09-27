@@ -158,7 +158,26 @@ Files: `module/apps/full-personatge.mjs`, `module/apps/full-pnj.mjs`, new `modul
 9. Add `equipada` to `item-armadura.mjs` and an equip toggle on the armour row.
 10. New strings: list them in the report (WP-F owns `lang/ca.json` in wave 2).
 
-### Wave 3 — after wave 2 is committed
+### Wave 3 — after wave 2 is committed (`01fa086`)
+
+WP-I and WP-D3 run in parallel. The translation and dialog packages move to wave 4, because WP-I adds new strings and edits dialogs.
+
+**WP-I · Remaining manual rules — Opus** (B13–B17, added 2026-09-27 at the user's request)
+Files: `module/combat/*` (except `equipament-automatic.mjs`), `module/apps/dialeg-declarar-accio.mjs`, `dialeg-defensa.mjs`, `dialeg-curacio.mjs`, `module/documents/combat.mjs`, `templates/combat/*`, `templates/dice/*`, `lang/ca.json`, `module/config/dades/armes.json` (only to add machine-readable flags).
+Rules found by WP-F that are not automated yet. Each must follow the manual (`docs/manual/FORJA_FC001CA_CORE.md`):
+
+| ID | Rule | Manual |
+|----|------|--------|
+| B13 | Shotguns, "Poca penetració": rigid armour gives double protection against shotguns. | weapon table, line ~3091 |
+| B14 | Extra damage when a dodge is botched (pífia). | "Esquivar"/"Pífies", around line 3157; grep `pífia` |
+| B15 | Blocking uses resistència without weapons, armes cos a cos with a shield, armes improvisades with other objects. Today it always uses resistència. | "Blocar", line 3181 |
+| B16 | Brawling delay: an actor may delay a barallar-se action by up to their skill level in extra latency; each extra turn gives +1 to hit. | "Cos a cos", line 2902 |
+| B17 | Healing requirements: first aid needs medicina ≥ 1 (enginyeria/nyaps for mecanoides); medical treatment needs ≥ 2. Treating yourself needs GM approval. | "Primers auxilis" / "Tractament mèdic", lines 3486–3502 |
+
+- Any new relayed write paths must be reported, so the coordinator can extend `CAMPS_PERMESOS_PER_TIPUS` in `module/xarxa/socket.mjs`.
+- Store weapon properties such as "shotgun" or "shield" as data (e.g. `propietats` in `armes.json` or a flag), not by matching names.
+
+### Wave 4 — after wave 3 is committed (D2, then D1)
 
 **WP-D1 · Translations — Sonnet** (C1)
 Files: `lang/*.json`.
@@ -174,9 +193,14 @@ Rewrite `CLAUDE.md` from the actual code (types, files, patterns, socket relay, 
 
 ### Model choice
 
-- **Opus** for WP-A and WP-F: multiplayer authority, turn order and combat resolution are the critical paths, where a subtle mistake corrupts game state.
+- **Opus** for WP-A, WP-F and WP-I: multiplayer authority, turn order and combat resolution are the critical paths, where a subtle mistake corrupts game state.
 - **Sonnet** for WP-B, E, G, D1, D3: well-specified work that needs judgement and reading surrounding code.
 - **Haiku** for WP-C, H, D2: mechanical, fully specified edits.
+
+### After all waves
+
+- Run **graphify** over the whole project to build a queryable knowledge graph of the code (requested by the user). Keep the output out of the repo unless the user asks otherwise.
+- Gameplay tests in a headless Foundry v13 on this machine (Playwright + headless Chromium, GM and player sessions). This needs the user's Foundry licence key and the timed Linux/NodeJS download link.
 
 ### Verification after all waves
 
