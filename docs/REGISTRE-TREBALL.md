@@ -50,6 +50,15 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 - **Atac d'una arma:** `atributIHabilitatAtac(item)` a `module/combat/equipament-automatic.mjs`, a partir de `FORJA.ATAC_PER_CATEGORIA` i `FORJA.ATAC_PER_ARMA`.
 - **Rellotge:** `flags.forja.{marcador, actiu, actuats}` a `Combat`; `ForjaCombat#fiDeTorn(combatant)` s'executa al DJ quan acaba un torn; `calcularSeguentTorn` és una funció pura.
 
+## Graf de coneixement (graphify)
+
+- Eina: [graphify](https://github.com/safishamsi/graphify), instal·lada amb `uv tool install graphifyy` (executable a `~/.local/bin/graphify`).
+- Generat el 2026-09-27 sobre el commit `92dbacc` amb `graphify extract ./ --code-only` i `graphify cluster-only .`: 317 nodes, 682 arestes, 14 comunitats i cap cicle d'imports.
+- Els nodes amb més connexions són `FullActorBase`, `ForjaCombat`, `actualitzarComGM()`, `ferAtac()` i `DiategDeclararAccio`.
+- Només inclou codi (`.mjs` i `.json`). Les plantilles `.hbs` i el Markdown no hi són.
+- El resultat és a `graphify-out/` (fora de git): `graph.html` (visualització interactiva), `GRAPH_REPORT.md` i `graph.json`.
+- Per actualitzar-lo després de canviar el codi: `graphify update .`.
+
 ## Preguntes obertes per a l'Oriol
 
 1. **Dues armadures.** El manual (l. 3337) permet una flexible sobre una de rígida, i la flexible suma **la meitat** de la seva protecció (arrodonint amunt). La resposta de l'Oriol va ser "la millor, i s'apilen les penalitzacions", que és el que està implementat. Quina de les dues val?
@@ -65,7 +74,6 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 - **Traducció de les dades de joc:** els noms i descripcions dels catàlegs (`module/config/dades/*.json`: trets, armes, armadures, artefactes, maniobres) només són en català. Traduir-los demana decidir un mecanisme (claus i18n per entrada, o una capa de localització dels catàlegs).
 - **Claus sense ús:** 15 claus de `ca.json` no les fa servir cap codi, probablement restes de la interfície antiga (`FORJA.Tab.*`, `FORJA.Hab.Marca`, `FORJA.Tret.Cost`…). Es mantenen traduïdes; es poden esborrar si es confirma que no calen.
 - **Proves de joc** en un Foundry v13 sense pantalla en aquesta màquina, amb Playwright i dues sessions (DJ i jugador). Cal la clau de llicència i l'enllaç temporal de descàrrega.
-- **graphify** de tot el projecte, en acabar.
 - **Temes menors apuntats pels agents:**
   - Els camps numèrics opcionals dels artefactes es desen com a `0` quan es buiden.
   - La icona de concentració del tracker pot trigar a refrescar-se.
