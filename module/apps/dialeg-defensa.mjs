@@ -4,6 +4,8 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
  * Diàleg de defensa (S-13): quan es resol un atac contra un objectiu, el DJ
  * tria en nom seu com es defensa — passiva, activa (esquivar/parar, gasta
  * reacció) o blocar (gasta reacció, sense tirada, suma resistència).
+ * Les opcions arriben de `opcionsDefensa` (combat/defensa.mjs, font única, B7);
+ * un defensor fora de combat (nivell 7) només té la defensa passiva a 1 (B1).
  */
 export default class DiategDefensa extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -39,6 +41,7 @@ export default class DiategDefensa extends HandlebarsApplicationMixin(Applicatio
     return {
       nomAtacant:  c.nomAtacant,
       nomDefensor: c.nomDefensor,
+      foraDeCombat: !!c.foraDeCombat,
       opcions:     c.opcions,
       opcioId:     this.#opcioId
     };

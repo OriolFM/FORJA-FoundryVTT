@@ -9,6 +9,13 @@
     <span class="mt-dif">dif. {{dificultat}}</span>
   </div>
 
+  {{#if (or penalSalut concentrat)}}
+  <div class="mt-mods">
+    {{#if concentrat}}<span class="mt-mod">{{localize "FORJA.Dice.ConcentratBonus"}}</span>{{/if}}
+    {{#if penalSalut}}<span class="mt-mod mt-mod-penal">{{localize "FORJA.Dice.PenalSalutMod" valor=penalSalut}}</span>{{/if}}
+  </div>
+  {{/if}}
+
   <div class="mt-daus">
     {{#each dice as |d|}}
     <span class="mt-dau {{dieClass d}}">{{d}}</span>

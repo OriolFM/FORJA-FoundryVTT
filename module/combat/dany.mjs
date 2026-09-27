@@ -1,5 +1,6 @@
 /**
- * Pipeline de dany (S-14, A2). Verificat contra el manual (FORJA_03_SISTEMES.md, p. 92-94):
+ * Pipeline de dany (S-14, A2). Verificat contra el manual (FORJA_03_SISTEMES.md, p. 92-94;
+ * FC001CA: SISTEMES › Dany › Protecció / Reducció de dany / Dany mínim):
  *
  *   danyTotal = danyBaseArma(resolt) + excedentAtac
  *
@@ -104,4 +105,118 @@ export function aplicarDanyAPista(salut, pista, quantitat) {
   const linia = salut[pista];
   linia.marcats = Math.max(0, linia.marcats + quantitat);
   return linia.marcats;
+}
+
+/* -------------------------------------------- */
+/*  Armadures i ègides (B3, B4)                 */
+/* -------------------------------------------- */
+
+/**
+ * Una armadura compta si està equipada. Les armadures d'abans del camp
+ * `equipada` (WP-G) es consideren equipades (`!== false`).
+ * @param {{type:string, system:object}} item
+ * @returns {boolean}
+ */
+export function esArmaduraEquipada(item) {
+  return item?.type === "armadura" && item.system?.equipada !== false;
+}
+
+/**
+ * Protecció d'armadura efectiva d'un objectiu (B3, funció pura).
+ *
+ * Manual FC001CA, SISTEMES › Dany › Protecció i › Armadures i ègides ›
+ * Armadures: la protecció es resta del dany total. Decisió del dissenyador
+ * (Q3, Oriol FM): amb diverses armadures equipades, protegeix NOMÉS la
+ * millor; les latències s'apilen (ja ho fa `actor-personatge.mjs`).
+ *
+ * El manual no lliga el tipus d'armadura a la categoria de l'arma; només
+ * alguns moviments especials en fan cas (p.ex. la maniobra d'arts marcials
+ * "Cop penetrant" ignora les armadures naturals i flexibles) — d'aquí
+ * `ignorarTipus`.
+ *
+ * @param {Iterable<{type:string, system:object}>} items  Ítems de l'objectiu
+ * @param {object} [opcions]
+ * @param {string[]} [opcions.ignorarTipus=[]]  Tipus d'armadura (`fisica`/`flexible`/`natural`) que no compten
+ * @returns {number}
+ */
+export function proteccioArmadura(items, { ignorarTipus = [] } = {}) {
+  let millor = 0;
+  for (const item of items ?? []) {
+    if (!esArmaduraEquipada(item)) continue;
+    if (ignorarTipus.includes(item.system.tipus)) continue;
+    millor = Math.max(millor, item.system.reduccio ?? 0);
+  }
+  return millor;
+}
+
+/**
+ * Tria l'ègida activa d'un objectiu (B4, funció pura): la de més protecció
+ * entre les armadures equipades amb l'ègida activa i `absorcio > 0`.
+ * @param {Iterable<{type:string, system:object}>} items
+ * @returns {object|null}  L'ítem d'armadura que la porta, o `null`
+ */
+export function itemEgidaActiva(items) {
+  let millor = null;
+  for (const item of items ?? []) {
+    if (!esArmaduraEquipada(item)) continue;
+    const e = item.system.egida;
+    if (!e?.activa || !(e.absorcio > 0)) continue;
+    if (!millor || e.absorcio > millor.system.egida.absorcio) millor = item;
+  }
+  return millor;
+}
+
+/**
+ * Tick del rellotge en què una ègida trencada torna a ser efectiva (B4,
+ * funció pura). Manual FC001CA, › Dany › Protecció: "l'ègida es trenca i
+ * roman inactiva un nombre de torns equivalent al dany que la sobrepassa";
+ * el dissenyador (Q2, Oriol FM) confirma que aquests torns són caselles del
+ * rellotge de temps actiu, no torns del portador.
+ * @param {number} marcador  Posició actual del marcador de temps
+ * @param {number} tornsInactiva
+ * @returns {number}
+ */
+export function tickReactivacioEgida(marcador, tornsInactiva) {
+  return (marcador ?? 0) + Math.max(0, tornsInactiva ?? 0);
+}
+
+/**
+ * Decideix si una ègida trencada s'ha de reactivar ara (B4, funció pura): té
+ * un tick de reactivació desat (`flags.forja.egidaReactivaAlTick`), el
+ * marcador l'ha assolit (o passat) i l'ègida encara té protecció
+ * (`absorcio > 0`). El tick només es desa si el portador és combatent d'un
+ * combat començat; en esborrar-lo o en començar-ne un altre, el DJ neteja els
+ * ticks pendents (`ForjaCombat`), de manera que no queden ticks d'altres combats.
+ * @param {{type:string, system:object, flags?:object}} item
+ * @param {number} marcador
+ * @returns {boolean}
+ */
+export function egidaHaDeReactivar(item, marcador) {
+  if (item?.type !== "armadura") return false;
+  const e = item.system?.egida;
+  if (!e || e.activa || !(e.absorcio > 0)) return false;
+  const tick = item.flags?.forja?.egidaReactivaAlTick;
+  if (typeof tick !== "number") return false;
+  return marcador >= tick;
+}
+
+/* -------------------------------------------- */
+/*  Concentració (B5)                           */
+/* -------------------------------------------- */
+
+/**
+ * Efecte del dany sobre un personatge concentrat (B5, funció pura).
+ * Manual FC001CA, SISTEMES › Gestió del temps de joc › Concentració: "Si un
+ * PJ pateix dany mentre està concentrat, perdrà la concentració i els
+ * beneficis que n'extreu"; › Salut › Estats › Concentrat: "Si un PJ concentrat
+ * rep més punts de dany que la seva FOR, se'l considera atordit, l'acció per
+ * la que es concentrava fracassa, i haurà de tornar a declarar".
+ * @param {boolean} concentrat
+ * @param {number} danyFinal
+ * @param {number} forca  FOR de l'objectiu
+ * @returns {{trenca:boolean, atordit:boolean}}
+ */
+export function efecteDanyConcentracio(concentrat, danyFinal, forca) {
+  if (!concentrat || !(danyFinal > 0)) return { trenca: false, atordit: false };
+  return { trenca: true, atordit: danyFinal > (forca ?? 0) };
 }

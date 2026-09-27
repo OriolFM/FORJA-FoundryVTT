@@ -1,0 +1,13 @@
+<div class="forja-item-sheet">
+  <header class="forja-item-header">
+    <img class="item-img" src="{{item.img}}" alt="{{item.name}}"
+         data-action="editImage" data-edit="img" data-tooltip="{{localize 'FORJA.Sheet.EditImage'}}"/>
+    <div class="item-header-fields">
+      <input class="item-name" type="text" name="name" value="{{item.name}}" placeholder="{{localize 'FORJA.Actor.Name'}}"/>
+      <span class="item-type-badge">{{localize (concat "TYPES.Item." item.type)}}</span>
+    </div>
+  </header>
+  <div class="forja-item-cos">
+    {{{cosHtml}}}
+  </div>
+</div>

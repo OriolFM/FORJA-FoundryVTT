@@ -66,7 +66,13 @@ Each finding has an ID. The plan section groups the IDs into work packages, each
 
 ### Open questions for the game designer
 
-- **Q1 (B8):** Do melee weapon attacks roll FOR or DES? The skill list says *armes cos a cos* uses DES.
+- **Q1 (B8): resolved from the manual** ("Cos a cos", line ~2896; "A distància", line 3024).
+  - Melee weapons roll **DES** + armes cos a cos (the code rolled FOR).
+  - Martial arts roll **DES**; brawling and natural weapons roll **FOR**.
+  - Ranged weapons roll **DES** + armes a distància, except thrown weapons (llancívoles), which roll **AGI**.
+  - Implemented as `FORJA.ATAC_PER_CATEGORIA` / `FORJA.ATAC_PER_ARMA` plus the helper `atributIHabilitatAtac(item)` (WP-G), used by the sheets and the tracker (WP-F).
+  - Still to confirm with the designer: improvised weapons are assumed to use the *armes improvisades* skill, and improvised thrown objects AGI.
+  - The manual contradicts itself on ties against passive defence: line ~2904 says a tie misses, line 3143 says a tie is enough. The code follows line 3143.
 - **Q2 (B4): answered by Oriol FM, 2026-09-27.** An ègida's inactive time counts in **clock ticks**, not the wearer's turns.
 - **Q3 (B3): answered by Oriol FM, 2026-09-27.** With several armours equipped, protection comes from the **best** one, while their **latency penalties stack**. This matches the plan and WP-B's implementation.
 

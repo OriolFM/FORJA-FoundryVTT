@@ -1,5 +1,6 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { aplicarDanyAPista } from "./dany.mjs";
+import { consumirConcentracio } from "./reaccions.mjs";
 import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
 
 /**
@@ -89,12 +90,23 @@ export async function aplicarReposNatural(objectiu, pista) {
  * @param {ForjaActor} p.objectiu
  * @param {"primers-auxilis"|"tractament-medic"} p.tipus
  * @param {"fatiga"|"ferides"} p.pista
- * @returns {Promise<{roll:ForjaRoll, exit:boolean, excedent:number, hab:{id:string,nivell:number}}>}
+ * @returns {Promise<{roll:ForjaRoll, exit:boolean, excedent:number, hab:{id:string,nivell:number}}|null>}
+ *   `null` si el guaridor està fora de combat (nivell 7 de salut).
+ *
+ * B1 (FC001CA › Salut › Fatiga i ferides): la penalització de salut del
+ * GUARIDOR s'afegeix a la dificultat, i al nivell 7 no pot actuar. B5: si
+ * s'havia concentrat, +1 dau (i es consumeix).
  */
 export async function ferCuracio({ guaridor, objectiu, tipus, pista }) {
-  const dificultat = tipus === "tractament-medic" ? 2 : 1;
+  if (guaridor.system.salut?.foraDeCombat) {
+    ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: guaridor.name }));
+    return null;
+  }
+  const penalSalut = guaridor.system.salut?.penalitzacio ?? 0;
+  const dificultat = (tipus === "tractament-medic" ? 2 : 1) + penalSalut;
   const hab = habilitatCuracio(guaridor, objectiu.system.especie);
-  const poolFinal = Math.max(1, (guaridor.system.atributs?.INT ?? 0) + hab.nivell);
+  const dauConcentracio = await consumirConcentracio(guaridor);
+  const poolFinal = Math.max(1, (guaridor.system.atributs?.INT ?? 0) + hab.nivell + dauConcentracio);
 
   const roll = new ForjaRoll(`${poolFinal}d10`, {}, { forja: { dificultat } });
   await roll.evaluate();
@@ -118,7 +130,8 @@ export async function ferCuracio({ guaridor, objectiu, tipus, pista }) {
   const content = await foundry.applications.handlebars.renderTemplate("systems/forja/templates/combat/missatge-curacio.hbs", {
     nomGuaridor:  guaridor.name,
     nomObjectiu:  objectiu.name,
-    tipus, pista, dificultat,
+    tipus, pista, dificultat, penalSalut,
+    concentrat: dauConcentracio > 0,
     habNom: game.i18n.localize(CONFIG.FORJA.LLISTA_HABILITATS.find(h => h.id === hab.id)?.nom ?? hab.id),
     ...roll.forjaResults,
     exit, excedent

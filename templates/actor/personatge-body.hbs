@@ -49,6 +49,15 @@
             {{/each}}
           </select>
         </div>
+        <!-- C5: genere/edat existien al DataModel però no a la fitxa -->
+        <div class="forja-camp">
+          <label>{{localize "FORJA.Actor.Genere"}}</label>
+          <input type="text" name="system.genere" value="{{sys.genere}}"/>
+        </div>
+        <div class="forja-camp">
+          <label>{{localize "FORJA.Actor.Edat"}}</label>
+          <input type="number" name="system.edat" value="{{sys.edat}}" min="0" step="1"/>
+        </div>
       </div>
     </div>
   </div>
@@ -389,9 +398,14 @@
       {{#if armadures.length}}
       <div class="forja-equip-llista">
         {{#each armadures as |a|}}
-        <div class="forja-equip-fila" data-action="editarItem" data-item-id="{{a.id}}" title="{{a.descripcio}}">
+        <div class="forja-equip-fila {{#unless a.equipada}}equip-inactiu{{/unless}}" data-action="editarItem" data-item-id="{{a.id}}" title="{{a.descripcio}}">
           <span class="equip-nom">{{a.nom}}</span>
-          <span class="equip-meta">Lat. {{a.modLatencia}} · Reducció {{a.reduccio}} · {{localize (concat "FORJA.Armadura.Tipus." a.tipus)}}</span>
+          <span class="equip-meta">Lat. {{a.modLatencia}} · Reducció {{a.reduccio}} · {{localize (concat "FORJA.Armadura.Tipus." a.tipus)}}{{#unless a.equipada}} · {{localize "FORJA.Equip.NoEquipada"}}{{/unless}}</span>
+          <button type="button" class="btn-equip-toggle {{#if a.equipada}}actiu{{/if}}" data-action="toggleEquipada"
+                  data-item-id="{{a.id}}"
+                  title="{{#if a.equipada}}{{localize 'FORJA.Equip.DesequiparTooltip'}}{{else}}{{localize 'FORJA.Equip.EquiparTooltip'}}{{/if}}">
+            <i class="fas {{#if a.equipada}}fa-shield-halved{{else}}fa-shield{{/if}}"></i>
+          </button>
           {{#if ../modeEdicio}}
           <button type="button" class="btn-tret-eliminar" data-action="eliminarArmadura"
                   data-item-id="{{a.id}}" title="{{localize 'FORJA.Equip.Eliminar'}}">
@@ -442,6 +456,17 @@
       {{else}}
       <p class="trets-buits">{{localize "FORJA.Equip.SenseArtefactes"}}</p>
       {{/if}}
+    </div>
+  </div>
+
+  <!-- ═══ BIOGRAFIA (C5) ═══ -->
+  <div class="forja-seccio" data-seccio="biografia">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Section.Biografia"}}
+    </div>
+    <div class="forja-seccio-cos">
+      {{editor sys.biografia target="system.biografia" button=true engine="prosemirror" collaborate=false}}
     </div>
   </div>
 

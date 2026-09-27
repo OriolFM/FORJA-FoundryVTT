@@ -1,5 +1,6 @@
 import { actualitzarComGM } from "../xarxa/socket.mjs";
 import { reiniciarReaccions } from "../combat/reaccions.mjs";
+import { egidaHaDeReactivar } from "../combat/dany.mjs";
 
 /**
  * ForjaCombat (S-10) — rellotge de temps actiu net (sense reaccions).
@@ -290,8 +291,93 @@ export default class ForjaCombat extends Combat {
 
   /** @override — comença el rellotge amb el marcador a zero. */
   async startCombat() {
+    // Ègides trencades en un combat anterior: el seu tick ja no té sentit en
+    // aquest rellotge nou (B4) — es tanquen abans de començar.
+    if (game.user.isGM) await this.tancarEgidesPendents();
     // `actiu` buit: el `turn: 0` de l'inici el fixa a `_preUpdate`.
     await this.update({ "flags.forja": { marcador: 0, actiu: null, actuats: [] } });
     return super.startCombat();
+  }
+
+  /* -------------------------------------------- */
+  /*  Ègides (REVIEW-PLAN B4)                     */
+  /* -------------------------------------------- */
+
+  /**
+   * Actors (únics) dels combatents d'aquest combat.
+   * @returns {Actor[]}
+   * @private
+   */
+  _forjaActors() {
+    const vistos = new Map();
+    for (const c of this.combatants) {
+      const a = c.actor;
+      if (a && !vistos.has(a.uuid)) vistos.set(a.uuid, a);
+    }
+    return [...vistos.values()];
+  }
+
+  /**
+   * Reactiva les ègides dels combatents quan el marcador de temps arriba (o
+   * passa) el tick desat en trencar-se (`flags.forja.egidaReactivaAlTick`,
+   * `combat/atac.mjs`). Manual FC001CA › SISTEMES › Armadures i ègides ›
+   * Ègides: "no torna a ser efectiva fins passats un nombre de torns
+   * equivalent a l'excés de dany"; Q2 (Oriol FM): torns = caselles del
+   * rellotge. Només si `absorcio > 0`. S'executa només al DJ actiu
+   * (des de `_onUpdate`), que és propietari de tots els ítems.
+   */
+  async reactivarEgides() {
+    const marcador = this.marcador;
+    for (const actor of this._forjaActors()) {
+      for (const item of actor.items) {
+        if (!egidaHaDeReactivar(item, marcador)) continue;
+        await item.update({
+          "system.egida.activa":        true,
+          "system.egida.tornsInactiva": 0,
+          "flags.forja.egidaReactivaAlTick": null
+        });
+        await ChatMessage.create({
+          speaker: ChatMessage.getSpeaker({ actor }),
+          content: `<div class="forja-missatge-accio">${game.i18n.format("FORJA.Combat.EgidaReactivada", { nom: actor.name, item: item.name })}</div>`
+        });
+      }
+    }
+  }
+
+  /**
+   * Quan el combat acaba (o en comença un de nou), les ègides que esperaven
+   * un tick d'aquest rellotge es reactiven: fora del temps actiu els torns són
+   * fraccions de segon i el temps narratiu ja les ha deixades recuperar-se.
+   * Si l'ègida no té protecció (`absorcio` 0), només es neteja el tick.
+   * Només per al DJ.
+   */
+  async tancarEgidesPendents() {
+    for (const actor of this._forjaActors()) {
+      for (const item of actor.items) {
+        if (item.type !== "armadura") continue;
+        if (typeof item.flags?.forja?.egidaReactivaAlTick !== "number") continue;
+        const canvis = { "flags.forja.egidaReactivaAlTick": null };
+        if (!item.system.egida?.activa && item.system.egida?.absorcio > 0) {
+          canvis["system.egida.activa"] = true;
+          canvis["system.egida.tornsInactiva"] = 0;
+        }
+        await item.update(canvis);
+      }
+    }
+  }
+
+  /** @override — el DJ actiu reactiva ègides quan avança el marcador (B4). */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    if (!game.users.activeGM?.isSelf) return;
+    if (!foundry.utils.hasProperty(changed, "flags.forja.marcador")) return;
+    this.reactivarEgides().catch(err => console.error("FORJA | Error reactivant ègides", err));
+  }
+
+  /** @override — en acabar el combat, el DJ actiu tanca les ègides pendents (B4). */
+  _onDelete(options, userId) {
+    super._onDelete(options, userId);
+    if (!game.users.activeGM?.isSelf) return;
+    this.tancarEgidesPendents().catch(err => console.error("FORJA | Error tancant ègides", err));
   }
 }

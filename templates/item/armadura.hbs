@@ -1,0 +1,41 @@
+<div class="forja-item-armadura">
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Tipus"}}</label>
+    <select name="system.tipus">
+      {{#each fields.tipus.choices as |c|}}
+      <option value="{{c}}" {{#if (eq c sys.tipus)}}selected{{/if}}>{{localize (concat "FORJA.Armadura.Tipus." c)}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Reduccio"}}</label>
+    <input type="number" name="system.reduccio" value="{{sys.reduccio}}" min="0" step="1"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.ModLatencia"}}</label>
+    <input type="number" name="system.modLatencia" value="{{sys.modLatencia}}" step="1"/>
+  </div>
+  <div class="form-group form-group-inline">
+    <label><input type="checkbox" name="system.equipada" {{checked sys.equipada}}/> {{localize "FORJA.Item.Equipada"}}</label>
+  </div>
+
+  <fieldset class="forja-item-egida">
+    <legend>{{localize "FORJA.Item.Egida"}}</legend>
+    <div class="form-group form-group-inline">
+      <label><input type="checkbox" name="system.egida.activa" {{checked sys.egida.activa}}/> {{localize "FORJA.Item.EgidaActiva"}}</label>
+    </div>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.EgidaAbsorcio"}}</label>
+      <input type="number" name="system.egida.absorcio" value="{{sys.egida.absorcio}}" min="0" step="1"/>
+    </div>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.EgidaTornsInactiva"}}</label>
+      <input type="number" name="system.egida.tornsInactiva" value="{{sys.egida.tornsInactiva}}" min="0" step="1"/>
+    </div>
+  </fieldset>
+
+  <div class="form-group form-group-stacked">
+    <label>{{localize "FORJA.Item.Descripcio"}}</label>
+    {{editor sys.descripcio target="system.descripcio" button=true engine="prosemirror" collaborate=false}}
+  </div>
+</div>

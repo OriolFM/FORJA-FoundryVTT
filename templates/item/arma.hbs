@@ -1,0 +1,35 @@
+<div class="forja-item-arma">
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Categoria"}}</label>
+    <select name="system.categoria">
+      {{#each fields.categoria.choices as |c|}}
+      <option value="{{c}}" {{#if (eq c sys.categoria)}}selected{{/if}}>{{localize (concat "FORJA.Arma.Categoria." c)}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.ModLatencia"}}</label>
+    <input type="number" name="system.modLatencia" value="{{sys.modLatencia}}" step="1"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Abast"}}</label>
+    <input type="number" name="system.abast" value="{{sys.abast}}" min="0" step="1"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.DanyBase"}}</label>
+    <input type="text" name="system.danyBase" value="{{sys.danyBase}}" placeholder="FOR, FOR+2, AGI+1…"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Maniobra"}}</label>
+    <input type="text" name="system.maniobra" value="{{sys.maniobra}}"/>
+  </div>
+  <div class="form-group form-group-inline">
+    <label><input type="checkbox" name="system.rangExtrem" {{checked sys.rangExtrem}}/> {{localize "FORJA.Item.RangExtrem"}}</label>
+    <label><input type="checkbox" name="system.basic" {{checked sys.basic}}/> {{localize "FORJA.Item.Basic"}}</label>
+  </div>
+
+  <div class="form-group form-group-stacked">
+    <label>{{localize "FORJA.Item.Descripcio"}}</label>
+    {{editor sys.descripcio target="system.descripcio" button=true engine="prosemirror" collaborate=false}}
+  </div>
+</div>

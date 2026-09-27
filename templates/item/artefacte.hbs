@@ -1,0 +1,65 @@
+<div class="forja-item-artefacte">
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Cost"}}</label>
+    <input type="number" name="system.cost" value="{{sys.cost}}" min="0" step="1"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Categoria"}}</label>
+    <select name="system.categoria">
+      {{#each fields.categoria.choices as |c|}}
+      <option value="{{c}}" {{#if (eq c sys.categoria)}}selected{{/if}}>{{localize (concat "FORJA.Artefacte.Categoria." c)}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <fieldset>
+    <legend>{{localize "FORJA.Item.ActivacioTipus"}}</legend>
+    <div class="form-group">
+      <select name="system.activacio.tipus">
+        {{#each fields.activacio.fields.tipus.choices as |c|}}
+        <option value="{{c}}" {{#if (eq c sys.activacio.tipus)}}selected{{/if}}>{{localize (concat "FORJA.Artefacte.Activacio." c)}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.ActivacioDificultat"}}</label>
+      <input type="number" name="system.activacio.dificultat" value="{{sys.activacio.dificultat}}" min="0" step="1"/>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>{{localize "FORJA.Tab.Us"}}</legend>
+    <div class="form-group form-group-inline">
+      <label><input type="checkbox" name="system.us.narratiu" {{checked sys.us.narratiu}}/> {{localize "FORJA.Item.UsNarratiu"}}</label>
+      <label><input type="checkbox" name="system.us.actiu" {{checked sys.us.actiu}}/> {{localize "FORJA.Item.UsActiu"}}</label>
+    </div>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.UsModLatencia"}}</label>
+      <input type="number" name="system.us.modLatencia" value="{{sys.us.modLatencia}}" step="1"/>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>{{localize "FORJA.Tab.Carrega"}}</legend>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.CarregaUsos"}}</label>
+      <input type="number" name="system.carrega.usosPerCarrega" value="{{sys.carrega.usosPerCarrega}}" min="0" step="1"/>
+    </div>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.CarregaTorns"}}</label>
+      <input type="number" name="system.carrega.tornsRecarrega" value="{{sys.carrega.tornsRecarrega}}" min="0" step="1"/>
+    </div>
+    <div class="form-group form-group-inline">
+      <label><input type="checkbox" name="system.carrega.modeEspera" {{checked sys.carrega.modeEspera}}/> {{localize "FORJA.Item.CarregaModeEspera"}}</label>
+    </div>
+  </fieldset>
+
+  <div class="form-group form-group-stacked">
+    <label>{{localize "FORJA.Item.Mecanica"}}</label>
+    {{editor sys.mecanica target="system.mecanica" button=true engine="prosemirror" collaborate=false}}
+  </div>
+  <div class="form-group form-group-stacked">
+    <label>{{localize "FORJA.Item.Descripcio"}}</label>
+    {{editor sys.descripcio target="system.descripcio" button=true engine="prosemirror" collaborate=false}}
+  </div>
+</div>

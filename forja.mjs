@@ -15,9 +15,10 @@ import ForjaCombat         from "./module/documents/combat.mjs";
 import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
 import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
+import FullItem            from "./module/apps/full-item.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
 import { registrarSocket } from "./module/xarxa/socket.mjs";
-import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
+import { assegurarAtacsAutomatics, eliminarArmaNaturalDelTret } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 
 Hooks.once("init", () => {
@@ -73,6 +74,15 @@ Hooks.once("init", () => {
     label:       "FORJA.Sheet.PNJ"
   });
 
+  // Fitxa d'Item (C3): una classe per als 4 tipus, una plantilla cadascun
+  // (templates/item/*.hbs) — reemplaça la fitxa genèrica de Foundry, que no
+  // sap res dels camps `system` de FORJA.
+  DocumentSheetConfig.registerSheet(Item, "forja", FullItem, {
+    types:       ["tret", "arma", "armadura", "artefacte"],
+    makeDefault: true,
+    label:       "FORJA.Sheet.Item"
+  });
+
   // Estats (S-16): catàleg com a CONFIG.statusEffects (HUD del token / fitxa)
   registrarEstats();
 
@@ -101,6 +111,15 @@ Hooks.on("createItem", async (item, _options, userId) => {
   const actor = item.parent;
   if (!actor || item.type !== "tret") return;
   await assegurarAtacsAutomatics(actor);
+});
+
+// B11: en eliminar un tret d'"Armament Natural", elimina l'arma natural que
+// concedia (llevat que un altre tret restant la segueixi concedint). Només
+// el client que ha fet l'eliminació ho fa (mateix criteri A1 que a dalt).
+Hooks.on("deleteItem", async (item, _options, userId) => {
+  if (userId !== game.user.id) return;
+  if (item.type !== "tret") return;
+  await eliminarArmaNaturalDelTret(item);
 });
 
 // Reaccions i concentració (S-11): qui acaba el seu torn recupera reaccions.

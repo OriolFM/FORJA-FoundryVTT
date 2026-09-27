@@ -12,6 +12,11 @@ export default class ItemArmadura extends foundry.abstract.TypeDataModel {
       }),
       reduccio:     new fields.NumberField({ integer: true, initial: 0, nullable: false }),
       modLatencia:  new fields.NumberField({ integer: true, initial: 0, nullable: false }),
+      // Armadura equipada (contracte de l'ona 2, WP-B/WP-F/WP-G): només les
+      // armadures equipades compten per protecció/latència (B2, B3, Q3). Els
+      // lectors han de tractar un valor absent (items antics, pre-migració)
+      // com a equipat: `system.equipada !== false`, mai `=== true`.
+      equipada:     new fields.BooleanField({ initial: true }),
       egida: new fields.SchemaField({
         activa:        new fields.BooleanField({ initial: false }),
         absorcio:      new fields.NumberField({ integer: true, initial: 0, nullable: false }),
