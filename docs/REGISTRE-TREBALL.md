@@ -51,7 +51,7 @@
 | `518c932` | | Proves a Foundry v14 i proves compatibles amb v13 i v14. |
 | `fd5f25b` | | Documentació: registre reescrit, `docs/PROVES.md`, README i `CLAUDE.md` al dia. |
 | `38a0328` | | Proves de combat: esperes adaptades a la lentitud de la màquina (U3, U6). **Primer push de la branca i de les etiquetes a GitHub.** |
-| *(aquest)* | | Resultats: combat a la v14, 17/17. |
+| `e9bd940` | | Resultats: combat a la v14, 17/17. |
 
 ## Versions
 
