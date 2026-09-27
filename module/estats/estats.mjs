@@ -33,7 +33,7 @@ const ICONES = {
   esguerrat:        "icons/svg/degen.svg",
   rapid:            "icons/svg/upgrade.svg",
   recuperacio:      "icons/svg/regen.svg",
-  sagnant:          "icons/svg/bleeding-wound.svg",
+  sagnant:          "icons/svg/blood.svg",
   vigilant:         "icons/svg/eye.svg"
 };
 

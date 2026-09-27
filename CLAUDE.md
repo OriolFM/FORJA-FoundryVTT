@@ -363,3 +363,7 @@ existeixi **abans** d'esborrar res de `packs/_source/manual`. Cal
 - **Actualitza `docs/REGISTRE-TREBALL.md` amb qualsevol canvi significatiu**
   (què s'ha fet, per què, què queda pendent) — és el registre de referència
   per a qui continuï el treball, humà o agent.
+
+## Proves de joc automàtiques
+
+A `tests/joc/` hi ha proves amb un Foundry real sense pantalla (Playwright, sessions de DJ i de Jugador). S'executen amb `npm run test:joc`. La preparació és a `tests/joc/README.md`. Cap credencial va al repo.

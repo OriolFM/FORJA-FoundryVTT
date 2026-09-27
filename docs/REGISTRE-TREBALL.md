@@ -11,7 +11,7 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
    - Model per tasca: Opus per al que és crític (multijugador, torns, combat), Sonnet per a feina ben especificada que demana criteri, i Haiku per a canvis mecànics.
 4. **Verificació.**
    - A cada onada: `node --check` de tots els `.mjs`, proves de Node de la lògica pura (a l'scratchpad, fora del repo) i comprovació que les plantilles i les `data-action` existeixen.
-   - Les proves de joc a Foundry encara no s'han fet: vegeu "Pendent".
+   - Proves de joc en un Foundry v13.351 real, sense pantalla (vegeu "Proves de joc" i `tests/joc/README.md`).
 
 ## Commits
 
@@ -50,6 +50,24 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 - **Atac d'una arma:** `atributIHabilitatAtac(item)` a `module/combat/equipament-automatic.mjs`, a partir de `FORJA.ATAC_PER_CATEGORIA` i `FORJA.ATAC_PER_ARMA`.
 - **Rellotge:** `flags.forja.{marcador, actiu, actuats}` a `Combat`; `ForjaCombat#fiDeTorn(combatant)` s'executa al DJ quan acaba un torn; `calcularSeguentTorn` és una funció pura.
 
+## Proves de joc
+
+- **Entorn:** Foundry VTT **13.351** (build NodeJS) a `~/foundry/v13`, amb les dades a `~/foundrydata` i el sistema enllaçat al repo. El servidor s'arrenca amb una contrasenya d'administrador aleatòria desada en un fitxer privat fora del repo. Les proves fan servir Playwright amb el Chromium de snap (sense pantalla) i dues sessions alhora: DJ i Jugador.
+- **Codi de les proves:** `tests/joc/`; s'executen amb `npm run test:joc`. No contenen cap credencial: la clau de llicència i la contrasenya es llegeixen de fitxers privats indicats per variables d'entorn.
+- **Resultat (2026-09-27): 10 de 10 proves OK.** Totes les del checklist del pla:
+  - un sol "Cop" per actor amb dos clients connectats;
+  - les fitxes s'obren;
+  - les barres del token (19/19 i 16/19 amb 3 ferides);
+  - els PX no consumeixen PC;
+  - l'estat `dead`;
+  - l'ordre de torns amb empat (A declara, el torn passa a B i A recupera la reacció);
+  - l'atac d'un jugador a un PNJ a través del DJ (6 de dany aplicats);
+  - gastar la reacció d'un actor aliè;
+  - el rebuig de camps no permesos;
+  - cap clau sense traduir en ca, es ni en.
+- **Error trobat i corregit:** la icona de l'estat *sagnant* (`icons/svg/bleeding-wound.svg`) no existeix a Foundry i donava un 404. Ara és `icons/svg/blood.svg`.
+- **Observació:** les barres del token no s'hi poden editar (`editable: false`), perquè són valors derivats. Per canviar la salut cal fer servir la fitxa.
+
 ## Graf de coneixement (graphify)
 
 - Eina: [graphify](https://github.com/safishamsi/graphify), instal·lada amb `uv tool install graphifyy` (executable a `~/.local/bin/graphify`).
@@ -78,7 +96,7 @@ Totes són contradiccions del manual o punts on el manual no diu res:
 - **Retard de barallar-se:** la tirada sense objectiu (`ferTirada`) no hi suma els daus del retard.
 - **Traducció de les dades de joc:** els noms i descripcions dels catàlegs (`module/config/dades/*.json`: trets, armes, armadures, artefactes, maniobres) només són en català. Traduir-los demana decidir un mecanisme (claus i18n per entrada, o una capa de localització dels catàlegs).
 - **Claus sense ús:** 15 claus de `ca.json` no les fa servir cap codi, probablement restes de la interfície antiga (`FORJA.Tab.*`, `FORJA.Hab.Marca`, `FORJA.Tret.Cost`…). Es mantenen traduïdes; es poden esborrar si es confirma que no calen.
-- **Proves de joc** en un Foundry v13 sense pantalla en aquesta màquina, amb Playwright i dues sessions (DJ i jugador). Cal la clau de llicència i l'enllaç temporal de descàrrega.
+- **Proves de joc pendents:** la interfície dels diàlegs de combat (declarar, defensa, curació, tirada) clicada de veritat al tracker, les regles de WP-F/WP-I (ègides, concentració, maniobres, blocar, retard, escopetes) i l'abast amb tokens grans. També provar-ho a Foundry v14 (el servidor avisa que hi ha la 14.368).
 - **Temes menors apuntats pels agents:**
   - Els camps numèrics opcionals dels artefactes es desen com a `0` quan es buiden.
   - La icona de concentració del tracker pot trigar a refrescar-se.
