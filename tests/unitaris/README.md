@@ -1,5 +1,7 @@
 # Proves unitàries
 
+> La guia completa de proves (els tres nivells, les tècniques i els resultats a v13 i v14) és a [`docs/PROVES.md`](../../docs/PROVES.md).
+
 Proves de la lògica pura del sistema, amb Node. No calen ni Foundry ni navegador: substitueixen `foundry`, `CONFIG` o `game` pel mínim imprescindible.
 
 ```bash

@@ -18,10 +18,17 @@ de les seves accions.
 - **Relé d'autoritat del DJ**: les accions d'un jugador que afecten documents
   d'altri (dany a un PNJ, avançar el rellotge de combat...) es resolen de
   forma segura encara que el jugador no en sigui propietari.
+- **Defensa dels PNJ decidida pel DJ** (amb un diàleg que li arriba a ell), o
+  **automàtica** per als figurants (passiva, la millor activa, esquivar,
+  parar o blocar).
+- **Moviment en temps actiu**: distàncies de caminar, córrer i saltar;
+  moviment només en el propi torn, amb la distància acumulada; bloqueig entre
+  tokens segons la mida i el bàndol; camí que voreja parets i tokens;
+  càrrega.
 - Compendi **Manual FORJA** (JournalEntry) generable des dels capítols en
   Markdown del manual complet.
-- Interfície en **català, castellà i anglès** (el català és la font; les
-  altres dues s'estan completant, vegeu `docs/REVIEW-PLAN.md`).
+- Interfície en **català, castellà i anglès**, amb les mateixes claus als
+  tres idiomes (el català és la font).
 
 ## Instal·lació
 
@@ -65,12 +72,29 @@ FORJA_MD_DIR=/ruta/als/capitols/markdown npm run build:manual
 Markdown i compila el compendi LevelDB a `packs/manual/`. Vegeu
 [`CLAUDE.md`](CLAUDE.md) per als detalls de l'script.
 
+### Proves
+
+```bash
+npm test                              # proves unitàries (segons)
+node tests/joc/proves.mjs             # proves de joc en un Foundry real (vegeu docs/PROVES.md)
+```
+
+### Versions
+
+Versionat semàntic. Els canvis de cada versió són a [`CHANGELOG.md`](CHANGELOG.md),
+i el procediment per tancar-ne una a [`docs/VERSIONS.md`](docs/VERSIONS.md)
+(`npm run versio -- minor`).
+
 Documentació addicional:
 - [`CLAUDE.md`](CLAUDE.md) — arquitectura del codi, convencions, com provar.
 - [`docs/REVIEW-PLAN.md`](docs/REVIEW-PLAN.md) — revisió de codi i pla de
   treball per paquets.
-- [`docs/REGISTRE-TREBALL.md`](docs/REGISTRE-TREBALL.md) — registre viu de
-  canvis, decisions de disseny i pendents.
+- [`docs/REGISTRE-TREBALL.md`](docs/REGISTRE-TREBALL.md) — **registre de tots
+  els canvis de la branca**, decisions de disseny, troballes i pendents.
+- [`docs/PROVES.md`](docs/PROVES.md) — totes les proves: què proven, com es
+  fan, com s'executen i resultats (Foundry v13 i v14).
+- [`CHANGELOG.md`](CHANGELOG.md) i [`docs/VERSIONS.md`](docs/VERSIONS.md) —
+  canvis per versió i control de versions.
 - [`docs/manual/FORJA_FC001CA_CORE.md`](docs/manual/FORJA_FC001CA_CORE.md) —
   manual complet del joc, font de veritat de totes les regles.
 
@@ -89,7 +113,9 @@ published, or copy/symlink this repository into
 `{FoundryData}/Data/systems/forja` for development. No build step is
 required to run the system; `npm install` + `npm run build:manual`
 (with `FORJA_MD_DIR` pointing at the manual's Markdown chapters) regenerates
-the in-game manual compendium. See [`CLAUDE.md`](CLAUDE.md) for the
-architecture and [`docs/REVIEW-PLAN.md`](docs/REVIEW-PLAN.md) /
-[`docs/REGISTRE-TREBALL.md`](docs/REGISTRE-TREBALL.md) for the ongoing code
-review and work log. Author: Oriol FM.
+the in-game manual compendium. `npm test` runs the unit tests; live gameplay
+tests against a headless Foundry v13/v14 are described in
+[`docs/PROVES.md`](docs/PROVES.md). See [`CLAUDE.md`](CLAUDE.md) for the
+architecture, [`CHANGELOG.md`](CHANGELOG.md) for changes per version, and
+[`docs/REGISTRE-TREBALL.md`](docs/REGISTRE-TREBALL.md) for the detailed work
+log of the current branch. Author: Oriol FM.

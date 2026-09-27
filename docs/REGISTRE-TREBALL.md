@@ -1,39 +1,65 @@
-# Registre de treball — revisió de la branca `Aw`
+# Registre de treball — branca `Aw`
 
-Aquest document recull **què s'ha fet, per què i què queda pendent**, per a referència futura. El detall de cada troballa (ID A1, B3, …) i el pla per paquets són a [`REVIEW-PLAN.md`](REVIEW-PLAN.md). La font de veritat de les regles és el manual: [`manual/FORJA_FC001CA_CORE.md`](manual/FORJA_FC001CA_CORE.md).
+**Aquest és el document de referència de tots els canvis de la branca `Aw`.** Recull què s'ha fet, per què, amb quines decisions i què queda pendent. S'actualitza amb cada commit.
+
+| Document | Per a què |
+|----------|-----------|
+| **Aquest registre** | Història detallada de la branca: commits, decisions, contractes entre mòduls, troballes i pendents. |
+| [`../CHANGELOG.md`](../CHANGELOG.md) | Canvis per versió, pensat per als usuaris del sistema. La feina en curs va a `[Pendent]`. |
+| [`VERSIONS.md`](VERSIONS.md) | Com es numeren i es tanquen les versions. |
+| [`PROVES.md`](PROVES.md) | Totes les proves: què proven, com es fan, com s'executen i els resultats. |
+| [`REVIEW-PLAN.md`](REVIEW-PLAN.md) | La revisió de codi original: troballes (A1, B3…) i pla per paquets. |
+| [`../CLAUDE.md`](../CLAUDE.md) | Arquitectura del codi tal com és ara. |
+| [`manual/FORJA_FC001CA_CORE.md`](manual/FORJA_FC001CA_CORE.md) | El manual del joc: font de veritat de les regles. |
 
 ## Com s'ha treballat
 
-1. **Revisió de codi** (2026-09-27) de tot el repositori, llegint el codi contra l'API de Foundry v13, sense executar-lo en un Foundry real.
-2. **Pla per paquets** (WP-A … WP-I, WP-D1–D3). Cada paquet té els seus fitxers en exclusiva, perquè diversos agents puguin treballar alhora a la mateixa carpeta sense trepitjar-se.
+1. **Revisió de codi** (2026-09-27) de tot el repositori, contra l'API de Foundry v13. Les troballes són a `REVIEW-PLAN.md`.
+2. **Pla per paquets de treball** (WP-A … WP-I, WP-D1–D3, WP-M). Cada paquet té els seus fitxers en exclusiva, perquè diversos agents puguin treballar alhora a la mateixa carpeta.
 3. **Agents per onades.**
-   - Els agents no fan commits: el coordinador revisa cada onada, torna a passar les proves i en fa un sol commit.
-   - Model per tasca: Opus per al que és crític (multijugador, torns, combat), Sonnet per a feina ben especificada que demana criteri, i Haiku per a canvis mecànics.
-4. **Verificació.**
-   - A cada onada: `node --check` de tots els `.mjs`, proves de Node de la lògica pura i comprovació que les plantilles i les `data-action` existeixen. Les proves unitàries són a `tests/unitaris/` i s'executen amb `npm test`: unes 180 comprovacions en 6 fitxers.
-   - Proves de joc en un Foundry v13.351 real, sense pantalla (vegeu "Proves de joc" i `tests/joc/README.md`).
+   - Els agents no fan commits: el coordinador revisa la feina, passa les proves i fa el commit.
+   - Model per tasca: Opus per al que és crític (multijugador, torns, combat, moviment), Sonnet per a feina especificada que demana criteri, i Haiku per a canvis mecànics.
+4. **Criteri de regles:** mana el manual, tret que es contradigui (Oriol FM). Les contradiccions i els buits es documenten aquí i es pregunten.
+5. **Verificació a cada canvi:**
+   - `node --check` de tots els mòduls;
+   - proves unitàries (`npm test`);
+   - proves de joc en un Foundry real sense pantalla, v13 i v14.
+
+   Tot el detall és a [`PROVES.md`](PROVES.md).
 
 ## Commits
 
-| Commit | Contingut |
-|--------|-----------|
-| `156f185` | Revisió i pla (`docs/REVIEW-PLAN.md`); `system.json` amb `"socket": true`. |
-| `76bfdbc` | **Onada 1.** Relé del DJ via socket (A2); hooks només al client que toca (A1); ordre de torns estable i `nextTurn` amb una sola escriptura (A3, D5); els PC ja no compten els PX (A4); barres de salut del token (A6); latència de les armadures (B2); càrrega de JSON robusta (D4); estat `dead` (A8); fora les sobreescriptures d'ajudants Handlebars (A7); codi mort eliminat (C4); fitxers LevelDB fora del repo (C7); `build-manual.mjs` ja no esborra les fonts (A5); manual del joc a `docs/manual/`. |
-| `01fa086` | **Onada 2.** Regles de combat (WP-F: B1, B3–B7, B9, B10, C2); fitxes amb classe base comuna i fitxa d'objectes (WP-G: D1–D3, D6, C3, C5, B11, B12); atributs d'atac segons el manual (Q1); llista blanca de camps del relé del DJ. |
-| `ac8f587` | **Onada 3.** Les cinc regles pendents del manual (WP-I: B13–B17), la documentació (`CLAUDE.md`, README i `system.json`, WP-D3) i el camp `propietats` de les armes, editable a la fitxa d'objecte. |
-| `2660bc8` | **Onada 4a.** Identificadors de diàleg únics (`{id}`, D7) i textos fixos passats a claus de traducció (C1). |
-| `4c44401` | **Traduccions completes** (WP-D1): `ca.json`, `es.json` i `en.json` amb les mateixes 401 claus. Totes les 386 claus que fa servir el codi hi són. |
+| Commit | Versió | Contingut |
+|--------|--------|-----------|
+| `f972f65` | 0.2.0 | Estat del repositori abans de la revisió. |
+| `156f185` | | Revisió i pla (`docs/REVIEW-PLAN.md`); `system.json` amb `"socket": true`. |
+| `76bfdbc` | | **Onada 1:** relé del DJ pel socket (A2); hooks només al client que toca (A1); ordre de torns estable i `nextTurn` amb una sola escriptura (A3, D5); els PC ja no compten els PX (A4); barres de salut del token (A6); latència de les armadures (B2); càrrega de JSON robusta (D4); estat `dead` (A8); fora les sobreescriptures d'ajudants Handlebars (A7); codi mort (C4); fitxers LevelDB fora de git (C7); `build-manual.mjs` segur (A5); manual del joc a `docs/manual/`. |
+| `01fa086` | | **Onada 2:** regles de combat (WP-F: B1, B3–B7, B9, B10, C2); fitxes amb classe base comuna i fitxa d'objectes (WP-G); atributs d'atac segons el manual (Q1); llista blanca del relé. |
+| `e78b51b` | | Registre de treball i paquet WP-I al pla. |
+| `ac8f587` | | **Onada 3:** les cinc regles pendents del manual (WP-I: B13–B17), documentació (WP-D3) i camp `propietats` de les armes. |
+| `2660bc8` | | **Onada 4a:** identificadors de diàleg únics (D7) i textos fixos passats a claus de traducció (C1). |
+| `4c44401` | | **Onada 4b:** traduccions completes ca/es/en (WP-D1). |
+| `92dbacc`, `e846ea1` | | Registre: hash de l'onada 4b i graf de graphify. |
+| `2b34cde` | 0.3.0 | Registre: l'Oriol confirma DES per impactar i FOR per al dany en cos a cos. |
+| `f29ba61` | | Dues armadures i pífia en esquivar tal com diu el manual. |
+| `f7790a4` | | Primera bateria de proves de joc a Foundry 13.351 (10/10); icona de *sagnant* corregida. |
+| `5c77b8c` | | Bateria de combat a Foundry (16/16), proves unitàries al repo, PJ amb el token enllaçat. |
+| `18e104a` | | La defensa del PNJ la decideix el DJ (o el propietari del defensor); defensa automàtica configurable. |
+| `7de4b7a` | 0.4.0 | Control de versions: `CHANGELOG.md`, `VERSIONS.md`, `npm run versio`, etiquetes. |
+| `0c3bcd0` | | Moviment en temps actiu (WP-M). |
+| `4d36051` | | Proves de moviment (10/10); camí sense retallar cantonades; l'atac no es perd si falla el relé. |
+| `518c932` | | Proves a Foundry v14 i proves compatibles amb v13 i v14. |
 
 ## Versions
 
-Des del 2026-09-27 hi ha control de versions: versionat semàntic, `CHANGELOG.md` i etiquetes de git anotades. El procediment és a [`VERSIONS.md`](VERSIONS.md).
+Versionat semàntic, `CHANGELOG.md` i etiquetes de git anotades. El procediment és a [`VERSIONS.md`](VERSIONS.md).
 
-| Versió | Etiqueta al commit | Contingut |
-|--------|--------------------|-----------|
-| 0.2.0 | `f972f65` | Estat inicial del repositori. |
-| 0.3.0 | `2b34cde` | Revisió de codi, onades 1–4. |
-| 0.4.0 | commit "Versió 0.4.0" | Regles segons el manual, proves de joc, token del PJ enllaçat i defensa decidida pel DJ. |
-| 0.5.0 (en curs) | — | Moviment. |
+| Versió | Etiqueta | Contingut |
+|--------|----------|-----------|
+| 0.2.0 | `v0.2.0` → `f972f65` | Estat inicial del repositori. |
+| 0.3.0 | `v0.3.0` → `2b34cde` | Revisió de codi, onades 1–4. Etiqueta posada a posteriori. |
+| 0.4.0 | `v0.4.0` → `7de4b7a` | Regles segons el manual, proves de joc, token del PJ enllaçat, defensa decidida pel DJ, control de versions. |
+| 0.5.0 | *(en curs)* | Moviment en temps actiu i correccions trobades amb les proves. |
 
 En tancar cada versió MINOR o MAJOR, `npm run versio` també actualitza el graf de graphify.
 
@@ -41,141 +67,94 @@ En tancar cada versió MINOR o MAJOR, `npm run versio` també actualitza el graf
 
 | Tema | Decisió | Font |
 |------|---------|------|
-| Atribut dels atacs (Q1) | Armes cos a cos: **DES** + armes cos a cos. Arts marcials: **DES**. Barallar-se i armes naturals: **FOR**. Distància: **DES**, excepte les armes llancívoles, que van amb **AGI**. | Manual, "Cos a cos" (l. ~2896) i "A distància" (l. 3024). Confirmat per l'Oriol FM (2026-09-27): cos a cos, DES per impactar i FOR per al dany (el `danyBase` de les armes, p. ex. `FOR+2`). |
-| Armes improvisades | Habilitat *armes improvisades*; si es llancen, AGI. El manual no diu quin atribut fan servir: el llistat d'habilitats en diu el nom, les taules en donen el dany (FOR+2 cos a cos; FOR+1 i abast FOR a distància) i la regla de les armes llançades diu AGI. **Interpretació pròpia: el manual no ho especifica.** | Manual, l. 1295, 2975, 3024, 3055 |
+| Atribut dels atacs (Q1) | Armes cos a cos: **DES** + armes cos a cos. Arts marcials: **DES**. Barallar-se i armes naturals: **FOR**. Distància: **DES**, excepte les llancívoles, que van amb **AGI**. El dany de les armes cos a cos és FOR + bonus (`danyBase`, p. ex. `FOR+2`). | Manual, l. ~2896 i 3024. Confirmat per l'Oriol FM (2026-09-27). |
+| Armes improvisades | Habilitat *armes improvisades*; si es llancen, AGI. **Interpretació pròpia: el manual no ho especifica.** | Manual, l. 1295, 2975, 3024, 3055 |
 | Ègides (Q2) | El temps inactiu compta en **ticks del rellotge**. Fora de combat, s'avisa que cal reactivar-la a mà (és una acció lliure). Si el combat s'esborra, les ègides pendents es reactiven. | Oriol FM, 2026-09-27 |
-| Diverses armadures (Q3) | Com diu el manual: la base és la millor armadura rígida (o natural), i una flexible hi suma **la meitat** de la seva protecció (arrodonint amunt). Dues rígides no s'apilen. Les penalitzacions de latència s'apilen senceres. Reprodueix els exemples del manual (Von Blum 5 + ⌈3/2⌉ = 7; Bauer 1 + ⌈1/2⌉ = 2). No es comprova la restricció de categoria de pes, perquè les dades no la tenen. | Manual, l. 3337. L'Oriol FM havia dit "la millor", però el 2026-09-27 va establir que mana el manual. |
-| Empat contra la defensa passiva | N'hi ha prou amb igualar-la. El manual es contradiu: les l. 2354 (regla general: igual o superior és èxit) i 3143 diuen que un empat impacta, i la l. ~2904 diu que falla. S'ha seguit la majoria. **Contradicció pendent de l'Oriol.** | Manual |
+| Dues armadures (Q3) | La base és la millor armadura rígida (o natural), i una flexible hi suma **la meitat** de la seva protecció (arrodonint amunt). Dues rígides no s'apilen. Les latències s'apilen senceres. Reprodueix els exemples del manual: Von Blum 5 + ⌈3/2⌉ = 7; Bauer 1 + ⌈1/2⌉ = 2. | Manual, l. 3337 (l'Oriol va establir que mana el manual). |
+| Empat contra la defensa passiva | N'hi ha prou amb igualar-la. **Contradicció del manual pendent de l'Oriol.** | Manual, l. 2354 i 3143 (impacta) contra l. ~2904 (falla) |
 | PC gastats | PC gastats = cost total de la fitxa − PX gastats. Els canvis manuals en mode edició compten com a PC. | WP-B |
-| Escopetes (B13) | Les armadures rígides (`tipus: "fisica"`) protegeixen el doble contra les armes amb la propietat `escopeta`. La millor armadura es tria després de doblar-la. | Manual, l. 3091 |
-| Pífia en esquivar (B14) | +1 de dany per cada 1 de la tirada pifiada. Només en esquivar i només si l'atac impacta. Se suma al **dany final**, després de l'ègida, l'armadura i la reducció, fins i tot si l'armadura atura l'atac: el manual diu que el personatge "rebria més mal" perquè s'ha posat a la trajectòria de l'atac. | Manual, l. ~4018 |
-| Blocar (B15) | Amb el cos, fa servir resistència i només contra atacs naturals. Amb escut (una arma amb la propietat `escut`), armes cos a cos. Amb un altre objecte, armes improvisades. La bonificació no pot superar la reducció natural. | Manual, l. 3177–3185 |
-| Retard de barallar-se (B16) | Cada +1 de latència (un tick) dona +1 dau, fins al nivell de barallar-se. No es pot combinar amb una maniobra d'arts marcials. | Manual, l. 2902 i 2927 |
-| Requisits de curació (B17) | Primers auxilis, habilitat ≥ 1; tractament mèdic, ≥ 2. Curar-se un mateix només ho pot fer el DJ (que ja equival a la seva aprovació). | Manual, l. 3486–3502 |
-| Glossari de traducció | fita → éxito / hit; pífia → pifia / botch; ègida → égida / aegis; latència → latencia / latency; PX → PX / XP; DJ → DJ / GM; PNJ → PNJ / NPC; guanxi no es tradueix; els codis d'atribut (FOR, DES…) es mantenen iguals en tots els idiomes. | WP-D1 |
-| Qui tria la defensa | La tria la configuració automàtica del PNJ (`system.defensaAutomatica`), si en té. Si no, el jugador propietari del defensor, si està connectat. Si no, el DJ, amb un diàleg que li arriba pel socket. Mai el jugador que ataca un PNJ. | Oriol FM, 2026-09-27 |
-| Defensa automàtica (figurants) | Cada PNJ pot tenir un mode: pregunta-ho al DJ (per defecte), sempre passiva, la millor activa, esquivar, parar o blocar. Si el mode demana una defensa activa i no li queda reacció, es fa servir la passiva. | Oriol FM, 2026-09-27 ("com a mínim amb els minions") |
-| Moviment: bloqueig entre tokens | Els tokens de mida mitjana o més gran (mida ≥ 3) bloquegen el pas. Els de mida petita o diminuta (≤ 2) es poden travessar, tret que siguin enemics. | Oriol FM, 2026-09-27 |
-| Moviment: distàncies | Caminar = AGI×2 + MID − 3. Córrer (també càrrega) = AGI×5 + (MID − 3)×2. Saltar = AGI×3 + ⌈(MID − 3)/2⌉. En metres; el mínim es fixa a 1. Són fórmules de la versió antiga, no del manual (que només diu que "el DJ decideix segons mida i AGI"). | Oriol FM, 2026-09-27 |
-| Moviment en el torn | En el seu torn d'acció, un personatge sempre pot fer un moviment normal (caminar) a més de l'acció declarada. Si declara una defensa completa com a acció, també es pot moure; si es defensa com a reacció, no. La distància és acumulativa en tot el torn: es pot moure en diversos trams fins a esgotar-la (a la versió antiga cada tram comptava com un moviment sencer). | Oriol FM, 2026-09-27 |
-| Autoritat del DJ | Els canvis a documents aliens passen pel DJ (`module/xarxa/socket.mjs`), amb una llista de camps permesos (`CAMPS_PERMESOS_PER_TIPUS`). Fora de combat, un jugador només pot treure fatiga o ferides a un actor aliè, no afegir-n'hi. | Seguretat, onada 2 |
+| Escopetes (B13) | Les armadures rígides protegeixen el doble contra les armes amb la propietat `escopeta`. | Manual, l. 3091 |
+| Pífia en esquivar (B14) | +1 de dany per cada 1 de la tirada pifiada, només en esquivar i si l'atac impacta, sumat al **dany final**. | Manual, l. ~4018 |
+| Blocar (B15) | Cos → resistència (només contra atacs naturals); escut → armes cos a cos; objecte → armes improvisades. La bonificació no supera la reducció natural. | Manual, l. 3177–3185 |
+| Retard de barallar-se (B16) | Cada +1 de latència dona +1 dau, fins al nivell de barallar-se. No es combina amb maniobres. | Manual, l. 2902 i 2927 |
+| Requisits de curació (B17) | Primers auxilis ≥ 1; tractament mèdic ≥ 2. Curar-se un mateix, només el DJ. | Manual, l. 3486–3502 |
+| Glossari de traducció | fita → éxito / hit; pífia → pifia / botch; ègida → égida / aegis; latència → latencia / latency; PX → PX / XP; DJ → DJ / GM; PNJ → PNJ / NPC; guanxi no es tradueix; els codis d'atribut no es tradueixen. | WP-D1 |
+| Qui tria la defensa | La configuració automàtica del PNJ, si en té. Si no, el jugador propietari del defensor connectat. Si no, el DJ, amb un diàleg que li arriba pel socket. Mai el jugador que ataca un PNJ. | Oriol FM, 2026-09-27 |
+| Defensa automàtica | Per PNJ: pregunta-ho al DJ (per defecte), sempre passiva, la millor activa, esquivar, parar o blocar. Sense reacció, passiva. | Oriol FM ("com a mínim amb els minions") |
+| Token del PJ enllaçat | Els personatges es creen amb el token enllaçat i amistós. Els PNJ, no enllaçats. | Error trobat a les proves de joc |
+| Moviment: bloqueig | Mida ≥ 3 bloqueja sempre; mida ≤ 2 només si és enemic. Els morts no bloquegen. No es pot acabar sobre un altre token. | Oriol FM, 2026-09-27 |
+| Moviment: distàncies | Caminar = AGI×2 + MID − 3; córrer (i càrrega) = AGI×5 + (MID − 3)×2; saltar = AGI×3 + ⌈(MID − 3)/2⌉. En metres, mínim 1. Fórmules de la versió antiga (el manual no dona xifres). | Oriol FM, 2026-09-27 |
+| Moviment en el torn | En el seu torn d'acció, un personatge sempre pot caminar a més de l'acció declarada; amb una defensa completa com a acció també; com a reacció, no. Distància acumulativa en tot el torn. Fora de combat, sense límit. El DJ, sense límit. | Oriol FM, 2026-09-27; manual l. 2742+ |
+| Tipus de moviment | Bàsic (caminar, amb l'acció); ràpid (córrer, acció "Només moviment"); especial (+2 latència); càrrega (córrer + atac cos a cos, +2 latència; si s'ha mogut ≥ 2 m, +1 dau i +1 de dany). | Manual, l. 2742–2794 |
+| Camí | El token voreja parets i tokens que bloquegen (A* sobre la quadrícula). En quadrícula quadrada no es retallen cantonades en diagonal. | Queixa de l'Oriol ("ho compta tot en línia recta") |
+| Autoritat del DJ | Els canvis a documents aliens passen pel DJ (`module/xarxa/socket.mjs`), amb una llista de camps permesos. Fora de combat, un jugador només pot treure fatiga o ferides a un actor aliè. Si el DJ no pot aplicar el resultat d'un atac, la tirada surt igualment al xat amb una nota. | Seguretat |
 
 ## Contractes entre mòduls (per a qui continuï)
 
-- **Relé del DJ** (`module/xarxa/socket.mjs`): `actualitzarComGM(doc, canvis, opcions)`, `crearEmbegutsComGM`, `eliminarEmbegutsComGM`, `alternarEstatComGM`. Per a qualsevol camp nou que un jugador hagi d'escriure en un document aliè, cal afegir-lo a `CAMPS_PERMESOS_PER_TIPUS`.
-- **Derivats de salut:** `salut.{fatiga,ferides}.{value,max}` (caselles que queden) i `salut.foraDeCombat` (nivell 7).
-- **Armadura equipada:** `system.equipada` (per defecte `true`; qualsevol valor que no sigui `false` compta com a equipada).
-- **Atac d'una arma:** `atributIHabilitatAtac(item)` a `module/combat/equipament-automatic.mjs`, a partir de `FORJA.ATAC_PER_CATEGORIA` i `FORJA.ATAC_PER_ARMA`.
-- **Rellotge:** `flags.forja.{marcador, actiu, actuats}` a `Combat`; `ForjaCombat#fiDeTorn(combatant)` s'executa al DJ quan acaba un torn; `calcularSeguentTorn` és una funció pura.
+- **Relé del DJ** (`module/xarxa/socket.mjs`):
+  - `actualitzarComGM`, `crearEmbegutsComGM`, `eliminarEmbegutsComGM` i `alternarEstatComGM` per aplicar canvis;
+  - `preguntarA(usuari, nom, dades)` i `registrarPregunta(nom, gestor)` per demanar una decisió a un altre usuari.
+  - Tot camp nou que un jugador hagi d'escriure en un document aliè s'ha d'afegir a `CAMPS_PERMESOS_PER_TIPUS`.
+- **Decisió de defensa** (`module/combat/decisio-defensa.mjs`): `decidirDefensa(...)` tria entre la defensa automàtica, el propietari i el DJ.
+- **Derivats:**
+  - salut: `salut.{fatiga,ferides}.{value,max}` i `salut.foraDeCombat`;
+  - moviment: `moviment.{caminar,correr,saltar}`.
+- **Armadura equipada:** `system.equipada` (tot el que no sigui `false` compta com a equipada).
+- **Atac d'una arma:** `atributIHabilitatAtac(item)` a `module/combat/equipament-automatic.mjs`.
+- **Rellotge:** `flags.forja.{marcador, actiu, actuats}` a `Combat`. El torn és de qui marca `actiu`. `ForjaCombat#fiDeTorn` s'executa al DJ; `calcularSeguentTorn` és una funció pura.
+- **Acció declarada:** `flags.forja.accioPendent` del combatent, amb `tipus`, `moviment`, `combatId`, `declaradaAlMarcador` i `movimentEnCurs`.
+- **Moviment:**
+  - `module/combat/moviment.mjs`: lògica pura;
+  - `module/documents/token.mjs`: límit per torn a `_preUpdateMovement`;
+  - `module/canvas/token.mjs`: cost infinit a caselles bloquejades i A*.
+- **Actor del món i actor del token:** els PNJ tenen tokens no enllaçats. El combat treballa amb l'actor del token, i una macro que passi l'actor del món escriuria en un altre actor.
 
-## Proves de joc
+## Troballes de les proves de joc
 
-- **Entorn:** Foundry VTT **13.351** (build NodeJS) a `~/foundry/v13`, amb les dades a `~/foundrydata` i el sistema enllaçat al repo. El servidor s'arrenca amb una contrasenya d'administrador aleatòria desada en un fitxer privat fora del repo. Les proves fan servir Playwright amb el Chromium de snap (sense pantalla) i dues sessions alhora: DJ i Jugador.
-- **Codi de les proves:** `tests/joc/`; s'executen amb `npm run test:joc`. No contenen cap credencial: la clau de llicència i la contrasenya es llegeixen de fitxers privats indicats per variables d'entorn.
-- **Resultat (2026-09-27): 10 de 10 proves OK.** Totes les del checklist del pla:
-  - un sol "Cop" per actor amb dos clients connectats;
-  - les fitxes s'obren;
-  - les barres del token (19/19 i 16/19 amb 3 ferides);
-  - els PX no consumeixen PC;
-  - l'estat `dead`;
-  - l'ordre de torns amb empat (A declara, el torn passa a B i A recupera la reacció);
-  - l'atac d'un jugador a un PNJ a través del DJ (6 de dany aplicats);
-  - gastar la reacció d'un actor aliè;
-  - el rebuig de camps no permesos;
-  - cap clau sense traduir en ca, es ni en.
-- **Error trobat i corregit:** la icona de l'estat *sagnant* (`icons/svg/bleeding-wound.svg`) no existeix a Foundry i donava un 404. Ara és `icons/svg/blood.svg`.
-- **Observació:** les barres del token no s'hi poden editar (`editable: false`), perquè són valors derivats. Per canviar la salut cal fer servir la fitxa.
+Errors que només es veien executant el sistema en un Foundry real (detall a [`PROVES.md`](PROVES.md)):
 
-### Segona bateria: combat (`tests/joc/proves-combat.mjs`)
-
-**Interfície, amb clics reals als diàlegs, en dues sessions (DJ i Jugador):**
-- **Tracker:** el jugador només veu els controls del seu combatent, i tothom veu el marcador de temps.
-- **Declarar:** declarar un atac amb "Cop" i concentració des del tracker.
-- **Resoldre:** resoldre l'atac contra el PNJ marcat. S'obre el diàleg de defensa, l'atac surt al xat i la concentració es gasta (5 daus = 2 + 2 + 1).
-- **Curació:** el diàleg de curació des de la fitxa.
-- **Tirada:** el diàleg de tirada (AGI + Esquivar, 5 daus).
-
-**Regles, amb daus forçats:** totes les proves passen.
-- Escopeta contra armadura rígida (dany 4).
-- Dues armadures (3 + ⌈3/2⌉).
-- Pífia en esquivar (+2).
-- Concentració trencada i estat *atordit*.
-- Maniobra amb el seu estat.
-- Mitjans de blocar.
-- Retard de barallar-se (+2 daus).
-- Penalització de salut i bloqueig a nivell 7.
-- Ègida trencada i reactivada al tick.
-- Abast amb tokens de 2×2.
-
-**Observacions d'entorn (no són errors del sistema):**
-- Amb el canvas renderitzat per programari, Foundry va molt lent. L'espera de Playwright, basada en `requestAnimationFrame`, gairebé no avança, i per això les proves comproven l'estat per polling.
-- Per forçar daus, Foundry calcula la cara com `ceil((1 − r) · 10)`.
-
-**Error trobat i corregit: els PJ neixen amb el token no enllaçat.** Foundry crea els tokens no enllaçats per defecte. En combat, la concentració, el dany i les ègides d'un PJ s'escrivien en una còpia del token i no a la seva fitxa: la fitxa deia "no concentrat" mentre el combat tirava amb concentració. Ara `ForjaActor#_preCreate` crea els personatges amb el token enllaçat (`actorLink`) i amistós, tret que s'especifiqui una altra cosa. Els PNJ continuen no enllaçats: cada token és una instància. **Els PJ creats abans del canvi** s'han d'enllaçar a mà (Configurar token prototip → "Enllaçar dades de l'actor").
-
-**Troballa de disseny — pendent de decidir:**
-- **Qui tria la defensa del PNJ.** Quan un jugador resol el seu atac, el diàleg de defensa del PNJ s'obre a la pantalla **del jugador** (confirmat per la prova U3). Per tant, és el jugador qui tria si el PNJ esquiva, para o bloca. El codi diu que el DJ tria "en nom seu", però el diàleg s'obre al client que resol l'acció. Solució proposada: enviar la tria de defensa al DJ pel socket quan el defensor no és del jugador.
-- **Actor del món i actor del token.** Els PNJ tenen tokens no enllaçats. L'ègida, la concentració i el dany s'han d'aplicar a l'actor del token, que és el que fa servir el tracker. Una macro que passi l'actor del món escriuria en un actor diferent del que usa el combat.
-
-### Tercera bateria: moviment (`tests/joc/proves-moviment.mjs`), 10/10
-
-Resultat de totes les proves:
-- **Distàncies a la fitxa:** 6 / 15 / 9 per AGI 3 i MID 3.
-- **Torn:** fora del seu torn el jugador no pot moure el token.
-- **Trams acumulats:** en el seu torn, 2 + 3 + 1 = 6 m, i el metre següent queda bloquejat.
-- **Bloqueig segons mida i bàndol:**
-  - un aliat de mida 3 es voreja;
-  - un aliat de mida 2 es travessa en línia recta;
-  - un enemic de mida 2 es voreja;
-  - no es pot acabar el moviment sobre un token;
-  - un mort de mida 3 no bloqueja.
-- **Paret:** el camí la voreja.
-- **DJ:** pot moure sense límit.
-
-**Error trobat i corregit:** el camí no vorejava una paret, perquè l'A* feia passos en diagonal que passaven exactament per l'extrem de la paret, i el nucli de Foundry els tallava en validar el camí. Ara, en quadrícula quadrada, un pas en diagonal només es permet si els dos passos rectes que l'envolten també són lliures.
-
-### Foundry v14 (14.368)
-
-- **Entorn:** Foundry v14 a `~/foundry/v14`, amb Node 24 (instal·lat amb nvm; el Node per defecte continua sent el 22). Carpeta de dades separada, `~/foundrydata14`, perquè el món de la v13 no es migri.
-- **FORJA carrega sense errors.**
-- **Resultats:** bateria general 10/10, combat 16/17, moviment 10/10. Són els mateixos que a la v13; la U3 falla igual a totes dues versions (vegeu la troballa).
-- **Canvis de la v14 que afecten les proves** (no el sistema):
-  - els mons es creen amb `POST /create` en lloc de `/setup`;
-  - a `/join` s'escriu el nom d'usuari en lloc de triar-lo d'una llista;
-  - l'activació de la llicència triga més.
-
-  Les proves de `tests/joc/` ara funcionen amb totes dues versions.
+| Troballa | Estat |
+|----------|-------|
+| La icona de l'estat *sagnant* no existeix a Foundry (404). | Corregit (`f7790a4`) |
+| Els PJ es creaven amb el token no enllaçat: el combat escrivia en una còpia i la fitxa no ho reflectia. | Corregit (`5c77b8c`). Els PJ antics s'han d'enllaçar a mà. |
+| El diàleg de defensa del PNJ s'obria al jugador que atacava. | Corregit (`18e104a`): el decideix el DJ. |
+| El camí no vorejava una paret (passos en diagonal per l'extrem de la paret). | Corregit (`4d36051`) |
+| Si el relé no responia, l'atac desapareixia sense deixar rastre. | Corregit (`4d36051`): surt al xat amb una nota. |
+| **U3:** després que el DJ triï la defensa, l'atac no apareix al xat dins l'espera de la prova (v13 i v14). | **En investigació** |
 
 ## Graf de coneixement (graphify)
 
-- Eina: [graphify](https://github.com/safishamsi/graphify), instal·lada amb `uv tool install graphifyy` (executable a `~/.local/bin/graphify`).
-- Generat el 2026-09-27 sobre el commit `92dbacc` amb `graphify extract ./ --code-only` i `graphify cluster-only .`: 317 nodes, 682 arestes, 14 comunitats i cap cicle d'imports.
-- Els nodes amb més connexions són `FullActorBase`, `ForjaCombat`, `actualitzarComGM()`, `ferAtac()` i `DiategDeclararAccio`.
-- Només inclou codi (`.mjs` i `.json`). Les plantilles `.hbs` i el Markdown no hi són.
-- El resultat és a `graphify-out/` (fora de git): `graph.html` (visualització interactiva), `GRAPH_REPORT.md` i `graph.json`.
-- Per actualitzar-lo després de canviar el codi: `graphify update .`.
-
-## Criteri general
-
-**Mana el manual**, tret que es contradigui (Oriol FM, 2026-09-27). Quan es contradiu o no diu res, es documenta aquí la interpretació triada i es pregunta.
+- **Eina:** [graphify](https://github.com/safishamsi/graphify), instal·lada amb `uv tool install graphifyy` (`~/.local/bin/graphify`).
+- **Darrera generació:** versió 0.4.0 (etiqueta `v0.4.0`), a partir d'una còpia neta. 993 nodes, 1.485 arestes i 50 comunitats; cap cicle d'imports.
+- **Contingut:** només codi (`.mjs` i `.json`); les plantilles `.hbs` i el Markdown no hi són.
+- **On és:** `graphify-out/` (fora de git): `graph.html` (interactiu), `GRAPH_REPORT.md` i `graph.json`.
+- **Quan s'actualitza:** amb cada versió MINOR o MAJOR (`npm run versio`), o a mà amb `graphify update .`.
 
 ## Preguntes obertes per a l'Oriol
 
-Totes són contradiccions del manual o punts on el manual no diu res:
+Contradiccions del manual o punts on no diu res:
 
 1. **Empat contra la defensa passiva:** les l. 2354 i 3143 diuen que un empat impacta, i la l. ~2904 que falla. Ara impacta.
-2. **Esquivar per sota de la defensa:** la l. 3159 diu que el resultat no pot ser inferior a la defensa bàsica +1, però l'exemple de la l. ~4016 fa servir la defensa bàsica sense el +1. Ara s'aplica el +1.
-3. **Armes improvisades:** el manual no diu quin atribut fan servir. Ara, DES a cos a cos i AGI si es llancen.
+2. **Esquivar per sota de la defensa:** la l. 3159 diu que el resultat no pot ser inferior a la defensa bàsica +1, però l'exemple de la l. ~4016 fa servir la defensa sense el +1. Ara s'aplica el +1.
+3. **Armes improvisades:** quin atribut fan servir. Ara, DES a cos a cos i AGI si es llancen.
 
 ## Pendent
 
+- **U3:** investigar per què l'atac no surt al xat després que el DJ triï la defensa (vegeu les troballes).
+- **Pujar la branca a GitHub.** Ara és només local: `origin` és el repo de l'Oriol, i cal permís d'escriptura o un fork a `ArnauFerma`. També cal pujar les etiquetes (`git push origin --tags`).
 - **Releases a GitHub:** les adreces `manifest` i `download` de `system.json` no funcionaran fins que es publiqui una release amb `system.json` i `forja.zip`.
-- **Regles del manual detectades però no implementades:** l'escut dona +1 a la defensa bàsica (l. 2985/3153); la integritat estructural de l'escut en blocar; la pífia de les armes de dispersió ("Perilloses").
-- **Retard de barallar-se:** la tirada sense objectiu (`ferTirada`) no hi suma els daus del retard.
-- **Traducció de les dades de joc:** els noms i descripcions dels catàlegs (`module/config/dades/*.json`: trets, armes, armadures, artefactes, maniobres) només són en català. Traduir-los demana decidir un mecanisme (claus i18n per entrada, o una capa de localització dels catàlegs).
-- **Claus sense ús:** 15 claus de `ca.json` no les fa servir cap codi, probablement restes de la interfície antiga (`FORJA.Tab.*`, `FORJA.Hab.Marca`, `FORJA.Tret.Cost`…). Es mantenen traduïdes; es poden esborrar si es confirma que no calen.
-- **Proves de joc pendents:** la interfície dels diàlegs de combat (declarar, defensa, curació, tirada) clicada de veritat al tracker, les regles de WP-F/WP-I (ègides, concentració, maniobres, blocar, retard, escopetes) i l'abast amb tokens grans. També provar-ho a Foundry v14 (el servidor avisa que hi ha la 14.368).
-- **Temes menors apuntats pels agents:**
-  - Els camps numèrics opcionals dels artefactes es desen com a `0` quan es buiden.
-  - La icona de concentració del tracker pot trigar a refrescar-se.
-  - Si el relé rebutja una escriptura, l'atac s'atura sense missatge al xat.
+- **Tancar la versió 0.5.0** quan el moviment estigui validat per l'Oriol.
+- **Regles del manual detectades però no implementades:**
+  - l'escut dona +1 a la defensa bàsica (l. 2985/3153);
+  - la integritat estructural de l'escut en blocar;
+  - la pífia de les armes de dispersió.
+- **Moviment, límits coneguts:**
+  - l'elevació no es té en compte (els tokens a diferent alçada també es bloquegen);
+  - una càrrega resolta sense objectiu no té bonus;
+  - els tokens que no són al combat es mouen lliurement durant un combat.
+- **Retard de barallar-se:** la tirada sense objectiu (`ferTirada`) no hi suma els daus.
+- **Traducció de les dades de joc:** els noms i descripcions dels catàlegs (`module/config/dades/*.json`) només són en català.
+- **Claus sense ús:** 15 claus de `ca.json` no les fa servir cap codi (`FORJA.Tab.*`, `FORJA.Hab.Marca`, `FORJA.Tret.Cost`…).
+- **Temes menors:**
+  - els camps numèrics opcionals dels artefactes es desen com a `0` quan es buiden;
+  - la icona de concentració del tracker pot trigar a refrescar-se.

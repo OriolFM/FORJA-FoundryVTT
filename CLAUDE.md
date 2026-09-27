@@ -26,7 +26,8 @@ Mecànica central:
 FORJA-FoundryVTT/
 ├── system.json              # Manifest del sistema
 ├── forja.mjs                 # Entry point (Hooks.once("init"/"ready"), hooks globals)
-├── package.json               # Scripts npm (build:manual)
+├── package.json               # Scripts npm: test, test:joc, versio, build:manual
+├── CHANGELOG.md               # Canvis per versió ([Pendent] = feina en curs)
 ├── module/
 │   ├── config/
 │   │   ├── constants.mjs      # CONFIG.FORJA: costos, taules, càrrega de dades/*.json
@@ -54,7 +55,9 @@ FORJA-FoundryVTT/
 │   │   └── dialeg-*.mjs          # Diàlegs (trets, equipament, millora, curació, defensa, declarar acció)
 │   ├── combat/                # Pipeline de combat
 │   │   ├── atac.mjs           # ferAtac: tirada, dany, ègida, concentració, maniobres
-│   │   ├── defensa.mjs        # opcionsDefensa / resoldreOpcioDefensa (passiva/esquivar/parar/blocar)
+│   │   ├── defensa.mjs        # opcionsDefensa / resoldreOpcioDefensa / triarDefensaAutomatica
+│   │   ├── decisio-defensa.mjs # Qui tria la defensa: automàtica, propietari o DJ (pregunta pel socket)
+│   │   ├── propietats.mjs     # Propietats d'arma (escut, escopeta) i mitjans de blocar
 │   │   ├── dany.mjs           # calcularDany (ègida → armadura → reducció), funcions pures
 │   │   ├── curacio.mjs        # Primers auxilis / tractament mèdic / repòs natural
 │   │   ├── reaccions.mjs      # Reaccions per torn i concentració
@@ -80,11 +83,18 @@ FORJA-FoundryVTT/
 ├── packs/
 │   ├── _source/manual/        # Fonts JSON (JournalEntry) del compendi "Manual FORJA"
 │   └── manual/                # Compendi compilat (LevelDB) — generat, no s'edita a mà
-├── scripts/build-manual.mjs   # Genera packs/_source/manual/*.json des de Markdown extern
+├── scripts/
+│   ├── build-manual.mjs       # Genera packs/_source/manual/*.json des de Markdown extern
+│   └── versio.mjs             # npm run versio: tanca una versió (i actualitza graphify)
+├── tests/
+│   ├── unitaris/              # npm test — lògica pura, sense Foundry
+│   └── joc/                   # Proves en un Foundry real sense pantalla (v13 i v14)
 └── docs/
     ├── manual/FORJA_FC001CA_CORE.md  # Manual complet del joc — font de veritat de les regles
     ├── REVIEW-PLAN.md         # Troballes de la revisió de codi i pla de treball per paquets
-    └── REGISTRE-TREBALL.md    # Registre viu: què s'ha fet, decisions, pendents
+    ├── REGISTRE-TREBALL.md    # REGISTRE DE TOTS ELS CANVIS DE LA BRANCA: commits, decisions, troballes, pendents
+    ├── PROVES.md              # Totes les proves: què, com, com s'executen, resultats v13/v14
+    └── VERSIONS.md            # Control de versions
 ```
 
 No hi ha `assets/`, `module/sheets/`, `module/helpers/`, `docs/PLAN.md` ni
@@ -262,13 +272,22 @@ que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
    (gasten una reacció, tirada enfrontada que cal **superar**), blocar (gasta
    reacció, sense tirada, suma `min(resistència, reduccioDany)` a la reducció
    de dany). El resultat de la defensa activa es publica al xat.
+   **Qui tria la defensa** (`combat/decisio-defensa.mjs`, `decidirDefensa`):
+   primer la defensa automàtica del PNJ (`system.defensaAutomatica`,
+   `triarDefensaAutomatica`); si no en té, el jugador propietari del defensor
+   si està connectat; si no, el DJ. El diàleg s'obre al client que ha de
+   decidir mitjançant una pregunta pel socket (`preguntarA`). Mai el tria el
+   jugador que ataca un PNJ. Si ningú respon en 2 minuts, s'aplica la defensa passiva.
 3. **Atac** (`combat/atac.mjs`, `ferAtac`): tira contra la dificultat
    resolta per la defensa; bloqueja si l'atacant està `foraDeCombat`; aplica
    la penalització de salut i el dau extra de concentració a la dificultat/pool.
 4. **Dany** (`combat/dany.mjs`, `calcularDany`, funció pura): ègida → armadura
    → reducció de dany, en aquest ordre, amb "dany mínim" quan la reducció
-   (no l'armadura) porta el dany a zero. Només la **millor** armadura
-   equipada protegeix; les seves latències, en canvi, s'apilen totes.
+   (no l'armadura) porta el dany a zero. Protecció d'armadures
+   (`proteccioArmadura`, manual l. 3337): la millor rígida (o natural) més la
+   meitat, arrodonint amunt, de la millor flexible; les latències s'apilen
+   totes. Si el DJ no pot aplicar el dany o els estats, la tirada es publica
+   igualment amb una nota perquè ho faci a mà.
    Ègides trencades es reactiven quan el marcador del rellotge arriba al
    tick desat (`flags.forja.egidaReactivaAlTick`), gestionat pel DJ actiu a
    `ForjaCombat#reactivarEgides`/`tancarEgidesPendents`.
@@ -278,13 +297,11 @@ que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
 6. **Maniobres d'arts marcials**: només amb l'atac "Cop" i habilitat
    `arts-marcials`; sumen dificultat i poden aplicar un estat en impactar.
 
-Aquesta descripció cobreix el codi de la darrera onada comitejada
-(`01fa086`); un altre paquet de treball (WP-I) està afegint en paral·lel
-cinc regles addicionals del manual (escopetes vs. armadura rígida, dany
-extra en pífia d'esquivar, blocar sense armes/amb escut/amb objecte,
-retard en barallar-se, requisits d'habilitat per curar) — consulta
-`docs/REVIEW-PLAN.md` (B13–B17) i `docs/REGISTRE-TREBALL.md` per l'estat
-actual d'aquestes regles abans de tocar `module/combat/*`.
+7. **Regles del manual B13–B17** (`combat/propietats.mjs`, `dany.mjs`,
+   `defensa.mjs`, `curacio.mjs`): escopetes contra armadura rígida, pífia en
+   esquivar (+1 de dany per cada 1, al dany final), mitjans de blocar (cos,
+   escut o objecte), retard de barallar-se i requisits d'habilitat per curar.
+   Les decisions i les fonts són a `docs/REGISTRE-TREBALL.md`.
 
 ## Xarxa: relé d'autoritat del DJ (`module/xarxa/socket.mjs`)
 
@@ -299,6 +316,10 @@ propietari, o passen per `game.socket` (canal `"system.forja"`, requereix
 - `crearEmbegutsComGM(actor, type, data[])`
 - `eliminarEmbegutsComGM(actor, type, ids[])`
 - `alternarEstatComGM(actor, statusId, active)`
+- `preguntarA(usuari, nom, dades)` / `registrarPregunta(nom, gestor)`: no
+  modifica documents; demana una **decisió** a un altre usuari (p. ex. la
+  defensa d'un PNJ, al DJ) i en retorna la resposta. El destinatari executa
+  el gestor registrat, que sol obrir un diàleg.
 
 **Regla del projecte: qualsevol escriptura a un document que l'usuari
 actual no posseeix ha de passar per aquestes funcions.** El DJ que atén la
@@ -368,25 +389,13 @@ existeixi **abans** d'esborrar res de `packs/_source/manual`. Cal
 
 ## Com provar
 
-- **Estàtic**: `node --check <fitxer>.mjs` per a qualsevol fitxer `.mjs`
-  tocat. Per a funcions pures (les de `combat/dany.mjs`, `combat/abast.mjs`,
-  `documents/combat.mjs#calcularSeguentTorn`...), val la pena escriure un
-  petit test de Node fora del repositori (scratchpad) abans de donar-les per
-  bones.
-- **En viu** (no hi ha tests automatitzats de Foundry en aquest repositori):
-  1. Copia o fes un enllaç simbòlic de la carpeta del repositori a
-     `{FoundryData}/Data/systems/forja`.
-  2. Crea un món nou amb el sistema "FORJA RPG".
-  3. Crea un Personatge i un PNJ; comprova que cadascun té exactament un
-     atac "Cop".
-  4. Amb una sessió de DJ i una de jugador: el jugador ataca el PNJ des del
-     tracker (sense errors de permisos, dany aplicat, tirada del defensor al
-     xat); declara accions amb posicions empatades (cap torn saltat);
-     gasta PX (l'avís de pressupost de PC no hauria de sortir només per
-     això).
-  5. Comprova les barres de salut del token i marcar un combatent com a
-     derrotat.
-  6. Canvia l'idioma (ca/es/en) i comprova que no apareixen claus en cru.
+Tot el detall és a **`docs/PROVES.md`**. En resum:
+
+1. **Sintaxi:** `node --check` de cada `.mjs` tocat.
+2. **Proves unitàries:** `npm test` (`tests/unitaris/`, sense Foundry). Obligatori abans de cada commit que toqui `module/`. La lògica nova s'ha d'escriure com a funcions pures i provar-se aquí.
+3. **Proves de joc:** `tests/joc/proves.mjs`, `proves-combat.mjs` i `proves-moviment.mjs`, en un Foundry v13 i v14 real sense pantalla, amb sessions de DJ i de Jugador (Playwright). Cal passar-les si el canvi toca el joc, i sempre abans de tancar una versió.
+   - Després, restaura `packs/manual`, que Foundry reescriu.
+   - Afegeix els resultats a `docs/PROVES.md`.
 
 ## Convencions
 
@@ -402,17 +411,10 @@ existeixi **abans** d'esborrar res de `packs/_source/manual`. Cal
   millora amb PX...), el codi ofereix l'eina però no decideix per ell.
 - Cap escriptura a un document que l'usuari actual no posseeix sense passar
   pel relé del DJ (`module/xarxa/socket.mjs`).
-- **Actualitza `docs/REGISTRE-TREBALL.md` amb qualsevol canvi significatiu**
-  (què s'ha fet, per què, què queda pendent) — és el registre de referència
-  per a qui continuï el treball, humà o agent.
-
-## Proves unitàries
-
-`npm test` executa `tests/unitaris/*.test.mjs` amb el runner de Node: lògica pura de combat, torns, relé del DJ, derivats i paritat de traduccions. Són ràpides i no necessiten Foundry. Cal executar-les abans de cada commit que toqui `module/`. Vegeu `tests/unitaris/README.md`.
-
-## Proves de joc automàtiques
-
-A `tests/joc/` hi ha proves amb un Foundry real (`proves.mjs`, general; `proves-combat.mjs`, diàlegs de combat i regles amb daus forçats) sense pantalla (Playwright, sessions de DJ i de Jugador). S'executen amb `npm run test:joc`. La preparació és a `tests/joc/README.md`. Cap credencial va al repo.
+- **Documenta-ho tot, amb cada commit.** La documentació és clau en aquest projecte.
+  - `docs/REGISTRE-TREBALL.md` és el registre de tots els canvis de la branca: el commit, què s'ha fet i per què, les decisions i els pendents.
+  - `CHANGELOG.md` (`[Pendent]`) recull els canvis visibles per a l'usuari.
+  - `docs/PROVES.md` recull les proves noves i els resultats.
 
 ## Versions i registre de canvis
 

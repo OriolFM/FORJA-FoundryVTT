@@ -1,5 +1,7 @@
 # Proves de joc (Foundry v13 sense pantalla)
 
+> La guia completa de proves (els tres nivells, les tècniques i els resultats a v13 i v14) és a [`docs/PROVES.md`](../../docs/PROVES.md).
+
 Proves automàtiques en un **Foundry real**, amb dues sessions de navegador obertes alhora (DJ i Jugador), controlades amb Playwright i un Chromium sense pantalla. Serveixen per comprovar allò que no es pot verificar només llegint el codi: permisos entre clients, el relé del DJ, l'ordre de torns, les fitxes i les traduccions.
 
 ## Preparació (un sol cop)
