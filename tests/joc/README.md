@@ -31,7 +31,15 @@ npm run test:joc        # o: node tests/joc/proves.mjs
 
 Escriu un JSON amb el resultat de cada prova (`ok`) i els errors de consola de cada sessió. Cada vegada crea de nou els actors `Prova PJ` i `Prova PNJ`, l'usuari `Jugador`, una escena i un combat.
 
-## Què es prova
+## Bateries
+
+| Fitxer | Contingut |
+|--------|-----------|
+| `proves.mjs` | General (10 proves, vegeu la taula de sota). |
+| `proves-combat.mjs` | Diàlegs de combat amb clics reals (DJ i Jugador) i regles amb daus forçats. |
+| `proves-moviment.mjs` | Moviment: distàncies, torn, trams acumulats, bloqueig segons mida i bàndol, morts, parets, DJ sense límit. |
+
+## Què es prova (`proves.mjs`)
 
 | # | Prova |
 |---|-------|

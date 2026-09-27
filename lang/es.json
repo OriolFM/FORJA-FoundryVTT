@@ -460,5 +460,6 @@
   "FORJA.Moviment.PermisExhaurit": "{nom} no se puede mover tanto: le quedan {restant} m de un total de {permis} m este turno.",
   "FORJA.Moviment.EspaiOcupat": "No se puede terminar el movimiento en el espacio de otro token.",
   "FORJA.Moviment.SenseTeletransport": "En combate no se puede hacer un movimiento de teletransporte.",
-  "FORJA.Moviment.ResoldreMoviment": "{nom} solo se mueve: arrastra su token en el lienzo."
+  "FORJA.Moviment.ResoldreMoviment": "{nom} solo se mueve: arrastra su token en el lienzo.",
+  "FORJA.Combat.ConsequenciesNoAplicades": "No se han podido aplicar todos los efectos a {nom} ({error}). DJ: aplícalos a mano según este resultado."
 }

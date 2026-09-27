@@ -22,6 +22,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
     - càrrega, amb +2 de latència i, si s'ha mogut 2 m o més, +1 dau i +1 de dany (manual, l. 2794).
 
 ### Corregit
+- Si el DJ no pot aplicar el dany o els estats d'un atac (desconnectat, massa lent o camp rebutjat), l'atac ja no desapareix: la tirada surt al xat amb una nota perquè el DJ ho apliqui a mà. El temps d'espera del relé passa de 15 a 30 segons.
+- El camí del moviment ja no es queda a mig fer quan passa per l'extrem d'una paret (sense retallar cantonades en diagonal).
 - En tornar a declarar una acció, les dades de l'acció anterior (maniobra, retard…) ja no es barregen amb les de la nova.
 
 ## [0.4.0] - 2026-09-27

@@ -117,6 +117,23 @@ En tancar cada versió MINOR o MAJOR, `npm run versio` també actualitza el graf
 - **Qui tria la defensa del PNJ.** Quan un jugador resol el seu atac, el diàleg de defensa del PNJ s'obre a la pantalla **del jugador** (confirmat per la prova U3). Per tant, és el jugador qui tria si el PNJ esquiva, para o bloca. El codi diu que el DJ tria "en nom seu", però el diàleg s'obre al client que resol l'acció. Solució proposada: enviar la tria de defensa al DJ pel socket quan el defensor no és del jugador.
 - **Actor del món i actor del token.** Els PNJ tenen tokens no enllaçats. L'ègida, la concentració i el dany s'han d'aplicar a l'actor del token, que és el que fa servir el tracker. Una macro que passi l'actor del món escriuria en un actor diferent del que usa el combat.
 
+### Tercera bateria: moviment (`tests/joc/proves-moviment.mjs`), 10/10
+
+Resultat de totes les proves:
+- **Distàncies a la fitxa:** 6 / 15 / 9 per AGI 3 i MID 3.
+- **Torn:** fora del seu torn el jugador no pot moure el token.
+- **Trams acumulats:** en el seu torn, 2 + 3 + 1 = 6 m, i el metre següent queda bloquejat.
+- **Bloqueig segons mida i bàndol:**
+  - un aliat de mida 3 es voreja;
+  - un aliat de mida 2 es travessa en línia recta;
+  - un enemic de mida 2 es voreja;
+  - no es pot acabar el moviment sobre un token;
+  - un mort de mida 3 no bloqueja.
+- **Paret:** el camí la voreja.
+- **DJ:** pot moure sense límit.
+
+**Error trobat i corregit:** el camí no vorejava una paret, perquè l'A* feia passos en diagonal que passaven exactament per l'extrem de la paret, i el nucli de Foundry els tallava en validar el camí. Ara, en quadrícula quadrada, un pas en diagonal només es permet si els dos passos rectes que l'envolten també són lliures.
+
 ## Graf de coneixement (graphify)
 
 - Eina: [graphify](https://github.com/safishamsi/graphify), instal·lada amb `uv tool install graphifyy` (executable a `~/.local/bin/graphify`).

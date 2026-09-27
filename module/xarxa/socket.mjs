@@ -22,7 +22,7 @@
 const CANAL = "system.forja";
 
 /** Temps màxim (ms) d'espera de la resposta del DJ. */
-const TEMPS_ESPERA = 15000;
+const TEMPS_ESPERA = 30000;
 
 /** Tipus de document que el DJ accepta modificar per encàrrec. */
 const TIPUS_PERMESOS = new Set(["Actor", "Item", "ActiveEffect", "Combat", "Combatant"]);

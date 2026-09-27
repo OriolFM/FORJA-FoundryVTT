@@ -460,5 +460,6 @@
   "FORJA.Moviment.PermisExhaurit": "{nom} no es pot moure tant: li queden {restant} m d'un total de {permis} m aquest torn.",
   "FORJA.Moviment.EspaiOcupat": "No es pot acabar el moviment a l'espai d'un altre token.",
   "FORJA.Moviment.SenseTeletransport": "En combat no es pot fer un moviment de teletransport.",
-  "FORJA.Moviment.ResoldreMoviment": "{nom} només es mou: arrossega el seu token al canvas."
+  "FORJA.Moviment.ResoldreMoviment": "{nom} només es mou: arrossega el seu token al canvas.",
+  "FORJA.Combat.ConsequenciesNoAplicades": "No s’han pogut aplicar tots els efectes a {nom} ({error}). DJ: aplica’ls a mà segons aquest resultat."
 }

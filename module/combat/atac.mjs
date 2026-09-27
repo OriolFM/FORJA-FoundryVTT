@@ -118,6 +118,10 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     });
     if (danyExtra > 0) notes.push(game.i18n.format("FORJA.Combat.PifiaEsquivarDanyAplicat", { nom: objectiu.name, valor: danyExtra }));
 
+    // Si el DJ no pot aplicar alguna conseqüència (desconnectat, massa lent,
+    // camp rebutjat pel relé), l'atac NO es perd: la tirada i el resultat es
+    // publiquen igualment al xat, amb una nota perquè el DJ ho apliqui a mà.
+    try {
     if (resultatDany.danyFinal > 0) {
       const marcatsActuals = objectiu.system.salut[pista].marcats;
       const nous = aplicarDanyAPista({ [pista]: { marcats: marcatsActuals } }, pista, resultatDany.danyFinal);
@@ -158,6 +162,11 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
         nom: objectiu.name,
         estat: game.i18n.localize(`FORJA.Estat.${maniobra.estat}`)
       }));
+    }
+    } catch (err) {
+      console.error("FORJA | No s'han pogut aplicar les conseqüències de l'atac", err);
+      resultatDany.noAplicat = true;
+      notes.push(game.i18n.format("FORJA.Combat.ConsequenciesNoAplicades", { nom: objectiu.name, error: err?.message ?? String(err) }));
     }
   }
 

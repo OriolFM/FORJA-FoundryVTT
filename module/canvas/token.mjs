@@ -332,6 +332,14 @@ export function crearTokenForja(Base) {
             if (!rect.contains(c.x, c.y)) continue;
             if (!ignoreCost && !cellesLliures(v, ocupacio.bloquejades)) continue;
             if (paretEntre(o, v)) continue;
+            // Quadrícula quadrada: un pas en diagonal només si els dos passos rectes
+            // que l'envolten també són lliures (sense "retallar" cantonades). Evita
+            // passar just per l'extrem d'una paret, que el nucli considera col·lisió
+            // quan valida el camí i el tallaria (trobat a les proves de joc, M9).
+            if (grid.isSquare && v.i !== o.i && v.j !== o.j) {
+              const h = { i: o.i, j: v.j }, w = { i: v.i, j: o.j };
+              if (paretEntre(o, h) || paretEntre(h, v) || paretEntre(o, w) || paretEntre(w, v)) continue;
+            }
             out.push({ node: v, cost: costPas(o, v) });
           }
           return out;

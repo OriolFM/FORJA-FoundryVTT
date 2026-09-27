@@ -460,5 +460,6 @@
   "FORJA.Moviment.PermisExhaurit": "{nom} cannot move that far: {restant} m left out of {permis} m this turn.",
   "FORJA.Moviment.EspaiOcupat": "A token cannot end its movement in another token's space.",
   "FORJA.Moviment.SenseTeletransport": "Teleport movement is not allowed in combat.",
-  "FORJA.Moviment.ResoldreMoviment": "{nom} only moves: drag their token on the canvas."
+  "FORJA.Moviment.ResoldreMoviment": "{nom} only moves: drag their token on the canvas.",
+  "FORJA.Combat.ConsequenciesNoAplicades": "Not all effects could be applied to {nom} ({error}). GM: apply them manually from this result."
 }
