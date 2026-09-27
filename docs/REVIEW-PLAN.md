@@ -66,7 +66,7 @@ Each finding has an ID. The plan section groups the IDs into work packages, each
 
 ### Open questions for the game designer
 
-- **Q1 (B8): resolved from the manual** ("Cos a cos", line ~2896; "A distància", line 3024).
+- **Q1 (B8): resolved from the manual, confirmed by Oriol FM on 2026-09-27** (melee: DES to hit, FOR for damage) ("Cos a cos", line ~2896; "A distància", line 3024).
   - Melee weapons roll **DES** + armes cos a cos (the code rolled FOR).
   - Martial arts roll **DES**; brawling and natural weapons roll **FOR**.
   - Ranged weapons roll **DES** + armes a distància, except thrown weapons (llancívoles), which roll **AGI**.

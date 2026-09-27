@@ -28,7 +28,7 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 
 | Tema | Decisió | Font |
 |------|---------|------|
-| Atribut dels atacs (Q1) | Armes cos a cos: **DES** + armes cos a cos. Arts marcials: **DES**. Barallar-se i armes naturals: **FOR**. Distància: **DES**, excepte les armes llancívoles, que van amb **AGI**. | Manual, "Cos a cos" (l. ~2896) i "A distància" (l. 3024) |
+| Atribut dels atacs (Q1) | Armes cos a cos: **DES** + armes cos a cos. Arts marcials: **DES**. Barallar-se i armes naturals: **FOR**. Distància: **DES**, excepte les armes llancívoles, que van amb **AGI**. | Manual, "Cos a cos" (l. ~2896) i "A distància" (l. 3024). Confirmat per l'Oriol FM (2026-09-27): cos a cos, DES per impactar i FOR per al dany (el `danyBase` de les armes, p. ex. `FOR+2`). |
 | Armes improvisades | Habilitat *armes improvisades*; si es llancen, AGI. **Interpretació pròpia, pendent de confirmar.** | — |
 | Ègides (Q2) | El temps inactiu compta en **ticks del rellotge**. Fora de combat, s'avisa que cal reactivar-la a mà (és una acció lliure). Si el combat s'esborra, les ègides pendents es reactiven. | Oriol FM, 2026-09-27 |
 | Diverses armadures (Q3) | La protecció la dona **la millor**; les penalitzacions de latència **s'apilen**. | Oriol FM, 2026-09-27 |
