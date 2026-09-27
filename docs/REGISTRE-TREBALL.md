@@ -128,7 +128,8 @@ Errors que només es veien executant el sistema en un Foundry real (detall a [`P
 ## Graf de coneixement (graphify)
 
 - **Eina:** [graphify](https://github.com/safishamsi/graphify), instal·lada amb `uv tool install graphifyy` (`~/.local/bin/graphify`).
-- **Darrera generació:** versió 0.4.0 (etiqueta `v0.4.0`), a partir d'una còpia neta. 993 nodes, 1.485 arestes i 50 comunitats; cap cicle d'imports.
+- **Darrera generació:** 2026-09-27, sobre el commit `866e284` (branca `Aw`, amb el moviment de la 0.5.0 en curs): 1.072 nodes, 1.653 arestes i 72 comunitats. Els nodes més connectats són `FullActorBase`, `ForjaCombat`, `actualitzarComGM()` i `ferAtac()`.
+- **Generació anterior:** versió 0.4.0 (etiqueta `v0.4.0`), a partir d'una còpia neta: 993 nodes, 1.485 arestes i 50 comunitats.
 - **Contingut:** només codi (`.mjs` i `.json`); les plantilles `.hbs` i el Markdown no hi són.
 - **On és:** `graphify-out/` (fora de git): `graph.html` (interactiu), `GRAPH_REPORT.md` i `graph.json`.
 - **Quan s'actualitza:** amb cada versió MINOR o MAJOR (`npm run versio`), o a mà amb `graphify update .`.
@@ -143,10 +144,18 @@ Contradiccions del manual o punts on no diu res:
 
 ## Pendent
 
-- **Repetir la bateria de combat a la v13** amb les esperes noves (a la v14 ja dona 17/17).
-- **Pull request de `Aw` cap a `main`**, quan l'Oriol hagi validat els canvis. La branca i les etiquetes `v0.2.0`–`v0.4.0` ja són a GitHub (2026-09-27, `origin` = OriolFM/FORJA-FoundryVTT).
+### Prioritat (estat a 2026-09-27)
+
+1. **Repetir la bateria de combat a la v13** amb les esperes noves (a la v14 ja dona 17/17; a la v13 la U3 va fallar per l'espera curta).
+2. **L'Oriol ha de validar el moviment** a la partida: bloqueig segons mida i bàndol, distàncies, moviment només en el propi torn, trams acumulats, càrrega i camí que voreja obstacles.
+3. **Tancar la versió 0.5.0** quan el moviment estigui validat: `npm run versio -- minor`, commit, etiqueta `v0.5.0` i push. L'script també actualitza graphify.
+4. **Respostes de l'Oriol a les tres preguntes obertes** (vegeu "Preguntes obertes per a l'Oriol"): empat contra la defensa passiva, el +1 en esquivar, i les armes improvisades.
+5. **Pull request de `Aw` cap a `main`**, quan l'Oriol hagi revisat els canvis. La branca i les etiquetes ja són a GitHub (`origin` = OriolFM/FORJA-FoundryVTT).
+6. **Decidir si el manual complet ha de ser públic.** `docs/manual/FORJA_FC001CA_CORE.md` és visible al repositori públic des del primer push; el seu contingut ja hi era, com a compendi (`packs/_source/manual`).
+
+### Altres
+
 - **Releases a GitHub:** les adreces `manifest` i `download` de `system.json` no funcionaran fins que es publiqui una release amb `system.json` i `forja.zip`.
-- **Tancar la versió 0.5.0** quan el moviment estigui validat per l'Oriol.
 - **Regles del manual detectades però no implementades:**
   - l'escut dona +1 a la defensa bàsica (l. 2985/3153);
   - la integritat estructural de l'escut en blocar;
