@@ -21,9 +21,14 @@ export async function entrarSetup(p) {
 }
 export async function unirse(p, usuari, contrasenya = "") {
   await p.goto(`${BASE}/join`); await p.waitForTimeout(4000);
-  const idUsuari = await p.evaluate((nom) => [...document.querySelectorAll('select[name="userid"] option')].find(o => o.textContent.trim() === nom)?.value, usuari);
-  if (!idUsuari) throw new Error(`Usuari ${usuari} no trobat a /join`);
-  await p.selectOption('select[name="userid"]', idUsuari);
+  // v13: llista desplegable d'usuaris (select userid); v14: camp de text (input username).
+  if (await p.locator('select[name="userid"]').count()) {
+    const idUsuari = await p.evaluate((nom) => [...document.querySelectorAll('select[name="userid"] option')].find(o => o.textContent.trim() === nom)?.value, usuari);
+    if (!idUsuari) throw new Error(`Usuari ${usuari} no trobat a /join`);
+    await p.selectOption('select[name="userid"]', idUsuari);
+  } else if (await p.locator('input[name="username"]').count()) {
+    await p.fill('input[name="username"]', usuari);
+  } else throw new Error("Pàgina /join desconeguda");
   if (contrasenya) await p.fill('input[name="password"]', contrasenya);
   await p.locator('button[name="join"]').click();
   await p.waitForFunction(() => window.game?.ready === true, null, { timeout: 120000 });

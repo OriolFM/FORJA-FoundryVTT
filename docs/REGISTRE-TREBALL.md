@@ -134,6 +134,18 @@ Resultat de totes les proves:
 
 **Error trobat i corregit:** el camí no vorejava una paret, perquè l'A* feia passos en diagonal que passaven exactament per l'extrem de la paret, i el nucli de Foundry els tallava en validar el camí. Ara, en quadrícula quadrada, un pas en diagonal només es permet si els dos passos rectes que l'envolten també són lliures.
 
+### Foundry v14 (14.368)
+
+- **Entorn:** Foundry v14 a `~/foundry/v14`, amb Node 24 (instal·lat amb nvm; el Node per defecte continua sent el 22). Carpeta de dades separada, `~/foundrydata14`, perquè el món de la v13 no es migri.
+- **FORJA carrega sense errors.**
+- **Resultats:** bateria general 10/10, combat 16/17, moviment 10/10. Són els mateixos que a la v13; la U3 falla igual a totes dues versions (vegeu la troballa).
+- **Canvis de la v14 que afecten les proves** (no el sistema):
+  - els mons es creen amb `POST /create` en lloc de `/setup`;
+  - a `/join` s'escriu el nom d'usuari en lloc de triar-lo d'una llista;
+  - l'activació de la llicència triga més.
+
+  Les proves de `tests/joc/` ara funcionen amb totes dues versions.
+
 ## Graf de coneixement (graphify)
 
 - Eina: [graphify](https://github.com/safishamsi/graphify), instal·lada amb `uv tool install graphifyy` (executable a `~/.local/bin/graphify`).

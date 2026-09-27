@@ -12,12 +12,16 @@ await p.fill('input[name="adminPassword"]', admin);
 await p.locator('button[type="submit"]').first().click();
 await p.waitForTimeout(6000);
 console.log("URL:", p.url());
-const post = (body) => p.evaluate(async (b) => {
-  const r = await fetch("/setup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b) });
+// v13: POST /setup; v14: la creació de mons és a POST /create.
+const post = (body, ruta = "/setup") => p.evaluate(async ({ b, ruta }) => {
+  const r = await fetch(ruta, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b) });
   return { status: r.status, text: (await r.text()).slice(0, 300) };
-}, body);
+}, { b: body, ruta });
 const sistemes = await p.evaluate(() => [...(game.systems?.keys?.() ?? [])]);
 console.log("Sistemes detectats:", JSON.stringify(sistemes));
-console.log("Crear món:", JSON.stringify(await post({ action: "createWorld", id: "proves-forja", title: "Proves FORJA", system: "forja" })));
+const dadesMon = { action: "createWorld", id: "proves-forja", title: "Proves FORJA", system: "forja" };
+let res = await post(dadesMon);
+if (res.status === 400 && res.text.includes("Unsupported")) res = await post(dadesMon, "/create");
+console.log("Crear món:", JSON.stringify(res));
 console.log("Errors de pàgina:", errors.slice(0, 5));
 await b.close();

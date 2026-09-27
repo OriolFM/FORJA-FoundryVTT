@@ -16,8 +16,16 @@ console.log("Després de l'EULA:", p.url(), "\n", camps);
 const input = p.locator('input[name="licenseKey"]');
 if (await input.count()) {
   await input.fill(clau);
-  await p.locator('button[type="submit"]').first().click();
-  await p.waitForTimeout(6000);
+  // requestSubmit amb el botó del formulari (el clic de Playwright espera animacions
+  // que amb el renderitzat per programari no arriben).
+  await input.evaluate(el => { const f = el.form; f.requestSubmit(f.querySelector('button[type="submit"]')); });
+  await p.waitForTimeout(15000);
+  // Algunes versions tornen a mostrar l'EULA després de validar la clau.
+  if (await p.locator("#eula-agree").count()) {
+    await p.locator("#eula-agree").check();
+    await p.locator("#sign").click();
+    await p.waitForTimeout(8000);
+  }
 }
 console.log("URL final:", p.url());
 await p.screenshot({ path: `${process.env.FORJA_CAPTURES ?? process.env.HOME + "/foundry/proves/captures"}/04-activacio.png` });

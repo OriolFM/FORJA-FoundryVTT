@@ -15,6 +15,8 @@ Proves automàtiques en un **Foundry real**, amb dues sessions de navegador ober
 6. **Crea el món:** `node tests/joc/mon.mjs` crea el món `proves-forja` amb el sistema `forja`.
 7. **Llança'l:** `node tests/joc/llancar.mjs`. Hi entra com a DJ i comprova que el sistema carrega sense errors.
 
+Les proves funcionen amb Foundry **v13 i v14**. Per a la v14 cal Node 24, i és recomanable fer servir una carpeta de dades a part.
+
 Per defecte les proves fan servir `/snap/bin/chromium`. El Chromium que baixa Playwright necessita llibreries del sistema que en aquesta màquina no hi són. Es pot canviar amb `FORJA_CHROMIUM`.
 
 ## Atenció: el compendi del manual
