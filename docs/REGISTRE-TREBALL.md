@@ -22,7 +22,7 @@ Aquest document recull **què s'ha fet, per què i què queda pendent**, per a r
 | `01fa086` | **Onada 2.** Regles de combat (WP-F: B1, B3–B7, B9, B10, C2); fitxes amb classe base comuna i fitxa d'objectes (WP-G: D1–D3, D6, C3, C5, B11, B12); atributs d'atac segons el manual (Q1); llista blanca de camps del relé del DJ. |
 | `ac8f587` | **Onada 3.** Les cinc regles pendents del manual (WP-I: B13–B17), la documentació (`CLAUDE.md`, README i `system.json`, WP-D3) i el camp `propietats` de les armes, editable a la fitxa d'objecte. |
 | `2660bc8` | **Onada 4a.** Identificadors de diàleg únics (`{id}`, D7) i textos fixos passats a claus de traducció (C1). |
-| *(onada 4b)* | **Traduccions completes** (WP-D1): `ca.json`, `es.json` i `en.json` amb les mateixes 401 claus. Totes les 386 claus que fa servir el codi hi són. |
+| `4c44401` | **Traduccions completes** (WP-D1): `ca.json`, `es.json` i `en.json` amb les mateixes 401 claus. Totes les 386 claus que fa servir el codi hi són. |
 
 ## Decisions de disseny
 
