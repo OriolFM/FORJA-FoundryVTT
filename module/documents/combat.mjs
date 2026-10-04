@@ -427,10 +427,31 @@ export default class ForjaCombat extends Combat {
     this.reactivarEgides().catch(err => console.error("FORJA | Error reactivant ègides", err));
   }
 
-  /** @override — en acabar el combat, el DJ actiu tanca les ègides pendents (B4). */
+  /**
+   * En acabar el combat, cada combatent recupera les reaccions, deixa d'estar
+   * concentrat i perd els estats que només tenen sentit en temps actiu
+   * (`fiCombat: true` a `config/dades/estats.json`: abatut, atordit, llançat,
+   * lent…). Els estats persistents (sagnant, inconscient, esguerrat…) es
+   * mantenen. Només per al DJ.
+   */
+  async netejarFinalCombat() {
+    const temporals = new Set((CONFIG.FORJA?.CATALEG_ESTATS ?? []).filter(e => e.fiCombat).map(e => e.id));
+    for (const actor of this._forjaActors()) {
+      await actor.update({ "system.reaccions.gastades": 0, "system.concentrat": false });
+      // Efectes d'estat temporals (inclosos els creats a mà, p. ex. el Lent/2
+      // d'Interrupció): fora els que només porten estats temporals.
+      const fora = actor.effects
+        .filter(e => e.statuses?.size && [...e.statuses].every(s => temporals.has(s)))
+        .map(e => e.id);
+      if (fora.length) await actor.deleteEmbeddedDocuments("ActiveEffect", fora);
+    }
+  }
+
+  /** @override — en acabar el combat, el DJ actiu tanca les ègides pendents (B4) i neteja reaccions i estats temporals. */
   _onDelete(options, userId) {
     super._onDelete(options, userId);
     if (!game.users.activeGM?.isSelf) return;
     this.tancarEgidesPendents().catch(err => console.error("FORJA | Error tancant ègides", err));
+    this.netejarFinalCombat().catch(err => console.error("FORJA | Error netejant el final del combat", err));
   }
 }
