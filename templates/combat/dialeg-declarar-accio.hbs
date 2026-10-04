@@ -23,10 +23,6 @@
       <input type="radio" name="tipus" value="altra" {{#if (eq tipus "altra")}}checked{{/if}}>
       {{localize "FORJA.Combat.Accio.Altra"}}
     </label>
-    <label class="dda-radio">
-      <input type="radio" name="tipus" value="moviment" {{#if (eq tipus "moviment")}}checked{{/if}}>
-      {{localize "FORJA.Combat.Accio.Moviment"}}
-    </label>
   </div>
 
   {{#if (eq tipus "moviment")}}
@@ -46,6 +42,20 @@
     <p class="dda-avis">{{localize "FORJA.Combat.SenseArmes"}}</p>
     {{/if}}
   </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.Objectiu"}}</label>
+    <select name="objectiuTokenId">
+      <option value="" {{#unless objectiuTokenId}}selected{{/unless}}>{{localize "FORJA.Combat.SenseObjectiuDeclarat"}}</option>
+      {{#each objectius as |o|}}
+      <option value="{{o.tokenId}}" {{#if (eq o.tokenId ../objectiuTokenId)}}selected{{/if}}>
+        {{o.nom}}{{#if o.aTocar}} ({{localize "FORJA.Combat.ObjectiuATocar"}}){{else}}{{#if o.distancia}} ({{o.distancia}} m){{/if}}{{/if}}
+      </option>
+      {{/each}}
+    </select>
+  </div>
+  {{#if avisObjectiu}}
+  <p class="dda-avis">{{avisObjectiu}}</p>
+  {{/if}}
   {{#if permetManiobres}}
   <div class="form-group">
     <label>{{localize "FORJA.Combat.Maniobra"}}</label>

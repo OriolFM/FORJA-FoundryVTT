@@ -194,6 +194,11 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // Font única de les opcions de defensa (B7): acció defensiva declarada.
     const defenses = opcionsDefensa(actor, undefined, { declarada: true });
 
+    // Objectius possibles de l'atac: els altres combatents amb token a
+    // l'escena. Es declaren ara (el manual declara l'acció completa) i
+    // l'atac es resol contra aquest token, encara que s'hagi mogut.
+    const objectius = _objectiusDeclarables(combat, combatant);
+
     const config = await DiategDeclararAccio.obrir({
       nom:          combatant.name,
       marcador:     combat.marcador ?? 0,
@@ -203,7 +208,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       defenses,
       maniobres:    CONFIG.FORJA?.LLISTA_MANIOBRES ?? [],
       concentrat:   !!sys.concentrat,
-      distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3)
+      distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3),
+      objectius,
+      objectiuPerDefecte: _objectiuPerDefecte(objectius)
     });
     if (!config) return;
 
@@ -234,6 +241,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     if (config.tipus === "atac") {
       const arma = armes.find(a => a.id === config.armaId);
       if (arma) pendent = { ...pendent, ...arma, label: arma.nom };
+      const objectiuDeclarat = objectius.find(o => o.tokenId === config.objectiuTokenId);
+      if (objectiuDeclarat) {
+        pendent = { ...pendent, objectiuTokenId: objectiuDeclarat.tokenId, objectiuNom: objectiuDeclarat.nom };
+      }
       if (arma && config.retardBarallarse > 0 && !config.maniobraId) {
         pendent = { ...pendent, retardBarallarse: config.retardBarallarse, label: config.etiqueta };
       }
@@ -262,7 +273,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       const concentra = config.concentrar ? ` <em>(${game.i18n.localize("FORJA.Combat.Concentrat")})</em>` : "";
       await ChatMessage.create({
         speaker: ChatMessage.getSpeaker({ actor }),
-        content: `<div class="forja-missatge-accio"><strong>${Handlebars.escapeExpression(config.etiqueta ?? "")}</strong>${concentra}${config.descripcio ? `<p>${Handlebars.escapeExpression(config.descripcio)}</p>` : ""}</div>`
+        content: `<div class="forja-missatge-accio"><strong>${Handlebars.escapeExpression(config.etiqueta ?? "")}</strong>${concentra}${pendent.objectiuNom ? ` → ${Handlebars.escapeExpression(pendent.objectiuNom)}` : ""}${config.descripcio ? `<p>${Handlebars.escapeExpression(config.descripcio)}</p>` : ""}</div>`
       });
     }
   }
@@ -311,7 +322,8 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     if (pendent.tipus === "atac") {
       const arma          = actor.items.get(pendent.id);
-      const tokenObjectiu = [...game.user.targets][0];
+      // L'objectiu és el declarat (si n'hi ha); si no, el marcat al canvas.
+      const tokenObjectiu = _tokenObjectiuDeclarat(pendent) ?? [...game.user.targets][0];
       const objectiu      = tokenObjectiu?.actor;
 
       // Maniobres d'Arts Marcials (S-12/B6, maniobres.mjs): es trien en
@@ -498,4 +510,51 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     if (!_potControlar(combat.combatants.get(target.dataset.combatantId))) return;
     await combat.marcarEmboscada(target.dataset.combatantId);
   }
+}
+
+/**
+ * Combatents que es poden declarar com a objectiu d'un atac: els altres
+ * combatents del combat amb token a l'escena actual. Inclou la distància vora
+ * a vora (B9) i si són a tocar, per orientar qui declara.
+ * @param {Combat} combat
+ * @param {Combatant} combatant  Qui declara
+ * @returns {Array<{tokenId:string, nom:string, distancia:number|null, aTocar:boolean, marcat:boolean}>}
+ */
+function _objectiusDeclarables(combat, combatant) {
+  const tokenPropi = combatant.token?.object ?? null;
+  const marcats = new Set([...game.user.targets].map(t => t.id));
+  return combat.combatants
+    .filter(c => c.id !== combatant.id && !c.isDefeated && c.token?.object)
+    .map(c => {
+      const token = c.token.object;
+      const distancia = tokenPropi ? Math.round(distanciaEntreTokens(tokenPropi, token) * 10) / 10 : null;
+      return {
+        tokenId: token.id,
+        nom:     c.name,
+        distancia,
+        aTocar:  tokenPropi ? tokensATocar(tokenPropi, token) : false,
+        marcat:  marcats.has(token.id)
+      };
+    })
+    .sort((a, b) => (a.distancia ?? Infinity) - (b.distancia ?? Infinity));
+}
+
+/** Objectiu preseleccionat: el marcat amb Target, o si no el més proper. */
+function _objectiuPerDefecte(objectius) {
+  return (objectius.find(o => o.marcat) ?? objectius[0])?.tokenId ?? null;
+}
+
+/**
+ * Token de l'objectiu declarat a l'acció pendent, si encara és a l'escena.
+ * Si ja no hi és, avisa i retorna `null` (es fa servir l'objectiu marcat).
+ * @param {object} pendent
+ * @returns {Token|null}
+ */
+function _tokenObjectiuDeclarat(pendent) {
+  if (!pendent?.objectiuTokenId) return null;
+  const token = canvas.tokens?.get(pendent.objectiuTokenId) ?? null;
+  if (!token) {
+    ui.notifications?.warn(game.i18n.format("FORJA.Combat.ObjectiuDeclaratNoTrobat", { nom: pendent.objectiuNom ?? "?" }));
+  }
+  return token;
 }

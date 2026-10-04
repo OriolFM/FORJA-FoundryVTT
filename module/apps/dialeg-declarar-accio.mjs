@@ -26,6 +26,9 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
  *   barallar-se (sense maniobra), es pot afegir fins a `nivell de
  *   barallar-se` ticks de latència; cada tick dona +1 dau a l'atac. Cada arma
  *   porta `retardMax` (0 = no s'hi pot retardar), calculat a `tracker-ui.mjs`.
+ * - Objectiu de l'atac: es declara aquí (llista de combatents amb la distància
+ *   vora a vora); l'atac es resol contra aquest token. Si és cos a cos i no
+ *   és a tocar, s'avisa que caldrà apropar-s'hi amb el moviment del torn.
  * - Moviment (WP-M; manual › Moviment dels PJ, l. 2678–2694, i › Temps actiu
  *   › Moviment, l. 2790–2794; Oriol FM, 2026-09-27): tota acció porta
  *   implícit un moviment bàsic (caminar). Es pot canviar per un moviment
@@ -67,6 +70,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   #descripcio = "";
   #retard     = 0;
   #moviment   = "basic";
+  #objectiuTokenId = null;
 
   constructor(config, options = {}) {
     super(options);
@@ -74,6 +78,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     this.#armaId     = config.armes?.[0]?.id ?? null;
     this.#defensaId  = config.defenses?.[0]?.id ?? null;
     this.#concentrar = !!config.concentrat;
+    this.#objectiuTokenId = config.objectiuPerDefecte ?? null;
     if (!config.armes?.length) this.#tipus = "defensa";
   }
 
@@ -144,8 +149,28 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       moviments:     this.#movimentsPermesos(),
       moviment:      this.#movimentEfectiu(),
       metresMoviment: permisMoviment(this.#movimentEfectiu(), c.distancies ?? {}),
+      objectius:     c.objectius ?? [],
+      objectiuTokenId: this.#objectiuTokenId,
+      avisObjectiu:  this.#avisObjectiu(),
       latencia:      this.#calcularLatencia()
     };
+  }
+
+  /**
+   * Avís si l'atac triat és cos a cos (o natural) i l'objectiu no és a tocar:
+   * l'atacant s'hi haurà d'apropar amb el moviment d'aquest torn.
+   * @returns {string|null}
+   */
+  #avisObjectiu() {
+    if (this.#tipus !== "atac") return null;
+    const obj = this.#config.objectius?.find(o => o.tokenId === this.#objectiuTokenId);
+    const categoria = this.#arma()?.categoria;
+    if (!obj || obj.aTocar || categoria === "distancia") return null;
+    return game.i18n.format("FORJA.Combat.ObjectiuNoATocar", {
+      nom: obj.nom,
+      distancia: obj.distancia ?? "?",
+      metres: permisMoviment(this.#movimentEfectiu(), this.#config.distancies ?? {})
+    });
   }
 
   #calcularLatencia() {
@@ -183,6 +208,11 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     el.querySelector("[name='armaId']")?.addEventListener("change", ev => {
       this.#armaId = ev.target.value;
       if (!this.#arma()?.permetManiobres) this.#maniobraId = "";
+      this.render(false);
+    });
+
+    el.querySelector("[name='objectiuTokenId']")?.addEventListener("change", ev => {
+      this.#objectiuTokenId = ev.target.value || null;
       this.render(false);
     });
 
@@ -261,6 +291,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       armaId:     arma?.id ?? null,
       defensa:    defensa ?? null,
       maniobraId: maniobra?.id ?? null,
+      objectiuTokenId: tipus === "atac" ? (d.objectiuTokenId || null) : null,
       retardBarallarse,
       moviment,
       concentrar: !!d.concentrar,
