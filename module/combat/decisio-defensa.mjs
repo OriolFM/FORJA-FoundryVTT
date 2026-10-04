@@ -82,6 +82,11 @@ export async function decidirDefensa({ defensor, opcions, defensaBasica, categor
   const automatica = triarDefensaAutomatica(opcions, defensor.system?.defensaAutomatica);
   if (automatica) return { eleccio: automatica, automatica: true };
 
+  // Sense cap reacció lliure (ni seva ni d'un protector) no hi ha res a
+  // decidir: defensa bàsica, sense preguntar.
+  const potReaccionar = opcions.some(o => o.id !== "passiva" && o.disponible);
+  if (!potReaccionar && passiva) return { eleccio: passiva, automatica: true };
+
   const desti = decisorDefensa(defensor);
   if (!desti) {
     ui.notifications?.warn(game.i18n.format("FORJA.Combat.DefensaSenseDecisor", { nom: defensor.name }));

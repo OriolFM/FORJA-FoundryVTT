@@ -6776,3 +6776,39 @@ li.combatant:has(> .forja-controls) {
 .forja-missatge-atac .mt-notes { margin:.3em 0 0; padding-left:1.1em; font-size:.85em; }
 .dialeg-tirada .tirada-concentrat-estat { display:flex; gap:.3em; align-items:center; font-style:italic; }
 .dialeg-declarar-accio .dda-concentrar .hint { flex-basis:100%; font-size:.8em; opacity:.8; margin:0; }
+
+/* ==== Combat: icones destacades i anuncis sobre la pantalla ==== */
+@keyframes forja-pols {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(20,184,166,0.0); }
+  50%      { box-shadow: 0 0 6px 2px rgba(20,184,166,0.85); }
+}
+.forja-controls a.forja-destacat,
+[data-action="nextTurn"].forja-destacat {
+  color: #5eead4;
+  background: rgba(13,148,136,0.25);
+  border-radius: 4px;
+  animation: forja-pols 1.4s ease-in-out infinite;
+}
+.forja-anunci {
+  position: fixed;
+  top: 18%;
+  left: 50%;
+  transform: translate(-50%, -12px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px;
+  background: rgba(15,17,23,0.92);
+  border: 2px solid #0d9488;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+  color: #f3f4f6;
+  font-size: 1.6rem;
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.forja-anunci.visible { opacity: 1; transform: translate(-50%, 0); }
+.forja-anunci i { color: #14b8a6; }

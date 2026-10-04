@@ -118,12 +118,13 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         </span>${concentrat}`;
 
       if (_potControlar(combatant)) {
+        const destacar = _iconaDestacada(combat, combatant);
         html += `
-        <a class="forja-declarar" data-action="forjaDeclararAccio" data-combatant-id="${combatantId}"
+        <a class="forja-declarar${destacar === "declarar" ? " forja-destacat" : ""}" data-action="forjaDeclararAccio" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.Declarar")}">
           <i class="fas fa-stopwatch"></i>
         </a>
-        <a class="forja-resoldre" data-action="forjaResoldreAccio" data-combatant-id="${combatantId}"
+        <a class="forja-resoldre${destacar === "resoldre" ? " forja-destacat" : ""}" data-action="forjaResoldreAccio" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.Resoldre")}">
           <i class="fas fa-dice-d10"></i>
         </a>
@@ -135,6 +136,13 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       div.innerHTML = html;
       li.appendChild(div);
     }
+
+    // Avançar torn: destacat quan el combatent actiu ja ha resolt i declarat
+    // la propera acció (DJ o propietari del combatent actiu).
+    const actiu = combat.combatant;
+    const potAvancar = combat.started && actiu && _potControlar(actiu)
+      && actiu.getFlag("forja", "estatTorn") === "redeclarada";
+    this.element.querySelectorAll('[data-action="nextTurn"]').forEach(el => el.classList.toggle("forja-destacat", !!potAvancar));
   }
 
   /**
@@ -268,6 +276,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // quedarien a la nova acció.
     if (anterior) await combatant.unsetFlag("forja", "accioPendent");
     await combatant.setFlag("forja", "accioPendent", pendent);
+    // Si declara durant el seu propi torn, la nova acció és per al proper:
+    // ja només li queda passar el torn (icona destacada, `_iconaDestacada`).
+    if (actiuAra && combat.started) await combatant.setFlag("forja", "estatTorn", "redeclarada");
+    else await combatant.unsetFlag("forja", "estatTorn");
 
     if (config.descripcio || config.etiqueta) {
       const concentra = config.concentrar ? ` <em>(${game.i18n.localize("FORJA.Combat.Concentrat")})</em>` : "";
@@ -304,6 +316,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // WP-M: una acció de només moviment no té tirada: es fa movent el token.
     if (pendent?.tipus === "moviment") {
       ui.notifications?.info(game.i18n.format("FORJA.Moviment.ResoldreMoviment", { nom: combatant.name }));
+      await _marcarResolta(combat, combatant);
       return;
     }
 
@@ -312,6 +325,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         ui.notifications?.info(game.i18n.format("FORJA.Combat.BlocarSenseAccio", { nom: combatant.name }));
       }
       actor.sheet?.render(true);
+      if (pendent) await _marcarResolta(combat, combatant);
       return;
     }
 
@@ -322,8 +336,14 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     if (pendent.tipus === "atac") {
       const arma          = actor.items.get(pendent.id);
-      // L'objectiu és el declarat (si n'hi ha); si no, el marcat al canvas.
-      const tokenObjectiu = _tokenObjectiuDeclarat(pendent) ?? [...game.user.targets][0];
+      // L'objectiu és el declarat (si n'hi ha); si no, el marcat al canvas; i
+      // si tampoc n'hi ha cap, es demana ara (excepte Puntada de peu
+      // giratòria, que és autocentrada).
+      let tokenObjectiu = _tokenObjectiuDeclarat(pendent) ?? [...game.user.targets][0];
+      if (!tokenObjectiu && pendent.maniobraId !== "puntada-de-peu-giratoria") {
+        tokenObjectiu = await _demanarObjectiu(combat, combatant);
+        if (tokenObjectiu === undefined) return; // cancel·lat
+      }
       const objectiu      = tokenObjectiu?.actor;
 
       // Maniobres d'Arts Marcials (S-12/B6, maniobres.mjs): es trien en
@@ -355,6 +375,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         for (const { objectiu: qui, eleccio, resultat } of resultats) {
           if (resultat.exit) await aplicarEfecteManiobra(maniobra, eleccio.interposant ?? qui);
         }
+        await _marcarResolta(combat, combatant);
         return;
       }
 
@@ -485,6 +506,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           const tokenQui = combatantQui?.token?.object ?? tokenObjectiu;
           await resoldreLlancament({ actorAtacant: combatant.actor, tokenAtacant, tokenObjectiu: tokenQui });
         }
+        await _marcarResolta(combat, combatant);
         return;
       }
 
@@ -501,6 +523,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       habNivell,
       label:      pendent.label
     });
+    await _marcarResolta(combat, combatant);
   }
 
   /** Marca el combatent com a part de l'emboscada (acció simultània a la primera casella). */
@@ -557,4 +580,63 @@ function _tokenObjectiuDeclarat(pendent) {
     ui.notifications?.warn(game.i18n.format("FORJA.Combat.ObjectiuDeclaratNoTrobat", { nom: pendent.objectiuNom ?? "?" }));
   }
   return token;
+}
+
+/**
+ * Quina icona del combatent cal destacar al tracker:
+ *  - fase de declaració: "declarar" si encara no té posició al rellotge;
+ *  - temps actiu, combatent actiu: "resoldre" si té l'acció per resoldre,
+ *    "declarar" si ja l'ha resolta (li toca declarar la propera).
+ * @param {Combat} combat
+ * @param {Combatant} combatant
+ * @returns {"declarar"|"resoldre"|null}
+ */
+function _iconaDestacada(combat, combatant) {
+  if (combat.fase === "declaracio") {
+    return (combatant.initiative === null || combatant.initiative === undefined) ? "declarar" : null;
+  }
+  if (!combat.started || combat.combatant?.id !== combatant.id) return null;
+  const estat = combatant.getFlag("forja", "estatTorn");
+  if (estat === "redeclarada") return null;
+  if (estat === "resolta" || !combatant.getFlag("forja", "accioPendent")) return "declarar";
+  return "resoldre";
+}
+
+/**
+ * Marca que el combatent actiu ja ha resolt la seva acció en aquest torn
+ * (només si és el seu torn; fora de torn no canvia res).
+ * @param {Combat} combat
+ * @param {Combatant} combatant
+ */
+async function _marcarResolta(combat, combatant) {
+  if (!combat.started || combat.combatant?.id !== combatant.id) return;
+  await combatant.setFlag("forja", "estatTorn", "resolta");
+}
+
+/**
+ * Demana l'objectiu d'un atac que no en té (ni declarat ni marcat).
+ * @param {Combat} combat
+ * @param {Combatant} combatant
+ * @returns {Promise<Token|null|undefined>}  El token triat; `null` = sense
+ *   objectiu (només tirada); `undefined` = cancel·lat.
+ */
+async function _demanarObjectiu(combat, combatant) {
+  const objectius = _objectiusDeclarables(combat, combatant);
+  if (!objectius.length) return null;
+  const opcions = objectius.map(o => {
+    const dist = o.aTocar ? game.i18n.localize("FORJA.Combat.ObjectiuATocar") : (o.distancia !== null ? `${o.distancia} m` : "");
+    return `<option value="${o.tokenId}">${Handlebars.escapeExpression(o.nom)}${dist ? ` (${dist})` : ""}</option>`;
+  }).join("");
+  const triat = await foundry.applications.api.DialogV2.prompt({
+    window: { title: game.i18n.format("FORJA.Combat.TriaObjectiuTitol", { nom: combatant.name }) },
+    content: `<div class="form-group"><label>${game.i18n.localize("FORJA.Combat.Objectiu")}</label>
+      <select name="objectiu">${opcions}</select></div>`,
+    ok: {
+      label: game.i18n.localize("FORJA.Combat.Resoldre"),
+      callback: (ev, button) => button.form.elements.objectiu.value
+    },
+    rejectClose: false
+  });
+  if (!triat) return undefined;
+  return canvas.tokens?.get(triat) ?? null;
 }

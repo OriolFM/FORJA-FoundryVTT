@@ -90,6 +90,21 @@ export default class ForjaCombat extends Combat {
   }
 
   /**
+   * Fase del combat: `"declaracio"` mentre s'esperen les primeres
+   * declaracions (abans de començar el temps actiu), `"actiu"` un cop
+   * començat, `null` si encara no s'ha intentat començar.
+   * @type {"declaracio"|"actiu"|null}
+   */
+  get fase() {
+    return this.getFlag("forja", "fase") ?? (this.started ? "actiu" : null);
+  }
+
+  /** Tots els combatents ja tenen posició al rellotge (han declarat). */
+  get totsHanDeclarat() {
+    return this.combatants.size > 0 && this.combatants.contents.every(c => c.initiative !== null && c.initiative !== undefined);
+  }
+
+  /**
    * @override — ordre ascendent: la posició (tick) més baixa actua primer.
    * En cas d'empat a la mateixa casella, declara abans qui té més latència
    * base (és a dir, qui reacciona/actua "de forma més lenta" per naturalesa
@@ -255,7 +270,9 @@ export default class ForjaCombat extends Combat {
     // `diff: false`: `turn` desat pot coincidir amb el nou índex tot i canviar
     // de combatent (l'índex local està re-apuntat); així el canvi de torn es
     // difon igualment.
-    const options = { direction: 1, diff: false, forja: { combatentSortint: sortint?.id ?? null } };
+    // L'avanç del marcador s'anuncia a tots els clients (combat/anuncis.mjs).
+    const avancTics = Math.max(0, seguent.marcador - this.marcador);
+    const options = { direction: 1, diff: false, forja: { combatentSortint: sortint?.id ?? null, avancTics } };
     await actualitzarComGM(this, changes, options);
     return this;
   }
@@ -289,13 +306,37 @@ export default class ForjaCombat extends Combat {
     return this;
   }
 
-  /** @override — comença el rellotge amb el marcador a zero. */
+  /**
+   * @override — FORJA no comença el temps actiu fins que tothom ha declarat la
+   * seva primera acció (manual › Temps actiu: es declara i el marcador avança).
+   * Si en falta algú, s'obre la fase de declaració (anunciada a tothom) i el
+   * combat comença sol quan declara l'últim (`iniciarTempsActiu`, des del
+   * hook `updateCombatant` del DJ, forja.mjs).
+   */
   async startCombat() {
+    if (!this.totsHanDeclarat) {
+      await this.update({ "flags.forja": { fase: "declaracio", marcador: 0, actiu: null, actuats: [] } });
+      return this;
+    }
+    return this.iniciarTempsActiu();
+  }
+
+  /**
+   * Comença el temps actiu: el marcador avança directament fins a la primera
+   * posició ocupada (el primer que actua) i s'anuncia a tothom l'inici i els
+   * tics avançats.
+   */
+  async iniciarTempsActiu() {
     // Ègides trencades en un combat anterior: el seu tick ja no té sentit en
     // aquest rellotge nou (B4) — es tanquen abans de començar.
     if (game.user.isGM) await this.tancarEgidesPendents();
+    const posicions = this.combatants.map(c => c.initiative).filter(p => typeof p === "number");
+    const primer = posicions.length ? Math.min(...posicions) : 0;
     // `actiu` buit: el `turn: 0` de l'inici el fixa a `_preUpdate`.
-    await this.update({ "flags.forja": { marcador: 0, actiu: null, actuats: [] } });
+    await this.update(
+      { "flags.forja": { fase: "actiu", marcador: primer, actiu: null, actuats: [] } },
+      { forja: { iniciTempsActiu: true, avancTics: primer } }
+    );
     return super.startCombat();
   }
 

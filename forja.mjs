@@ -24,6 +24,7 @@ import { registrarSocket } from "./module/xarxa/socket.mjs";
 import { registrarPreguntaDefensa } from "./module/combat/decisio-defensa.mjs";
 import { assegurarAtacsAutomatics, eliminarArmaNaturalDelTret } from "./module/combat/equipament-automatic.mjs";
 import { recuperarEquilibri } from "./module/combat/manifestar.mjs";
+import { anunciarCanvisCombat } from "./module/combat/anuncis.mjs";
 import { avancarRecarregaActor } from "./module/combat/artefactes.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 import { registrarHookValorX, aplicarTicsEstats } from "./module/estats/estats-parametritzats.mjs";
@@ -143,6 +144,26 @@ Hooks.on("deleteItem", async (item, _options, userId) => {
 // Només al DJ actiu (A1). El combatent que acaba el passa `ForjaCombat#nextTurn`
 // a les opcions de l'update (es difonen a tots els clients); per a canvis de
 // torn d'altres orígens, s'usa l'estat previ que Foundry desa a `combat.previous`.
+// Anuncis sobre la pantalla (fase de declaració, inici del temps actiu,
+// avanç del rellotge): a TOTS els clients.
+Hooks.on("updateCombat", (combat, changes, options) => anunciarCanvisCombat(combat, changes, options));
+
+// Fase de declaració: quan l'últim combatent declara, comença el temps actiu.
+// Només al DJ actiu (és qui pot escriure el combat).
+Hooks.on("updateCombatant", async (combatant, changes) => {
+  if (!game.users.activeGM?.isSelf || !("initiative" in changes)) return;
+  const combat = combatant.parent;
+  if (combat?.fase === "declaracio" && combat.totsHanDeclarat) await combat.iniciarTempsActiu();
+});
+
+// Fase del torn de cada combatent (per destacar les icones del tracker):
+// en acabar el torn es neteja (`estatTorn`, tracker-ui.mjs).
+Hooks.on("updateCombat", async (combat, changes, options) => {
+  if (!game.users.activeGM?.isSelf) return;
+  const sortint = options?.forja?.combatentSortint;
+  if (sortint) await combat.combatants.get(sortint)?.unsetFlag("forja", "estatTorn");
+});
+
 Hooks.on("updateCombat", async (combat, changes, options) => {
   if (!game.users.activeGM?.isSelf) return;
   const canviTorn = ("turn" in changes) || ("round" in changes);
