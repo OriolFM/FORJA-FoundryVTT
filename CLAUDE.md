@@ -451,6 +451,7 @@ Tot el detall és a **`docs/PROVES.md`**. En resum:
 
 ## Convencions
 
+- **MAI cap secret a git.** El repositori és públic: ni claus d'API, ni contrasenyes, ni tokens, ni credencials, ni fitxers que en continguin (p. ex. la configuració d'un món de Foundry, `data/settings/`, on hi ha la clau de FORJAPP). Van al `.gitignore`; si cal, es puja un fitxer d'exemple sense valors reals. Abans de cada commit, sobretot de fitxers copiats o binaris (mons, LevelDB), revisa'n el contingut. `tests/unitaris/secrets.test.mjs` falla si en troba algun.
 - Codi en ES Modules (`.mjs`), sense build step.
 - **Identificadors i comentaris en català** (noms de funcions, variables,
   JSDoc); és l'estil de tot el codi existent.

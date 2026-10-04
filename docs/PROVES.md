@@ -31,8 +31,9 @@ Fitxers `*.test.mjs` que s'executen amb el runner de Node (`node --test`), Node 
 | `moviment.test.mjs` | Distàncies, bloqueig segons mida i bàndol, permís acumulatiu per torn, càrrega, A* (voreja, bloquejat del tot, destinació ocupada, límit de nodes). |
 | `i18n.test.mjs` | Els tres fitxers de `lang/` tenen les mateixes claus; totes les claus que fa servir el codi existeixen; els `{placeholders}` coincideixen. |
 | `versio.test.mjs` | `system.json` i `package.json` tenen la mateixa versió, i aquesta té entrada al `CHANGELOG.md`. |
+| `secrets.test.mjs` | Cap fitxer del repositori conté claus d'API, tokens ni claus privades (el repositori és públic). |
 
-**Resultat actual:** 9 fitxers, 27 proves de primer nivell (el fitxer de moviment n'agrupa 19) i unes 250 comprovacions, totes OK.
+**Resultat actual:** 10 fitxers, 28 proves de primer nivell (el fitxer de moviment n'agrupa 19) i unes 250 comprovacions, totes OK.
 
 Els missatges `FORJA | No s'ha pogut carregar …` en executar-les són esperats: el `fetch` dels catàlegs JSON està desactivat.
 

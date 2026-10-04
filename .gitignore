@@ -28,3 +28,20 @@ mon-proves/*/data/settings/
 # graphify (graf de coneixement del codi, es genera localment)
 graphify-out/
 captures/
+
+# SECRETS: claus, contrasenyes, tokens i credencials MAI van a git (el repositori és públic).
+# Si cal, es puja un fitxer d'exemple sense valors reals (p. ex. .env.example).
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.*
+!secrets.example.*
+credencials*
+CREDENCIALS*
+credentials*
+**/settings/*.ldb
+**/data/settings/
