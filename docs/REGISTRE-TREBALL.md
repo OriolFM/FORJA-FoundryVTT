@@ -210,6 +210,8 @@ Amb tot aquest contingut al repositori, FORJA ja no necessita FORJAPP ni Firebas
 
 **B. Sistema:**
 
+- **Creadors contra els skills de referència** (`skills/README.md`): el constructor d'efectes i artefactes no té recàrrega, acumulador, armes i armadures base, dificultat i latència declarades, ni l'excepció dels artefactes permanents; cal una prova que reprodueixi les 83 plantilles. El skill `forja-creator` té taules de cost desfasades respecte del manual v3 (el projecte és correcte).
+
 4. **Moviments especials d'armes a distància** (Ràfega, Automàtic, Foc automàtic) i armes que encara no són al catàleg (armes de dispersió i de suport), amb les àrees (esfèric, lliure, llàgrima). Pla detallat a `FOUNDRY/09_CONTEXT_SESSIONS.md`, «PENDENT — moviments especials d'armes a distància». Cal decidir amb l'Oriol la llargada de la llàgrima de les escopetes, el «15*» de les armes de dispersió i el radi de l'automàtic.
 5. **Connectar el motor d'àrea** (`area.mjs`, `plantilla.mjs`, `selector-caselles-lliures.mjs`) als efectes i artefactes amb àrea.
 6. **Maniobres d'arts marcials pendents:** Dim Mak, Combinació i Contraatac.

@@ -110,6 +110,7 @@ FORJA-FoundryVTT/
 │   └── joc/                   # Proves en un Foundry real sense pantalla (v13 i v14);
 │                              # local.mjs: segon client contra el Foundry local (Windows)
 ├── mon-proves/                # Món de proves compartit (Foundry v14) + imatges; vegeu el seu README
+├── skills/                    # Còpia dels skills de referència (forja-parametres, forja-creator) i com comprovar-los
 └── docs/
     ├── FORJA_FC001CA_CORE.md  # Manual complet del joc (v3) — font de veritat de les regles
     ├── REVIEW-PLAN.md         # Troballes de la revisió de codi i pla de treball per paquets
