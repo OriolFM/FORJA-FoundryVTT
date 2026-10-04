@@ -85,7 +85,11 @@ export async function decidirDefensa({ defensor, opcions, defensaBasica, categor
   // Sense cap reacció lliure (ni seva ni d'un protector) no hi ha res a
   // decidir: defensa bàsica, sense preguntar.
   const potReaccionar = opcions.some(o => o.id !== "passiva" && o.disponible);
-  if (!potReaccionar && passiva) return { eleccio: passiva, automatica: true };
+  if (!potReaccionar && passiva) {
+    ui.notifications?.info(game.i18n.format("FORJA.Combat.SenseReaccionsPassiva", { nom: defensor.name }));
+    const nom = `${passiva.nom} (${game.i18n.localize("FORJA.Combat.SenseReaccions")})`;
+    return { eleccio: { ...passiva, nom }, automatica: true };
+  }
 
   const desti = decisorDefensa(defensor);
   if (!desti) {

@@ -315,6 +315,8 @@
   "FORJA.Combat.Resoldre": "Resolve declared action",
   "FORJA.Combat.BlocarSenseAccio": "{nom} blocks: no roll required — just apply the extra reduction if the attack hits.",
   "FORJA.Combat.SenseObjectiu": "No target selected (mark it on the canvas with Target): only the roll will be made, without resolving the attack.",
+  "FORJA.Combat.SenseReaccions": "no reactions",
+  "FORJA.Combat.SenseReaccionsPassiva": "{nom} has no free reaction (it recovers at the end of their turn): basic defense applies.",
   "FORJA.Combat.DefensaCompletaEtiqueta": "Full defense: {defensa}",
   "FORJA.Combat.DefensaCompletaJaTirada": "{nom}'s full defense was already rolled when declared: now just declare the next action.",
   "FORJA.Combat.DefensaCompletaConcentrada": "The full defense is rolled right now, always concentrated (+1 die), and applies against every attack until the end of your turn.",
