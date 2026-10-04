@@ -38,8 +38,14 @@ export default class DiategDefensa extends HandlebarsApplicationMixin(Applicatio
   constructor(config, options = {}) {
     super(options);
     this.#config = config;
-    this.#opcioId = config.opcions.find(o => o.disponible)?.id ?? config.opcions[0]?.id ?? null;
-    this.#mitjaId = config.opcions.find(o => o.id === "blocar")?.mitjaId ?? null;
+    // Per defecte, l'última defensa triada en aquest combat (si està disponible).
+    const ultima = config.ultima;
+    const ultimaOpcio = ultima && config.opcions.find(o => o.id === ultima.opcioId && o.disponible);
+    this.#opcioId = ultimaOpcio?.id ?? config.opcions.find(o => o.disponible)?.id ?? config.opcions[0]?.id ?? null;
+    const blocar = config.opcions.find(o => o.id === "blocar");
+    this.#mitjaId = (ultima?.mitjaId && blocar?.mitjans?.some(m => m.id === ultima.mitjaId))
+      ? ultima.mitjaId
+      : (blocar?.mitjaId ?? null);
   }
 
   get title() {

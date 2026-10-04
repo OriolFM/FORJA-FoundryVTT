@@ -437,7 +437,7 @@ export default class ForjaCombat extends Combat {
   async netejarFinalCombat() {
     const temporals = new Set((CONFIG.FORJA?.CATALEG_ESTATS ?? []).filter(e => e.fiCombat).map(e => e.id));
     for (const actor of this._forjaActors()) {
-      await actor.update({ "system.reaccions.gastades": 0, "system.concentrat": false });
+      await actor.update({ "system.reaccions.gastades": 0, "system.concentrat": false, "flags.forja.-=ultimaDefensa": null });
       // Efectes d'estat temporals (inclosos els creats a mà, p. ex. el Lent/2
       // d'Interrupció): fora els que només porten estats temporals.
       const fora = actor.effects

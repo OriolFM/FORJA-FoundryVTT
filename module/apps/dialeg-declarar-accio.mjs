@@ -79,6 +79,16 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     this.#defensaId  = config.defenses?.[0]?.id ?? null;
     this.#concentrar = !!config.concentrat;
     this.#objectiuTokenId = config.objectiuPerDefecte ?? null;
+    // Durant el combat es proposa el que es va triar l'últim cop (si encara val).
+    const u = config.ultima;
+    if (u) {
+      if (u.tipus === "atac" ? config.armes?.length : ["defensa", "moviment", "altra"].includes(u.tipus)) this.#tipus = u.tipus;
+      if (config.armes?.some(a => a.id === u.armaId)) this.#armaId = u.armaId;
+      if (config.defenses?.some(d => d.id === u.defensaId)) this.#defensaId = u.defensaId;
+      if (u.maniobraId && this.#arma()?.permetManiobres) this.#maniobraId = u.maniobraId;
+      if (u.moviment) this.#moviment = normalitzarMoviment(u.moviment);
+      if (u.retard) this.#retard = u.retard;
+    }
     if (!config.armes?.length) this.#tipus = "defensa";
   }
 

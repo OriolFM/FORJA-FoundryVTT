@@ -223,6 +223,8 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // l'escena. Es declaren ara (el manual declara l'acció completa) i
     // l'atac es resol contra aquest token, encara que s'hagi mogut.
     const objectius = _objectiusDeclarables(combat, combatant);
+    // Última declaració d'aquest combatent en aquest combat (valors per defecte).
+    const ultima = combatant.getFlag("forja", "ultimaDeclaracio") ?? null;
 
     const config = await DiategDeclararAccio.obrir({
       nom:          combatant.name,
@@ -235,9 +237,16 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       concentrat:   !!sys.concentrat,
       distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3),
       objectius,
-      objectiuPerDefecte: _objectiuPerDefecte(objectius)
+      objectiuPerDefecte: _objectiuPerDefecte(objectius, ultima?.objectiuTokenId),
+      ultima
     });
     if (!config) return;
+    await combatant.setFlag("forja", "ultimaDeclaracio", {
+      tipus: config.tipus, armaId: config.armaId, maniobraId: config.maniobraId,
+      defensaId: config.defensa?.id ?? ultima?.defensaId ?? null,
+      moviment: config.moviment, retard: config.retardBarallarse ?? 0,
+      objectiuTokenId: config.objectiuTokenId ?? ultima?.objectiuTokenId ?? null
+    });
 
     // WP-M: si el combatent declara durant el seu propi torn, la nova acció
     // és per al proper torn; el moviment del torn en curs (el de l'acció que
@@ -625,9 +634,9 @@ function _objectiusDeclarables(combat, combatant) {
     .sort((a, b) => (a.distancia ?? Infinity) - (b.distancia ?? Infinity));
 }
 
-/** Objectiu preseleccionat: el marcat amb Target, o si no el més proper. */
-function _objectiuPerDefecte(objectius) {
-  return (objectius.find(o => o.marcat) ?? objectius[0])?.tokenId ?? null;
+/** Objectiu preseleccionat: el marcat amb Target, si no l'últim declarat, si no el més proper. */
+function _objectiuPerDefecte(objectius, ultimTokenId = null) {
+  return (objectius.find(o => o.marcat) ?? objectius.find(o => o.tokenId === ultimTokenId) ?? objectius[0])?.tokenId ?? null;
 }
 
 /**

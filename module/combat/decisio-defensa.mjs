@@ -33,9 +33,15 @@ export function registrarPreguntaDefensa() {
       nomAtacant,
       nomDefensor:  defensor.name,
       foraDeCombat: !!defensor.system.salut?.foraDeCombat,
-      opcions
+      opcions,
+      ultima: defensor.getFlag("forja", "ultimaDefensa") ?? null
     });
-    return eleccio ? { opcioId: eleccio.id, mitjaId: eleccio.mitjaId ?? null } : null;
+    if (!eleccio) return null;
+    // Es recorda per proposar-la la propera vegada (s'esborra en acabar el combat).
+    if (!eleccio.interposant && defensor.isOwner) {
+      await defensor.setFlag("forja", "ultimaDefensa", { opcioId: eleccio.id, mitjaId: eleccio.mitjaId ?? null });
+    }
+    return { opcioId: eleccio.id, mitjaId: eleccio.mitjaId ?? null };
   });
 }
 
