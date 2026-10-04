@@ -33,15 +33,28 @@ const ICONES = {
   esguerrat:        "icons/svg/degen.svg",
   rapid:            "icons/svg/upgrade.svg",
   recuperacio:      "icons/svg/regen.svg",
-  sagnant:          "icons/svg/bleeding-wound.svg",
+  sagnant:          "icons/svg/blood.svg",
   vigilant:         "icons/svg/eye.svg"
 };
 
+/**
+ * Estat "Mort" del nucli de Foundry (`dead`, `CONFIG.specialStatusEffects.DEFEATED`),
+ * usat pel Combat Tracker per marcar un combatent com a derrotat. El catàleg
+ * FORJA (estats.json) no té cap entrada equivalent — "Inconscient" i
+ * "Incapacitat" són estats diferents (encara actius, no derrotats) —, així que
+ * es manté explícitament enlloc de perdre'l en substituir `CONFIG.statusEffects`.
+ */
+const ESTAT_MORT = { id: "dead", name: "FORJA.Estat.mort", img: "icons/svg/skull.svg" };
+
 /** Registra `FORJA.CATALEG_ESTATS` com a `CONFIG.statusEffects`. Cridar a l'init. */
 export function registrarEstats() {
-  CONFIG.statusEffects = FORJA.CATALEG_ESTATS.map(estat => ({
-    id:   estat.id,
-    name: estat.nom,
-    img:  ICONES[estat.id] ?? "icons/svg/aura.svg"
-  }));
+  CONFIG.statusEffects = [
+    ESTAT_MORT,
+    ...FORJA.CATALEG_ESTATS.map(estat => ({
+      id:   estat.id,
+      name: `FORJA.Estat.${estat.id}`,
+      img:  ICONES[estat.id] ?? "icons/svg/aura.svg"
+    }))
+  ];
+  CONFIG.specialStatusEffects.DEFEATED = ESTAT_MORT.id;
 }

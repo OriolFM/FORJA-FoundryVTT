@@ -3,12 +3,25 @@
   <!-- Capçalera -->
   <div class="mt-cap">
     <span class="mt-label">{{nomAtacant}} ataca {{nomObjectiu}} amb {{nomArma}}{{#if etiquetaRang}} ({{etiquetaRang}}){{/if}}</span>
-    <span class="mt-dif">def. {{dificultat}}{{#if etiquetaDefensa}} ({{etiquetaDefensa}}){{/if}}</span>
+    <span class="mt-dif">{{localize "FORJA.Display.Defensa"}} {{dificultat}}{{#if etiquetaDefensa}} ({{etiquetaDefensa}}){{/if}}</span>
   </div>
 
   {{#if maniobra}}
   <div class="mt-maniobra" title="{{maniobra.descripcio}}">
-    <i class="fas fa-hand-fist"></i> {{maniobra.nom}} <span class="mt-mod">(+{{maniobra.dificultat}} dif.)</span>
+    <i class="fas fa-hand-fist"></i> {{maniobra.nom}} <span class="mt-mod">(+{{maniobra.dificultat}} {{localize "FORJA.Display.Dificultats"}})</span>
+  </div>
+  {{/if}}
+
+  {{#if (or penalSalut concentrat)}}
+  <div class="mt-mods">
+    {{#if concentrat}}<span class="mt-mod">{{localize "FORJA.Dice.ConcentratBonus"}}</span>{{/if}}
+    {{#if penalSalut}}<span class="mt-mod mt-mod-penal">{{localize "FORJA.Dice.PenalSalutMod" valor=penalSalut}}</span>{{/if}}
+  </div>
+  {{/if}}
+
+  {{#if bonusRetard}}
+  <div class="mt-mods">
+    <span class="mt-mod">{{localize "FORJA.Combat.RetardBarallarseBonus" valor=bonusRetard}}</span>
   </div>
   {{/if}}
 
@@ -22,11 +35,11 @@
   <!-- Resultat de l'atac -->
   <div class="mt-resultat">
     {{#if pifia}}
-      <span class="mt-badge badge-pifia"><i class="fas fa-skull"></i> PÍFIA</span>
+      <span class="mt-badge badge-pifia"><i class="fas fa-skull"></i> {{localize "FORJA.Display.Pifia"}}</span>
     {{else if exit}}
       <span class="mt-badge badge-exit">
         <i class="fas fa-bullseye"></i> {{localize "FORJA.Combat.Impacta"}}
-        {{#if excedent}}<span class="mt-excedent">+{{excedent}} exc.</span>{{/if}}
+        {{#if excedent}}<span class="mt-excedent">+{{excedent}} {{localize "FORJA.Display.Excedent"}}</span>{{/if}}
       </span>
     {{else}}
       <span class="mt-badge badge-fallada">
@@ -52,12 +65,13 @@
         {{localize "FORJA.Combat.EgidaTrencada"}} ({{dany.tornsInactivaEgida}} {{localize "FORJA.Combat.Torns"}})
       </span>
     {{/if}}
-    {{#if concentracioTrencada}}
-      <span class="mt-mod mt-mod-penal">
-        <i class="fas fa-brain"></i> {{localize "FORJA.Concentracio.Trencada"}}
-      </span>
-    {{/if}}
   </div>
+  {{/if}}
+
+  {{#if notes.length}}
+  <ul class="mt-notes">
+    {{#each notes as |n|}}<li>{{n}}</li>{{/each}}
+  </ul>
   {{/if}}
 
 </div>

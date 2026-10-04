@@ -2,6 +2,7 @@ import { ferAtac } from "./atac.mjs";
 import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
 import { objectiusEsferic, puntColisio, tokensEnCaselles } from "./area.mjs";
 import { aplicarDanyAPista } from "./dany.mjs";
+import { actualitzarComGM, alternarEstatComGM, crearEmbegutsComGM } from "../xarxa/socket.mjs";
 
 /**
  * Maniobres d'Arts Marcials (S-12, manual p. 631-651). Només disponibles
@@ -13,15 +14,10 @@ import { aplicarDanyAPista } from "./dany.mjs";
  * POSTERIOR a un `ferAtac` normal ja reeixit (aplicar un estat, o
  * —Puntada de peu giratòria— repetir la resolució contra més d'un
  * objectiu) — i que per tant no calia tocar `ferAtac`/`calcularDany` per
- * dins. **Deliberadament fora d'aquesta peça** (necessiten tocar el
- * pipeline de dany o l'economia de reaccions per dins, cadascuna amb el
- * seu propi matís, documentat com a pendent):
- *   - Cop penetrant (ignora armadura natural/flexible): el sistema
- *     actual no distingeix TIPUS d'armadura enlloc (`_armaduraEfectiva`
- *     a atac.mjs sempre fa servir la primera armadura que trobi, sense
- *     mirar `fisica`/`flexible`/`natural`) — caldria primer fer que
- *     l'armadura es filtri per tipus abans de poder "ignorar-ne només
- *     alguns tipus".
+ * dins. L'estat de la maniobra i Cop penetrant (ignora armadures naturals i
+ * flexibles) ja els aplica `ferAtac` (B6). **Deliberadament fora d'aquesta
+ * peça** (necessiten tocar el pipeline de dany o l'economia de reaccions
+ * per dins, cadascuna amb el seu propi matís, documentat com a pendent):
  *   - Dim Mak (triar dany a ferides o el doble a fatiga): toca el
  *     pipeline de dany per dins.
  *   - Combinació (2 cops en 2 torns consecutius): estat entre activacions.
@@ -39,7 +35,7 @@ import { aplicarDanyAPista } from "./dany.mjs";
 export async function aplicarEfecteManiobra(maniobra, objectiu) {
   if (!maniobra?.estat) return;
   if (!objectiu.statuses?.has(maniobra.estat)) {
-    await objectiu.toggleStatusEffect(maniobra.estat, { active: true });
+    await alternarEstatComGM(objectiu, maniobra.estat, true);
   }
   // Interrupció (manual p. 641): a més de l'atordit, +2 de llatència a la
   // PROPERA acció de l'objectiu — reaprofita el mateix mecanisme de
@@ -47,7 +43,7 @@ export async function aplicarEfecteManiobra(maniobra, objectiu) {
   // perquè es retiri sol un cop usat (consumit a `tracker-ui.mjs`, quan
   // l'objectiu torna a declarar).
   if (maniobra.id === "interrupcio") {
-    await objectiu.createEmbeddedDocuments("ActiveEffect", [{
+    await crearEmbegutsComGM(objectiu, "ActiveEffect", [{
       name: game.i18n.format("FORJA.Combat.LentPerManiobra", { nom: maniobra.nom }),
       statuses: ["lent"],
       img: "icons/svg/downgrade.svg",
@@ -185,7 +181,7 @@ export async function resoldreLlancament({ actorAtacant, tokenAtacant, tokenObje
   // {animate:false}: un llançament reposiciona el token a l'instant (com
   // qualsevol altre efecte de joc que el mou), no com un arrossegament
   // manual del jugador — no té sentit una animació de lliscament.
-  await tokenObjectiu.document.update({ x: tlFinal.x, y: tlFinal.y }, { animate: false });
+  await actualitzarComGM(tokenObjectiu.document, { x: tlFinal.x, y: tlFinal.y }, { animate: false });
 
   if (obstacle) {
     const dany = await demanarDanyColisio(tokenObjectiu.name);
@@ -194,7 +190,7 @@ export async function resoldreLlancament({ actorAtacant, tokenAtacant, tokenObje
       const nous = aplicarDanyAPista({ ferides: { marcats: marcatsActuals } }, "ferides", dany, {
         noMort: !!tokenObjectiu.actor.system.noMort
       });
-      await tokenObjectiu.actor.update({ "system.salut.ferides.marcats": nous });
+      await actualitzarComGM(tokenObjectiu.actor, { "system.salut.ferides.marcats": nous });
     }
     const clau = obstacle.tipus === "mur" ? "FORJA.Combat.LlancamentXocMur" : "FORJA.Combat.LlancamentXocObjecte";
     const content = `<div class="forja-missatge-atac">`

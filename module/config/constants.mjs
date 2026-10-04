@@ -111,6 +111,37 @@ FORJA.LLISTA_HABILITATS = [
   { id: "qi",              nom: "FORJA.Hab.qi",              attr: "APL", tipus: "restringida" }
 ];
 
+/* ---------- Habilitat/atribut d'atac per categoria d'arma (D3, B8/Q1) ----------
+   HAB_PER_CATEGORIA: habilitat que es tira per defecte segons `ItemArma#categoria`
+   (font única — abans hi havia una còpia a full-personatge.mjs i una altra a
+   tracker-ui.mjs). ATAC_PER_CATEGORIA hi afegeix l'atribut: confirmat contra el
+   manual (cap. Combat, "Cos a cos" i "A distància"): armes cos a cos i arts
+   marcials tiren DES, barallar-se/armament natural tira FOR, a distància tira
+   DES — amb l'excepció de les llancívoles (AGI), vegeu ATAC_PER_ARMA. */
+FORJA.HAB_PER_CATEGORIA = {
+  natural:   "barallar-se",
+  cosAcos:   "armes-cos-a-cos",
+  distancia: "armes-distancia"
+};
+
+FORJA.ATAC_PER_CATEGORIA = {
+  natural:   { atribut: "FOR", habId: "barallar-se" },
+  cosAcos:   { atribut: "DES", habId: "armes-cos-a-cos" },
+  distancia: { atribut: "DES", habId: "armes-distancia" }
+};
+
+// Excepcions per catàleg (flags.forja.catalegId) al valor per categoria de
+// dalt. Les improvisades són una interpretació pròpia (el manual només dona
+// FOR+1/DES+3 de dany per a les improvisades a distància i no diu tirada
+// explícita per a les cos a cos ni distància improvisades; per coherència amb
+// la resta de la taula els assignem la seva pròpia habilitat "armes-improvisades",
+// FOR->DES); cal confirmar-ho amb el dissenyador.
+FORJA.ATAC_PER_ARMA = {
+  "llancivoles":                    { atribut: "AGI" },
+  "armes-improvisades-cac":         { habId: "armes-improvisades" },
+  "armes-improvisades-distancia":   { atribut: "AGI", habId: "armes-improvisades" }
+};
+
 /* ---------- Dades del manual (JSON editable) ----------
    Externalitzades perquè es puguin ampliar/corregir sense tocar codi (i, més
    endavant, des d'una interfície d'edició). Es carreguen totes en paral·lel
@@ -118,10 +149,17 @@ FORJA.LLISTA_HABILITATS = [
    round-trips seqüencials pot arribar a retardar l'evaluació del mòdul més
    enllà del que Foundry espera abans de disparar el hook "init" (vist en
    viu: amb 6 fetches seqüencials, `Hooks.once("init")` de forja.mjs a vegades
-   no arribava a registrar-se a temps — vegeu 09_CONTEXT_SESSIONS.md). */
+   no arribava a registrar-se a temps — vegeu 09_CONTEXT_SESSIONS.md). La URL
+   es construeix relativa a aquest mòdul (`import.meta.url`) enlloc d'un camí
+   fix `systems/forja/...`, perquè segueixi funcionant si Foundry serveix el
+   sistema sota un prefix de ruta diferent o la carpeta es renombra. */
 async function _carregarJSON(fitxer) {
-  return fetch(`systems/forja/module/config/dades/${fitxer}`)
-    .then(r => r.json())
+  const url = new URL(`./dades/${fitxer}`, import.meta.url);
+  return fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
+      return r.json();
+    })
     .catch(err => { console.error(`FORJA | No s'ha pogut carregar ${fitxer}`, err); return []; });
 }
 

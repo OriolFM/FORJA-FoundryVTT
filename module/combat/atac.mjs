@@ -1,6 +1,11 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
-import { calcularDany, resoldreDanyArma, aplicarDanyAPista } from "./dany.mjs";
-import { trencarConcentracio } from "./reaccions.mjs";
+import {
+  calcularDany, resoldreDanyArma, aplicarDanyAPista,
+  proteccioArmadura, itemEgidaActiva, tickReactivacioEgida, efecteDanyConcentracio
+} from "./dany.mjs";
+import { consumirConcentracio, trencarConcentracio } from "./reaccions.mjs";
+import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
+import { teProprietat } from "./propietats.mjs";
 import { resoldrePerRupturaConcentracio } from "./control-efecte.mjs";
 
 /**
@@ -28,10 +33,53 @@ import { resoldrePerRupturaConcentracio } from "./control-efecte.mjs";
  *   afegeix la seva dificultat a la tirada d'atac i s'anota a l'estat/xat resultant.
  * @param {string}  [p.etiquetaDefensa]  Nom de l'opció de defensa resolta (S-13), només per al xat.
  * @param {string}  [p.etiquetaRang]      Nom de la banda de rang resolta (S-12), només per al xat.
+ * @param {number}  [p.danyExtra=0]       Dany addicional si impacta (B14: pífia del defensor en esquivar).
+ * @param {number}  [p.retardBarallarse=0] Ticks de latència extra declarats per barallar-se (B16):
+ *   +1 dau a la tirada d'atac per cada tick.
+ * @param {{daus:number, dany:number}} [p.bonusCarrega]  Bonificació de càrrega (WP-M,
+ *   `bonificacioCarrega` de combat/moviment.mjs): +daus a l'atac i +dany si impacta.
+ * @returns {Promise<object|null>}  `null` si l'atacant està fora de combat (nivell 7 de salut)
+ *
+ * Regles aplicades (manual FC001CA):
+ *  - SISTEMES › Salut › Fatiga i ferides: la penalització de salut de
+ *    l'ATACANT s'afegeix a la dificultat (B1); al nivell 7 no pot actuar.
+ *  - › Gestió del temps de joc › Concentració: si l'atacant s'havia
+ *    concentrat, +1 dau i es consumeix (B5); si l'OBJECTIU concentrat rep
+ *    dany, perd la concentració, i si en rep més que la seva FOR queda
+ *    atordit (› Estats › Concentrat).
+ *  - › Combat › Cos a cos (taula Arts Marcials): la maniobra suma +1 a la
+ *    dificultat i, si l'atac impacta, aplica el seu estat (B6); "Cop
+ *    penetrant" ignora les armadures naturals i flexibles.
+ *  - › Dany › Protecció + manual l. 3337: millor armadura + meitat de la flexible (B3, `proteccioArmadura`).
+ *  - › Dany › Protecció + decisió Q2: l'ègida trencada es reactiva al tick
+ *    del rellotge `marcador + torns` (B4, vegeu `ForjaCombat#reactivarEgides`).
+ *  - › A Distància, taula (Escopetes, "Poca penetració"): contra una arma amb
+ *    la propietat `escopeta`, les armadures rígides protegeixen el doble (B13).
+ *  - › Exemple de combat › "Esquivar o defensa bàsica?": si el defensor ha
+ *    espifiat l'esquivada, +1 dany per cada 1 (B14, `danyExtra`).
+ *  - › Cos a cos, "Barallar-se" i taula d'armes naturals (Cop): cada +1 de
+ *    latència afegida dona +1 a impactar — +1 dau, com els altres "+X a la
+ *    tirada" del manual (B16, `retardBarallarse`).
+ *  - › Temps actiu › Moviment (l. 2794): la càrrega de 2 m o més dona "1 dau
+ *    addicional a la tirada d'atac i al dany (si l'atac impacta)". El dany de
+ *    FORJA no es tira, així que el dau "al dany" és +1 al dany de l'atac,
+ *    abans de l'ègida i l'armadura (WP-M, `bonusCarrega`).
  */
-export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null }) {
-  const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0);
-  const roll = new ForjaRoll(`${Math.max(1, poolFinal)}d10`, {}, {
+export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null, danyExtra = 0, retardBarallarse = 0, bonusCarrega = null }) {
+  if (actor.system.salut?.foraDeCombat) {
+    ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
+    return null;
+  }
+
+  const penalSalut      = actor.system.salut?.penalitzacio ?? 0;
+  const dauConcentracio = await consumirConcentracio(actor);
+  const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0) + penalSalut;
+  const bonusRetard     = Math.max(0, retardBarallarse ?? 0);
+  const dausCarrega     = Math.max(0, bonusCarrega?.daus ?? 0);
+  const danyCarrega     = Math.max(0, bonusCarrega?.dany ?? 0);
+  const pool            = Math.max(1, poolFinal + dauConcentracio + bonusRetard + dausCarrega);
+
+  const roll = new ForjaRoll(`${pool}d10`, {}, {
     forja: { dificultat: dificultatFinal }
   });
   await roll.evaluate();
@@ -42,43 +90,87 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
 
   let resultatDany = null;
   let concentracioTrencada = false;
+  const notes = [];
+  if (dausCarrega > 0) notes.push(game.i18n.format("FORJA.Combat.CarregaBonus", { daus: dausCarrega, dany: danyCarrega }));
   if (exit) {
     const { valor: danyBaseArma, bonificador: bonificadorArma } = resoldreDanyArma(arma.system.danyBase, actor);
 
-    const armadura = _armaduraEfectiva(objectiu, arma.system.categoria);
-    const egida    = _egidaEfectiva(objectiu);
+    // "Cop penetrant" (arts marcials) ignora les armadures naturals i flexibles.
+    const ignorarTipus = maniobra?.id === "cop-penetrant" ? ["natural", "flexible"] : [];
+    // B13: "Poca penetració" de les escopetes — les rígides protegeixen el doble.
+    const escopeta  = teProprietat(arma, "escopeta");
+    const armadura  = proteccioArmadura(objectiu.items, { ignorarTipus, dobleRigida: escopeta });
+    if (escopeta && armadura > proteccioArmadura(objectiu.items, { ignorarTipus })) {
+      notes.push(game.i18n.format("FORJA.Combat.PocaPenetracio", { proteccio: armadura }));
+    }
+    const itemEgida = itemEgidaActiva(objectiu.items);
+    const egida     = itemEgida ? { activa: true, absorcio: itemEgida.system.egida.absorcio } : null;
+
+    // Estat previ a aplicar el dany (la còpia local es refresca després de l'update).
+    const estavaConcentrat = !!objectiu.system.concentrat;
 
     resultatDany = calcularDany({
-      danyBaseArma,
+      danyBaseArma: danyBaseArma + danyCarrega,
       bonificadorArma,
       excedentAtac: excedent,
       reduccioDany: (objectiu.system.reduccioDany ?? 0) + reduccioExtra,
       armadura,
-      egida
+      egida,
+      danyExtra
     });
+    if (danyExtra > 0) notes.push(game.i18n.format("FORJA.Combat.PifiaEsquivarDanyAplicat", { nom: objectiu.name, valor: danyExtra }));
 
+    // Si el DJ no pot aplicar alguna conseqüència (desconnectat, massa lent,
+    // camp rebutjat pel relé), l'atac NO es perd: la tirada i el resultat es
+    // publiquen igualment al xat, amb una nota perquè el DJ ho apliqui a mà.
+    try {
     if (resultatDany.danyFinal > 0) {
       const marcatsActuals = objectiu.system.salut[pista].marcats;
       const nous = aplicarDanyAPista({ [pista]: { marcats: marcatsActuals } }, pista, resultatDany.danyFinal, { noMort: !!objectiu.system.noMort });
-      await objectiu.update({ [`system.salut.${pista}.marcats`]: nous });
-
-      // Concentració (S-11, manual "Concentrat"): un cop de dany superior a la
-      // FOR de l'objectiu trenca la concentració (l'atordiment resultant queda
-      // a criteri del DJ, com la resta d'estats — vegeu estats.mjs).
-      if (objectiu.system.concentrat && resultatDany.danyFinal > (objectiu.system.atributs?.FOR ?? 0)) {
-        concentracioTrencada = await trencarConcentracio(objectiu);
-        if (concentracioTrencada) await resoldrePerRupturaConcentracio(game.combat, objectiu);
-      }
+      await actualitzarComGM(objectiu, { [`system.salut.${pista}.marcats`]: nous });
     }
 
-    if (resultatDany.egidaTrencada) {
-      const armaduraObjectiu = objectiu.items.find(i => i.type === "armadura" && i.system.egida?.activa);
-      if (armaduraObjectiu) {
-        await armaduraObjectiu.update({
-          "system.egida.activa": false,
-          "system.egida.tornsInactiva": resultatDany.tornsInactivaEgida
-        });
-      }
+    if (resultatDany.egidaTrencada && itemEgida) {
+      const combat = _combatDe(objectiu);
+      const reactivaAlTick = combat
+        ? tickReactivacioEgida(combat.marcador ?? 0, resultatDany.tornsInactivaEgida)
+        : null;
+      await actualitzarComGM(itemEgida, {
+        "system.egida.activa":        false,
+        "system.egida.tornsInactiva": resultatDany.tornsInactivaEgida,
+        "flags.forja.egidaReactivaAlTick": reactivaAlTick
+      });
+      resultatDany.egidaReactivaAlTick = reactivaAlTick;
+      notes.push(reactivaAlTick !== null
+        ? game.i18n.format("FORJA.Combat.EgidaReactivaAlTick", { tick: reactivaAlTick })
+        : game.i18n.localize("FORJA.Combat.EgidaReactivacioManual"));
+    }
+
+    // Concentració de l'objectiu (B5).
+    const conc = efecteDanyConcentracio(estavaConcentrat, resultatDany.danyFinal, objectiu.system.atributs?.FOR);
+    if (conc.trenca) {
+      concentracioTrencada = await trencarConcentracio(objectiu);
+      // S-21: si l'objectiu disputava el control d'un efecte, el perd.
+      if (concentracioTrencada) await resoldrePerRupturaConcentracio(_combatDe(objectiu) ?? game.combat, objectiu);
+      notes.push(game.i18n.format("FORJA.Combat.ConcentracioTrencada", { nom: objectiu.name }));
+    }
+    if (conc.atordit && _estatExisteix("atordit")) {
+      await alternarEstatComGM(objectiu, "atordit", true);
+      notes.push(game.i18n.format("FORJA.Combat.ConcentracioAtordit", { nom: objectiu.name }));
+    }
+
+    // Estat de la maniobra d'arts marcials (B6).
+    if (maniobra?.estat && _estatExisteix(maniobra.estat)) {
+      await alternarEstatComGM(objectiu, maniobra.estat, true);
+      notes.push(game.i18n.format("FORJA.Combat.EstatAplicat", {
+        nom: objectiu.name,
+        estat: game.i18n.localize(`FORJA.Estat.${maniobra.estat}`)
+      }));
+    }
+    } catch (err) {
+      console.error("FORJA | No s'han pogut aplicar les conseqüències de l'atac", err);
+      resultatDany.noAplicat = true;
+      notes.push(game.i18n.format("FORJA.Combat.ConsequenciesNoAplicades", { nom: objectiu.name, error: err?.message ?? String(err) }));
     }
   }
 
@@ -91,6 +183,10 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     etiquetaDefensa,
     etiquetaRang,
     maniobra,
+    penalSalut,
+    concentrat: dauConcentracio > 0,
+    bonusRetard,
+    notes,
     dany: resultatDany,
     pista,
     concentracioTrencada,
@@ -109,24 +205,59 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
 }
 
 /**
- * Determina la protecció d'armadura efectiva contra una categoria d'arma
- * (manual: l'armadura redueix el dany segons el seu tipus de protecció).
- * @param {Actor} objectiu
- * @param {string} _categoriaArma
+ * Combat començat on l'actor és combatent (per llegir-ne el marcador de
+ * temps). Si no n'és combatent, `null`: l'ègida no es pot reactivar
+ * automàticament (vegeu `ForjaCombat#reactivarEgides`), i es fa a mà — activar
+ * una ègida és una acció lliure (manual FC001CA › Armadures i ègides › Ègides).
+ * @param {Actor} actor
+ * @returns {Combat|null}
+ */
+function _combatDe(actor) {
+  const iniciats = game.combats?.filter(c => c.started) ?? [];
+  return iniciats.find(c => c.combatants.some(cb => cb.actor?.uuid === actor.uuid)) ?? null;
+}
+
+/** @param {string} id  @returns {boolean} si l'estat existeix a CONFIG.statusEffects */
+function _estatExisteix(id) {
+  return !!CONFIG.statusEffects?.some(e => e.id === id);
+}
+
+/* -------------------------------------------- */
+/*  Barallar-se: retard voluntari (B16)         */
+/* -------------------------------------------- */
+
+/**
+ * Màxim de ticks de retard que un atac de barallar-se admet (B16, funció pura).
+ *
+ * Manual FC001CA › SISTEMES › Combat › Cos a cos: "Barallar-se (FOR): el PJ
+ * fa servir les seves armes naturals sense reserves. El jugador pot retardar
+ * la seva acció (afegint latència) tants torns com punts d'habilitat tingui.
+ * Cada torn afegeix un +1 a impactar." Taula "Armes naturals", Cop:
+ * "Barallar-se -- Cada +1 addicional a latència dóna un +1 a impactar. El
+ * màxim nombre de torns que es pot retardar és el nivell d'habilitat del PJ."
+ *
+ * Lectura: aquí "torn" = +1 de latència = una casella (tick) del rellotge de
+ * temps actiu, com diu explícitament la taula del Cop. Només per a atacs que
+ * es tiren amb barallar-se (armes naturals, `habId === "barallar-se"`) i sense
+ * maniobra d'arts marcials (llavors la tirada és DES + Arts Marcials).
+ *
+ * @param {{habId:string}} arma   Entrada d'arma del diàleg de declarar
+ * @param {number} nivellBarallarse
+ * @param {boolean} [ambManiobra=false]
  * @returns {number}
  */
-function _armaduraEfectiva(objectiu, _categoriaArma) {
-  const armadura = objectiu.items.find(i => i.type === "armadura");
-  return armadura?.system?.reduccio ?? 0;
+export function retardMaximBarallarse(arma, nivellBarallarse, ambManiobra = false) {
+  if (!arma || arma.habId !== "barallar-se" || ambManiobra) return 0;
+  return Math.max(0, Math.floor(nivellBarallarse ?? 0));
 }
 
 /**
- * Retorna l'estat actual de l'ègida de l'objectiu, si en té una activa.
- * @param {Actor} objectiu
- * @returns {{activa:boolean, absorcio:number}|null}
+ * Normalitza el retard triat al rang [0, màxim] (B16, funció pura).
+ * @param {number|string} retard
+ * @param {number} maxim
+ * @returns {number}
  */
-function _egidaEfectiva(objectiu) {
-  const armadura = objectiu.items.find(i => i.type === "armadura" && i.system.egida?.activa);
-  if (!armadura) return null;
-  return { activa: true, absorcio: armadura.system.egida.absorcio };
+export function limitarRetardBarallarse(retard, maxim) {
+  const n = Math.floor(Number(retard) || 0);
+  return Math.min(Math.max(0, n), Math.max(0, maxim ?? 0));
 }

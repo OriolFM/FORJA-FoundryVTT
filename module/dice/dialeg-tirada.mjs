@@ -3,11 +3,13 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 /**
  * Diàleg de configuració de tirada FORJA.
  * L'atribut i habilitat ja vénen triats; aquí s'afegeixen modificadors (DA-5).
+ * La concentració NO es pot marcar aquí (B5): es declara en declarar l'acció
+ * i el diàleg només en mostra l'estat (+1 dau que aplica `ferTirada`).
  */
 export default class DiategTirada extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
-    id: "forja-dialeg-tirada",
+    id: "forja-dialeg-tirada-{id}",
     classes: ["forja", "forja-dialog", "dialeg-tirada"],
     tag: "form",
     position: { width: 320 },
@@ -53,8 +55,7 @@ export default class DiategTirada extends HandlebarsApplicationMixin(Application
     this.#resolve?.({
       dificultat:    Math.max(1, parseInt(d.dificultat)    || 1),
       modDaus:       parseInt(d.modDaus)       || 0,
-      modDificultat: parseInt(d.modDificultat) || 0,
-      concentrat:    !!d.concentrat
+      modDificultat: parseInt(d.modDificultat) || 0
     });
   }
 

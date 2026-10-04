@@ -6384,7 +6384,7 @@ li.combatant:has(> .forja-controls) {
 .forja-equip-llista { display: flex; flex-direction: column; gap: 4px; }
 .forja-equip-fila {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   align-items: center;
   gap: 8px;
   padding: 4px 8px;
@@ -6395,6 +6395,25 @@ li.combatant:has(> .forja-controls) {
 .forja-equip-fila:hover { background: rgba(255,255,255,0.07); }
 .forja-equip-fila .equip-nom { font-weight: 600; }
 .forja-equip-fila .equip-meta { color: #94a3b8; font-size: 0.8rem; }
+
+/* Armadura no equipada (equip-armadura): atenuada, no compta per protecció/latència */
+.forja-equip-fila.equip-inactiu { opacity: 0.55; }
+.forja-equip-fila.equip-inactiu .equip-nom { text-decoration: line-through; }
+
+/* Commutador d'equipar/desequipar armadura */
+.btn-equip-toggle {
+  width: 22px; height: 22px;
+  background: transparent;
+  border: 1px solid var(--forja-border-color);
+  border-radius: 3px;
+  color: var(--forja-text-muted);
+  font-size: 0.75rem;
+  cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.btn-equip-toggle.actiu { color: #4ade80; border-color: rgba(74,222,128,0.5); }
+.btn-equip-toggle:hover { color: var(--forja-primary-light); border-color: var(--forja-primary); }
 
 .forja-dialeg-equipament { display: flex; flex-direction: column; height: 100%; padding: 8px; gap: 8px; }
 .forja-dialeg-equipament .de-cap { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -6694,3 +6713,66 @@ li.combatant:has(> .forja-controls) {
   color: #fca5a5;
 }
 .forja-disputa-control .dc-botons button.dc-renunciar:hover { background: rgba(248,113,113,0.3); color: #fecaca; }
+/* ==== C3 — FITXA D'ITEM (FullItem, templates/item/*.hbs) ==== */
+.forja-item-sheet { display: flex; flex-direction: column; height: 100%; }
+.forja-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-bottom: 1px solid var(--forja-border-color);
+}
+.forja-item-header .item-img {
+  width: 48px; height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid var(--forja-border-color);
+}
+.forja-item-header .item-header-fields { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.forja-item-header .item-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid transparent;
+}
+.forja-item-header .item-name:hover, .forja-item-header .item-name:focus { border-color: var(--forja-border-color); }
+.forja-item-header .item-type-badge {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--forja-text-muted);
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+.forja-item-cos { padding: 10px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+.forja-item-cos .form-group { display: flex; flex-direction: column; gap: 2px; }
+.forja-item-cos .form-group label { font-size: 0.8rem; color: var(--forja-text-muted); }
+.forja-item-cos .form-group-inline { flex-direction: row; align-items: center; gap: 14px; }
+.forja-item-cos .form-group-inline label { display: flex; align-items: center; gap: 4px; }
+.forja-item-cos .form-group-stacked { margin-top: 4px; }
+.forja-item-cos fieldset {
+  border: 1px solid var(--forja-border-color);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.forja-item-cos fieldset legend { font-size: 0.8rem; color: var(--forja-text-muted); padding: 0 4px; }
+.forja-item-ajuda { font-size: 0.75rem; color: var(--forja-text-muted); margin: 0; }
+.forja-item-json {
+  font-family: monospace;
+  font-size: 0.8rem;
+  resize: vertical;
+}
+/* ---- Combat: rellotge i missatges (WP-F) ---- */
+.forja-marcador-temps { display:flex; gap:.35em; align-items:center; justify-content:center; padding:2px 6px; font-size:.9em; }
+.combatant.forja-a-la-casella { box-shadow: inset 3px 0 0 var(--forja-accent, #2aa198); }
+.forja-controls .forja-concentrat { color: var(--forja-accent, #2aa198); margin-left:.25em; }
+.forja-missatge-atac .mt-notes { margin:.3em 0 0; padding-left:1.1em; font-size:.85em; }
+.dialeg-tirada .tirada-concentrat-estat { display:flex; gap:.3em; align-items:center; font-style:italic; }
+.dialeg-declarar-accio .dda-concentrar .hint { flex-basis:100%; font-size:.8em; opacity:.8; margin:0; }

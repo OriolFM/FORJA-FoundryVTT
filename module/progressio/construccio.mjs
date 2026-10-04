@@ -33,8 +33,8 @@
  * dissenyar artefactes — es construeixen amb els mateixos blocs bàsics
  * (abast/objectius/durada/dany/curació/protecció/estats/habilitats) més dos
  * paràmetres exclusius d'artefacte (`seleccio.artefacte`, opcional):
- * `activacioId` (`FORJA.PARAMETRES.artefacteActivacio` — normal/trivial) i
- * `modeEsperaId` (`FORJA.PARAMETRES.artefacteModeEspera` — si cal invertir
+ * `activacioId` (`CONFIG.FORJA.PARAMETRES.artefacteActivacio` — normal/trivial) i
+ * `modeEsperaId` (`CONFIG.FORJA.PARAMETRES.artefacteModeEspera` — si cal invertir
  * temps mantenint-lo preparat perquè l'activació sigui trivial). **No
  * confondre amb el `carrega.modeEspera` de S-26** (`combat/artefactes.mjs`):
  * aquell és un booleà d'estat en joc (recàrrega manual vs. automàtica per
@@ -45,11 +45,11 @@
 /**
  * @typedef {object} SeleccioConstruccio
  * @property {string} tipus       "efecte" | "ritual"
- * @property {string} abast       id de `FORJA.PARAMETRES.abast`
- * @property {string} objectius   id de `FORJA.PARAMETRES.objectius`
- * @property {string} durada      id de `FORJA.PARAMETRES.durada`
- * @property {string} usTemps     id de `FORJA.PARAMETRES.usTemps`
- * @property {string} usAccio     id de `FORJA.PARAMETRES.usAccio`
+ * @property {string} abast       id de `CONFIG.FORJA.PARAMETRES.abast`
+ * @property {string} objectius   id de `CONFIG.FORJA.PARAMETRES.objectius`
+ * @property {string} durada      id de `CONFIG.FORJA.PARAMETRES.durada`
+ * @property {string} usTemps     id de `CONFIG.FORJA.PARAMETRES.usTemps`
+ * @property {string} usAccio     id de `CONFIG.FORJA.PARAMETRES.usAccio`
  * @property {{categoria:string, tipus:string, nivell:number}|null} dany
  * @property {{tipus:string, nivell:number, extra:string[]}|null} curacio
  * @property {{tipus:string, nivell:number}|null} proteccio

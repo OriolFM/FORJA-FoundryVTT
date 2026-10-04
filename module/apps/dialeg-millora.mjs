@@ -7,7 +7,7 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 export default class DiategMillora extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
-    id: "forja-dialeg-millora",
+    id: "forja-dialeg-millora-{id}",
     classes: ["forja", "forja-dialog", "dialeg-millora"],
     tag: "form",
     position: { width: 420 },

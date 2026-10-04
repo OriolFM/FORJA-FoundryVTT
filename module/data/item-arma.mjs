@@ -25,6 +25,10 @@ export default class ItemArma extends foundry.abstract.TypeDataModel {
       maniobra:     new fields.StringField({ initial: "" }),
       rangExtrem:   new fields.BooleanField({ initial: false }),
       basic:        new fields.BooleanField({ initial: false }),
+      // Propietats de regla llegibles per màquina (WP-I, B13/B15): p. ex.
+      // "escopeta" (poca penetració), "escut" (blocar amb armes cos a cos).
+      // Vegeu module/combat/propietats.mjs.
+      propietats:   new fields.ArrayField(new fields.StringField({ blank: false })),
       descripcio:   new fields.HTMLField({ initial: "" })
     };
   }

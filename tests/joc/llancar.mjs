@@ -1,0 +1,12 @@
+import { BASE, navegador, entrarSetup, registrarErrors, unirse } from "./comu.mjs";
+const b = await navegador(); const p = await b.newPage({ viewport: { width: 1400, height: 900 } });
+const errors = registrarErrors(p, "DJ");
+await entrarSetup(p);
+const r = await p.evaluate(async () => { const r = await fetch("/setup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "launchWorld", world: "proves-forja" }) }); return r.status; });
+console.log("launchWorld:", r); await p.waitForTimeout(8000);
+await unirse(p, "Gamemaster");
+const info = await p.evaluate(() => ({ sistema: game.system.id, versio: game.system.version, core: game.version, forja: !!CONFIG.FORJA, trets: CONFIG.FORJA?.LLISTA_TRETS?.length, armes: CONFIG.FORJA?.CATALEG_ARMES?.length, estats: CONFIG.statusEffects.length, idioma: game.i18n.lang }));
+console.log("Món carregat:", JSON.stringify(info));
+await p.screenshot({ path: `${process.env.FORJA_CAPTURES ?? process.env.HOME + "/foundry/proves/captures"}/10-mon-dj.png` });
+console.log("Errors:", errors.length ? errors.join("\n") : "cap");
+await b.close();

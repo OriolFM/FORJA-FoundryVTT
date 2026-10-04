@@ -132,6 +132,7 @@
     "danyBase": "FOR+2",
     "maniobra": "Llançament — Si està equilibrat, es pot llançar com a arma. Defensa amb escut — +1 a la defensa bàsica si no s'usa per atacar; integritat estructural 10 si es fa servir per blocar.",
     "rangExtrem": false,
+    "propietats": ["escut"],
     "descripcio": "Escuts (manual: Lat +1, Abast +0, Dany FOR+2)."
   },
   {
@@ -290,6 +291,7 @@
     "danyBase": "DES+3",
     "maniobra": "Dispersió — Inefectives a més de rang mitjà, però l'objectiu sempre té defensa bàsica 1 (modificada per distància). Poca penetració — Les armadures rígides ofereixen el doble de protecció contra escopetes.",
     "rangExtrem": true,
+    "propietats": ["escopeta"],
     "descripcio": "Manual: Lat +2, Rang 10 (abast extrem), Dany DES+3, munició 6."
   },
   {

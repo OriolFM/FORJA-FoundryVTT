@@ -1,5 +1,6 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { concentrar, trencarConcentracio } from "./reaccions.mjs";
+import { actualitzarComGM } from "../xarxa/socket.mjs";
 
 /**
  * Prendre el control d'un efecte (S-21, manual p. 580-588): quan un
@@ -11,7 +12,7 @@ import { concentrar, trencarConcentracio } from "./reaccions.mjs";
  *
  * Estat de la disputa: es guarda com a flag al document `Combat` actiu
  * (`combat.getFlag("forja","disputaControl")`), igual que
- * `_forjaCombatentDeclarant` — és l'únic lloc amb identitat inequívoca
+ * els flags del rellotge (`flags.forja.actiu`) — és l'únic lloc amb identitat inequívoca
  * de "quin combat" i sobreviu als re-renders de fitxa. Mentre duri, els
  * dos contendents estan CONCENTRATS (reaprofitant `concentrar`/
  * `trencarConcentracio` de S-11: +1 dau, sense reaccions — exactament
@@ -97,7 +98,7 @@ export async function iniciarDisputaControl({ combat, efecteNom, dificultatBase,
     defensorId: defensor.id, defensorNom: defensor.name,
     fites: { [atacant.id]: atacantFites, [defensor.id]: defensorFites }
   };
-  await combat.setFlag(SCOPE, KEY, estat);
+  await _desarDisputa(combat, estat);
   await concentrar(atacant);
   await concentrar(defensor);
   return estat;
@@ -131,7 +132,7 @@ export async function continuarDisputaControl(combat, actor) {
     return { resolt: true, roll, fitesActor, fitesOponent, guanyador: resolucio.guanyador };
   }
 
-  await combat.setFlag(SCOPE, KEY, { ...estat, fites: nousFites });
+  await _desarDisputa(combat, { ...estat, fites: nousFites });
   return { resolt: false, roll, fitesActor, fitesOponent };
 }
 
@@ -199,8 +200,19 @@ export async function oferirControlSiEscau({ resultat, resistencia, dificultatBa
   });
 }
 
+/**
+ * Desa (o esborra, amb `null`) l'estat de la disputa al combat. Un jugador no
+ * pot escriure el document Combat: passa pel relé del DJ (`flags.forja.*`).
+ * @param {Combat} combat
+ * @param {object|null} estat
+ */
+async function _desarDisputa(combat, estat) {
+  const canvi = estat === null ? { [`flags.${SCOPE}.-=${KEY}`]: null } : { [`flags.${SCOPE}.${KEY}`]: estat };
+  await actualitzarComGM(combat, canvi);
+}
+
 async function _resoldreDisputa(combat, estat, guanyadorId) {
-  await combat.unsetFlag(SCOPE, KEY);
+  await _desarDisputa(combat, null);
   const atacant  = game.actors.get(estat.atacantId);
   const defensor = game.actors.get(estat.defensorId);
   if (atacant)  await trencarConcentracio(atacant);

@@ -1,13 +1,15 @@
 <div class="forja-dialeg-defensa">
   <p class="dd-intro">{{localize "FORJA.Combat.DefensaIntro" atacant=nomAtacant defensor=nomDefensor}}</p>
 
+  {{#if foraDeCombat}}<p class="dd-avis"><strong>{{localize "FORJA.Combat.DefensorForaDeCombat"}}</strong></p>{{/if}}
+
   <div class="form-group dd-opcions">
     {{#each opcions as |op|}}
     <label class="dd-radio {{#unless op.disponible}}dd-disabled{{/unless}}">
       <input type="radio" name="opcioId" value="{{op.id}}" {{#if (eq op.id ../opcioId)}}checked{{/if}} {{#unless op.disponible}}disabled{{/unless}}>
       {{op.nom}}
       {{#if op.gastaReaccio}}<i class="fas fa-bolt" title="{{localize 'FORJA.Combat.GastaReaccio'}}"></i>{{/if}}
-      {{#unless op.senseTirada}} — {{op.atribut}} {{op.atributVal}} + {{op.habId}} {{op.habNivell}} = {{op.pool}} daus{{/unless}}
+      {{#unless op.senseTirada}} — {{op.atribut}} {{op.atributVal}} + {{op.habId}} {{op.habNivell}} = {{localize "FORJA.Combat.DausPool" pool=op.pool}}{{/unless}}
     </label>
     {{/each}}
   </div>
@@ -18,6 +20,17 @@
     {{op.descripcio}}
     {{#unless op.disponible}}<br><strong>{{localize "FORJA.Combat.SenseReaccioDisponibleAvis"}}</strong>{{/unless}}
     {{#if op.reduccioExtra}}<br>{{localize "FORJA.Combat.ReduccioExtra" valor=op.reduccioExtra}}{{/if}}
+    {{#if (eq op.id "blocar")}}{{#if op.disponible}}{{#if op.mitjans.length}}
+    <br><label>{{localize "FORJA.Combat.Blocar.MitjaTriar"}}
+      <select name="mitjaId">
+        {{#each op.mitjans as |m|}}
+        <option value="{{m.id}}" {{#if (eq m.id @root.mitjaId)}}selected{{/if}}>{{m.nom}} — {{m.habId}} {{m.nivell}} (+{{m.reduccioExtra}})</option>
+        {{/each}}
+      </select>
+    </label>
+    <br><small>{{localize "FORJA.Combat.Blocar.Limit"}}</small>
+    {{/if}}{{/if}}{{/if}}
+    {{#if op.penalSalut}}<br>{{localize "FORJA.Combat.PenalSalutFites" valor=op.penalSalut}}{{/if}}
   </p>
   {{/if}}
   {{/each}}

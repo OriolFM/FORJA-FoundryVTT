@@ -10,7 +10,7 @@
       {{/if}}
     </div>
     <div class="pool-total">
-      <span class="pool-valor" id="tirada-pool-val">{{poolBase}}</span>
+      <span class="pool-valor">{{poolBase}}</span>
       <span class="pool-daus">d10</span>
     </div>
   </div>
@@ -21,10 +21,11 @@
       <label>{{localize "FORJA.Dice.ModDaus"}}</label>
       <input type="number" name="modDaus" value="0" min="-10" max="10"/>
     </div>
-    <div class="tirada-camp tirada-camp-check">
-      <label>{{localize "FORJA.Dice.Concentrat"}} <small>(+1d)</small></label>
-      <input type="checkbox" name="concentrat" {{#if concentrat}}checked{{/if}}/>
+    {{#if concentrat}}
+    <div class="tirada-camp tirada-concentrat-estat" title="{{localize 'FORJA.Dice.ConcentratEstatDesc'}}">
+      <i class="fas fa-bullseye"></i> {{localize "FORJA.Dice.ConcentratBonus"}}
     </div>
+    {{/if}}
   </div>
 
   <hr class="tirada-sep"/>

@@ -1,14 +1,18 @@
 {
   "name": "forja-foundryvtt",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "FORJA RPG system for Foundry VTT v13",
   "private": true,
   "type": "module",
   "scripts": {
-    "build:manual": "node scripts/build-manual.mjs && npx @foundryvtt/foundryvtt-cli package pack --type System --id forja -n manual --compendiumType JournalEntry --in packs/_source/manual --out packs"
+    "test": "node --test \"tests/unitaris/*.test.mjs\"",
+    "build:manual": "node scripts/build-manual.mjs && npx @foundryvtt/foundryvtt-cli package pack --type System --id forja -n manual --compendiumType JournalEntry --in packs/_source/manual --out packs",
+    "test:joc": "node tests/joc/proves.mjs",
+    "versio": "node scripts/versio.mjs"
   },
   "devDependencies": {
     "@foundryvtt/foundryvtt-cli": "^3.0.4",
-    "marked": "^14.1.0"
+    "marked": "^14.1.0",
+    "playwright": "^1.63.0"
   }
 }

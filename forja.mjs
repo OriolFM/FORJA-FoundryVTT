@@ -13,17 +13,20 @@ import ItemArtefacte       from "./module/data/item-artefacte.mjs";
 import ItemEfecte          from "./module/data/item-efecte.mjs";
 import ForjaActor          from "./module/documents/actor.mjs";
 import ForjaCombat         from "./module/documents/combat.mjs";
+import { crearTokenDocumentForja } from "./module/documents/token.mjs";
+import { crearTokenForja } from "./module/canvas/token.mjs";
 import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
 import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
+import FullItem            from "./module/apps/full-item.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
-import { reiniciarReaccions } from "./module/combat/reaccions.mjs";
+import { registrarSocket } from "./module/xarxa/socket.mjs";
+import { registrarPreguntaDefensa } from "./module/combat/decisio-defensa.mjs";
+import { assegurarAtacsAutomatics, eliminarArmaNaturalDelTret } from "./module/combat/equipament-automatic.mjs";
 import { recuperarEquilibri } from "./module/combat/manifestar.mjs";
 import { avancarRecarregaActor } from "./module/combat/artefactes.mjs";
-import { assegurarAtacsAutomatics } from "./module/combat/equipament-automatic.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 import { registrarHookValorX, aplicarTicsEstats } from "./module/estats/estats-parametritzats.mjs";
-import { potMoureToken } from "./module/combat/restriccio-moviment.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -38,6 +41,11 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = ForjaActor;
   CONFIG.Combat.documentClass = ForjaCombat;
   CONFIG.ui.combat = ForjaCombatTracker;
+
+  // Moviment (WP-M): bloqueig entre tokens, pathfinding (A*) i límit de
+  // moviment per torn. S'estenen les classes que Foundry fa servir per defecte.
+  CONFIG.Token.documentClass = crearTokenDocumentForja(CONFIG.Token.documentClass);
+  CONFIG.Token.objectClass   = crearTokenForja(CONFIG.Token.objectClass);
 
   // DataModels
   CONFIG.Actor.dataModels = {
@@ -79,6 +87,15 @@ Hooks.once("init", () => {
     label:       "FORJA.Sheet.PNJ"
   });
 
+  // Fitxa d'Item (C3): una classe per als 4 tipus, una plantilla cadascun
+  // (templates/item/*.hbs) — reemplaça la fitxa genèrica de Foundry, que no
+  // sap res dels camps `system` de FORJA.
+  DocumentSheetConfig.registerSheet(Item, "forja", FullItem, {
+    types:       ["tret", "arma", "armadura", "artefacte"],
+    makeDefault: true,
+    label:       "FORJA.Sheet.Item"
+  });
+
   // Estats (S-16): catàleg com a CONFIG.statusEffects (HUD del token / fitxa)
   registrarEstats();
   // Tics d'estats parametritzats (M-05): demana X en marcar Lent/Ràpid/
@@ -92,68 +109,70 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
+  // Relé d'autoritat del DJ (A2): escriptures a documents d'altri.
+  registrarSocket();
+  registrarPreguntaDefensa();
   console.log("FORJA RPG | Sistema llest");
 });
 
 // Tot personatge/PNJ disposa de l'atac bàsic "Cop", i de l'atac corresponent
 // a cada tret d'"Armament Natural" que tingui (manual): s'afegeixen sols.
-Hooks.on("createActor", async (actor) => {
+// Només el client que ha creat el document ho fa (A1), per evitar duplicats.
+Hooks.on("createActor", async (actor, _options, userId) => {
+  if (userId !== game.user.id) return;
   await assegurarAtacsAutomatics(actor);
 });
 
-Hooks.on("createItem", async (item) => {
+Hooks.on("createItem", async (item, _options, userId) => {
+  if (userId !== game.user.id) return;
   const actor = item.parent;
   if (!actor || item.type !== "tret") return;
   await assegurarAtacsAutomatics(actor);
 });
 
+// B11: en eliminar un tret d'"Armament Natural", elimina l'arma natural que
+// concedia (llevat que un altre tret restant la segueixi concedint). Només
+// el client que ha fet l'eliminació ho fa (mateix criteri A1 que a dalt).
+Hooks.on("deleteItem", async (item, _options, userId) => {
+  if (userId !== game.user.id) return;
+  if (item.type !== "tret") return;
+  await eliminarArmaNaturalDelTret(item);
+});
+
 // Reaccions i concentració (S-11): qui acaba el seu torn recupera reaccions.
-// El combatent SORTINT es captura a `ForjaCombat#declararAccio` (l'únic punt
-// on la identitat és inequívoca), no aquí: en el moment en què arriba aquest
-// update de `turn`/`round`, `setupTurns()` ja pot haver reordenat `this.turns`
-// (declararAccio el crida abans de `nextTurn`), de manera que `combat.combatant`
-// (índex `this.turn` contra `this.turns`) ja no és fiable.
-Hooks.on("updateCombat", async (combat, changes) => {
-  if (!changes || !(("turn" in changes) || ("round" in changes))) return;
-  const combatantId = combat._forjaCombatentDeclarant;
-  combat._forjaCombatentDeclarant = null;
-  const actor = combatantId ? combat.combatants.get(combatantId)?.actor : null;
-  if (actor) {
-    await reiniciarReaccions(actor);
-    await recuperarEquilibri(actor);
-    await avancarRecarregaActor(actor);
+// Només al DJ actiu (A1). El combatent que acaba el passa `ForjaCombat#nextTurn`
+// a les opcions de l'update (es difonen a tots els clients); per a canvis de
+// torn d'altres orígens, s'usa l'estat previ que Foundry desa a `combat.previous`.
+Hooks.on("updateCombat", async (combat, changes, options) => {
+  if (!game.users.activeGM?.isSelf) return;
+  const canviTorn = ("turn" in changes) || ("round" in changes);
+  const sortintId = options?.forja?.combatentSortint
+    ?? (canviTorn ? combat.previous?.combatantId : null);
+  if (sortintId) {
+    const combatant = combat.combatants.get(sortintId);
+    if (combatant && typeof combat.fiDeTorn === "function") await combat.fiDeTorn(combatant);
+    // Equilibri (S-20) i recàrrega d'artefactes (S-26) del combatent que acaba.
+    if (combatant?.actor) {
+      await recuperarEquilibri(combatant.actor);
+      await avancarRecarregaActor(combatant.actor);
+    }
   }
 
-  // Tics d'estats parametritzats (M-05, Sagnant/Recuperació): a diferència
-  // del bloc de dalt, aquí SÍ interessa el combatent ENTRANT — "cada cop
-  // que li toca actuar" — i `combat.combatant` ja és fiable en aquest punt
-  // perquè `this.turns`/`this.turn` ja reflecteixen el nou torn (és
-  // exactament per això que no ho és per identificar el SORTINT, de dalt).
-  const actorEntrant = combat.combatant?.actor;
-  if (actorEntrant) await aplicarTicsEstats(actorEntrant);
-});
-
-// Restricció de moviment en temps actiu (manual p. 359-361, 483-487):
-// només es pot moure el combatent que el rellotge té actiu ara mateix.
-// El DJ n'és sempre exempt. Vegeu `combat/restriccio-moviment.mjs`.
-Hooks.on("preUpdateToken", (tokenDocument, changes) => {
-  if (game.user.isGM) return;
-  const esMoviment = ("x" in changes) || ("y" in changes) || ("elevation" in changes);
-  if (!esMoviment) return;
-  if (!potMoureToken(tokenDocument)) {
-    ui.notifications?.warn(game.i18n.format("FORJA.Combat.NoEsElTeuTorn", { nom: tokenDocument.name }));
-    return false;
+  // Tics d'estats parametritzats (M-05, Sagnant/Recuperació): aquí interessa
+  // el combatent ENTRANT — "cada cop que li toca actuar". `combat.combatant`
+  // ja és fiable perquè `turn` està re-apuntat al flag `actiu` (A3).
+  if (canviTorn) {
+    const actorEntrant = combat.combatant?.actor;
+    if (actorEntrant) await aplicarTicsEstats(actorEntrant);
   }
 });
 
-/* ---- Helpers Handlebars ---- */
+/* ---- Helpers Handlebars ----
+ * `eq`, `lt`, `or` són de Foundry i `lookup` és nadiu de Handlebars (A7):
+ * no es tornen a registrar (el `or` de 2 arguments trencava plantilles del nucli). */
 function _registrarHelpers() {
   Handlebars.registerHelper("add",     (a, b) => (a ?? 0) + (b ?? 0));
-  Handlebars.registerHelper("lt",      (a, b) => a < b);
-  Handlebars.registerHelper("eq",      (a, b) => a === b);
   Handlebars.registerHelper("concat",  (...args) => args.slice(0, -1).join(""));
-  Handlebars.registerHelper("lookup",  (obj, key) => obj?.[key]);
-  Handlebars.registerHelper("or",  (a, b) => !!a || !!b);
   Handlebars.registerHelper("range", (n) => Array.from({ length: n }, (_, i) => i));
   Handlebars.registerHelper("includes", (arr, val) => Array.isArray(arr) && arr.includes(val));
   Handlebars.registerHelper("lookupNom", (llista, id) => llista?.find?.(e => e.id === id)?.nom ?? id);

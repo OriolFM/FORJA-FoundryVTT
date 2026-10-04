@@ -18,6 +18,15 @@ export default class ActorPNJ extends foundry.abstract.TypeDataModel {
         initial: "extra",
         choices: ["extra", "antagonista", "nemesis", "criatura", "animal"]
       }),
+      // Defensa automàtica (petició de l'Oriol FM, 2026-09-27): per als PNJ que
+      // no mereixen un diàleg cada cop (sobretot figurants), el DJ pot fixar com
+      // es defensen. "" = pregunta-ho al DJ amb un diàleg (per defecte).
+      // "millor" = l'esquiva o parada amb més daus si té reacció; si no, passiva.
+      defensaAutomatica: new fields.StringField({
+        initial: "",
+        blank: true,
+        choices: ["", "passiva", "millor", "esquivar", "parar", "blocar"]
+      }),
       notes: new fields.HTMLField({ initial: "" })
     };
   }

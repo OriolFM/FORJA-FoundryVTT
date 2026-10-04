@@ -216,7 +216,7 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
 
   /**
    * Drecera de creació (manual p. 354-361): aplica d'un cop els 6 valors
-   * d'una distribució predefinida, en l'ordre de `FORJA.ATRIBUTS`. Punt de
+   * d'una distribució predefinida, en l'ordre de `CONFIG.FORJA.ATRIBUTS`. Punt de
    * partida ràpid, no una assignació definitiva — el jugador els pot seguir
    * reassignant amb els steppers normals, exactament igual que si els
    * hagués triat un a un.

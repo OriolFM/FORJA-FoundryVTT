@@ -1,23 +1,43 @@
 import DiategDeclararAccio from "../apps/dialeg-declarar-accio.mjs";
-import DiategDefensa from "../apps/dialeg-defensa.mjs";
-import DiategManiobra from "../apps/dialeg-maniobra.mjs";
 import { ferTirada } from "../dice/tirada.mjs";
-import { ferAtac }  from "./atac.mjs";
+import { ferAtac, retardMaximBarallarse, limitarRetardBarallarse }  from "./atac.mjs";
 import { opcionsDefensa, resoldreOpcioDefensa, opcionsInterposar } from "./defensa.mjs";
-import { distanciaEntreTokens, bandaDistancia, estaAlAbastCosACos, avantatgeAbastCosACos } from "./abast.mjs";
+import { distanciaEntreTokens, bandaDistancia, tokensATocar, avantatgeAbastCosACos } from "./abast.mjs";
+import { establirConcentracio } from "./reaccions.mjs";
+// Atribut + habilitat d'atac d'una arma (Q1, manual FC001CA › SISTEMES ›
+// Combat › Cos a cos / A Distància): taula canònica de WP-G.
+import { atributIHabilitatAtac } from "./equipament-automatic.mjs";
+import { decidirDefensa } from "./decisio-defensa.mjs";
+import { movimentDelTorn, bonificacioCarrega, distanciesMoviment } from "./moviment.mjs";
+import { metresMogutsAquestTorn } from "../documents/token.mjs";
 import { modificadorLatenciaEstats } from "../estats/estats-parametritzats.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
+import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
 
-const HAB_PER_CATEGORIA = {
-  natural:   "barallar-se",
-  cosAcos:   "armes-cos-a-cos",
-  distancia: "armes-distancia"
-};
+/**
+ * L'atac bàsic "Cop" (catàleg `cop`, `system.basic`), l'única arma natural
+ * que admet maniobres d'arts marcials (manual › Cos a cos, taula "Armes
+ * naturals": Cop — "Arts Marcials (+1 dificultat) — Escull un moviment").
+ * @param {Item} item
+ * @returns {boolean}
+ */
+function _esCop(item) {
+  return item.flags?.forja?.catalegId === "cop" || !!item.system.basic;
+}
+
+/** L'usuari actual pot fer servir els controls de FORJA d'aquest combatent (C2). */
+function _potControlar(combatant) {
+  return game.user.isGM || !!combatant?.isOwner;
+}
 
 /**
  * Extensió del Combat Tracker natiu (S-10): mostra la posició/tick de cada
  * combatent al rellotge de temps actiu i el marcador actual, i permet
  * declarar accions amb un diàleg que prefarceix la latència calculada.
+ *
+ * C2: el marcador de temps es mostra a la capçalera i la posició de cada
+ * combatent a la seva fila (visible per a tothom); els botons de declarar /
+ * resoldre / emboscada només els veu el DJ o el propietari del combatent.
  */
 export default class ForjaCombatTracker extends foundry.applications.sidebar.tabs.CombatTracker {
 
@@ -46,7 +66,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     return context;
   }
 
-  /** @override — afegeix els controls de FORJA a cada fila del tracker. */
+  /** @override — afegeix el marcador de temps i els controls de FORJA (C2). */
   async _onRender(context, options) {
     await super._onRender(context, options);
 
@@ -58,19 +78,47 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       this.element.querySelectorAll(`[data-action="${accio}"]`).forEach(el => el.remove());
     }
 
+    const combat = this.viewed;
+    if (!combat) return;
+    const marcador = combat.marcador ?? 0;
+
+    // Marcador de temps actiu, a la capçalera del tracker.
+    this.element.querySelectorAll(".forja-marcador-temps").forEach(el => el.remove());
+    const capcalera = this.element.querySelector(".combat-tracker-header")
+      ?? this.element.querySelector("header");
+    if (capcalera) {
+      const div = document.createElement("div");
+      div.classList.add("forja-marcador-temps");
+      div.title = game.i18n.localize("FORJA.Combat.MarcadorDesc");
+      div.innerHTML = `<i class="fas fa-clock"></i> ${game.i18n.localize("FORJA.Combat.MarcadorActual")}: <strong>${marcador}</strong>`;
+      capcalera.appendChild(div);
+    }
+
     for (const li of this.element.querySelectorAll(".combatant")) {
       const combatantId = li.dataset.combatantId;
-      const combatant   = this.viewed?.combatants?.get(combatantId);
+      const combatant   = combat.combatants?.get(combatantId);
       if (!combatant) continue;
-
       if (li.querySelector(".forja-controls")) continue;
+
+      const posicio = combatant.initiative;
+      li.classList.toggle("forja-a-la-casella", posicio !== null && posicio !== undefined && posicio === marcador);
 
       const div = document.createElement("div");
       div.classList.add("forja-controls");
-      div.innerHTML = `
-        <span class="forja-posicio" title="${game.i18n.localize("FORJA.Combat.PosicioActual")}">
-          <i class="fas fa-clock"></i> ${combatant.initiative ?? "—"}
-        </span>
+
+      const concentrat = combatant.actor?.system?.concentrat
+        ? `<i class="fas fa-bullseye forja-concentrat" title="${game.i18n.localize("FORJA.Dice.Concentrat")}"></i>`
+        : "";
+      const retard = (typeof posicio === "number") ? posicio - marcador : null;
+      const titolPosicio = game.i18n.localize("FORJA.Combat.PosicioActual")
+        + (retard !== null && retard > 0 ? ` (${game.i18n.format("FORJA.Combat.TicksFins", { n: retard })})` : "");
+      let html = `
+        <span class="forja-posicio" title="${titolPosicio}">
+          <i class="fas fa-clock"></i> ${posicio ?? "—"}
+        </span>${concentrat}`;
+
+      if (_potControlar(combatant)) {
+        html += `
         <a class="forja-declarar" data-action="forjaDeclararAccio" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.Declarar")}">
           <i class="fas fa-stopwatch"></i>
@@ -82,8 +130,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         <a class="forja-emboscada" data-action="forjaMarcarEmboscada" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.MarcarEmboscada")}">
           <i class="fas fa-user-ninja"></i>
-        </a>
-      `;
+        </a>`;
+      }
+      div.innerHTML = html;
       li.appendChild(div);
     }
   }
@@ -91,6 +140,8 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
   /**
    * Obre el diàleg de declaració d'acció prefarcit amb la latència de l'actor
    * i suma el valor confirmat a la posició del combatent (S-10, DA-5).
+   * B1: un actor fora de combat (nivell 7) no pot declarar. B5: concentració.
+   * B6: maniobres d'arts marcials. B7: defenses des de `opcionsDefensa`.
    */
   static async #onDeclararAccio(event, target) {
     const combat = this.viewed;
@@ -98,58 +149,50 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     const combatantId = target.dataset.combatantId;
     const combatant   = combat.combatants.get(combatantId);
-    if (!combatant?.actor) return;
+    if (!combatant?.actor || !_potControlar(combatant)) return;
 
-    const sys   = combatant.actor.system;
+    const actor = combatant.actor;
+    const sys   = actor.system;
+    if (sys.salut?.foraDeCombat) {
+      ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
+      return;
+    }
+
     const habilitat = (id) => sys.habilitats?.[id]?.nivell ?? 0;
     // Lent/X i Ràpid/X (M-05, estats-parametritzats.mjs): modificador net
     // (+Lent -Ràpid) sobre qualsevol llatència d'aquest combatent.
-    const modEstats = modificadorLatenciaEstats(combatant.actor);
+    const modEstats = modificadorLatenciaEstats(actor);
     // Interrupció (maniobra d'Arts Marcials, maniobres.mjs): el Lent/2 que
     // aplica es "autoconsum" — un cop ja ha comptat per a AQUESTA
     // declaració (inclòs a `modEstats` de dalt), es retira perquè no
     // afecti la següent.
-    const efectesAutoconsum = combatant.actor.effects?.filter(e => e.getFlag("forja", "autoconsum")) ?? [];
+    const efectesAutoconsum = actor.effects?.filter(e => e.getFlag("forja", "autoconsum")) ?? [];
     if (efectesAutoconsum.length) {
-      await combatant.actor.deleteEmbeddedDocuments("ActiveEffect", efectesAutoconsum.map(e => e.id));
+      await eliminarEmbegutsComGM(actor, "ActiveEffect", efectesAutoconsum.map(e => e.id));
     }
-    const armes = combatant.actor.items
+    const potArtsMarcials = habilitat("arts-marcials") > 0;
+    const armes = actor.items
       .filter(i => i.type === "arma")
       .map(i => {
-        const habId      = HAB_PER_CATEGORIA[i.system.categoria] ?? "barallar-se";
-        const atribut    = i.system.categoria === "distancia" ? "DES" : "FOR";
-        const atributVal = sys.atributs?.[atribut] ?? 0;
+        const { atribut, habId } = atributIHabilitatAtac(i);
         return {
           id:            i.id,
           nom:           i.name,
           latenciaTotal: Math.max(1, (sys.latenciaBase ?? 0) + (i.system.modLatencia ?? 0) + modEstats),
-          atribut, atributVal,
-          habId, habNivell: habilitat(habId)
+          atribut, atributVal: sys.atributs?.[atribut] ?? 0,
+          habId, habNivell: habilitat(habId),
+          // Arts marcials: només amb l'atac "Cop" i si l'actor en té l'habilitat
+          // (manual › Cos a cos: "Arts Marcials (DES): el PJ fa servir moviments especials").
+          permetManiobres: _esCop(i) && potArtsMarcials,
+          // WP-M: la càrrega només amb armes cos a cos o naturals (manual l. 2794).
+          categoria:     i.system.categoria ?? null,
+          // B16: retard voluntari de barallar-se (fins al nivell d'habilitat).
+          retardMax: retardMaximBarallarse({ habId }, habilitat("barallar-se"))
         };
       });
 
-    const defenses = [
-      {
-        id: "esquivar", nom: game.i18n.localize("FORJA.Combat.Defensa.Esquivar"),
-        descripcio: game.i18n.localize("FORJA.Combat.Defensa.EsquivarDesc"),
-        atribut: "AGI", atributVal: sys.atributs?.AGI ?? 0,
-        habId: "esquivar", habNivell: habilitat("esquivar"),
-        pool: (sys.atributs?.AGI ?? 0) + habilitat("esquivar")
-      },
-      {
-        id: "parar", nom: game.i18n.localize("FORJA.Combat.Defensa.Parar"),
-        descripcio: game.i18n.localize("FORJA.Combat.Defensa.PararDesc"),
-        atribut: "DES", atributVal: sys.atributs?.DES ?? 0,
-        habId: "armes-cos-a-cos", habNivell: habilitat("armes-cos-a-cos"),
-        pool: (sys.atributs?.DES ?? 0) + habilitat("armes-cos-a-cos")
-      },
-      {
-        id: "blocar", nom: game.i18n.localize("FORJA.Combat.Defensa.Blocar"),
-        descripcio: game.i18n.localize("FORJA.Combat.Defensa.BlocarDesc"),
-        senseTirada: true,
-        reduccioExtra: habilitat("resistencia")
-      }
-    ];
+    // Font única de les opcions de defensa (B7): acció defensiva declarada.
+    const defenses = opcionsDefensa(actor, undefined, { declarada: true });
 
     const config = await DiategDeclararAccio.obrir({
       nom:          combatant.name,
@@ -157,28 +200,69 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       posicioActual: combatant.initiative ?? "—",
       latenciaBase: Math.max(1, (sys.latenciaBase ?? 0) + modEstats),
       armes,
-      defenses
+      defenses,
+      maniobres:    CONFIG.FORJA?.LLISTA_MANIOBRES ?? [],
+      concentrat:   !!sys.concentrat,
+      distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3)
     });
     if (!config) return;
 
+    // WP-M: si el combatent declara durant el seu propi torn, la nova acció
+    // és per al proper torn; el moviment del torn en curs (el de l'acció que
+    // s'està resolent) es conserva a `movimentEnCurs` perquè el permís de
+    // moviment d'ara no canviï (vegeu `movimentDelTorn`, combat/moviment.mjs).
+    const anterior = combatant.getFlag("forja", "accioPendent") ?? null;
+    const actiuAra = (combat.combatentActiuId ?? combat.combatant?.id) === combatantId;
+    const marcadorDeclaracio = combat.marcador ?? 0;
+
     await combat.declararAccio(combatantId, config.latencia);
+    await establirConcentracio(actor, config.concentrar);
 
     // Desa l'acció declarada com a "pendent de resoldre" (DA-?): el botó de
     // resoldre obrirà directament la tirada corresponent, ja preseleccionada.
-    let pendent = { tipus: config.tipus, etiqueta: config.etiqueta, descripcio: config.descripcio };
+    let pendent = {
+      tipus: config.tipus, etiqueta: config.etiqueta, descripcio: config.descripcio,
+      // WP-M: moviment declarat (basic/rapid/especial/carrega) i on es va declarar.
+      moviment: config.moviment ?? "basic",
+      combatId: combat.id,
+      declaradaAlMarcador: marcadorDeclaracio,
+      movimentEnCurs: null
+    };
+    if (actiuAra && combat.started) {
+      pendent.movimentEnCurs = movimentDelTorn(anterior, combat.id, marcadorDeclaracio);
+    }
     if (config.tipus === "atac") {
       const arma = armes.find(a => a.id === config.armaId);
       if (arma) pendent = { ...pendent, ...arma, label: arma.nom };
+      if (arma && config.retardBarallarse > 0 && !config.maniobraId) {
+        pendent = { ...pendent, retardBarallarse: config.retardBarallarse, label: config.etiqueta };
+      }
+      if (arma && config.maniobraId) {
+        // Maniobra d'arts marcials: la tirada és DES + Arts Marcials (manual ›
+        // Cos a cos), no la de l'arma "Cop" (FOR + barallar-se).
+        pendent = {
+          ...pendent,
+          maniobraId: config.maniobraId,
+          atribut: "DES", atributVal: sys.atributs?.DES ?? 0,
+          habId: "arts-marcials", habNivell: habilitat("arts-marcials"),
+          label: config.etiqueta
+        };
+      }
     } else if (config.tipus === "defensa") {
       const def = defenses.find(d => d.id === config.defensa?.id);
       if (def) pendent = { ...pendent, ...def, label: def.nom };
     }
+    // `setFlag` FUSIONA objectes: sense esborrar-la abans, claus d'una
+    // declaració anterior (maniobraId, retardBarallarse, movimentEnCurs...)
+    // quedarien a la nova acció.
+    if (anterior) await combatant.unsetFlag("forja", "accioPendent");
     await combatant.setFlag("forja", "accioPendent", pendent);
 
     if (config.descripcio || config.etiqueta) {
+      const concentra = config.concentrar ? ` <em>(${game.i18n.localize("FORJA.Combat.Concentrat")})</em>` : "";
       await ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: combatant.actor }),
-        content: `<div class="forja-missatge-accio"><strong>${config.etiqueta ?? ""}</strong>${config.descripcio ? `<p>${config.descripcio}</p>` : ""}</div>`
+        speaker: ChatMessage.getSpeaker({ actor }),
+        content: `<div class="forja-missatge-accio"><strong>${Handlebars.escapeExpression(config.etiqueta ?? "")}</strong>${concentra}${config.descripcio ? `<p>${Handlebars.escapeExpression(config.descripcio)}</p>` : ""}</div>`
       });
     }
   }
@@ -195,42 +279,49 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     if (!combat) return;
     const combatantId = target.dataset.combatantId;
     const combatant   = combat.combatants.get(combatantId);
-    if (!combatant?.actor) return;
+    if (!combatant?.actor || !_potControlar(combatant)) return;
 
+    const actor   = combatant.actor;
+    const sys     = actor.system;
     const pendent = combatant.getFlag("forja", "accioPendent");
+
+    if (sys.salut?.foraDeCombat) {
+      ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
+      return;
+    }
+
+    // WP-M: una acció de només moviment no té tirada: es fa movent el token.
+    if (pendent?.tipus === "moviment") {
+      ui.notifications?.info(game.i18n.format("FORJA.Moviment.ResoldreMoviment", { nom: combatant.name }));
+      return;
+    }
 
     if (!pendent || pendent.tipus === "altra" || (pendent.tipus === "defensa" && pendent.senseTirada)) {
       if (pendent?.senseTirada) {
         ui.notifications?.info(game.i18n.format("FORJA.Combat.BlocarSenseAccio", { nom: combatant.name }));
       }
-      combatant.actor.sheet?.render(true);
+      actor.sheet?.render(true);
       return;
     }
 
-    const poolFinal = (pendent.atributVal ?? 0) + (pendent.habNivell ?? 0);
+    // Valors ACTUALS de l'actor (poden haver canviat des de la declaració).
+    const atributVal = sys.atributs?.[pendent.atribut] ?? pendent.atributVal ?? 0;
+    const habNivell  = pendent.habId ? (sys.habilitats?.[pendent.habId]?.nivell ?? pendent.habNivell ?? 0) : 0;
+    const poolFinal  = atributVal + habNivell;
 
     if (pendent.tipus === "atac") {
-      const arma     = combatant.actor.items.get(pendent.id);
-      const objectiu = [...game.user.targets][0]?.actor;
+      const arma          = actor.items.get(pendent.id);
+      const tokenObjectiu = [...game.user.targets][0];
+      const objectiu      = tokenObjectiu?.actor;
 
-      // Maniobres d'Arts Marcials (S-12, maniobres.mjs): només amb "Cop"
-      // (única arma natural que la taula del manual llista amb l'opció
-      // d'Arts Marcials). Es demana ABANS de mirar l'objectiu perquè
-      // Puntada de peu giratòria no en necessita cap (és autocentrada).
-      let maniobra = null;
-      let poolFinalManiobra = poolFinal;
-      if (arma?.getFlag("forja", "catalegId") === "cop") {
-        maniobra = await DiategManiobra.obrir({
-          nom: combatant.name,
-          maniobres: CONFIG.FORJA.LLISTA_MANIOBRES
-        });
-        if (maniobra === undefined) return; // diàleg cancel·lat
-        if (maniobra) {
-          const sysM = combatant.actor.system;
-          poolFinalManiobra = (sysM.atributs?.DES ?? 0) + (sysM.habilitats?.["arts-marcials"]?.nivell ?? 0);
-        }
-      }
+      // Maniobres d'Arts Marcials (S-12/B6, maniobres.mjs): es trien en
+      // declarar l'acció (`pendent.maniobraId`); el pool ja és DES + Arts
+      // Marcials (vegeu #onDeclararAccio).
+      const maniobra = pendent.maniobraId
+        ? (CONFIG.FORJA?.LLISTA_MANIOBRES ?? []).find(m => m.id === pendent.maniobraId) ?? null
+        : null;
 
+      // Puntada de peu giratòria no necessita objectiu (és autocentrada).
       if (maniobra?.id === "puntada-de-peu-giratoria") {
         const tokenAtacant = combatant.token?.object;
         if (!tokenAtacant) return;
@@ -239,12 +330,15 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // giratòria contra diversos objectius alhora és un cas que el
         // manual no contempla; es queda com a simplificació deliberada.
         const { resultats } = await resoldrePuntadaDePeuGiratoria({
-          actor: combatant.actor, tokenAtacant, arma, poolFinal: poolFinalManiobra, maniobra,
-          demanarDefensa: async (obj) => DiategDefensa.obrir({
-            nomAtacant: combatant.name,
-            nomDefensor: obj.name,
-            opcions: opcionsDefensa(obj)
-          })
+          actor, tokenAtacant, arma, poolFinal, maniobra,
+          demanarDefensa: async (obj) => {
+            const categoriaAtac = arma.system.categoria ?? null;
+            const decisio = await decidirDefensa({
+              defensor: obj, opcions: opcionsDefensa(obj, undefined, { categoriaAtac }),
+              categoriaAtac, nomAtacant: combatant.name
+            });
+            return decisio?.eleccio ?? null;
+          }
         });
         for (const { objectiu: qui, eleccio, resultat } of resultats) {
           if (resultat.exit) await aplicarEfecteManiobra(maniobra, eleccio.interposant ?? qui);
@@ -259,11 +353,11 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // FORJA. Si l'objectiu és fora d'abast, l'acció s'anul·la aquí —
         // sense tirada ni conseqüències — fins que es mogui el token i es
         // torni a resoldre, o es doni per perduda i es declari una de nova.
-        const tokenAtacant  = combatant.token?.object;
-        const tokenObjectiu = [...game.user.targets][0];
+        // Distàncies vora a vora (B9).
+        const tokenAtacant = combatant.token?.object;
         let defensaBasica = objectiu.system.defensa ?? 0;
         let etiquetaRang = null;
-        let poolFinalAtac = poolFinalManiobra;
+        let poolFinalAtac = poolFinal;
         let bonusDauDefensa = 0;
 
         // Avantatge d'abast en cos a cos (manual p. 611, S-12): qui té
@@ -275,11 +369,12 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         }
 
         if (tokenAtacant && tokenObjectiu) {
-          const distancia = distanciaEntreTokens(tokenAtacant, tokenObjectiu);
+          const aTocar = tokensATocar(tokenAtacant, tokenObjectiu);
 
           if (arma.system.categoria === "distancia") {
             if (arma.system.abast > 0 || arma.system.rangMultFor > 0) {
-              const banda = bandaDistancia(distancia, arma, defensaBasica, combatant.actor);
+              const distancia = distanciaEntreTokens(tokenAtacant, tokenObjectiu);
+              const banda = bandaDistancia(distancia, arma, defensaBasica, aTocar, actor);
               if (!banda) {
                 ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaAbast", { nom: objectiu.name }));
                 return;
@@ -290,7 +385,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
             // Rang realment desconegut (abast=0 i rangMultFor=0, p. ex.
             // "Armes pesants" — "varia" segons l'arma concreta): no es
             // calcula banda automàticament, es manté la defensa bàsica.
-          } else if (!estaAlAbastCosACos(distancia)) {
+          } else if (!aTocar) {
             ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaAbastCosACos", { nom: objectiu.name }));
             return;
           }
@@ -301,14 +396,14 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // mateix) pot interposar-s'hi parant o blocant — reaprofita
         // `opcionsInterposar`, que ja filtra a parar/blocar únicament i
         // marca `interposant` amb l'actor que s'hi interposa.
-        const opcionsProtectors = [];
+        const protectors = [];
         if (tokenObjectiu) {
           for (const altre of combat.combatants) {
             if (altre.id === combatant.id || altre.actor?.id === objectiu.id) continue;
             const tokenAltre = altre.token?.object;
-            if (!tokenAltre) continue;
-            if (!estaAlAbastCosACos(distanciaEntreTokens(tokenAltre, tokenObjectiu))) continue;
-            opcionsProtectors.push(...opcionsInterposar(altre.actor));
+            if (!tokenAltre || !altre.actor) continue;
+            if (!tokensATocar(tokenAltre, tokenObjectiu)) continue;
+            protectors.push(altre.actor);
           }
         }
 
@@ -317,35 +412,59 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // parar / blocar / algú altre s'interposa — gastant reacció i, si
         // escau, tirant), i després es tira l'atac contra la dificultat
         // resultant.
-        const opcions = [...opcionsDefensa(objectiu, defensaBasica, bonusDauDefensa), ...opcionsProtectors];
-        const eleccio = await DiategDefensa.obrir({
-          nomAtacant:  combatant.name,
-          nomDefensor: objectiu.name,
-          opcions
+        // B15: la categoria de l'arma atacant decideix amb què es pot blocar.
+        const categoriaAtac = arma.system.categoria ?? null;
+        const opcions = [
+          ...opcionsDefensa(objectiu, defensaBasica, { categoriaAtac, bonusDauDefensa }),
+          ...protectors.flatMap(p => opcionsInterposar(p, { categoriaAtac }))
+        ];
+        // Qui tria la defensa: la configuració automàtica del PNJ, el jugador
+        // propietari del defensor o el DJ — mai el jugador que ataca un PNJ
+        // (decisio-defensa.mjs; Oriol FM, 2026-09-27).
+        const decisio = await decidirDefensa({
+          defensor: objectiu, opcions, defensaBasica, categoriaAtac, bonusDauDefensa,
+          protectors,
+          nomAtacant: combatant.name
         });
-        if (!eleccio) return;
+        if (!decisio) return;
+        const eleccio = decisio.eleccio;
 
         // Si s'ha triat interposar-se, qui rep la tirada/reacció I el dany
         // és el protector, no l'objectiu original.
         const qui = eleccio.interposant ?? objectiu;
 
-        const resolucio = await resoldreOpcioDefensa(qui, eleccio);
+        const resolucio = await resoldreOpcioDefensa(qui, eleccio, { nomAtacant: combatant.name });
         if (!resolucio) {
           ui.notifications?.warn(game.i18n.format("FORJA.Combat.SenseReaccioDisponible", { nom: qui.name }));
           return;
         }
 
+        // B16: retard de barallar-se declarat (ja pagat en latència), limitat
+        // al nivell ACTUAL de l'habilitat; no s'aplica amb maniobra.
+        const retardBarallarse = (pendent.habId === "barallar-se" && !pendent.maniobraId)
+          ? limitarRetardBarallarse(pendent.retardBarallarse, sys.habilitats?.["barallar-se"]?.nivell ?? 0)
+          : 0;
+
+        // WP-M: càrrega (manual l. 2794) — si el token s'ha mogut 2 m o més
+        // aquest torn, +1 dau a l'atac i +1 al dany si impacta. Es mesura
+        // l'historial de moviment del token (buidat a l'inici del torn).
+        const movimentTorn = movimentDelTorn(pendent, combat.id, combat.marcador);
+        const bonusCarrega = bonificacioCarrega(movimentTorn, metresMogutsAquestTorn(combatant.token));
+
         const resultatAtac = await ferAtac({
-          actor:      combatant.actor,
+          actor,
           objectiu:   qui,
           arma,
           poolFinal:  poolFinalAtac,
           dificultat:      resolucio.dificultat,
           exigirSuperar:   resolucio.exigirSuperar,
           reduccioExtra:   resolucio.reduccioExtra,
-          maniobra,
-          etiquetaDefensa: eleccio.nom,
+          danyExtra:       resolucio.danyExtra ?? 0,
+          retardBarallarse,
+          bonusCarrega,
+          etiquetaDefensa: eleccio.nomMitja ? `${eleccio.nom} (${eleccio.nomMitja})` : eleccio.nom,
           etiquetaRang,
+          maniobra,
           label:      pendent.label
         });
         if (maniobra && resultatAtac.exit) await aplicarEfecteManiobra(maniobra, qui);
@@ -363,11 +482,11 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // Defensa activa (esquivar/parar) o atac sense objectiu seleccionat:
     // tirada simple, preseleccionada amb les dades de l'acció declarada.
     await ferTirada({
-      actor:      combatant.actor,
+      actor,
       atribut:    pendent.atribut,
-      atributVal: pendent.atributVal,
+      atributVal,
       habId:      pendent.habId,
-      habNivell:  pendent.habNivell,
+      habNivell,
       label:      pendent.label
     });
   }
@@ -376,6 +495,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
   static async #onMarcarEmboscada(event, target) {
     const combat = this.viewed;
     if (!combat) return;
+    if (!_potControlar(combat.combatants.get(target.dataset.combatantId))) return;
     await combat.marcarEmboscada(target.dataset.combatantId);
   }
 }

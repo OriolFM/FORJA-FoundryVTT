@@ -1,17 +1,54 @@
+import { retardMaximBarallarse, limitarRetardBarallarse } from "../combat/atac.mjs";
+import { latenciaExtraMoviment, normalitzarMoviment, permisMoviment } from "../combat/moviment.mjs";
+
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 /**
  * Diàleg de declaració d'acció (S-10, DA-5): tria el tipus d'acció
  * (atac / defensa completa / altra acció) i en calcula la latència
  * corresponent — editable abans de confirmar.
+ *
+ * - Defensa completa (B7): la llista arriba ja construïda per
+ *   `opcionsDefensa(actor, …, { declarada: true })` (combat/defensa.mjs), la
+ *   mateixa font que el diàleg de defensa en resoldre un atac.
+ * - Maniobres d'arts marcials (B6; manual FC001CA › SISTEMES › Combat › Cos a
+ *   cos, taules "Armes naturals" — Cop: "Arts Marcials (+1 dificultat) —
+ *   Escull un moviment de la taula" — i "Arts Marcials"): només per a l'atac
+ *   "Cop" i si l'actor té Arts Marcials (vegeu `tracker-ui.mjs`). No
+ *   modifiquen la latència ("no la penalitzen en velocitat", › Temps actiu ›
+ *   Accions).
+ * - Concentració (B5; › Gestió del temps de joc › Concentració: "En declarar,
+ *   un jugador pot indicar que el seu PJ es concentra en la seva acció"):
+ *   casella que fixa `system.concentrat` (+1 dau a la propera tirada, sense
+ *   reaccions fins llavors).
+ * - Retard de barallar-se (B16; › Cos a cos, "Barallar-se" i taula "Armes
+ *   naturals", Cop): per als atacs amb armes naturals tirats amb
+ *   barallar-se (sense maniobra), es pot afegir fins a `nivell de
+ *   barallar-se` ticks de latència; cada tick dona +1 dau a l'atac. Cada arma
+ *   porta `retardMax` (0 = no s'hi pot retardar), calculat a `tracker-ui.mjs`.
+ * - Moviment (WP-M; manual › Moviment dels PJ, l. 2678–2694, i › Temps actiu
+ *   › Moviment, l. 2790–2794; Oriol FM, 2026-09-27): tota acció porta
+ *   implícit un moviment bàsic (caminar). Es pot canviar per un moviment
+ *   especial (+2 de latència, cal tirada que no s'automatitza) o, en un atac
+ *   cos a cos / natural, per una càrrega (córrer + atac, +2 de latència). El
+ *   moviment ràpid (córrer) no es pot combinar amb cap altra acció: només
+ *   s'ofereix amb el tipus d'acció "Només moviment".
  */
+/** Clau i18n de cada tipus de moviment (literals, per a la prova de paritat i18n). */
+const ETIQUETES_MOVIMENT = {
+  basic:    "FORJA.Moviment.Basic",
+  rapid:    "FORJA.Moviment.Rapid",
+  especial: "FORJA.Moviment.Especial",
+  carrega:  "FORJA.Moviment.Carrega"
+};
+
 export default class DiategDeclararAccio extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
-    id: "forja-dialeg-declarar-accio",
+    id: "forja-dialeg-declarar-accio-{id}",
     classes: ["forja", "forja-dialog", "dialeg-declarar-accio"],
     tag: "form",
-    position: { width: 360 },
+    position: { width: 380 },
     window: { resizable: false },
     form: { closeOnSubmit: true, handler: DiategDeclararAccio._onSubmit }
   };
@@ -20,17 +57,23 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     form: { template: "systems/forja/templates/combat/dialeg-declarar-accio.hbs" }
   };
 
-  #config    = null;
-  #resolve   = null;
-  #tipus     = "atac";
-  #armaId    = null;
-  #defensaId = null;
+  #config     = null;
+  #resolve    = null;
+  #tipus      = "atac";
+  #armaId     = null;
+  #defensaId  = null;
+  #maniobraId = "";
+  #concentrar = false;
+  #descripcio = "";
+  #retard     = 0;
+  #moviment   = "basic";
 
   constructor(config, options = {}) {
     super(options);
-    this.#config    = config;
-    this.#armaId    = config.armes?.[0]?.id ?? null;
-    this.#defensaId = config.defenses?.[0]?.id ?? null;
+    this.#config     = config;
+    this.#armaId     = config.armes?.[0]?.id ?? null;
+    this.#defensaId  = config.defenses?.[0]?.id ?? null;
+    this.#concentrar = !!config.concentrat;
     if (!config.armes?.length) this.#tipus = "defensa";
   }
 
@@ -38,8 +81,48 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     return game.i18n.format("FORJA.Combat.DeclararAccioTitol", { nom: this.#config?.nom ?? "" });
   }
 
+  /** Arma triada (entrada de `config.armes`). */
+  #arma() {
+    return this.#config.armes?.find(a => a.id === this.#armaId) ?? null;
+  }
+
+  /** Màxim de ticks de retard de barallar-se per a l'atac triat (B16). */
+  #retardMax() {
+    if (this.#tipus !== "atac") return 0;
+    const arma = this.#arma();
+    return retardMaximBarallarse(arma, arma?.retardMax ?? 0, !!this.#maniobraId);
+  }
+
+  /**
+   * Moviments que es poden triar amb el tipus d'acció i l'arma actuals (WP-M).
+   * El ràpid només sol (acció "moviment"); la càrrega només amb atac cos a
+   * cos o natural (manual l. 2794: "combina un moviment ràpid amb un atac cos a cos").
+   * @returns {string[]}
+   */
+  #movimentsPermesos() {
+    if (this.#tipus === "moviment") return ["basic", "rapid", "especial"];
+    const llista = ["basic", "especial"];
+    const categoria = this.#arma()?.categoria;
+    if (this.#tipus === "atac" && (categoria === "cosAcos" || categoria === "natural")) llista.push("carrega");
+    return llista;
+  }
+
+  /** Moviment triat, limitat als permesos ara mateix (WP-M). */
+  #movimentEfectiu() {
+    const m = normalitzarMoviment(this.#moviment);
+    return this.#movimentsPermesos().includes(m) ? m : "basic";
+  }
+
+  /** Retard efectiu, limitat al màxim actual (B16). */
+  #retardEfectiu() {
+    return limitarRetardBarallarse(this.#retard, this.#retardMax());
+  }
+
   async _prepareContext(options) {
     const c = this.#config;
+    const arma = this.#arma();
+    const permetManiobres = this.#tipus === "atac" && !!arma?.permetManiobres;
+    const maniobres = permetManiobres ? (c.maniobres ?? []) : [];
     return {
       nom:           c.nom,
       marcador:      c.marcador,
@@ -50,23 +133,35 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       tipus:         this.#tipus,
       armaId:        this.#armaId,
       defensaId:     this.#defensaId,
+      permetManiobres,
+      maniobres,
+      maniobraId:    this.#maniobraId,
+      maniobra:      maniobres.find(m => m.id === this.#maniobraId) ?? null,
+      concentrar:    this.#concentrar,
+      descripcio:    this.#descripcio,
+      retardMax:     this.#retardMax(),
+      retard:        this.#retardEfectiu(),
+      moviments:     this.#movimentsPermesos(),
+      moviment:      this.#movimentEfectiu(),
+      metresMoviment: permisMoviment(this.#movimentEfectiu(), c.distancies ?? {}),
       latencia:      this.#calcularLatencia()
     };
   }
 
   #calcularLatencia() {
     const c = this.#config;
+    const extraMoviment = latenciaExtraMoviment(this.#movimentEfectiu());
     if (this.#tipus === "atac") {
-      const arma = c.armes?.find(a => a.id === this.#armaId);
-      return arma?.latenciaTotal ?? c.latenciaBase;
+      return (this.#arma()?.latenciaTotal ?? c.latenciaBase) + this.#retardEfectiu() + extraMoviment;
     }
     // Moviment i defensa completa: latència bàsica (manual p. 483-487,
-    // "els moviments bàsics i ràpids es fan amb la latència bàsica del PJ").
-    return c.latenciaBase;
+    // "els moviments bàsics i ràpids es fan amb la latència bàsica del PJ"),
+    // més el +2 del moviment especial / càrrega (WP-M).
+    return c.latenciaBase + extraMoviment;
   }
 
   async _onRender(context, options) {
-    super._onRender?.(context, options);
+    await super._onRender?.(context, options);
     const el = this.element;
 
     const inputLatencia = el.querySelector("[name='latencia']");
@@ -87,12 +182,36 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
 
     el.querySelector("[name='armaId']")?.addEventListener("change", ev => {
       this.#armaId = ev.target.value;
-      recalcular();
+      if (!this.#arma()?.permetManiobres) this.#maniobraId = "";
+      this.render(false);
+    });
+
+    el.querySelector("[name='maniobraId']")?.addEventListener("change", ev => {
+      this.#maniobraId = ev.target.value ?? "";
+      this.render(false);
+    });
+
+    el.querySelector("[name='retardBarallarse']")?.addEventListener("change", ev => {
+      this.#retard = limitarRetardBarallarse(ev.target.value, this.#retardMax());
+      this.render(false);
+    });
+
+    el.querySelector("[name='moviment']")?.addEventListener("change", ev => {
+      this.#moviment = normalitzarMoviment(ev.target.value);
+      this.render(false);
     });
 
     el.querySelector("[name='defensaId']")?.addEventListener("change", ev => {
       this.#defensaId = ev.target.value;
       this.render(false);
+    });
+
+    el.querySelector("[name='concentrar']")?.addEventListener("change", ev => {
+      this.#concentrar = ev.target.checked;
+    });
+
+    el.querySelector("[name='descripcio']")?.addEventListener("input", ev => {
+      this.#descripcio = ev.target.value;
     });
 
     inputMod?.addEventListener("input", recalcular);
@@ -103,25 +222,57 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     const tipus   = d.tipus ?? "altra";
     const arma    = tipus === "atac"    ? this.#config.armes?.find(a => a.id === d.armaId) : null;
     const defensa = tipus === "defensa" ? this.#config.defenses?.find(x => x.id === d.defensaId) : null;
+    const maniobra = (arma?.permetManiobres && d.maniobraId)
+      ? (this.#config.maniobres ?? []).find(m => m.id === d.maniobraId) ?? null
+      : null;
+
+    // WP-M: el moviment triat, validat contra els permesos per a aquesta acció.
+    const moviment = this.#movimentEfectiu();
 
     let etiqueta;
-    if (tipus === "atac")           etiqueta = arma?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Atac");
-    else if (tipus === "defensa")   etiqueta = defensa?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Defensa");
-    else if (tipus === "moviment")  etiqueta = game.i18n.localize("FORJA.Combat.Accio.Moviment");
-    else                            etiqueta = game.i18n.localize("FORJA.Combat.Accio.Altra");
+    if (tipus === "atac")          etiqueta = arma?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Atac");
+    else if (tipus === "defensa")  etiqueta = defensa?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Defensa");
+    else if (tipus === "moviment") etiqueta = game.i18n.localize("FORJA.Combat.Accio.Moviment");
+    else                           etiqueta = game.i18n.localize("FORJA.Combat.Accio.Altra");
+    if (maniobra) etiqueta = `${etiqueta} — ${maniobra.nom}`;
+    if (moviment !== "basic" || tipus === "moviment") {
+      etiqueta = `${etiqueta} — ${game.i18n.localize(ETIQUETES_MOVIMENT[moviment])}`;
+    }
+
+    // B16: el retard només val per a atacs de barallar-se sense maniobra.
+    const retardBarallarse = arma
+      ? limitarRetardBarallarse(d.retardBarallarse, retardMaximBarallarse(arma, arma.retardMax ?? 0, !!maniobra))
+      : 0;
+    if (retardBarallarse > 0) {
+      etiqueta = `${etiqueta} — ${game.i18n.format("FORJA.Combat.RetardBarallarseEtiqueta", { n: retardBarallarse })}`;
+    }
+
+    // Latència mínima que la tria obliga a pagar (no es pot "desfer" editant
+    // la latència a mà): retard de barallar-se (B16) i +2 del moviment
+    // especial / càrrega (WP-M, manual l. 2792).
+    const extraMoviment = latenciaExtraMoviment(moviment);
+    const minimObligat = arma
+      ? (retardBarallarse > 0 || extraMoviment > 0 ? (arma.latenciaTotal ?? 0) + retardBarallarse + extraMoviment : 1)
+      : (extraMoviment > 0 ? (this.#config.latenciaBase ?? 0) + extraMoviment : 1);
 
     this.#resolve?.({
-      latencia:   Math.max(1, parseInt(d.latencia) || 1),
+      latencia:   Math.max(1, parseInt(d.latencia) || 1, minimObligat),
       tipus,
       armaId:     arma?.id ?? null,
       defensa:    defensa ?? null,
+      maniobraId: maniobra?.id ?? null,
+      retardBarallarse,
+      moviment,
+      concentrar: !!d.concentrar,
       etiqueta,
       descripcio: (d.descripcio ?? "").trim()
     });
+    this.#resolve = null;
   }
 
   async close(options = {}) {
     this.#resolve?.(null);
+    this.#resolve = null;
     return super.close(options);
   }
 

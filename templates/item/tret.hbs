@@ -1,0 +1,17 @@
+<div class="forja-item-tret">
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Cost"}}</label>
+    <input type="number" name="system.cost" value="{{sys.cost}}" step="1"/>
+  </div>
+
+  <div class="form-group form-group-stacked">
+    <label>{{localize "FORJA.Item.Descripcio"}}</label>
+    {{editor sys.descripcio target="system.descripcio" button=true engine="prosemirror" collaborate=false}}
+  </div>
+
+  <fieldset class="forja-item-avancat">
+    <legend>{{localize "FORJA.Item.Efecte"}}</legend>
+    <p class="forja-item-ajuda">{{localize "FORJA.Item.EfecteAjuda"}}</p>
+    <textarea name="system.efecte" rows="4" class="forja-item-json" spellcheck="false">{{efecteJSON}}</textarea>
+  </fieldset>
+</div>

@@ -14,3 +14,12 @@ Thumbs.db
 
 # Build artifacts
 dist/
+
+# LevelDB runtime files (compendiums)
+packs/*/LOCK
+packs/*/LOG
+packs/*/LOG.old
+
+# graphify (graf de coneixement del codi, es genera localment)
+graphify-out/
+captures/

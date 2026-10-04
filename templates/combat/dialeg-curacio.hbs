@@ -4,14 +4,20 @@
   {{#unless esMecanoide}}
   <div class="form-group dc-tipus">
     <label class="dc-radio">
-      <input type="radio" name="tipus" value="primers-auxilis" {{#if (eq tipus "primers-auxilis")}}checked{{/if}}>
+      <input type="radio" name="tipus" value="primers-auxilis" {{#if (eq tipus "primers-auxilis")}}checked{{/if}} {{#unless permesPrimersAuxilis}}disabled{{/unless}}>
       {{localize "FORJA.Curacio.PrimersAuxilis"}}
     </label>
     <label class="dc-radio">
-      <input type="radio" name="tipus" value="tractament-medic" {{#if (eq tipus "tractament-medic")}}checked{{/if}}>
+      <input type="radio" name="tipus" value="tractament-medic" {{#if (eq tipus "tractament-medic")}}checked{{/if}} {{#unless permesTractamentMedic}}disabled{{/unless}}>
       {{localize "FORJA.Curacio.TractamentMedic"}}
     </label>
   </div>
+  {{#unless tipusPermes}}
+  <p class="dc-avis"><strong>{{localize "FORJA.Curacio.NivellMinim" hab=habNom minim=minimTipus}}</strong></p>
+  {{/unless}}
+  {{#if avisAutotractament}}
+  <p class="dc-avis"><strong>{{localize "FORJA.Curacio.AutotractamentAvis"}}</strong></p>
+  {{/if}}
   <p class="dc-desc">
     {{#if (eq tipus "tractament-medic")}}{{localize "FORJA.Curacio.TractamentMedicDesc"}}{{else}}{{localize "FORJA.Curacio.PrimersAuxilisDesc"}}{{/if}}
   </p>

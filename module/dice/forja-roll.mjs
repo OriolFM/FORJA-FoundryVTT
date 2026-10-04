@@ -44,12 +44,4 @@ export default class ForjaRoll extends Roll {
       totalDice: dice.length
     };
   }
-
-  /** Classe CSS per a cada dau */
-  static getDieClass(value) {
-    if (value === 1)   return "dau-pifia";
-    if (value >= 10)   return "dau-doble";
-    if (value >= 6)    return "dau-fita";
-    return "dau-neutre";
-  }
 }
