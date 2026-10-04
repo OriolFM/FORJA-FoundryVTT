@@ -56,6 +56,14 @@ let m = prop.mitjansBlocar({ items: [], habilitat: hab({ resistencia: 4, "armes-
 assert.deepEqual(m.map(x => [x.id, x.reduccioExtra]), [["resistencia", 2], ["improvisat", 1]]);
 m = prop.mitjansBlocar({ items: [], habilitat: hab({ resistencia: 4 }), reduccioNatural: 2, categoriaAtac: "cosAcos" });
 assert.deepEqual(m.map(x => x.id), ["improvisat"]);                      // sense armes no: el cos no bloca armes
+// Exemple del manual (l. 3832–3836): el gólem (urpes, resistència 4, reducció 3)
+// bloca l'espasa de la Yoko amb el cos → +3 (limitat a la reducció natural).
+const urpes = { type: "arma", name: "Urpes", system: { categoria: "natural" }, flags: { forja: { catalegId: "urpes" } } };
+const cop   = { type: "arma", name: "Cop", system: { categoria: "natural", basic: true }, flags: { forja: { catalegId: "cop" } } };
+m = prop.mitjansBlocar({ items: [urpes], habilitat: hab({ resistencia: 4 }), reduccioNatural: 3, categoriaAtac: "cosAcos" });
+assert.deepEqual(m.map(x => [x.id, x.reduccioExtra]), [["resistencia", 3], ["improvisat", 0]]);
+m = prop.mitjansBlocar({ items: [cop], habilitat: hab({ resistencia: 4 }), reduccioNatural: 3, categoriaAtac: "cosAcos" });
+assert.deepEqual(m.map(x => x.id), ["improvisat"]);
 m = prop.mitjansBlocar({ items: [arma("escuts")], habilitat: hab({ resistencia: 1, "armes-cos-a-cos": 3 }), reduccioNatural: 5, categoriaAtac: "distancia", cataleg });
 assert.deepEqual(m.map(x => [x.id, x.reduccioExtra, x.nomArma]), [["escut", 3, "escuts"], ["improvisat", 0, undefined]]);
 m = prop.mitjansBlocar({ items: [arma("escuts")], habilitat: hab({ resistencia: 2, "armes-cos-a-cos": 3 }), reduccioNatural: 5, categoriaAtac: "natural", cataleg });

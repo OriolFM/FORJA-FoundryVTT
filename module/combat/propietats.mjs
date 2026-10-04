@@ -62,10 +62,13 @@ export function teProprietat(item, propietat, cataleg) {
  * dany del PJ". I: "El bonificador ... no pot superar la reducció de dany
  * natural del PJ, és a dir, ... podrà duplicar la seva reducció de dany".
  *
- * Lectura literal (documentada a l'informe de WP-I):
- *  - "sense armes" es refereix a l'ATAC: el cos (resistència) només bloca
- *    atacs d'armes naturals. Contra atacs amb armes (cos a cos o distància)
- *    cal un escut o un altre objecte.
+ * Lectura (WP-I, ajustada amb l'exemple de combat del manual, l. 3832–3836):
+ *  - El cos (resistència) bloca els atacs d'armes naturals. Contra atacs amb
+ *    armes (cos a cos o distància) només si el defensor té alguna part del
+ *    cos "que pugui suportar el dany": armament natural (urpes, banyes...,
+ *    no el "Cop" bàsic) o armadura natural — l'exemple: el gólem bloca
+ *    l'espasa de la Yoko amb les plaques òssies del braç i suma resistència.
+ *    Contra la resta d'atacs armats cal un escut o un altre objecte.
  *  - L'escut només si el defensor té una arma amb la propietat `escut`.
  *  - "Altres objectes" (armes improvisades) sempre s'ofereix: el DJ decideix
  *    si hi ha un objecte adequat a mà.
@@ -81,6 +84,19 @@ export function teProprietat(item, propietat, cataleg) {
  * @returns {Array<{id:string, habId:string, nivell:number, reduccioExtra:number, nomArma?:string}>}
  *   Ordenats de més a menys reducció extra.
  */
+/**
+ * El defensor té una part del cos que pot suportar un cop armat (B15): una
+ * arma natural pròpia (no el "Cop" bàsic que tothom té) o una armadura natural.
+ * @param {Iterable<object>} items
+ * @returns {boolean}
+ */
+export function teCosResistent(items = []) {
+  return [...(items ?? [])].some(i =>
+    (i?.type === "arma" && i.system?.categoria === "natural"
+      && !i.system?.basic && i.flags?.forja?.catalegId !== "cop")
+    || (i?.type === "armadura" && i.system?.tipus === "natural" && i.system?.equipada !== false));
+}
+
 export function mitjansBlocar({ items = [], habilitat, reduccioNatural = 0, categoriaAtac = null, cataleg } = {}) {
   const cap = Math.max(0, reduccioNatural ?? 0);
   const mitja = (id, habId, extra = {}) => {
@@ -90,7 +106,7 @@ export function mitjansBlocar({ items = [], habilitat, reduccioNatural = 0, cate
 
   const mitjans = [];
   const atacArmat = categoriaAtac === "cosAcos" || categoriaAtac === "distancia";
-  if (!atacArmat) mitjans.push(mitja("resistencia", "resistencia"));
+  if (!atacArmat || teCosResistent(items)) mitjans.push(mitja("resistencia", "resistencia"));
 
   const escut = [...(items ?? [])].find(i => i?.type === "arma" && teProprietat(i, "escut", cataleg));
   if (escut) mitjans.push(mitja("escut", "armes-cos-a-cos", { nomArma: escut.name }));
