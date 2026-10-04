@@ -13,6 +13,9 @@ import { metresMogutsAquestTorn } from "../documents/token.mjs";
 import { modificadorLatenciaEstats } from "../estats/estats-parametritzats.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
+import {
+  tirarDefensaCompleta, desarDefensaCompleta, defensaCompletaDe, combatantDe, resolucioDefensaCompleta
+} from "./defensa-completa.mjs";
 
 /**
  * L'atac bàsic "Cop" (catàleg `cop`, `system.basic`), l'única arma natural
@@ -245,7 +248,11 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     const marcadorDeclaracio = combat.marcador ?? 0;
 
     await combat.declararAccio(combatantId, config.latencia);
-    await establirConcentracio(actor, config.concentrar);
+    // Defensa completa: sempre concentrada, però el dau es suma a la tirada de
+    // defensa que es fa ara mateix (defensa-completa.mjs), no a una acció futura.
+    await establirConcentracio(actor, config.tipus === "defensa" ? false : config.concentrar);
+    // Declarar la propera acció tanca el torn: la defensa completa anterior s'acaba.
+    await desarDefensaCompleta(combatant, null);
 
     // Desa l'acció declarada com a "pendent de resoldre" (DA-?): el botó de
     // resoldre obrirà directament la tirada corresponent, ja preseleccionada.
@@ -284,6 +291,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     } else if (config.tipus === "defensa") {
       const def = defenses.find(d => d.id === config.defensa?.id);
       if (def) pendent = { ...pendent, ...def, label: def.nom };
+      // La tirada de defensa es fa en declarar i val per a tots els atacs
+      // fins al final del seu torn.
+      await desarDefensaCompleta(combatant, await tirarDefensaCompleta(actor, def, combat));
     }
     // `setFlag` FUSIONA objectes: sense esborrar-la abans, claus d'una
     // declaració anterior (maniobraId, retardBarallarse, movimentEnCurs...)
@@ -338,6 +348,13 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       return;
     }
 
+    // Defensa completa: ja es va tirar en declarar; al seu torn només declara.
+    if (pendent?.tipus === "defensa") {
+      ui.notifications?.info(game.i18n.format("FORJA.Combat.DefensaCompletaJaTirada", { nom: combatant.name }));
+      await _marcarResolta(combat, combatant);
+      return;
+    }
+
     if (!pendent || pendent.tipus === "altra" || (pendent.tipus === "defensa" && pendent.senseTirada)) {
       if (pendent?.senseTirada) {
         ui.notifications?.info(game.i18n.format("FORJA.Combat.BlocarSenseAccio", { nom: combatant.name }));
@@ -381,8 +398,13 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // manual no contempla; es queda com a simplificació deliberada.
         const { resultats } = await resoldrePuntadaDePeuGiratoria({
           actor, tokenAtacant, arma, poolFinal, maniobra,
-          demanarDefensa: async (obj) => {
+          demanarDefensa: async (obj, tokenObj) => {
             const categoriaAtac = arma.system.categoria ?? null;
+            const dc = defensaCompletaDe(combat, combatantDe(combat, tokenObj, obj));
+            if (dc) {
+              const { eleccio, resolucio } = resolucioDefensaCompleta(dc, { objectiu: obj, defensaBasica: obj.system.defensa ?? 0, categoriaAtac });
+              return { ...eleccio, preresolta: resolucio };
+            }
             const decisio = await decidirDefensa({
               defensor: obj, opcions: opcionsDefensa(obj, undefined, { categoriaAtac }),
               categoriaAtac, nomAtacant: combatant.name
@@ -465,29 +487,38 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         // resultant.
         // B15: la categoria de l'arma atacant decideix amb què es pot blocar.
         const categoriaAtac = arma.system.categoria ?? null;
-        const opcions = [
-          ...opcionsDefensa(objectiu, defensaBasica, { categoriaAtac, bonusDauDefensa }),
-          ...protectors.flatMap(p => opcionsInterposar(p, { categoriaAtac }))
-        ];
-        // Qui tria la defensa: la configuració automàtica del PNJ, el jugador
-        // propietari del defensor o el DJ — mai el jugador que ataca un PNJ
-        // (decisio-defensa.mjs; Oriol FM, 2026-09-27).
-        const decisio = await decidirDefensa({
-          defensor: objectiu, opcions, defensaBasica, categoriaAtac, bonusDauDefensa,
-          protectors,
-          nomAtacant: combatant.name
-        });
-        if (!decisio) return;
-        const eleccio = decisio.eleccio;
 
-        // Si s'ha triat interposar-se, qui rep la tirada/reacció I el dany
-        // és el protector, no l'objectiu original.
-        const qui = eleccio.interposant ?? objectiu;
+        // Defensa completa declarada: ja està tirada, l'atac s'hi resol
+        // directament (sense preguntar ni gastar reaccions).
+        const defensaCompleta = defensaCompletaDe(combat, combatantDe(combat, tokenObjectiu, objectiu));
+        let eleccio, resolucio, qui = objectiu;
+        if (defensaCompleta) {
+          ({ eleccio, resolucio } = resolucioDefensaCompleta(defensaCompleta, { objectiu, defensaBasica, categoriaAtac }));
+        } else {
+          const opcions = [
+            ...opcionsDefensa(objectiu, defensaBasica, { categoriaAtac, bonusDauDefensa }),
+            ...protectors.flatMap(p => opcionsInterposar(p, { categoriaAtac }))
+          ];
+          // Qui tria la defensa: la configuració automàtica del PNJ, el jugador
+          // propietari del defensor o el DJ — mai el jugador que ataca un PNJ
+          // (decisio-defensa.mjs; Oriol FM, 2026-09-27).
+          const decisio = await decidirDefensa({
+            defensor: objectiu, opcions, defensaBasica, categoriaAtac, bonusDauDefensa,
+            protectors,
+            nomAtacant: combatant.name
+          });
+          if (!decisio) return;
+          eleccio = decisio.eleccio;
 
-        const resolucio = await resoldreOpcioDefensa(qui, eleccio, { nomAtacant: combatant.name });
-        if (!resolucio) {
-          ui.notifications?.warn(game.i18n.format("FORJA.Combat.SenseReaccioDisponible", { nom: qui.name }));
-          return;
+          // Si s'ha triat interposar-se, qui rep la tirada/reacció I el dany
+          // és el protector, no l'objectiu original.
+          qui = eleccio.interposant ?? objectiu;
+
+          resolucio = await resoldreOpcioDefensa(qui, eleccio, { nomAtacant: combatant.name });
+          if (!resolucio) {
+            ui.notifications?.warn(game.i18n.format("FORJA.Combat.SenseReaccioDisponible", { nom: qui.name }));
+            return;
+          }
         }
 
         // B16: retard de barallar-se declarat (ja pagat en latència), limitat
@@ -657,6 +688,7 @@ function _estaHabilitat(combat, combatant) {
 /** El combatent actiu té una acció pendent per resoldre en aquest tic. */
 function _potResoldre(combat, combatant) {
   if (!combat.started || combat.fase === "declaracio") return false;
+  if (combatant.getFlag("forja", "accioPendent")?.tipus === "defensa") return false;
   if (combat.combatant?.id !== combatant.id || combatant.initiative !== combat.marcador) return false;
   if (["resolta", "redeclarada"].includes(combatant.getFlag("forja", "estatTorn"))) return false;
   return !!combatant.getFlag("forja", "accioPendent");

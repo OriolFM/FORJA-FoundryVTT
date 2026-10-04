@@ -93,10 +93,11 @@ export async function resoldrePuntadaDePeuGiratoria({ actor, tokenAtacant, arma,
     const objectiu = tokenObjectiu.actor;
     if (!objectiu) continue;
 
-    const eleccio = await demanarDefensa(objectiu);
+    const eleccio = await demanarDefensa(objectiu, tokenObjectiu);
     if (!eleccio) continue; // DJ ha cancel·lat aquest objectiu concret, continua amb el següent
 
-    const resolucio = await resoldreOpcioDefensa(objectiu, eleccio);
+    // Defensa completa: ja tirada en declarar (defensa-completa.mjs).
+    const resolucio = eleccio.preresolta ?? await resoldreOpcioDefensa(objectiu, eleccio);
     if (!resolucio) continue;
 
     const resultat = await ferAtac({

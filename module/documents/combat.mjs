@@ -114,6 +114,11 @@ export default class ForjaCombat extends Combat {
     const ia = a.initiative ?? Infinity;
     const ib = b.initiative ?? Infinity;
     if (ia !== ib) return ia - ib;
+    // Qui fa una defensa completa actua l'últim del seu tic: els atacs que
+    // rep en aquella casella es resolen abans que acabi la defensa.
+    const da = a.flags?.forja?.defensaCompleta ? 1 : 0;
+    const db = b.flags?.forja?.defensaCompleta ? 1 : 0;
+    if (da !== db) return da - db;
     const la = a.actor?.system?.latenciaBase ?? 0;
     const lb = b.actor?.system?.latenciaBase ?? 0;
     if (la !== lb) return lb - la;

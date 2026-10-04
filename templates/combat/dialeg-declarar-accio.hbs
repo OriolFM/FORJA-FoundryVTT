@@ -130,6 +130,9 @@
     {{#if (eq moviment "carrega")}}{{localize "FORJA.Moviment.CarregaDesc" metres=metresMoviment}}{{/if}}
   </p>
 
+  {{#if (eq tipus "defensa")}}
+  <p class="hint">{{localize "FORJA.Combat.DefensaCompletaConcentrada"}}</p>
+  {{else}}
   <div class="form-group dda-concentrar">
     <label title="{{localize 'FORJA.Combat.ConcentrarDesc'}}">
       <input type="checkbox" name="concentrar" {{#if concentrar}}checked{{/if}}>
@@ -137,6 +140,7 @@
     </label>
     <p class="hint">{{localize "FORJA.Combat.ConcentrarDesc"}}</p>
   </div>
+  {{/if}}
 
   <div class="form-group">
     <label>{{localize "FORJA.Combat.Latencia"}}</label>
