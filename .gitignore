@@ -38,8 +38,11 @@ captures/
 *.pem
 *.p12
 *.pfx
-secrets.*
-!secrets.example.*
+secrets.json
+secrets.env
+secrets.yml
+secrets.yaml
+secrets.txt
 credencials*
 CREDENCIALS*
 credentials*
