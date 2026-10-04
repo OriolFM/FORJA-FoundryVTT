@@ -19,6 +19,11 @@ dist/
 packs/*/LOCK
 packs/*/LOG
 packs/*/LOG.old
+mon-proves/**/LOCK
+mon-proves/**/LOG
+mon-proves/**/LOG.old
+# Configuració del món: hi ha claus privades (p. ex. la de FORJAPP). Mai a git.
+mon-proves/*/data/settings/
 
 # graphify (graf de coneixement del codi, es genera localment)
 graphify-out/

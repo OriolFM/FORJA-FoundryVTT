@@ -1,0 +1,16 @@
+{
+  "title": "FORJA betatest",
+  "id": "forja-betatest",
+  "system": "forja",
+  "joinTheme": "default",
+  "coreVersion": "14.368",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.368"
+  },
+  "systemVersion": "0.4.0",
+  "lastPlayed": "Sun Oct 04 2026 20:10:17 GMT+0200 (Hora d’estiu d’Europa central)",
+  "playtime": 21514,
+  "description": "",
+  "flags": {}
+}

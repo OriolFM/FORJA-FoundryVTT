@@ -31,8 +31,9 @@ FORJA-FoundryVTT/
 ├── module/
 │   ├── config/
 │   │   ├── constants.mjs      # CONFIG.FORJA: costos, taules, càrrega de dades/*.json
-│   │   └── dades/*.json       # Catàlegs editables: armadures, armes, artefactes,
-│   │                          # estats, incompatibilitats, maniobres-arts-marcials, trets
+│   │   └── dades/*.json       # Catàlegs editables: armadures, armes, artefactes, efectes,
+│   │                          # estats, incompatibilitats, maniobres-arts-marcials, trets,
+│   │                          # parametres (motor d'efectes/artefactes), criatures-exemple
 │   ├── data/                  # DataModels d'actors i items
 │   │   ├── _camps.mjs         # Camps compartits (campsBase, campsHabilitats)
 │   │   ├── actor-personatge.mjs  # ActorPersonatge + _prepararDerivats (compartit amb PNJ)
@@ -40,7 +41,8 @@ FORJA-FoundryVTT/
 │   │   ├── item-tret.mjs
 │   │   ├── item-arma.mjs
 │   │   ├── item-armadura.mjs
-│   │   └── item-artefacte.mjs
+│   │   ├── item-artefacte.mjs
+│   │   └── item-efecte.mjs    # Efecte sobrenatural (do, tipus, dificultat, ús, mecànica)
 │   ├── documents/
 │   │   ├── actor.mjs          # ForjaActor (helpers aplicarDany/curar)
 │   │   ├── combat.mjs         # ForjaCombat: rellotge de temps, ègides
@@ -52,7 +54,10 @@ FORJA-FoundryVTT/
 │   │   ├── full-personatge.mjs   # Fitxa de Personatge (extén la base)
 │   │   ├── full-pnj.mjs          # Fitxa de PNJ (extén la base)
 │   │   ├── full-item.mjs         # Fitxa única per als 4 tipus d'Item
-│   │   └── dialeg-*.mjs          # Diàlegs (trets, equipament, millora, curació, defensa, declarar acció)
+│   │   ├── assistent-creacio.mjs # Assistent de creació de PJ pas a pas (M-03)
+│   │   ├── selector-caselles-lliures.mjs # Tria de caselles per a àrees de forma lliure
+│   │   └── dialeg-*.mjs          # Diàlegs: trets, equipament, millora, curació, defensa, declarar acció,
+│   │                             # manifestar, resistir, desfer, constructor, prototip, accions complexes
 │   ├── combat/                # Pipeline de combat
 │   │   ├── atac.mjs           # ferAtac: tirada, dany, ègida, concentració, maniobres
 │   │   ├── defensa.mjs        # opcionsDefensa / resoldreOpcioDefensa / triarDefensaAutomatica
@@ -64,13 +69,27 @@ FORJA-FoundryVTT/
 │   │   ├── abast.mjs          # Distàncies i bandes de rang (vora a vora)
 │   │   ├── moviment.mjs       # Moviment: distàncies, bloqueig, permís per torn, A* (funcions pures)
 │   │   ├── equipament-automatic.mjs  # Atacs automàtics (Cop, armament natural), atributIHabilitatAtac
+│   │   ├── maniobres.mjs      # Maniobres d'arts marcials (Puntada giratòria, Llançament, Interrupció)
+│   │   ├── defensa-completa.mjs # Defensa completa declarada: tirada en declarar, val fins al final del torn
+│   │   ├── anuncis.mjs        # Anuncis sobre la pantalla (declaració, inici, avanç del rellotge)
+│   │   ├── area.mjs / plantilla.mjs  # Motor d'àrees (esfèric, lliure, llàgrima) i lectura de plantilles
+│   │   ├── manifestar.mjs     # Sobrenatural: manifestar efectes, equilibri (S-20/S-21)
+│   │   ├── resistencia.mjs / contrarestar.mjs / desfer.mjs / control-efecte.mjs  # Resposta als efectes (S-21)
+│   │   ├── artefactes.mjs     # Activació i càrrega d'artefactes (S-26)
 │   │   └── tracker-ui.mjs     # ForjaCombatTracker (extén el Combat Tracker natiu)
 │   ├── dice/
 │   │   ├── forja-roll.mjs     # ForjaRoll (Roll amb fites/pífia)
 │   │   ├── tirada.mjs         # ferTirada: obre el diàleg i executa la tirada
 │   │   └── dialeg-tirada.mjs  # Diàleg de configuració d'una tirada
-│   ├── estats/estats.mjs      # Registra CONFIG.statusEffects + estat "dead"
-│   ├── progressio/millora.mjs # Millora amb PX (mateixos costos que la creació)
+│   ├── estats/
+│   │   ├── estats.mjs         # Registra CONFIG.statusEffects + estat "dead"
+│   │   └── estats-parametritzats.mjs # Lent/Ràpid/Sagnant/Recuperació amb valor X (M-05)
+│   ├── progressio/
+│   │   ├── millora.mjs        # Millora amb PX (mateixos costos que la creació)
+│   │   ├── construccio.mjs    # Motor de paràmetres: cost/dificultat/latència d'efectes i artefactes (S-23)
+│   │   ├── progressio-sobrenatural.mjs # Aprendre/millorar efectes amb PX (S-29)
+│   │   ├── rd-artefactes.mjs / modular.mjs # R+D: prototips i artefactes modulars (S-30)
+│   │   └── accions-complexes.mjs # Calculadora d'accions complexes (S-08)
 │   ├── validacio/coherencia.mjs # Avisos (no bloquegen): PC/PX excedits, incompatibilitats
 │   └── xarxa/socket.mjs       # Relé d'autoritat del DJ (vegeu més avall)
 ├── templates/                 # Plantilles Handlebars, organitzades com module/apps i module/combat
@@ -88,11 +107,13 @@ FORJA-FoundryVTT/
 │   └── versio.mjs             # npm run versio: tanca una versió (i actualitza graphify)
 ├── tests/
 │   ├── unitaris/              # npm test — lògica pura, sense Foundry
-│   └── joc/                   # Proves en un Foundry real sense pantalla (v13 i v14)
+│   └── joc/                   # Proves en un Foundry real sense pantalla (v13 i v14);
+│                              # local.mjs: segon client contra el Foundry local (Windows)
+├── mon-proves/                # Món de proves compartit (Foundry v14) + imatges; vegeu el seu README
 └── docs/
-    ├── manual/FORJA_FC001CA_CORE.md  # Manual complet del joc — font de veritat de les regles
+    ├── FORJA_FC001CA_CORE.md  # Manual complet del joc (v3) — font de veritat de les regles
     ├── REVIEW-PLAN.md         # Troballes de la revisió de codi i pla de treball per paquets
-    ├── REGISTRE-TREBALL.md    # REGISTRE DE TOTS ELS CANVIS DE LA BRANCA: commits, decisions, troballes, pendents
+    ├── REGISTRE-TREBALL.md    # REGISTRE DE TOTS ELS CANVIS: commits, decisions, troballes, PENDENTS
     ├── PROVES.md              # Totes les proves: què, com, com s'executen, resultats v13/v14
     └── VERSIONS.md            # Control de versions
 ```
@@ -115,7 +136,8 @@ Registrats a `forja.mjs` (`CONFIG.Actor.dataModels`, `CONFIG.Item.dataModels`,
 | `tret` | `ItemTret` | `cost`, `descripcio`, `efecte` (opcional: `{stat, delta}` o `{flag}`, aplicat als derivats) |
 | `arma` | `ItemArma` | `categoria` (`natural`/`cosAcos`/`distancia`), `modLatencia`, `abast`, `danyBase`, `maniobra`, `rangExtrem`, `basic` |
 | `armadura` | `ItemArmadura` | `tipus` (`fisica`/`flexible`/`natural`), `reduccio`, `modLatencia`, `equipada`, `egida.{activa,absorcio,tornsInactiva}` |
-| `artefacte` | `ItemArtefacte` | `cost`, `categoria`, `activacio`, `us`, `carrega`, `mecanica` — dades de referència del catàleg; **no s'automatitza** (motor d'artefactes encara no existeix) |
+| `artefacte` | `ItemArtefacte` | `cost`, `categoria`, `activacio`, `us`, `carrega`, `mecanica`, `fase`/`trencat` (prototips), `modular`/`moduls` — activació i càrrega a `combat/artefactes.mjs` |
+| `efecte` | `ItemEfecte` | `cost`, `do`, `tipus`, `dificultat`, `modLatencia`, `us`, `mecanica` — es manifesta amb `combat/manifestar.mjs`; sense fitxa pròpia (fa servir la genèrica de Foundry) |
 
 Els actors comparteixen els camps base de `module/data/_camps.mjs`
 (`campsBase`): atributs (FOR/DES/AGI/PER/INT/APL, 0–5), `especie`, `mida`
@@ -208,23 +230,42 @@ Estat persistit a `flags.forja`:
   — `setupTurns()` el torna a apuntar al combatent actiu després d'ordenar).
 - `actuats` — ids que ja han actuat a la casella del `marcador`.
 
+**Fases** (`flags.forja.fase`): `startCombat` no arrenca si algú no té
+posició: posa `"declaracio"`. Quan declara l'últim, el hook `updateCombatant`
+del DJ crida `iniciarTempsActiu`, que posa `"actiu"`, avança el marcador
+fins a la primera posició ocupada i arrenca el combat. En empat de posició,
+qui té una defensa completa va l'últim (`_sortCombatants`).
+
 `declararAccio(combatantId, latencia)` suma la latència a la posició actual
 del combatent i reordena. `nextTurn()` (funció pura `calcularSeguentTorn`)
 tria el proper combatent (algú pendent a la casella del marcador; si no,
 avança el marcador a la propera casella ocupada) i escriu `round`, `turn` i
-els tres flags en un sol `update` (evita doble escriptura). `fiDeTorn`
-reinicia les reaccions del combatent sortint; s'executa només al DJ actiu,
-des del hook `updateCombat` de `forja.mjs`.
+els tres flags en un sol `update` (evita doble escriptura), amb
+`options.forja.avancTics` perquè `combat/anuncis.mjs` ho anunciï a tothom.
+`fiDeTorn` reinicia les reaccions del combatent sortint; s'executa només al
+DJ actiu, des del hook `updateCombat` de `forja.mjs`, que també hi
+recupera l'equilibri, avança la recàrrega dels artefactes, aplica els tics
+d'estats al combatent entrant i neteja `estatTorn`. En esborrar el combat,
+`netejarFinalCombat` recupera reaccions i treu els estats amb
+`fiCombat: true` (`estats.json`).
 
 ### Tracker (`module/combat/tracker-ui.mjs`, `ForjaCombatTracker`)
 
 Extén el `CombatTracker` natiu: elimina els controls d'iniciativa (irrellevants
-en aquest sistema), mostra el marcador de temps i la posició de cada
-combatent, i afegeix botons "declarar acció" / "resoldre" / "marcar
+en aquest sistema), substitueix el títol per «Tic N» (o «Fase de declaració»)
+amb el botó «Avança» del DJ (`_potAvancarTemps`), mostra la posició de cada
+combatent i afegeix botons "declarar acció" / "resoldre" / "marcar
 emboscada" — **només visibles** per al DJ o el propietari del combatent
-(`_potControlar`). Declarar acció obre `DiategDeclararAccio` amb la latència
-i les opcions d'atac/defensa/maniobres calculades; resoldre obre el diàleg de
-tirada (o el flux d'atac complet si hi ha un objectiu marcat al canvas).
+(`_potControlar`). Qui no ha d'actuar ara surt atenuat i bloquejat
+(`_estaHabilitat`, `_potResoldre`); la icona que toca fa pampallugues
+(`_iconaDestacada`, segons `flags.forja.estatTorn`).
+
+Declarar acció obre `DiategDeclararAccio` amb la latència, les opcions
+d'atac/defensa/maniobres, l'**objectiu** (`_objectiusDeclarables`) i l'última
+tria del combatent (`flags.forja.ultimaDeclaracio`). Una defensa completa es
+tira en aquell moment (`combat/defensa-completa.mjs`). Resoldre fa el flux
+d'atac complet contra l'objectiu declarat (o el marcat, o el demana), o la
+tirada simple que toqui.
 
 ### Moviment (WP-M)
 
@@ -270,14 +311,19 @@ que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
    — font única, usada tant pel diàleg de resoldre un atac com pel de
    declarar una acció defensiva): passiva (sense cost), esquivar/parar
    (gasten una reacció, tirada enfrontada que cal **superar**), blocar (gasta
-   reacció, sense tirada, suma `min(resistència, reduccioDany)` a la reducció
-   de dany). El resultat de la defensa activa es publica al xat.
+   reacció, sense tirada, suma l'habilitat del mitjà —cos, escut o objecte,
+   `mitjansBlocar`— a la reducció de dany, fins a duplicar-la). El cos també
+   bloca atacs armats si el defensor té armament o armadura natural. El resultat de la defensa activa es publica al xat.
    **Qui tria la defensa** (`combat/decisio-defensa.mjs`, `decidirDefensa`):
    primer la defensa automàtica del PNJ (`system.defensaAutomatica`,
    `triarDefensaAutomatica`); si no en té, el jugador propietari del defensor
    si està connectat; si no, el DJ. El diàleg s'obre al client que ha de
    decidir mitjançant una pregunta pel socket (`preguntarA`). Mai el tria el
    jugador que ataca un PNJ. Si ningú respon en 2 minuts, s'aplica la defensa passiva.
+   Si el defensor no té cap reacció lliure, defensa bàsica sense preguntar.
+   Si té una **defensa completa** declarada, l'atac s'hi resol directament
+   (`resolucioDefensaCompleta`). El diàleg proposa l'última defensa triada
+   (`flags.forja.ultimaDefensa` de l'actor).
 3. **Atac** (`combat/atac.mjs`, `ferAtac`): tira contra la dificultat
    resolta per la defensa; bloqueja si l'atacant està `foraDeCombat`; aplica
    la penalització de salut i el dau extra de concentració a la dificultat/pool.
@@ -295,7 +341,9 @@ que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
    dona +1 dau a la propera tirada pròpia i es consumeix; rebre dany la
    trenca (i pot atordir si el dany supera la FOR de l'objectiu).
 6. **Maniobres d'arts marcials**: només amb l'atac "Cop" i habilitat
-   `arts-marcials`; sumen dificultat i poden aplicar un estat en impactar.
+   `arts-marcials`; es trien en declarar, sumen dificultat i poden aplicar un
+   estat en impactar. Puntada de peu giratòria, Llançament i Interrupció
+   tenen lògica pròpia a `combat/maniobres.mjs`.
 
 7. **Regles del manual B13–B17** (`combat/propietats.mjs`, `dany.mjs`,
    `defensa.mjs`, `curacio.mjs`): escopetes contra armadura rígida, pífia en
@@ -340,8 +388,10 @@ s'executin a tots els clients connectats alhora:
 - `createActor` / `createItem` / `deleteItem`: només si
   `userId === game.user.id` (el client que ha fet l'acció, no tots els
   altres).
-- `updateCombat` (fi de torn → reinicia reaccions): només si
+- `updateCombat` (fi de torn → reaccions, equilibri, recàrrega, tics,
+  `estatTorn`) i `updateCombatant` (inici del temps actiu): només si
   `game.users.activeGM?.isSelf`.
+- `updateCombat` per als **anuncis**: a tots els clients (no escriu res).
 
 En tocar aquests hooks o afegir-ne de nous que escriguin documents,
 mantingues aquest patró (`userId`/`activeGM` guard) — la manca d'aquest
@@ -396,6 +446,8 @@ Tot el detall és a **`docs/PROVES.md`**. En resum:
 3. **Proves de joc:** `tests/joc/proves.mjs`, `proves-combat.mjs` i `proves-moviment.mjs`, en un Foundry v13 i v14 real sense pantalla, amb sessions de DJ i de Jugador (Playwright). Cal passar-les si el canvi toca el joc, i sempre abans de tancar una versió.
    - Després, restaura `packs/manual`, que Foundry reescriu.
    - Afegeix els resultats a `docs/PROVES.md`.
+4. **Contra el Foundry local** (Windows, aplicació oberta): `tests/joc/local.mjs` hi entra com a segon client del DJ. Fes servir escenes i actors temporals i esborra'ls en acabar. Vegeu `docs/PROVES.md`, secció 4.
+5. **Món de proves compartit:** `mon-proves/` (instruccions al seu README).
 
 ## Convencions
 

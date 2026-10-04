@@ -79,6 +79,8 @@ npm test                              # proves unitàries (segons)
 node tests/joc/proves.mjs             # proves de joc en un Foundry real (vegeu docs/PROVES.md)
 ```
 
+Per provar a mà hi ha un **món de proves compartit** a [`mon-proves/`](mon-proves/README.md) (Foundry v14), amb instruccions per instal·lar-lo i per desar-hi canvis.
+
 ### Versions
 
 Versionat semàntic. Els canvis de cada versió són a [`CHANGELOG.md`](CHANGELOG.md),

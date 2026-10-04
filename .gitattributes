@@ -1,0 +1,4 @@
+# Bases de dades LevelDB (món de proves i compendis compilats): binàries.
+# Sense això, autocrlf convertiria CURRENT/MANIFEST a CRLF i Foundry no les podria obrir.
+mon-proves/forja-betatest/** binary
+packs/manual/** binary

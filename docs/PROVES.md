@@ -169,3 +169,48 @@ Escena quadrada, 100 px i 1 m per casella; PJ amb AGI 3 i MID 3 (caminar 6 m).
 3. **Esperes:** amb `esperarElement` i `esperarQue`, no amb les esperes de Playwright.
 4. **Daus:** si la regla depèn dels daus, amb `window.__daus(...)`.
 5. **Documentació:** afegir-la a la taula d'aquest document i, quan es passi, el resultat a v13 i v14.
+
+---
+
+## 4. Proves contra el Foundry local (Windows)
+
+Per provar canvis al mateix Foundry on juga l'Oriol (l'aplicació d'Electron a Windows), sense tancar-li la sessió. Es va fer servir el 2026-10-04 per verificar els canvis de combat d'aquella sessió.
+
+### Com funciona
+
+- L'aplicació d'Electron també té un servidor a `http://localhost:30000`.
+- [`tests/joc/local.mjs`](../tests/joc/local.mjs) hi entra com a **segon client** del mateix usuari DJ (`Gamemaster`), amb Playwright i l'**Edge** de Windows sense pantalla (no cal baixar cap navegador).
+- El segon client carrega el codi actual del repositori. El de l'Oriol no, fins que fa F5.
+- **Instal·lació:** `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install`.
+
+```js
+import { obrir } from "./local.mjs";
+const { b, p, errors } = await obrir();
+console.log(await p.evaluate(() => game.combats.map(c => [c.marcador, c.combatant?.name])));
+await b.close();
+```
+
+### Normes
+
+- **No toquis les dades de qui juga.** Per a proves que creen o modifiquen coses, fes servir una escena, actors i un combat **temporals** (amb nom que comenci per `_Prova`) i esborra'ls en acabar, també si la prova falla (`try … finally`).
+- Per veure al tracker un combat que no és el de l'escena activa: `ui.combat.initialize({ combat })`. Només afecta el segon client.
+- Abans de fer clic a la barra lateral: `ui.sidebar.expand()`.
+- **Dues sessions del mateix DJ:** els hooks «només al DJ actiu» s'executen a totes dues. Per això `iniciarTempsActiu` i els anuncis estan protegits contra execucions repetides.
+- Les captures de pantalla surten bé amb WebGL per programari (ja configurat a `local.mjs`).
+
+### Proves fetes el 2026-10-04 (Foundry v14.368)
+
+| Prova | Resultat |
+|-------|----------|
+| Combat començat abans del codi nou (marcador 0, Yoko al 7): «Avança» porta el marcador al 7 i anuncia «avança 7 tics» | OK |
+| Fase de declaració: no arrenca fins que declara l'últim; després tic de la primera posició i anuncis | OK |
+| Cicle de torn amb clics: declarar, resoldre, redeclarar, «Avança» al tic següent | OK |
+| Blocar del gòlem (urpes) contra un atac cos a cos: ofereix el cos (+4) | OK |
+| Defensa completa: tirada en declarar (6 daus, concentrada), dos atacs contra la mateixa tirada sense diàleg, un al mateix tic que el defensor | OK |
+| Final del combat: reaccions a 0, concentració fora, estats temporals fora, *sagnant* es manté | OK |
+| Missatge de defensa: mostra la defensa resultant (mínim defensa +1) | OK |
+| Últimes tries als diàlegs de declarar i de reacció; s'obliden en acabar el combat | OK |
+
+### Proves unitàries a Windows
+
+`npm test` falla a Windows: les proves fan `import("E:\…")`, i Node a Windows només accepta URL `file://`. Mentre no es corregeixi (vegeu «Pendent» a `REGISTRE-TREBALL.md`), es poden executar en una còpia temporal que embolcalli cada `import()` amb `pathToFileURL(...).href`.
