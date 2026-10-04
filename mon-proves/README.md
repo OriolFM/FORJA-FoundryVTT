@@ -70,7 +70,7 @@ Quan hagis afegit contingut al món (actors, objectes, escenes…) i el vulguis 
 1. **Tanca el món** (o Foundry sencer), perquè la base de dades quedi escrita del tot.
 2. Copia'l de tornada al repositori, sense els fitxers de bloqueig:
    ```powershell
-   robocopy "$env:LOCALAPPDATA\FoundryVTT\Data\worlds\forja-betatest" "mon-proves\forja-betatest" /MIR /XF LOCK LOG LOG.old
+   robocopy "$env:LOCALAPPDATA\FoundryVTT\Data\worlds\forja-betatest" "mon-proves\forja-betatest" /MIR /XF LOCK LOG LOG.old /XD settings
    ```
    ```bash
    rsync -a --delete --exclude LOCK --exclude 'LOG*' --exclude settings ~/.local/share/FoundryVTT/Data/worlds/forja-betatest/ mon-proves/forja-betatest/
