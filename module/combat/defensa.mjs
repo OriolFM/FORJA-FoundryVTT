@@ -226,6 +226,9 @@ export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null 
   const danyExtra  = opcio.id === "esquivar" ? danyExtraPifiaEsquivar(roll.forjaResults) : 0;
 
   const content = await foundry.applications.handlebars.renderTemplate("systems/forja/templates/combat/missatge-defensa.hbs", {
+    // Primer les dades de la tirada: la seva `dificultat` interna (1) no ha de
+    // tapar la defensa resultant, que és la que es mostra.
+    ...roll.forjaResults,
     nomDefensor: objectiu.name,
     nomAtacant,
     nomOpcio:    opcio.nom,
@@ -235,8 +238,7 @@ export async function resoldreOpcioDefensa(objectiu, opcio, { nomAtacant = null 
     dificultatMinima: opcio.dificultatMinima ?? 0,
     minimAplicat: (roll.forjaResults.fites - penalSalut) < (opcio.dificultatMinima ?? 0),
     dificultat,
-    danyExtra,
-    ...roll.forjaResults
+    danyExtra
   });
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor: objectiu }),
