@@ -192,6 +192,8 @@ Contradiccions del manual o punts on no diu res:
 
 **A. Contingut del manual dins de Foundry** (es fa al món de proves, `mon-proves/`, i després es pot passar a compendis):
 
+Amb tot aquest contingut al repositori, FORJA ja no necessita FORJAPP ni Firebase per importar personatges (Oriol FM, 2026-10-04). El món antic encara guarda un paràmetre de FORJAPP d'una versió anterior que el codi actual no fa servir.
+
 1. **Artefactes del manual (18 plantilles, l. 5361–5516).** El motor ja hi és (catàleg, activació i càrrega S-26, constructor S-23, R+D i modulars S-30), però els artefactes només existeixen com a dades de catàleg (`module/config/dades/artefactes.json`). Cal:
    - revisar-ne el cost, la dificultat i la latència amb les taules del manual v3 (el skill `forja-parametres` els calcula);
    - crear-los com a objectes de Foundry al món de proves (i, més endavant, un compendi);
