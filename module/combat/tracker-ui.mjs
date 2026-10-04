@@ -45,7 +45,8 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     actions: {
       forjaDeclararAccio: ForjaCombatTracker.#onDeclararAccio,
       forjaMarcarEmboscada: ForjaCombatTracker.#onMarcarEmboscada,
-      forjaResoldreAccio: ForjaCombatTracker.#onResoldreAccio
+      forjaResoldreAccio: ForjaCombatTracker.#onResoldreAccio,
+      forjaAvancarTemps: ForjaCombatTracker.#onAvancarTemps
     }
   };
 
@@ -82,16 +83,28 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     if (!combat) return;
     const marcador = combat.marcador ?? 0;
 
-    // Marcador de temps actiu, a la capçalera del tracker.
-    this.element.querySelectorAll(".forja-marcador-temps").forEach(el => el.remove());
-    const capcalera = this.element.querySelector(".combat-tracker-header")
-      ?? this.element.querySelector("header");
-    if (capcalera) {
-      const div = document.createElement("div");
-      div.classList.add("forja-marcador-temps");
-      div.title = game.i18n.localize("FORJA.Combat.MarcadorDesc");
-      div.innerHTML = `<i class="fas fa-clock"></i> ${game.i18n.localize("FORJA.Combat.MarcadorActual")}: <strong>${marcador}</strong>`;
-      capcalera.appendChild(div);
+    // Capçalera: el títol natiu ("Round N", irrellevant a FORJA) passa a ser
+    // el tic del rellotge de temps actiu (o la fase de declaració), i el DJ hi
+    // té el botó d'avançar el temps fins a la propera casella ocupada.
+    this.element.querySelectorAll(".forja-marcador-temps, .forja-avancar-temps").forEach(el => el.remove());
+    const titol = this.element.querySelector(".encounter-title");
+    const textTitol = combat.fase === "declaracio"
+      ? game.i18n.localize("FORJA.Combat.FaseDeclaracio")
+      : (combat.started ? game.i18n.format("FORJA.Combat.Tic", { n: marcador }) : null);
+    if (titol && textTitol) {
+      titol.textContent = textTitol;
+      titol.title = game.i18n.localize("FORJA.Combat.MarcadorDesc");
+    }
+    if (game.user.isGM && combat.started && titol) {
+      const potAvancar = _potAvancarTemps(combat);
+      const boto = document.createElement("button");
+      boto.type = "button";
+      boto.dataset.action = "forjaAvancarTemps";
+      boto.className = "forja-avancar-temps inline-control" + (potAvancar ? " forja-destacat" : "");
+      boto.disabled = !potAvancar;
+      boto.title = game.i18n.localize(potAvancar ? "FORJA.Combat.AvancarTemps" : "FORJA.Combat.AvancarTempsEspera");
+      boto.innerHTML = `<i class="fas fa-forward-step"></i> ${game.i18n.localize("FORJA.Combat.AvancarTempsCurt")}`;
+      titol.insertAdjacentElement("afterend", boto);
     }
 
     for (const li of this.element.querySelectorAll(".combatant")) {
@@ -102,6 +115,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
       const posicio = combatant.initiative;
       li.classList.toggle("forja-a-la-casella", posicio !== null && posicio !== undefined && posicio === marcador);
+      // Només qui ha d'actuar ara apareix habilitat (manual › Temps actiu).
+      const habilitat = _estaHabilitat(combat, combatant);
+      li.classList.toggle("forja-inactiu", !habilitat);
 
       const div = document.createElement("div");
       div.classList.add("forja-controls");
@@ -120,11 +136,11 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       if (_potControlar(combatant)) {
         const destacar = _iconaDestacada(combat, combatant);
         html += `
-        <a class="forja-declarar${destacar === "declarar" ? " forja-destacat" : ""}" data-action="forjaDeclararAccio" data-combatant-id="${combatantId}"
+        <a class="forja-declarar${destacar === "declarar" ? " forja-destacat" : ""}${habilitat ? "" : " forja-deshabilitat"}" data-action="forjaDeclararAccio" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.Declarar")}">
           <i class="fas fa-stopwatch"></i>
         </a>
-        <a class="forja-resoldre${destacar === "resoldre" ? " forja-destacat" : ""}" data-action="forjaResoldreAccio" data-combatant-id="${combatantId}"
+        <a class="forja-resoldre${destacar === "resoldre" ? " forja-destacat" : ""}${_potResoldre(combat, combatant) ? "" : " forja-deshabilitat"}" data-action="forjaResoldreAccio" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.Resoldre")}">
           <i class="fas fa-dice-d10"></i>
         </a>
@@ -137,12 +153,6 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       li.appendChild(div);
     }
 
-    // Avançar torn: destacat quan el combatent actiu ja ha resolt i declarat
-    // la propera acció (DJ o propietari del combatent actiu).
-    const actiu = combat.combatant;
-    const potAvancar = combat.started && actiu && _potControlar(actiu)
-      && actiu.getFlag("forja", "estatTorn") === "redeclarada";
-    this.element.querySelectorAll('[data-action="nextTurn"]').forEach(el => el.classList.toggle("forja-destacat", !!potAvancar));
   }
 
   /**
@@ -158,6 +168,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     const combatantId = target.dataset.combatantId;
     const combatant   = combat.combatants.get(combatantId);
     if (!combatant?.actor || !_potControlar(combatant)) return;
+    if (!_estaHabilitat(combat, combatant)) {
+      ui.notifications?.warn(game.i18n.format("FORJA.Combat.NoEsElSeuTorn", { nom: combatant.name }));
+      return;
+    }
 
     const actor = combatant.actor;
     const sys   = actor.system;
@@ -303,6 +317,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     const combatantId = target.dataset.combatantId;
     const combatant   = combat.combatants.get(combatantId);
     if (!combatant?.actor || !_potControlar(combatant)) return;
+    if (!_potResoldre(combat, combatant)) {
+      ui.notifications?.warn(game.i18n.format("FORJA.Combat.NoEsElSeuTorn", { nom: combatant.name }));
+      return;
+    }
 
     const actor   = combatant.actor;
     const sys     = actor.system;
@@ -526,6 +544,20 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     await _marcarResolta(combat, combatant);
   }
 
+  /**
+   * DJ: avança el rellotge fins a la propera casella ocupada (`nextTurn`),
+   * només quan ningú ha d'actuar al tic actual (`_potAvancarTemps`).
+   */
+  static async #onAvancarTemps(event, target) {
+    const combat = this.viewed;
+    if (!combat || !game.user.isGM) return;
+    if (!_potAvancarTemps(combat)) {
+      ui.notifications?.warn(game.i18n.localize("FORJA.Combat.AvancarTempsEspera"));
+      return;
+    }
+    await combat.nextTurn();
+  }
+
   /** Marca el combatent com a part de l'emboscada (acció simultània a la primera casella). */
   static async #onMarcarEmboscada(event, target) {
     const combat = this.viewed;
@@ -592,14 +624,48 @@ function _tokenObjectiuDeclarat(pendent) {
  * @returns {"declarar"|"resoldre"|null}
  */
 function _iconaDestacada(combat, combatant) {
-  if (combat.fase === "declaracio") {
-    return (combatant.initiative === null || combatant.initiative === undefined) ? "declarar" : null;
-  }
-  if (!combat.started || combat.combatant?.id !== combatant.id) return null;
-  const estat = combatant.getFlag("forja", "estatTorn");
-  if (estat === "redeclarada") return null;
-  if (estat === "resolta" || !combatant.getFlag("forja", "accioPendent")) return "declarar";
-  return "resoldre";
+  if (!combat.started && combat.fase !== "declaracio") return null;
+  if (_potResoldre(combat, combatant)) return "resoldre";
+  return _estaHabilitat(combat, combatant) ? "declarar" : null;
+}
+
+/** El combatent encara no té posició al rellotge (no ha declarat mai). */
+function _senseDeclarar(combatant) {
+  return combatant.initiative === null || combatant.initiative === undefined;
+}
+
+/**
+ * El combatent ha d'actuar ara (fila habilitada, pot declarar):
+ *  - fase de declaració: si encara no ha declarat;
+ *  - temps actiu: si és el combatent actiu i és a la casella del marcador i
+ *    encara no ha declarat la propera acció; o si s'ha afegit al combat sense
+ *    posició (ha de declarar per entrar al rellotge).
+ * Abans de començar el combat, tothom pot declarar.
+ * @param {Combat} combat
+ * @param {Combatant} combatant
+ * @returns {boolean}
+ */
+function _estaHabilitat(combat, combatant) {
+  if (combat.fase === "declaracio") return _senseDeclarar(combatant);
+  if (!combat.started) return true;
+  if (_senseDeclarar(combatant)) return true;
+  return combat.combatant?.id === combatant.id
+    && combatant.initiative === combat.marcador
+    && combatant.getFlag("forja", "estatTorn") !== "redeclarada";
+}
+
+/** El combatent actiu té una acció pendent per resoldre en aquest tic. */
+function _potResoldre(combat, combatant) {
+  if (!combat.started || combat.fase === "declaracio") return false;
+  if (combat.combatant?.id !== combatant.id || combatant.initiative !== combat.marcador) return false;
+  if (["resolta", "redeclarada"].includes(combatant.getFlag("forja", "estatTorn"))) return false;
+  return !!combatant.getFlag("forja", "accioPendent");
+}
+
+/** Ningú ha d'actuar al tic actual: el DJ pot avançar el rellotge. */
+function _potAvancarTemps(combat) {
+  if (!combat.started || combat.fase === "declaracio") return false;
+  return !combat.combatants.contents.some(c => !c.isDefeated && _estaHabilitat(combat, c));
 }
 
 /**

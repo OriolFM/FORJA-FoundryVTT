@@ -327,17 +327,24 @@ export default class ForjaCombat extends Combat {
    * tics avançats.
    */
   async iniciarTempsActiu() {
-    // Ègides trencades en un combat anterior: el seu tick ja no té sentit en
-    // aquest rellotge nou (B4) — es tanquen abans de començar.
-    if (game.user.isGM) await this.tancarEgidesPendents();
-    const posicions = this.combatants.map(c => c.initiative).filter(p => typeof p === "number");
-    const primer = posicions.length ? Math.min(...posicions) : 0;
-    // `actiu` buit: el `turn: 0` de l'inici el fixa a `_preUpdate`.
-    await this.update(
-      { "flags.forja": { fase: "actiu", marcador: primer, actiu: null, actuats: [] } },
-      { forja: { iniciTempsActiu: true, avancTics: primer } }
-    );
-    return super.startCombat();
+    // Dues crides seguides (p. ex. dos clients del DJ) no el reinicien.
+    if (this._forjaIniciant || (this.started && this.fase === "actiu")) return this;
+    this._forjaIniciant = true;
+    try {
+      // Ègides trencades en un combat anterior: el seu tick ja no té sentit en
+      // aquest rellotge nou (B4) — es tanquen abans de començar.
+      if (game.user.isGM) await this.tancarEgidesPendents();
+      const posicions = this.combatants.map(c => c.initiative).filter(p => typeof p === "number");
+      const primer = posicions.length ? Math.min(...posicions) : 0;
+      // `actiu` buit: el `turn: 0` de l'inici el fixa a `_preUpdate`.
+      await this.update(
+        { "flags.forja": { fase: "actiu", marcador: primer, actiu: null, actuats: [] } },
+        { forja: { iniciTempsActiu: true, avancTics: primer } }
+      );
+      return await super.startCombat();
+    } finally {
+      this._forjaIniciant = false;
+    }
   }
 
   /* -------------------------------------------- */

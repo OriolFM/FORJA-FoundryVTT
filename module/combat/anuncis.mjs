@@ -9,6 +9,8 @@
  */
 
 const DURADA_MS = 2600;
+/** Combats dels quals ja s'ha anunciat l'inici del temps actiu (un sol cop). */
+const iniciats = new Set();
 const cua = [];
 let mostrant = false;
 
@@ -60,6 +62,9 @@ export function anunciarCanvisCombat(combat, changes, options) {
   }
   const f = options?.forja ?? {};
   if (f.iniciTempsActiu) {
+    // Un sol cop per combat, encara que l'inici arribi repetit.
+    if (iniciats.has(combat.id)) return;
+    iniciats.add(combat.id);
     mostrarAnunci(game.i18n.localize("FORJA.Anunci.IniciTempsActiu"), { icona: "fa-hourglass-start" });
   }
   if (f.avancTics > 0) mostrarAnunci(textAvancTics(f.avancTics));

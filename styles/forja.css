@@ -6812,3 +6812,19 @@ li.combatant:has(> .forja-controls) {
 }
 .forja-anunci.visible { opacity: 1; transform: translate(-50%, 0); }
 .forja-anunci i { color: #14b8a6; }
+
+/* Tracker: files de qui no li toca, botons bloquejats i botó d'avançar el temps */
+li.combatant.forja-inactiu { opacity: 0.45; }
+li.combatant.forja-inactiu:hover { opacity: 0.75; }
+.forja-controls a.forja-deshabilitat { opacity: 0.3; pointer-events: none; }
+.forja-avancar-temps {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: auto;
+  padding: 2px 8px;
+  margin-left: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+.forja-avancar-temps:disabled { opacity: 0.35; cursor: default; visibility: visible; }
