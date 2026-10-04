@@ -2,7 +2,7 @@
   {
     "id": "auguris",
     "nom": "Auguris",
-    "cost": 7,
+    "cost": 10,
     "do": "canalitzacio",
     "tipus": "ritual",
     "dificultat": 2,
@@ -17,7 +17,7 @@
     "cost": 21,
     "do": "canalitzacio",
     "tipus": "ritual",
-    "dificultat": 3,
+    "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins l'àrea d'efecte situada a tocar durant una escena. Crea una barrera de força 8.",
@@ -29,7 +29,7 @@
     "cost": 12,
     "do": "canalitzacio",
     "tipus": "efecte",
-    "dificultat": 2,
+    "dificultat": 3,
     "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari toca un o més objectius individuals i els marca d'alguna manera (inscripció, signe, pintura de guerra...). Els objectius guanyen l'estat berserc (modificador +0) i el tret dur de pelar fins al final de l'escena.",
@@ -41,7 +41,7 @@
     "cost": 20,
     "do": "canalitzacio",
     "tipus": "ritual",
-    "dificultat": 3,
+    "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Tots els objectius dins l'àrea d'efecte situada al voltant de l'usuari reben una sensació de calma i tranquil·litat (control emocional) fins al final de l'escena. Si l'usuari fa accions agressives, el ritual queda invalidat.",
@@ -50,13 +50,13 @@
   {
     "id": "cercle-de-proteccio",
     "nom": "Cercle de protecció",
-    "cost": 15,
+    "cost": 14,
     "do": "canalitzacio",
     "tipus": "ritual",
-    "dificultat": 2,
+    "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
-    "mecanica": "Crea una barrera de protecció de força 10 que encercla una àrea d'efecte al voltant de l'usuari. És efectiva contra un tipus d'objectiu fins al final de l'escena.",
+    "mecanica": "Crea una barrera de protecció de força 12 que encercla una àrea d'efecte al voltant de l'usuari. És efectiva contra un tipus d'objectiu fins al final de l'escena.",
     "descripcio": "Una de les bases de la màgia divina o espiritual, ensenyada pel patró per protegir el canalitzador dels seus enemics. Diversos usuaris poden solapar els seus cercles per cobrir àrees més grans i allargar-ne la durada."
   },
   {
@@ -65,7 +65,7 @@
     "cost": 17,
     "do": "canalitzacio",
     "tipus": "ritual",
-    "dificultat": 3,
+    "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Suggestiona la ment de l'objectiu perquè es resisteixi a la possessió, i li dóna un modificador de +4 a l'habilitat resistència.",
@@ -74,13 +74,13 @@
   {
     "id": "guarir",
     "nom": "Guarir",
-    "cost": 26,
+    "cost": 25,
     "do": "canalitzacio",
     "tipus": "efecte",
     "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals a tocar. En guareix malalties, estats negatius i 8 punts de ferides.",
+    "mecanica": "Afecta un o més objectius individuals a tocar. En guareix malalties, estats negatius i 10 punts de ferides.",
     "descripcio": "Molts sacerdots i monjos serveixen patrons benèvols que els han ensenyat a guarir ferides amb una simple imposició de mans."
   },
   {
@@ -89,10 +89,10 @@
     "cost": 24,
     "do": "canalitzacio",
     "tipus": "ritual",
-    "dificultat": 3,
+    "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte al voltant de l'usuari, que queden astorats per la majestuositat que en desprèn (control emocional). Tots pateixen l'estat marejat (modificador +3).",
+    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte al voltant de l'usuari, que queden astorats durant una escena per la majestuositat que en desprèn (control emocional). Tots pateixen l'estat marejat (modificador +3).",
     "descripcio": "El canalitzador irradia l'aura majestàtica del seu patró, que deixa embadalits tots els objectius hostils dins l'àrea d'efecte, incapaços de declarar noves accions fins que no se'n sobreposin."
   },
   {
@@ -110,7 +110,7 @@
   {
     "id": "restauracio",
     "nom": "Restauració",
-    "cost": 15,
+    "cost": 16,
     "do": "canalitzacio",
     "tipus": "efecte",
     "dificultat": 2,
@@ -122,11 +122,11 @@
   {
     "id": "revelar-leter",
     "nom": "Revelar l’èter",
-    "cost": 23,
+    "cost": 22,
     "do": "canalitzacio",
     "tipus": "ritual",
-    "dificultat": 3,
-    "modLatencia": 10,
+    "dificultat": 1,
+    "modLatencia": 9,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins una àrea d'efecte centrada en l'usuari durant una escena. L'usuari torna visibles tots els incorporis de tipus esperit o ectoplasma que hi hagi dins l'àrea d'efecte i fa un enllaç mental entre ells i la resta dels presents per facilitar la comunicació.",
     "descripcio": "Habitual entre els canalitzadors que fan de mèdiums. Fa visibles els esperits i ectoplasmes presents a l'àrea i estableix un enllaç mental amb ells perquè es puguin comunicar amb els presents, fins i tot prenent una certa forma física si cal."
@@ -137,7 +137,7 @@
     "cost": 9,
     "do": "canalitzacio",
     "tipus": "ritual",
-    "dificultat": 3,
+    "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari toca un o més objectius individuals, i els confereix armadura natural 3 i els estats recuperació/1 i vigilant (modificador +0) fins al final de l'escena.",
@@ -149,7 +149,7 @@
     "cost": 22,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 5,
+    "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "Reconstitueix un corser macabre (87 PC), considerat un constructe a tots els efectes. El corser dura un mínim d'una escena, i es pot mantenir animat si el mag l'alimenta amb un punt de fatiga per dia.",
@@ -158,13 +158,13 @@
   {
     "id": "animar-golem-de-carn",
     "nom": "Animar gólem de carn",
-    "cost": 28,
+    "cost": 29,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 5,
+    "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
-    "mecanica": "El nigromant utilitza restes d'altres organismes morts per construir el cos del gólem macabre i infondre-li no-vida. El gólem d'aquest efecte està valorat en 110 PC i dura un mínim d'una escena. El nigromant el pot mantenir actiu sacrificant-li un punt de fatiga cada dia.",
+    "mecanica": "El nigromant utilitza restes d'altres organismes morts per construir el cos del gólem macabre i infondre-li no-vida. El gólem d'aquest efecte està valorat en 114 PC i dura un mínim d'una escena. El nigromant el pot mantenir actiu sacrificant-li un punt de fatiga cada dia.",
     "descripcio": "El nigromant construeix el cos del gólem amb restes d'organismes morts i li infon no-vida. Són forts, resistents, no es cansen i obeeixen cegament, tot i que el seu aspecte depèn dels cadàvers frescos disponibles; alguns porten armes naturals o plaques òssies afegides."
   },
   {
@@ -173,7 +173,7 @@
     "cost": 17,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 5,
+    "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "El nigromant utilitza restes d'altres organismes morts per reconstituir un gos de l'avern (65 PC), considerat un constructe a tots els efectes, i infondre-li no-vida. El gos té una durada mínima d'una escena, i es pot mantenir actiu si el nigromant li sacrifica un punt de fatiga cada dia.",
@@ -182,13 +182,13 @@
   {
     "id": "animar-mortalla-vorac",
     "nom": "Animar mortalla voraç",
-    "cost": 36,
+    "cost": 40,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 5,
+    "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
-    "mecanica": "El nigromant aplega restes d'organismes morts, en especial dels seus sistemes digestius, per reconstituir una mortalla voraç (142 PC), considerada un constructe a tots els efectes. La mortalla té una durada mínima d'una escena, i el nigromant la pot mantenir activa sacrificant-li un punt de ferides cada dia.",
+    "mecanica": "El nigromant aplega restes d'organismes morts, en especial dels seus sistemes digestius, per reconstituir una mortalla voraç (158 PC), considerada un constructe a tots els efectes. La mortalla té una durada mínima d'una escena, i el nigromant la pot mantenir activa sacrificant-li un punt de ferides cada dia.",
     "descripcio": "Un dels servents més temuts dels nigromants: capes vivents fetes de teixits morts que fan servir com a atuell, protecció i mitjà de locomoció. Moltes recorden grans insectes amb punxes o pinces, i algunes segreguen sucs que dissolen qui hi queda atrapat."
   },
   {
@@ -218,11 +218,11 @@
   {
     "id": "la-dalla-de-la-parca",
     "nom": "La dalla de la parca",
-    "cost": 10,
+    "cost": 11,
     "do": "magia",
     "tipus": "efecte",
     "dificultat": 1,
-    "modLatencia": 0,
+    "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari conjura una arma màgica (habitualment una dalla, que fa servir amb la seva habilitat d'armes cos a cos) durant una escena. L'arma té una latència de +0 i causa dany indirecte de fatiga i ferides amb un modificador de +3.",
     "descripcio": "Tot i que els nigromants solen conjurar dalles, espases llargues o coltells, pràcticament tots els practicants de màgia tenen la seva pròpia variant d'aquesta arma. Només canvien la forma, l'habilitat amb què es fa servir i el moviment especial associat."
@@ -245,7 +245,7 @@
     "cost": 20,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 3,
+    "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més constructes amb el tret dron sota el control del nigromant que es trobin dins el seu abast sensorial. Els drons esclaten, causant dany indirecte d'explosió amb un modificador de +8 i l'estat sagnant/1 a tots els que estiguin a tocar del dron.",
@@ -266,10 +266,10 @@
   {
     "id": "essencia-de-la-brisa",
     "nom": "Essència de la brisa",
-    "cost": 14,
+    "cost": 13,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 5,
+    "dificultat": 3,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta la percepció de tots els objectius d'una àrea d'efecte situada dins l'abast sensorial del PJ durant una escena. Els objectius són dins una il·lusió immersiva (amb un modificador de +3 al realisme) on el mag controla totes les seves percepcions.",
@@ -278,13 +278,13 @@
   {
     "id": "mot-destructiu",
     "nom": "Mot destructiu",
-    "cost": 25,
+    "cost": 26,
     "do": "magia",
     "tipus": "ritual",
     "dificultat": 3,
-    "modLatencia": 15,
+    "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa +10 de dany directe de ferides.",
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa +9 de dany directe de ferides.",
     "descripcio": "Dins la tradició hermètica, els grans mags podien ferir greument o matar amb una sola paraula i un gest de vareta. Aquest encanteri causa una quantitat notable de dany que ignora la majoria de proteccions; hi ha variants de mestres experimentats capaces de matar d'un sol cop."
   },
   {
@@ -293,7 +293,7 @@
     "cost": 20,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 3,
+    "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Cura 10 punts de fatiga o ferides.",
@@ -308,7 +308,7 @@
     "dificultat": 1,
     "modLatencia": 12,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals a tocar. Simula una tirada de l'habilitat nyaps, amb un resultat de 5 fites.",
+    "mecanica": "Afecta un o més objectius individuals a tocar. Simula una tirada de l'habilitat nyaps, amb un resultat de 7 fites.",
     "descripcio": "Un dels clàssics encanteris hermètics per accedir a llocs vedats, capaç de forçar qualsevol pany sense contemplacions. Un cop obert, però, difícilment es pot tornar a tancar i quedarà evident que ha estat forçat; hi ha encanteris similars per a altres habilitats, com disfressar-se o persuadir."
   },
   {
@@ -326,13 +326,13 @@
   {
     "id": "polimorfacio-macabra",
     "nom": "Polimorfació macabra",
-    "cost": 56,
+    "cost": 58,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 3,
-    "modLatencia": 15,
+    "dificultat": 1,
+    "modLatencia": 12,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals a tocar per una durada mínima d'una escena. Transforma l'objectiu en un paladí no-mort, valorat en 242 PC.",
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ per una durada mínima d'una escena. Transforma l'objectiu en un paladí no-mort, valorat en 246 PC.",
     "descripcio": "Com que molts nigromants no destaquen en combat, aquest encanteri, fet servint una espasa macabra com a focus, transforma el mag o un ajudant en un paladí no-mort. En acabar l'efecte, el PJ recupera el seu estat habitual, incloent-hi les ferides i la fatiga que tingués abans."
   },
   {
@@ -368,19 +368,19 @@
     "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Tots els objectius situats dins l'àrea d'efecte al voltant de l'usuari reben l'estat atordit (modificador +2).",
+    "mecanica": "Tots els objectius situats dins l'àrea d'efecte al voltant de l'usuari reben els estats atordit i marejat (modificador +3).",
     "descripcio": "Un dels encanteris més efectius per distreure els oponents: un eixam de mosques els ataca frenèticament, forçant-los a tancar ulls i boca. Hi ha variants amb llagostes o insectes amb fibló que, a més d'atordir, causen dany."
   },
   {
     "id": "set-de-sang",
     "nom": "Set de sang",
-    "cost": 17,
+    "cost": 16,
     "do": "magia",
     "tipus": "ritual",
-    "dificultat": 2,
+    "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica els estats berserc (modificador +2) i recuperació/2.",
+    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica els estats berserc (modificador +2) i recuperació/4.",
     "descripcio": "El mag grava una runa a la pell de l'objectiu amb un objecte tallant, convertint-lo en un lluitador fanàtic assedegat de sang."
   },
   {
@@ -422,11 +422,11 @@
   {
     "id": "cicatritzar",
     "nom": "Cicatritzar",
-    "cost": 8,
+    "cost": 7,
     "do": "psi",
     "tipus": "efecte",
     "dificultat": 1,
-    "modLatencia": 2,
+    "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar. Cura 4 punts de fatiga o ferides.",
     "descripcio": "Permet al PJ prendre consciència dels seus propis mecanismes curatius i accelerar-los per guarir-se una mica de fatiga o ferides."
@@ -500,19 +500,19 @@
     "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "L'usuari genera una ègida de protecció 10.",
+    "mecanica": "L'usuari genera una ègida de protecció 15.",
     "descripcio": "Segons algunes teories, aprofita i amplifica la reverberació sònica del crit de l'usuari per generar una ona expansiva que contraresta un atac entrant, encara que un cop prou fort pot fer-la inútil."
   },
   {
     "id": "pas-al-costat",
     "nom": "Pas al costat",
-    "cost": 22,
+    "cost": 23,
     "do": "psi",
     "tipus": "efecte",
     "dificultat": 1,
-    "modLatencia": 0,
+    "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "L'usuari es transposa instantàniament a un punt proper. La tirada de manifestar l'efecte serveix com una tirada d'esquivar; si la tirada d'atac és més alta, l'usuari es transposa massa tard i rep el dany normal segons la seva defensa bàsica.",
+    "mecanica": "L'usuari es transposa instantàniament a un punt dins el seu abast sensorial (distància mitjana). La tirada de manifestar l'efecte serveix com una tirada d'esquivar; si la tirada d'atac és més alta, l'usuari es transposa massa tard i rep el dany normal segons la seva defensa bàsica.",
     "descripcio": "Parteix de la idea que la millor manera d'evitar un atac és no ser-hi quan arriba: transposa l'usuari a un punt proper. La tirada de l'efecte fa d'esquiva; si l'atac la supera, l'usuari es mou massa tard i rep el dany normal."
   },
   {
@@ -578,13 +578,13 @@
   {
     "id": "larmadura-del-queloni",
     "nom": "L'armadura del queloni",
-    "cost": 16,
+    "cost": 15,
     "do": "qi",
     "tipus": "efecte",
-    "dificultat": 0,
+    "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Dóna a l'usuari l'equivalent a una armadura natural de protecció 8.",
+    "mecanica": "Dóna a l'usuari l'equivalent a una armadura natural de protecció 10.",
     "descripcio": "L'efecte que va donar fama i malnom al mestre Queloni de Takama-ga-hara. No té durada pròpia, però es pot manifestar just en el moment necessari per esmorteir un atac, cosa que el fa un favorit entre els practicants novells."
   },
   {
@@ -608,17 +608,17 @@
     "dificultat": 1,
     "modLatencia": 12,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta només l'usuari. Simula una tirada de l'habilitat enigmes, amb un resultat de 5 fites.",
+    "mecanica": "Afecta només l'usuari. Simula una tirada de l'habilitat enigmes, amb un resultat de 7 fites.",
     "descripcio": "Un dels primers efectes que aprenen els habitants de Takama-ga-hara, que mitjançant la meditació permet trobar la solució a dilemes complexos o enigmes enrevessats."
   },
   {
     "id": "dansa-del-cel",
     "nom": "Dansa del cel",
-    "cost": 8,
+    "cost": 9,
     "do": "qi",
     "tipus": "efecte",
     "dificultat": 1,
-    "modLatencia": 2,
+    "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari obté el tret levitar durant una escena.",
     "descripcio": "Molt popular entre els practicants novells, permet vèncer la gravetat i moure's per l'aire. Mantenir-lo actiu massa estona pot esgotar l'usuari, i no falten accidents entre joves que competeixen a veure qui puja més amunt."
@@ -630,7 +630,7 @@
     "do": "qi",
     "tipus": "efecte",
     "dificultat": 2,
-    "modLatencia": 0,
+    "modLatencia": 6,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Conjura una gran quantitat de fum negre (fins a 1 kg de massa) que enfosqueix la visibilitat, suficient per cobrir una gran àrea d'efecte durant una escena. Com més àrea cobreixi, menys dens serà i menys afectarà la visibilitat.",
     "descripcio": "Genera un núvol de fum negre que s'expandeix des del PJ i bloqueja completament la visibilitat. En espais tancats pot durar tota l'escena, mentre que a l'aire lliure es dissipa segons el vent i les condicions atmosfèriques."
@@ -638,7 +638,7 @@
   {
     "id": "inspirar-el-yang",
     "nom": "Inspirar el yang",
-    "cost": 12,
+    "cost": 13,
     "do": "qi",
     "tipus": "efecte",
     "dificultat": 2,
@@ -656,7 +656,7 @@
     "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Permet llegir o sondar la ment de l'objectiu.",
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Permet llegir o sondar la ment de l'objectiu.",
     "descripcio": "Els usuaris de Qi experimentats sincronitzen la seva energia corporal amb la de l'objectiu per captar-ne els pensaments i emocions superficials, o per sondar-hi més a fons."
   },
   {
@@ -674,13 +674,13 @@
   {
     "id": "les-mans-den-miyagi",
     "nom": "Les mans d'en Miyagi",
-    "cost": 14,
+    "cost": 13,
     "do": "qi",
     "tipus": "ritual",
     "dificultat": 1,
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals a tocar. Cura 8 punts de fatiga o ferides.",
+    "mecanica": "Afecta un o més objectius individuals a tocar. Cura 11 punts de fatiga o ferides.",
     "descripcio": "Una variant de la imposició de mans que reordena el Qi de l'objectiu per estimular la curació, i que pràcticament tot estudiant de Qi aprèn durant el seu entrenament."
   },
   {
@@ -704,7 +704,7 @@
     "dificultat": 2,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Tots els objectius dins una àrea d'efecte centrada en el personatge queden encegats i atordits (amb un modificador de +0) durant una escena.",
+    "mecanica": "Tots els objectius dins una àrea d'efecte centrada en el personatge queden encegats i atordits (amb un modificador de +3) durant una escena.",
     "descripcio": "Un efecte molt infravalorat, especialment útil per escapar-se d'un gran depredador sense fer-li mal. Variants més complicades també anul·len l'olfacte o l'oïda."
   },
   {
@@ -713,7 +713,7 @@
     "cost": 26,
     "do": "qi",
     "tipus": "efecte",
-    "dificultat": 1,
+    "dificultat": 2,
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa 5 de dany directe de ferides.",
@@ -722,13 +722,13 @@
   {
     "id": "puny-de-drac",
     "nom": "Puny de drac",
-    "cost": 13,
+    "cost": 12,
     "do": "qi",
     "tipus": "efecte",
     "dificultat": 1,
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
-    "mecanica": "Afecta un o més objectius individuals a tocar. Causa dany indirecte de foc amb un modificador de +5.",
+    "mecanica": "Afecta un o més objectius individuals a tocar. Causa dany indirecte de foc amb un modificador de +7.",
     "descripcio": "Un dels moviments clàssics de les arts marcials de Takama-ga-hara: l'usuari destil·la el seu Qi en flames que envolten el puny per colpejar l'oponent."
   },
   {
@@ -761,7 +761,7 @@
     "cost": 19,
     "do": "qi",
     "tipus": "efecte",
-    "dificultat": 2,
+    "dificultat": 3,
     "modLatencia": 1,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari fa un atac cos a cos amb un +2 a l'habilitat d'arts marcials. L'atac causa +4 de dany directe de fatiga o ferides.",
@@ -770,7 +770,7 @@
   {
     "id": "la-velocitat-del-vent",
     "nom": "La velocitat del vent",
-    "cost": 21,
+    "cost": 22,
     "do": "qi",
     "tipus": "efecte",
     "dificultat": 2,

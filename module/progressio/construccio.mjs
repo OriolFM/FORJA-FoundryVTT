@@ -106,7 +106,7 @@ export function calcularConstruccio(seleccio) {
   // ── Artefacte (S-30) ──
   if (seleccio.artefacte) {
     const activacio = _buscar(P.artefacteActivacio, seleccio.artefacte.activacioId ?? "normal");
-    if (activacio) afegir(`Activació: ${activacio.nom}`, activacio.cost);
+    if (activacio) afegir(`Activació: ${activacio.nom}`, activacio.cost, activacio.dificultat ?? 0);
     const modeEspera = _buscar(P.artefacteModeEspera, seleccio.artefacte.modeEsperaId ?? "cap");
     if (modeEspera) afegir(modeEspera.nom, modeEspera.cost);
   }
@@ -220,12 +220,21 @@ export function calcularConstruccio(seleccio) {
     latencia:   acc.latencia + l.latencia
   }), { cost: 0, dificultat: 0, latencia: 0 });
 
+  // La dificultat mai pot baixar d'1, llevat d'artefactes permanents
+  // (manual p. 704). Si la calculada és 0 o menys, pujar-la fins a 1 retorna
+  // 5 PC per punt, igual que qualsevol altre increment de dificultat
+  // (decisió de disseny, 4/10/2026).
+  if (total.dificultat < 1) {
+    const ajust = -5 * (1 - total.dificultat);
+    linies.push({ etiqueta: `Dificultat ${total.dificultat} → 1`, cost: ajust, dificultat: 1 - total.dificultat, latencia: 0 });
+    total.cost += ajust;
+    total.dificultat = 1;
+  }
+
   return {
-    cost: Math.round(total.cost),
-    // La dificultat mai pot baixar d'1, llevat d'artefactes permanents
-    // (manual p. 704) — un efecte construït sempre necessita com a mínim
-    // una fita per manifestar-se.
-    dificultat: Math.max(1, total.dificultat),
+    // Arrodoniment cap amunt (invocacions i transformacions donen fraccions).
+    cost: Math.ceil(total.cost - 1e-9),
+    dificultat: total.dificultat,
     latencia: total.latencia,
     desglossament: linies
   };

@@ -1,7 +1,7 @@
 [
   {
-    "_comentari": "Gólem de carn — estadístiques completes del manual (FORJA_03_SISTEMES.md, exemple Yoko vs gólems). Cost manual: 98PC; el calculat amb les regles actuals dona 113PC (probablement el manual aplica un cost diferent per a 'armament natural', no inclòs explícitament a la taula de trets).",
-    "name": "Gólem de carn",
+    "_comentari": "Gólem de carn menor — variant del bestiari (manual v3) que fa servir l'exemple de combat Yoko vs gólems del cap. 3. Cost: 98 PC, verificat amb les taules v3.",
+    "name": "Gólem de carn menor",
     "type": "pnj",
     "system": {
       "tier": "antagonista",

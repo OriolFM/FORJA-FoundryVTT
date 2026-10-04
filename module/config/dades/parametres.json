@@ -22,7 +22,7 @@
   ],
   "tipusEfecte": [
     { "id": "efecte", "nom": "Efecte", "cost": 0,   "dificultat": 0,  "latencia": 0 },
-    { "id": "ritual",  "nom": "Ritual", "cost": -10, "dificultat": -1, "latencia": 5 }
+    { "id": "ritual",  "nom": "Ritual", "cost": -10, "dificultat": -1, "latencia": 10 }
   ],
   "danyCategoria": [
     { "id": "indirecte", "nom": "Indirecte", "costBase": 0,  "costPerNivell": 2, "dificultat": 0 },
@@ -60,8 +60,8 @@
   "habilitats": [
     { "id": "eina-1",     "nom": "Eina (1a habilitat)",     "costBase": 0,  "costPerNivell": 3,   "dificultat": 0, "latencia": 1 },
     { "id": "eina-2",     "nom": "Eina (2a habilitat)",     "costBase": 5,  "costPerNivell": 3,   "dificultat": 0, "latencia": 1 },
-    { "id": "autoeina-1", "nom": "Autoeina (1a habilitat)", "costBase": 5,  "costPerNivell": 0.5, "dificultat": 0, "latencia": 2 },
-    { "id": "autoeina-2", "nom": "Autoeina (2a habilitat)", "costBase": 10, "costPerNivell": 0.5, "dificultat": 0, "latencia": 1 }
+    { "id": "autoeina-1", "nom": "Autoeina (1a habilitat)", "costBase": 5,  "costPerNivell": 5,   "dificultat": 0, "latencia": 2 },
+    { "id": "autoeina-2", "nom": "Autoeina (2a habilitat)", "costBase": 10, "costPerNivell": 5,   "dificultat": 0, "latencia": 1 }
   ],
   "estats": [
     { "id": "abatut",       "nom": "Abatut",        "costBase": 3, "costPerNivell": 1, "dificultat": 0 },
@@ -87,7 +87,8 @@
   ],
   "artefacteActivacio": [
     { "id": "normal",  "nom": "Activació normal",  "cost": 0 },
-    { "id": "trivial", "nom": "Activació trivial", "cost": 10 }
+    { "id": "trivial", "nom": "Activació trivial", "cost": 10 },
+    { "id": "complexa", "nom": "Activació complexa (només temps narratiu)", "cost": -10, "dificultat": -1 }
   ],
   "artefacteModeEspera": [
     { "id": "cap",     "nom": "Cap",                          "cost": 0 },

@@ -158,7 +158,7 @@
     "nom": "Atribut Titànic",
     "cost": 30,
     "positiu": true,
-    "descripcio": "4+ compta com fita, ignora 1s en un atribut."
+    "descripcio": "Les fites es compten a partir de 4+; ignora 1s en un atribut."
   },
   {
     "id": "bracos-addicionals",
@@ -252,7 +252,7 @@
     "nom": "Especialista",
     "cost": 20,
     "positiu": true,
-    "descripcio": "Ignora 1s; 9–10 compten doble."
+    "descripcio": "Ignora 1s; els 9 també compten com a doble fita."
   },
   {
     "id": "estatus",
