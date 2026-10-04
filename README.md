@@ -95,7 +95,7 @@ Documentació addicional:
   fan, com s'executen i resultats (Foundry v13 i v14).
 - [`CHANGELOG.md`](CHANGELOG.md) i [`docs/VERSIONS.md`](docs/VERSIONS.md) —
   canvis per versió i control de versions.
-- [`docs/manual/FORJA_FC001CA_CORE.md`](docs/manual/FORJA_FC001CA_CORE.md) —
+- [`docs/FORJA_FC001CA_CORE.md`](docs/FORJA_FC001CA_CORE.md) —
   manual complet del joc, font de veritat de totes les regles.
 
 ## Crèdits

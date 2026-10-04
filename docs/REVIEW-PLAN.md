@@ -84,7 +84,7 @@ Each finding has an ID. The plan section groups the IDs into work packages, each
 
 - Work in `/home/bonnie/projectes/ForjaVTT/FORJA-FoundryVTT` on branch `Aw`. **Do not run git commands** (no commit, checkout, stash, reset). The coordinator commits after each wave.
 - Edit **only** the files your package owns. If you need a change elsewhere, write it under "Needs from others" in your report instead.
-- **Rules reference:** `docs/manual/FORJA_FC001CA_CORE.md` is the physical game manual (Catalan) and the source of truth for every rule. Search it (e.g. `grep -n`) before implementing or changing any game mechanic, and cite the section in comments.
+- **Rules reference:** `docs/FORJA_FC001CA_CORE.md` is the physical game manual (Catalan) and the source of truth for every rule. Search it (e.g. `grep -n`) before implementing or changing any game mechanic, and cite the section in comments.
 - Match the existing style: ES modules, Catalan identifiers and comments, JSDoc headers citing the manual/spec IDs.
 - New UI strings go in `lang/ca.json` only (`FORJA.*` keys). Package D1 translates them afterwards. **Exception:** only the owner of `lang/ca.json` in a wave edits it; others list the keys and Catalan text in their report.
 - Check every file you touch with `node --check <file>`. For pure functions, write a quick Node test in the scratchpad (`/tmp/claude-1000/-home-bonnie-projectes-ForjaVTT/ef039ca4-3800-4ff6-9c2d-e2341ab195a4/scratchpad`), not in the repo.
@@ -164,7 +164,7 @@ WP-I and WP-D3 run in parallel. The translation and dialog packages move to wave
 
 **WP-I · Remaining manual rules — Opus** (B13–B17, added 2026-09-27 at the user's request)
 Files: `module/combat/*` (except `equipament-automatic.mjs`), `module/apps/dialeg-declarar-accio.mjs`, `dialeg-defensa.mjs`, `dialeg-curacio.mjs`, `module/documents/combat.mjs`, `templates/combat/*`, `templates/dice/*`, `lang/ca.json`, `module/config/dades/armes.json` (only to add machine-readable flags).
-Rules found by WP-F that are not automated yet. Each must follow the manual (`docs/manual/FORJA_FC001CA_CORE.md`):
+Rules found by WP-F that are not automated yet. Each must follow the manual (`docs/FORJA_FC001CA_CORE.md`):
 
 | ID | Rule | Manual |
 |----|------|--------|

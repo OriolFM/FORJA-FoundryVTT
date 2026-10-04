@@ -358,7 +358,7 @@ plantilles ni al JS; sempre `game.i18n.localize`/`format` o
 
 ## El manual com a font de veritat
 
-`docs/manual/FORJA_FC001CA_CORE.md` és el manual físic complet (català).
+`docs/FORJA_FC001CA_CORE.md` és el manual físic complet (català).
 **Abans d'implementar o canviar qualsevol mecànica de joc, busca-hi la
 secció rellevant** (`grep -n` hi funciona bé, és un sol fitxer llarg) i
 cita-la als comentaris/JSDoc (secció i, quan calgui, número de línia
@@ -403,7 +403,7 @@ Tot el detall és a **`docs/PROVES.md`**. En resum:
 - **Identificadors i comentaris en català** (noms de funcions, variables,
   JSDoc); és l'estil de tot el codi existent.
 - Cada funció que implementi una regla ha de citar la secció del manual
-  (`docs/manual/FORJA_FC001CA_CORE.md`) al JSDoc, i sovint l'ID de finding
+  (`docs/FORJA_FC001CA_CORE.md`) al JSDoc, i sovint l'ID de finding
   del pla de revisió (`docs/REVIEW-PLAN.md`, p. ex. "B3", "A2") quan el canvi
   ve d'allà.
 - Automatitza el càlcul, mai la decisió: quan una regla depèn de judici del
