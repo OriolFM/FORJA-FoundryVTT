@@ -10,8 +10,8 @@
  * - Adepte: repeteix un cop els 1 (es fa amb el modificador `r1` de la
  *   fórmula; aquí només es compten els daus actius).
  * - Inepte: els 10 no compten doble, i cada 1 resta una fita. La pífia es
- *   mira després de restar-les: si hi ha més 1 que fites, és pífia encara
- *   que hi hagi alguna fita (Oriol FM, 2026-10-06; manual l. 1597).
+ *   mira després de restar-les: si hi ha tants 1 com fites o més, és pífia
+ *   encara que hi hagi alguna fita (Oriol FM, 2026-10-06; manual l. 1597).
  */
 
 /** Àmbits d'adepte/inepte (`trets.json`: `adepte-<àmbit>`, `inepte-<àmbit>`). */
