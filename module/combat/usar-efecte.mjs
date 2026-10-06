@@ -6,6 +6,25 @@ import { aplicarResultatEfecte } from "./aplicar-efecte.mjs";
 import { activarArtefacte, teCarrega } from "./artefactes.mjs";
 import { resumParametres } from "./resultat-parametres.mjs";
 import { consumirConcentracio } from "./reaccions.mjs";
+import { darreraPlantilla, actorsDinsPlantilla, consumirPlantilla } from "./plantilla.mjs";
+
+/**
+ * Objectius d'un efecte o artefacte d'àrea: els tokens dins la darrera
+ * plantilla que ha dibuixat l'usuari (que es consumeix); si no n'hi ha cap,
+ * els marcats.
+ * @param {Actor[]} perDefecte
+ * @returns {Promise<Actor[]>}
+ */
+async function objectiusArea(perDefecte) {
+  const plantilla = canvas?.ready ? darreraPlantilla() : null;
+  if (!plantilla) {
+    ui.notifications?.info(game.i18n.localize("FORJA.Efecte.AreaSensePlantilla"));
+    return perDefecte;
+  }
+  const actors = actorsDinsPlantilla(plantilla);
+  await consumirPlantilla(plantilla);
+  return actors;
+}
 
 /**
  * Fer servir un efecte o un artefacte de principi a fi (Fase 3): la tirada,
@@ -39,6 +58,7 @@ export function objectiusMarcats() {
 export async function manifestarIAplicar(actor, eleccio, { objectius = objectiusMarcats() } = {}) {
   const efecte = eleccio.efecteId ? actor.items.get(eleccio.efecteId) : null;
   const resum = efecte?.system?.parametres?.length ? resumParametres(efecte.system.parametres) : null;
+  if (resum?.objectius === "area") objectius = await objectiusArea(objectius);
   const dests = resum?.objectius === "usuari" ? [] : objectius;
 
   const resistencies = new Map();
@@ -173,6 +193,7 @@ export async function usarArtefacte(actor, item, { objectius = objectiusMarcats(
   }
 
   if (exit) {
+    if ((s.parametres ?? []).some(p => p.tipus === "area")) objectius = await objectiusArea(objectius);
     const res = await aplicarResultatEfecte({ actor, font: item, objectius, excedent, dificultat });
     if (!res) {
       await ChatMessage.create({

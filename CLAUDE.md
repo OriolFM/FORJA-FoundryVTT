@@ -190,6 +190,17 @@ Els catàlegs `artefactes.json` i `efectes.json` porten els paràmetres de cada
 plantilla; `crearItemDesDeCataleg` els copia. El constructor
 (`apps/dialeg-constructor.mjs`) edita aquesta llista.
 
+### Ús d'efectes i artefactes (Fase 3)
+
+- `combat/resultat-parametres.mjs` (pur): què fa cada paràmetre; armes i armadures d'artefactes.
+- `combat/aplicar-efecte.mjs`: aplica el resultat pel relé (estats com a ActiveEffect amb
+  `flags.forja.efecteForja`, bonificacions a `flags.forja.bonus`, armadura/ègida temporals amb
+  `flags.forja.temporal`); `durada` "escena" (fi del combat) o "instantania" (quan avança el rellotge).
+- `combat/usar-efecte.mjs`: `manifestarIAplicar`, `usarArtefacte` (fitxa i tracker).
+- `combat/artefactes-vinculats.mjs`: arma i armadures vinculades (`flags.forja.artefacteId`).
+- `combat/decisio-resistencia.mjs`: la resistència la decideix el jugador de l'objectiu o el DJ.
+- Les bonificacions se sumen als derivats; per editar o pagar, `valorsBase(actor)` (`_source`).
+
 ## Derivats (`module/data/actor-personatge.mjs`, `_prepararDerivats`)
 
 Compartit per `ActorPersonatge` i `ActorPNJ` (el PNJ crida la mateixa funció).

@@ -13,6 +13,8 @@ import { metresMogutsAquestTorn } from "../documents/token.mjs";
 import { modificadorLatenciaEstats } from "../estats/estats-parametritzats.mjs";
 import { restriccionsEstats, tipusAccioBloquejats } from "../estats/regles-estats.mjs";
 import { restriccionsActor, comprovarEstat, tirarEstat } from "../estats/aplicacio-estats.mjs";
+import { manifestarIAplicar, usarArtefacte, objectiusMarcats } from "./usar-efecte.mjs";
+import DiategManifestar from "../apps/dialeg-manifestar.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
 import {
@@ -231,6 +233,16 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         };
       });
 
+    // Fase 3: efectes que es poden manifestar en temps actiu (no rituals ni
+    // només narratius, manual › Ús, l. 4796) i artefactes que s'activen
+    // (no sempre actius ni d'activació complexa).
+    const efectes = sys.dotat ? actor.items
+      .filter(i => i.type === "efecte" && i.system.us?.actiu !== false && i.system.tipus !== "ritual")
+      .map(i => ({ id: i.id, nom: i.name, dificultat: i.system.dificultat, modLatencia: i.system.modLatencia ?? 0 })) : [];
+    const artefactes = actor.items
+      .filter(i => i.type === "artefacte" && ["normal", "trivial"].includes(i.system.activacio?.tipus) && i.system.us?.actiu !== false && !i.system.construccio?.permanent)
+      .map(i => ({ id: i.id, nom: i.name, modLatencia: i.system.us?.modLatencia ?? 0 }));
+
     // Font única de les opcions de defensa (B7): acció defensiva declarada.
     const defenses = opcionsDefensa(actor, undefined, { declarada: true });
 
@@ -249,6 +261,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       armes,
       defenses,
       maniobres:    CONFIG.FORJA?.LLISTA_MANIOBRES ?? [],
+      efectes, artefactes,
       concentrat:   !!sys.concentrat,
       distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3),
       objectius,
@@ -265,7 +278,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       tipus: config.tipus, armaId: config.armaId, maniobraId: config.maniobraId,
       defensaId: config.defensa?.id ?? ultima?.defensaId ?? null,
       moviment: config.moviment, retard: config.retardBarallarse ?? 0,
-      objectiuTokenId: config.objectiuTokenId ?? ultima?.objectiuTokenId ?? null
+      objectiuTokenId: config.objectiuTokenId ?? ultima?.objectiuTokenId ?? null,
+      efecteId: config.efecteId ?? ultima?.efecteId ?? null,
+      artefacteId: config.artefacteId ?? ultima?.artefacteId ?? null
     });
 
     // WP-M: si el combatent declara durant el seu propi torn, la nova acció
@@ -317,6 +332,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           label: config.etiqueta
         };
       }
+    } else if (config.tipus === "manifestar" || config.tipus === "artefacte") {
+      pendent = { ...pendent, efecteId: config.efecteId ?? null, artefacteId: config.artefacteId ?? null, label: config.etiqueta };
+      const objectiuDeclarat = objectius.find(o => o.tokenId === config.objectiuTokenId);
+      if (objectiuDeclarat) pendent = { ...pendent, objectiuTokenId: objectiuDeclarat.tokenId, objectiuNom: objectiuDeclarat.nom };
     } else if (config.tipus === "defensa") {
       const def = defenses.find(d => d.id === config.defensa?.id);
       if (def) pendent = { ...pendent, ...def, label: def.nom };
@@ -385,6 +404,32 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // WP-M: una acció de només moviment no té tirada: es fa movent el token.
     if (pendent?.tipus === "moviment") {
       ui.notifications?.info(game.i18n.format("FORJA.Moviment.ResoldreMoviment", { nom: combatant.name }));
+      await _marcarResolta(combat, combatant);
+      return;
+    }
+
+    // Fase 3: manifestar un efecte o activar un artefacte declarats. Els
+    // objectius són el declarat (si n'hi ha) o els marcats al canvas.
+    if (pendent?.tipus === "manifestar" || pendent?.tipus === "artefacte") {
+      const tokenDeclarat = _tokenObjectiuDeclarat(pendent);
+      const objectius = tokenDeclarat?.actor ? [tokenDeclarat.actor] : objectiusMarcats();
+      if (pendent.tipus === "artefacte") {
+        const item = actor.items.get(pendent.artefacteId);
+        if (!item) return;
+        await usarArtefacte(actor, item, { objectius });
+      } else {
+        const eleccio = await DiategManifestar.obrir({
+          nomActor: actor.name,
+          donNom:   game.i18n.localize(`FORJA.Sobrenatural.Do.${sys.dotat}`),
+          eqActual: sys.equilibri.actual,
+          eqMax:    sys.equilibri.max,
+          nomObjectiu: objectius.map(o => o.name).join(", ") || null,
+          efectes:  actor.items.filter(i => i.type === "efecte").map(i => ({ id: i.id, nom: i.name, tipus: i.system.tipus, dificultat: i.system.dificultat })),
+          efectePerDefecte: pendent.efecteId
+        });
+        if (!eleccio) return;
+        await manifestarIAplicar(actor, eleccio, { objectius });
+      }
       await _marcarResolta(combat, combatant);
       return;
     }

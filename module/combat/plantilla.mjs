@@ -62,6 +62,23 @@ export function destiDeLlagrimaDesDe(origenToken, template, llargadaCaselles) {
   };
 }
 
+/**
+ * Actors dels tokens que queden dins la forma d'una plantilla (Fase 3,
+ * efectes i artefactes d'àrea). El manual no dona la mida de l'àrea dels
+ * efectes (› Objectius, l. 4852), de manera que aquí sí que mana la
+ * plantilla que dibuixa l'usuari (amb el vistiplau del DJ). Es compta el
+ * centre de cada token.
+ * @param {MeasuredTemplateDocument} template
+ * @returns {Actor[]}
+ */
+export function actorsDinsPlantilla(template) {
+  const forma = template?.object?.shape;
+  if (!forma) return [];
+  return (canvas.tokens?.placeables ?? [])
+    .filter(t => t.actor && forma.contains(t.center.x - template.x, t.center.y - template.y))
+    .map(t => t.actor);
+}
+
 /** Elimina la plantilla un cop consumida, perquè no es reaprofiti per error en properes resolucions. */
 export async function consumirPlantilla(template) {
   if (template) await template.delete();

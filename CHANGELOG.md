@@ -30,6 +30,9 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - **Fitxa d'objecte per als efectes**; la d'artefacte mostra també la tirada d'activació (atribut + habilitat), la càrrega actual, la fase de prototip i si és modular.
 - **Migració:** els efectes i artefactes del catàleg que ja hi hagi en un món reben els paràmetres en entrar el DJ.
 - **Efectes i artefactes amb resultat automàtic:** en manifestar un efecte o activar un artefacte, s'apliquen sols el dany (indirecte, directe o drenatge), la curació, els estats, les bonificacions (atributs, habilitats, trets, armadura i ègida temporals) i es publica al xat; el que és narratiu (il·lusions, telecinesi, invocació…) queda indicat per al DJ. Funciona amb diversos objectius marcats.
+- **Declarar al tracker** «Manifestar un efecte» i «Activar un artefacte», amb la latència de l'efecte o artefacte i l'objectiu; es resolen al seu torn.
+- **Efectes de reacció** (L'armadura del queloni, Negar el dany…) al diàleg de defensa.
+- **Efectes d'àrea:** afecten els tokens dins la plantilla dibuixada.
 - **Resistir i contrarestar** un efecte ho decideix el jugador de l'objectiu o el DJ, no qui el manifesta.
 - **Ressonància** (cinc nivells) i tria de fatiga o ferides al diàleg de manifestar.
 - **Activar un artefacte:** tirada d'atribut + habilitat contra la dificultat d'activació (es demana si l'artefacte no la té), càrrega i prototips que es trenquen en pifiar.

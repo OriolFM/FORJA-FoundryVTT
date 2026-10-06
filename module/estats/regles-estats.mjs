@@ -98,10 +98,11 @@ export function restriccionsEstats(estats) {
  * - Berserc: sense defensa completa.
  * - No es pot moure: sense «només moviment».
  * @param {ReturnType<typeof restriccionsEstats>} r
- * @returns {Record<"atac"|"defensa"|"moviment"|"altra", string|null>}  null = permès; si no, l'estat que ho impedeix
+ * Manifestar un efecte i activar un artefacte compten com «altra acció».
+ * @returns {Record<"atac"|"defensa"|"moviment"|"altra"|"manifestar"|"artefacte", string|null>}  null = permès; si no, l'estat que ho impedeix
  */
 export function tipusAccioBloquejats(r) {
-  const tots = { atac: null, defensa: null, moviment: null, altra: null };
+  const tots = { atac: null, defensa: null, moviment: null, altra: null, manifestar: null, artefacte: null };
   if (!r.potActuar) {
     for (const k of Object.keys(tots)) tots[k] = r.motiuActuar;
     return tots;
@@ -109,6 +110,8 @@ export function tipusAccioBloquejats(r) {
   if (r.nomesDefensiva) {
     tots.atac = r.motiuNomesDefensiva;
     tots.altra = r.motiuNomesDefensiva;
+    tots.manifestar = r.motiuNomesDefensiva;
+    tots.artefacte = r.motiuNomesDefensiva;
   }
   if (!r.potDefensaActiva) tots.defensa = r.motiuDefensaActiva;
   if (!r.potMoure) tots.moviment = r.motiuMoure;

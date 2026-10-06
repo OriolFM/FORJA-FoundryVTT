@@ -239,3 +239,14 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 2. **Fitxa d'efecte** (nova) i **fitxa d'artefacte** (tirada d'activació, càrrega actual, fase, modular): els paràmetres es veuen amb el cost calculat, i «Editar amb el constructor» desa el resultat.
 3. **Millorar un efecte** (progressió sobrenatural): el constructor parteix dels paràmetres de l'efecte.
 4. **Migració:** en un món amb efectes o artefactes antics del catàleg, en entrar el DJ reben els paràmetres (un sol cop).
+
+### Pendent de provar a Foundry: Fase 3 (ús d'artefactes i efectes), 2026-10-06
+
+1. **Manifestar** des de la fitxa amb un o diversos objectius marcats: el jugador de l'objectiu (o el DJ) decideix si es resisteix; s'aplica el dany (indirecte amb armadura/reducció; directe sense), la curació, els estats (Sagnant/X amb la X) i les bonificacions; el xat ho resumeix. Ressonància i tria de fatiga o ferides.
+2. **Àrea:** dibuixar una plantilla i manifestar Bola de foc: afecta els tokens de dins; la plantilla desapareix.
+3. **Activar un artefacte** (Ulleres intel·ligents, Cibermòdem): tirada (o la demana), càrrega, bonificació d'habilitat amb «+n» a la fitxa durant l'escena i que desapareix en acabar el combat. Un prototip que pifia queda trencat.
+4. **Armes artefacte:** afegir l'Espasa serra a un PJ → apareix com a arma; atacar → FOR+4 i sagnant/3; l'Espasa d'energia gasta càrrega i fa dany directe; sense càrrega no ataca. Treure l'artefacte esborra l'arma.
+5. **Armadures artefacte:** la Holocapa i la Servoarmadura apareixen com a armadura; la Servoarmadura suma FOR +3 (es veu «+3») sense canviar els PC; desequipar-la ho treu. Espasa pretoriana: ègida 9 que es trenca i es reactiva.
+6. **Tracker:** declarar «Manifestar un efecte» / «Activar un artefacte» amb objectiu; latència correcta; resoldre-ho al seu torn.
+7. **Reacció:** L'armadura del queloni apareix al diàleg de defensa; en triar-la gasta la reacció, dona armadura 10 i l'atac es resol contra la defensa bàsica; l'armadura desapareix quan avança el rellotge.
+8. **Relé:** un jugador aplica estats i bonificacions a un PNJ (sense ser-ne propietari).

@@ -175,6 +175,13 @@
 
   "FORJA.Estats.ValorXTitol": "Valor de {nom}",
   "FORJA.Estats.ValorX":      "Valor de X",
+  "FORJA.Combat.Accio.Manifestar": "Manifestar un efecte",
+  "FORJA.Combat.Accio.Artefacte": "Activar un artefacte",
+  "FORJA.Combat.Efecte": "Efecte",
+  "FORJA.Combat.ArtefacteDeclarat": "Artefacte",
+  "FORJA.Combat.Defensa.EfecteReaccio": "Efecte: {nom}",
+  "FORJA.Combat.Defensa.EfecteReaccioDesc": "Manifesta l'efecte com a reacció (dificultat {dificultat}, gasta la reacció); l'atac es resol contra la defensa bàsica.",
+  "FORJA.Efecte.AreaSensePlantilla": "Efecte d'àrea sense plantilla dibuixada: s'apliquen als objectius marcats.",
   "FORJA.Artefacte.ActivatManual": "<strong>{nom}</strong> activat. Aquest artefacte no té paràmetres: apliqueu-ne el resultat a mà.",
   "FORJA.Artefacte.ArmaduraNatural": "armadura",
   "FORJA.Artefacte.Egida": "ègida",

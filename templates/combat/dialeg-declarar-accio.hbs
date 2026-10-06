@@ -23,6 +23,18 @@
       <input type="radio" name="tipus" value="moviment" {{#if (eq tipus "moviment")}}checked{{/if}} {{#if bloqueigTipus.moviment}}disabled title="{{bloqueigTipus.moviment}}"{{/if}}>
       {{localize "FORJA.Combat.Accio.Moviment"}}
     </label>
+    {{#if efectes.length}}
+    <label class="dda-radio">
+      <input type="radio" name="tipus" value="manifestar" {{#if (eq tipus "manifestar")}}checked{{/if}} {{#if bloqueigTipus.manifestar}}disabled title="{{bloqueigTipus.manifestar}}"{{/if}}>
+      {{localize "FORJA.Combat.Accio.Manifestar"}}
+    </label>
+    {{/if}}
+    {{#if artefactes.length}}
+    <label class="dda-radio">
+      <input type="radio" name="tipus" value="artefacte" {{#if (eq tipus "artefacte")}}checked{{/if}} {{#if bloqueigTipus.artefacte}}disabled title="{{bloqueigTipus.artefacte}}"{{/if}}>
+      {{localize "FORJA.Combat.Accio.Artefacte"}}
+    </label>
+    {{/if}}
     <label class="dda-radio">
       <input type="radio" name="tipus" value="altra" {{#if (eq tipus "altra")}}checked{{/if}} {{#if bloqueigTipus.altra}}disabled title="{{bloqueigTipus.altra}}"{{/if}}>
       {{localize "FORJA.Combat.Accio.Altra"}}
@@ -31,6 +43,34 @@
 
   {{#if (eq tipus "moviment")}}
   <p class="dda-avis">{{localize "FORJA.Combat.AvisMoviment"}}</p>
+  {{/if}}
+
+  {{#if (eq tipus "manifestar")}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.Efecte"}}</label>
+    <select name="efecteId">
+      {{#each efectes as |e|}}<option value="{{e.id}}" {{#if (eq e.id ../efecteId)}}selected{{/if}}>{{e.nom}} (dif. {{e.dificultat}}, lat. {{e.modLatencia}})</option>{{/each}}
+    </select>
+  </div>
+  {{/if}}
+  {{#if (eq tipus "artefacte")}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.ArtefacteDeclarat"}}</label>
+    <select name="artefacteId">
+      {{#each artefactes as |a|}}<option value="{{a.id}}" {{#if (eq a.id ../artefacteId)}}selected{{/if}}>{{a.nom}} (lat. {{a.modLatencia}})</option>{{/each}}
+    </select>
+  </div>
+  {{/if}}
+  {{#if (or (eq tipus "manifestar") (eq tipus "artefacte"))}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.Objectiu"}}</label>
+    <select name="objectiuTokenId">
+      <option value="" {{#unless objectiuTokenId}}selected{{/unless}}>{{localize "FORJA.Combat.SenseObjectiuDeclarat"}}</option>
+      {{#each objectius as |o|}}
+      <option value="{{o.tokenId}}" {{#if (eq o.tokenId ../objectiuTokenId)}}selected{{/if}}>{{o.nom}}{{#if o.aTocar}} ({{localize "FORJA.Combat.ObjectiuATocar"}}){{else}}{{#if o.distancia}} ({{o.distancia}} m){{/if}}{{/if}}</option>
+      {{/each}}
+    </select>
+  </div>
   {{/if}}
 
   {{#if (eq tipus "atac")}}

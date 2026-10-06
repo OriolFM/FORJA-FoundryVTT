@@ -19,7 +19,7 @@
 
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Sobrenatural.DificultatBase"}}</label>
-    <input type="number" name="dificultatBase" value="1" min="1"/>
+    <input type="number" name="dificultatBase" value="{{dificultatInicial}}" min="1"/>
   </div>
 
   <div class="form-group dm-camp">
@@ -68,7 +68,7 @@
 
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Combat.Descripcio"}}</label>
-    <input type="text" name="descripcio" placeholder="{{localize 'FORJA.Combat.DescripcioPlaceholder'}}"/>
+    <input type="text" name="descripcio" value="{{descripcioInicial}}" placeholder="{{localize 'FORJA.Combat.DescripcioPlaceholder'}}"/>
   </div>
 
   <button type="submit">

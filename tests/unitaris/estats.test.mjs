@@ -15,7 +15,7 @@ test("sense estats: ho pot fer tot", () => {
   assert.equal(r.potDefensaActiva, true);
   assert.equal(r.latenciaExtra, 0);
   assert.equal(r.reaccionsExtra, 0);
-  assert.deepEqual(tipusAccioBloquejats(r), { atac: null, defensa: null, moviment: null, altra: null });
+  assert.deepEqual(tipusAccioBloquejats(r), { atac: null, defensa: null, moviment: null, altra: null, manifestar: null, artefacte: null });
 });
 
 test("abatut: +2 latència, no corre ni esquiva, però es mou i para", () => {
@@ -55,7 +55,7 @@ test("inconscient, incapacitat i marejat: no poden actuar", () => {
     assert.equal(r.potMoure, false, id);
     assert.equal(r.potDefensaActiva, false, id);
     const t = tipusAccioBloquejats(r);
-    assert.deepEqual(Object.values(t), [id, id, id, id]);
+    assert.deepEqual(Object.values(t), [id, id, id, id, id, id]);
   }
 });
 

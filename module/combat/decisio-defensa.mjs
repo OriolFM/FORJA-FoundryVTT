@@ -1,6 +1,28 @@
 import DiategDefensa from "../apps/dialeg-defensa.mjs";
 import { opcionsDefensa, opcionsInterposar, triarDefensaAutomatica, triarMitjaBlocar } from "./defensa.mjs";
 import { preguntarA, registrarPregunta } from "../xarxa/socket.mjs";
+import { potReaccionar, gastarReaccio } from "./reaccions.mjs";
+import { manifestarIAplicar } from "./usar-efecte.mjs";
+
+/**
+ * Efectes que el defensor pot manifestar com a reacció (Fase 3; manual › Ús,
+ * l. 4808: «poden activar-se o manifestar-se gastant un punt de reacció»),
+ * p. ex. L'armadura del queloni o Negar el dany. Només els ofereix qui
+ * decideix la defensa (és qui posseeix el defensor i pot manifestar-los).
+ * @param {Actor} defensor
+ * @returns {object[]}
+ */
+export function opcionsEfectesReaccio(defensor) {
+  if (!defensor?.system?.dotat) return [];
+  const disponible = potReaccionar(defensor) && !defensor.system.salut?.foraDeCombat;
+  return defensor.items
+    .filter(i => i.type === "efecte" && (i.system.parametres ?? []).some(p => p.tipus === "reaccio"))
+    .map(i => ({
+      id: `efecte:${i.id}`, efecteId: i.id, gastaReaccio: true, senseTirada: true, disponible,
+      nom: game.i18n.format("FORJA.Combat.Defensa.EfecteReaccio", { nom: i.name }),
+      descripcio: game.i18n.format("FORJA.Combat.Defensa.EfecteReaccioDesc", { dificultat: i.system.dificultat })
+    }));
+}
 
 /**
  * Qui decideix com es defensa l'objectiu d'un atac (Oriol FM, 2026-09-27:
@@ -28,7 +50,10 @@ export function registrarPreguntaDefensa() {
     const defensor = await fromUuid(uuidDefensor);
     if (!defensor) throw new Error(`defensor no trobat (${uuidDefensor})`);
     const protectors = (await Promise.all(uuidsProtectors.map(u => fromUuid(u)))).filter(Boolean);
-    const opcions = _opcions(defensor, defensaBasica, categoriaAtac, bonusDauDefensa, protectors);
+    const opcions = [
+      ..._opcions(defensor, defensaBasica, categoriaAtac, bonusDauDefensa, protectors),
+      ...opcionsEfectesReaccio(defensor)
+    ];
     const eleccio = await DiategDefensa.obrir({
       nomAtacant,
       nomDefensor:  defensor.name,
@@ -37,6 +62,19 @@ export function registrarPreguntaDefensa() {
       ultima: defensor.getFlag("forja", "ultimaDefensa") ?? null
     });
     if (!eleccio) return null;
+    // Fase 3: efecte com a reacció. Gasta la reacció, el manifesta (i
+    // n'aplica el resultat, p. ex. l'armadura temporal) i l'atac es resol
+    // contra la defensa bàsica.
+    if (eleccio.efecteId) {
+      const efecte = defensor.items.get(eleccio.efecteId);
+      if (efecte && await gastarReaccio(defensor)) {
+        await manifestarIAplicar(defensor, {
+          efecteId: efecte.id, dificultatBase: efecte.system.dificultat ?? 1,
+          modDaus: 0, modDificultat: 0, puntsExtra: 0, usPuntsExtra: "cap", descripcio: efecte.name
+        }, { objectius: [] });
+      }
+      return { opcioId: "passiva", mitjaId: null };
+    }
     // Es recorda per proposar-la la propera vegada (s'esborra en acabar el combat).
     if (!eleccio.interposant && defensor.isOwner) {
       await defensor.setFlag("forja", "ultimaDefensa", { opcioId: eleccio.id, mitjaId: eleccio.mitjaId ?? null });

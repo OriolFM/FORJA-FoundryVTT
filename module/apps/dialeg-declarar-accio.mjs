@@ -75,6 +75,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   #retard     = 0;
   #moviment   = "basic";
   #objectiuTokenId = null;
+  #efecteId   = null;
+  #artefacteId = null;
 
   constructor(config, options = {}) {
     super(options);
@@ -83,10 +85,17 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     this.#defensaId  = config.defenses?.[0]?.id ?? null;
     this.#concentrar = !!config.concentrat;
     this.#objectiuTokenId = config.objectiuPerDefecte ?? null;
+    this.#efecteId    = config.efectes?.[0]?.id ?? null;
+    this.#artefacteId = config.artefactes?.[0]?.id ?? null;
     // Durant el combat es proposa el que es va triar l'últim cop (si encara val).
     const u = config.ultima;
     if (u) {
-      if (u.tipus === "atac" ? config.armes?.length : ["defensa", "moviment", "altra"].includes(u.tipus)) this.#tipus = u.tipus;
+      if (u.tipus === "atac" ? config.armes?.length
+        : u.tipus === "manifestar" ? config.efectes?.length
+        : u.tipus === "artefacte" ? config.artefactes?.length
+        : ["defensa", "moviment", "altra"].includes(u.tipus)) this.#tipus = u.tipus;
+      if (config.efectes?.some(e => e.id === u.efecteId)) this.#efecteId = u.efecteId;
+      if (config.artefactes?.some(a => a.id === u.artefacteId)) this.#artefacteId = u.artefacteId;
       if (config.armes?.some(a => a.id === u.armaId)) this.#armaId = u.armaId;
       if (config.defenses?.some(d => d.id === u.defensaId)) this.#defensaId = u.defensaId;
       if (u.maniobraId && this.#arma()?.permetManiobres) this.#maniobraId = u.maniobraId;
@@ -96,7 +105,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     if (!config.armes?.length) this.#tipus = "defensa";
     // Estats: si el tipus proposat està bloquejat, el primer permès.
     if (this.#bloqueig(this.#tipus)) {
-      this.#tipus = ["atac", "defensa", "moviment", "altra"]
+      this.#tipus = ["atac", "defensa", "moviment", "altra", "manifestar", "artefacte"]
         .find(t => !this.#bloqueig(t) && (t !== "atac" || config.armes?.length)) ?? this.#tipus;
     }
   }
@@ -177,7 +186,13 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       maniobra:      maniobres.find(m => m.id === this.#maniobraId) ?? null,
       concentrar:    this.#concentrar && this.#potConcentrar(),
       potConcentrar: this.#potConcentrar(),
-      bloqueigTipus: Object.fromEntries(["atac", "defensa", "moviment", "altra"].map(t => {
+      // Fase 3: manifestar un efecte i activar un artefacte com a acció declarada.
+      efectes:       c.efectes ?? [],
+      artefactes:    c.artefactes ?? [],
+      efecteId:      this.#efecteId,
+      artefacteId:   this.#artefacteId,
+      ambObjectiu:   ["atac", "manifestar", "artefacte"].includes(this.#tipus),
+      bloqueigTipus: Object.fromEntries(["atac", "defensa", "moviment", "altra", "manifestar", "artefacte"].map(t => {
         const estat = this.#bloqueig(t);
         return [t, estat ? game.i18n.format("FORJA.Estats.ImpedeixTitol", { estat: c.nomsEstats?.[estat] ?? estat }) : null];
       })),
@@ -219,6 +234,14 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     if (this.#tipus === "atac") {
       return (this.#arma()?.latenciaTotal ?? c.latenciaBase) + this.#retardEfectiu() + extraMoviment;
     }
+    // Fase 3: latència bàsica + modificador de l'efecte o de l'artefacte
+    // (manual › Latència, l. 4776: «cal afegir a la latència bàsica de l'usuari»).
+    if (this.#tipus === "manifestar") {
+      return Math.max(1, c.latenciaBase + (c.efectes?.find(e => e.id === this.#efecteId)?.modLatencia ?? 0)) + extraMoviment;
+    }
+    if (this.#tipus === "artefacte") {
+      return Math.max(1, c.latenciaBase + (c.artefactes?.find(a => a.id === this.#artefacteId)?.modLatencia ?? 0)) + extraMoviment;
+    }
     // Moviment i defensa completa: latència bàsica (manual p. 483-487,
     // "els moviments bàsics i ràpids es fan amb la latència bàsica del PJ"),
     // més el +2 del moviment especial / càrrega (WP-M).
@@ -258,6 +281,15 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     el.querySelector("[name='armaId']")?.addEventListener("change", ev => {
       this.#armaId = ev.target.value;
       if (!this.#arma()?.permetManiobres) this.#maniobraId = "";
+      this.render(false);
+    });
+
+    el.querySelector("[name='efecteId']")?.addEventListener("change", ev => {
+      this.#efecteId = ev.target.value || null;
+      this.render(false);
+    });
+    el.querySelector("[name='artefacteId']")?.addEventListener("change", ev => {
+      this.#artefacteId = ev.target.value || null;
       this.render(false);
     });
 
@@ -315,6 +347,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     if (tipus === "atac")          etiqueta = arma?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Atac");
     else if (tipus === "defensa")  etiqueta = defensa?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Defensa");
     else if (tipus === "moviment") etiqueta = game.i18n.localize("FORJA.Combat.Accio.Moviment");
+    else if (tipus === "manifestar") etiqueta = this.#config.efectes?.find(e => e.id === d.efecteId)?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Manifestar");
+    else if (tipus === "artefacte")  etiqueta = this.#config.artefactes?.find(a => a.id === d.artefacteId)?.nom ?? game.i18n.localize("FORJA.Combat.Accio.Artefacte");
     else                           etiqueta = game.i18n.localize("FORJA.Combat.Accio.Altra");
     if (maniobra) etiqueta = `${etiqueta} — ${maniobra.nom}`;
     if (moviment !== "basic" || tipus === "moviment") {
@@ -343,7 +377,9 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       armaId:     arma?.id ?? null,
       defensa:    defensa ?? null,
       maniobraId: maniobra?.id ?? null,
-      objectiuTokenId: tipus === "atac" ? (d.objectiuTokenId || null) : null,
+      objectiuTokenId: ["atac", "manifestar", "artefacte"].includes(tipus) ? (d.objectiuTokenId || null) : null,
+      efecteId:    tipus === "manifestar" ? (d.efecteId || null) : null,
+      artefacteId: tipus === "artefacte" ? (d.artefacteId || null) : null,
       retardBarallarse,
       moviment,
       concentrar: !!d.concentrar && this.#potConcentrar(),

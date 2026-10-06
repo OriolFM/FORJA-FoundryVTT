@@ -41,6 +41,8 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
   constructor(config, options = {}) {
     super(options);
     this.#config = config;
+    // Fase 3: efecte declarat al tracker (preseleccionat).
+    this.#efecteId = config.efectePerDefecte ?? "";
   }
 
   get title() {
@@ -57,6 +59,8 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
       nomObjectiu: c.nomObjectiu ?? null,
       efectes:  c.efectes ?? [],
       efecteId: this.#efecteId,
+      dificultatInicial: (c.efectes ?? []).find(e => e.id === this.#efecteId)?.dificultat ?? 1,
+      descripcioInicial: (c.efectes ?? []).find(e => e.id === this.#efecteId)?.nom ?? "",
       usPuntsExtra: this.#usPuntsExtra,
       ressonancies: Object.keys(RESSONANCIA).map(id => ({ id, nom: game.i18n.localize(`FORJA.Sobrenatural.Ressonancia.${id}`) }))
     };
