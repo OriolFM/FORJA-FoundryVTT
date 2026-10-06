@@ -14,6 +14,7 @@ El 2026-10-04 es van fusionar a `main` (vegeu «Sessió 2026-10-04»). La histò
 | [`../CHANGELOG.md`](../CHANGELOG.md) | Canvis per versió, pensat per als usuaris del sistema. La feina en curs va a `[Pendent]`. |
 | [`VERSIONS.md`](VERSIONS.md) | Com es numeren i es tanquen les versions. |
 | [`PROVES.md`](PROVES.md) | Totes les proves: què proven, com es fan, com s'executen i els resultats. |
+| [`PLA-MANUAL-COMPLET.md`](PLA-MANUAL-COMPLET.md) | Què falta del manual bàsic i pla per fases (2026-10-06). |
 | [`REVIEW-PLAN.md`](REVIEW-PLAN.md) | La revisió de codi original: troballes (A1, B3…) i pla per paquets. |
 | [`../CLAUDE.md`](../CLAUDE.md) | Arquitectura del codi tal com és ara. |
 | [`FORJA_FC001CA_CORE.md`](FORJA_FC001CA_CORE.md) | El manual del joc (v3, revisat el 2026-10-04): font de veritat de les regles. |
@@ -187,6 +188,8 @@ Contradiccions del manual o punts on no diu res:
 3. **Armes improvisades:** quin atribut fan servir. Ara, DES a cos a cos i AGI si es llancen.
 
 ## Pendent
+
+> **2026-10-06:** revisió completa del que falta del manual bàsic (estats, artefactes i efectes, experiència, contingut en compendis) i pla per fases a [`PLA-MANUAL-COMPLET.md`](PLA-MANUAL-COMPLET.md). Aquest pla substitueix la llista «A» de sota quan s'aprovi.
 
 ### Prioritat (estat a 2026-10-04)
 
