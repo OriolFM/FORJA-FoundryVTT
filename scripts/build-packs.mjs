@@ -658,7 +658,7 @@ function escriureInforme({ actors, incidencies, comptes, cfg }) {
 
   L.push("## Observacions sobre el sistema (no són errors del contingut)");
   L.push("");
-  L.push("- **Incorporis** (manual l. 1218): fan servir PER enlloc d'AGI, INT enlloc de DES i APL enlloc de FOR als atributs secundaris. `_prepararDerivats` (module/data/actor-personatge.mjs) no ho implementa: l'actor «IAssistent» (FOR/DES/AGI 0) mostrarà latència 12, defensa 1 i reducció de dany 0 a Foundry en lloc de 6, 4 i 2. Aquest informe fa el càlcul amb la regla del manual.");
+  L.push("- **Incorporis** (manual l. 1218): fan servir PER en lloc d'AGI i APL en lloc de FOR als atributs secundaris; `_prepararDerivats` ho aplica des de la Fase 7 (l'«IAssistent» surt amb latència 6, defensa 4 i reducció de dany 2, com al manual).");
   L.push("- **Armadura natural** (trets «armadura-nat-N»): el sistema no crea cap Item d'armadura natural en comprar el tret; als compendis només hi ha el tret, com fa el flux normal de la fitxa.");
   L.push("- **Tentacles** (Kraken): el tret «Tentacles» no és a `ARMAMENT_NATURAL_PER_TRET`, de manera que no s'hi ha afegit l'arma «Tentacles» del catàleg d'armes (és el que farien els hooks del sistema).");
   L.push("- **Biografia / notes**: als PJ, `system.biografia` conté els paràgrafs de presentació del manual que precedeixen la construcció; als PNJ, animals i criatures, `system.notes` conté el paràgraf descriptiu posterior al bloc.");

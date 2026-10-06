@@ -33,7 +33,7 @@ FORJA-FoundryVTT/
 │   │   ├── constants.mjs      # CONFIG.FORJA: costos, taules, càrrega de dades/*.json
 │   │   └── dades/*.json       # Catàlegs editables: armadures, armes, artefactes, efectes,
 │   │                          # estats, incompatibilitats, maniobres-arts-marcials, trets,
-│   │                          # parametres (motor d'efectes/artefactes), criatures-exemple
+│   │                          # parametres (motor d'efectes/artefactes)
 │   ├── data/                  # DataModels d'actors i items
 │   │   ├── _camps.mjs         # Camps compartits (campsBase, campsHabilitats)
 │   │   ├── actor-personatge.mjs  # ActorPersonatge + _prepararDerivats (compartit amb PNJ)

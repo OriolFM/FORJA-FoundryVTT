@@ -76,9 +76,14 @@ export function _prepararDerivats(sys) {
   }
 
   // --- Derivats de combat ---
-  sys.latenciaBase = Math.max(1, 10 + mida - atributs.AGI * 2);
-  sys.defensa      = atributs.AGI + (cfg.MIDA_DEFENSA[mida] ?? 0);
-  sys.reduccioDany = atributs.FOR;
+  // Incorporis (manual › Espècie, l. ~1220): no tenen atributs físics; els
+  // atributs secundaris es calculen amb PER en lloc d'AGI i APL en lloc de FOR.
+  const incorpori = sys.especie === "incorpori";
+  const agiDerivats = incorpori ? (atributs.PER ?? 0) : atributs.AGI;
+  const forDerivats = incorpori ? (atributs.APL ?? 0) : atributs.FOR;
+  sys.latenciaBase = Math.max(1, 10 + mida - agiDerivats * 2);
+  sys.defensa      = agiDerivats + (cfg.MIDA_DEFENSA[mida] ?? 0);
+  sys.reduccioDany = forDerivats;
   sys.reaccionsMax = 1;
 
   // --- Efectes mecànics dels trets (S-04, Onada 3) ---
@@ -120,7 +125,7 @@ export function _prepararDerivats(sys) {
   // --- Moviment (WP-M): caminar / córrer / saltar, en metres ---
   // Fórmules de l'Oriol FM (2026-09-27), no del manual (l. 2668: "el DJ
   // decideix [...] en base a la seva mida i AGI"). Vegeu combat/moviment.mjs.
-  sys.moviment = distanciesMoviment(atributs.AGI, mida);
+  sys.moviment = distanciesMoviment(agiDerivats, mida);
 
   // --- Salut: derivats (S-15) ---
   salut.fatiga.perNivell  = constitucio;

@@ -222,3 +222,19 @@ function fakeSys({ items = [], pxGastats = 0, habNivell = 0, armaduraModLatencia
 }
 
 console.log("\nTOTS ELS TESTS WP-B HAN PASSAT");
+
+// Fase 7: incorporis (manual › Espècie): PER en lloc d'AGI i APL en lloc de FOR als derivats.
+{
+  const sys = {
+    atributs: { FOR: 0, DES: 0, AGI: 0, PER: 3, INT: 3, APL: 2 },
+    especie: "incorpori", mida: 3, constitucio: 3,
+    habilitats: novaHabilitats(),
+    salut: { fatiga: { marcats: 0 }, ferides: { marcats: 0 } },
+    reaccions: { gastades: 0 }, pc: 200, px: { total: 0, gastats: 0 },
+    equilibri: { gastat: 0 }, parent: null
+  };
+  _prepararDerivats(sys);
+  assert.equal(sys.latenciaBase, 7);   // 10 + 3 − 3×2
+  assert.equal(sys.defensa, 3);
+  assert.equal(sys.reduccioDany, 2);
+}

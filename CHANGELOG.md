@@ -63,12 +63,16 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
     - especial, amb +2 de latència;
     - càrrega, amb +2 de latència i, si s'ha mogut 2 m o més, +1 dau i +1 de dany (manual, l. 2794).
 
+### Eliminat
+- `criatures-exemple.json`: les criatures del manual són ara al compendi «Criatures».
+
 ### Canviat
 - **Blocar amb el cos** també contra atacs armats si el defensor té armament natural (urpes, banyes…) o armadura natural, com a l'exemple del gólem del manual.
 - Si el defensor no té cap reacció lliure, es defensa amb la defensa bàsica sense diàleg, però amb un avís i «(sense reaccions)» al xat.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- **Incorporis:** la latència, la defensa, el moviment i la reducció de dany es calculen amb PER i APL, com diu el manual.
 - **Recuperació/X:** amb fatiga i ferides al mateix nivell, ara cura primer la fatiga (abans, les ferides); des del nivell 7 (inconscient o incapacitat) passa al nivell 6, com diu el manual.
 - El missatge de defensa mostrava «Defensa 1» en lloc de la defensa resultant (mínim defensa bàsica +1).
 - Les defenses completes ja no tornen a demanar la tirada al torn del defensor.
