@@ -16,8 +16,8 @@ globalThis.CONFIG = { FORJA: { PARAMETRES: P } };
 
 const calcula = (e) => calcularParametres(e.parametres, e.construccio, P);
 
-test("hi ha 18 artefactes i 65 efectes, tots amb paràmetres", () => {
-  assert.equal(artefactes.length, 18);
+test("hi ha 18 artefactes (+2 de La porta d'Hèkate) i 65 efectes, tots amb paràmetres", () => {
+  assert.equal(artefactes.length, 20);
   assert.equal(efectes.length, 65);
   for (const e of [...artefactes, ...efectes]) {
     assert.ok(Array.isArray(e.parametres) && e.parametres.length, e.id);
@@ -31,7 +31,7 @@ test("cap paràmetre desconegut", () => {
   }
 });
 
-test("cost de les 83 plantilles", () => {
+test("cost de les 83 plantilles (i dels 2 artefactes de l'aventura)", () => {
   const errors = [...artefactes, ...efectes]
     .map(e => ({ id: e.id, esperat: e.cost, calculat: calcula(e).cost }))
     .filter(r => r.esperat !== r.calculat);

@@ -101,9 +101,9 @@ test("comptes de documents per compendi", () => {
     assert.equal(actor.folder, carpeta._id);
     assert.equal(carpeta._key, `!folders!${carpeta._id}`);
   }
-  assert.equal(PACKS.artefactes.length, 18);
+  assert.equal(PACKS.artefactes.length, 20); // 18 del manual + 2 ègides ancestrals (La porta d'Hèkate)
   assert.equal(PACKS.efectes.length, 65);
-  assert.equal(PACKS.trets.length, 95);
+  assert.equal(PACKS.trets.length, 99); // 95 del manual + 4 variants de Tòxic (La porta d'Hèkate)
   assert.equal(PACKS.armes.length, 29); // 27 del manual + armes de dispersió i de suport (Fase 6)
   assert.equal(PACKS.armadures.length, 5);
 });

@@ -93,6 +93,9 @@
         "nivell": 3,
         "especialitat": "mons tòxics"
       },
+      "tactica": {
+        "nivell": 3
+      },
       "vehicle": {
         "nivell": 5,
         "especialitat": "espacial petit, lliscadors"
@@ -225,6 +228,28 @@
       }
     },
     {
+      "_id": "HIluEkTqywHgOvER",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.HIluEkTqywHgOvER",
+      "name": "Contactes",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "contactes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
       "_id": "rg2hJj5XcBQRgFns",
       "_key": "!actors.items!JGgeeDDsivWHeRDM.rg2hJj5XcBQRgFns",
       "name": "Cop",
@@ -245,6 +270,69 @@
       "flags": {
         "forja": {
           "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Fdi6TWzPcfG76G9R",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.Fdi6TWzPcfG76G9R",
+      "name": "Ciberbraç",
+      "type": "artefacte",
+      "system": {
+        "cost": 22,
+        "categoria": "permanent",
+        "activacio": {
+          "tipus": "permanent",
+          "dificultat": null
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 2
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "Afecta només l'usuari. Dóna l'equivalent a una armadura natural de protecció 2. Dóna un modificador de +3 a dues habilitats de combat, a escollir en el moment d'instal·lar-lo (per exemple, armes cos a cos i barallar-se).",
+        "descripcio": "Pròtesi cibernètica de combat feta a mida de l'usuari; s'autorepara a la velocitat normal de curació i té les característiques físiques de l'usuari.",
+        "parametres": [
+          {
+            "tipus": "usuari"
+          },
+          {
+            "tipus": "armadura",
+            "nivell": 2
+          },
+          {
+            "tipus": "eina",
+            "nivell": 3,
+            "segona": false,
+            "habilitat": null
+          },
+          {
+            "tipus": "eina",
+            "nivell": 3,
+            "segona": true,
+            "habilitat": null
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": 2,
+          "permanent": true
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ciberbrac"
         }
       },
       "effects": [],

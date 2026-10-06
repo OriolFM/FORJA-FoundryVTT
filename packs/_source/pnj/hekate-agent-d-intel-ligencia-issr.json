@@ -43,6 +43,9 @@
       "correr": {
         "nivell": 4
       },
+      "disfressar-se": {
+        "nivell": 5
+      },
       "enginyeria": {
         "nivell": 2
       },
@@ -80,6 +83,9 @@
       "persuasio": {
         "nivell": 5
       },
+      "tactica": {
+        "nivell": 4
+      },
       "vehicle": {
         "nivell": 4,
         "especialitat": "aeri petit, terrestre"
@@ -101,6 +107,28 @@
     }
   },
   "items": [
+    {
+      "_id": "aIVxqup0sjapvijt",
+      "_key": "!actors.items!HvZRpFxodExUGm8M.aIVxqup0sjapvijt",
+      "name": "Contactes",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "contactes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
     {
       "_id": "Gi9TBLhTQqMxCir3",
       "_key": "!actors.items!HvZRpFxodExUGm8M.Gi9TBLhTQqMxCir3",

@@ -69,6 +69,9 @@
       "resistencia": {
         "nivell": 4
       },
+      "tactica": {
+        "nivell": 4
+      },
       "vehicle": {
         "nivell": 8,
         "especialitat": "espacial gros, espacial petit, lliscadors"
@@ -87,6 +90,28 @@
     }
   },
   "items": [
+    {
+      "_id": "E6rhqlkVGVV2sSLP",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.E6rhqlkVGVV2sSLP",
+      "name": "Adepte (INT)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-int"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
     {
       "_id": "DV96ubLrhlGKaqUi",
       "_key": "!actors.items!rIiHHVmzZvbDVlsw.DV96ubLrhlGKaqUi",
@@ -577,6 +602,116 @@
       }
     },
     {
+      "_id": "k2pammAWnPhd2zRt",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.k2pammAWnPhd2zRt",
+      "name": "Ègida ancestral (dany físic)",
+      "type": "artefacte",
+      "system": {
+        "cost": 40,
+        "categoria": "armadura",
+        "activacio": {
+          "tipus": "trivial",
+          "dificultat": 1
+        },
+        "us": {
+          "narratiu": false,
+          "actiu": true,
+          "modLatencia": 0
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 20 contra dany físic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany energètic); cadascuna funciona per separat.",
+        "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). El mòdul (regles anteriors) en donava 28 PC per ègida; amb els paràmetres del manual v3 en surten 40.",
+        "parametres": [
+          {
+            "tipus": "reaccio"
+          },
+          {
+            "tipus": "activacio",
+            "mode": "trivial"
+          },
+          {
+            "tipus": "egida",
+            "nivell": 20
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": null,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "egida-ancestral-fisica"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "7FViNFCPEujE1nfY",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.7FViNFCPEujE1nfY",
+      "name": "Ègida ancestral (energia)",
+      "type": "artefacte",
+      "system": {
+        "cost": 40,
+        "categoria": "armadura",
+        "activacio": {
+          "tipus": "trivial",
+          "dificultat": 1
+        },
+        "us": {
+          "narratiu": false,
+          "actiu": true,
+          "modLatencia": 0
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 20 contra dany energètic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany físic); cadascuna funciona per separat.",
+        "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). El mòdul (regles anteriors) en donava 28 PC per ègida; amb els paràmetres del manual v3 en surten 40.",
+        "parametres": [
+          {
+            "tipus": "reaccio"
+          },
+          {
+            "tipus": "activacio",
+            "mode": "trivial"
+          },
+          {
+            "tipus": "egida",
+            "nivell": 20
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": null,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "egida-ancestral-energia"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
       "_id": "bPiI2lgok2AivpNi",
       "_key": "!actors.items!rIiHHVmzZvbDVlsw.bPiI2lgok2AivpNi",
       "name": "Llançament",
@@ -655,6 +790,48 @@
       "flags": {
         "forja": {
           "catalegId": "matar-maquina"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "hKRGKCqmd4ebj9Fg",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.hKRGKCqmd4ebj9Fg",
+      "name": "Cicatritzar",
+      "type": "efecte",
+      "system": {
+        "cost": 7,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 1,
+        "modLatencia": 0,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "Afecta un o més objectius individuals a tocar. Cura 4 punts de fatiga o ferides.",
+        "descripcio": "Permet al PJ prendre consciència dels seus propis mecanismes curatius i accelerar-los per guarir-se una mica de fatiga o ferides.",
+        "parametres": [
+          {
+            "tipus": "cura",
+            "nivell": 4,
+            "pista": "fatiga-o-ferides"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 1,
+          "latenciaDeclarada": 0,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cicatritzar"
         }
       },
       "effects": [],

@@ -77,6 +77,28 @@
   },
   "items": [
     {
+      "_id": "oOVV2vbBHFCoBBCG",
+      "_key": "!actors.items!mkulhqRssvq62C3J.oOVV2vbBHFCoBBCG",
+      "name": "Adepte (INT)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-int"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
       "_id": "3uuFGdDZKqdMpcDO",
       "_key": "!actors.items!mkulhqRssvq62C3J.3uuFGdDZKqdMpcDO",
       "name": "Coordinació Millorada",

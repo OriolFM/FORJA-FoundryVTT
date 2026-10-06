@@ -12,40 +12,8 @@ El mòdul (esborrany v0.2) fa servir unes regles anteriors. Conversió decidida 
 
 ## Trets, habilitats o equip que no s'han pogut mapar (no s'han inclòs)
 
-- **Bretxer 1** (`pj`): Tret desconegut «recursos/prof. o emprenedor»
-- **Bretxer 2** (`pj`): Tret desconegut «recursos/prof. o emprenedor»
-- **Magistrat 1** (`pj`): Tret desconegut «recursos/prof. o emprenedor»
-- **Magistrat 2** (`pj`): Tret desconegut «recursos/prof. o emprenedor»
-- **Custodi 1** (`pj`): Habilitat desconeguda «muntar animal»
-- **Científic** (`pj`): Tret desconegut «inepte/social»
-- **Dron de manteniment** (`pnj`): Tret desconegut «adepte/tècnic»
-- **Dron de manteniment** (`pnj`): Tret desconegut «veloç»
-- **Magistrat Otomo** (`pnj`): Habilitat desconeguda «tàctiques»
-- **Magistrat Otomo** (`pnj`): Tret desconegut «vincles»
-- **Sr. Thèvenin** (`pnj`): Tret desconegut «adepte/tècnic»
-- **Frederick Bauer (Orfeu)** (`pnj`): Habilitat desconeguda «tàctiques»
-- **Frederick Bauer (Orfeu)** (`pnj`): Tret desconegut «adepte/tècnic»
-- **Frederick Bauer (Orfeu)** (`pnj`): Tret desconegut «atribut excepcional»
-- **Frederick Bauer (Orfeu)** (`pnj`): Tret desconegut «vincles»
-- **Frederick Bauer (Orfeu)** (`pnj`): Artefactes: «Braç biònic» no és al catàleg d'artefactes ni d'efectes
 - **Frederick Bauer (Orfeu)** (`pnj`): Artefactes: «Vestit d'infiltració de l'ANM» no és al catàleg d'artefactes ni d'efectes
-- **Líder operatiu** (`pnj`): Habilitat desconeguda «tàctiques»
-- **Líder operatiu** (`pnj`): Tret desconegut «vincles»
-- **Operatiu** (`pnj`): Habilitat desconeguda «tàctiques»
-- **Operatiu** (`pnj`): Tret desconegut «vincles»
-- **Agent d'intel·ligència (ISSR)** (`pnj`): Habilitat desconeguda «disfressa»
-- **Agent d'intel·ligència (ISSR)** (`pnj`): Habilitat desconeguda «tàctiques»
-- **Agent d'intel·ligència (ISSR)** (`pnj`): Tret desconegut «vincles»
-- **Hèkate** (`pnj`): Habilitat desconeguda «tàctiques»
-- **Hèkate** (`pnj`): Tret desconegut «adepte/tècnic»
-- **Hèkate** (`pnj`): Tret desconegut «atribut excepcional»
 - **Hèkate** (`pnj`): Artefactes: «Generador de bretxa» no és al catàleg d'artefactes ni d'efectes
-- **Hèkate** (`pnj`): Artefactes: «Ègida ancestral - dany físic» no és al catàleg d'artefactes ni d'efectes
-- **Hèkate** (`pnj`): Artefactes: «Ègida ancestral - energia» no és al catàleg d'artefactes ni d'efectes
-- **Hèkate** (`pnj`): Efectes: «Tancar ferides» no és al catàleg d'artefactes ni d'efectes
-- **Aràcnid Acherontia XM976** (`criatures`): Tret desconegut «atribut excepcional»
-- **Aràcnid Acherontia XM976** (`criatures`): Tret desconegut «temible/2»
-- **Aràcnid Acherontia XM976** (`criatures`): Tret desconegut «tòxic/sagnat»
 
 ## Línies no analitzables
 
@@ -53,40 +21,64 @@ Cap.
 
 ## Conversions i suposicions
 
+- **Bretxer 1** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
+- **Bretxer 2** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
+- **Magistrat 1** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
+- **Magistrat 2** (`pj`): «adepte/mental» (grup d'habilitats, regles antigues) → adepte (INT)
+- **Magistrat 2** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
+- **Científic** (`pj`): «inepte/social» (grup d'habilitats, regles antigues) → inepte (APL)
 - **Dron de manteniment** (`pnj`): constitució «massissa» → robusta (5)
+- **Dron de manteniment** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
+- **Dron de manteniment** (`pnj`): «veloç» retirat: no és al manual final
 - **Jovenalla del Mur** (`pnj`): constitució «feble» → magra (2)
 - **Jörg Marsuí** (`pnj`): constitució «robusta» → ferma (4)
 - **Magistrada Blume** (`pnj`): constitució «robusta» → ferma (4)
 - **Magistrat Otomo** (`pnj`): «curació ràpida/» sense valor: s'ha pres X=1
+- **Magistrat Otomo** (`pnj`): «vincles» → contactes (amb una organització)
+- **Sr. Thèvenin** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
+- **Frederick Bauer (Orfeu)** (`pnj`): «adepte - mental» (grup d'habilitats, regles antigues) → adepte (INT)
+- **Frederick Bauer (Orfeu)** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
+- **Frederick Bauer (Orfeu)** (`pnj`): «adepte - tècnic» repetit després de convertir-lo (adepte/int): només un cop
+- **Frederick Bauer (Orfeu)** (`pnj`): «atribut excepcional» retirat: ja no cal: un atribut a 4 ja inclou el cost al manual v3
+- **Frederick Bauer (Orfeu)** (`pnj`): «vincles» → contactes (amb una organització)
 - **Líder operatiu** (`pnj`): constitució «robusta» → ferma (4)
+- **Líder operatiu** (`pnj`): «vincles» → contactes (amb una organització)
+- **Operatiu** (`pnj`): «vincles» → contactes (amb una organització)
+- **Agent d'intel·ligència (ISSR)** (`pnj`): «vincles» → contactes (amb una organització)
 - **Hèkate** (`pnj`): mida «col·losal» → enorme (5)
 - **Hèkate** (`pnj`): constitució «robusta» → ferma (4)
+- **Hèkate** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
+- **Hèkate** (`pnj`): «atribut excepcional» retirat: ja no cal: un atribut a 4 ja inclou el cost al manual v3
 - **Hèkate** (`pnj`): «curació ràpida/» sense valor: s'ha pres X=1
 - **Aràcnid Acherontia XM976** (`criatures`): mida «col·losal» → enorme (5)
 - **Aràcnid Acherontia XM976** (`criatures`): constitució «robusta» → ferma (4)
+- **Aràcnid Acherontia XM976** (`criatures`): «atribut excepcional» retirat: ja no cal: un atribut a 4 ja inclou el cost al manual v3
+- **Aràcnid Acherontia XM976** (`criatures`): «temible/2» retirat: no és al manual final; el cost passa a intimidació i aplom (APL)
+- **Aràcnid Acherontia XM976** (`criatures`): temible retirat: +1 a APL i +1 a intimidació en compensació (ajustable)
 - **Centpeus gegant** (`criatures`): mida «col·losal» → enorme (5)
 - **Centpeus gegant** (`criatures`): constitució «feble» → magra (2)
 - **Katydid Acherontia XJ748** (`criatures`): constitució «robusta» → ferma (4)
 
 ## Costos d'artefactes/efectes: mòdul contra catàleg
 
+- **Frederick Bauer (Orfeu)** (`pnj`): Ciberbraç: el manual diu 16 PC i el catàleg 22 PC
 - **Frederick Bauer (Orfeu)** (`pnj`): Cibermòdem d'interfície neural directa: el manual diu 16 PC i el catàleg 15 PC
 - **Hèkate** (`pnj`): Cibermòdem d'interfície neural directa: el manual diu 16 PC i el catàleg 15 PC
 - **Hèkate** (`pnj`): Espasa d'energia: el manual diu 44 PC i el catàleg 21 PC
+- **Hèkate** (`pnj`): Ègida ancestral (dany físic): el manual diu 28 PC i el catàleg 40 PC
+- **Hèkate** (`pnj`): Ègida ancestral (energia): el manual diu 28 PC i el catàleg 40 PC
 - **Hèkate** (`pnj`): Matar màquina: el manual diu 16 PC i el catàleg 14 PC
 - **Hèkate** (`pnj`): Enllaç mental: el manual diu 7 PC i el catàleg 10 PC
 - **Hèkate** (`pnj`): Negar el dany: el manual diu 12 PC i el catàleg 15 PC
 
 ## Notes
 
-- **Magistrat 2** (`pj`): Tret «adepte/mental»: «adepte/mental» s'ha interpretat com adepte (INT)
 - **Àstrid Corçana** (`pnj`): Habilitat «vehicle» repetida (vehicle (vaixells) 6): es queda el nivell 6
 - **Jörg Marsuí** (`pnj`): Habilitat «vehicle» repetida (vehicle (vaixells) 8): es queda el nivell 8
 - **Sr. Thèvenin** (`pnj`): Habilitat «vehicle» repetida (vehicle (barques) 3): es queda el nivell 5
 - **Sr. Thèvenin** (`pnj`): Habilitat «vehicle» repetida (vehicle (espacial gros) 5): es queda el nivell 5
 - **Sr. Thèvenin** (`pnj`): Habilitat «vehicle» repetida (vehicle (espacial petit) 4): es queda el nivell 5
 - **Frederick Bauer (Orfeu)** (`pnj`): Habilitat «vehicle» repetida (vehicle (lliscadors) 5): es queda el nivell 5
-- **Frederick Bauer (Orfeu)** (`pnj`): Tret «adepte/mental»: «adepte/mental» s'ha interpretat com adepte (INT)
 - **Agent d'intel·ligència (ISSR)** (`pnj`): Habilitat «vehicle» repetida (vehicle (terrestre) 4): es queda el nivell 4
 - **Hèkate** (`pnj`): Habilitat «medicina» repetida (medicina (xenomedicina) 6): es queda el nivell 6
 - **Hèkate** (`pnj`): Habilitat «vehicle» repetida (vehicle (espacial petit) 6): es queda el nivell 8
@@ -109,7 +101,7 @@ Esperables: la defensa, la salut i part dels costos canvien d'escala entre versi
 | Magistrat 2 | `pj` | cost | 150 | 147 | -3 |
 | Magistrat 2 | `pj` | defensa | 10 | 2 | -8 |
 | Magistrat 2 | `pj` | reduccioDany | 5 | 2 | -3 |
-| Custodi 1 | `pj` | cost | 150 | 142 | -8 |
+| Custodi 1 | `pj` | cost | 150 | 145 | -5 |
 | Custodi 1 | `pj` | defensa | 10 | 2 | -8 |
 | Custodi 1 | `pj` | reduccioDany | 5 | 2 | -3 |
 | Custodi 2 | `pj` | cost | 150 | 135 | -15 |
@@ -119,14 +111,14 @@ Esperables: la defensa, la salut i part dels costos canvien d'escala entre versi
 | Doctor | `pj` | cost | 150 | 140 | -10 |
 | Doctor | `pj` | defensa | 9 | 1 | -8 |
 | Doctor | `pj` | reduccioDany | 4 | 1 | -3 |
-| Científic | `pj` | cost | 150 | 167 | 17 |
+| Científic | `pj` | cost | 150 | 152 | 2 |
 | Científic | `pj` | latencia | 11 | 12 | 1 |
 | Científic | `pj` | defensa | 9 | 0 | -9 |
 | Científic | `pj` | reduccioDany | 5 | 1 | -4 |
 | Àstrid Corçana | `pnj` | cost | 221 | 355 | 134 |
 | Àstrid Corçana | `pnj` | defensa | 12 | 3 | -9 |
 | Àstrid Corçana | `pnj` | reduccioDany | 4 | 2 | -2 |
-| Dron de manteniment | `pnj` | cost | 71 | 119 | 48 |
+| Dron de manteniment | `pnj` | cost | 71 | 134 | 63 |
 | Dron de manteniment | `pnj` | latencia | 18 | 9 | -9 |
 | Dron de manteniment | `pnj` | defensa | 4 | 3 | -1 |
 | Dron de manteniment | `pnj` | reduccioDany | 6 | 1 | -5 |
@@ -144,34 +136,34 @@ Esperables: la defensa, la salut i part dels costos canvien d'escala entre versi
 | Magistrat assistent de l'ANM | `pnj` | latencia | 10 | 9 | -1 |
 | Magistrat assistent de l'ANM | `pnj` | defensa | 9 | 2 | -7 |
 | Magistrat assistent de l'ANM | `pnj` | reduccioDany | 4 | 2 | -2 |
-| Magistrat Otomo | `pnj` | cost | 332 | 499 | 167 |
+| Magistrat Otomo | `pnj` | cost | 332 | 524 | 192 |
 | Magistrat Otomo | `pnj` | latencia | 10 | 9 | -1 |
 | Magistrat Otomo | `pnj` | defensa | 9 | 2 | -7 |
 | Magistrat Otomo | `pnj` | reduccioDany | 4 | 2 | -2 |
-| Sr. Thèvenin | `pnj` | cost | 161 | 210 | 49 |
+| Sr. Thèvenin | `pnj` | cost | 161 | 225 | 64 |
 | Sr. Thèvenin | `pnj` | latencia | 9 | 8 | -1 |
 | Sr. Thèvenin | `pnj` | defensa | 8 | 3 | -5 |
 | Sr. Thèvenin | `pnj` | reduccioDany | 3 | 1 | -2 |
-| Frederick Bauer (Orfeu) | `pnj` | cost | 518 | 531 | 13 |
+| Frederick Bauer (Orfeu) | `pnj` | cost | 518 | 569 | 51 |
 | Frederick Bauer (Orfeu) | `pnj` | latencia | 10 | 9 | -1 |
 | Frederick Bauer (Orfeu) | `pnj` | defensa | 9 | 2 | -7 |
 | Frederick Bauer (Orfeu) | `pnj` | reduccioDany | 4 | 2 | -2 |
-| Líder operatiu | `pnj` | cost | 240 | 392 | 152 |
+| Líder operatiu | `pnj` | cost | 240 | 405 | 165 |
 | Líder operatiu | `pnj` | latencia | 10 | 9 | -1 |
 | Líder operatiu | `pnj` | defensa | 9 | 2 | -7 |
 | Líder operatiu | `pnj` | reduccioDany | 5 | 2 | -3 |
-| Operatiu | `pnj` | cost | 118 | 197 | 79 |
+| Operatiu | `pnj` | cost | 118 | 210 | 92 |
 | Operatiu | `pnj` | latencia | 10 | 9 | -1 |
 | Operatiu | `pnj` | defensa | 9 | 2 | -7 |
 | Operatiu | `pnj` | reduccioDany | 4 | 2 | -2 |
-| Agent d'intel·ligència (ISSR) | `pnj` | cost | 272 | 412 | 140 |
+| Agent d'intel·ligència (ISSR) | `pnj` | cost | 272 | 447 | 175 |
 | Agent d'intel·ligència (ISSR) | `pnj` | latencia | 10 | 9 | -1 |
 | Agent d'intel·ligència (ISSR) | `pnj` | defensa | 9 | 2 | -7 |
 | Agent d'intel·ligència (ISSR) | `pnj` | reduccioDany | 4 | 2 | -2 |
-| Hèkate | `pnj` | cost | 841 | 945 | 104 |
+| Hèkate | `pnj` | cost | 841 | 1057 | 216 |
 | Hèkate | `pnj` | defensa | 14 | 1 | -13 |
 | Hèkate | `pnj` | reduccioDany | 5 | 2 | -3 |
-| Aràcnid Acherontia XM976 | `criatures` | cost | 302 | 381 | 79 |
+| Aràcnid Acherontia XM976 | `criatures` | cost | 302 | 408 | 106 |
 | Aràcnid Acherontia XM976 | `criatures` | defensa | 14 | 1 | -13 |
 | Aràcnid Acherontia XM976 | `criatures` | reduccioDany | 7 | 4 | -3 |
 | Centpeus gegant | `criatures` | cost | 97 | 148 | 51 |

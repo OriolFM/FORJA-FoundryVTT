@@ -1,0 +1,55 @@
+{
+  "_id": "naafgdPF8jXTvggU",
+  "_key": "!items!naafgdPF8jXTvggU",
+  "name": "Ègida ancestral (dany físic)",
+  "type": "artefacte",
+  "system": {
+    "cost": 40,
+    "categoria": "armadura",
+    "activacio": {
+      "tipus": "trivial",
+      "dificultat": 1
+    },
+    "us": {
+      "narratiu": false,
+      "actiu": true,
+      "modLatencia": 0
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 20 contra dany físic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany energètic); cadascuna funciona per separat.",
+    "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). El mòdul (regles anteriors) en donava 28 PC per ègida; amb els paràmetres del manual v3 en surten 40.",
+    "parametres": [
+      {
+        "tipus": "reaccio"
+      },
+      {
+        "tipus": "activacio",
+        "mode": "trivial"
+      },
+      {
+        "tipus": "egida",
+        "nivell": 20
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "egida-ancestral-fisica"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

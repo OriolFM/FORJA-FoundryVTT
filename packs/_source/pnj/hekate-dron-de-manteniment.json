@@ -47,6 +47,28 @@
   },
   "items": [
     {
+      "_id": "nrpnKz06GvjRkohO",
+      "_key": "!actors.items!8T0lr1cGtKG2CZDH.nrpnKz06GvjRkohO",
+      "name": "Adepte (INT)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-int"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
       "_id": "CFMiGnC5izKWNXY5",
       "_key": "!actors.items!8T0lr1cGtKG2CZDH.CFMiGnC5izKWNXY5",
       "name": "Armadura Natural /2",

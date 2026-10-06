@@ -224,6 +224,9 @@ export function resoldreTret(text, trets) {
       return res(perId(`${base}-${atr}`), null,
         ALIAS_ATRIBUT[param] ? `«${base}/${param}» s'ha interpretat com ${base} (${atr.toUpperCase()})` : "");
     }
+    case "toxic":
+      // Tòxic/X (aventura «La porta d'Hèkate», Nous trets): X és l'estat que causa.
+      return res(perId(`toxic-${param.split(" ")[0]}`));
     case "recursos":
       return res(param.startsWith("pobre") ? perId("recursos-pobre") : perId(`recursos-${param}`));
     case "sentit agut":
@@ -470,7 +473,8 @@ export function construirActor(bloc, cat, cfg, incidencies) {
   // Artefactes i efectes
   for (const eq of bloc.equip) {
     const text = netejarText(eq.text);
-    const noms = [...text.matchAll(/([^,()]+?)\s*\((\d+)\s*PC\)/g)];
+    // El nom pot portar parèntesis: «Ègida ancestral (energia) (28 PC)».
+    const noms = [...text.matchAll(/\s*([^,]+?)\s*\((\d+)\s*PC\)/g)];
     if (!noms.length) avisa("no-analitzable", `${eq.etiqueta}: «${text}»`);
     for (const m of noms) {
       const nom = m[1].trim();

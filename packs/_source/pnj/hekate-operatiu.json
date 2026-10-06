@@ -54,6 +54,9 @@
       "resistencia": {
         "nivell": 2
       },
+      "tactica": {
+        "nivell": 2
+      },
       "vehicle": {
         "nivell": 2,
         "especialitat": "terrestre"
@@ -72,6 +75,28 @@
     }
   },
   "items": [
+    {
+      "_id": "sCnGSDLB9yP5xF6A",
+      "_key": "!actors.items!BOEj0YlnOw0ukFSR.sCnGSDLB9yP5xF6A",
+      "name": "Contactes",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "contactes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
     {
       "_id": "IJgxEUOWlwZUK2qu",
       "_key": "!actors.items!BOEj0YlnOw0ukFSR.IJgxEUOWlwZUK2qu",

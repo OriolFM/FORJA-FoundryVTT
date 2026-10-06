@@ -74,6 +74,9 @@
       "resistencia": {
         "nivell": 3
       },
+      "tactica": {
+        "nivell": 5
+      },
       "vehicle": {
         "nivell": 4,
         "especialitat": "lliscadors"
@@ -216,6 +219,28 @@
       "flags": {
         "forja": {
           "catalegId": "linguista-natural"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "F6XN0YEqffAR4fGA",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.F6XN0YEqffAR4fGA",
+      "name": "Contactes",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "contactes"
         }
       },
       "effects": [],

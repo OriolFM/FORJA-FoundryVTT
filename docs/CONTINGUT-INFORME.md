@@ -10,10 +10,10 @@ Generat per `scripts/build-packs.mjs` (no s'edita a mà: es regenera). Fonts: `d
 | `pnj` | Actor | 25 |
 | `animals` | Actor | 7 |
 | `criatures` | Actor | 9 |
-| `trets` | Item | 95 |
+| `trets` | Item | 99 |
 | `armes` | Item | 29 |
 | `armadures` | Item | 5 |
-| `artefactes` | Item | 18 |
+| `artefactes` | Item | 20 |
 | `efectes` | Item | 65 |
 
 Les maniobres d'arts marcials (`maniobres-arts-marcials.json`) no tenen compendi: no són un tipus d'Item, només una llista de dades (`FORJA.LLISTA_MANIOBRES`) consultada en declarar un «Cop».

@@ -316,5 +316,31 @@
       { "tipus": "atribut", "nivell": 2, "atribut": "AGI" },
       { "tipus": "tret", "tret": "levitar", "cost": 15 }
     ]
+  },
+  {
+    "id": "egida-ancestral-fisica",
+    "nom": "Ègida ancestral (dany físic)",
+    "cost": 40,
+    "categoria": "armadura",
+    "activacio": { "tipus": "trivial", "dificultat": 1 },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 0 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 20 contra dany físic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany energètic); cadascuna funciona per separat.",
+    "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). El mòdul (regles anteriors) en donava 28 PC per ègida; amb els paràmetres del manual v3 en surten 40.",
+    "construccio": { "dificultatDeclarada": null, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [{"tipus": "reaccio"}, {"tipus": "activacio", "mode": "trivial"}, {"tipus": "egida", "nivell": 20}]
+  },
+  {
+    "id": "egida-ancestral-energia",
+    "nom": "Ègida ancestral (energia)",
+    "cost": 40,
+    "categoria": "armadura",
+    "activacio": { "tipus": "trivial", "dificultat": 1 },
+    "us": { "narratiu": false, "actiu": true, "modLatencia": 0 },
+    "carrega": { "usosPerCarrega": null, "tornsRecarrega": null, "modeEspera": false },
+    "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 20 contra dany energètic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany físic); cadascuna funciona per separat.",
+    "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). El mòdul (regles anteriors) en donava 28 PC per ègida; amb els paràmetres del manual v3 en surten 40.",
+    "construccio": { "dificultatDeclarada": null, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [{"tipus": "reaccio"}, {"tipus": "activacio", "mode": "trivial"}, {"tipus": "egida", "nivell": 20}]
   }
 ]

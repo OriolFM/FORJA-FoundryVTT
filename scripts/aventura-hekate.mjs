@@ -37,6 +37,30 @@ const MIDA = {
 const ARMA_NATURAL = { ullals: "mossegada", urpes: "urpes", pinces: "pinces", banyes: "banyes", fiblons: "fiblons" };
 const ESPECIE_PER_ETIQUETA = { androide: "mecanoide" };
 
+/**
+ * Correspondències indicades per l'Oriol FM (2026-10-06) entre el mòdul i el
+ * manual v3. Els trets amb `omet` desapareixen de les regles actuals.
+ */
+const TRETS_RETIRATS = {
+  "atribut excepcional": "ja no cal: un atribut a 4 ja inclou el cost al manual v3",
+  "veloç": "no és al manual final",
+  "temible": "no és al manual final; el cost passa a intimidació i aplom (APL)"
+};
+/** Adepte/inepte per grups d'habilitats (regles antigues) → per atribut (manual v3, l. 1332). */
+const ATRIBUT_PER_GRUP = { tècnic: "int", mental: "int", social: "apl", físic: "for" };
+const HABILITATS_RENOMENADES = [
+  [/\btàctiques\b/gi, "tàctica"],
+  [/\bdisfressa\b/gi, "disfressar-se"],
+  [/\bmuntar animal\b/gi, "tracte amb animals"]
+];
+const EQUIP_RENOMENAT = [
+  [/Cibermòdem \(interfície neural directa\)/g, "Cibermòdem d'interfície neural directa"],
+  [/Braç biònic/g, "Ciberbraç"],
+  [/Tancar ferides/g, "Cicatritzar"],
+  [/Ègida ancestral - dany físic/g, "Ègida ancestral (dany físic)"],
+  [/Ègida ancestral - energia/g, "Ègida ancestral (energia)"]
+];
+
 const treuHTML = t => t.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 const majuscula = t => t.charAt(0).toUpperCase() + t.slice(1);
 
@@ -48,6 +72,14 @@ export function reescriureTret(text) {
   let t = text.trim().replace(/\.$/, "");
   let m;
   if ((m = t.match(/^espècie\s*[-/]\s*(.+)$/i))) return { especie: m[1].trim() };
+  const base = t.replace(/\s*\/.*$/, "").toLowerCase();
+  if (TRETS_RETIRATS[base]) return { omet: base, nota: `«${t}» retirat: ${TRETS_RETIRATS[base]}` };
+  if (/^recursos\s*\/\s*prof/i.test(t)) return { omet: "recursos", nota: "«recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret" };
+  if (/^vincles$/i.test(t)) return { tret: "contactes", nota: "«vincles» → contactes (amb una organització)" };
+  if ((m = t.match(/^(adepte|inepte)\s*[-/]\s*(tècnic|mental|social|físic)$/i))) {
+    const atr = ATRIBUT_PER_GRUP[m[2].toLowerCase()];
+    return { tret: `${m[1].toLowerCase()}/${atr}`, nota: `«${t}» (grup d'habilitats, regles antigues) → ${m[1].toLowerCase()} (${atr.toUpperCase()})` };
+  }
   if ((m = t.match(/^arma natural\s*-\s*(.+)$/i))) {
     const arma = ARMA_NATURAL[m[1].trim().toLowerCase()];
     return arma ? { tret: `armament natural/${arma}` } : { tret: t };
@@ -83,19 +115,39 @@ function secundarisDe(text, especie) {
   return { secundaris, notes };
 }
 
+/** Habilitats amb els noms del manual v3. */
+function renomenarHabilitats(text) {
+  return HABILITATS_RENOMENADES.reduce((t, [re, nou]) => t.replace(re, nou), text ?? "");
+}
+
+/**
+ * Temible no és al manual final: el seu cost passa a intimidació i aplom
+ * (Oriol FM, 2026-10-06). +1 a APL (màx. 5) i +1 a intimidació (màx. 10).
+ * @returns {{primaris:string, habilitats:string, nota:string}}
+ */
+function compensarTemible(primaris, habilitats) {
+  const nouPrimaris = primaris.replace(/\bAPL (\d)/, (_, v) => `APL ${Math.min(5, Number(v) + 1)}`);
+  let nouHab = habilitats.replace(/\bintimidació (\d+)/, (_, v) => `intimidació ${Math.min(10, Number(v) + 1)}`);
+  if (nouHab === habilitats) nouHab = `${habilitats.replace(/\.$/, "")}, intimidació 1`;
+  return { primaris: nouPrimaris, habilitats: nouHab, nota: "temible retirat: +1 a APL i +1 a intimidació en compensació (ajustable)" };
+}
+
 /** Separa trets en espècie i trets reescrits (amb notes). */
 function processarTrets(text, especiePerDefecte) {
   let especie = especiePerDefecte;
   const trets = [];
   const notes = [];
+  const omesos = [];
   for (const tros of text.replace(/\.$/, "").split(",")) {
     if (!tros.trim()) continue;
     const r = reescriureTret(tros);
     if (r.especie) { especie = r.especie; continue; }
-    trets.push(r.tret);
     if (r.nota) notes.push(r.nota);
+    if (r.omet) { omesos.push(r.omet); continue; }
+    if (trets.includes(r.tret)) { notes.push(`«${tros.trim()}» repetit després de convertir-lo (${r.tret}): només un cop`); continue; }
+    trets.push(r.tret);
   }
-  return { especie, trets: trets.join(", "), notes };
+  return { especie, trets: trets.join(", "), notes, omesos };
 }
 
 /** PJ pregenerats: taules HTML del capítol d'introducció. */
@@ -110,7 +162,7 @@ function analitzarPregenerats(text, fitxer) {
     const descripcio = [...(files[1].match(/<p>([\s\S]*?)<\/p>/g) ?? [])].map(treuHTML);
     const primaris = cel(files[2]).join(", ");
     const secText = cel(files[3])[0] ?? "";
-    const habilitats = cel(files[4])[0] ?? "";
+    const habilitats = renomenarHabilitats(cel(files[4])[0] ?? "");
     const tretsText = cel(files[5])[0] ?? "";
     const equip = files[6] ? cel(files[6])[0] : "";
     const { especie, trets, notes } = processarTrets(tretsText, secText.match(/espècie\/([a-zà-ú]+)/i)?.[1] ?? "humanoide");
@@ -148,11 +200,17 @@ function analitzarPNJ(text, fitxer) {
     const tipus = normalitzarEtiqueta(etiqueta);
     const esCriatura = grup === "Criatures";
     const especieEtiqueta = ESPECIE_PER_ETIQUETA[etiqueta.split(",")[1]?.trim().toLowerCase()];
-    const { especie, trets, notes } = processarTrets(camp("Trets") ?? "", especieEtiqueta ?? "humanoide");
+    const { especie, trets, notes, omesos } = processarTrets(camp("Trets") ?? "", especieEtiqueta ?? "humanoide");
+    let primarisFinal = primaris;
+    let habilitats = renomenarHabilitats(camp("Habilitats"));
+    if (omesos.includes("temible")) {
+      const c = compensarTemible(primarisFinal, habilitats);
+      primarisFinal = c.primaris; habilitats = c.habilitats; notes.push(c.nota);
+    }
     const sec = secundarisDe(atributs, especie);
     const equip = [];
     for (const clau of ["Artefactes", "Efectes"]) {
-      if (camp(clau)) equip.push({ etiqueta: clau, text: camp(clau).replace(/Cibermòdem \(interfície neural directa\)/g, "Cibermòdem d'interfície neural directa") });
+      if (camp(clau)) equip.push({ etiqueta: clau, text: EQUIP_RENOMENAT.reduce((t, [re, nou]) => t.replace(re, nou), camp(clau)) });
     }
     const descripcio = [];
     const equipText = camp("Equipament") ?? camp("Equip");
@@ -166,8 +224,8 @@ function analitzarPNJ(text, fitxer) {
     }
     blocs.push({
       nom: h[1].trim().replace(/\s+\d+\s*PC$/i, ""), etiqueta: esCriatura ? "Criatura" : "Personatge No Jugador",
-      cost, linia: 0, fitxer, primaris, secundaris: sec.secundaris,
-      habilitats: camp("Habilitats"), trets, equip, descripcio, previ: [], prosa: "",
+      cost, linia: 0, fitxer, primaris: primarisFinal, secundaris: sec.secundaris,
+      habilitats, trets, equip, descripcio, previ: [], prosa: "",
       seccio: esCriatura ? "criatures" : tipus, grup,
       notesConversio: [...sec.notes, ...notes]
     });

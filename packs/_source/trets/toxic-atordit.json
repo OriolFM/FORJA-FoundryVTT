@@ -1,0 +1,22 @@
+{
+  "_id": "IVdxlPCiGKXOIhEy",
+  "_key": "!items!IVdxlPCiGKXOIhEy",
+  "name": "Tòxic (atordit)",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "El seu organisme genera una toxina que aplica en atacar amb el seu armament natural; no afecta incorporis, mecanoides, constructes inorgànics ni no-morts. En atacar per primer cop un objectiu tira FOR + força bruta (toxicitat); l'objectiu resisteix cada atac amb FOR + resistència (d. toxicitat). Causa l'estat atordit. (La porta d'Hèkate, Nous trets.)",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "toxic-atordit"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

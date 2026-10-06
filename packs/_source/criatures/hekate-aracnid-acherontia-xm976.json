@@ -11,7 +11,7 @@
       "AGI": 3,
       "PER": 2,
       "INT": 1,
-      "APL": 3
+      "APL": 4
     },
     "especie": "artropode",
     "mida": 5,
@@ -42,7 +42,7 @@
         "nivell": 6
       },
       "intimidacio": {
-        "nivell": 6
+        "nivell": 7
       },
       "resistencia": {
         "nivell": 6
@@ -213,6 +213,28 @@
       "flags": {
         "forja": {
           "catalegId": "reflexos-rapids"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "myqo1JQabPKJBSGn",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.myqo1JQabPKJBSGn",
+      "name": "Tòxic (sagnat)",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "El seu organisme genera una toxina que aplica en atacar amb el seu armament natural; no afecta incorporis, mecanoides, constructes inorgànics ni no-morts. En atacar per primer cop un objectiu tira FOR + força bruta (toxicitat); l'objectiu resisteix cada atac amb FOR + resistència (d. toxicitat). Causa l'estat Sagnat/1. (La porta d'Hèkate, Nous trets.)",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "toxic-sagnat"
         }
       },
       "effects": [],
