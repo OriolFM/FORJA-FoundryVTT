@@ -18,7 +18,7 @@
   {{#if (eq op.id ../opcioId)}}
   <p class="dd-avis">
     {{op.descripcio}}
-    {{#unless op.disponible}}<br><strong>{{localize "FORJA.Combat.SenseReaccioDisponibleAvis"}}</strong>{{/unless}}
+    {{#unless op.disponible}}<br><strong>{{#if op.bloquejatPer}}{{localize "FORJA.Estats.ImpedeixTitol" estat=(localize (concat "FORJA.Estat." op.bloquejatPer))}}{{else}}{{localize "FORJA.Combat.SenseReaccioDisponibleAvis"}}{{/if}}</strong>{{/unless}}
     {{#if op.reduccioExtra}}<br>{{localize "FORJA.Combat.ReduccioExtra" valor=op.reduccioExtra}}{{/if}}
     {{#if (eq op.id "blocar")}}{{#if op.disponible}}{{#if op.mitjans.length}}
     <br><label>{{localize "FORJA.Combat.Blocar.MitjaTriar"}}

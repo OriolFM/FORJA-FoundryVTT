@@ -83,7 +83,10 @@ FORJA-FoundryVTT/
 │   │   └── dialeg-tirada.mjs  # Diàleg de configuració d'una tirada
 │   ├── estats/
 │   │   ├── estats.mjs         # Registra CONFIG.statusEffects + estat "dead"
-│   │   └── estats-parametritzats.mjs # Lent/Ràpid/Sagnant/Recuperació amb valor X (M-05)
+│   │   ├── estats-parametritzats.mjs # Lent/Ràpid/Sagnant/Recuperació amb valor X (M-05)
+│   │   ├── regles-estats.mjs  # Regles dels estats (funcions pures): què pot fer l'actor, tirades d'estat
+│   │   ├── aplicacio-estats.mjs # Estats a Foundry: salut → inconscient/incapacitat, pèrdua d'acció, tirades
+│   │   └── notificacions.mjs  # Textos flotants al costat del token (estats, fatiga, ferides, curació)
 │   ├── progressio/
 │   │   ├── millora.mjs        # Millora amb PX (mateixos costos que la creació)
 │   │   ├── construccio.mjs    # Motor de paràmetres: cost/dificultat/latència d'efectes i artefactes (S-23)
@@ -351,6 +354,22 @@ que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
    esquivar (+1 de dany per cada 1, al dany final), mitjans de blocar (cos,
    escut o objecte), retard de barallar-se i requisits d'habilitat per curar.
    Les decisions i les fonts són a `docs/REGISTRE-TREBALL.md`.
+
+### Estats (`module/estats/`)
+
+Els efectes dels estats s'apliquen (Oriol FM, 2026-10-06). `restriccionsEstats(actor.statuses)`
+(`regles-estats.mjs`, pura) en dona les restriccions, i es llegeixen a:
+- derivats (`_prepararDerivats`): abatut +2 latència, vigilant +1 reacció, berserc sense penalització;
+- diàleg de declarar (tipus d'acció i moviments bloquejats) i resoldre (tracker);
+- `opcionsDefensa` (sense esquivar, sense defensa activa, defensa bàsica 1);
+- moviment del token (`documents/token.mjs`): qui no es pot moure no es mou (el DJ sí);
+- `ForjaCombat#totsHanDeclarat` i `_estaHabilitat`: qui no pot actuar no bloqueja el combat.
+
+Al DJ actiu: `sincronitzarEstatsSalut` (hook `updateActor`: nivell 7 de fatiga → inconscient, de
+ferides → incapacitat) i `iniciTornEstats` (hook `updateCombat`: atordit, marejat, inconscient i
+incapacitat perden l'acció). Quan un estat impedeix el que s'intenta, `comprovarEstat` mostra
+l'estat al costat del token (`notificacions.mjs`). Els textos flotants només es dibuixen al client
+local: els canvis d'estat i de salut s'escolten amb hooks a tots els clients, sense escriure res.
 
 ## Xarxa: relé d'autoritat del DJ (`module/xarxa/socket.mjs`)
 

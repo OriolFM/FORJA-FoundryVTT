@@ -8,12 +8,11 @@ import { FORJA } from "../config/constants.mjs";
  * la pestanya "Efectes" de la fitxa (Active Effects del nucli, tal com marca
  * 05_ESPECIFICACIONS.md §7 per als estats sense paràmetre).
  *
- * Els estats SENSE paràmetre (aquest fitxer) continuen sent purament
- * informatius/visuals — cap efecte mecànic automàtic, tal com marca
- * 05_ESPECIFICACIONS.md §7. Els 4 estats PARAMETRITZATS (Lent/X, Ràpid/X,
- * Recuperació/X, Sagnant/X) sí tenen automatització (M-05): demanar X en
- * marcar-los, tic per torn, i modificador de latència — vegeu
- * `estats-parametritzats.mjs`.
+ * Aquest fitxer només els registra. Les regles de cada estat (Fase 1,
+ * Oriol FM 2026-10-06: els efectes s'apliquen) són a `regles-estats.mjs`
+ * (funcions pures) i `aplicacio-estats.mjs` (Foundry); els textos flotants,
+ * a `notificacions.mjs`; i els 4 estats PARAMETRITZATS (Lent/X, Ràpid/X,
+ * Recuperació/X, Sagnant/X), a `estats-parametritzats.mjs` (M-05).
  */
 const ICONES = {
   abatut:           "icons/svg/falling.svg",

@@ -1,6 +1,7 @@
 import { actualitzarComGM } from "../xarxa/socket.mjs";
 import { reiniciarReaccions } from "../combat/reaccions.mjs";
 import { egidaHaDeReactivar } from "../combat/dany.mjs";
+import { restriccionsEstats } from "../estats/regles-estats.mjs";
 
 /**
  * ForjaCombat (S-10) — rellotge de temps actiu net (sense reaccions).
@@ -101,7 +102,10 @@ export default class ForjaCombat extends Combat {
 
   /** Tots els combatents ja tenen posició al rellotge (han declarat). */
   get totsHanDeclarat() {
-    return this.combatants.size > 0 && this.combatants.contents.every(c => c.initiative !== null && c.initiative !== undefined);
+    // Qui no pot actuar (inconscient, incapacitat, marejat; manual › Estats)
+    // no ha de declarar per començar: entrarà al rellotge quan declari.
+    return this.combatants.size > 0 && this.combatants.contents.every(c =>
+      (c.initiative !== null && c.initiative !== undefined) || !restriccionsEstats(c.actor?.statuses ?? []).potActuar);
   }
 
   /**

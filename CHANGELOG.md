@@ -14,6 +14,18 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Estats amb efecte** (manual › Estats; Oriol FM, 2026-10-06):
+  - **Abatut:** +2 a la latència; no pot córrer, saltar (càrrega) ni esquivar.
+  - **Atrapat** i **immobilitzat:** el token no es pot moure; atrapat no pot esquivar; immobilitzat té defensa bàsica 1.
+  - **Acovardit:** només pot declarar defensa o moviment.
+  - **Berserc:** cap defensa activa ni concentració (excepte en atac); sense penalització de salut.
+  - **Atordit:** perd l'acció en arribar el seu torn i ha de tornar a declarar.
+  - **Marejat:** perd l'acció; per declarar-ne una altra ha de superar FOR o APL + resistència.
+  - **Inconscient** i **incapacitat:** es posen sols al nivell 7 de fatiga o de ferides i es treuen en curar-se; no poden actuar i el rellotge continua sense ells.
+  - **Vigilant:** +1 reacció.
+  - **Tirades d'estat** des de la fitxa: escapar-se d'atrapat, superar acovardit, mantenir-se dempeus (empès), resistir una malaltia o toxina, actuar marejat, forçar una extremitat esguerrada.
+  - La fitxa mostra els estats actius, amb un botó per tirar i un per treure'ls.
+- **Textos flotants al costat del token** (com als videojocs): estats guanyats i perduts, fatiga, ferides i curació. Si un jugador intenta fer una cosa que un estat li impedeix, l'estat torna a sortir.
 - **Fase de declaració:** en començar el combat, si algú no ha declarat, s'anuncia «Declareu les accions» i el combat no arrenca fins que declara l'últim. Llavors comença el temps actiu i el rellotge salta directament fins al primer que actua.
 - **Anuncis sobre la pantalla:** «Declareu les accions», «Comença el temps actiu» i «El rellotge de temps actiu avança n tics».
 - **Tracker:** el títol mostra el tic («Tic N»); el DJ hi té el botó **Avança**, actiu només quan ningú ha d'actuar al tic actual. Les files de qui no li toca surten atenuades i amb els botons bloquejats; les icones que toca fer servir fan pampallugues.
@@ -39,6 +51,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- **Recuperació/X:** amb fatiga i ferides al mateix nivell, ara cura primer la fatiga (abans, les ferides); des del nivell 7 (inconscient o incapacitat) passa al nivell 6, com diu el manual.
 - El missatge de defensa mostrava «Defensa 1» en lloc de la defensa resultant (mínim defensa bàsica +1).
 - Les defenses completes ja no tornen a demanar la tirada al torn del defensor.
 - Si el DJ no pot aplicar el dany o els estats d'un atac (desconnectat, massa lent o camp rebutjat), l'atac ja no desapareix: la tirada surt al xat amb una nota perquè el DJ ho apliqui a mà. El temps d'espera del relé passa de 15 a 30 segons.

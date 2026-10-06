@@ -29,11 +29,12 @@ Fitxers `*.test.mjs` que s'executen amb el runner de Node (`node --test`), Node 
 | `socket.test.mjs` | Relé del DJ: camps permesos i rebutjats, estats, dany fora de combat, peticions del DJ. |
 | `derivats.test.mjs` | PC i PX, barres de salut, `foraDeCombat`, latència d'armadures. |
 | `moviment.test.mjs` | Distàncies, bloqueig segons mida i bàndol, permís acumulatiu per torn, càrrega, A* (voreja, bloquejat del tot, destinació ocupada, límit de nodes). |
+| `estats.test.mjs` | Regles dels estats (Fase 1): què pot fer cada estat (actuar, moure's, córrer, esquivar, defensa activa, concentrar-se), tipus d'acció i moviments bloquejats, latència d'abatut, reacció de vigilant, inconscient/incapacitat per salut, Recuperació/X (pista i pas del nivell 7 al 6), tirada d'atrapat. `combat-wpf.test.mjs` hi afegeix les opcions de defensa amb estats. |
 | `i18n.test.mjs` | Els tres fitxers de `lang/` tenen les mateixes claus; totes les claus que fa servir el codi existeixen; els `{placeholders}` coincideixen. |
 | `versio.test.mjs` | `system.json` i `package.json` tenen la mateixa versió, i aquesta té entrada al `CHANGELOG.md`. |
 | `secrets.test.mjs` | Cap fitxer del repositori conté claus d'API, tokens ni claus privades (el repositori és públic). |
 
-**Resultat actual:** 10 fitxers, 28 proves de primer nivell (el fitxer de moviment n'agrupa 19) i unes 250 comprovacions, totes OK.
+**Resultat actual (2026-10-06):** 11 fitxers, 40 proves de primer nivell, totes OK.
 
 Els missatges `FORJA | No s'ha pogut carregar …` en executar-les són esperats: el `fetch` dels catàlegs JSON està desactivat.
 
@@ -215,3 +216,18 @@ await b.close();
 ### Proves unitàries a Windows
 
 `npm test` falla a Windows: les proves fan `import("E:\…")`, i Node a Windows només accepta URL `file://`. Mentre no es corregeixi (vegeu «Pendent» a `REGISTRE-TREBALL.md`), es poden executar en una còpia temporal que embolcalli cada `import()` amb `pathToFileURL(...).href`.
+
+### Pendent de provar a Foundry: Fase 1 (estats), 2026-10-06
+
+Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14):
+
+1. **Textos flotants:** marcar i treure un estat des del HUD (surt «▼ Abatut» / «✕ Abatut» a tots els clients, i no surt també el text natiu de Foundry); fer dany i curar (surt «−3 fatiga», «−2 ferides», «+2 fatiga»).
+2. **Moure's:** un jugador amb el token atrapat o immobilitzat no el pot moure (en combat i fora), i torna a sortir l'estat. El DJ sí que el pot moure.
+3. **Declarar:** abatut (+2 de latència, sense córrer ni càrrega); acovardit (només defensa o moviment); berserc (sense defensa completa ni concentració, excepte en atac); en clicar un tipus bloquejat torna a sortir l'estat.
+4. **Marejat:** en declarar, demana la tirada FOR/APL + resistència; si falla, no declara.
+5. **Atordit:** quan arriba el torn, perd l'acció, l'estat s'acaba i ha de tornar a declarar.
+6. **Inconscient/incapacitat:** arribar al nivell 7 de fatiga/ferides posa l'estat; curar-se el treu; al seu torn perd l'acció i el rellotge continua (el botó «Avança» no queda bloquejat). Un combat amb un inconscient sense posició pot començar.
+7. **Defensa:** abatut i atrapat no poden esquivar; berserc cap defensa activa; immobilitzat té defensa bàsica 1. El diàleg diu quin estat ho impedeix.
+8. **Vigilant:** +1 reacció a la fitxa i al combat.
+9. **Recuperació/X:** amb fatiga i ferides al mateix nivell, cura primer la fatiga; des del nivell 7 passa al 6.
+10. **Fitxa:** la llista d'estats actius, amb la tirada (atrapat, acovardit, empès, malaltia/toxina, marejat, esguerrat) i el botó de treure'l.

@@ -81,6 +81,15 @@ Proves fetes a mà per l'Oriol al món `forja-betatest` (Foundry v14, Windows) i
 | `d8ee275` | Els diàlegs proposen l'última tria de cada combatent durant el combat. |
 | *(aquest)* | Món de proves al repositori (`mon-proves/`) i documentació al dia. |
 
+### Sessió 2026-10-06 (Oriol, amb Claude, al núvol): completar el manual bàsic
+
+Pla aprovat a [`PLA-MANUAL-COMPLET.md`](PLA-MANUAL-COMPLET.md) (fases 1–7). Al contenidor del núvol no hi ha Foundry: les proves de joc de cada fase queden anotades a `PROVES.md` per passar-les en local.
+
+| Commit | Contingut |
+|--------|-----------|
+| `4050ff8` | Revisió del que falta del manual i pla per fases. |
+| *(fase 1)* | **Estats amb efecte i textos flotants.** Regles pures a `module/estats/regles-estats.mjs` (restriccions per estat, tipus d'acció i moviments bloquejats, estats per salut, Recuperació/X, tirades d'estat); part de Foundry a `aplicacio-estats.mjs` (sincronitzar inconscient/incapacitat amb la salut, pèrdua d'acció a l'inici del torn, tirades d'estat, llista per a la fitxa) i `notificacions.mjs` (textos flotants). Connectat a derivats (abatut +2 latència, vigilant +1 reacció, berserc sense penalització), diàleg de declarar, resoldre, defensa, moviment del token, `totsHanDeclarat` i `_estaHabilitat`. Recuperació/X corregida. |
+
 ## Versions
 
 Versionat semàntic, `CHANGELOG.md` i etiquetes de git anotades. El procediment és a [`VERSIONS.md`](VERSIONS.md).
@@ -127,6 +136,13 @@ En tancar cada versió MINOR o MAJOR, `npm run versio` també actualitza el graf
 | Sense reaccions | Si el defensor no té cap reacció lliure, s'aplica la defensa bàsica sense preguntar, amb un avís i «(sense reaccions)» al xat. Les reaccions es recuperen al final del propi torn. | Manual (reaccions); Oriol FM, 2026-10-04 |
 | Final del combat | Es recuperen les reaccions, es treu la concentració i s'esborren els estats temporals (`fiCombat: true` a `estats.json`: abatut, atordit, atrapat, concentrat, empès, immobilitzat, llançat, marejat, lent). Els persistents es mantenen. | Oriol FM, 2026-10-04 |
 | Últimes tries | Durant un combat, el diàleg de declarar proposa l'última tria del combatent (tipus, arma, maniobra, defensa, moviment, retard, objectiu) i el de reacció l'última defensa. En acabar el combat s'oblida. | Oriol FM, 2026-10-04 |
+| Estats (Fase 1) | Els efectes dels estats s'apliquen (qui no es pot moure no es mou fins que pertoqui). Visualment, text flotant al costat del token quan es guanya o es perd un estat, quan es rep fatiga, ferides o curació, i quan s'intenta una acció que l'estat impedeix. | Oriol FM, 2026-10-06 |
+| Estats que no actuen | Inconscient, incapacitat i marejat no poden actuar. Inconscient i incapacitat perden el torn i es tornen a situar al rellotge amb la latència bàsica (perquè el rellotge no s'encalli i tornin a tenir torn quan es recuperin); no cal que declarin per començar el combat. Marejat pot provar la tirada per declarar. | Manual l. 3602, 3612, 3640. **Interpretació pròpia** (com no encallar el rellotge). |
+| Atordit | Perd l'acció declarada quan arriba el seu torn, ha de tornar a declarar (latència habitual des de la casella actual) i l'estat s'acaba, tant si tenia acció declarada com si no. | Manual l. 3564 |
+| Moviment i estats | Atrapat, immobilitzat, inconscient, incapacitat i marejat no mouen el token (en combat i fora; el DJ sí). Abatut no pot córrer: el permís es limita a caminar encara que hagués declarat córrer o càrrega. | Manual l. 3554, 3566, 3596. Oriol FM, 2026-10-06 |
+| Defensa i estats | Abatut i atrapat no esquiven; berserc cap defensa activa; immobilitzat, incapacitat i inconscient tenen defensa bàsica 1. Atrapat no té defensa bàsica 1 (el manual no ho diu). | Manual l. 3151, 3554, 3568, 3578 |
+| Berserc | Compta com a dur de pelar i incansable: cap penalització de salut (ni de ferides ni de fatiga). | Manual l. 3578, 1557, 1593 |
+| No automatitzat dels estats | Esguerrat (quina extremitat; restriccions de cama), malaltia/toxina (efectes variables), empès i llançat (distància i dany contra superfícies), acovardit (que el moviment sigui per allunyar-se). Tenen la tirada a la fitxa i el DJ n'aplica la resta. | Judici del DJ |
 | Autoritat del DJ | Els canvis a documents aliens passen pel DJ (`module/xarxa/socket.mjs`), amb una llista de camps permesos. Fora de combat, un jugador només pot treure fatiga o ferides a un actor aliè. Si el DJ no pot aplicar el resultat d'un atac, la tirada surt igualment al xat amb una nota. | Seguretat |
 
 ## Contractes entre mòduls (per a qui continuï)
@@ -150,6 +166,7 @@ En tancar cada versió MINOR o MAJOR, `npm run versio` també actualitza el graf
   - `module/combat/moviment.mjs`: lògica pura;
   - `module/documents/token.mjs`: límit per torn a `_preUpdateMovement`;
   - `module/canvas/token.mjs`: cost infinit a caselles bloquejades i A*.
+- **Estats** (`module/estats/`): `restriccionsEstats(statuses)` (pura) diu què pot fer un actor; `restriccionsActor(actor)` i `comprovarEstat(actor, motiu, clauAccio)` (que mostra l'estat i avisa) per als fluxos de Foundry. Les opcions de defensa porten `bloquejatPer`. Textos flotants: `textFlotant`, `mostrarCanviEstat`, `mostrarCanviSalut`, `avisarBloqueigEstat` (`notificacions.mjs`); només dibuixen al client local, per això els canvis s'escolten amb hooks a tots els clients.
 - **Actor del món i actor del token:** els PNJ tenen tokens no enllaçats. El combat treballa amb l'actor del token, i una macro que passi l'actor del món escriuria en un altre actor.
 
 ## Troballes de les proves de joc

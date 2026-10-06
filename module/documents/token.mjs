@@ -2,6 +2,8 @@ import {
   distanciesMoviment, permisMoviment, comprovarPermis, movimentDelTorn
 } from "../combat/moviment.mjs";
 import { posicioOcupada } from "../canvas/token.mjs";
+import { restriccionsEstats } from "../estats/regles-estats.mjs";
+import { avisarBloqueigEstat } from "../estats/notificacions.mjs";
 
 /**
  * Metres que el token ha recorregut en el torn actual: la mesura del seu
@@ -70,7 +72,9 @@ export function motiuBloqueigMoviment(doc, move) {
 
   const sys = doc.actor?.system;
   const distancies = sys?.moviment ?? distanciesMoviment(sys?.atributs?.AGI ?? 0, sys?.mida ?? 3);
-  const tipus = movimentDelTorn(combatant.getFlag("forja", "accioPendent"), combat.id, combat.marcador);
+  let tipus = movimentDelTorn(combatant.getFlag("forja", "accioPendent"), combat.id, combat.marcador);
+  // Abatut (l. 3554): no pot córrer, encara que hagués declarat córrer.
+  if (!restriccionsEstats(doc.actor?.statuses ?? []).potCorrer && (tipus === "rapid" || tipus === "carrega")) tipus = "basic";
   const permis = permisMoviment(tipus, distancies);
   const nou = (move.passed?.distance ?? 0) + (move.pending?.distance ?? 0);
   const r = comprovarPermis({ jaMogut: move.history?.distance ?? 0, nou, permis });
@@ -109,6 +113,14 @@ export function crearTokenDocumentForja(Base) {
       const permes = await super._preUpdateMovement(movement, operation);
       if (permes === false) return false;
       if (game.user.isGM || movement.method === "undo") return permes;
+      // Estats (Fase 1): atrapat, immobilitzat, inconscient, incapacitat i
+      // marejat no es mouen, en combat o fora (el DJ sí que els pot moure).
+      // L'estat torna a sortir al costat del token (Oriol FM, 2026-10-06).
+      const estats = restriccionsEstats(this.actor?.statuses ?? []);
+      if (!estats.potMoure) {
+        avisarBloqueigEstat(this.actor, estats.motiuMoure, "FORJA.Estats.Accio.Moure");
+        return false;
+      }
       const motiu = motiuBloqueigMoviment(this, movement);
       if (motiu) {
         ui.notifications?.warn(motiu);

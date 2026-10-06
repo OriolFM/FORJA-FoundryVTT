@@ -2,7 +2,7 @@
 
 Revisió del 2026-10-06 (sessió al núvol, branca `claude/forja-foundryvtt-kodk9f`), sobre el commit `77c5566`. Compara el manual (`docs/FORJA_FC001CA_CORE.md`) amb el codi i proposa un pla per fases.
 
-**Estat:** pendent de l'aprovació de l'Oriol. Les decisions obertes són a la secció 3.
+**Estat:** aprovat per l'Oriol el 2026-10-06, amb les decisions de la secció 3.
 
 ## 1. Què hi ha i què falta
 
@@ -160,11 +160,9 @@ Maniobres que falten, moviments especials d'armes a distància, regles de l'escu
 
 Documentació (`CLAUDE.md`, registre, `PROVES.md`), traduccions es/en de les claus noves, proves de joc a la v13 i la v14 (en local) i versió 0.6.0.
 
-## 3. Decisions obertes
+## 3. Decisions de l'Oriol (2026-10-06)
 
-Les respostes de l'Oriol s'anotaran aquí i al registre.
-
-1. **On va el contingut:** compendis del sistema (proposta) o només el món de proves.
-2. **Grau d'automatització dels estats:** bloquejar el que el manual diu clarament i avisar del que és judici del DJ (proposta), o només avisos.
-3. **Resultat dels efectes:** aplicar-lo automàticament en tenir èxit, com el dany dels atacs (proposta), o amb un botó «Aplicar» al xat per al DJ.
-4. **Fase 6:** dins d'aquest pla o més endavant.
+1. **Contingut:** en compendis del sistema.
+2. **Estats:** els efectes de l'estat s'apliquen (p. ex. qui no es pot moure no es pot moure fins que pertoqui). Cal **notificar-ho visualment**: text flotant al costat del token (com als videojocs) quan es guanya o es perd un estat i quan es rep fatiga, ferides o curació, amb números, text o icones que s'esvaeixen. Si el jugador intenta una acció que l'estat li impedeix, el text flotant de l'estat torna a sortir.
+3. **Resultat dels efectes i artefactes:** automàtic, com el dany dels atacs, pel relé del DJ.
+4. **Fase 6** (maniobres, ràfegues i foc automàtic, escut): dins d'aquest pla. Els dubtes de regles es preguntaran en arribar-hi.

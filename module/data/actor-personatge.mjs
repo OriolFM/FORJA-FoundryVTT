@@ -1,6 +1,8 @@
 import { campsBase } from "./_camps.mjs";
 import { FORJA } from "../config/constants.mjs";
 import { distanciesMoviment } from "../combat/moviment.mjs";
+import { restriccionsEstats } from "../estats/regles-estats.mjs";
+import { recordarSalut } from "../estats/notificacions.mjs";
 
 /**
  * DataModel per a Personatges Jugadors (PJ).
@@ -61,6 +63,14 @@ export function _prepararDerivats(sys) {
     }
   }
 
+  // --- Estats (Fase 1; manual › Salut › Estats) ---
+  // Abatut: +2 a la latència de qualsevol acció; Vigilant: +1 reacció.
+  // `actor.statuses` ja és a punt: Foundry aplica els efectes actius
+  // (`prepareEmbeddedDocuments`) abans de `prepareDerivedData`.
+  const restriccions = restriccionsEstats(sys.parent?.statuses ?? []);
+  sys.latenciaBase += restriccions.latenciaExtra;
+  sys.reaccionsMax += restriccions.reaccionsExtra;
+
   sys.latenciaBase = Math.max(1, sys.latenciaBase);
   sys.reaccionsMax = Math.max(0, sys.reaccionsMax);
 
@@ -101,6 +111,11 @@ export function _prepararDerivats(sys) {
   // exempció total (no només de ferides), a diferència de "Dur de pelar".
   sys.noMort = flagsEfecte.has("noMort");
   if (sys.noMort) salut.penalitzacio = 0;
+  // Berserc (l. 3578): «dur de pelar i incansable» → cap penalització de salut.
+  if (restriccions.ignoraPenalitzacio && salut.penalitzacio != null) salut.penalitzacio = 0;
+
+  // Textos flotants de salut (estats/notificacions.mjs): primera lectura.
+  recordarSalut(sys.parent);
 
   // --- PC gastats ---
   _calcularPunts(sys, cfg);

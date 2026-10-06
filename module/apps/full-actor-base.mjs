@@ -1,4 +1,5 @@
 import { ferTirada }  from "../dice/tirada.mjs";
+import { estatsPerFitxa, tirarEstat } from "../estats/aplicacio-estats.mjs";
 import DiategTrets    from "./dialeg-trets.mjs";
 import DiategEquipament from "./dialeg-equipament.mjs";
 import DiategCuracio  from "./dialeg-curacio.mjs";
@@ -105,7 +106,10 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       forjaObrirDesfer: FullActorBase._onObrirDesfer,
       // Prendre el control de l'efecte (S-21)
       forjaContinuarDisputa: FullActorBase._onContinuarDisputa,
-      forjaRenunciarDisputa: FullActorBase._onRenunciarDisputa
+      forjaRenunciarDisputa: FullActorBase._onRenunciarDisputa,
+      // Estats (Fase 1): tirada per sortir-ne i treure'ls
+      forjaTirarEstat: FullActorBase._onTirarEstat,
+      forjaTreureEstat: FullActorBase._onTreureEstat
     },
     form: { submitOnChange: true }
   };
@@ -135,6 +139,7 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
         moviment:     sys.moviment
       },
       salut:      _prepSalut(sys),
+      estatsActius: estatsPerFitxa(this.actor),
       sobrenatural:   _prepSobrenatural(sys),
       disputaControl: _prepDisputaControl(this.actor),
       habilitats: _prepHabilitats(sys, cfg),
@@ -591,6 +596,19 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       atacant: actor, defensor: objectiu, label: eleccio.descripcio
     });
   }
+  // ── Estats (Fase 1) ─────────────────────────────────────────────────────────
+
+  /** Tirada per sortir de l'estat o actuar malgrat l'estat (`TIRADES_ESTAT`). */
+  static async _onTirarEstat(event, target) {
+    await tirarEstat(this.actor, target.dataset.estat);
+  }
+
+  /** Treu un estat (l'ActiveEffect que el porta). */
+  static async _onTreureEstat(event, target) {
+    const efecte = this.actor.effects.get(target.dataset.efecteId);
+    if (efecte) await efecte.delete();
+  }
+
   // ── Concentració (S-11) ─────────────────────────────────────────────────────
 
   static async _onToggleConcentracio(event, target) {

@@ -98,6 +98,17 @@ ops = def.opcionsDefensa(actor({ salut: { penalitzacio: 2, foraDeCombat: false }
 assert.equal(ops.find(o => o.id === "esquivar").penalSalut, 2);
 assert.equal(ops.find(o => o.id === "esquivar").dificultatMinima, 6);
 assert.equal(def.resultatDefensaActiva(8, 2, 4), 6);
+// Estats (Fase 1): abatut no esquiva; berserc cap defensa activa; immobilitzat defensa 1
+const ambEstats = (...estats) => ({ ...actor(), statuses: new Set(estats) });
+ops = def.opcionsDefensa(ambEstats("abatut"));
+assert.ok(!ops.find(o => o.id === "esquivar").disponible);
+assert.equal(ops.find(o => o.id === "esquivar").bloquejatPer, "abatut");
+assert.ok(ops.find(o => o.id === "parar").disponible);
+ops = def.opcionsDefensa(ambEstats("berserc"));
+assert.ok(ops.slice(1).every(o => !o.disponible && o.bloquejatPer === "berserc"));
+ops = def.opcionsDefensa(ambEstats("immobilitzat"));
+assert.equal(ops[0].dificultat, 1);
+assert.ok(ops.find(o => o.id === "parar").disponible);
 assert.equal(def.resultatDefensaActiva(5, 2, 4), 4);
 assert.equal(def.resultatDefensaActiva(1, 3, 0), 0);
 

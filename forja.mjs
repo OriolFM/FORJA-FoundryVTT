@@ -28,6 +28,8 @@ import { anunciarCanvisCombat } from "./module/combat/anuncis.mjs";
 import { avancarRecarregaActor } from "./module/combat/artefactes.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 import { registrarHookValorX, aplicarTicsEstats } from "./module/estats/estats-parametritzats.mjs";
+import { registrarNotificacions } from "./module/estats/notificacions.mjs";
+import { sincronitzarEstatsSalut, iniciTornEstats } from "./module/estats/aplicacio-estats.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -102,6 +104,9 @@ Hooks.once("init", () => {
   // Tics d'estats parametritzats (M-05): demana X en marcar Lent/Ràpid/
   // Recuperació/Sagnant des del HUD del token.
   registrarHookValorX();
+  // Textos flotants al costat del token: estats guanyats i perduts, fatiga,
+  // ferides i curació (Fase 1; Oriol FM, 2026-10-06). A tots els clients.
+  registrarNotificacions();
 
   // Handlebars helpers
   _registrarHelpers();
@@ -184,8 +189,22 @@ Hooks.on("updateCombat", async (combat, changes, options) => {
   // ja és fiable perquè `turn` està re-apuntat al flag `actiu` (A3).
   if (canviTorn) {
     const actorEntrant = combat.combatant?.actor;
-    if (actorEntrant) await aplicarTicsEstats(actorEntrant);
+    if (actorEntrant) {
+      await aplicarTicsEstats(actorEntrant);
+      // Estats (Fase 1): el sagnat pot haver-lo deixat inconscient; i atordit,
+      // marejat, inconscient o incapacitat li fan perdre l'acció.
+      await sincronitzarEstatsSalut(actorEntrant);
+      await iniciTornEstats(combat, combat.combatant);
+    }
   }
+});
+
+// Estats per salut (Fase 1): nivell 7 de fatiga → inconscient; de ferides →
+// incapacitat; i es treuen en curar-se. Només al DJ actiu (A1).
+Hooks.on("updateActor", async (actor, changes) => {
+  if (!game.users.activeGM?.isSelf) return;
+  if (!foundry.utils.hasProperty(changes, "system.salut")) return;
+  await sincronitzarEstatsSalut(actor);
 });
 
 /* ---- Helpers Handlebars ----

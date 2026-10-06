@@ -11,6 +11,8 @@ import { decidirDefensa } from "./decisio-defensa.mjs";
 import { movimentDelTorn, bonificacioCarrega, distanciesMoviment } from "./moviment.mjs";
 import { metresMogutsAquestTorn } from "../documents/token.mjs";
 import { modificadorLatenciaEstats } from "../estats/estats-parametritzats.mjs";
+import { restriccionsEstats, tipusAccioBloquejats } from "../estats/regles-estats.mjs";
+import { restriccionsActor, comprovarEstat, tirarEstat } from "../estats/aplicacio-estats.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
 import {
@@ -183,6 +185,19 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       return;
     }
 
+    // Estats (Fase 1): qui no pot actuar no declara. Marejat (manual l. 3644):
+    // pot provar de vèncer el mareig amb una tirada; si la supera, declara.
+    let restriccions = restriccionsActor(actor);
+    if (!restriccions.potActuar) {
+      if (restriccions.motiuActuar !== "marejat") {
+        comprovarEstat(actor, restriccions.motiuActuar, "FORJA.Estats.Accio.Declarar");
+        return;
+      }
+      const tirada = await tirarEstat(actor, "marejat");
+      if (!tirada?.exit) return;
+      restriccions = restriccionsEstats([...actor.statuses].filter(id => id !== "marejat"));
+    }
+
     const habilitat = (id) => sys.habilitats?.[id]?.nivell ?? 0;
     // Lent/X i Ràpid/X (M-05, estats-parametritzats.mjs): modificador net
     // (+Lent -Ràpid) sobre qualsevol llatència d'aquest combatent.
@@ -238,7 +253,12 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3),
       objectius,
       objectiuPerDefecte: _objectiuPerDefecte(objectius, ultima?.objectiuTokenId),
-      ultima
+      ultima,
+      // Estats (Fase 1): tipus d'acció i moviments que no es poden triar.
+      restriccions,
+      bloquejats:   tipusAccioBloquejats(restriccions),
+      onBloqueig:   (estat) => comprovarEstat(actor, estat, "FORJA.Estats.Accio.Declarar"),
+      nomsEstats:   Object.fromEntries([...actor.statuses].map(id => [id, game.i18n.localize(`FORJA.Estat.${id}`)]))
     });
     if (!config) return;
     await combatant.setFlag("forja", "ultimaDeclaracio", {
@@ -347,6 +367,18 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     if (sys.salut?.foraDeCombat) {
       ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
+      return;
+    }
+
+    // Estats (Fase 1): qui no pot actuar no resol; i si un estat guanyat
+    // després de declarar impedeix aquesta acció (p. ex. acovardit i un atac),
+    // l'acció es perd.
+    const restriccions = restriccionsActor(actor);
+    if (!comprovarEstat(actor, restriccions.motiuActuar, "FORJA.Estats.Accio.Actuar")) return;
+    const bloqueigTipus = pendent?.tipus ? tipusAccioBloquejats(restriccions)[pendent.tipus] : null;
+    if (bloqueigTipus) {
+      comprovarEstat(actor, bloqueigTipus, "FORJA.Estats.Accio.Resoldre");
+      await _marcarResolta(combat, combatant);
       return;
     }
 
@@ -686,6 +718,10 @@ function _senseDeclarar(combatant) {
  * @returns {boolean}
  */
 function _estaHabilitat(combat, combatant) {
+  // Inconscient o incapacitat: no pot fer res (el DJ en passa el torn sol,
+  // `iniciTornEstats`). Marejat sí: pot provar de vèncer el mareig.
+  const r = restriccionsActor(combatant.actor);
+  if (!r.potActuar && r.motiuActuar !== "marejat") return false;
   if (combat.fase === "declaracio") return _senseDeclarar(combatant);
   if (!combat.started) return true;
   if (_senseDeclarar(combatant)) return true;

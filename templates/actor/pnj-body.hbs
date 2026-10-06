@@ -193,6 +193,20 @@
           {{/each}}
         </tbody>
       </table>
+      {{#if estatsActius.length}}
+      <div class="forja-estats-actius">
+        <span class="forja-estats-titol">{{localize "FORJA.Estats.Actius"}}:</span>
+        {{#each estatsActius as |e|}}
+        <span class="forja-estat-chip" data-estat="{{e.id}}">
+          {{e.nom}}
+          {{#if e.teTirada}}
+          <a data-action="forjaTirarEstat" data-estat="{{e.id}}" title="{{localize 'FORJA.Estats.TirarDesc'}}"><i class="fas fa-dice-d10"></i></a>
+          {{/if}}
+          <a data-action="forjaTreureEstat" data-efecte-id="{{e.efecteId}}" title="{{localize 'FORJA.Estats.Treure'}}"><i class="fas fa-xmark"></i></a>
+        </span>
+        {{/each}}
+      </div>
+      {{/if}}
       <div class="forja-salut-accions">
         <button type="button" data-action="forjaObrirCuracio">
           <i class="fas fa-kit-medical"></i> {{localize "FORJA.Curacio.Curar"}}

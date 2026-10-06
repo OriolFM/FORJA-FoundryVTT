@@ -2,6 +2,7 @@ import ForjaRoll from "../dice/forja-roll.mjs";
 import { gastarReaccio, potReaccionar } from "./reaccions.mjs";
 import { mitjansBlocar } from "./propietats.mjs";
 import { danyExtraPifiaEsquivar } from "./dany.mjs";
+import { restriccionsEstats } from "../estats/regles-estats.mjs";
 
 /**
  * Defensa (S-13, manual p. 703-817; FC001CA, SISTEMES › Combat › Defensar-se).
@@ -32,6 +33,12 @@ import { danyExtraPifiaEsquivar } from "./dany.mjs";
  * (› Defensar-se › Defensa bàsica: "Si l'objectiu ... l'han immobilitzat o
  * incapacitat ... la defensa bàsica és de 1").
  *
+ * Estats (Fase 1; manual › Estats): abatut i atrapat no poden esquivar;
+ * berserc no fa cap defensa activa; inconscient, incapacitat i marejat
+ * tampoc. Immobilitzat, incapacitat i inconscient tenen defensa bàsica 1
+ * (› Defensa bàsica, l. 3151). Les opcions bloquejades porten `bloquejatPer`
+ * (l'estat que ho impedeix).
+ *
  * @param {ForjaActor} objectiu
  * @param {number} [defensaBasica]  Defensa bàsica a fer servir com a base per a
  *   passiva/blocar i com a mínim d'esquivar/parar. Per defecte `objectiu.system.defensa`;
@@ -54,8 +61,10 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
   const reduccioNatural = sys.reduccioDany ?? 0;
   const foraDeCombat = !!sys.salut?.foraDeCombat;
   const penalSalut   = sys.salut?.penalitzacio ?? 0;
-  if (foraDeCombat) defensaBasica = 1;
-  const actiuDisponible = !foraDeCombat && (declarada || potReaccionar(objectiu));
+  const estats = restriccionsEstats(objectiu.statuses ?? []);
+  if (foraDeCombat || estats.defensaBasica1) defensaBasica = 1;
+  const actiuDisponible = !foraDeCombat && estats.potDefensaActiva && (declarada || potReaccionar(objectiu));
+  const bloquejatPer = estats.motiuDefensaActiva;
   const desc = (id) => game.i18n.localize(`FORJA.Combat.Defensa.${id}${declarada ? "Desc" : "ReaccioDesc"}`);
 
 
@@ -78,7 +87,8 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
       exigirSuperar: false
     },
     {
-      id: "esquivar", gastaReaccio: true, disponible: actiuDisponible, senseTirada: false,
+      id: "esquivar", gastaReaccio: true, disponible: actiuDisponible && estats.potEsquivar, senseTirada: false,
+      bloquejatPer: estats.motiuEsquivar,
       nom:        game.i18n.localize("FORJA.Combat.Defensa.Esquivar"),
       descripcio: desc("Esquivar"), penalSalut,
       atribut: "AGI", atributVal: sys.atributs?.AGI ?? 0,
@@ -89,6 +99,7 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
     },
     {
       id: "parar", gastaReaccio: true, disponible: actiuDisponible, senseTirada: false,
+      bloquejatPer,
       nom:        game.i18n.localize("FORJA.Combat.Defensa.Parar"),
       descripcio: desc("Parar"), penalSalut,
       atribut: "DES", atributVal: sys.atributs?.DES ?? 0,
@@ -98,7 +109,7 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
       dificultatMinima: defensaBasica + 1
     },
     _opcioBlocar({
-      disponible: actiuDisponible, descripcio: desc("Blocar"), dificultat: defensaBasica,
+      disponible: actiuDisponible, bloquejatPer, descripcio: desc("Blocar"), dificultat: defensaBasica,
       mitjans: mitjansBlocar({ items: objectiu.items ?? [], habilitat, reduccioNatural, categoriaAtac })
     })
   ];
@@ -113,13 +124,13 @@ export function opcionsDefensa(objectiu, defensaBasica = objectiu.system.defensa
  * Construeix l'opció "blocar" a partir dels mitjans disponibles (B15).
  * @returns {object}
  */
-function _opcioBlocar({ disponible, descripcio, dificultat, mitjans }) {
+function _opcioBlocar({ disponible, bloquejatPer = null, descripcio, dificultat, mitjans }) {
   const mitjansAmbNom = mitjans.map(m => ({
     ...m,
     nom: game.i18n.format(`FORJA.Combat.Blocar.Mitja.${m.id}`, { arma: m.nomArma ?? "" })
   }));
   return {
-    id: "blocar", gastaReaccio: true, disponible, senseTirada: true,
+    id: "blocar", gastaReaccio: true, disponible, bloquejatPer, senseTirada: true,
     nom: game.i18n.localize("FORJA.Combat.Defensa.Blocar"),
     descripcio,
     dificultat,

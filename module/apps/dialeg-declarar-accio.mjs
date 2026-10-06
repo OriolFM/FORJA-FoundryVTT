@@ -1,5 +1,6 @@
 import { retardMaximBarallarse, limitarRetardBarallarse } from "../combat/atac.mjs";
 import { latenciaExtraMoviment, normalitzarMoviment, permisMoviment } from "../combat/moviment.mjs";
+import { movimentsPermesosPerEstats } from "../estats/regles-estats.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -36,6 +37,9 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
  *   cos a cos / natural, per una càrrega (córrer + atac, +2 de latència). El
  *   moviment ràpid (córrer) no es pot combinar amb cap altra acció: només
  *   s'ofereix amb el tipus d'acció "Només moviment".
+ * - Estats (Fase 1, `estats/regles-estats.mjs`): els tipus d'acció i els
+ *   moviments que els estats impedeixen surten deshabilitats, amb l'estat que
+ *   ho impedeix (`config.bloquejats`, `config.restriccions`).
  */
 /** Clau i18n de cada tipus de moviment (literals, per a la prova de paritat i18n). */
 const ETIQUETES_MOVIMENT = {
@@ -90,6 +94,22 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       if (u.retard) this.#retard = u.retard;
     }
     if (!config.armes?.length) this.#tipus = "defensa";
+    // Estats: si el tipus proposat està bloquejat, el primer permès.
+    if (this.#bloqueig(this.#tipus)) {
+      this.#tipus = ["atac", "defensa", "moviment", "altra"]
+        .find(t => !this.#bloqueig(t) && (t !== "atac" || config.armes?.length)) ?? this.#tipus;
+    }
+  }
+
+  /** Estat que impedeix el tipus d'acció `tipus`, o null. */
+  #bloqueig(tipus) {
+    return this.#config.bloquejats?.[tipus] ?? null;
+  }
+
+  /** Es pot concentrar amb el tipus triat (berserc: només en atac, l. 3578). */
+  #potConcentrar() {
+    const r = this.#config.restriccions;
+    return !r || r.potConcentrar || this.#tipus === "atac";
   }
 
   get title() {
@@ -115,11 +135,14 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
    * @returns {string[]}
    */
   #movimentsPermesos() {
-    if (this.#tipus === "moviment") return ["basic", "rapid", "especial"];
+    if (this.#tipus === "moviment") {
+      const llista = ["basic", "rapid", "especial"];
+      return this.#config.restriccions ? movimentsPermesosPerEstats(llista, this.#config.restriccions) : llista;
+    }
     const llista = ["basic", "especial"];
     const categoria = this.#arma()?.categoria;
     if (this.#tipus === "atac" && (categoria === "cosAcos" || categoria === "natural")) llista.push("carrega");
-    return llista;
+    return this.#config.restriccions ? movimentsPermesosPerEstats(llista, this.#config.restriccions) : llista;
   }
 
   /** Moviment triat, limitat als permesos ara mateix (WP-M). */
@@ -152,7 +175,14 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       maniobres,
       maniobraId:    this.#maniobraId,
       maniobra:      maniobres.find(m => m.id === this.#maniobraId) ?? null,
-      concentrar:    this.#concentrar,
+      concentrar:    this.#concentrar && this.#potConcentrar(),
+      potConcentrar: this.#potConcentrar(),
+      bloqueigTipus: Object.fromEntries(["atac", "defensa", "moviment", "altra"].map(t => {
+        const estat = this.#bloqueig(t);
+        return [t, estat ? game.i18n.format("FORJA.Estats.ImpedeixTitol", { estat: c.nomsEstats?.[estat] ?? estat }) : null];
+      })),
+      estatsActius:  Object.values(c.nomsEstats ?? {}).join(", "),
+      noEsMou:       c.restriccions ? !c.restriccions.potMoure : false,
       descripcio:    this.#descripcio,
       retardMax:     this.#retardMax(),
       retard:        this.#retardEfectiu(),
@@ -208,6 +238,16 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       if (inputLatencia) inputLatencia.value = Math.max(1, valor);
     };
 
+    // Estats: en intentar triar un tipus bloquejat, torna a sortir l'estat al
+    // costat del token (Oriol FM, 2026-10-06).
+    el.querySelectorAll("label.dda-radio").forEach(label => {
+      label.addEventListener("click", () => {
+        const tipus = label.querySelector("input[name='tipus']")?.value;
+        const estat = tipus ? this.#bloqueig(tipus) : null;
+        if (estat) this.#config.onBloqueig?.(estat);
+      });
+    });
+
     el.querySelectorAll("input[name='tipus']").forEach(radio => {
       radio.addEventListener("change", ev => {
         this.#tipus = ev.target.value;
@@ -260,6 +300,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   static async _onSubmit(event, form, formData) {
     const d     = formData.object;
     const tipus   = d.tipus ?? "altra";
+    // Estats: un tipus bloquejat no es pot declarar (el formulari ja el deshabilita).
+    if (this.#bloqueig(tipus)) return;
     const arma    = tipus === "atac"    ? this.#config.armes?.find(a => a.id === d.armaId) : null;
     const defensa = tipus === "defensa" ? this.#config.defenses?.find(x => x.id === d.defensaId) : null;
     const maniobra = (arma?.permetManiobres && d.maniobraId)
@@ -304,7 +346,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       objectiuTokenId: tipus === "atac" ? (d.objectiuTokenId || null) : null,
       retardBarallarse,
       moviment,
-      concentrar: !!d.concentrar,
+      concentrar: !!d.concentrar && this.#potConcentrar(),
       etiqueta,
       descripcio: (d.descripcio ?? "").trim()
     });

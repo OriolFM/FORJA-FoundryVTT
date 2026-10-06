@@ -5,22 +5,26 @@
     — {{localize "FORJA.Combat.LatenciaBase"}}: <strong>{{latenciaBase}}</strong>
   </p>
 
+  {{#if estatsActius}}
+  <p class="dda-avis dda-estats"><i class="fas fa-triangle-exclamation"></i> {{localize "FORJA.Estats.Actius"}}: <strong>{{estatsActius}}</strong></p>
+  {{/if}}
+
   <div class="form-group dda-tipus">
     <label>{{localize "FORJA.Combat.TipusAccio"}}</label>
     <label class="dda-radio">
-      <input type="radio" name="tipus" value="atac" {{#if (eq tipus "atac")}}checked{{/if}} {{#unless armes.length}}disabled{{/unless}}>
+      <input type="radio" name="tipus" value="atac" {{#if (eq tipus "atac")}}checked{{/if}} {{#if bloqueigTipus.atac}}disabled title="{{bloqueigTipus.atac}}"{{/if}} {{#unless armes.length}}disabled{{/unless}}>
       {{localize "FORJA.Combat.Accio.Atac"}}
     </label>
     <label class="dda-radio">
-      <input type="radio" name="tipus" value="defensa" {{#if (eq tipus "defensa")}}checked{{/if}}>
+      <input type="radio" name="tipus" value="defensa" {{#if (eq tipus "defensa")}}checked{{/if}} {{#if bloqueigTipus.defensa}}disabled title="{{bloqueigTipus.defensa}}"{{/if}}>
       {{localize "FORJA.Combat.Accio.Defensa"}}
     </label>
     <label class="dda-radio">
-      <input type="radio" name="tipus" value="moviment" {{#if (eq tipus "moviment")}}checked{{/if}}>
+      <input type="radio" name="tipus" value="moviment" {{#if (eq tipus "moviment")}}checked{{/if}} {{#if bloqueigTipus.moviment}}disabled title="{{bloqueigTipus.moviment}}"{{/if}}>
       {{localize "FORJA.Combat.Accio.Moviment"}}
     </label>
     <label class="dda-radio">
-      <input type="radio" name="tipus" value="altra" {{#if (eq tipus "altra")}}checked{{/if}}>
+      <input type="radio" name="tipus" value="altra" {{#if (eq tipus "altra")}}checked{{/if}} {{#if bloqueigTipus.altra}}disabled title="{{bloqueigTipus.altra}}"{{/if}}>
       {{localize "FORJA.Combat.Accio.Altra"}}
     </label>
   </div>
@@ -123,6 +127,9 @@
       {{/each}}
     </select>
   </div>
+  {{#if noEsMou}}
+  <p class="dda-avis">{{localize "FORJA.Estats.NoEsMou"}}</p>
+  {{/if}}
   <p class="hint">
     {{#if (eq moviment "basic")}}{{localize "FORJA.Moviment.BasicDesc" metres=metresMoviment}}{{/if}}
     {{#if (eq moviment "rapid")}}{{localize "FORJA.Moviment.RapidDesc" metres=metresMoviment}}{{/if}}
@@ -135,7 +142,7 @@
   {{else}}
   <div class="form-group dda-concentrar">
     <label title="{{localize 'FORJA.Combat.ConcentrarDesc'}}">
-      <input type="checkbox" name="concentrar" {{#if concentrar}}checked{{/if}}>
+      <input type="checkbox" name="concentrar" {{#if concentrar}}checked{{/if}} {{#unless potConcentrar}}disabled{{/unless}}>
       {{localize "FORJA.Combat.Concentrar"}}
     </label>
     <p class="hint">{{localize "FORJA.Combat.ConcentrarDesc"}}</p>

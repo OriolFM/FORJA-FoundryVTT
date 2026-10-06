@@ -6828,3 +6828,19 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
   white-space: nowrap;
 }
 .forja-avancar-temps:disabled { opacity: 0.35; cursor: default; visibility: visible; }
+
+/* -- Estats actius a la fitxa (Fase 1) -- */
+.forja-estats-actius { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.forja-estats-titol { font-size: 0.85rem; color: #94a3b8; }
+.forja-estat-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,112,67,0.15);
+  border: 1px solid rgba(255,112,67,0.45);
+  color: #ffccbc;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 0.85rem;
+}
+.forja-estat-chip a { color: inherit; cursor: pointer; opacity: 0.8; }
+.forja-estat-chip a:hover { opacity: 1; }
+.forja-dialeg-declarar-accio .dda-estats { color: #ffab91; font-style: normal; }

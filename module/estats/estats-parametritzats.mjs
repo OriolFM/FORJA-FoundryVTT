@@ -1,4 +1,5 @@
 import { FORJA } from "../config/constants.mjs";
+import { pistaRecuperacio, marcatsDespresRecuperacio } from "./regles-estats.mjs";
 
 /**
  * Automatització de tics dels 4 estats parametritzats (M-05, sobre la
@@ -117,11 +118,14 @@ export async function aplicarTicsEstats(actor) {
     const comptadorNou = (efecteRecuperacio.getFlag("forja", "comptador") ?? 0) + 1;
 
     if (comptadorNou >= 8) {
+      // Manual l. 3676–3680: primer la condició més greu, la fatiga si
+      // empaten; des del nivell 7 (inconscient/incapacitat) es passa al 6.
       const salut = actor.system.salut;
-      const pista = (salut.ferides.nivellActiu ?? 1) >= (salut.fatiga.nivellActiu ?? 1) ? "ferides" : "fatiga";
-      const abans = salut[pista].marcats;
-      await actor.update({ [`system.salut.${pista}.marcats`]: Math.max(0, abans - x) });
+      const pista = pistaRecuperacio(salut);
       await efecteRecuperacio.setFlag("forja", "comptador", 0);
+      if (!pista) continue;
+      const abans = salut[pista].marcats;
+      await actor.update({ [`system.salut.${pista}.marcats`]: marcatsDespresRecuperacio(abans, salut[pista].perNivell, x) });
       await ChatMessage.create({
         speaker: ChatMessage.getSpeaker({ actor }),
         content: game.i18n.format("FORJA.Estats.RecuperacioTic", {
