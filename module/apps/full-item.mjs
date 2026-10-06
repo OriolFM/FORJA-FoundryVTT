@@ -49,7 +49,7 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
     let parametresHtml = "";
     if (this.#teParametres) {
       const r = calcularParametres(sys.parametres ?? [], { ...(sys.construccio ?? {}), autoDificultat: item.type === "efecte" });
-      parametresHtml = await renderTemplate("systems/forja/templates/item/parametres.hbs", {
+      parametresHtml = await foundry.applications.handlebars.renderTemplate("systems/forja/templates/item/parametres.hbs", {
         resultat: r,
         teParametres: (sys.parametres ?? []).length > 0,
         quadra: r.cost === sys.cost,
@@ -57,7 +57,7 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
       });
     }
 
-    const cosHtml = await renderTemplate(`systems/forja/templates/item/${item.type}.hbs`, {
+    const cosHtml = await foundry.applications.handlebars.renderTemplate(`systems/forja/templates/item/${item.type}.hbs`, {
       parametresHtml,
       atributs: CONFIG.FORJA.ATRIBUTS,
       habilitats: CONFIG.FORJA.LLISTA_HABILITATS.map(h => ({ id: h.id, nom: game.i18n.localize(h.nom) })),
@@ -93,13 +93,13 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
     if (esArtefacte) {
       await item.update({
         name: construit.nom,
-        system: {
-          ...comu,
-          categoria: construit.categoria,
-          "activacio.tipus": construit.activacioId,
-          "activacio.dificultat": construit.dificultat,
-          "us.modLatencia": construit.modLatencia
-        }
+        "system.cost": comu.cost,
+        "system.parametres": comu.parametres,
+        "system.construccio": comu.construccio,
+        "system.categoria": construit.categoria,
+        "system.activacio.tipus": construit.activacioId,
+        "system.activacio.dificultat": construit.dificultat,
+        "system.us.modLatencia": construit.modLatencia
       });
     } else {
       await item.update({

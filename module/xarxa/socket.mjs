@@ -453,7 +453,8 @@ async function _aplicar({ accio, dades, usuari }) {
         if (doc.documentName === "Combat" && !doc.combatant?.testUserPermission(user, "OWNER")) {
           throw new Error("només el propietari del combatent en torn pot avançar el combat");
         }
-        if (doc.documentName === "Combatant" && !doc.testUserPermission(user, "OWNER")) {
+        const nomesContraatac = Object.keys(foundry.utils.flattenObject(dades.changes ?? {})).every(k => k === "flags.forja.contraatac.usat");
+        if (doc.documentName === "Combatant" && !doc.testUserPermission(user, "OWNER") && !(nomesContraatac && game.combats?.active?.started)) {
           throw new Error(`no es pot reposicionar un combatent que l'usuari no posseeix (${doc.uuid})`);
         }
         const pla = foundry.utils.flattenObject(dades.changes ?? {});

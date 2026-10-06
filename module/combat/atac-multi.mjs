@@ -1,4 +1,4 @@
-import ForjaRoll from "../dice/forja-roll.mjs";
+import ForjaRoll, { publicarTirada } from "../dice/forja-roll.mjs";
 import { ferAtac } from "./atac.mjs";
 import { opcionsDefensa, resoldreOpcioDefensa } from "./defensa.mjs";
 import { decidirDefensa } from "./decisio-defensa.mjs";
@@ -38,7 +38,7 @@ export async function tiradaUnica(actor, arma, pool) {
   const dau = await consumirConcentracio(actor);
   const roll = new ForjaRoll(`${Math.max(1, pool + dau)}d10`, {}, { forja: { dificultat: 1 } });
   await roll.evaluate();
-  await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: game.i18n.format("FORJA.Combat.TiradaUnica", { arma: arma.name }) });
+  await publicarTirada(roll, { actor, label: game.i18n.format("FORJA.Combat.TiradaUnica", { arma: arma.name }), dificultat: "—", exit: !roll.forjaResults.pifia });
   return roll;
 }
 
@@ -111,10 +111,9 @@ export async function atacArea({ combat, combatant, actor, arma, poolFinal, mode
   const tokenAtacant = combatant.token?.object;
   const tokens = (canvas.tokens?.placeables ?? []).filter(t => t.actor && t !== tokenAtacant
     && forma?.contains(t.center.x - plantilla.x, t.center.y - plantilla.y));
-  await consumirPlantilla(plantilla);
-
   const roll = await tiradaUnica(actor, arma, poolFinal);
   if (!roll) return false;
+  await consumirPlantilla(plantilla);
 
   for (const token of tokens) {
     const objectiu = token.actor;
@@ -219,10 +218,16 @@ export async function resoldreSegonCopCombinacio(combat, combatant) {
  */
 export async function contraatacar({ combat, defensor, combatantDefensor, atacant, tokenAtacant }) {
   const dades = combatantDefensor?.getFlag("forja", "contraatac");
-  if (!dades || dades.combatId !== combat.id) return false;
+  if (!dades || dades.combatId !== combat.id || dades.usat) return false;
   const arma = defensor.items.get(dades.armaId);
   if (!arma) return false;
-  await combatantDefensor.unsetFlag("forja", "contraatac");
+  // Només contraataca un cop: es marca pel relé (el defensor sol ser d'un altre
+  // usuari); si no es pot, no passa res (el flag s'esborra al seu torn).
+  try {
+    await actualitzarComGM(combatantDefensor, { "flags.forja.contraatac.usat": true });
+  } catch (err) {
+    console.warn("FORJA | No s'ha pogut marcar el contraatac com a fet", err);
+  }
   const sys = defensor.system;
   const poolFinal = (sys.atributs?.DES ?? 0) + (sys.habilitats?.["arts-marcials"]?.nivell ?? 0);
   const maniobra = (CONFIG.FORJA?.LLISTA_MANIOBRES ?? []).find(m => m.id === "contraatac") ?? null;

@@ -1,4 +1,4 @@
-import ForjaRoll from "../dice/forja-roll.mjs";
+import ForjaRoll, { publicarTirada } from "../dice/forja-roll.mjs";
 import { manifestarEfecte } from "./manifestar.mjs";
 import { oferirControlSiEscau } from "./control-efecte.mjs";
 import { decidirResistencia } from "./decisio-resistencia.mjs";
@@ -176,9 +176,9 @@ export async function usarArtefacte(actor, item, { objectius = objectiusMarcats(
     await roll.evaluate();
     ({ exit, excedent } = roll.forjaResults);
     const habNom = habilitat ? game.i18n.localize(`FORJA.Hab.${habilitat}`) : "";
-    await roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor }),
-      flavor: game.i18n.format("FORJA.Artefacte.TiradaActivacioXat", {
+    await publicarTirada(roll, {
+      actor,
+      label: game.i18n.format("FORJA.Artefacte.TiradaActivacioXat", {
         nom: item.name, tirada: habNom ? `${atribut} + ${habNom}` : atribut, dificultat: difFinal,
         resultat: game.i18n.localize(exit ? "FORJA.Efecte.Resultat.exit" : (roll.forjaResults.pifia ? "FORJA.Efecte.Resultat.pifia" : "FORJA.Efecte.Resultat.fracas"))
       })

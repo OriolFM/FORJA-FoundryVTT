@@ -72,6 +72,9 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- Les tirades d'activació, de resistència i les tirades úniques d'àrea surten amb els daus i les fites al xat.
+- Els estats que aplica un efecte instantani (p. ex. Sagnant/X) ja no desapareixen quan avança el rellotge.
+- Els textos flotants i els estats per salut també funcionen amb els tokens no enllaçats.
 - **Incorporis:** la latència, la defensa, el moviment i la reducció de dany es calculen amb PER i APL, com diu el manual.
 - **Recuperació/X:** amb fatiga i ferides al mateix nivell, ara cura primer la fatiga (abans, les ferides); des del nivell 7 (inconscient o incapacitat) passa al nivell 6, com diu el manual.
 - El missatge de defensa mostrava «Defensa 1» en lloc de la defensa resultant (mínim defensa bàsica +1).

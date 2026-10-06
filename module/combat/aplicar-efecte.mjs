@@ -29,7 +29,7 @@ const ESTATS_POSITIUS = new Set(["vigilant", "rapid", "recuperacio", "berserc", 
 
 /** Nom traduït d'un estat. */
 function nomEstat(id) {
-  return game.i18n.localize(`FORJA.Estat.${id}`);
+  return game.i18n.localize(`FORJA.Estat.${id === "dead" ? "mort" : id}`);
 }
 
 /** Icona registrada d'un estat. */
@@ -218,7 +218,9 @@ export async function aplicarResultatEfecte({ actor, font, objectius = [], exced
       }
       if (resum.cura) fet.push(...await aplicarCura(obj, resum.cura, eleccioPista));
       for (const estat of resum.estats) {
-        if (await aplicarEstat(obj, estat, { origen, durada, dificultatBase: dificultat })) {
+        // Els estats d'un efecte instantani duren el que diu l'estat (no s'esborren
+        // en avançar el rellotge); només els d'un efecte amb durada s'acaben amb l'escena.
+        if (await aplicarEstat(obj, estat, { origen, durada: durada === "escena" ? "escena" : null, dificultatBase: dificultat })) {
           fet.push(game.i18n.format("FORJA.Efecte.EstatAplicat", { estat: estat.valorX != null ? `${nomEstat(estat.id).replace(/\/X$/, "")}/${estat.valorX}` : nomEstat(estat.id) }));
         }
       }

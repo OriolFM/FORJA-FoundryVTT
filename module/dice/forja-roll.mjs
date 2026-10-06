@@ -45,3 +45,30 @@ export default class ForjaRoll extends Roll {
     };
   }
 }
+
+/**
+ * Publica una tirada de FORJA al xat amb la plantilla pròpia
+ * (`missatge-tirada.hbs`). `Roll#toMessage` no serveix: la plantilla
+ * necessita les fites, els daus i la dificultat, que Foundry no hi passa.
+ * @param {ForjaRoll} roll  Ja avaluada.
+ * @param {object} p
+ * @param {Actor} [p.actor]
+ * @param {string} p.label
+ * @param {number} [p.dificultat]  Per defecte, la de la tirada.
+ * @param {boolean} [p.exit]       Per defecte, el de la tirada.
+ * @param {boolean} [p.ambDificultat=true]  Mostrar la dificultat (no per a tirades enfrontades sense dificultat pròpia).
+ * @returns {Promise<ChatMessage>}
+ */
+export async function publicarTirada(roll, { actor = null, label, dificultat, exit } = {}) {
+  const r = roll.forjaResults ?? {};
+  const content = await foundry.applications.handlebars.renderTemplate(ForjaRoll.CHAT_TEMPLATE, {
+    label, poolFinal: r.totalDice, penalSalut: 0, concentrat: false, modDaus: 0, modDificultat: 0,
+    ...r,
+    dificultat: dificultat ?? r.dificultat,
+    exit: exit ?? r.exit
+  });
+  return ChatMessage.create({
+    speaker: actor ? ChatMessage.getSpeaker({ actor }) : ChatMessage.getSpeaker(),
+    content, rolls: [roll], sound: CONFIG.sounds.dice
+  });
+}

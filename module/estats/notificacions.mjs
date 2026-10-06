@@ -55,7 +55,7 @@ export function textFlotant(actor, text, { color = 0xffffff, mida = 30, direccio
 
 /** Nom traduït d'un estat (amb el valor X dels parametritzats, si en té). */
 function nomEstat(estatId, valorX = null) {
-  const nom = game.i18n.localize(`FORJA.Estat.${estatId}`);
+  const nom = game.i18n.localize(`FORJA.Estat.${estatId === "dead" ? "mort" : estatId}`);
   return valorX != null ? `${nom.replace(/\/X$/, "")}/${valorX}` : nom;
 }
 
@@ -153,13 +153,21 @@ export function registrarNotificacions() {
 
   // Les dades de l'actor ja estan actualitzades quan arriba el hook: la
   // diferència es calcula amb l'última salut que aquest client havia vist.
-  Hooks.on("updateActor", (actor, changes) => {
-    if (!foundry.utils.hasProperty(changes, "system.salut")) return;
+  const perSalut = (actor) => {
+    if (!actor) return;
     const abans = actor._forjaSalutVista ?? null;
     const ara = salutActual(actor);
     actor._forjaSalutVista = ara;
     if (!abans) return;
     mostrarCanviSalut(actor, "fatiga", ara.fatiga - abans.fatiga);
     mostrarCanviSalut(actor, "ferides", ara.ferides - abans.ferides);
+  };
+  Hooks.on("updateActor", (actor, changes) => {
+    if (foundry.utils.hasProperty(changes, "system.salut")) perSalut(actor);
+  });
+  // Actors sintètics (tokens no enllaçats): el canvi arriba com a delta del
+  // token. Si també arriba per `updateActor`, la diferència ja serà 0.
+  Hooks.on("updateToken", (token, changes) => {
+    if (foundry.utils.hasProperty(changes, "delta.system.salut")) perSalut(token.actor);
   });
 }

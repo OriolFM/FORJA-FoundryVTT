@@ -31,7 +31,7 @@ function existeixEstat(estatId) {
 
 /** Nom traduït d'un estat. */
 function nomEstat(estatId) {
-  return game.i18n.localize(`FORJA.Estat.${estatId}`);
+  return game.i18n.localize(`FORJA.Estat.${estatId === "dead" ? "mort" : estatId}`);
 }
 
 /**
@@ -57,9 +57,9 @@ export async function sincronitzarEstatsSalut(actor) {
  *   (amb la latència habitual) i l'estat s'acaba.
  * - Marejat (l. 3640): perd l'acció. Per declarar-ne una altra ha de superar
  *   la tirada (vegeu `ForjaCombatTracker`).
- * - Inconscient/incapacitat: no pot actuar. Perd l'acció i passa el torn
- *   (es torna a situar al rellotge amb la seva latència bàsica, perquè el
- *   rellotge continuï i torni a tenir torn quan es recuperi).
+ * - Inconscient/incapacitat: no pot actuar. Perd l'acció i es torna a
+ *   situar al rellotge amb la seva latència bàsica (perquè torni a tenir torn
+ *   quan es recuperi); el DJ avança el rellotge amb «Avança».
  * @param {Combat} combat
  * @param {Combatant} combatant
  */

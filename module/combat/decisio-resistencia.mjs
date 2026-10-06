@@ -1,4 +1,5 @@
 import DiategResistir from "../apps/dialeg-resistir.mjs";
+import { publicarTirada } from "../dice/forja-roll.mjs";
 import { opcioResistir, resoldreResistir } from "./resistencia.mjs";
 import { opcioContrarestar, resoldreContrarestar } from "./contrarestar.mjs";
 import { potReaccionar } from "./reaccions.mjs";
@@ -35,9 +36,10 @@ export function registrarPreguntaResistencia() {
     if (opcio === "mental" || opcio === "fisic") resultat = await resoldreResistir(objectiu, opcio);
     else if (opcio === "contrarestar") resultat = await resoldreContrarestar(objectiu, don);
     if (!resultat) return null;
-    await resultat.roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: objectiu }),
-      flavor: game.i18n.format(opcio === "contrarestar" ? "FORJA.Efecte.TiradaContrarestar" : "FORJA.Efecte.TiradaResistir", { nom: objectiu.name })
+    await publicarTirada(resultat.roll, {
+      actor: objectiu,
+      label: game.i18n.format(opcio === "contrarestar" ? "FORJA.Efecte.TiradaContrarestar" : "FORJA.Efecte.TiradaResistir", { nom: objectiu.name }),
+      dificultat: "—", exit: true
     });
     return { dificultat: resultat.dificultat, exigirSuperar: true, tipus: opcio === "contrarestar" ? "contrarestar" : "resistir" };
   });

@@ -229,6 +229,12 @@ Hooks.on("updateActor", async (actor, changes) => {
   if (!foundry.utils.hasProperty(changes, "system.salut")) return;
   await sincronitzarEstatsSalut(actor);
 });
+// Tokens no enllaçats: el canvi de salut arriba com a delta del token.
+Hooks.on("updateToken", async (token, changes) => {
+  if (!game.users.activeGM?.isSelf) return;
+  if (!foundry.utils.hasProperty(changes, "delta.system.salut")) return;
+  if (token.actor) await sincronitzarEstatsSalut(token.actor);
+});
 
 // Fase 4: botó del DJ per repartir PX al directori d'actors.
 Hooks.on("renderActorDirectory", (app, html) => {
