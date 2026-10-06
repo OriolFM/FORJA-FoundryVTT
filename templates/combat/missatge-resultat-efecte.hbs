@@ -1,0 +1,19 @@
+<div class="forja-missatge-efecte">
+  <header><strong>{{nomFont}}</strong>{{#if durada}} <em>({{localize "FORJA.Efecte.UnaEscena"}})</em>{{/if}}</header>
+  {{#each linies as |l|}}
+  <div class="forja-efecte-objectiu">
+    <span class="forja-efecte-nom">{{l.nom}}</span>
+    {{#if l.fet.length}}
+    <ul>{{#each l.fet as |f|}}<li>{{f}}</li>{{/each}}</ul>
+    {{else}}
+    <p class="hint">{{localize "FORJA.Efecte.SenseCanvis"}}</p>
+    {{/if}}
+  </div>
+  {{/each}}
+  {{#if senseObjectius}}<p class="hint">{{localize "FORJA.Efecte.SenseObjectius"}}</p>{{/if}}
+  {{#each resistits as |r|}}<p class="hint">{{localize "FORJA.Efecte.Resistit" nom=r}}</p>{{/each}}
+  {{#if extres.length}}
+  <p class="forja-efecte-dj">{{localize "FORJA.Efecte.PerAlDJ"}}</p>
+  <ul>{{#each extres as |e|}}<li>{{e}}</li>{{/each}}</ul>
+  {{/if}}
+</div>

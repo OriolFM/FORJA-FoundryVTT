@@ -67,6 +67,9 @@ export default class ItemArtefacte extends foundry.abstract.TypeDataModel {
         choices: ["prototip1", "prototip2", "produccio"]
       }),
       trencat: new fields.BooleanField({ initial: false }),
+      // Fase 3: es porta posat. Els artefactes sempre actius (permanents,
+      // armes i armadures) només donen les bonificacions si estan equipats.
+      equipat: new fields.BooleanField({ initial: true }),
       // S-30 (artefactes modulars, manual p. 576-588): "cada mòdul agrupa
       // algunes de les característiques de l'artefacte... i té un cost en
       // punts determinat" — el manual no dona cap fórmula de quant "menys"

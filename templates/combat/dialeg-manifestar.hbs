@@ -23,6 +23,21 @@
   </div>
 
   <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Sobrenatural.RessonanciaEtiqueta"}}</label>
+    <select name="ressonancia">
+      {{#each ressonancies as |r|}}<option value="{{r.id}}" {{#if (eq r.id "neutra")}}selected{{/if}}>{{r.nom}}</option>{{/each}}
+    </select>
+  </div>
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Sobrenatural.PistaEtiqueta"}}</label>
+    <select name="eleccioPista">
+      <option value="">{{localize "FORJA.Sobrenatural.PistaAuto"}}</option>
+      <option value="fatiga">{{localize "FORJA.Salut.Fatiga"}}</option>
+      <option value="ferides">{{localize "FORJA.Salut.Ferides"}}</option>
+    </select>
+  </div>
+
+  <div class="form-group dm-camp">
     <label>{{localize "FORJA.Dice.ModDaus"}}</label>
     <input type="number" name="modDaus" value="0"/>
   </div>

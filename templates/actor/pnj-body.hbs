@@ -57,7 +57,7 @@
           <div class="attr-stepper">
             <button type="button" class="btn-stepper" data-action="ajustarAtribut"
                     data-attr="{{attr}}" data-delta="-1">−</button>
-            <span class="attr-val">{{lookup ../sys.atributs attr}}</span>
+            <span class="attr-val">{{lookup ../atributsBase attr}}</span>
             <button type="button" class="btn-stepper" data-action="ajustarAtribut"
                     data-attr="{{attr}}" data-delta="1">+</button>
           </div>
@@ -67,7 +67,7 @@
         <div class="forja-attr-box" data-action="selectAtribut" data-attr="{{attr}}"
              title="{{localize 'FORJA.Dice.TirarAtribut'}}">
           <span class="attr-codi">{{attr}}</span>
-          <span class="attr-val">{{lookup ../sys.atributs attr}}</span>
+          <span class="attr-val">{{lookup ../sys.atributs attr}}{{#if (lookup ../sys.bonus.atributs attr)}}<small class="forja-bonus" title="{{localize 'FORJA.Bonus.Desc'}}">+{{lookup ../sys.bonus.atributs attr}}</small>{{/if}}</span>
           <span class="attr-nom">{{localize (concat "FORJA.Attr." attr)}}</span>
         </div>
         {{/if}}
@@ -340,7 +340,7 @@
             <div class="hab-stepper">
               <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
                       data-hab-id="{{h.id}}" data-delta="-1">−</button>
-              <span class="hab-niv-val">{{h.nivell}}</span>
+              <span class="hab-niv-val">{{h.nivellBase}}</span>
               <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
                       data-hab-id="{{h.id}}" data-delta="1">+</button>
             </div>
@@ -353,7 +353,7 @@
                     data-action="toggleMarca" data-hab-id="{{h.id}}">{{h.marca}}</button>
             <span class="hab-nom">{{h.nom}}</span>
             <span class="hab-esp">{{#if h.especialitat}}{{h.especialitat}}{{/if}}</span>
-            <span class="hab-niv-val">{{h.nivell}}</span>
+            <span class="hab-niv-val">{{h.nivell}}{{#if h.bonus}}<small class="forja-bonus" title="{{localize 'FORJA.Bonus.Desc'}}">+{{h.bonus}}</small>{{/if}}</span>
           </div>
           {{/if}}
           {{/each}}
@@ -379,7 +379,7 @@
             <div class="hab-stepper">
               <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
                       data-hab-id="{{h.id}}" data-delta="-1">−</button>
-              <span class="hab-niv-val">{{h.nivell}}</span>
+              <span class="hab-niv-val">{{h.nivellBase}}</span>
               <button type="button" class="btn-stepper-sm" data-action="ajustarHabilitat"
                       data-hab-id="{{h.id}}" data-delta="1">+</button>
             </div>
@@ -392,7 +392,7 @@
                     data-action="toggleMarca" data-hab-id="{{h.id}}">{{h.marca}}</button>
             <span class="hab-nom">{{h.nom}}</span>
             <span class="hab-esp">{{#if h.especialitat}}{{h.especialitat}}{{/if}}</span>
-            <span class="hab-niv-val">{{h.nivell}}</span>
+            <span class="hab-niv-val">{{h.nivell}}{{#if h.bonus}}<small class="forja-bonus" title="{{localize 'FORJA.Bonus.Desc'}}">+{{h.bonus}}</small>{{/if}}</span>
           </div>
           {{/if}}
           {{/each}}

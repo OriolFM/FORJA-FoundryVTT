@@ -29,6 +29,11 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - **Els 18 artefactes i els 65 efectes del manual porten els seus paràmetres**, i la fitxa en mostra el desglossament amb el cost calculat i un botó per editar-los amb el constructor. Millorar un efecte parteix dels seus paràmetres.
 - **Fitxa d'objecte per als efectes**; la d'artefacte mostra també la tirada d'activació (atribut + habilitat), la càrrega actual, la fase de prototip i si és modular.
 - **Migració:** els efectes i artefactes del catàleg que ja hi hagi en un món reben els paràmetres en entrar el DJ.
+- **Efectes i artefactes amb resultat automàtic:** en manifestar un efecte o activar un artefacte, s'apliquen sols el dany (indirecte, directe o drenatge), la curació, els estats, les bonificacions (atributs, habilitats, trets, armadura i ègida temporals) i es publica al xat; el que és narratiu (il·lusions, telecinesi, invocació…) queda indicat per al DJ. Funciona amb diversos objectius marcats.
+- **Resistir i contrarestar** un efecte ho decideix el jugador de l'objectiu o el DJ, no qui el manifesta.
+- **Ressonància** (cinc nivells) i tria de fatiga o ferides al diàleg de manifestar.
+- **Activar un artefacte:** tirada d'atribut + habilitat contra la dificultat d'activació (es demana si l'artefacte no la té), càrrega i prototips que es trenquen en pifiar.
+- **Armes i armadures que són artefactes** (Espasa d'energia, Holocapa, Servoarmadura…): apareixen com a arma o armadura i funcionen al combat (dany directe, estats en impactar, càrrega per atac, ègida). Els artefactes permanents i els que es porten donen les seves bonificacions mentre estan equipats; la fitxa les mostra amb un «+n».
 - **Textos flotants al costat del token** (com als videojocs): estats guanyats i perduts, fatiga, ferides i curació. Si un jugador intenta fer una cosa que un estat li impedeix, l'estat torna a sortir.
 - **Fase de declaració:** en començar el combat, si algú no ha declarat, s'anuncia «Declareu les accions» i el combat no arrenca fins que declara l'últim. Llavors comença el temps actiu i el rellotge salta directament fins al primer que actua.
 - **Anuncis sobre la pantalla:** «Declareu les accions», «Comença el temps actiu» i «El rellotge de temps actiu avança n tics».

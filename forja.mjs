@@ -22,6 +22,7 @@ import FullItem            from "./module/apps/full-item.mjs";
 import ForjaRoll           from "./module/dice/forja-roll.mjs";
 import { registrarSocket } from "./module/xarxa/socket.mjs";
 import { registrarPreguntaDefensa } from "./module/combat/decisio-defensa.mjs";
+import { registrarPreguntaResistencia } from "./module/combat/decisio-resistencia.mjs";
 import { assegurarAtacsAutomatics, eliminarArmaNaturalDelTret } from "./module/combat/equipament-automatic.mjs";
 import { recuperarEquilibri } from "./module/combat/manifestar.mjs";
 import { anunciarCanvisCombat } from "./module/combat/anuncis.mjs";
@@ -31,6 +32,7 @@ import { registrarHookValorX, aplicarTicsEstats } from "./module/estats/estats-p
 import { registrarNotificacions } from "./module/estats/notificacions.mjs";
 import { sincronitzarEstatsSalut, iniciTornEstats } from "./module/estats/aplicacio-estats.mjs";
 import { registrarMigracio, executarMigracions } from "./module/migracio/migracio.mjs";
+import { sincronitzarVinculats, eliminarVinculats } from "./module/combat/artefactes-vinculats.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -122,6 +124,7 @@ Hooks.once("ready", () => {
   // Relé d'autoritat del DJ (A2): escriptures a documents d'altri.
   registrarSocket();
   registrarPreguntaDefensa();
+  registrarPreguntaResistencia();
   // Fase 2: paràmetres als efectes i artefactes antics (només el DJ actiu).
   executarMigracions().catch(err => console.error("FORJA | Error a la migració", err));
   console.log("FORJA RPG | Sistema llest");
@@ -138,8 +141,17 @@ Hooks.on("createActor", async (actor, _options, userId) => {
 Hooks.on("createItem", async (item, _options, userId) => {
   if (userId !== game.user.id) return;
   const actor = item.parent;
-  if (!actor || item.type !== "tret") return;
+  if (!actor) return;
+  if (item.type === "artefacte") return sincronitzarVinculats(item);
+  if (item.type !== "tret") return;
   await assegurarAtacsAutomatics(actor);
+});
+
+// Fase 3: armes i armadures que són artefactes (objectes vinculats). Només el
+// client que ha fet el canvi (A1).
+Hooks.on("updateItem", async (item, _changes, _options, userId) => {
+  if (userId !== game.user.id || item.type !== "artefacte" || !item.parent) return;
+  await sincronitzarVinculats(item);
 });
 
 // B11: en eliminar un tret d'"Armament Natural", elimina l'arma natural que
@@ -147,6 +159,7 @@ Hooks.on("createItem", async (item, _options, userId) => {
 // el client que ha fet l'eliminació ho fa (mateix criteri A1 que a dalt).
 Hooks.on("deleteItem", async (item, _options, userId) => {
   if (userId !== game.user.id) return;
+  if (item.type === "artefacte") return eliminarVinculats(item);
   if (item.type !== "tret") return;
   await eliminarArmaNaturalDelTret(item);
 });

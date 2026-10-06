@@ -7,6 +7,9 @@ import { consumirConcentracio, trencarConcentracio } from "./reaccions.mjs";
 import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
 import { teProprietat } from "./propietats.mjs";
 import { resoldrePerRupturaConcentracio } from "./control-efecte.mjs";
+import { artefacteDe } from "./artefactes-vinculats.mjs";
+import { activarArtefacte } from "./artefactes.mjs";
+import { aplicarEstat } from "./aplicar-efecte.mjs";
 
 /**
  * Flux d'atac (S-12): tira, compara amb la defensa de l'objectiu, i si
@@ -64,12 +67,29 @@ import { resoldrePerRupturaConcentracio } from "./control-efecte.mjs";
  *    addicional a la tirada d'atac i al dany (si l'atac impacta)". El dany de
  *    FORJA no es tira, així que el dau "al dany" és +1 al dany de l'atac,
  *    abans de l'ègida i l'armadura (WP-M, `bonusCarrega`).
+ *  - Armes que són artefactes (Fase 3, `combat/artefactes-vinculats.mjs`):
+ *    gasten una càrrega de l'artefacte en atacar (sense càrrega, no ataquen);
+ *    la propietat `directe` ignora ègida, armadura i reducció (› Dany directe,
+ *    l. 3283); `system.pista` tria la pista del dany; i `system.estatsImpacte`
+ *    s'apliquen a l'objectiu si l'atac impacta (p. ex. l'Espasa serra, sagnant/3).
  */
 export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null, danyExtra = 0, retardBarallarse = 0, bonusCarrega = null }) {
   if (actor.system.salut?.foraDeCombat) {
     ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
     return null;
   }
+
+  // Fase 3: una arma que és un artefacte gasta una càrrega en cada ús.
+  const artefacte = artefacteDe(arma);
+  if (artefacte) {
+    const carrega = await activarArtefacte(artefacte);
+    if (!carrega.ok) {
+      ui.notifications?.warn(game.i18n.format("FORJA.Artefacte.SenseCarrega", { nom: artefacte.name }));
+      return null;
+    }
+  }
+  const directe = teProprietat(arma, "directe");
+  const pistes = arma.system.pista === "ambdues" ? ["fatiga", "ferides"] : [arma.system.pista || pista];
 
   const penalSalut      = actor.system.salut?.penalitzacio ?? 0;
   const dauConcentracio = await consumirConcentracio(actor);
@@ -103,7 +123,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     if (escopeta && armadura > proteccioArmadura(objectiu.items, { ignorarTipus })) {
       notes.push(game.i18n.format("FORJA.Combat.PocaPenetracio", { proteccio: armadura }));
     }
-    const itemEgida = itemEgidaActiva(objectiu.items);
+    const itemEgida = directe ? null : itemEgidaActiva(objectiu.items);
     const egida     = itemEgida ? { activa: true, absorcio: itemEgida.system.egida.absorcio } : null;
 
     // Estat previ a aplicar el dany (la còpia local es refresca després de l'update).
@@ -113,8 +133,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       danyBaseArma: danyBaseArma + danyCarrega,
       bonificadorArma,
       excedentAtac: excedent,
-      reduccioDany: (objectiu.system.reduccioDany ?? 0) + reduccioExtra,
-      armadura,
+      reduccioDany: directe ? 0 : (objectiu.system.reduccioDany ?? 0) + reduccioExtra,
+      armadura: directe ? 0 : armadura,
       egida,
       danyExtra
     });
@@ -125,9 +145,22 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     // publiquen igualment al xat, amb una nota perquè el DJ ho apliqui a mà.
     try {
     if (resultatDany.danyFinal > 0) {
-      const marcatsActuals = objectiu.system.salut[pista].marcats;
-      const nous = aplicarDanyAPista({ [pista]: { marcats: marcatsActuals } }, pista, resultatDany.danyFinal, { noMort: !!objectiu.system.noMort });
-      await actualitzarComGM(objectiu, { [`system.salut.${pista}.marcats`]: nous });
+      const canvis = {};
+      for (const p of pistes) {
+        const marcatsActuals = objectiu.system.salut[p].marcats;
+        canvis[`system.salut.${p}.marcats`] = aplicarDanyAPista({ [p]: { marcats: marcatsActuals } }, p, resultatDany.danyFinal, { noMort: !!objectiu.system.noMort });
+      }
+      await actualitzarComGM(objectiu, canvis);
+    }
+
+    // Fase 3: estats que aplica l'arma en impactar (armes que són artefactes).
+    for (const estat of arma.system.estatsImpacte ?? []) {
+      if (await aplicarEstat(objectiu, estat, { origen: artefacte?.uuid ?? arma.uuid, dificultatBase: excedent })) {
+        notes.push(game.i18n.format("FORJA.Combat.EstatAplicat", {
+          nom: objectiu.name,
+          estat: estat.valorX != null ? `${game.i18n.localize(`FORJA.Estat.${estat.id}`).replace(/\/X$/, "")}/${estat.valorX}` : game.i18n.localize(`FORJA.Estat.${estat.id}`)
+        }));
+      }
     }
 
     if (resultatDany.egidaTrencada && itemEgida) {
@@ -188,7 +221,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     bonusRetard,
     notes,
     dany: resultatDany,
-    pista,
+    pista: pistes[0],
+    pistaEtiqueta: pistes.map(p => game.i18n.localize(`FORJA.Salut.${p}`)).join(" + "),
     concentracioTrencada,
     ...roll.forjaResults,
     exit, excedent

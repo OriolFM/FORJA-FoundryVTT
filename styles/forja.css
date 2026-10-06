@@ -6855,3 +6855,6 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 .forja-dialeg-constructor .dc-avis { color: #fca5a5; font-size: 0.8rem; margin: 0; }
 .forja-item-parametres .dc-desglossament { max-height: none; }
 .forja-item-parametres .forja-avis-cost { color: #fca5a5; }
+
+/* -- Bonificacions d'efectes i artefactes (Fase 3) -- */
+.forja-bonus { color: #86efac; font-size: 0.7em; margin-left: 2px; vertical-align: super; }

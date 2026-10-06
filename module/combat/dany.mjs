@@ -177,6 +177,9 @@ export function proteccioArmadura(items, { ignorarTipus = [], dobleRigida = fals
     if (!esArmaduraEquipada(item)) continue;
     if (ignorarTipus.includes(item.system.tipus)) continue;
     const base = item.system.reduccio ?? 0;
+    // Una «armadura» sense protecció (p. ex. només una ègida d'un artefacte,
+    // Fase 3) no és la base de la protecció.
+    if (base <= 0) continue;
     peces.push({
       flexible:  item.system.tipus === "flexible",
       proteccio: (dobleRigida && esArmaduraRigida(item)) ? base * 2 : base

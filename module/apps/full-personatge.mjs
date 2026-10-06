@@ -1,4 +1,5 @@
 import FullActorBase from "./full-actor-base.mjs";
+import { valorsBase } from "../data/actor-personatge.mjs";
 import DiategTrets   from "./dialeg-trets.mjs";
 import DiategMillora from "./dialeg-millora.mjs";
 import AssistentCreacio from "./assistent-creacio.mjs";
@@ -64,9 +65,11 @@ export default class FullPersonatge extends FullActorBase {
     const actor = this.actor;
     const sys   = actor.system;
     const cfg   = CONFIG.FORJA;
+    // Fase 3: es millora el valor base, sense bonificacions d'efectes i artefactes.
+    const base  = valorsBase(actor);
 
     const atributs = cfg.ATRIBUTS.map(attr => {
-      const actual = sys.atributs[attr] ?? 0;
+      const actual = base.atributs[attr] ?? 0;
       return {
         id: attr, nom: game.i18n.localize(`FORJA.Attr.${attr}`),
         actual, seguent: actual + 1, cost: costSeguentAtribut(actual)
@@ -74,7 +77,7 @@ export default class FullPersonatge extends FullActorBase {
     });
 
     const habilitats = cfg.LLISTA_HABILITATS.map(h => {
-      const actual = sys.habilitats[h.id]?.nivell ?? 0;
+      const actual = base.habilitats[h.id]?.nivell ?? 0;
       return {
         id: h.id, nom: game.i18n.localize(h.nom),
         actual, seguent: actual + 1, cost: costSeguentHabilitat(actual)

@@ -3,6 +3,9 @@ import { FORJA } from "../config/constants.mjs";
 import { distanciesMoviment } from "../combat/moviment.mjs";
 import { restriccionsEstats } from "../estats/regles-estats.mjs";
 import { recordarSalut } from "../estats/notificacions.mjs";
+import {
+  bonificacionsBuides, bonificacionsDeParametres, sumarBonificacions, artefacteSempreActiu
+} from "../combat/resultat-parametres.mjs";
 
 /**
  * DataModel per a Personatges Jugadors (PJ).
@@ -31,6 +34,21 @@ export default class ActorPersonatge extends foundry.abstract.TypeDataModel {
 }
 
 /**
+ * Atributs i habilitats base de l'actor, sense les bonificacions d'efectes i
+ * artefactes que `_prepararDerivats` hi suma (Fase 3). És el que s'edita, es
+ * millora amb PX i es paga amb PC.
+ * @param {Actor} actor
+ * @returns {{atributs:Record<string,number>, habilitats:Record<string,{nivell:number}>}}
+ */
+export function valorsBase(actor) {
+  const font = actor?._source?.system ?? {};
+  return {
+    atributs:   font.atributs ?? actor?.system?.atributs ?? {},
+    habilitats: font.habilitats ?? actor?.system?.habilitats ?? {}
+  };
+}
+
+/**
  * Càlcul de tots els derivats. Compartit per personatge i pnj.
  * @param {TypeDataModel} sys
  */
@@ -39,6 +57,23 @@ export function _prepararDerivats(sys) {
   if (!cfg) return;
 
   const { atributs, mida, constitucio, salut } = sys;
+
+  // --- PC gastats (abans de cap bonificació: es paguen els valors base) ---
+  _calcularPunts(sys, cfg);
+
+  // --- Bonificacions d'efectes i artefactes (Fase 3) ---
+  // Atributs i habilitats que donen els artefactes sempre actius (equipats) i
+  // els efectes temporals (ActiveEffect amb `flags.forja.bonus`). Se sumen
+  // als valors (dades derivades, no es desen); la fitxa edita els valors base
+  // (`_source`). L'armadura i l'ègida van per objectes vinculats
+  // (`combat/artefactes-vinculats.mjs`).
+  sys.bonus = _bonificacions(sys.parent);
+  for (const [attr, n] of Object.entries(sys.bonus.atributs)) {
+    if (attr in atributs) atributs[attr] = (atributs[attr] ?? 0) + n;
+  }
+  for (const [habId, n] of Object.entries(sys.bonus.habilitats)) {
+    if (sys.habilitats[habId]) sys.habilitats[habId].nivell = (sys.habilitats[habId].nivell ?? 0) + n;
+  }
 
   // --- Derivats de combat ---
   sys.latenciaBase = Math.max(1, 10 + mida - atributs.AGI * 2);
@@ -117,9 +152,6 @@ export function _prepararDerivats(sys) {
   // Textos flotants de salut (estats/notificacions.mjs): primera lectura.
   recordarSalut(sys.parent);
 
-  // --- PC gastats ---
-  _calcularPunts(sys, cfg);
-
   // --- PX lliures (S-28) ---
   sys.px.lliures = (sys.px.total ?? 0) - (sys.px.gastats ?? 0);
 
@@ -193,6 +225,27 @@ function _prepararSobrenatural(sys, cfg) {
   sys.equilibri.zona = actual > 0 ? "normal" : actual > -max ? "fatiga" : "ferides";
 }
 
+/**
+ * Bonificacions actives de l'actor (Fase 3): artefactes sempre actius
+ * equipats i efectes temporals amb `flags.forja.bonus`.
+ * @param {Actor|undefined} actor
+ * @returns {object}
+ */
+function _bonificacions(actor) {
+  const total = bonificacionsBuides();
+  for (const item of actor?.items ?? []) {
+    if (item.type === "artefacte" && artefacteSempreActiu(item)) {
+      sumarBonificacions(total, bonificacionsDeParametres(item.system.parametres));
+    }
+  }
+  for (const efecte of actor?.effects ?? []) {
+    if (efecte.disabled) continue;
+    const bonus = efecte.flags?.forja?.bonus;
+    if (bonus) sumarBonificacions(total, bonus);
+  }
+  return total;
+}
+
 /** Stats derivats que un tret pot modificar amb `efecte.stat`/`efecte.delta`. */
 const STATS_MODIFICABLES_PER_TRETS = new Set(["reaccionsMax", "latenciaBase", "defensa", "reduccioDany"]);
 
@@ -207,15 +260,22 @@ function _aplicarEfectesTrets(sys) {
   const items = sys.parent?.items;
   if (!items) return flags;
 
-  for (const item of items) {
-    if (item.type !== "tret") continue;
-    const efecte = item.system?.efecte;
-    if (!efecte) continue;
-
+  const aplicar = (efecte) => {
+    if (!efecte) return;
     if (efecte.stat && STATS_MODIFICABLES_PER_TRETS.has(efecte.stat) && Number.isFinite(efecte.delta)) {
       sys[efecte.stat] = (sys[efecte.stat] ?? 0) + efecte.delta;
     }
     if (efecte.flag) flags.add(efecte.flag);
+  };
+  for (const item of items) {
+    if (item.type === "tret") aplicar(item.system?.efecte);
+  }
+  // Fase 3: trets temporals d'efectes i artefactes (p. ex. Benedicció del
+  // fanàtic → dur de pelar), amb l'efecte mecànic del catàleg.
+  const propis = new Set(items.filter(i => i.type === "tret").map(i => i.getFlag?.("forja", "catalegId")));
+  for (const id of sys.bonus?.trets ?? []) {
+    if (propis.has(id)) continue;
+    aplicar(CONFIG.FORJA?.LLISTA_TRETS?.find(t => t.id === id)?.efecte);
   }
   return flags;
 }

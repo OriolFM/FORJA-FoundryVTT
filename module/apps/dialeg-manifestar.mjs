@@ -1,5 +1,14 @@
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
+/** Ressonància (manual l. 4229): daus o dificultat que suma cada nivell. */
+const RESSONANCIA = {
+  "molt-favorable":    { daus: 2, dificultat: 0 },
+  "favorable":         { daus: 1, dificultat: 0 },
+  "neutra":            { daus: 0, dificultat: 0 },
+  "desfavorable":      { daus: 0, dificultat: 1 },
+  "molt-desfavorable": { daus: 0, dificultat: 2 }
+};
+
 /**
  * Diàleg per declarar la manifestació d'un efecte sobrenatural (S-21).
  * Si l'actor té efectes après (S-25, `system.efectes` a la fitxa), es pot
@@ -48,7 +57,8 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
       nomObjectiu: c.nomObjectiu ?? null,
       efectes:  c.efectes ?? [],
       efecteId: this.#efecteId,
-      usPuntsExtra: this.#usPuntsExtra
+      usPuntsExtra: this.#usPuntsExtra,
+      ressonancies: Object.keys(RESSONANCIA).map(id => ({ id, nom: game.i18n.localize(`FORJA.Sobrenatural.Ressonancia.${id}`) }))
     };
   }
 
@@ -79,10 +89,16 @@ export default class DiategManifestar extends HandlebarsApplicationMixin(Applica
 
   static async _onSubmit(event, form, formData) {
     const d = formData.object;
+    // Ressonància (manual › Ressonància, l. 4229): molt favorable +2 daus,
+    // favorable +1 dau, desfavorable +1 dificultat, molt desfavorable +2.
+    const ressonancia = RESSONANCIA[d.ressonancia] ?? RESSONANCIA.neutra;
     this.#resolve?.({
+      efecteId:       d.efecteId || this.#efecteId || null,
+      eleccioPista:   d.eleccioPista || null,
+      ressonancia:    d.ressonancia ?? "neutra",
       dificultatBase: Math.max(1, parseInt(d.dificultatBase) || 1),
-      modDaus:        parseInt(d.modDaus) || 0,
-      modDificultat:  parseInt(d.modDificultat) || 0,
+      modDaus:        (parseInt(d.modDaus) || 0) + ressonancia.daus,
+      modDificultat:  (parseInt(d.modDificultat) || 0) + ressonancia.dificultat,
       puntsExtra:     Math.max(0, parseInt(d.puntsExtra) || 0),
       usPuntsExtra:   d.usPuntsExtra ?? this.#usPuntsExtra,
       descripcio:     d.descripcio ?? ""

@@ -395,6 +395,50 @@ function _esEfecteInterrupcio(dades) {
     && Object.keys(e.flags).length === 1);
 }
 
+const CLAUS_EFECTE = new Set(["name", "img", "statuses", "flags", "origin", "description", "disabled"]);
+const CLAUS_FLAGS_EFECTE = new Set(["efecteForja", "valorX", "comptador", "bonus", "durada", "origen", "dificultat", "modificador"]);
+const CLAUS_ARMADURA = new Set(["name", "img", "type", "system", "flags"]);
+const CLAUS_SYSTEM_ARMADURA = new Set(["tipus", "reduccio", "modLatencia", "egida", "equipada"]);
+const CLAUS_FLAGS_ARMADURA = new Set(["temporal", "durada", "origen"]);
+
+/**
+ * Creacions que un jugador pot demanar sobre un actor que no posseeix quan
+ * aplica el resultat d'un efecte o artefacte (Fase 3, `combat/aplicar-efecte.mjs`):
+ *   - ActiveEffect d'estat o de bonificació: `flags.forja.efecteForja`, com a
+ *     màxim un estat registrat, cap `changes` (les bonificacions es llegeixen
+ *     de `flags.forja.bonus` als derivats) i només les claus previstes;
+ *   - armadura temporal (protecció o ègida d'un efecte): `flags.forja.temporal`,
+ *     sense latència i només les claus previstes.
+ * @param {{type:string, data:object[]}} dades
+ * @returns {boolean}
+ */
+export function esCreacioEfecteForja(dades) {
+  const llista = Array.isArray(dades?.data) ? dades.data : [];
+  if (!llista.length) return false;
+  const nomes = (obj, claus) => Object.keys(obj ?? {}).every(k => claus.has(k));
+  if (dades.type === "ActiveEffect") {
+    const estats = new Set((CONFIG.statusEffects ?? []).map(e => e.id));
+    return llista.every(e =>
+      e?.flags?.forja?.efecteForja === true
+      && nomes(e, CLAUS_EFECTE)
+      && nomes(e.flags, new Set(["forja"]))
+      && nomes(e.flags.forja, CLAUS_FLAGS_EFECTE)
+      && (e.statuses ?? []).length <= 1
+      && (e.statuses ?? []).every(s => estats.has(s)));
+  }
+  if (dades.type === "Item") {
+    return llista.every(e =>
+      e?.type === "armadura"
+      && e.flags?.forja?.temporal === true
+      && nomes(e, CLAUS_ARMADURA)
+      && nomes(e.flags, new Set(["forja"]))
+      && nomes(e.flags.forja, CLAUS_FLAGS_ARMADURA)
+      && nomes(e.system, CLAUS_SYSTEM_ARMADURA)
+      && !(e.system?.modLatencia));
+  }
+  return false;
+}
+
 async function _aplicar({ accio, dades, usuari }) {
   const user = game.users.get(usuari);
   if (!user) throw new Error(`usuari desconegut (${usuari})`);
@@ -420,7 +464,7 @@ async function _aplicar({ accio, dades, usuari }) {
       return true;
     }
     case "crear": {
-      if (!user.isGM && !doc.testUserPermission(user, "OWNER") && !_esEfecteInterrupcio(dades)) {
+      if (!user.isGM && !doc.testUserPermission(user, "OWNER") && !_esEfecteInterrupcio(dades) && !esCreacioEfecteForja(dades)) {
         console.warn(`FORJA | Socket: petició rebutjada de ${user.name} — crear documents encastats a un actor que no posseeix (${doc.uuid})`);
         throw new Error(`cap flux permet crear documents encastats en un actor que l'usuari no posseeix (${doc.uuid})`);
       }

@@ -10,20 +10,18 @@ import {
 import { ferCuracio, habilitatCuracio, aplicarReposNatural, potReferSePerSiSol } from "../combat/curacio.mjs";
 import DiategManifestar from "./dialeg-manifestar.mjs";
 import DiategConstructor from "./dialeg-constructor.mjs";
-import DiategResistir  from "./dialeg-resistir.mjs";
 import DiategDesfer from "./dialeg-desfer.mjs";
 import DiategProvarPrototip from "./dialeg-provar-prototip.mjs";
 import DiategAccionsComplexes from "./dialeg-accions-complexes.mjs";
-import { manifestarEfecte, potManifestar } from "../combat/manifestar.mjs";
-import { opcioResistir, resoldreResistir } from "../combat/resistencia.mjs";
-import { opcioContrarestar, resoldreContrarestar } from "../combat/contrarestar.mjs";
+import { potManifestar } from "../combat/manifestar.mjs";
 import { desferEfecte } from "../combat/desfer.mjs";
 import { concentrar, trencarConcentracio } from "../combat/reaccions.mjs";
 import {
-  oferirControlSiEscau, disputaActor, esElSeuTorn,
+  disputaActor, esElSeuTorn,
   continuarDisputaControl, renunciarDisputaControl, resoldrePerRupturaConcentracio
 } from "../combat/control-efecte.mjs";
-import { teCarrega, carregaActual, activarArtefacte, recarregarArtefacte } from "../combat/artefactes.mjs";
+import { teCarrega, carregaActual, recarregarArtefacte } from "../combat/artefactes.mjs";
+import { manifestarIAplicar, usarArtefacte, objectiusMarcats } from "../combat/usar-efecte.mjs";
 import { esPrototip, provarPrototip, repararPrototip, marcarProduccio } from "../progressio/rd-artefactes.mjs";
 import { costTotalModular, afegirModul, treureModul } from "../progressio/modular.mjs";
 
@@ -125,6 +123,8 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       actor:      this.actor,
       sys,
       modeEdicio: this._modeEdicio,
+      // Fase 3: valors base (sense bonificacions d'efectes i artefactes) per editar.
+      atributsBase: foundry.utils.getProperty(this.actor._source, "system.atributs") ?? sys.atributs,
       campos: {
         especie:     Object.keys(cfg.COST_ESPECIE),
         atributs:    cfg.ATRIBUTS,
@@ -142,7 +142,7 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       estatsActius: estatsPerFitxa(this.actor),
       sobrenatural:   _prepSobrenatural(sys),
       disputaControl: _prepDisputaControl(this.actor),
-      habilitats: _prepHabilitats(sys, cfg),
+      habilitats: _prepHabilitats(sys, cfg, foundry.utils.getProperty(this.actor._source, "system.habilitats")),
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
       armadures:  _prepItems(this.actor, "armadura"),
@@ -291,7 +291,8 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
   static async _onAjustarAtribut(event, target) {
     const attr  = target.dataset.attr;
     const delta = parseInt(target.dataset.delta);
-    const actual = this.actor.system.atributs[attr] ?? 0;
+    // Valor base (sense bonificacions d'efectes i artefactes, Fase 3).
+    const actual = foundry.utils.getProperty(this.actor._source, `system.atributs.${attr}`) ?? 0;
     const nou    = Math.max(0, Math.min(5, actual + delta));
     await this.actor.update({ [`system.atributs.${attr}`]: nou });
   }
@@ -299,7 +300,7 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
   static async _onAjustarHabilitat(event, target) {
     const habId = target.dataset.habId;
     const delta = parseInt(target.dataset.delta);
-    const actual = this.actor.system.habilitats[habId]?.nivell ?? 0;
+    const actual = foundry.utils.getProperty(this.actor._source, `system.habilitats.${habId}.nivell`) ?? 0;
     const nou    = Math.max(0, Math.min(10, actual + delta));
     await this.actor.update({ [`system.habilitats.${habId}.nivell`]: nou });
   }
@@ -538,56 +539,21 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
     const actor = this.actor;
     if (!potManifestar(actor)) return;
     const sys = actor.system;
-    const objectiu = [...game.user.targets][0]?.actor ?? null;
+    const objectius = objectiusMarcats();
 
     const eleccio = await DiategManifestar.obrir({
       nomActor: actor.name,
       donNom:   game.i18n.localize(`FORJA.Sobrenatural.Do.${sys.dotat}`),
       eqActual: sys.equilibri.actual,
       eqMax:    sys.equilibri.max,
-      nomObjectiu: objectiu?.name ?? null,
+      nomObjectiu: objectius.map(o => o.name).join(", ") || null,
       efectes:  _prepEfectes(actor)
     });
     if (!eleccio) return;
-
-    let resistencia = null;
-    if (objectiu) {
-      const contrarestarOpcio = opcioContrarestar(objectiu, sys.dotat);
-      const opcioResistirId = await DiategResistir.obrir({
-        nomActor: actor.name,
-        nomObjectiu: objectiu.name,
-        mental: opcioResistir(objectiu, "mental"),
-        fisic:  opcioResistir(objectiu, "fisic"),
-        contrarestar: contrarestarOpcio.atribut !== "-" ? contrarestarOpcio : null
-      });
-      if (opcioResistirId === null) return; // diàleg cancel·lat
-      if (opcioResistirId === "mental" || opcioResistirId === "fisic") {
-        resistencia = await resoldreResistir(objectiu, opcioResistirId);
-      } else if (opcioResistirId === "contrarestar") {
-        resistencia = await resoldreContrarestar(objectiu, sys.dotat);
-      }
-    }
-
-    const resultat = await manifestarEfecte({
-      actor,
-      dificultatBase: eleccio.dificultatBase,
-      modDaus:        eleccio.modDaus,
-      modDificultat:  eleccio.modDificultat,
-      puntsExtra:     eleccio.puntsExtra,
-      usPuntsExtra:   eleccio.usPuntsExtra,
-      resistencia,
-      label:    eleccio.descripcio,
-      objectiu
-    });
-
-    await oferirControlSiEscau({
-      resultat, resistencia, dificultatBase: eleccio.dificultatBase,
-      atacant: actor, defensor: objectiu, label: eleccio.descripcio
-    });
+    // Fase 3: resistència de cada objectiu (la decideix el seu jugador o el
+    // DJ), tirada i resultat automàtic (combat/usar-efecte.mjs).
+    await manifestarIAplicar(actor, eleccio, { objectius });
   }
-  // ── Estats (Fase 1) ─────────────────────────────────────────────────────────
-
-  /** Tirada per sortir de l'estat o actuar malgrat l'estat (`TIRADES_ESTAT`). */
   static async _onTirarEstat(event, target) {
     await tirarEstat(this.actor, target.dataset.estat);
   }
@@ -638,16 +604,8 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
   static async _onActivarArtefacte(event, target) {
     const item = this.actor.items.get(target.dataset.itemId);
     if (!item) return;
-    const resultat = await activarArtefacte(item);
-    if (!resultat.ok) {
-      ui.notifications?.warn(game.i18n.format("FORJA.Artefacte.SenseCarrega", { nom: item.name }));
-      return;
-    }
-    if (resultat.restant !== null) {
-      ui.notifications?.info(game.i18n.format("FORJA.Artefacte.Activat", {
-        nom: item.name, restant: resultat.restant, max: item.system.carrega.usosPerCarrega
-      }));
-    }
+    // Fase 3: tirada d'activació, càrrega i resultat automàtic (combat/usar-efecte.mjs).
+    await usarArtefacte(this.actor, item);
   }
   static async _onRecarregarArtefacte(event, target) {
     const item = this.actor.items.get(target.dataset.itemId);
@@ -845,13 +803,16 @@ export function _prepDisputaControl(actor) {
   };
 }
 
-export function _prepHabilitats(sys, cfg) {
+export function _prepHabilitats(sys, cfg, habilitatsBase = null) {
   const tots = cfg.LLISTA_HABILITATS.map(h => ({
     id:           h.id,
     nom:          game.i18n.localize(h.nom),
     tipus:        h.tipus,
     attr:         h.attr,
     nivell:       sys.habilitats[h.id]?.nivell       ?? 0,
+    // Fase 3: nivell base (el que s'edita) i bonificació d'efectes i artefactes.
+    nivellBase:   habilitatsBase?.[h.id]?.nivell ?? sys.habilitats[h.id]?.nivell ?? 0,
+    bonus:        sys.bonus?.habilitats?.[h.id] ?? 0,
     marca:        sys.habilitats[h.id]?.marca         ?? "",
     especialitat: sys.habilitats[h.id]?.especialitat  ?? ""
   })).sort((a, b) => a.nom.localeCompare(b.nom, "ca"));

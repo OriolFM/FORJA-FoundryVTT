@@ -29,6 +29,11 @@ export default class ItemArma extends foundry.abstract.TypeDataModel {
       // "escopeta" (poca penetració), "escut" (blocar amb armes cos a cos).
       // Vegeu module/combat/propietats.mjs.
       propietats:   new fields.ArrayField(new fields.StringField({ blank: false })),
+      // Fase 3 (armes que són artefactes, `combat/artefactes-vinculats.mjs`):
+      // pista del dany ("" = ferides, com fins ara; "ambdues" = fatiga i
+      // ferides) i estats que aplica en impactar ({id, valorX, modificador}).
+      pista:        new fields.StringField({ initial: "", blank: true, choices: ["", "fatiga", "ferides", "ambdues"] }),
+      estatsImpacte: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
       descripcio:   new fields.HTMLField({ initial: "" })
     };
   }

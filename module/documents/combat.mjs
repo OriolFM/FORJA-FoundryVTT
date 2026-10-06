@@ -2,6 +2,7 @@ import { actualitzarComGM } from "../xarxa/socket.mjs";
 import { reiniciarReaccions } from "../combat/reaccions.mjs";
 import { egidaHaDeReactivar } from "../combat/dany.mjs";
 import { restriccionsEstats } from "../estats/regles-estats.mjs";
+import { netejarTemporals } from "../combat/aplicar-efecte.mjs";
 
 /**
  * ForjaCombat (S-10) — rellotge de temps actiu net (sense reaccions).
@@ -429,6 +430,8 @@ export default class ForjaCombat extends Combat {
     if (!game.users.activeGM?.isSelf) return;
     if (!foundry.utils.hasProperty(changed, "flags.forja.marcador")) return;
     this.reactivarEgides().catch(err => console.error("FORJA | Error reactivant ègides", err));
+    // Fase 3: la protecció instantània d'un efecte (p. ex. com a reacció) dura fins que el rellotge avança.
+    netejarTemporals(this._forjaActors(), "instantania").catch(err => console.error("FORJA | Error netejant efectes instantanis", err));
   }
 
   /**
@@ -449,6 +452,9 @@ export default class ForjaCombat extends Combat {
         .map(e => e.id);
       if (fora.length) await actor.deleteEmbeddedDocuments("ActiveEffect", fora);
     }
+    // Fase 3: els efectes i armadures temporals d'una escena s'acaben amb el combat.
+    await netejarTemporals(this._forjaActors(), "escena");
+    await netejarTemporals(this._forjaActors(), "instantania");
   }
 
   /** @override — en acabar el combat, el DJ actiu tanca les ègides pendents (B4) i neteja reaccions i estats temporals. */

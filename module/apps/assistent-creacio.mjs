@@ -1,3 +1,4 @@
+import { valorsBase } from "../data/actor-personatge.mjs";
 /**
  * Assistent de creació de PJ (M-03, 07_MILLORES_FUTUR.md): interfície pas a
  * pas sobre la validació ja existent (S-05, `avisosCoherencia`). No introdueix
@@ -103,10 +104,10 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
       atributs: cfg.ATRIBUTS.map(attr => ({
         id: attr,
         nom: game.i18n.localize(`FORJA.Attr.${attr}`),
-        val: sys.atributs[attr] ?? 0,
-        cost: cfg.COST_ATRIBUT[sys.atributs[attr] ?? 0] ?? 0
+        val: valorsBase(actor).atributs[attr] ?? 0,
+        cost: cfg.COST_ATRIBUT[valorsBase(actor).atributs[attr] ?? 0] ?? 0
       })),
-      costAtributs: Object.values(sys.atributs).reduce((s, v) => s + (cfg.COST_ATRIBUT[v] ?? 0), 0),
+      costAtributs: Object.values(valorsBase(actor).atributs).reduce((s, v) => s + (cfg.COST_ATRIBUT[v] ?? 0), 0),
       tramsAtribut: [0, 1, 2, 3, 4, 5].map(v => ({ val: v, cost: cfg.COST_ATRIBUT[v] })),
       distribucionsAtribut: Object.entries(cfg.DISTRIBUCIONS_ATRIBUT).map(([id, d]) => ({
         id, nom: game.i18n.localize(d.nom),
@@ -122,8 +123,8 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
       costEspecie: cfg.COST_ESPECIE[sys.especie] ?? 0,
 
       // Pas: habilitats
-      habilitats: _prepHabilitatsAssistent(sys, cfg),
-      costHabilitats: Object.values(sys.habilitats).reduce((s, h) => s + (cfg.COST_HABILITAT[h.nivell] ?? 0), 0),
+      habilitats: _prepHabilitatsAssistent(valorsBase(actor), cfg),
+      costHabilitats: Object.values(valorsBase(actor).habilitats).reduce((s, h) => s + (cfg.COST_HABILITAT[h.nivell] ?? 0), 0),
       paquetsHabilitat: Object.entries(cfg.PAQUETS_HABILITAT).map(([id, p]) => ({
         id, nom: game.i18n.localize(p.nom),
         cost: p.valors.reduce((s, v) => s + (cfg.COST_HABILITAT[v] ?? 0), 0)
@@ -208,7 +209,7 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
   static async _onAjustarAtribut(event, target) {
     const attr   = target.dataset.attr;
     const delta  = parseInt(target.dataset.delta);
-    const actual = this.#actor.system.atributs[attr] ?? 0;
+    const actual = valorsBase(this.#actor).atributs[attr] ?? 0;
     const nou    = Math.max(0, Math.min(5, actual + delta));
     await this.#actor.update({ [`system.atributs.${attr}`]: nou });
     this.render(false);
@@ -251,7 +252,7 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
   static async _onAjustarHabilitat(event, target) {
     const habId  = target.dataset.habId;
     const delta  = parseInt(target.dataset.delta);
-    const actual = this.#actor.system.habilitats[habId]?.nivell ?? 0;
+    const actual = valorsBase(this.#actor).habilitats[habId]?.nivell ?? 0;
     const nou    = Math.max(0, Math.min(10, actual + delta));
     await this.#actor.update({ [`system.habilitats.${habId}.nivell`]: nou });
     this.render(false);
@@ -268,7 +269,7 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
   static async _onAplicarPaquetHabilitats(event, target) {
     const pkg = CONFIG.FORJA.PAQUETS_HABILITAT[target.dataset.paquet];
     if (!pkg) return;
-    const disponibles = _prepHabilitatsAssistent(this.#actor.system, CONFIG.FORJA)
+    const disponibles = _prepHabilitatsAssistent(valorsBase(this.#actor), CONFIG.FORJA)
       .filter(h => h.tipus === "basica" && h.nivell === 0);
     const updates = {};
     pkg.valors.forEach((val, i) => {

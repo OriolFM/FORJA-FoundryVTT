@@ -38,7 +38,8 @@ export function costSeguentHabilitat(actual) {
  * @returns {Promise<{cost:number, valorNou:number}|{error:"max"|"px"}>}
  */
 export async function millorarAtribut(actor, attr) {
-  const actual = actor.system.atributs[attr] ?? 0;
+  // Valor base (sense bonificacions d'efectes i artefactes, Fase 3).
+  const actual = foundry.utils.getProperty(actor._source, `system.atributs.${attr}`) ?? actor.system.atributs[attr] ?? 0;
   const cost = costSeguentAtribut(actual);
   if (cost == null) return { error: "max" };
   if (cost > pxLliures(actor)) return { error: "px" };
@@ -55,7 +56,7 @@ export async function millorarAtribut(actor, attr) {
  * @returns {Promise<{cost:number, valorNou:number}|{error:"max"|"px"}>}
  */
 export async function millorarHabilitat(actor, habId) {
-  const actual = actor.system.habilitats[habId]?.nivell ?? 0;
+  const actual = foundry.utils.getProperty(actor._source, `system.habilitats.${habId}.nivell`) ?? actor.system.habilitats[habId]?.nivell ?? 0;
   const cost = costSeguentHabilitat(actual);
   if (cost == null) return { error: "max" };
   if (cost > pxLliures(actor)) return { error: "px" };
