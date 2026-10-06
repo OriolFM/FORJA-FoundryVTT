@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-Compara el text d'un PDF del manual (maqueta) amb docs/FORJA_FC001CA_CORE.md
-per trobar paràgrafs que no hi siguin (Oriol FM, 2026-10-06).
+Compara el text d'un PDF del manual (maqueta), o d'una exportació del Word en
+Markdown o text (`pandoc -t gfm`, «Desa com a .txt»), amb
+docs/FORJA_FC001CA_CORE.md per trobar paràgrafs que no hi siguin (Oriol FM,
+2026-10-06).
 
 Extreu el text amb `pdftotext -bbox-layout` (poppler) i el reordena per
 columnes (la maqueta és a doble pàgina i a dues columnes: 4 columnes per full
@@ -10,7 +12,7 @@ del PDF). Per a cada paràgraf calcula quina part dels seus grups de 4 paraules
 per sota del llindar surten a l'informe: sovint són fragments de taules o
 paràgrafs tallats per un salt de columna; cal revisar-los a mà.
 
-Ús: python3 scripts/comparar-pdf.py manual.pdf [informe.md] [--llindar 0.6]
+Ús: python3 scripts/comparar-pdf.py manual.pdf|manual.md|manual.txt [informe.md] [--llindar 0.6]
 """
 import html
 import re
@@ -25,7 +27,15 @@ MANUAL = ARREL / "docs/FORJA_FC001CA_CORE.md"
 K = 4
 
 
+def treure_marques(text):
+    """Etiquetes HTML (taules de pandoc), destins d'enllaços i atributs `{#…}`."""
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\]\(#[^)]*\)", " ", text)
+    return re.sub(r"\{[#.][^}]*\}", " ", text)
+
+
 def normalitzar(text):
+    text = treure_marques(text)
     text = (text.replace("ŀl", "l·l").replace("Ŀl", "L·l").replace("’", "'")
             .replace("ﬁ", "fi").replace("ﬂ", "fl"))
     text = unicodedata.normalize("NFD", text).encode("ascii", "ignore").decode().lower()
@@ -50,6 +60,17 @@ def paragrafs_pdf(pdf):
     return resultat
 
 
+def paragrafs_text(fitxer):
+    """[(0, paràgraf)] d'un Markdown o text; cada fila d'una taula HTML és un paràgraf."""
+    resultat = []
+    for bloc in re.split(r"\n\s*\n", fitxer.read_text(encoding="utf-8")):
+        if "<table" in bloc:
+            resultat += [(0, f) for f in re.findall(r"<tr[^>]*>(.*?)</tr>", bloc, re.S)]
+        else:
+            resultat.append((0, re.sub(r"[|+=\-]{3,}", " ", bloc).replace("|", " ")))
+    return resultat
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     llindar = float(sys.argv[sys.argv.index("--llindar") + 1]) if "--llindar" in sys.argv else 0.6
@@ -57,11 +78,12 @@ def main():
         sys.exit(__doc__)
     pdf = Path(args[0])
     informe = Path(args[1]) if len(args) > 1 else None
-    md = normalitzar(MANUAL.read_text(encoding="utf-8"))
+    md = normalitzar(MANUAL.read_text(encoding="utf-8").replace("|", " "))
     grups = {tuple(md[i:i + K]) for i in range(len(md) - K + 1)}
     total = cobert = 0
     baixos = []
-    for full, p in paragrafs_pdf(pdf):
+    font = paragrafs_pdf(pdf) if pdf.suffix.lower() == ".pdf" else paragrafs_text(pdf)
+    for full, p in font:
         paraules = normalitzar(p)
         if len(paraules) < 10:
             continue
