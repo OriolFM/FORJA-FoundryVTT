@@ -6869,3 +6869,91 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 .forja-historial-px .px-data { color: #94a3b8; }
 .forja-historial-px .px-guany strong { color: #86efac; }
 .forja-historial-px .px-despesa strong { color: #fca5a5; }
+
+/* ------------------------------------------------------------------ */
+/* Manual FORJA (compendi): aspecte de llibre                          */
+/* El contingut de cada pàgina va dins `.forja-manual`                  */
+/* (scripts/build-manual.mjs#mdToHtml). El títol de la pàgina, que      */
+/* Foundry pinta fora del contingut, s'agafa per l'id de la fitxa.      */
+/* ------------------------------------------------------------------ */
+.forja-manual {
+  --manual-paper: #f7f4ee;
+  --manual-tinta: #1f1f1f;
+  --manual-gris: #5c5c5c;
+  --manual-gris-clar: #e9e5dc;
+  --manual-linia: #b9b3a6;
+  background: var(--manual-paper);
+  color: var(--manual-tinta);
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  font-size: 15px;
+  line-height: 1.55;
+  padding: 1.2em 1.6em;
+  border-radius: 3px;
+}
+.forja-manual p {
+  margin: 0 0 0.65em;
+  text-align: justify;
+  hyphens: auto;
+}
+.forja-manual h3,
+.forja-manual h4 {
+  font-family: "Arial Narrow", "Liberation Sans Narrow", Arial, "Helvetica Neue", sans-serif;
+  color: var(--manual-gris);
+  border: none;
+  text-shadow: none;
+}
+.forja-manual h3 {
+  font-size: 1.35em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid var(--manual-gris);
+  padding-bottom: 0.15em;
+  margin: 1.3em 0 0.6em;
+}
+.forja-manual h4 {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 1.1em 0 0.4em;
+}
+.forja-manual strong { color: #000; }
+.forja-manual a { color: #3d5a4a; text-decoration: underline dotted; }
+.forja-manual hr { border: none; border-top: 1px solid var(--manual-linia); margin: 1.2em 0; }
+.forja-manual blockquote {
+  margin: 0.8em 0;
+  padding: 0.5em 1em;
+  border-left: 4px solid var(--manual-gris);
+  background: var(--manual-gris-clar);
+  font-style: italic;
+}
+.forja-manual table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.6em 0 1em;
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid var(--manual-linia);
+}
+.forja-manual thead th,
+.forja-manual tr:first-child th {
+  background: var(--manual-gris);
+  color: #fff;
+  text-align: left;
+  font-weight: bold;
+}
+.forja-manual th,
+.forja-manual td {
+  padding: 3px 7px;
+  border: 1px solid var(--manual-linia);
+  color: inherit;
+}
+.forja-manual tbody tr:nth-child(even) { background: var(--manual-gris-clar); }
+.forja-manual tbody tr:nth-child(odd) { background: transparent; }
+[id^="JournalEntrySheet-Compendium-forja-manual-"] .journal-page-header h1,
+[id^="JournalEntrySheet-Compendium-forja-manual-"] .journal-entry-page > header h1 {
+  font-family: "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary, #333);
+  border-bottom: 3px solid #5c5c5c;
+}

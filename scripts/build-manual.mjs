@@ -237,7 +237,8 @@ function mdToHtml(md) {
     return `<h${depth}${id}>${text}</h${depth}>\n`;
   };
   marked.setOptions({ gfm: true, breaks: false, renderer });
-  return marked.parse(md.trim());
+  // `forja-manual`: l'estil de llibre de styles/forja.css només s'aplica al manual.
+  return `<div class="forja-manual">${marked.parse(md.trim())}</div>`;
 }
 
 /**

@@ -69,7 +69,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 
 ### Canviat
 - **Compendis:** capçalera gris pla (provisional).
-- **Manual:** els capítols surten en l'ordre del llibre, amb el número al davant.
+- **Manual:** els capítols surten en l'ordre del llibre, amb el número al davant, i les pàgines tenen aspecte de llibre (paper, lletra amb serifa, títols i taules en gris).
 - **Blocar amb el cos** també contra atacs armats si el defensor té armament natural (urpes, banyes…) o armadura natural, com a l'exemple del gólem del manual.
 - Si el defensor no té cap reacció lliure, es defensa amb la defensa bàsica sense diàleg, però amb un avís i «(sense reaccions)» al xat.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
