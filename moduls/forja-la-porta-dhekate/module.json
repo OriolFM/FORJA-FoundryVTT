@@ -1,0 +1,22 @@
+{
+  "id": "forja-la-porta-dhekate",
+  "title": "FORJA — La porta d'Hèkate",
+  "description": "Aventura introductòria de FORJA RPG (FM000CA, esborrany v0.2): el text del mòdul en un compendi de diari.",
+  "version": "0.2.0",
+  "authors": [{ "name": "Oriol FM" }],
+  "compatibility": { "minimum": "13", "verified": "14" },
+  "relationships": {
+    "systems": [{ "id": "forja", "type": "system", "compatibility": { "minimum": "0.4.0" } }]
+  },
+  "packs": [
+    {
+      "name": "aventura",
+      "label": "La porta d'Hèkate",
+      "path": "packs/aventura",
+      "banner": "systems/forja/assets/banners/gris.webp",
+      "type": "JournalEntry",
+      "system": "forja",
+      "ownership": { "PLAYER": "NONE", "ASSISTANT": "OWNER" }
+    }
+  ]
+}

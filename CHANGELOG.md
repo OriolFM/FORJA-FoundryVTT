@@ -14,6 +14,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Mòdul «La porta d'Hèkate»** (`moduls/forja-la-porta-dhekate`): l'aventura introductòria en un compendi de diari, amb el mateix estil que el manual. S'instal·la a part, com qualsevol mòdul.
 - **Tokens per als actors dels compendis:** Yoko-1, Trace, Marvin el dèlfic i el Gólem de carn porten el seu token; la resta, un de provisional (cercle gris amb el nom a l'anella).
 - **Estats amb efecte** (manual › Estats; Oriol FM, 2026-10-06):
   - **Abatut:** +2 a la latència; no pot córrer, saltar (càrrega) ni esquivar.

@@ -1,0 +1,45 @@
+{
+  "_id": "TVNgdwblbQhojvSv",
+  "_key": "!journal!TVNgdwblbQhojvSv",
+  "name": "7. Equipament",
+  "pages": [
+    {
+      "_id": "jaV3YrhsUMROXXTQ",
+      "_key": "!journal.pages!TVNgdwblbQhojvSv.jaV3YrhsUMROXXTQ",
+      "name": "Artefactes",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<div class=\"forja-manual\"><h3 id=\"egida-ancestral-56pc\">Ègida ancestral 56PC</h3>\n<p>Artefacte modular, s&#39;activa amb una reacció trivial. Pot utilitzar-se en temps actiu. Genera una ègida que protegeix el PJ contra dany físic i energètic amb un valor de protecció 20.</p>\n<p>Vist per primer cop en possessió de l’aesir Hèkate, l’ègida ancestral és un artefacte modular en dues parts.</p>\n<p>De fet, és un conjunt de dues ègides, una de les quals pot activar-se contra dany físic, i l’altra contra dany energètic, sempre que l’usuari tingui prou reaccions per fer-ho.</p>\n<p>Cadascuna de les dues ègides té mateix nivell de protecció i són perfectament funcionals si es separen (el cost de cadascuna per separat és de 28 PC).</p>\n</div>"
+      },
+      "sort": 100000,
+      "flags": {}
+    },
+    {
+      "_id": "mIsKEfMUsDOopXks",
+      "_key": "!journal.pages!TVNgdwblbQhojvSv.mIsKEfMUsDOopXks",
+      "name": "Transport",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<div class=\"forja-manual\"><h3 id=\"autoplataforma-lliscadora\">Autoplataforma lliscadora</h3>\n<p>Aquestes plataformes flotants de 3 metres d’ample per 6 de llarg fan servir tecnologia antigravetat per carregar coses feixugues (fins a deu tones).</p>\n<p>Quan s’aturen poden posar-se a nivell de terra amb un petit graó, però un cop actives, tenen un sostre de vol aproximat d’un metre, i poden desplaçar-se a 9 hexàgons per torn (com un humanoide de mida mitjana a pas lleuger). Quan es mou, la plataforma es manté sempre horitzontal.</p>\n<p>Els moviments de la plataforma es poden controlar des d’un braçalet. També es pot seleccionar un mode de seguiment, en què la plataforma seguirà el PJ que porti el dispositiu de control.</p>\n<p>La plataforma té uns dispositius de seguretat que la fan reduïr la velocitat fins a aturar-se si detecten perill de colisió. En mode de seguiment, la plataforma es bellugarà per evitar els obstacles, provant de</p>\n</div>"
+      },
+      "sort": 200000,
+      "flags": {}
+    }
+  ],
+  "folder": null,
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

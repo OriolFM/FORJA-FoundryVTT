@@ -31,6 +31,8 @@
  * encadenat a `npm run build:manual`.
  * Variable d'entorn FORJA_MD_DIR: ruta personalitzada a la carpeta de Markdown
  * (per defecte: ../../FOUNDRY/MD respecte al root del projecte).
+ * FORJA_OUT_DIR i FORJA_COMPENDI (o `--md=`, `--out=`, `--compendi=`): carpeta de sortida i compendi dels enllaços
+ * (per defecte, el manual del sistema; els mòduls d'aventura, vegeu `moduls/`).
  */
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from "node:fs";
 import { resolve, dirname, basename } from "node:path";
@@ -40,8 +42,12 @@ import { marked } from "marked";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT       = resolve(__dirname, "..");
-const MD_DIR     = process.env.FORJA_MD_DIR ? resolve(process.env.FORJA_MD_DIR) : resolve(ROOT, "../../FOUNDRY/MD");
-const OUT_DIR    = resolve(ROOT, "packs/_source/manual");
+// Arguments `--md=`, `--out=`, `--compendi=` (funcionen igual a Windows) o variables d'entorn.
+const ARGS       = Object.fromEntries(process.argv.slice(2).map(a => a.match(/^--([a-z]+)=(.*)$/)).filter(Boolean).map(m => [m[1], m[2]]));
+const MD_DIR     = resolve(ARGS.md ?? process.env.FORJA_MD_DIR ?? resolve(ROOT, "../../FOUNDRY/MD"));
+const OUT_DIR    = resolve(ARGS.out ?? process.env.FORJA_OUT_DIR ?? resolve(ROOT, "packs/_source/manual"));
+// Compendi de destí dels enllaços interns (els mòduls d'aventura en fan servir un altre).
+const COMPENDI   = ARGS.compendi ?? process.env.FORJA_COMPENDI ?? "forja.manual";
 
 const ID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -215,7 +221,7 @@ function convertirReferencies(linies, capcaleres, fitxerActual) {
       // el compendi, no com a documents de món — sense el prefix, Foundry
       // intenta resoldre l'UUID contra les col·leccions de món i l'enllaç
       // surt "broken" (detectat en viu, vegeu 09_CONTEXT_SESSIONS.md).
-      const uuid = `Compendium.forja.manual.JournalEntry.${capcalera.journalId}.JournalEntryPage.${capcalera.pageId}` +
+      const uuid = `Compendium.${COMPENDI}.JournalEntry.${capcalera.journalId}.JournalEntryPage.${capcalera.pageId}` +
         (capcalera.ancoratge ? `#${capcalera.ancoratge}` : "");
       resultat += original.slice(cursor, inici) + `@UUID[${uuid}]{${frase}}`;
       cursor = fi;

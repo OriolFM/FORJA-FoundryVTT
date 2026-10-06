@@ -1,0 +1,29 @@
+{
+  "_id": "c66mZhl4JMn5pC9h",
+  "_key": "!journal!c66mZhl4JMn5pC9h",
+  "name": "8. Contraportada",
+  "pages": [
+    {
+      "_id": "OibH9pBgwVFwgYVz",
+      "_key": "!journal.pages!c66mZhl4JMn5pC9h.OibH9pBgwVFwgYVz",
+      "name": "Introducció",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<div class=\"forja-manual\"><p>HAVIA DE SER<br>UNA MISSIÓ RUTINÀRIA</p>\n<p>En aquest mòdul, el grup de PJs ha aconseguit una llicència de l’ANM per explorar i catalogar un hàbitat del sector Hades de la Forja de Mons, una àrea majoritàriament inexplorada, però que els drons de manteniment ja han condicionat per a l’accés humà.</p>\n<p>Els PJs descobriran que aquest hàbitat ha estat saquejat fa un parell de setmanes, i alguns artefactes potencialment catastròfics han arribat al mercat negre, i qui el té pretén vendre’ls al millor postor.</p>\n<p>Uns agents de Realitat Prima volen adquirir un d’aquests artefactes, un portal de bretxa multiversal. Si l’aconsegueixen, les potències de la seva realitat podran entrar en qualsevol hàbitat no catalogat de Forja sense ésser detectats, i l’ANM estarà en perill greu.</p>\n<p>Els PJ han de recuperar els artefactes, descobrir els agents infiltrats i exposar els co-conspiradors.</p>\n</div>"
+      },
+      "sort": 100000,
+      "flags": {}
+    }
+  ],
+  "folder": null,
+  "sort": 800000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

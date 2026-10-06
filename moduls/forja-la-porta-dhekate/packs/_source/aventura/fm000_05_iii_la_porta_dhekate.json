@@ -1,0 +1,29 @@
+{
+  "_id": "Jwutk2MRpp0fFuMV",
+  "_key": "!journal!Jwutk2MRpp0fFuMV",
+  "name": "5. III – La porta d’Hèkate",
+  "pages": [
+    {
+      "_id": "rQhnsdhEzujx4Hpm",
+      "_key": "!journal.pages!Jwutk2MRpp0fFuMV.rQhnsdhEzujx4Hpm",
+      "name": "Introducció",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<div class=\"forja-manual\"><p>Els agents de Realitat Prima s’han fet amb el portal de bretxa i volen obrir-lo en un dels hàbitats per catalogar del sector Hades.</p>\n<p>Amb ajuda d’Orfeu o sense, els PJs rastregen els agents i aconsegueixen trobar l’hàbitat en concret on s’amaguen els agents.</p>\n<p>Els agents proven d’obrir el portal per obtenir els reforços que esperen a Realitat Prima per entrar a l’ANM, però les coordenades espai-temporals són errònies, i un portal inestable absorbeix els PJs i els agents a una realitat paral·lela on són atacats per criatures de malson.</p>\n<p>Finalment, amb l’ajut inesperat d’una femella que es fa dir Hèkate, poden tornar a l’ANM, però el portal es tanca darrere seu.</p>\n</div>"
+      },
+      "sort": 100000,
+      "flags": {}
+    }
+  ],
+  "folder": null,
+  "sort": 500000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

@@ -6957,3 +6957,5 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
   color: var(--color-text-primary, #333);
   border-bottom: 3px solid #5c5c5c;
 }
+.forja-manual th h4 { color: inherit; margin: 0; font-size: 1.05em; }
+.forja-manual td p { margin: 0; text-align: left; }

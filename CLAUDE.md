@@ -116,6 +116,8 @@ FORJA-FoundryVTT/
 │   ├── unitaris/              # npm test — lògica pura, sense Foundry
 │   └── joc/                   # Proves en un Foundry real sense pantalla (v13 i v14);
 │                              # local.mjs: segon client contra el Foundry local (Windows)
+├── moduls/                    # Mòduls de Foundry d'aventures (forja-la-porta-dhekate: text en font/*.md,
+│                              # compendi de diari; npm run build:hekate)
 ├── mon-proves/                # Món de proves compartit (Foundry v14) + imatges; vegeu el seu README
 ├── skills/                    # Còpia dels skills de referència (forja-parametres, forja-creator) i com comprovar-los
 └── docs/

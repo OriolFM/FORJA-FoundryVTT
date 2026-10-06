@@ -1,0 +1,29 @@
+{
+  "_id": "VCcHytaouKGdx9ZQ",
+  "_key": "!journal!VCcHytaouKGdx9ZQ",
+  "name": "0. Crèdits",
+  "pages": [
+    {
+      "_id": "XEHpUDBWhiw3nZlf",
+      "_key": "!journal.pages!VCcHytaouKGdx9ZQ.XEHpUDBWhiw3nZlf",
+      "name": "Introducció",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "text": {
+        "format": 1,
+        "content": "<div class=\"forja-manual\"><p>Disseny: Oriol Ferrerons</p>\n<p>Maquetació: Oriol Ferrerons</p>\n<p>Il·lustracions: Oriol Ferrerons</p>\n<p>Agraïments: Arnau Ferrerons, Juan Antonio Ramos</p>\n<p>Jugadors de prova: (inserir aquí)</p>\n</div>"
+      },
+      "sort": 100000,
+      "flags": {}
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}
