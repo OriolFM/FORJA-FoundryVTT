@@ -31,6 +31,13 @@
     {{/if}}
   </div>
 
+  {{#if aptitud}}
+  <div class="mt-mods">
+    <span class="mt-mod">{{aptitud}}{{#if unsRestats}} · {{localize "FORJA.Aptitud.UnsRestats" n=unsRestats}}{{/if}}</span>
+    {{#if inepteSenseNivell}}<span class="mt-mod mt-mod-penal">{{localize "FORJA.Aptitud.AvisInepte"}}</span>{{/if}}
+  </div>
+  {{/if}}
+
   <!-- Modificadors aplicats -->
   {{#if (add modDaus modDificultat)}}
   <div class="mt-mods">

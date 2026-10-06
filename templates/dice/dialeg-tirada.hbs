@@ -42,6 +42,18 @@
     </div>
   </div>
 
+  {{#if aptituds.length}}
+  <!-- Adepte/inepte: el jugador o el DJ decideix si la tirada és de l'àmbit -->
+  <div class="tirada-aptitud" title="{{localize 'FORJA.Aptitud.Ajuda'}}">
+    <label>{{localize "FORJA.Aptitud.Camp"}}</label>
+    <select name="aptitud">
+      <option value="">{{localize "FORJA.Aptitud.Cap"}}</option>
+      {{#each aptituds}}<option value="{{valor}}">{{etiqueta}}</option>{{/each}}
+    </select>
+    {{#if avisInepte}}<p class="tirada-aptitud-avis"><i class="fas fa-triangle-exclamation"></i> {{localize "FORJA.Aptitud.AvisInepte"}}</p>{{/if}}
+  </div>
+  {{/if}}
+
   {{#if penalSalut}}
   <div class="tirada-penal-avis">
     <i class="fas fa-heart-crack"></i>

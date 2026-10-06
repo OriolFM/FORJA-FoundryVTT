@@ -6994,3 +6994,7 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
   color: #034751;
   border-bottom: 3px solid #034751;
 }
+
+/* Adepte/inepte al diàleg de tirada */
+.forja.dialeg-tirada .tirada-aptitud { display: flex; flex-direction: column; gap: 2px; margin: 6px 0; }
+.forja.dialeg-tirada .tirada-aptitud-avis { margin: 2px 0 0; font-size: 0.85em; color: #c0392b; }

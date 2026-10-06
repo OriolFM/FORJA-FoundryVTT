@@ -280,3 +280,9 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 - Carpeta «La porta d'Hèkate» als compendis `pj`, `pnj` i `criatures`; importar-ne un i obrir-ne la fitxa (derivats, trets, habilitats amb especialitat).
 - Mòdul `forja-la-porta-dhekate`: s'activa, el compendi de diari mostra els 9 capítols en ordre i les taules dels PJ pregenerats es llegeixen bé.
 - Eina del DJ: botó «Nou actor FORJA» al directori d'actors (PJ → assistent de creació; PNJ, criatura, animal → fitxa amb el tier); menú d'un actor → «Desa al compendi del món» crea `FORJA (món): …` la primera vegada, hi copia l'actor i, si ja n'hi ha un amb el mateix nom, demana si el reemplaça. Els jugadors no veuen ni el botó ni l'opció.
+
+### Pendent de provar a Foundry: adepte/inepte per àmbits, 2026-10-06
+- Un PJ amb «Adepte (social)»: tirada des de la fitxa → el diàleg mostra «Àmbit de la tirada»; amb «Adepte (social)», els 1 es repeteixen (al xat no surt el 1 repetit) i el missatge ho indica.
+- Un PJ amb «Inepte (tècnic)»: amb l'àmbit marcat, un 10 val 1 fita i cada 1 en resta una; amb una habilitat a 0 surt l'avís al diàleg i al xat.
+- Sense cap d'aquests trets, el diàleg no mostra el desplegable.
+- Compendi del manual regenerat: capítols i pàgines amb els mateixos `_id` (les còpies importades als mons no es dupliquen), enllaços creuats que obren la pàgina i l'apartat, taules de l'exemple de combat (caselles de salut) i de visibilitat.

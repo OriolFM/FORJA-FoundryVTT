@@ -1,6 +1,7 @@
 import ForjaRoll from "./forja-roll.mjs";
 import DiategTirada from "./dialeg-tirada.mjs";
 import { consumirConcentracio } from "../combat/reaccions.mjs";
+import { aptitudsDelsTrets } from "./fites.mjs";
 
 /**
  * Obre el diàleg de configuració i executa la tirada.
@@ -19,6 +20,10 @@ import { consumirConcentracio } from "../combat/reaccions.mjs";
  * Concentració (B5; › Gestió del temps de joc › Concentració): si l'actor
  * s'havia concentrat en declarar, la tirada rep +1 dau i la concentració es
  * consumeix. El diàleg ja no ofereix el +1 dau lliure; només en mostra l'estat.
+ * Adepte/inepte (manual › Trets, l. 1332 i 1597; per àmbits, Oriol FM
+ * 2026-10-06): si l'actor en té, el diàleg deixa marcar que la tirada és de
+ * l'àmbit (ho decideix el jugador o el DJ); adepte repeteix els 1 (`r1`),
+ * inepte fa que els 10 no comptin doble i que cada 1 resti una fita.
  */
 export async function ferTirada({ actor, atribut, atributVal, habId = null, habNivell = 0, label }) {
   const sys      = actor.system;
@@ -38,7 +43,8 @@ export async function ferTirada({ actor, atribut, atributVal, habId = null, habN
     habNivell,
     poolBase,
     penalSalut: penal,
-    concentrat: sys.concentrat ?? false
+    concentrat: sys.concentrat ?? false,
+    aptituds:   aptitudsDelsTrets(actor.items)
   });
 
   if (!config) return null; // cancel·lat
@@ -48,9 +54,10 @@ export async function ferTirada({ actor, atribut, atributVal, habId = null, habN
   const poolFinal = Math.max(1, poolBase + config.modDaus + dauConcentracio);
   const difFinal  = Math.max(1, config.dificultat + penal + config.modDificultat);
 
-  // Tirar
-  const roll = new ForjaRoll(`${poolFinal}d10`, {}, {
-    forja: { dificultat: difFinal }
+  // Tirar (adepte: repeteix un cop els 1; inepte: es compta a ForjaRoll)
+  const aptitud = config.aptitud;
+  const roll = new ForjaRoll(`${poolFinal}d10${aptitud?.tipus === "adepte" ? "r1" : ""}`, {}, {
+    forja: { dificultat: difFinal, inepte: aptitud?.tipus === "inepte" }
   });
   await roll.evaluate();
 
@@ -65,6 +72,9 @@ export async function ferTirada({ actor, atribut, atributVal, habId = null, habN
     concentrat:    dauConcentracio > 0,
     modDaus:       config.modDaus,
     modDificultat: config.modDificultat,
+    aptitud:       aptitud ? game.i18n.format(`FORJA.Aptitud.${aptitud.tipus === "adepte" ? "Adepte" : "Inepte"}`,
+      { ambit: game.i18n.localize(`FORJA.Aptitud.Ambit.${aptitud.ambit}`) }) : "",
+    inepteSenseNivell: aptitud?.tipus === "inepte" && !!habId && !habNivell,
     ...roll.forjaResults
   });
 

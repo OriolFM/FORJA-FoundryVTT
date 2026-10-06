@@ -8,6 +8,8 @@
  *   d10 = 1   → marca de pífia
  *   Pífia: cap fita + almenys un 1
  */
+import { comptarFites } from "./fites.mjs";
+
 export default class ForjaRoll extends Roll {
 
   static CHAT_TEMPLATE = "systems/forja/templates/dice/missatge-tirada.hbs";
@@ -19,26 +21,17 @@ export default class ForjaRoll extends Roll {
   }
 
   _computeForjaResults() {
-    const dice   = this.dice[0]?.results?.map(r => r.result) ?? [];
+    // Només els daus actius: amb adepte (`r1`), el 1 repetit queda inactiu.
+    const dice   = this.dice[0]?.results?.filter(r => r.active !== false).map(r => r.result) ?? [];
     const opts   = this.options.forja ?? {};
     const dif    = opts.dificultat ?? 1;
 
-    let fites   = 0;
-    let hasOnes = false;
-
-    for (const d of dice) {
-      if (d === 10)     fites += 2;
-      else if (d >= 6)  fites += 1;
-      if (d === 1)      hasOnes = true;
-    }
-
-    fites = Math.max(0, fites);
-    const pifia    = hasOnes && fites === 0;
+    const { fites, hasOnes, pifia, unsRestats } = comptarFites(dice, { inepte: !!opts.inepte });
     const exit     = !pifia && fites >= dif;
     const excedent = exit ? fites - dif : 0;
 
     this.forjaResults = {
-      dice, fites, hasOnes, pifia,
+      dice, fites, hasOnes, pifia, unsRestats,
       dificultat: dif,
       exit, excedent,
       totalDice: dice.length

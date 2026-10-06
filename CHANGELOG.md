@@ -14,6 +14,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Adepte i inepte a les tirades:** si el personatge en té, el diàleg de tirada deixa triar l'àmbit (físic, mental, social o tècnic) quan l'activitat ho és. Adepte repeteix un cop els 1; inepte fa que els 10 no comptin doble i que cada 1 resti una fita.
 - **Eina del DJ per al contingut:** botó «Nou actor FORJA» al directori d'actors (PJ amb l'assistent de creació, PNJ, criatura o animal) i opció «Desa al compendi del món» al menú de cada actor. Desa els actors en compendis del món (`FORJA (món): …`), que no es perden en actualitzar el sistema.
 - **Mòdul «La porta d'Hèkate»** (`moduls/forja-la-porta-dhekate`): l'aventura introductòria en un compendi de diari, amb el mateix estil que el manual. S'instal·la a part, com qualsevol mòdul.
 - **Actors de «La porta d'Hèkate»** als compendis del sistema, en una carpeta pròpia: 8 PJ pregenerats, 13 PNJ (Hèkate, Orfeu, la magistrada Blume…) i 4 criatures (Aràcnid Acherontia, amb el seu token). Venen d'unes regles anteriors i s'han convertit a les actuals; el que no s'ha pogut mapar és a `moduls/forja-la-porta-dhekate/CONVERSIO.md`.

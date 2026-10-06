@@ -44,6 +44,12 @@ export default class DiategTirada extends HandlebarsApplicationMixin(Application
       poolBase:   c.poolBase,
       penalSalut: c.penalSalut,
       concentrat: c.concentrat,
+      aptituds:   (c.aptituds ?? []).map(a => ({
+        valor: `${a.tipus}:${a.ambit}`,
+        etiqueta: game.i18n.format(`FORJA.Aptitud.${a.tipus === "adepte" ? "Adepte" : "Inepte"}`,
+          { ambit: game.i18n.localize(`FORJA.Aptitud.Ambit.${a.ambit}`) })
+      })),
+      avisInepte: !!c.habId && !c.habNivell && (c.aptituds ?? []).some(a => a.tipus === "inepte"),
       dificultat:    1,
       modDaus:       0,
       modDificultat: 0
@@ -55,7 +61,8 @@ export default class DiategTirada extends HandlebarsApplicationMixin(Application
     this.#resolve?.({
       dificultat:    Math.max(1, parseInt(d.dificultat)    || 1),
       modDaus:       parseInt(d.modDaus)       || 0,
-      modDificultat: parseInt(d.modDificultat) || 0
+      modDificultat: parseInt(d.modDificultat) || 0,
+      aptitud:       d.aptitud ? { tipus: d.aptitud.split(":")[0], ambit: d.aptitud.split(":")[1] } : null
     });
   }
 
