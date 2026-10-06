@@ -607,7 +607,7 @@
       "name": "Ègida ancestral (dany físic)",
       "type": "artefacte",
       "system": {
-        "cost": 40,
+        "cost": 28,
         "categoria": "armadura",
         "activacio": {
           "tipus": "trivial",
@@ -623,8 +623,8 @@
           "tornsRecarrega": null,
           "modeEspera": false
         },
-        "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 20 contra dany físic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany energètic); cadascuna funciona per separat.",
-        "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). El mòdul (regles anteriors) en donava 28 PC per ègida; amb els paràmetres del manual v3 en surten 40.",
+        "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 8 contra dany físic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany energètic); cadascuna funciona per separat.",
+        "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). Es manté el cost del mòdul (28 PC per ègida); amb els paràmetres del manual v3 dona protecció 8 (el 20 del mòdul era de l'escala antiga).",
         "parametres": [
           {
             "tipus": "reaccio"
@@ -635,7 +635,7 @@
           },
           {
             "tipus": "egida",
-            "nivell": 20
+            "nivell": 8
           }
         ],
         "construccio": {
@@ -662,7 +662,7 @@
       "name": "Ègida ancestral (energia)",
       "type": "artefacte",
       "system": {
-        "cost": 40,
+        "cost": 28,
         "categoria": "armadura",
         "activacio": {
           "tipus": "trivial",
@@ -678,8 +678,8 @@
           "tornsRecarrega": null,
           "modeEspera": false
         },
-        "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 20 contra dany energètic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany físic); cadascuna funciona per separat.",
-        "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). El mòdul (regles anteriors) en donava 28 PC per ègida; amb els paràmetres del manual v3 en surten 40.",
+        "mecanica": "S'activa amb una reacció trivial i es pot fer servir en temps actiu. Genera una ègida de protecció 8 contra dany energètic. Forma part de l'ègida ancestral modular, amb l'altra meitat (contra dany físic); cadascuna funciona per separat.",
+        "descripcio": "Vist per primer cop en possessió de l'aesir Hèkate (La porta d'Hèkate). Es manté el cost del mòdul (28 PC per ègida); amb els paràmetres del manual v3 dona protecció 8 (el 20 del mòdul era de l'escala antiga).",
         "parametres": [
           {
             "tipus": "reaccio"
@@ -690,7 +690,7 @@
           },
           {
             "tipus": "egida",
-            "nivell": 20
+            "nivell": 8
           }
         ],
         "construccio": {

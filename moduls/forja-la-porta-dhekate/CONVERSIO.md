@@ -65,8 +65,6 @@ Cap.
 - **Frederick Bauer (Orfeu)** (`pnj`): Cibermòdem d'interfície neural directa: el manual diu 16 PC i el catàleg 15 PC
 - **Hèkate** (`pnj`): Cibermòdem d'interfície neural directa: el manual diu 16 PC i el catàleg 15 PC
 - **Hèkate** (`pnj`): Espasa d'energia: el manual diu 44 PC i el catàleg 21 PC
-- **Hèkate** (`pnj`): Ègida ancestral (dany físic): el manual diu 28 PC i el catàleg 40 PC
-- **Hèkate** (`pnj`): Ègida ancestral (energia): el manual diu 28 PC i el catàleg 40 PC
 - **Hèkate** (`pnj`): Matar màquina: el manual diu 16 PC i el catàleg 14 PC
 - **Hèkate** (`pnj`): Enllaç mental: el manual diu 7 PC i el catàleg 10 PC
 - **Hèkate** (`pnj`): Negar el dany: el manual diu 12 PC i el catàleg 15 PC
@@ -160,7 +158,7 @@ Esperables: la defensa, la salut i part dels costos canvien d'escala entre versi
 | Agent d'intel·ligència (ISSR) | `pnj` | latencia | 10 | 9 | -1 |
 | Agent d'intel·ligència (ISSR) | `pnj` | defensa | 9 | 2 | -7 |
 | Agent d'intel·ligència (ISSR) | `pnj` | reduccioDany | 4 | 2 | -2 |
-| Hèkate | `pnj` | cost | 841 | 1057 | 216 |
+| Hèkate | `pnj` | cost | 841 | 1033 | 192 |
 | Hèkate | `pnj` | defensa | 14 | 1 | -13 |
 | Hèkate | `pnj` | reduccioDany | 5 | 2 | -3 |
 | Aràcnid Acherontia XM976 | `criatures` | cost | 302 | 408 | 106 |
