@@ -1,0 +1,22 @@
+{
+  "_id": "2xPxhYMEJu2noajH",
+  "_key": "!items!2xPxhYMEJu2noajH",
+  "name": "Encantador",
+  "type": "tret",
+  "system": {
+    "cost": 2,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "encantador"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

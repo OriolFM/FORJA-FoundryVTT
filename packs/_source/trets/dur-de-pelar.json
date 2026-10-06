@@ -1,0 +1,24 @@
+{
+  "_id": "kWEELuzKNIY0oBpO",
+  "_key": "!items!kWEELuzKNIY0oBpO",
+  "name": "Dur de Pelar",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+    "efecte": {
+      "flag": "ignoraPenalitzacioFerides"
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "dur-de-pelar"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

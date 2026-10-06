@@ -1,0 +1,263 @@
+{
+  "_id": "xfstQ6Nex0ZgzKsF",
+  "_key": "!actors!xfstQ6Nex0ZgzKsF",
+  "name": "Kraken",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 5,
+      "DES": 2,
+      "AGI": 3,
+      "PER": 1,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "cefalopode",
+    "mida": 5,
+    "constitucio": 5,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 5
+      },
+      "navegacio": {
+        "nivell": 3
+      },
+      "nedar": {
+        "nivell": 5
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "supervivencia": {
+        "nivell": 3
+      }
+    },
+    "pc": 350,
+    "tier": "criatura",
+    "notes": "<p>Als mons amb grans mars i oceans s'hi poden trobar habitualment cefalòpodes de mida colossal, que aquí categoritzem senzillament com a Krakens. Aquestes bèsties de força titànica són extremadament intel·ligents, i habitualment tendeixen a evitar els humans. No obstant això, són bastant territorials, i no es prenen bé que se'ls envaeixi el que consideren casa seva.</p>"
+  },
+  "prototypeToken": {
+    "name": "Kraken",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "gxsHAw3BdAkkmCRT",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.gxsHAw3BdAkkmCRT",
+      "name": "Aquàtic",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "Neda a velocitat normal.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aquatic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ubrjMUTz7qaGwGrK",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.ubrjMUTz7qaGwGrK",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "QeC34AJYV2KPNlfJ",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.QeC34AJYV2KPNlfJ",
+      "name": "Atribut Titànic",
+      "type": "tret",
+      "system": {
+        "cost": 30,
+        "descripcio": "Les fites es compten a partir de 4+; ignora 1s en un atribut.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "atribut-titanic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "xNqGk9vNhdjhPfn9",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.xNqGk9vNhdjhPfn9",
+      "name": "Coordinació Millorada",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "coordinacio-millorada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Qvwp6JxpJ5IAfOOD",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.Qvwp6JxpJ5IAfOOD",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "BlwpcJgyr25SLc04",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.BlwpcJgyr25SLc04",
+      "name": "Sonar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sonar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "bEOu7XhEt4BAeXDJ",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.bEOu7XhEt4BAeXDJ",
+      "name": "Tentacles (4)",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "5 PC per parell.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "tentacles",
+          "valorX": 4
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "R73kxUQclHho7dki",
+      "_key": "!actors.items!xfstQ6Nex0ZgzKsF.R73kxUQclHho7dki",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7559",
+      "costManual": 350,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 1,
+        "reduccioDany": 5,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_id": "jRypYzjQhpCfiH3z",
+  "_key": "!items!jRypYzjQhpCfiH3z",
+  "name": "Negar el dany",
+  "type": "efecte",
+  "system": {
+    "cost": 15,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari genera una ègida de protecció 15.",
+    "descripcio": "Segons algunes teories, aprofita i amplifica la reverberació sònica del crit de l'usuari per generar una ona expansiva que contraresta un atac entrant, encara que un cop prou fort pot fer-la inútil.",
+    "parametres": [
+      {
+        "tipus": "reaccio"
+      },
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "egida",
+        "nivell": 15
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "negar-el-dany"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

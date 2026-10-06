@@ -1,0 +1,22 @@
+{
+  "_id": "2BBZBLnT4wetI0zr",
+  "_key": "!items!2BBZBLnT4wetI0zr",
+  "name": "Recursos (pobre de solemnitat)",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "recursos-pobre"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

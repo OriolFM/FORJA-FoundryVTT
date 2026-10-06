@@ -1,0 +1,55 @@
+{
+  "_id": "F2AHPRFOfY1gEEwO",
+  "_key": "!items!F2AHPRFOfY1gEEwO",
+  "name": "Majestat divina",
+  "type": "efecte",
+  "system": {
+    "cost": 24,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte al voltant de l'usuari, que queden astorats durant una escena per la majestuositat que en desprèn (control emocional). Tots pateixen l'estat marejat (modificador +3).",
+    "descripcio": "El canalitzador irradia l'aura majestàtica del seu patró, que deixa embadalits tots els objectius hostils dins l'àrea d'efecte, incapaços de declarar noves accions fins que no se'n sobreposin.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "control-emocional"
+      },
+      {
+        "tipus": "estat",
+        "estat": "marejat",
+        "nivell": 3
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "majestat-divina"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

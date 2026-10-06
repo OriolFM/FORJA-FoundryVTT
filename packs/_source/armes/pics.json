@@ -1,0 +1,30 @@
+{
+  "_id": "dmneLAbbpkKWsx4R",
+  "_key": "!items!dmneLAbbpkKWsx4R",
+  "name": "Pics",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 3,
+    "abast": 1,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+3",
+    "maniobra": "Destrossar — Malmet armadures físiques: redueix la protecció en 2 per cada atac de Destrossar que en superi el valor (s'aplica després de l'atac).",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Pics (manual: Lat +3, Abast +1, Dany FOR+3)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "pics"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

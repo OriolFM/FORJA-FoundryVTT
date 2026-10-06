@@ -1,0 +1,53 @@
+{
+  "_id": "rSWnoCr5cWmOlzy0",
+  "_key": "!items!rSWnoCr5cWmOlzy0",
+  "name": "El rostre de la parca",
+  "type": "efecte",
+  "system": {
+    "cost": 21,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Tots els objectius dins l'àrea d'efecte centrada en el nigromant reben els estats acovardit i immobilitzat (amb un modificador de +2) durant una escena.",
+    "descripcio": "El nigromant desprèn una aura terrorífica que indueix por a qui s'hi acosta i immobilitza aquells que s'hi apropen massa.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "acovardit",
+        "nivell": 2
+      },
+      {
+        "tipus": "estat",
+        "estat": "immobilitzat",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "el-rostre-de-la-parca"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

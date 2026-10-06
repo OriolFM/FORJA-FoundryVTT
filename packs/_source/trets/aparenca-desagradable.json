@@ -1,0 +1,22 @@
+{
+  "_id": "UvaZHoCd66tUVjNj",
+  "_key": "!items!UvaZHoCd66tUVjNj",
+  "name": "Aparença Estranya (desagradable)",
+  "type": "tret",
+  "system": {
+    "cost": -2,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "aparenca-desagradable"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

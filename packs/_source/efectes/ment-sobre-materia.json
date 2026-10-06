@@ -1,0 +1,47 @@
+{
+  "_id": "orvAFz9K9KKHcvV0",
+  "_key": "!items!orvAFz9K9KKHcvV0",
+  "name": "Ment sobre matèria",
+  "type": "efecte",
+  "system": {
+    "cost": 20,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Permet exercir telecinesi de nivell alfa (massa no superior a la del PJ, manipulació precisa).",
+    "descripcio": "Un dels efectes psíquics més vistosos: permet controlar una massa a distància i variar-ne la velocitat dins els límits de l'efecte. Si en surt, passa a regir-se per la gravetat i altres forces externes.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "telecinesi",
+        "categoria": "alfa"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "ment-sobre-materia"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

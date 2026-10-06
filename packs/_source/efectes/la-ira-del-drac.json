@@ -1,0 +1,53 @@
+{
+  "_id": "DdQEu1xAwAjw6Qpx",
+  "_key": "!items!DdQEu1xAwAjw6Qpx",
+  "name": "La ira del drac",
+  "type": "efecte",
+  "system": {
+    "cost": 10,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Durant una escena, l'usuari és sota els efectes dels estats berserc (modificador +0) i ràpid/2.",
+    "descripcio": "Té mala reputació entre els mestres de Takama-ga-hara perquè trenca l'equilibri cognitiu de qui el fa servir. És un últim recurs per a qui ja està greument ferit, tot i que un oponent serè pot aprofitar la manca de defensa que provoca.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "berserc",
+        "nivell": 0
+      },
+      {
+        "tipus": "estat",
+        "estat": "rapid",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-ira-del-drac"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "_id": "Rw2dyaCWGRMrsvXy",
+  "_key": "!items!Rw2dyaCWGRMrsvXy",
+  "name": "Bastó neural",
+  "type": "artefacte",
+  "system": {
+    "cost": 10,
+    "categoria": "arma",
+    "activacio": {
+      "tipus": "cap",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": false,
+      "actiu": true,
+      "modLatencia": 2
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Arma contundent amb latència +2, abast a tocar, i +2 al dany. Aplica els estats atordit (mod. +0) i lent/2.",
+    "descripcio": "Una de les eines favorites dels magistrats per reduir algú sense causar danys permanents.",
+    "parametres": [
+      {
+        "tipus": "arma",
+        "base": "contundent",
+        "latencia": 2,
+        "dany": 2
+      },
+      {
+        "tipus": "estat",
+        "estat": "atordit",
+        "nivell": 0
+      },
+      {
+        "tipus": "estat",
+        "estat": "lent",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "baston-neural"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

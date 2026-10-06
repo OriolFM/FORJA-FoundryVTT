@@ -1,0 +1,230 @@
+{
+  "_id": "KnExxDrj11eQYTqS",
+  "_key": "!actors!KnExxDrj11eQYTqS",
+  "name": "Gólem de carn menor",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 1,
+      "INT": 1,
+      "APL": 1
+    },
+    "especie": "constructe",
+    "mida": 4,
+    "constitucio": 5,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 4
+      },
+      "forca-bruta": {
+        "nivell": 4
+      },
+      "resistencia": {
+        "nivell": 4
+      }
+    },
+    "pc": 98,
+    "tier": "criatura",
+    "notes": "<p>Quan no té prou cadàvers frescos o no pot dedicar-hi gaire temps, el nigromant pot crear una versió menor del gólem de carn: més petita, menys forta i que no pot actuar pel seu compte, però igualment incansable i obedient. Els dos gólems de l'exemple de combat del capítol Sistemes són d'aquest tipus.</p>"
+  },
+  "prototypeToken": {
+    "name": "Gólem de carn menor",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "XRACJeeVZWOSg9A2",
+      "_key": "!actors.items!KnExxDrj11eQYTqS.XRACJeeVZWOSg9A2",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "gE86YGd1Ry7Os1ir",
+      "_key": "!actors.items!KnExxDrj11eQYTqS.gE86YGd1Ry7Os1ir",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "PYfJToSABUkzVWwW",
+      "_key": "!actors.items!KnExxDrj11eQYTqS.PYfJToSABUkzVWwW",
+      "name": "Impediment de la Parla",
+      "type": "tret",
+      "system": {
+        "cost": -15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "impediment-parla"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "iEbohWSAHVT9VO8C",
+      "_key": "!actors.items!KnExxDrj11eQYTqS.iEbohWSAHVT9VO8C",
+      "name": "No-Mort",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": {
+          "flag": "noMort"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "no-mort"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "thtTh50xgdMqZT3m",
+      "_key": "!actors.items!KnExxDrj11eQYTqS.thtTh50xgdMqZT3m",
+      "name": "Repulsiu",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "repulsiu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ia7xyFlJDfxFQpdJ",
+      "_key": "!actors.items!KnExxDrj11eQYTqS.ia7xyFlJDfxFQpdJ",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "pUCrVce0RGJ75leU",
+      "_key": "!actors.items!KnExxDrj11eQYTqS.pUCrVce0RGJ75leU",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7531",
+      "costManual": 98,
+      "derivatsManual": {
+        "latencia": 12,
+        "defensa": 0,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

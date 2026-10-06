@@ -1,0 +1,53 @@
+{
+  "_id": "ScQkgZmkWHIPodiU",
+  "_key": "!items!ScQkgZmkWHIPodiU",
+  "name": "Set de sang",
+  "type": "efecte",
+  "system": {
+    "cost": 16,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica els estats berserc (modificador +2) i recuperació/4.",
+    "descripcio": "El mag grava una runa a la pell de l'objectiu amb un objecte tallant, convertint-lo en un lluitador fanàtic assedegat de sang.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "berserc",
+        "nivell": 2
+      },
+      {
+        "tipus": "estat",
+        "estat": "recuperacio",
+        "nivell": 4
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "set-de-sang"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

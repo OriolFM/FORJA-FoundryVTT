@@ -1,0 +1,49 @@
+{
+  "_id": "x28QRPCJG6cIT45k",
+  "_key": "!items!x28QRPCJG6cIT45k",
+  "name": "Bola de foc",
+  "type": "efecte",
+  "system": {
+    "cost": 17,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 3,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte, situada dins l'abast sensorial del PJ. Causa dany indirecte de foc amb un modificador de +5.",
+    "descripcio": "Un dels principals encanteris ofensius del mag hermètic tradicional. Algunes variants prescindeixen de la vareta i fan servir materials combustibles que s'encenen i es llancen contra l'enemic.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 5,
+        "danyTipus": "foc"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 3,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "bola-de-foc"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

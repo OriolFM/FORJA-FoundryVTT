@@ -1,0 +1,46 @@
+{
+  "_id": "ptWl3TDNlXZKCVjt",
+  "_key": "!items!ptWl3TDNlXZKCVjt",
+  "name": "Obrir pany",
+  "type": "efecte",
+  "system": {
+    "cost": 20,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 12,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar. Simula una tirada de l'habilitat nyaps, amb un resultat de 7 fites.",
+    "descripcio": "Un dels clàssics encanteris hermètics per accedir a llocs vedats, capaç de forçar qualsevol pany sense contemplacions. Un cop obert, però, difícilment es pot tornar a tancar i quedarà evident que ha estat forçat; hi ha encanteris similars per a altres habilitats, com disfressar-se o persuadir.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "autoeina",
+        "nivell": 7,
+        "segona": false,
+        "habilitat": "nyaps"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 12,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "obrir-pany"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "_id": "y6jRMWu1CXgw7YzI",
+  "_key": "!actors!y6jRMWu1CXgw7YzI",
+  "name": "IAssistent",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 0,
+      "DES": 0,
+      "AGI": 0,
+      "PER": 3,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "incorpori",
+    "mida": 2,
+    "constitucio": 2,
+    "habilitats": {
+      "cercar": {
+        "nivell": 3
+      },
+      "ciencia": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "enginyeria": {
+        "nivell": 3
+      },
+      "enigmes": {
+        "nivell": 3
+      },
+      "humanitats": {
+        "nivell": 3
+      },
+      "informatica": {
+        "nivell": 4
+      },
+      "negociacio": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 4
+      },
+      "oratoria": {
+        "nivell": 2
+      }
+    },
+    "pc": 94,
+    "tier": "antagonista",
+    "notes": "<p>Els IAssistents són petites IA generalistes que poden estar contingudes en un dispositiu portable, com un braçalet o un comunicador, i que es pot connectar a sistemes informàtics, maquinària o vehicles. El seu potencial és força limitat, però estan dissenyades per ser molt competents en diverses tasques. No és inusual per un PJ el tenir un IAssistent com a company o familiar. Si s'escau, es poden canviar les habilitats mantenint els nivells (per exemple, una IA amb medicina enlloc d'enginyeria o informàtica com a ajudant d'un metge).</p><p>És possible per un PJ el tenir un IAssistent si selecciona el tret Company/94 i l'apunta com a company. Com passa amb els companys de carn i ossos, els IAssistents respondran al tracte que se'ls doni. Tot i que estan programats per fer el que el seu propietari els demani, els IAssistents sota un amo tirànic o maltractador poden ometre informació rellevant per la que no s'hagi demanat específicament, o interpretar les ordres d'una manera retorçada per complir expedient sense fer exactament el que el seu amo volia.</p>"
+  },
+  "prototypeToken": {
+    "name": "IAssistent",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "tEqfsl3NcmYfWwkl",
+      "_key": "!actors.items!y6jRMWu1CXgw7YzI.tEqfsl3NcmYfWwkl",
+      "name": "Lingüista Natural",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "linguista-natural"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "SufkxfTCif0Imblz",
+      "_key": "!actors.items!y6jRMWu1CXgw7YzI.SufkxfTCif0Imblz",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7065",
+      "costManual": 94,
+      "derivatsManual": {
+        "latencia": 6,
+        "defensa": 4,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "Y7uF4p5JFWhlUwhr",
+  "_key": "!items!Y7uF4p5JFWhlUwhr",
+  "name": "Sentit Atrofiat (tacte)",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-atrofiat-tacte"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

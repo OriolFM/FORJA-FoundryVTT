@@ -1,0 +1,56 @@
+{
+  "_id": "0TcEVAWjvWKCSYb6",
+  "_key": "!items!0TcEVAWjvWKCSYb6",
+  "name": "Cibermòdem d'interfície neural directa",
+  "type": "artefacte",
+  "system": {
+    "cost": 15,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "normal",
+      "dificultat": 1
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 1
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +5 a l'habilitat informàtica. Mentre s'usa, l'usuari no pot percebre el seu entorn excepte estímuls molt potents, i encara així amb +2 de dificultat.",
+    "descripcio": "Evolució dels primers cibermòdems: submergeix l'usuari en una realitat immersiva, traducció del sistema informàtic, la IA o el mecanoide que la genera.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 5,
+        "segona": false,
+        "habilitat": "informatica"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 1,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "cibermodem-neural"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "xl6iPoh7yqZAaLMJ",
+  "_key": "!items!xl6iPoh7yqZAaLMJ",
+  "name": "Al·lèrgia (lleu)",
+  "type": "tret",
+  "system": {
+    "cost": -2,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "alergia-lleu"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

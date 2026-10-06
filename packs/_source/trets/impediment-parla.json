@@ -1,0 +1,22 @@
+{
+  "_id": "oH38rEhE0GaSDwAV",
+  "_key": "!items!oH38rEhE0GaSDwAV",
+  "name": "Impediment de la Parla",
+  "type": "tret",
+  "system": {
+    "cost": -15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "impediment-parla"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

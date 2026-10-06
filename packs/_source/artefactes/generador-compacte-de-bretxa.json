@@ -1,0 +1,66 @@
+{
+  "_id": "MV6c22ps0GOhKa7s",
+  "_key": "!items!MV6c22ps0GOhKa7s",
+  "name": "Generador compacte de bretxa",
+  "type": "artefacte",
+  "system": {
+    "cost": 53,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "complexa",
+      "dificultat": 4
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 10
+    },
+    "carrega": {
+      "usosPerCarrega": 1,
+      "tornsRecarrega": 26,
+      "modeEspera": true
+    },
+    "mecanica": "Crea un parell de portals transitables (àrea d'efecte circular) entre dos punts del multivers, amb una durada d'una escena. Triga 26 torns a recuperar una càrrega parcial (vàlida per un ús). El mode d'espera permet fer una activació prèvia a l'ús.",
+    "descripcio": "Exclusiu del Cos de Bretxers de l'Aliança i extremadament controlat; tenir-ne un sense ser-ne membre és delicte.",
+    "parametres": [
+      {
+        "tipus": "activacio",
+        "mode": "complexa"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "translocacio",
+        "mode": "portals",
+        "distancia": "multiversal"
+      },
+      {
+        "tipus": "recarrega",
+        "unitats": 26
+      },
+      {
+        "tipus": "espera"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 4,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "generador-compacte-de-bretxa"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

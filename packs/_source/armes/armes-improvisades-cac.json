@@ -1,0 +1,30 @@
+{
+  "_id": "vFndcm5onMegqNCI",
+  "_key": "!items!vFndcm5onMegqNCI",
+  "name": "Armes improvisades (cos a cos)",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 0,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+2",
+    "maniobra": "Flexibilitat — Segons el tipus d'objecte, el DJ pot aplicar modificadors a latència i abast a discreció.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Latència i abast variables ('+abast +variable' al manual). Dany FOR+2."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armes-improvisades-cac"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

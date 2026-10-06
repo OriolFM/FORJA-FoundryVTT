@@ -1,0 +1,22 @@
+{
+  "_id": "9ju1PvIT0Bjf9zPH",
+  "_key": "!items!9ju1PvIT0Bjf9zPH",
+  "name": "Oracle",
+  "type": "tret",
+  "system": {
+    "cost": 30,
+    "descripcio": "Permet usar l'habilitat Psi.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "oracle"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

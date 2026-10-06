@@ -1,0 +1,46 @@
+{
+  "_id": "AbNXSglZvZVRWTp3",
+  "_key": "!items!AbNXSglZvZVRWTp3",
+  "name": "Puny explosiu",
+  "type": "efecte",
+  "system": {
+    "cost": 15,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 2,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Causa dany indirecte d'explosió amb un modificador de +5 a tots els objectius dins una àrea d'efecte que es propaga des de l'usuari.",
+    "descripcio": "Crea una ona expansiva que es propaga des de l'usuari, popular entre qui ha de fer front a diversos oponents alhora.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 5,
+        "danyTipus": "explosio"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 2,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "puny-explosiu"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

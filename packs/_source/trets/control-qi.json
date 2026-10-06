@@ -1,0 +1,22 @@
+{
+  "_id": "ERqP5hlkPBTzroth",
+  "_key": "!items!ERqP5hlkPBTzroth",
+  "name": "Control del Qi",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "Permet usar l'habilitat Qi.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "control-qi"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

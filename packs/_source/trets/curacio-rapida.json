@@ -1,0 +1,22 @@
+{
+  "_id": "he97O8EPi09QkHJ9",
+  "_key": "!items!he97O8EPi09QkHJ9",
+  "name": "Curació Ràpida",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "15 PC per punt de curació.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "curacio-rapida"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

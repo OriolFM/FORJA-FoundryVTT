@@ -1,0 +1,193 @@
+{
+  "_id": "0MLOlAVmScVWD4eB",
+  "_key": "!actors!0MLOlAVmScVWD4eB",
+  "name": "Gos gros",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 2,
+    "constitucio": 4,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 44,
+    "tier": "animal",
+    "notes": "<p>Molts cops fets servir com a guardians o gossos de caça, els gossos grans són el millor amic de l'home, però molts pequen de golafres. Aquesta plantilla també es pot fer servir per representar llops (tot i que amb més habilitat d'amagar-se i córrer).</p>"
+  },
+  "prototypeToken": {
+    "name": "Gos gros",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "I8JoEyiOF4x40HmI",
+      "_key": "!actors.items!0MLOlAVmScVWD4eB.I8JoEyiOF4x40HmI",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "BZd1UrMZwfyYNMxP",
+      "_key": "!actors.items!0MLOlAVmScVWD4eB.BZd1UrMZwfyYNMxP",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "CzUrF7Up4v68UXu0",
+      "_key": "!actors.items!0MLOlAVmScVWD4eB.CzUrF7Up4v68UXu0",
+      "name": "Sentit Agut (olfacte i gust)",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-agut-un"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "JOChGDI9nOqW2dY8",
+      "_key": "!actors.items!0MLOlAVmScVWD4eB.JOChGDI9nOqW2dY8",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "2mNoIEetPezArmgG",
+      "_key": "!actors.items!0MLOlAVmScVWD4eB.2mNoIEetPezArmgG",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7397",
+      "costManual": 44,
+      "derivatsManual": {
+        "latencia": 8,
+        "defensa": 3,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

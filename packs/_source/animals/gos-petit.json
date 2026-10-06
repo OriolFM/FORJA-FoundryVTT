@@ -1,0 +1,196 @@
+{
+  "_id": "OaJbNURNpDFXw1MX",
+  "_key": "!actors!OaJbNURNpDFXw1MX",
+  "name": "Gos petit",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 2,
+      "APL": 1
+    },
+    "especie": "animal",
+    "mida": 1,
+    "constitucio": 1,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 4,
+    "tier": "animal",
+    "notes": "<p>Sense una utilitat concreta a part de donar afecte incondicional al seu amo, els gossos petits acostumen a tenir existències còmodes i sense grans sobresalts.</p>"
+  },
+  "prototypeToken": {
+    "name": "Gos petit",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "WlFxfpM4UUV2zSlM",
+      "_key": "!actors.items!OaJbNURNpDFXw1MX.WlFxfpM4UUV2zSlM",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "xq1qagAPei5OQAfa",
+      "_key": "!actors.items!OaJbNURNpDFXw1MX.xq1qagAPei5OQAfa",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "1PyQZ7jBpPFA9uo1",
+      "_key": "!actors.items!OaJbNURNpDFXw1MX.1PyQZ7jBpPFA9uo1",
+      "name": "Sentit Agut (olfacte i gust)",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-agut-un"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "MsYf2cz6AjXsObUL",
+      "_key": "!actors.items!OaJbNURNpDFXw1MX.MsYf2cz6AjXsObUL",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "HMvz2cwscyRoKzLm",
+      "_key": "!actors.items!OaJbNURNpDFXw1MX.HMvz2cwscyRoKzLm",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7411",
+      "costManual": 4,
+      "derivatsManual": {
+        "latencia": 7,
+        "defensa": 4,
+        "reduccioDany": 1,
+        "reaccio": 1
+      }
+    }
+  }
+}

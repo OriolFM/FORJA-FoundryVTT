@@ -1,0 +1,49 @@
+{
+  "_id": "lXz42aXXiqhfnJY4",
+  "_key": "!items!lXz42aXXiqhfnJY4",
+  "name": "La cogitació de l'asceta",
+  "type": "efecte",
+  "system": {
+    "cost": 15,
+    "do": "qi",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 12,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta només l'usuari. Simula una tirada de l'habilitat enigmes, amb un resultat de 7 fites.",
+    "descripcio": "Un dels primers efectes que aprenen els habitants de Takama-ga-hara, que mitjançant la meditació permet trobar la solució a dilemes complexos o enigmes enrevessats.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "autoeina",
+        "nivell": 7,
+        "segona": false,
+        "habilitat": "enigmes"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 12,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-cogitacio-de-lasceta"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

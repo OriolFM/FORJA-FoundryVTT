@@ -1,0 +1,274 @@
+{
+  "_id": "bHSxW2DMve6EmFtb",
+  "_key": "!actors!bHSxW2DMve6EmFtb",
+  "name": "Gólem de carn",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 4,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "constructe",
+    "mida": 5,
+    "constitucio": 5,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 4
+      },
+      "forca-bruta": {
+        "nivell": 4
+      },
+      "resistencia": {
+        "nivell": 4
+      }
+    },
+    "pc": 114,
+    "tier": "criatura",
+    "notes": "<p>Els gólems de carn són un dels pesos pesants en l'arsenal del nigromàntic. A canvi d'un punt de fatiga cada dia, el nigromàntic disposa d'un servent incansable, resistent i fort per complir amb totes les seves ordres.</p>"
+  },
+  "prototypeToken": {
+    "name": "Gólem de carn",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "Jf2Q4mbYT0ZnUuDG",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.Jf2Q4mbYT0ZnUuDG",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "6ikkqg5QUHcn4GvD",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.6ikkqg5QUHcn4GvD",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "4vZuB1wHMaCG0VnN",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.4vZuB1wHMaCG0VnN",
+      "name": "Dron",
+      "type": "tret",
+      "system": {
+        "cost": -30,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dron"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "zPC4CFpoAr9AvOTW",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.zPC4CFpoAr9AvOTW",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "DHdMcDxJ2DGKzJTm",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.DHdMcDxJ2DGKzJTm",
+      "name": "Impediment de la Parla",
+      "type": "tret",
+      "system": {
+        "cost": -15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "impediment-parla"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "kFwNq85qx5uXlyBV",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.kFwNq85qx5uXlyBV",
+      "name": "No-Mort",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": {
+          "flag": "noMort"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "no-mort"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "tiGvnWmI6XN6K8eg",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.tiGvnWmI6XN6K8eg",
+      "name": "Repulsiu",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "repulsiu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "tmBWPBSDwmcNVuum",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.tmBWPBSDwmcNVuum",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "JxCRwNAXXkcLt4H8",
+      "_key": "!actors.items!bHSxW2DMve6EmFtb.JxCRwNAXXkcLt4H8",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7517",
+      "costManual": 114,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 0,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

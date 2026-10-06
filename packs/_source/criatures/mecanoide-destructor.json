@@ -1,0 +1,198 @@
+{
+  "_id": "ZytKSkZa3Sk0J7u2",
+  "_key": "!actors!ZytKSkZa3Sk0J7u2",
+  "name": "Mecanoide destructor",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 4,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "mecanoide",
+    "mida": 5,
+    "constitucio": 5,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 4
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "forca-bruta": {
+        "nivell": 4
+      },
+      "intimidacio": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 4
+      }
+    },
+    "pc": 223,
+    "tier": "criatura",
+    "notes": "<p>En aquells mons on l'avenç de la tecnologia i la moral no estan en consonància, es pot donar el cas que els comandants militars alliberin mecanoides destructors als camps de batalla, màquines implacables l'únic propòsit de les quals és l'aniquilació total i absoluta de l'enemic i tot el que representa.</p>"
+  },
+  "prototypeToken": {
+    "name": "Mecanoide destructor",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "hruChsow40G2ptPH",
+      "_key": "!actors.items!ZytKSkZa3Sk0J7u2.hruChsow40G2ptPH",
+      "name": "Armadura Natural /3",
+      "type": "tret",
+      "system": {
+        "cost": 12,
+        "descripcio": "Reducció de dany natural +3.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-3"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "uoXYzZ44j2vfUgTo",
+      "_key": "!actors.items!ZytKSkZa3Sk0J7u2.uoXYzZ44j2vfUgTo",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "bcgnfETcAhhD5Sg5",
+      "_key": "!actors.items!ZytKSkZa3Sk0J7u2.bcgnfETcAhhD5Sg5",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "iJtIxhku2Eo13OvP",
+      "_key": "!actors.items!ZytKSkZa3Sk0J7u2.iJtIxhku2Eo13OvP",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "6ffxk5YG6avUUbJT",
+      "_key": "!actors.items!ZytKSkZa3Sk0J7u2.6ffxk5YG6avUUbJT",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7573",
+      "costManual": 223,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 0,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

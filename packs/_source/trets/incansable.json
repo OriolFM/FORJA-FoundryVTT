@@ -1,0 +1,22 @@
+{
+  "_id": "T5kk26UvTIJbVQGQ",
+  "_key": "!items!T5kk26UvTIJbVQGQ",
+  "name": "Incansable",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "incansable"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

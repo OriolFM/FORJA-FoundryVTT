@@ -1,0 +1,228 @@
+{
+  "_id": "v9DvfaQHIFupP3DN",
+  "_key": "!actors!v9DvfaQHIFupP3DN",
+  "name": "Ós",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 4,
+    "constitucio": 3,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 3
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 1
+      },
+      "escalada": {
+        "nivell": 2
+      },
+      "nedar": {
+        "nivell": 1
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "supervivencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 83,
+    "tier": "animal",
+    "notes": "<p>Habituals en mons amb boscos i zones de muntanya, els óssos són un dels més grans depredadors terrestres.</p>"
+  },
+  "prototypeToken": {
+    "name": "Ós",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "4mR1BwROb5m43fK9",
+      "_key": "!actors.items!v9DvfaQHIFupP3DN.4mR1BwROb5m43fK9",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "raWQ8vsbKlOOcp0X",
+      "_key": "!actors.items!v9DvfaQHIFupP3DN.raWQ8vsbKlOOcp0X",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "6HHyQ1wbUu6pVa3G",
+      "_key": "!actors.items!v9DvfaQHIFupP3DN.6HHyQ1wbUu6pVa3G",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "qeOs5WCK1sKqe7Fg",
+      "_key": "!actors.items!v9DvfaQHIFupP3DN.qeOs5WCK1sKqe7Fg",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Rl3Nz3bkU8xy2FkS",
+      "_key": "!actors.items!v9DvfaQHIFupP3DN.Rl3Nz3bkU8xy2FkS",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "r2jVEK93BbM7ZkO7",
+      "_key": "!actors.items!v9DvfaQHIFupP3DN.r2jVEK93BbM7ZkO7",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7453",
+      "costManual": 83,
+      "derivatsManual": {
+        "latencia": 12,
+        "defensa": 0,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

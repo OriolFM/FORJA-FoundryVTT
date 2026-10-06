@@ -1,0 +1,47 @@
+{
+  "_id": "FuHj4OmFBWiV0H0C",
+  "_key": "!items!FuHj4OmFBWiV0H0C",
+  "name": "Sonda mental",
+  "type": "efecte",
+  "system": {
+    "cost": 10,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 5,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "El PJ llegeix o sonda la ment d'un o més objectius dins el seu abast sensorial durant una escena.",
+    "descripcio": "Permet al PJ llegir o sondar la ment d'un o més objectius dins el seu abast sensorial.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "llegir"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 5,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sonda-mental"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

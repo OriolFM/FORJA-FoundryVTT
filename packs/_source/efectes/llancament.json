@@ -1,0 +1,45 @@
+{
+  "_id": "kx7hH5DDVJXQEsCC",
+  "_key": "!items!kx7hH5DDVJXQEsCC",
+  "name": "Llançament",
+  "type": "efecte",
+  "system": {
+    "cost": 13,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Aplica l'estat llançat (modificador +5).",
+    "descripcio": "No té en compte el pes de l'objectiu, que es pot resistir amb APL+Psi o APL+Resistència. Si no ho aconsegueix, sortirà disparat com si hagués rebut una maniobra d'arts marcials, fins i tot podent ser llançat contra un segon objectiu.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "estat",
+        "estat": "llancat",
+        "nivell": 5
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "llancament"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

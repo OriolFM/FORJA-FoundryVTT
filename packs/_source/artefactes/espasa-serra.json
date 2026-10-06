@@ -1,0 +1,55 @@
+{
+  "_id": "767KdXE6egBW1Dyg",
+  "_key": "!items!767KdXE6egBW1Dyg",
+  "name": "Espasa serra",
+  "type": "artefacte",
+  "system": {
+    "cost": 11,
+    "categoria": "arma",
+    "activacio": {
+      "tipus": "cap",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": false,
+      "actiu": true,
+      "modLatencia": 2
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Espasa amb latència +2, abast a tocar, i +4 de dany indirecte de ferides. Aplica l'estat sagnant/3 a l'objectiu.",
+    "descripcio": "D'extrema utilitat per desgastar contrincants durs de pelar; les dents de la fulla giren a gran velocitat provocant hemorràgies difícils d'aturar.",
+    "parametres": [
+      {
+        "tipus": "arma",
+        "base": "espasa",
+        "latencia": 2,
+        "dany": 4
+      },
+      {
+        "tipus": "estat",
+        "estat": "sagnant",
+        "nivell": 3
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "espasa-serra"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

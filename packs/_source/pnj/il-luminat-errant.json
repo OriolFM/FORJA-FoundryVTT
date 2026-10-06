@@ -1,0 +1,272 @@
+{
+  "_id": "dZeRolYoo5WxYflm",
+  "_key": "!actors!dZeRolYoo5WxYflm",
+  "name": "Il·luminat errant",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "acrobacies": {
+        "nivell": 1
+      },
+      "arts-marcials": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 1
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "enigmes": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "navegacio": {
+        "nivell": 1
+      },
+      "nedar": {
+        "nivell": 2
+      },
+      "oratoria": {
+        "nivell": 2
+      },
+      "persuasio": {
+        "nivell": 2
+      },
+      "qi": {
+        "nivell": 4
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 183,
+    "tier": "antagonista",
+    "notes": "<p>Quan l'ANM va establir relacions diplomàtiques amb Takama-ga-hara, una de les condicions va ser que permetessin als il·luminats errants unir-se a les expedicions de descoberta del multivers, per mirar d'aprendre més coses sobre la naturalesa de la realitat, i portar la il·luminació allà on hi haguessin persones receptives. Els primers Il·luminats errants es van escampar pel territori de l'ANM, però des de llavors han anat a d'altres universos, així que es poden trobar en qualsevol lloc (tot i que no són habituals fora de Takama-ga-hara i l'ANM).</p>"
+  },
+  "prototypeToken": {
+    "name": "Il·luminat errant",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "3aacNUTp8WiLgKzY",
+      "_key": "!actors.items!dZeRolYoo5WxYflm.3aacNUTp8WiLgKzY",
+      "name": "Control del Qi",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Permet usar l'habilitat Qi.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "control-qi"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "32bt2r9t9ciDAWIu",
+      "_key": "!actors.items!dZeRolYoo5WxYflm.32bt2r9t9ciDAWIu",
+      "name": "Foraster",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "foraster"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "cCQhFCW4lGLr60FH",
+      "_key": "!actors.items!dZeRolYoo5WxYflm.cCQhFCW4lGLr60FH",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "jxLE97vGpJhLHEeL",
+      "_key": "!actors.items!dZeRolYoo5WxYflm.jxLE97vGpJhLHEeL",
+      "name": "La velocitat del vent",
+      "type": "efecte",
+      "system": {
+        "cost": 22,
+        "do": "qi",
+        "tipus": "efecte",
+        "dificultat": 2,
+        "modLatencia": 3,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "L'usuari rep un modificador de +3 a l'habilitat de córrer, l'estat ràpid/2, i el tret incansable durant una escena.",
+        "descripcio": "Els il·luminats errants solen fer llargues caminades a la recerca de saviesa, però de vegades necessiten arribar més ràpid. Aquest efecte els permet recórrer grans distàncies a gran velocitat sense patir cansament, almenys fins que hi arriben.",
+        "parametres": [
+          {
+            "tipus": "usuari"
+          },
+          {
+            "tipus": "durada"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 3,
+            "segona": false,
+            "habilitat": "correr"
+          },
+          {
+            "tipus": "estat",
+            "estat": "rapid",
+            "nivell": 2
+          },
+          {
+            "tipus": "tret",
+            "tret": "incansable",
+            "cost": 10
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 2,
+          "latenciaDeclarada": 3,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "la-velocitat-del-vent"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "TWVxss2W4xqWFCB0",
+      "_key": "!actors.items!dZeRolYoo5WxYflm.TWVxss2W4xqWFCB0",
+      "name": "Les mans d'en Miyagi",
+      "type": "efecte",
+      "system": {
+        "cost": 13,
+        "do": "qi",
+        "tipus": "ritual",
+        "dificultat": 1,
+        "modLatencia": 10,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "Afecta un o més objectius individuals a tocar. Cura 11 punts de fatiga o ferides.",
+        "descripcio": "Una variant de la imposició de mans que reordena el Qi de l'objectiu per estimular la curació, i que pràcticament tot estudiant de Qi aprèn durant el seu entrenament.",
+        "parametres": [
+          {
+            "tipus": "ritual"
+          },
+          {
+            "tipus": "cura",
+            "nivell": 11,
+            "pista": "fatiga-o-ferides"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 1,
+          "latenciaDeclarada": 10,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "les-mans-den-miyagi"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7081",
+      "costManual": 183,
+      "derivatsManual": {
+        "latencia": 7,
+        "defensa": 3,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

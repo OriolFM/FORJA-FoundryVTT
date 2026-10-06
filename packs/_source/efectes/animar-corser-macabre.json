@@ -1,0 +1,47 @@
+{
+  "_id": "AcgG59PrvVCohoaF",
+  "_key": "!items!AcgG59PrvVCohoaF",
+  "name": "Animar corser macabre",
+  "type": "efecte",
+  "system": {
+    "cost": 22,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": false
+    },
+    "mecanica": "Reconstitueix un corser macabre (87 PC), considerat un constructe a tots els efectes. El corser dura un mínim d'una escena, i es pot mantenir animat si el mag l'alimenta amb un punt de fatiga per dia.",
+    "descripcio": "Quan un nigromant necessita desplaçar-se ràpidament per terra, cap muntura supera un corser macabre: fort, ràpid, i que no necessita menjar ni dormir. El seu aspecte varia segons les matèries primeres emprades, i es pot modificar per dotar-lo de capacitats ofensives.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "invocacio",
+        "costCriatura": 87
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "animar-corser-macabre"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

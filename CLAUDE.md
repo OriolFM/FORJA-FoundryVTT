@@ -108,6 +108,7 @@ FORJA-FoundryVTT/
 │   └── manual/                # Compendi compilat (LevelDB) — generat, no s'edita a mà
 ├── scripts/
 │   ├── build-manual.mjs       # Genera packs/_source/manual/*.json des de Markdown extern
+│   ├── build-packs.mjs        # npm run build:packs: compendis de contingut (manual + catàlegs)
 │   └── versio.mjs             # npm run versio: tanca una versió (i actualitza graphify)
 ├── tests/
 │   ├── unitaris/              # npm test — lògica pura, sense Foundry
@@ -123,8 +124,14 @@ FORJA-FoundryVTT/
     └── VERSIONS.md            # Control de versions
 ```
 
-No hi ha `assets/`, `module/sheets/`, `module/helpers/`, `docs/PLAN.md` ni
-`scripts/build-packs.mjs`: si algun document antic els esmenta, són obsolets.
+No hi ha `assets/`, `module/sheets/`, `module/helpers/` ni `docs/PLAN.md`: si
+algun document antic els esmenta, són obsolets.
+
+**Compendis de contingut (Fase 5):** `scripts/build-packs.mjs` genera
+`packs/_source/{pj,pnj,animals,criatures,trets,armes,armadures,artefactes,efectes}/`
+a partir del manual i dels catàlegs, i `npm run build:packs` els compila a
+`packs/<nom>/` (LevelDB, no s'edita a mà). Cal regenerar-los quan canvien els
+catàlegs. Informe d'incidències: `docs/CONTINGUT-INFORME.md`.
 
 ## Tipus d'actor i d'item
 

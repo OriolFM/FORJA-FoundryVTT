@@ -1,0 +1,48 @@
+{
+  "_id": "poSAPFNhBE6A12Bf",
+  "_key": "!items!poSAPFNhBE6A12Bf",
+  "name": "Mot guaridor",
+  "type": "efecte",
+  "system": {
+    "cost": 20,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Cura 10 punts de fatiga o ferides.",
+    "descripcio": "El contrapunt del mot destructiu: permet als mags hermètics guarir els seus aliats fins a deu punts de fatiga o de ferides, a escollir en el moment de comprar l'efecte.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "cura",
+        "nivell": 10,
+        "pista": "fatiga-o-ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "mot-guaridor"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

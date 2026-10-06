@@ -1,0 +1,112 @@
+{
+  "_id": "G4pmqJm6tj4fR1ga",
+  "_key": "!actors!G4pmqJm6tj4fR1ga",
+  "name": "Soldat",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 2,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "armes-distancia": {
+        "nivell": 3
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 72,
+    "tier": "antagonista",
+    "notes": "<p>Els estats on impera la llei militar acostumen a tenir grans contingents de soldats rasos i de soldats. És el cas dels soldats de Prússia, la Rodina i altres potències de la guerra dels mil anys d'Erde, dels legionaris imperials de l'imperi romà o dels ashigaru (soldats de peu) a l'imperi Japonès de Terra, o de les forces d'autodefensa de les ciutats-estat de Harmagedon.</p>"
+  },
+  "prototypeToken": {
+    "name": "Soldat",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "QifDq0hZ2Sl5FEta",
+      "_key": "!actors.items!G4pmqJm6tj4fR1ga.QifDq0hZ2Sl5FEta",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7265",
+      "costManual": 72,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 1,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

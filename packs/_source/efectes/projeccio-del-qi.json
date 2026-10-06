@@ -1,0 +1,46 @@
+{
+  "_id": "dS7I5QU0KsFiOuUs",
+  "_key": "!items!dS7I5QU0KsFiOuUs",
+  "name": "Projecció del Qi",
+  "type": "efecte",
+  "system": {
+    "cost": 26,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 2,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa 5 de dany directe de ferides.",
+    "descripcio": "La forma més bàsica d'atacar a distància: l'usuari projecta el seu propi Qi com si fos un projectil.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "directe",
+        "nivell": 5,
+        "danyTipus": "ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 2,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "projeccio-del-qi"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

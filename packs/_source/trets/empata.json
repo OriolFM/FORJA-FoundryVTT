@@ -1,0 +1,22 @@
+{
+  "_id": "QE3bkqQN1X4riWNm",
+  "_key": "!items!QE3bkqQN1X4riWNm",
+  "name": "Èmpata",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "empata"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

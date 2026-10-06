@@ -1,0 +1,22 @@
+{
+  "_id": "7e0ZrnAXKYCVSD7M",
+  "_key": "!items!7e0ZrnAXKYCVSD7M",
+  "name": "Sonar",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sonar"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

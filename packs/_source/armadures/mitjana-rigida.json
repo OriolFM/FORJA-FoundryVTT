@@ -1,0 +1,29 @@
+{
+  "_id": "8Pwcu2WPx3p8vhJT",
+  "_key": "!items!8Pwcu2WPx3p8vhJT",
+  "name": "Armadura mitjana, rígida",
+  "type": "armadura",
+  "system": {
+    "tipus": "fisica",
+    "reduccio": 4,
+    "modLatencia": 2,
+    "equipada": true,
+    "egida": {
+      "activa": false,
+      "absorcio": 0,
+      "tornsInactiva": 0
+    },
+    "descripcio": "Manual: Lat +2, Protecció bàsica 4, mod. per mida ±2."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "mitjana-rigida"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

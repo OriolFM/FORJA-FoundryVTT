@@ -1,0 +1,30 @@
+{
+  "_id": "KuootOaT3dNPt7LY",
+  "_key": "!items!KuootOaT3dNPt7LY",
+  "name": "Llancívoles",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 0,
+    "abast": 0,
+    "rangMultFor": 3,
+    "esEscut": false,
+    "danyBase": "AGI+1",
+    "maniobra": "Rang limitat — El rang curt és FOR x3, en metres. Carambola — No fa dany a objectes i només la meitat de ferides als PJ; pot afectar diversos objectius (+1 dif./objectiu addicional). Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Manual: Lat +0, Rang FORx3, Dany AGI+1, sense munició."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "llancivoles"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

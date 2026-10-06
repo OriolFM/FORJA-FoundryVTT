@@ -1,0 +1,53 @@
+{
+  "_id": "ZeFUGgFbsRGfh9cf",
+  "_key": "!items!ZeFUGgFbsRGfh9cf",
+  "name": "Accelerar",
+  "type": "efecte",
+  "system": {
+    "cost": 12,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari gaudeix dels estats ràpid/2 i recuperació/1 durant una escena.",
+    "descripcio": "L'efecte es nota semblant a prendre cafè, però sense haver d'ingerir res.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "rapid",
+        "nivell": 2
+      },
+      {
+        "tipus": "estat",
+        "estat": "recuperacio",
+        "nivell": 1
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "accelerar"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "_id": "y98395KYO0mhne8D",
+  "_key": "!items!y98395KYO0mhne8D",
+  "name": "Detonar el servent",
+  "type": "efecte",
+  "system": {
+    "cost": 20,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més constructes amb el tret dron sota el control del nigromant que es trobin dins el seu abast sensorial. Els drons esclaten, causant dany indirecte d'explosió amb un modificador de +8 i l'estat sagnant/1 a tots els que estiguin a tocar del dron.",
+    "descripcio": "Els nigromants que van escortats per gólems no-morts els envien a atacar i, quan ja estan molt malmesos o a curta distància, els fan esclatar, omplint els enemics de metralla òssia. Per això molts indrets prohibeixen l'entrada de servents no-morts.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 8,
+        "danyTipus": "explosio"
+      },
+      {
+        "tipus": "estat",
+        "estat": "sagnant",
+        "nivell": 1
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "detonar-el-servent"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

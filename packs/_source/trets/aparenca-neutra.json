@@ -1,0 +1,22 @@
+{
+  "_id": "AFuL9h9xBFGG6igf",
+  "_key": "!items!AFuL9h9xBFGG6igf",
+  "name": "Aparença Estranya (neutra)",
+  "type": "tret",
+  "system": {
+    "cost": 0,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "aparenca-neutra"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

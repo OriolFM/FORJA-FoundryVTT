@@ -1,0 +1,47 @@
+{
+  "_id": "iqJHTBwAXJ6cYpHs",
+  "_key": "!items!iqJHTBwAXJ6cYpHs",
+  "name": "Animar mortalla voraç",
+  "type": "efecte",
+  "system": {
+    "cost": 40,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": false
+    },
+    "mecanica": "El nigromant aplega restes d'organismes morts, en especial dels seus sistemes digestius, per reconstituir una mortalla voraç (158 PC), considerada un constructe a tots els efectes. La mortalla té una durada mínima d'una escena, i el nigromant la pot mantenir activa sacrificant-li un punt de ferides cada dia.",
+    "descripcio": "Un dels servents més temuts dels nigromants: capes vivents fetes de teixits morts que fan servir com a atuell, protecció i mitjà de locomoció. Moltes recorden grans insectes amb punxes o pinces, i algunes segreguen sucs que dissolen qui hi queda atrapat.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "invocacio",
+        "costCriatura": 158
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "animar-mortalla-vorac"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

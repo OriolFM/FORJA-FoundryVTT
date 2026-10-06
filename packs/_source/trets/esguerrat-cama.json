@@ -1,0 +1,22 @@
+{
+  "_id": "9dc5GAz0jX5pKqxI",
+  "_key": "!items!9dc5GAz0jX5pKqxI",
+  "name": "Esguerrat (cama)",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "esguerrat-cama"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

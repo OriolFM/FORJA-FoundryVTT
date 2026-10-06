@@ -1,0 +1,146 @@
+{
+  "_id": "eqb9G5XMJNDKLpIv",
+  "_key": "!actors!eqb9G5XMJNDKLpIv",
+  "name": "Comissari polític",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 3,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 3
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 1
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 1
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 3
+      },
+      "lideratge": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 2
+      },
+      "oratoria": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 1
+      },
+      "supervivencia": {
+        "nivell": 1
+      },
+      "tactica": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 2
+      }
+    },
+    "pc": 126,
+    "tier": "antagonista",
+    "notes": "<p>En exèrcits i estats autoritaris, com ara gairebé tots els d'Erde, existeix la figura del comissari o oficial polític, també anomenat inquisidor en teocràcies o aquells estats on la línia entre religió i estat és força difusa, com l'imperi japonès o els estats caribenys de Terra. Els comissaris o inquisidors s'encarreguen de trobar i eliminar aquells que resulten incòmodes per l'estatus quo: els revolucionaris, els dissidents, els lluitadors per la llibertat, i membres destacats de minories incòmodes. Fins i tot algunes democràcies plenes disposen d'individus sense escrúpols ni moral que fan bàsicament el mateix, però sense publicitar-ho.</p>"
+  },
+  "prototypeToken": {
+    "name": "Comissari polític",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "lKMmO8U27dkHLn56",
+      "_key": "!actors.items!eqb9G5XMJNDKLpIv.lKMmO8U27dkHLn56",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "u4lRHLpNENmZaKxW",
+      "_key": "!actors.items!eqb9G5XMJNDKLpIv.u4lRHLpNENmZaKxW",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7007",
+      "costManual": 126,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

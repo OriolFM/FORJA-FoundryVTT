@@ -1,0 +1,48 @@
+{
+  "_id": "pZnZDPxn6rQX59O5",
+  "_key": "!items!pZnZDPxn6rQX59O5",
+  "name": "La fugida del pop",
+  "type": "efecte",
+  "system": {
+    "cost": 25,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 6,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Conjura una gran quantitat de fum negre (fins a 1 kg de massa) que enfosqueix la visibilitat, suficient per cobrir una gran àrea d'efecte durant una escena. Com més àrea cobreixi, menys dens serà i menys afectarà la visibilitat.",
+    "descripcio": "Genera un núvol de fum negre que s'expandeix des del PJ i bloqueja completament la visibilitat. En espais tancats pot durar tota l'escena, mentre que a l'aire lliure es dissipa segons el vent i les condicions atmosfèriques.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "replicacio",
+        "massa": "menys-1kg",
+        "complexitat": "monomaterial"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 6,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-fugida-del-pop"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

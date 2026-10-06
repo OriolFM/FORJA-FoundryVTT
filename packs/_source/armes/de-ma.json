@@ -1,0 +1,30 @@
+{
+  "_id": "DbDpUxrdzgW2DGHs",
+  "_key": "!items!DbDpUxrdzgW2DGHs",
+  "name": "De mà",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 0,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+1",
+    "maniobra": "Atac a traïció — Ataca un punt vulnerable de l'oponent: ignora l'armadura però no la reducció de dany.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Armes de mà petites (manual: Lat +0, Abast a tocar, Dany FOR+1)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "de-ma"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

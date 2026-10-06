@@ -1,0 +1,22 @@
+{
+  "_id": "59y5fyZCTM98Enq1",
+  "_key": "!items!59y5fyZCTM98Enq1",
+  "name": "Canalitzador",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "Permet usar l'habilitat Canalització.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "canalitzador"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

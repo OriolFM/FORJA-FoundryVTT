@@ -1,0 +1,56 @@
+{
+  "_id": "qwRMMW6oxWfu3H3n",
+  "_key": "!items!qwRMMW6oxWfu3H3n",
+  "name": "Autometge",
+  "type": "artefacte",
+  "system": {
+    "cost": 15,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "normal",
+      "dificultat": 2
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": false,
+      "modLatencia": 0
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Es pot fer servir només en temps narratiu. Afecta un objectiu individual a tocar durant una escena. Simula una tirada de l'habilitat medicina amb un resultat de 5 fites.",
+    "descripcio": "Autoeina amb sensors per analitzar l'estat del cos del pacient i una base de dades mèdiques que determina el tractament més efectiu, donant instruccions precises a l'usuari.",
+    "parametres": [
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "autoeina",
+        "nivell": 5,
+        "segona": false,
+        "habilitat": "medicina"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "autometge"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

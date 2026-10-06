@@ -44,6 +44,78 @@
       "type": "JournalEntry",
       "system": "forja",
       "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "pj",
+      "label": "Personatges jugadors (exemples)",
+      "path": "packs/pj",
+      "type": "Actor",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "pnj",
+      "label": "Personatges no jugadors",
+      "path": "packs/pnj",
+      "type": "Actor",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "animals",
+      "label": "Animals",
+      "path": "packs/animals",
+      "type": "Actor",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "criatures",
+      "label": "Criatures",
+      "path": "packs/criatures",
+      "type": "Actor",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "trets",
+      "label": "Trets",
+      "path": "packs/trets",
+      "type": "Item",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "armes",
+      "label": "Armes",
+      "path": "packs/armes",
+      "type": "Item",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "armadures",
+      "label": "Armadures",
+      "path": "packs/armadures",
+      "type": "Item",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "artefactes",
+      "label": "Artefactes",
+      "path": "packs/artefactes",
+      "type": "Item",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+    },
+    {
+      "name": "efectes",
+      "label": "Efectes sobrenaturals",
+      "path": "packs/efectes",
+      "type": "Item",
+      "system": "forja",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
     }
   ]
 }

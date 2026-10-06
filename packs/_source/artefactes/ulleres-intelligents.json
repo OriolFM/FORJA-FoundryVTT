@@ -1,0 +1,69 @@
+{
+  "_id": "oSTkiJpN5Pd1IuBF",
+  "_key": "!items!oSTkiJpN5Pd1IuBF",
+  "name": "Ulleres intel·ligents",
+  "type": "artefacte",
+  "system": {
+    "cost": 13,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "trivial",
+      "dificultat": 2
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 4
+    },
+    "carrega": {
+      "usosPerCarrega": 1,
+      "tornsRecarrega": 5,
+      "modeEspera": false
+    },
+    "mecanica": "Aplica un modificador de +1 a l'atribut PER. Dóna un modificador de +2 a les habilitats armes a distància i cercar.",
+    "descripcio": "Detecten quan el PJ enfoca la seva atenció i contribueixen a millorar la seva percepció amb pistes visuals i auditives.",
+    "parametres": [
+      {
+        "tipus": "activacio",
+        "mode": "trivial"
+      },
+      {
+        "tipus": "recarrega",
+        "unitats": 5
+      },
+      {
+        "tipus": "atribut",
+        "nivell": 1,
+        "atribut": "PER"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 2,
+        "segona": false,
+        "habilitat": "armes-distancia"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 2,
+        "segona": true,
+        "habilitat": "cercar"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 4,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "ulleres-intelligents"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

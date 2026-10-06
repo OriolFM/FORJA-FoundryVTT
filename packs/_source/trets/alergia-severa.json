@@ -1,0 +1,22 @@
+{
+  "_id": "SKo1HpVPuLjpG3di",
+  "_key": "!items!SKo1HpVPuLjpG3di",
+  "name": "Al·lèrgia (severa)",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "alergia-severa"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

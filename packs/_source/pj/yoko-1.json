@@ -1,0 +1,229 @@
+{
+  "_id": "ODEfq1Owk8ftKKVX",
+  "_key": "!actors!ODEfq1Owk8ftKKVX",
+  "name": "Yoko-1",
+  "type": "personatge",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "mecanoide",
+    "mida": 2,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 3
+      },
+      "arts-marcials": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "enginyeria": {
+        "nivell": 1
+      },
+      "esquitllar-se": {
+        "nivell": 1
+      },
+      "esquivar": {
+        "nivell": 4
+      },
+      "informatica": {
+        "nivell": 1
+      },
+      "medicina": {
+        "nivell": 1
+      },
+      "persuasio": {
+        "nivell": 1
+      },
+      "resistencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 200,
+    "biografia": "<p>La Yoko-1 serà una androide de l'Aliança del Nou Món, que fa funcions de custodi i escorta i protegeix membres importants del govern o cos diplomàtic en missions crítiques. Com a tal, ha de ser algú que pugui passar desapercebuda i amb una aparença discreta, però molt efectiva detectant amenaces i fent-los front.</p><p>El seu cos tindrà la mida i complexió d'una jove humana. La seva cara tindrà aparença orgànica, però la resta del cos serà clarament mecànic, tot i que el podrà ocultar sota la roba per passar desapercebuda.</p>"
+  },
+  "prototypeToken": {
+    "name": "Yoko-1",
+    "actorLink": true,
+    "disposition": 1
+  },
+  "items": [
+    {
+      "_id": "31t8uCjY4XTx8ash",
+      "_key": "!actors.items!ODEfq1Owk8ftKKVX.31t8uCjY4XTx8ash",
+      "name": "Aparença Estranya (neutra)",
+      "type": "tret",
+      "system": {
+        "cost": 0,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-neutra"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "wXXQEwrEm987EwtK",
+      "_key": "!actors.items!ODEfq1Owk8ftKKVX.wXXQEwrEm987EwtK",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "noXGcjIFmZSInVTP",
+      "_key": "!actors.items!ODEfq1Owk8ftKKVX.noXGcjIFmZSInVTP",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "r03BaSDNevtCGLfv",
+      "_key": "!actors.items!ODEfq1Owk8ftKKVX.r03BaSDNevtCGLfv",
+      "name": "Reflexos Ràpids",
+      "type": "tret",
+      "system": {
+        "cost": 30,
+        "descripcio": "+1 reacció màxima per torn.",
+        "efecte": {
+          "stat": "reaccionsMax",
+          "delta": 1
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "reflexos-rapids"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "b5lEtIx1YJJCBZaQ",
+      "_key": "!actors.items!ODEfq1Owk8ftKKVX.b5lEtIx1YJJCBZaQ",
+      "name": "Sentit del Perill",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-del-perill"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "qIXix8uwjVPO8Fcg",
+      "_key": "!actors.items!ODEfq1Owk8ftKKVX.qIXix8uwjVPO8Fcg",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.2280",
+      "costManual": 200,
+      "derivatsManual": {
+        "latencia": 6,
+        "defensa": 4,
+        "reduccioDany": 2,
+        "reaccio": 2
+      }
+    }
+  }
+}

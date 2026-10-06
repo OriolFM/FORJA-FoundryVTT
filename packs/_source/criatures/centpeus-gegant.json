@@ -1,0 +1,194 @@
+{
+  "_id": "oT8NS9BBQFYH2kTF",
+  "_key": "!actors!oT8NS9BBQFYH2kTF",
+  "name": "Centpeus gegant",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 4,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "artropode",
+    "mida": 5,
+    "constitucio": 2,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "esquitllar-se": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      }
+    },
+    "pc": 153,
+    "tier": "criatura",
+    "notes": "<p>Els centpeus gegants són artròpodes semblants als que hi havia al període carbonífer de Terra Prima. Fan uns 4,5 metres de llargada i un de diàmetre, son segmentats, i tenen multitud de potes de 1,5 metres de llargada. Tenen unes grans mandíbules que es comporten com unes pinces i que serveixen per combatre, però habitualment eviten la confrontació amb qualsevol animal o criatura de mida mitjana o superior. Es poden moure força silenciosament per la mida que tenen, i acostumen a viure en llocs humits i foscos, com ara pantans o coves.</p>"
+  },
+  "prototypeToken": {
+    "name": "Centpeus gegant",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "4wB6uCMNo66zGdAA",
+      "_key": "!actors.items!oT8NS9BBQFYH2kTF.4wB6uCMNo66zGdAA",
+      "name": "Armadura Natural /3",
+      "type": "tret",
+      "system": {
+        "cost": 12,
+        "descripcio": "Reducció de dany natural +3.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-3"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "XUiTCNY2Hlu6okes",
+      "_key": "!actors.items!oT8NS9BBQFYH2kTF.XUiTCNY2Hlu6okes",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "AWJcCe0HxorOq1KC",
+      "_key": "!actors.items!oT8NS9BBQFYH2kTF.AWJcCe0HxorOq1KC",
+      "name": "Potes Addicionals (10)",
+      "type": "tret",
+      "system": {
+        "cost": 50,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "potes-addicionals",
+          "valorX": 10
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "TLA9SXjqLNi2TScb",
+      "_key": "!actors.items!oT8NS9BBQFYH2kTF.TLA9SXjqLNi2TScb",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "KhaaI06c0y2rjicE",
+      "_key": "!actors.items!oT8NS9BBQFYH2kTF.KhaaI06c0y2rjicE",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7487",
+      "costManual": 153,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 0,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

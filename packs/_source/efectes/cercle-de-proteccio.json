@@ -1,0 +1,53 @@
+{
+  "_id": "fl9jYYF7QEhrAG8E",
+  "_key": "!items!fl9jYYF7QEhrAG8E",
+  "name": "Cercle de protecció",
+  "type": "efecte",
+  "system": {
+    "cost": 14,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": false
+    },
+    "mecanica": "Crea una barrera de protecció de força 12 que encercla una àrea d'efecte al voltant de l'usuari. És efectiva contra un tipus d'objectiu fins al final de l'escena.",
+    "descripcio": "Una de les bases de la màgia divina o espiritual, ensenyada pel patró per protegir el canalitzador dels seus enemics. Diversos usuaris poden solapar els seus cercles per cobrir àrees més grans i allargar-ne la durada.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "barrera",
+        "nivell": 12
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "cercle-de-proteccio"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

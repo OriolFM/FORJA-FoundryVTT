@@ -1,0 +1,22 @@
+{
+  "_id": "zlLLwq3FVj2iyEoc",
+  "_key": "!items!zlLLwq3FVj2iyEoc",
+  "name": "Etern",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "No envelleix.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "etern"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

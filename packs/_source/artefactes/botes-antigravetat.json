@@ -1,0 +1,55 @@
+{
+  "_id": "dm9jCXhZkVB5mIYx",
+  "_key": "!items!dm9jCXhZkVB5mIYx",
+  "name": "Botes antigravetat",
+  "type": "artefacte",
+  "system": {
+    "cost": 13,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "normal",
+      "dificultat": 1
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 1
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Afecta només l'usuari durant una escena. Aplica el tret levitar.",
+    "descripcio": "Donen una llibertat de moviments útil per moure's sense pertorbar restes arqueològiques o sense fer soroll.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "tret",
+        "tret": "levitar",
+        "cost": 15
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 1,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "botes-antigravetat"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

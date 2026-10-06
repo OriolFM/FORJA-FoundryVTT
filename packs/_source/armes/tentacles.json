@@ -1,0 +1,30 @@
+{
+  "_id": "VpyXHOlwG2qUGm14",
+  "_key": "!items!VpyXHOlwG2qUGm14",
+  "name": "Tentacles",
+  "type": "arma",
+  "system": {
+    "categoria": "natural",
+    "modLatencia": 0,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+2",
+    "maniobra": "Agafar (+1 dif.) — Envolta l'enemic i li aplica l'estat presa. L'atacant obté +1 FOR per cada parell de tentacles que faci servir.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "tentacles"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

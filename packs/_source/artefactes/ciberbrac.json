@@ -1,0 +1,63 @@
+{
+  "_id": "1s20Fb3vvPAmf0L4",
+  "_key": "!items!1s20Fb3vvPAmf0L4",
+  "name": "Ciberbraç",
+  "type": "artefacte",
+  "system": {
+    "cost": 22,
+    "categoria": "permanent",
+    "activacio": {
+      "tipus": "permanent",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 2
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Afecta només l'usuari. Dóna l'equivalent a una armadura natural de protecció 2. Dóna un modificador de +3 a dues habilitats de combat, a escollir en el moment d'instal·lar-lo (per exemple, armes cos a cos i barallar-se).",
+    "descripcio": "Pròtesi cibernètica de combat feta a mida de l'usuari; s'autorepara a la velocitat normal de curació i té les característiques físiques de l'usuari.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "armadura",
+        "nivell": 2
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": false,
+        "habilitat": null
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": true,
+        "habilitat": null
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": 2,
+      "permanent": true
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "ciberbrac"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

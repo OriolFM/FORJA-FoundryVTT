@@ -1,0 +1,22 @@
+{
+  "_id": "t3EthvpHsMhnXCQv",
+  "_key": "!items!t3EthvpHsMhnXCQv",
+  "name": "Processador Cortical",
+  "type": "tret",
+  "system": {
+    "cost": 40,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "processador-cortical"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

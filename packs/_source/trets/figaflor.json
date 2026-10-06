@@ -1,0 +1,22 @@
+{
+  "_id": "q8CyLAoJkAFl91Me",
+  "_key": "!items!q8CyLAoJkAFl91Me",
+  "name": "Figaflor",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "figaflor"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

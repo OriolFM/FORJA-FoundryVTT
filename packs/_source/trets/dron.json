@@ -1,0 +1,22 @@
+{
+  "_id": "LsSC6Rfin3vqqWrD",
+  "_key": "!items!LsSC6Rfin3vqqWrD",
+  "name": "Dron",
+  "type": "tret",
+  "system": {
+    "cost": -30,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "dron"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

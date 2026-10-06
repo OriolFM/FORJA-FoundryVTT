@@ -1,0 +1,48 @@
+{
+  "_id": "FTW7toYMnmDeG4sv",
+  "_key": "!items!FTW7toYMnmDeG4sv",
+  "name": "Enllaç mental",
+  "type": "efecte",
+  "system": {
+    "cost": 10,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 5,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Permet llegir o sondar i projectar pensaments a la ment de l'objectiu.",
+    "descripcio": "Un dels primers efectes que aprèn un psíquic: sincronitza els impulsos mentals amb els d'un company per llegir i projectar pensaments i aconseguir una comunicació no verbal perfecta. No funciona amb mecanoides, de pautes mentals molt diferents.",
+    "parametres": [
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "llegir"
+      },
+      {
+        "tipus": "mental",
+        "mode": "projectar"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 5,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "enllac-mental"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

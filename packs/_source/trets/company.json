@@ -1,0 +1,22 @@
+{
+  "_id": "lfhtSRDSVc2T5Rkz",
+  "_key": "!items!lfhtSRDSVc2T5Rkz",
+  "name": "Company",
+  "type": "tret",
+  "system": {
+    "cost": 0,
+    "descripcio": "Cost = cost del PNJ/4.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "company"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

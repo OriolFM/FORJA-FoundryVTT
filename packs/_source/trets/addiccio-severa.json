@@ -1,0 +1,22 @@
+{
+  "_id": "e31YGGNLxSRh2Ajq",
+  "_key": "!items!e31YGGNLxSRh2Ajq",
+  "name": "Addicció (severa)",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "addiccio-severa"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

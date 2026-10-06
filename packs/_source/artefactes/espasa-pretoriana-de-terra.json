@@ -1,0 +1,65 @@
+{
+  "_id": "TFM9UB0Yt9AZQpJX",
+  "_key": "!items!TFM9UB0Yt9AZQpJX",
+  "name": "Espasa pretoriana de Terra",
+  "type": "artefacte",
+  "system": {
+    "cost": 40,
+    "categoria": "arma",
+    "activacio": {
+      "tipus": "cap",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": false,
+      "actiu": true,
+      "modLatencia": 3
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Espasa llarga amb latència +3, abast a tocar, i +4 al dany. Dóna un modificador de +5 a l'habilitat armes cos a cos i genera una ègida de protecció 9 per a l'usuari. Aplica l'estat sagnant/3 a l'objectiu dels atacs.",
+    "descripcio": "Indicador de rang de la guàrdia pretoriana de l'imperi romà de Terra; un pretor mai no se'n separa.",
+    "parametres": [
+      {
+        "tipus": "arma",
+        "base": "fulla-llarga",
+        "latencia": 2,
+        "dany": 4
+      },
+      {
+        "tipus": "eina",
+        "nivell": 5,
+        "segona": false,
+        "habilitat": "armes-cos-a-cos"
+      },
+      {
+        "tipus": "egida",
+        "nivell": 9
+      },
+      {
+        "tipus": "estat",
+        "estat": "sagnant",
+        "nivell": 3
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "espasa-pretoriana-de-terra"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

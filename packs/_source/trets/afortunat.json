@@ -1,0 +1,22 @@
+{
+  "_id": "UWCY47Y4fxrJIZUh",
+  "_key": "!items!UWCY47Y4fxrJIZUh",
+  "name": "Afortunat",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "afortunat"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

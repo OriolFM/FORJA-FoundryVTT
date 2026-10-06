@@ -1,0 +1,160 @@
+{
+  "_id": "6DaOb3FYwWtqrDv0",
+  "_key": "!actors!6DaOb3FYwWtqrDv0",
+  "name": "Corser macabre",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 1,
+      "AGI": 3,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "constructe",
+    "mida": 4,
+    "constitucio": 3,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 4
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "supervivencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 87,
+    "tier": "criatura",
+    "notes": "<p>Els corsers macabres són força populars entre els nigromants que necessiten moure's ràpid per terra. En general, són quadrúpedes o hexàpodes de la forma i mida aproximada d'un cavall, per poder-ne aprofitar les selles i altres accessoris (tot i que no calen regnes, perquè el corser macabre segueix les instruccions del nigromant fil per randa).</p><p>Segons els ossos i carn amb els que el nigromant l'hagi creat, el corser macabre podria tenir capacitats ofensives, per exemple, si la matèria primera prové d'un brau (banyes) o d'un gran felí (urpes, ullals). En qualsevol cas, el nigromant pot barrejar ossos de diferents animals si així ho desitja, i per tant, res no és descartable, però el cost del corser macabre serà superior.</p>"
+  },
+  "prototypeToken": {
+    "name": "Corser macabre",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "QHZXgZe3ceUhlYsQ",
+      "_key": "!actors.items!6DaOb3FYwWtqrDv0.QHZXgZe3ceUhlYsQ",
+      "name": "Dron",
+      "type": "tret",
+      "system": {
+        "cost": -30,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dron"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "3NIey5thKKnF0uVo",
+      "_key": "!actors.items!6DaOb3FYwWtqrDv0.3NIey5thKKnF0uVo",
+      "name": "No-Mort",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": {
+          "flag": "noMort"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "no-mort"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "2RCQ7eODqRjc8uh7",
+      "_key": "!actors.items!6DaOb3FYwWtqrDv0.2RCQ7eODqRjc8uh7",
+      "name": "Potes Addicionals (1)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "potes-addicionals",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "mj5qdUCgyF14b8bj",
+      "_key": "!actors.items!6DaOb3FYwWtqrDv0.mj5qdUCgyF14b8bj",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7501",
+      "costManual": 87,
+      "derivatsManual": {
+        "latencia": 8,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

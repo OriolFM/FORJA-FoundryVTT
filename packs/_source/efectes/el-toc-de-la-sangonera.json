@@ -1,0 +1,45 @@
+{
+  "_id": "hJ1UbBUiLyKVcn5u",
+  "_key": "!items!hJ1UbBUiLyKVcn5u",
+  "name": "El toc de la sangonera",
+  "type": "efecte",
+  "system": {
+    "cost": 12,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica l'estat sagnant/2.",
+    "descripcio": "Molts mestres veterans del Qi el fan servir per afeblir ràpidament els seus contrincants. Repetir el toc apila l'estat, fent que la víctima perdi fatiga de manera continuada.",
+    "parametres": [
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "sagnant",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "el-toc-de-la-sangonera"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

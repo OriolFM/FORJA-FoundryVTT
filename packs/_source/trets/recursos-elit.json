@@ -1,0 +1,22 @@
+{
+  "_id": "DexrnjTDOC2CT9ki",
+  "_key": "!items!DexrnjTDOC2CT9ki",
+  "name": "Recursos (elit)",
+  "type": "tret",
+  "system": {
+    "cost": 50,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "recursos-elit"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

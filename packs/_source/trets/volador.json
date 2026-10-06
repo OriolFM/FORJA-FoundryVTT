@@ -1,0 +1,22 @@
+{
+  "_id": "Mz3gfQqhWER7NFEm",
+  "_key": "!items!Mz3gfQqhWER7NFEm",
+  "name": "Volador",
+  "type": "tret",
+  "system": {
+    "cost": 25,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "volador"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

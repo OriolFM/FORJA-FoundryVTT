@@ -1,0 +1,59 @@
+{
+  "_id": "I78xytXS4Ci4AwmI",
+  "_key": "!items!I78xytXS4Ci4AwmI",
+  "name": "La velocitat del vent",
+  "type": "efecte",
+  "system": {
+    "cost": 22,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 3,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari rep un modificador de +3 a l'habilitat de córrer, l'estat ràpid/2, i el tret incansable durant una escena.",
+    "descripcio": "Els il·luminats errants solen fer llargues caminades a la recerca de saviesa, però de vegades necessiten arribar més ràpid. Aquest efecte els permet recórrer grans distàncies a gran velocitat sense patir cansament, almenys fins que hi arriben.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": false,
+        "habilitat": "correr"
+      },
+      {
+        "tipus": "estat",
+        "estat": "rapid",
+        "nivell": 2
+      },
+      {
+        "tipus": "tret",
+        "tret": "incansable",
+        "cost": 10
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 3,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-velocitat-del-vent"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

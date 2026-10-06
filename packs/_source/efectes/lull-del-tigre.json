@@ -1,0 +1,49 @@
+{
+  "_id": "oa6xImtTxyzZ6S78",
+  "_key": "!items!oa6xImtTxyzZ6S78",
+  "name": "L'ull del tigre",
+  "type": "efecte",
+  "system": {
+    "cost": 19,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 1,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari fa un atac cos a cos amb un +2 a l'habilitat d'arts marcials. L'atac causa +4 de dany directe de fatiga o ferides.",
+    "descripcio": "El PJ es mou seguint el flux de Qi entre el seu cos i el de l'oponent, guanyant precisió per colpejar els punts febles i causar dany directe.",
+    "parametres": [
+      {
+        "tipus": "eina",
+        "nivell": 2,
+        "segona": false,
+        "habilitat": "arts-marcials"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "directe",
+        "nivell": 4,
+        "danyTipus": "fatiga-o-ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 1,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "lull-del-tigre"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

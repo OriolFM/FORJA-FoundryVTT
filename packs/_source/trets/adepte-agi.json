@@ -1,0 +1,22 @@
+{
+  "_id": "iSsbhwxqOOdsXlW4",
+  "_key": "!items!iSsbhwxqOOdsXlW4",
+  "name": "Adepte (AGI)",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Repeteix els 1s en tirades de AGI.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "adepte-agi"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

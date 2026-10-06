@@ -1,0 +1,140 @@
+{
+  "_id": "9dhZbq8wElhpj84v",
+  "_key": "!actors!9dhZbq8wElhpj84v",
+  "name": "Cacic nòmada",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 1
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 3
+      },
+      "lideratge": {
+        "nivell": 2
+      },
+      "navegacio": {
+        "nivell": 2
+      },
+      "persuasio": {
+        "nivell": 1
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 2
+      },
+      "tactica": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 2
+      }
+    },
+    "pc": 108,
+    "tier": "antagonista",
+    "notes": "<p>Les famílies o grups tribals nòmades estan dirigits habitualment per un cap o cacic, que pot haver estat escollit per la seva saviesa (més habitual en models familiars) o per la seva capacitat per a la violència (en molts models tribals).Aquesta plantilla fa referència als cacics menors, de grups més aviat petits i no gaire rellevants. A vegades, diversos grups poden unir-se sota el paraigua d'un senyor de la guerra, més agressiu, que els porta a reclamar grans extensions de terreny com a territori propi.</p>"
+  },
+  "prototypeToken": {
+    "name": "Cacic nòmada",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "HGr45lsjXopNveyk",
+      "_key": "!actors.items!9dhZbq8wElhpj84v.HGr45lsjXopNveyk",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "CMPlfV8NgRvTSbEJ",
+      "_key": "!actors.items!9dhZbq8wElhpj84v.CMPlfV8NgRvTSbEJ",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.6993",
+      "costManual": 108,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

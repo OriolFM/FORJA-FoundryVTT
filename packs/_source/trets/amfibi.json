@@ -1,0 +1,22 @@
+{
+  "_id": "M7GRRc0gGBJSOxbC",
+  "_key": "!items!M7GRRc0gGBJSOxbC",
+  "name": "Amfibi",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "Pot respirar sota l'aigua.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "amfibi"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

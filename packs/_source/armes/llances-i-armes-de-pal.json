@@ -1,0 +1,30 @@
+{
+  "_id": "EK10ca5LMixeehff",
+  "_key": "!items!EK10ca5LMixeehff",
+  "name": "Llances i armes de pal",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 3,
+    "abast": 2,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+3",
+    "maniobra": "Escombrada — Fa la traveta als enemics adjacents; s'aplica l'estat abatut si no superen AGI+Equilibri.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Llances i armes de pal (manual: Lat +3, Abast +2, Dany FOR+3)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "llances-i-armes-de-pal"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

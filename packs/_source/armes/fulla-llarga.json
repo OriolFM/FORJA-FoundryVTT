@@ -1,0 +1,30 @@
+{
+  "_id": "bDQDXtDK6eZFar8e",
+  "_key": "!items!bDQDXtDK6eZFar8e",
+  "name": "Fulla llarga",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 2,
+    "abast": 1,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+3",
+    "maniobra": "Tall — Aplica l'estat sagnar/+1 a l'objectiu.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Fulla llarga (manual: Lat +2, Abast +1, Dany FOR+3)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "fulla-llarga"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

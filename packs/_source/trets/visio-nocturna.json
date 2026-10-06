@@ -1,0 +1,22 @@
+{
+  "_id": "n0UHKKm9yWVZ0BID",
+  "_key": "!items!n0UHKKm9yWVZ0BID",
+  "name": "Visió Nocturna",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "visio-nocturna"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "vhbhrC6gHsNEfhCL",
+  "_key": "!items!vhbhrC6gHsNEfhCL",
+  "name": "Feromones",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "feromones"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

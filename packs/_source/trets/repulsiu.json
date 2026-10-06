@@ -1,0 +1,22 @@
+{
+  "_id": "4iybPrKQBT3o2W2I",
+  "_key": "!items!4iybPrKQBT3o2W2I",
+  "name": "Repulsiu",
+  "type": "tret",
+  "system": {
+    "cost": -2,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "repulsiu"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

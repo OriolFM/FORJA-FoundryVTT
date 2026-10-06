@@ -1,0 +1,427 @@
+{
+  "_id": "UFXE2spqAxFNR4CC",
+  "_key": "!actors!UFXE2spqAxFNR4CC",
+  "name": "Renegat",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 4,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 3,
+      "APL": 4
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 4,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 4
+      },
+      "barallar-se": {
+        "nivell": 4
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "ciencia": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 4
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "enginyeria": {
+        "nivell": 3
+      },
+      "enigmes": {
+        "nivell": 3
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "escalada": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "explosius": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 1
+      },
+      "informatica": {
+        "nivell": 3
+      },
+      "intimidacio": {
+        "nivell": 4
+      },
+      "medicina": {
+        "nivell": 2
+      },
+      "navegacio": {
+        "nivell": 2
+      },
+      "nedar": {
+        "nivell": 1
+      },
+      "negociacio": {
+        "nivell": 2
+      },
+      "persuasio": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "supervivencia": {
+        "nivell": 3
+      },
+      "tactica": {
+        "nivell": 3
+      },
+      "vehicle": {
+        "nivell": 4
+      }
+    },
+    "pc": 459,
+    "tier": "nemesis",
+    "notes": "<p>El Renegat (el seu nom autèntic no figura als arxius desclassificats de l'ANM) és un antic membre d'elit del cos de bretxers mancat d'escrúpols i moral, que es dedicava al tràfic de tecnologia il·legal per afany de lucre.</p><p>Durant una missió a Terra, va intentar enredar una família noble. Aquests el van matar i el van convertir en un no-mort al seu servei. Amb el temps, va poder trencar el control que tenien sobre ell i es va girar contra els seus captors.</p><p>Per evitar pagar pels crims comesos a l'ANM i l'Imperi romà de Terra, va fugir pel multivers i ara va per lliure, fent-se amb tots els artefactes que pot i venent els seus serveis al millor postor.</p>"
+  },
+  "prototypeToken": {
+    "name": "Renegat",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "sIAF9QNgYhdUNXYD",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.sIAF9QNgYhdUNXYD",
+      "name": "Aparença Estranya (desagradable)",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-desagradable"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "BmyMBNYFavUPUuli",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.BmyMBNYFavUPUuli",
+      "name": "Curació Ràpida (1)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "15 PC per punt de curació.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "curacio-rapida",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "AuH4d6t2vvY9Ay2I",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.AuH4d6t2vvY9Ay2I",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "lfn5TBOoCVC7XsWh",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.lfn5TBOoCVC7XsWh",
+      "name": "No-Mort",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": {
+          "flag": "noMort"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "no-mort"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "LpN1u1cIzwGEfIQu",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.LpN1u1cIzwGEfIQu",
+      "name": "Regeneració",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "regeneracio"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "dOvuROeO0vgZIHUo",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.dOvuROeO0vgZIHUo",
+      "name": "Visió Nocturna",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-nocturna"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "3eBuqcDKexXhDekM",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.3eBuqcDKexXhDekM",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Oo68N1HEj5tNZgOr",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.Oo68N1HEj5tNZgOr",
+      "name": "Generador compacte de bretxa",
+      "type": "artefacte",
+      "system": {
+        "cost": 53,
+        "categoria": "dispositiu",
+        "activacio": {
+          "tipus": "complexa",
+          "dificultat": 4
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 10
+        },
+        "carrega": {
+          "usosPerCarrega": 1,
+          "tornsRecarrega": 26,
+          "modeEspera": true
+        },
+        "mecanica": "Crea un parell de portals transitables (àrea d'efecte circular) entre dos punts del multivers, amb una durada d'una escena. Triga 26 torns a recuperar una càrrega parcial (vàlida per un ús). El mode d'espera permet fer una activació prèvia a l'ús.",
+        "descripcio": "Exclusiu del Cos de Bretxers de l'Aliança i extremadament controlat; tenir-ne un sense ser-ne membre és delicte.",
+        "parametres": [
+          {
+            "tipus": "activacio",
+            "mode": "complexa"
+          },
+          {
+            "tipus": "area"
+          },
+          {
+            "tipus": "durada"
+          },
+          {
+            "tipus": "translocacio",
+            "mode": "portals",
+            "distancia": "multiversal"
+          },
+          {
+            "tipus": "recarrega",
+            "unitats": 26
+          },
+          {
+            "tipus": "espera"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 4,
+          "latenciaDeclarada": 10,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "generador-compacte-de-bretxa"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "TGPDXAPH4L7QsPqk",
+      "_key": "!actors.items!UFXE2spqAxFNR4CC.TGPDXAPH4L7QsPqk",
+      "name": "Servoarmadura d'assalt",
+      "type": "artefacte",
+      "system": {
+        "cost": 62,
+        "categoria": "armadura",
+        "activacio": {
+          "tipus": "permanent",
+          "dificultat": null
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 2
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "Armadura pesant amb latència +2 i protecció 10 (±2 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +3 a FOR, +3 a l'habilitat força bruta i +4 a l'habilitat resistència.",
+        "descripcio": "Permet als operatius de l'ANM moure's ràpidament pel camp de batalla ben protegits per acomplir els seus objectius.",
+        "parametres": [
+          {
+            "tipus": "armaduraBase",
+            "base": "pesant",
+            "latencia": 0,
+            "proteccio": 10
+          },
+          {
+            "tipus": "atribut",
+            "nivell": 3,
+            "atribut": "FOR"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 3,
+            "segona": false,
+            "habilitat": "forca-bruta"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 4,
+            "segona": true,
+            "habilitat": "resistencia"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": null,
+          "permanent": true
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "servoarmadura-dassalt"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7343",
+      "costManual": 459,
+      "derivatsManual": {
+        "latencia": 7,
+        "defensa": 3,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

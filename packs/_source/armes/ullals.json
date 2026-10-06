@@ -1,0 +1,30 @@
+{
+  "_id": "CrmrR91sK04gjXrX",
+  "_key": "!items!CrmrR91sK04gjXrX",
+  "name": "Ullals",
+  "type": "arma",
+  "system": {
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+2",
+    "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "ullals"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

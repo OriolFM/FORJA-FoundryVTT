@@ -1,0 +1,22 @@
+{
+  "_id": "tBGxpLIMvI82A8Ql",
+  "_key": "!items!tBGxpLIMvI82A8Ql",
+  "name": "Adepte (DES)",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Repeteix els 1s en tirades de DES.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "adepte-des"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

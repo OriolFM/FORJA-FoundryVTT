@@ -1,0 +1,30 @@
+{
+  "_id": "dzBb1r0vcr5kuJfu",
+  "_key": "!items!dzBb1r0vcr5kuJfu",
+  "name": "Rifles",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 100,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "DES+4",
+    "maniobra": "Abast extrem — Poden disparar a rang extrem (8x el rang curt).",
+    "rangExtrem": true,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Manual: Lat +2, Rang 100, Dany DES+4, munició 5."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "rifles"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

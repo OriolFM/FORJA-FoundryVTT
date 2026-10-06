@@ -1,0 +1,22 @@
+{
+  "_id": "McPCHajAtDP8kKDK",
+  "_key": "!items!McPCHajAtDP8kKDK",
+  "name": "Esguerrat (braç)",
+  "type": "tret",
+  "system": {
+    "cost": -15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "esguerrat-brac"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

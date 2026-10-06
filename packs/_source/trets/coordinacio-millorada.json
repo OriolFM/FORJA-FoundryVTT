@@ -1,0 +1,22 @@
+{
+  "_id": "tVdn6AesKnzROufL",
+  "_key": "!items!tVdn6AesKnzROufL",
+  "name": "Coordinació Millorada",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "coordinacio-millorada"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

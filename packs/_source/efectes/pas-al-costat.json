@@ -1,0 +1,48 @@
+{
+  "_id": "aihcxaEd2iV4qz2B",
+  "_key": "!items!aihcxaEd2iV4qz2B",
+  "name": "Pas al costat",
+  "type": "efecte",
+  "system": {
+    "cost": 23,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 3,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari es transposa instantàniament a un punt dins el seu abast sensorial (distància mitjana). La tirada de manifestar l'efecte serveix com una tirada d'esquivar; si la tirada d'atac és més alta, l'usuari es transposa massa tard i rep el dany normal segons la seva defensa bàsica.",
+    "descripcio": "Parteix de la idea que la millor manera d'evitar un atac és no ser-hi quan arriba: transposa l'usuari a un punt proper. La tirada de l'efecte fa d'esquiva; si l'atac la supera, l'usuari es mou massa tard i rep el dany normal.",
+    "parametres": [
+      {
+        "tipus": "reaccio"
+      },
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "translocacio",
+        "mode": "translocacio",
+        "distancia": "mitjana"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 3,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "pas-al-costat"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

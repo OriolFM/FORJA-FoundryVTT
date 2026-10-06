@@ -1,0 +1,244 @@
+{
+  "_id": "PdFSv0jtxgyAwhbE",
+  "_key": "!actors!PdFSv0jtxgyAwhbE",
+  "name": "Insecte soldat",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "artropode",
+    "mida": 4,
+    "constitucio": 3,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 1
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "tactica": {
+        "nivell": 2
+      }
+    },
+    "pc": 137,
+    "tier": "antagonista",
+    "notes": "<p>Alguns insectes eusocials de Rrrrth tenen, a part dels obrers, una casta de soldats per defensar la colònia.</p><p>Els soldats no acostumen a ser gaire agressius a no ser que trobin intrusos a la colònia o si la seva reina els ho ordena. Defensaran la colònia fins a les últimes conseqüències, encara que això suposi una mort segura.</p>"
+  },
+  "prototypeToken": {
+    "name": "Insecte soldat",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "x2AZHiXRSUHe8R3q",
+      "_key": "!actors.items!PdFSv0jtxgyAwhbE.x2AZHiXRSUHe8R3q",
+      "name": "Armadura Natural /4",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Reducció de dany natural +4.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-4"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "eKPuO49vaDshiEDq",
+      "_key": "!actors.items!PdFSv0jtxgyAwhbE.eKPuO49vaDshiEDq",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "AggDJAGZ5lt52U98",
+      "_key": "!actors.items!PdFSv0jtxgyAwhbE.AggDJAGZ5lt52U98",
+      "name": "Braços Addicionals (1)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "bracos-addicionals",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "PZfoFr0xVW4eujN8",
+      "_key": "!actors.items!PdFSv0jtxgyAwhbE.PZfoFr0xVW4eujN8",
+      "name": "Coordinació Millorada",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "coordinacio-millorada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "uIvsrvAYaxB9kwdW",
+      "_key": "!actors.items!PdFSv0jtxgyAwhbE.uIvsrvAYaxB9kwdW",
+      "name": "Feromones",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "feromones"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "faMVM8VatzAY6ha9",
+      "_key": "!actors.items!PdFSv0jtxgyAwhbE.faMVM8VatzAY6ha9",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "BP1ZLL8HfCFFhJUd",
+      "_key": "!actors.items!PdFSv0jtxgyAwhbE.BP1ZLL8HfCFFhJUd",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7129",
+      "costManual": 137,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 1,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

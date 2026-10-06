@@ -1,0 +1,50 @@
+{
+  "_id": "L8YgLekF5FLCEjjR",
+  "_key": "!items!L8YgLekF5FLCEjjR",
+  "name": "L'aleteig de la grua",
+  "type": "efecte",
+  "system": {
+    "cost": 13,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte situada a tocar de l'usuari. Aplica els estats atordit (modificador +0) i empès (modificador +2).",
+    "descripcio": "Es veu poques vegades en duels, però més d'un il·luminat errant ha salvat la vida gràcies a aquest efecte quan s'ha vist enmig d'una emboscada.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "estat",
+        "estat": "atordit",
+        "nivell": 0
+      },
+      {
+        "tipus": "estat",
+        "estat": "empes",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "laleteig-de-la-grua"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

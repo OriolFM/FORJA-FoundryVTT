@@ -1,0 +1,22 @@
+{
+  "_id": "3WpOENhvTvhiPYxy",
+  "_key": "!items!3WpOENhvTvhiPYxy",
+  "name": "Sentit Atrofiat (gust+olfacte)",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-atrofiat-gust-olfacte"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

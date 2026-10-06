@@ -1,0 +1,22 @@
+{
+  "_id": "xiOHMB2qh3wbT32d",
+  "_key": "!items!xiOHMB2qh3wbT32d",
+  "name": "Adepte (PER)",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Repeteix els 1s en tirades de PER.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "adepte-per"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

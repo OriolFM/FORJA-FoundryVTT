@@ -1,0 +1,30 @@
+{
+  "_id": "8dfGbZfxr4x6x5Bm",
+  "_key": "!items!8dfGbZfxr4x6x5Bm",
+  "name": "Pistoles",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 0,
+    "abast": 15,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "DES+2",
+    "maniobra": "Desenfundar — Si van en una beina adequada, es desenfunden sense afegir latència.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Manual: Lat +0, Rang 15, Dany DES+2, munició 10."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "pistoles"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

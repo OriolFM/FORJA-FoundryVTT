@@ -1,0 +1,47 @@
+{
+  "_id": "NRNFDf58edMT8QWL",
+  "_key": "!items!NRNFDf58edMT8QWL",
+  "name": "Subjugar",
+  "type": "efecte",
+  "system": {
+    "cost": 15,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 5,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari pot controlar les emocions d'un o més objectius dins el seu abast sensorial durant una escena.",
+    "descripcio": "La veu de l'usuari incorpora infrasons inaudibles que estimulen el cervell de l'objectiu, fent-lo més susceptible a la suggestió i alterant-ne les secrecions hormonals per controlar-ne les emocions. Les emocions primàries, com la ira o la por, són sempre més fàcils d'induir que les més subtils.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "control-emocional"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 5,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "subjugar"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

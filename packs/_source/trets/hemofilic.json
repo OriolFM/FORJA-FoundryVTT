@@ -1,0 +1,22 @@
+{
+  "_id": "Vr52son2xvAtjgAf",
+  "_key": "!items!Vr52son2xvAtjgAf",
+  "name": "Hemofílic",
+  "type": "tret",
+  "system": {
+    "cost": -15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "hemofilic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

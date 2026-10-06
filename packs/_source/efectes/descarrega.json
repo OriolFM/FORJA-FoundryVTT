@@ -1,0 +1,46 @@
+{
+  "_id": "HArKqsKv3mymDZHe",
+  "_key": "!items!HArKqsKv3mymDZHe",
+  "name": "Descàrrega",
+  "type": "efecte",
+  "system": {
+    "cost": 12,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 2,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa dany indirecte d'electricitat amb un modificador de +4.",
+    "descripcio": "Molts mags de batalla i bruixes el prefereixen a la bola de foc per la seva precisió: un arc voltaic salta d'un objectiu a un altre sense afectar qui tinguin al costat. Com que es propaga pels medis conductors, no és gaire recomanable sota la pluja.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 4,
+        "danyTipus": "electricitat"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 2,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "descarrega"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

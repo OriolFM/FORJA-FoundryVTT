@@ -1,0 +1,186 @@
+{
+  "_id": "lTETloXBXcichaEo",
+  "_key": "!actors!lTETloXBXcichaEo",
+  "name": "Senyor de la guerra",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 4,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 4
+      },
+      "armes-cos-a-cos": {
+        "nivell": 3
+      },
+      "barallar-se": {
+        "nivell": 4
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "explosius": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 4
+      },
+      "navegacio": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 4
+      },
+      "supervivencia": {
+        "nivell": 3
+      },
+      "tactica": {
+        "nivell": 4
+      },
+      "vehicle": {
+        "nivell": 3
+      }
+    },
+    "pc": 198,
+    "tier": "antagonista",
+    "notes": "<p>Per senyor de la guerra entenem aquell individu que es dedica a exercir el monopoli de la violència per a un estat (en el cas de generals o alts rangs militars) o per ell mateix (reis, cacics).</p><p>Els que estan integrats en estructures militars acostumen a tenir bona reputació dins els seus estats, gràcies a les seves contribucions. Els senyors de la guerra errants, que controlen saquejadors o guerrilles i planifiquen ràtzies contra altres poblacions, acostumen a ser temuts per propis i aliens a parts iguals.</p><p>Aquesta plantilla es pot modificar, sense variar el valor en Punts de Creació, canviant l'ordre dels atributs segons convingui (per exemple, posar 1 a FOR, 2 a PER i 3 a INT per a un senyor de la guerra fràgil però molt hàbil tàcticament), com també les habilitats (canviar el tipus d'habilitat però sense canviar els valors).</p>"
+  },
+  "prototypeToken": {
+    "name": "Senyor de la guerra",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "pnkLT781z6UyYFeQ",
+      "_key": "!actors.items!lTETloXBXcichaEo.pnkLT781z6UyYFeQ",
+      "name": "Arrauxat",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "arrauxat"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "gkIgh70KYuDHVxNH",
+      "_key": "!actors.items!lTETloXBXcichaEo.gkIgh70KYuDHVxNH",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "QZC9l5pNhMxobGCY",
+      "_key": "!actors.items!lTETloXBXcichaEo.QZC9l5pNhMxobGCY",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "mU31oMqriZH65C9O",
+      "_key": "!actors.items!lTETloXBXcichaEo.mU31oMqriZH65C9O",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7247",
+      "costManual": 198,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "WImKHzUVicVVLatK",
+  "_key": "!items!WImKHzUVicVVLatK",
+  "name": "Gelatinós",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "gelatinos"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

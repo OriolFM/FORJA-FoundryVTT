@@ -1,0 +1,43 @@
+{
+  "_id": "6BBmCUZwrT4Fmt8q",
+  "_key": "!items!6BBmCUZwrT4Fmt8q",
+  "name": "Puny de drac",
+  "type": "efecte",
+  "system": {
+    "cost": 12,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar. Causa dany indirecte de foc amb un modificador de +7.",
+    "descripcio": "Un dels moviments clàssics de les arts marcials de Takama-ga-hara: l'usuari destil·la el seu Qi en flames que envolten el puny per colpejar l'oponent.",
+    "parametres": [
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 7,
+        "danyTipus": "foc"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "puny-de-drac"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "_id": "qFuOKE0nQiXPytnd",
+  "_key": "!items!qFuOKE0nQiXPytnd",
+  "name": "Auguris",
+  "type": "efecte",
+  "system": {
+    "cost": 10,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 2,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": false
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Crea una il·lusió immersiva amb un modificador de +0. Aplica el tret oracle.",
+    "descripcio": "Alguns patrons transporten la ment del canalitzador a esdeveniments que passen en un altre lloc o moment, que el PJ viu com si hi fos present. A diferència del tret d'oracle, que és imprevisible, aquest ús és controlat i sol donar informació més concreta, ja que és el mateix patró qui el guia.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "illusio",
+        "nivell": 0
+      },
+      {
+        "tipus": "tret",
+        "tret": "oracle",
+        "cost": 30
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "auguris"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "_id": "czDqDL0bbcywHbBD",
+  "_key": "!items!czDqDL0bbcywHbBD",
+  "name": "Cibermòdem",
+  "type": "artefacte",
+  "system": {
+    "cost": 9,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "normal",
+      "dificultat": 1
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 1
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +3 a l'habilitat informàtica. Genera fatiga a raó d'un punt per hora d'ús.",
+    "descripcio": "Ulleres i auriculars de realitat virtual que fan d'interfície entre l'usuari i un sistema informàtic o la ment d'un mecanoide.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": false,
+        "habilitat": "informatica"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 1,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "cibermodem"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

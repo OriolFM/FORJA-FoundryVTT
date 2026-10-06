@@ -1,0 +1,22 @@
+{
+  "_id": "hqIYZi5f4VrjW0Ie",
+  "_key": "!items!hqIYZi5f4VrjW0Ie",
+  "name": "Inepte (AGI)",
+  "type": "tret",
+  "system": {
+    "cost": -15,
+    "descripcio": "10 no compta doble; cada 1 resta una fita.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "inepte-agi"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "_id": "BFZNVfHXD29AAGdQ",
+  "_key": "!items!BFZNVfHXD29AAGdQ",
+  "name": "Contundents",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 2,
+    "abast": 1,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+2",
+    "maniobra": "Empènyer — Aplica l'estat Empès. Si l'objectiu és més gran, +1 dificultat per cada nivell de diferència de mida.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Armes contundents (manual: Lat +2, Abast +1, Dany FOR+2)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "contundents"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

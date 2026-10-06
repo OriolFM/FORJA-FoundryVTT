@@ -1,0 +1,32 @@
+{
+  "_id": "OUQbo3mEDWpnVtCR",
+  "_key": "!items!OUQbo3mEDWpnVtCR",
+  "name": "Escopetes",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 10,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "DES+3",
+    "maniobra": "Dispersió — Inefectives a més de rang mitjà, però l'objectiu sempre té defensa bàsica 1 (modificada per distància). Poca penetració — Les armadures rígides ofereixen el doble de protecció contra escopetes.",
+    "rangExtrem": true,
+    "basic": false,
+    "propietats": [
+      "escopeta"
+    ],
+    "descripcio": "Manual: Lat +2, Rang 10 (abast extrem), Dany DES+3, munició 6."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "escopetes"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

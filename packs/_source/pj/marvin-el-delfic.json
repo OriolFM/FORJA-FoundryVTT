@@ -1,0 +1,176 @@
+{
+  "_id": "ort16TGw70Kp9evK",
+  "_key": "!actors!ort16TGw70Kp9evK",
+  "name": "Marvin el dèlfic",
+  "type": "personatge",
+  "system": {
+    "atributs": {
+      "FOR": 4,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 3,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 4,
+    "constitucio": 5,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 1
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "enigmes": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 2
+      },
+      "medicina": {
+        "nivell": 1
+      },
+      "navegacio": {
+        "nivell": 3
+      },
+      "nedar": {
+        "nivell": 4
+      },
+      "nyaps": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 2
+      },
+      "persuasio": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "supervivencia": {
+        "nivell": 3
+      },
+      "tracte-animals": {
+        "nivell": 3
+      }
+    },
+    "pc": 200,
+    "biografia": "<p>El Marvin és un dèlfic que descendeix d'algun avantpassat de les rorquals blaves que es poden trobar a Terra Prima. És gros i fort, i treballa com a custodi a l'hàbitat d'Atlantis.</p>"
+  },
+  "prototypeToken": {
+    "name": "Marvin el dèlfic",
+    "actorLink": true,
+    "disposition": 1
+  },
+  "items": [
+    {
+      "_id": "HNXBpjxWukuIocER",
+      "_key": "!actors.items!ort16TGw70Kp9evK.HNXBpjxWukuIocER",
+      "name": "Aquàtic",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "Neda a velocitat normal.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aquatic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "KBXaonjuqMTrh8RZ",
+      "_key": "!actors.items!ort16TGw70Kp9evK.KBXaonjuqMTrh8RZ",
+      "name": "Sonar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sonar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "WVf0CtLgB26WmhT4",
+      "_key": "!actors.items!ort16TGw70Kp9evK.WVf0CtLgB26WmhT4",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.2190",
+      "costManual": 200,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 1,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

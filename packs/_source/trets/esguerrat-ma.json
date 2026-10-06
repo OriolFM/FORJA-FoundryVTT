@@ -1,0 +1,22 @@
+{
+  "_id": "cJYYEGfI9FltwI5D",
+  "_key": "!items!cJYYEGfI9FltwI5D",
+  "name": "Esguerrat (mà)",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "esguerrat-ma"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

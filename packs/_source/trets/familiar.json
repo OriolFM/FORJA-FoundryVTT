@@ -1,0 +1,22 @@
+{
+  "_id": "Dss7PpBMxVLrexpa",
+  "_key": "!items!Dss7PpBMxVLrexpa",
+  "name": "Familiar",
+  "type": "tret",
+  "system": {
+    "cost": 0,
+    "descripcio": "Cost = cost del PNJ/3.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "familiar"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "_id": "fOBevjw4AfHpBxw7",
+  "_key": "!items!fOBevjw4AfHpBxw7",
+  "name": "Martell de descàrrega",
+  "type": "artefacte",
+  "system": {
+    "cost": 15,
+    "categoria": "arma",
+    "activacio": {
+      "tipus": "cap",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": false,
+      "actiu": true,
+      "modLatencia": 2
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Arma contundent amb latència +2, abast a tocar, i causa +5 de dany indirecte d'electricitat. Aplica els estats atordit i llançat amb un modificador de +0.",
+    "descripcio": "Acumula una càrrega elèctrica considerable i l'allibera en impactar, amb prou força per llançar l'objectiu pels aires.",
+    "parametres": [
+      {
+        "tipus": "arma",
+        "base": "contundent",
+        "latencia": 2,
+        "dany": 5
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 0,
+        "danyTipus": "electricitat"
+      },
+      {
+        "tipus": "estat",
+        "estat": "atordit",
+        "nivell": 0
+      },
+      {
+        "tipus": "estat",
+        "estat": "llancat",
+        "nivell": 0
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "martell-de-descarrega"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

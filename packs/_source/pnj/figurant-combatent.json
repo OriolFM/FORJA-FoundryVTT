@@ -1,0 +1,119 @@
+{
+  "_id": "v96hNqyxlfqHz8te",
+  "_key": "!actors!v96hNqyxlfqHz8te",
+  "name": "Figurant (combatent)",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 1
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 2,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 3
+      }
+    },
+    "pc": 16,
+    "tier": "extra",
+    "notes": "<p>Aquesta plantilla es pot fer servir com a referència per qualsevol extra o esbirro combatent anònim, ja sigui un guàrdia, agent de les forces de seguretat, soldat ras…</p><p>És prou competent en les seves habilitats i característiques marcials (4-5 daus), però gens donat a heroïcitats (com evidencia el seu poc aplom). Tampoc destaca per la seva brillantor intel·lectual, ja que habitualment està acostumat a complir ordres i prou..</p>"
+  },
+  "prototypeToken": {
+    "name": "Figurant (combatent)",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "xob3E2k7biQ7t2tJ",
+      "_key": "!actors.items!v96hNqyxlfqHz8te.xob3E2k7biQ7t2tJ",
+      "name": "Inepte (INT)",
+      "type": "tret",
+      "system": {
+        "cost": -15,
+        "descripcio": "10 no compta doble; cada 1 resta una fita.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "inepte-int"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "zhkN5rlUrLaLkoce",
+      "_key": "!actors.items!v96hNqyxlfqHz8te.zhkN5rlUrLaLkoce",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.6913",
+      "costManual": 16,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 1,
+        "reaccio": 1
+      }
+    }
+  }
+}

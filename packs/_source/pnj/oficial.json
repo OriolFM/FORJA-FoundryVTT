@@ -1,0 +1,162 @@
+{
+  "_id": "bYu08rajMrAKAnDq",
+  "_key": "!actors!bYu08rajMrAKAnDq",
+  "name": "Oficial",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 1
+      },
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "lideratge": {
+        "nivell": 3
+      },
+      "ofici": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 2
+      },
+      "tactica": {
+        "nivell": 4
+      },
+      "vehicle": {
+        "nivell": 2
+      }
+    },
+    "pc": 120,
+    "tier": "antagonista",
+    "notes": "<p>Ja sigui com a oficial en un exèrcit o a les forces de seguretat d'un estat, els oficials són qui donen les ordres i mantenen els subalterns a ratlla (quan els interessa). Aquesta plantilla serveix pels oficials de rang intermedi, ja que els de graduació superior podrien entrar dins de la categoria de senyors de la guerra.</p>"
+  },
+  "prototypeToken": {
+    "name": "Oficial",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "ufoWHKymq9U06vzf",
+      "_key": "!actors.items!bYu08rajMrAKAnDq.ufoWHKymq9U06vzf",
+      "name": "Contactes",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "contactes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "kwXMpVNw3Zrkzb6e",
+      "_key": "!actors.items!bYu08rajMrAKAnDq.kwXMpVNw3Zrkzb6e",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "rD0aiXoWFPPVsyau",
+      "_key": "!actors.items!bYu08rajMrAKAnDq.rD0aiXoWFPPVsyau",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7219",
+      "costManual": 120,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 1,
+        "reaccio": 1
+      }
+    }
+  }
+}

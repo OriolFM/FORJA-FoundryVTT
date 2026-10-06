@@ -1,0 +1,47 @@
+{
+  "_id": "MSmWSfaxnBG0Zelt",
+  "_key": "!items!MSmWSfaxnBG0Zelt",
+  "name": "Animar gos de l'avern",
+  "type": "efecte",
+  "system": {
+    "cost": 17,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": false
+    },
+    "mecanica": "El nigromant utilitza restes d'altres organismes morts per reconstituir un gos de l'avern (65 PC), considerat un constructe a tots els efectes, i infondre-li no-vida. El gos té una durada mínima d'una escena, i es pot mantenir actiu si el nigromant li sacrifica un punt de fatiga cada dia.",
+    "descripcio": "Menys espectaculars que un gólem de carn, aquests gossos són populars com a guardians, mascotes o escorta, i segueixen els designis del seu amo sense qüestionar-los. Hi ha variants que aixequen altres animals petits armats amb ullals.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "invocacio",
+        "costCriatura": 65
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "animar-gos-de-lavern"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

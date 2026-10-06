@@ -1,0 +1,162 @@
+{
+  "_id": "WjDM68T5ywLS39cI",
+  "_key": "!actors!WjDM68T5ywLS39cI",
+  "name": "Gos de l'avern",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "constructe",
+    "mida": 2,
+    "constitucio": 2,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 3
+      }
+    },
+    "pc": 65,
+    "tier": "criatura",
+    "notes": "<p>Els gossos de l'avern són un dels servents nigromàntics més comuns. També se'ls fa amb ossos d'altres quadrúpedes de mida petita. Per mantenir-los, el nigromant els sacrifica un punt de fatiga cada dia.</p>"
+  },
+  "prototypeToken": {
+    "name": "Gos de l'avern",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "j6RPkzb5mwvIY3HT",
+      "_key": "!actors.items!WjDM68T5ywLS39cI.j6RPkzb5mwvIY3HT",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "vB9obixhPGmyPPzF",
+      "_key": "!actors.items!WjDM68T5ywLS39cI.vB9obixhPGmyPPzF",
+      "name": "No-Mort",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": {
+          "flag": "noMort"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "no-mort"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "AZ8xy15LeALG64uG",
+      "_key": "!actors.items!WjDM68T5ywLS39cI.AZ8xy15LeALG64uG",
+      "name": "Repulsiu",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "repulsiu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "9nByhENEwQwDDjIl",
+      "_key": "!actors.items!WjDM68T5ywLS39cI.9nByhENEwQwDDjIl",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7545",
+      "costManual": 65,
+      "derivatsManual": {
+        "latencia": 8,
+        "defensa": 3,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "lhZOHoLnyOoLjKct",
+  "_key": "!items!lhZOHoLnyOoLjKct",
+  "name": "Lingüista Natural",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "linguista-natural"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

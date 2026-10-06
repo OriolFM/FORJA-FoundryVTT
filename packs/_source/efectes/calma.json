@@ -1,0 +1,50 @@
+{
+  "_id": "5D72p2sAsFeqDGRJ",
+  "_key": "!items!5D72p2sAsFeqDGRJ",
+  "name": "Calma",
+  "type": "efecte",
+  "system": {
+    "cost": 20,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Tots els objectius dins l'àrea d'efecte situada al voltant de l'usuari reben una sensació de calma i tranquil·litat (control emocional) fins al final de l'escena. Si l'usuari fa accions agressives, el ritual queda invalidat.",
+    "descripcio": "Sacerdots de cultes que prediquen la no-violència fan servir aquest ritual per apaivagar situacions tenses, escampant una sensació de pau al seu voltant. Si l'usuari actua de manera agressiva, l'efecte es trenca immediatament.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "control-emocional"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "calma"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

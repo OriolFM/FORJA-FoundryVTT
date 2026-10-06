@@ -1,0 +1,30 @@
+{
+  "_id": "Cpq3XsnIC4H83toa",
+  "_key": "!items!Cpq3XsnIC4H83toa",
+  "name": "Mecàniques: ballestes",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 20,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "DES+4",
+    "maniobra": "Fiables — No s'encallen mai. Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Manual: Lat +2, Rang 20, Dany DES+4, munició 1."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "mecaniques-ballestes"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

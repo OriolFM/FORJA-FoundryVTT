@@ -1,0 +1,50 @@
+{
+  "_id": "I9b6rHYXWAZazKjw",
+  "_key": "!items!I9b6rHYXWAZazKjw",
+  "name": "Repel·lir l'antinatural",
+  "type": "efecte",
+  "system": {
+    "cost": 20,
+    "do": "canalitzacio",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 8,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte situada dins l'abast sensorial del PJ durant una escena. Crea una barrera de força 8.",
+    "descripcio": "El canalitzador concentra l'aura del seu patró al voltant d'un símbol significatiu per esdevenir temible davant dels seus enemics. És habitual entre clergues i monjos que repel·leixen no-morts, dimonis o fantasmes, amb variants per a cada mena d'amenaça.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "barrera",
+        "nivell": 8
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 8,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "repelir-lantinatural"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

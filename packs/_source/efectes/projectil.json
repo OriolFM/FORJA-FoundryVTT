@@ -1,0 +1,44 @@
+{
+  "_id": "QgfJQHBO5CWZFMyG",
+  "_key": "!items!QgfJQHBO5CWZFMyG",
+  "name": "Projectil",
+  "type": "efecte",
+  "system": {
+    "cost": 20,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Permet exercir telecinesi de nivell beta (massa fins a 10 cops la del PJ, precisió ±1 cm). El dany bàsic és el doble de les fites de la tirada per manifestar l'efecte, més l'excedent d'una segona tirada d'impactar amb armes a distància.",
+    "descripcio": "L'usuari pren el control telecinètic d'un objecte, criatura o persona i el llança contra un objectiu com si fos una bala de canó, calculant l'impacte amb una segona tirada d'atac a distància.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "telecinesi",
+        "categoria": "beta"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "projectil"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

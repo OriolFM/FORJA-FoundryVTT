@@ -1,0 +1,49 @@
+{
+  "_id": "nNcbrJhGpp0rdGjX",
+  "_key": "!items!nNcbrJhGpp0rdGjX",
+  "name": "Passes de felí",
+  "type": "efecte",
+  "system": {
+    "cost": 26,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 4,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta només l'usuari durant una escena. Simula una tirada de l'habilitat esquitllar-se, amb un resultat de 5 fites.",
+    "descripcio": "Llançat sobre un mateix o un aliat, permet caminar de manera silenciosa i passar desapercebut durant uns minuts, el temps just per esmunyir-se sense ser vist.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "autoeina",
+        "nivell": 5,
+        "segona": false,
+        "habilitat": "esquitllar-se"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 4,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "passes-de-feli"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

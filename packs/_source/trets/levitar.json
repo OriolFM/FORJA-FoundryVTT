@@ -1,0 +1,22 @@
+{
+  "_id": "RAO5KvUGdK4kra1r",
+  "_key": "!items!RAO5KvUGdK4kra1r",
+  "name": "Levitar",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "levitar"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

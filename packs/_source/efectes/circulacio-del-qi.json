@@ -1,0 +1,45 @@
+{
+  "_id": "iF6O26aL42uOB87X",
+  "_key": "!items!iF6O26aL42uOB87X",
+  "name": "Circulació del Qi",
+  "type": "efecte",
+  "system": {
+    "cost": 16,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica l'estat recuperació/4.",
+    "descripcio": "Reconduint el Qi dins el cos de l'objectiu i alineant-ne els txakres, l'usuari n'accelera el procés curatiu natural.",
+    "parametres": [
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "recuperacio",
+        "nivell": 4
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "circulacio-del-qi"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

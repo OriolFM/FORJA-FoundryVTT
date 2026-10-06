@@ -1,0 +1,54 @@
+{
+  "_id": "Erut2HA87Hov47Xo",
+  "_key": "!items!Erut2HA87Hov47Xo",
+  "name": "Revelar l’èter",
+  "type": "efecte",
+  "system": {
+    "cost": 22,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 9,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta tots els objectius dins una àrea d'efecte centrada en l'usuari durant una escena. L'usuari torna visibles tots els incorporis de tipus esperit o ectoplasma que hi hagi dins l'àrea d'efecte i fa un enllaç mental entre ells i la resta dels presents per facilitar la comunicació.",
+    "descripcio": "Habitual entre els canalitzadors que fan de mèdiums. Fa visibles els esperits i ectoplasmes presents a l'àrea i estableix un enllaç mental amb ells perquè es puguin comunicar amb els presents, fins i tot prenent una certa forma física si cal.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "llegir"
+      },
+      {
+        "tipus": "mental",
+        "mode": "projectar"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 9,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "revelar-leter"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

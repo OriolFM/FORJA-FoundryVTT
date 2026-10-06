@@ -1,0 +1,22 @@
+{
+  "_id": "8l3DBkcyFRG5XsDQ",
+  "_key": "!items!8l3DBkcyFRG5XsDQ",
+  "name": "Psíquic",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "Permet usar l'habilitat Psi.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "psiquic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

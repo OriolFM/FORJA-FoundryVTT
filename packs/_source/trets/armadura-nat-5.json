@@ -1,0 +1,22 @@
+{
+  "_id": "aTL6DDoGhjMABG2B",
+  "_key": "!items!aTL6DDoGhjMABG2B",
+  "name": "Armadura Natural /5",
+  "type": "tret",
+  "system": {
+    "cost": 30,
+    "descripcio": "Reducció de dany natural +5.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armadura-nat-5"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

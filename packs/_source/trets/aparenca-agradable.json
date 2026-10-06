@@ -1,0 +1,22 @@
+{
+  "_id": "9rBZuQn8CCGVraAe",
+  "_key": "!items!9rBZuQn8CCGVraAe",
+  "name": "Aparença Estranya (agradable)",
+  "type": "tret",
+  "system": {
+    "cost": 2,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "aparenca-agradable"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

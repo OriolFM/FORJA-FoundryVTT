@@ -1,0 +1,50 @@
+{
+  "_id": "lyHR1T5oSdZyjzpW",
+  "_key": "!items!lyHR1T5oSdZyjzpW",
+  "name": "Polimorfació macabra",
+  "type": "efecte",
+  "system": {
+    "cost": 58,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 12,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ per una durada mínima d'una escena. Transforma l'objectiu en un paladí no-mort, valorat en 246 PC.",
+    "descripcio": "Com que molts nigromants no destaquen en combat, aquest encanteri, fet servint una espasa macabra com a focus, transforma el mag o un ajudant en un paladí no-mort. En acabar l'efecte, el PJ recupera el seu estat habitual, incloent-hi les ferides i la fatiga que tingués abans.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "transformacio",
+        "costAlterEgo": 246
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 12,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "polimorfacio-macabra"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

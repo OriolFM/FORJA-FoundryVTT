@@ -1,0 +1,91 @@
+{
+  "_id": "69yVoJFdwyxGhTnb",
+  "_key": "!actors!69yVoJFdwyxGhTnb",
+  "name": "Figurant (no combatent)",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 1,
+      "INT": 1,
+      "APL": 1
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 2,
+    "habilitats": {
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 1
+      },
+      "ofici": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 1
+      }
+    },
+    "pc": 11,
+    "tier": "extra",
+    "notes": "<p>Aquesta plantilla es pot fer servir com a referència per a qualsevol figurant anònim no combatent dels que poblen qualsevol dels mons de FORJA. Botiguers i comerciants, mossos de magatzem, treballadors d'empresa, conductors de transport públic…</p><p>L'atribut més utilitzat pot tenir-lo a 2, i la resta a 1. Com que té l'habilitat d'Ofici a 3, això li garanteix que per la majoria de tasques relatives a l'ofici que li pertoca serà força competent (hi tirarà 4-5 daus).</p>"
+  },
+  "prototypeToken": {
+    "name": "Figurant (no combatent)",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "sh5uQjf23z8azrNK",
+      "_key": "!actors.items!69yVoJFdwyxGhTnb.sh5uQjf23z8azrNK",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.6929",
+      "costManual": 11,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 1,
+        "reduccioDany": 1,
+        "reaccio": 1
+      }
+    }
+  }
+}

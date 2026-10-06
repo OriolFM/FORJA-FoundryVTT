@@ -1,0 +1,67 @@
+{
+  "_id": "Idq7a3rxszR7ahb5",
+  "_key": "!items!Idq7a3rxszR7ahb5",
+  "name": "Servoarmadura d'assalt",
+  "type": "artefacte",
+  "system": {
+    "cost": 62,
+    "categoria": "armadura",
+    "activacio": {
+      "tipus": "permanent",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 2
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Armadura pesant amb latència +2 i protecció 10 (±2 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +3 a FOR, +3 a l'habilitat força bruta i +4 a l'habilitat resistència.",
+    "descripcio": "Permet als operatius de l'ANM moure's ràpidament pel camp de batalla ben protegits per acomplir els seus objectius.",
+    "parametres": [
+      {
+        "tipus": "armaduraBase",
+        "base": "pesant",
+        "latencia": 0,
+        "proteccio": 10
+      },
+      {
+        "tipus": "atribut",
+        "nivell": 3,
+        "atribut": "FOR"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": false,
+        "habilitat": "forca-bruta"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 4,
+        "segona": true,
+        "habilitat": "resistencia"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": true
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "servoarmadura-dassalt"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

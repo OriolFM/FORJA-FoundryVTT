@@ -1,0 +1,22 @@
+{
+  "_id": "Iz5pDKj28ukvUEIV",
+  "_key": "!items!Iz5pDKj28ukvUEIV",
+  "name": "Atribut Titànic",
+  "type": "tret",
+  "system": {
+    "cost": 30,
+    "descripcio": "Les fites es compten a partir de 4+; ignora 1s en un atribut.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "atribut-titanic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

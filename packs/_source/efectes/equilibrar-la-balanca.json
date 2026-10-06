@@ -1,0 +1,49 @@
+{
+  "_id": "97c50BaPnXI5VouZ",
+  "_key": "!items!97c50BaPnXI5VouZ",
+  "name": "Equilibrar la balança",
+  "type": "efecte",
+  "system": {
+    "cost": 21,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 2,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "El nigromant es fa un tall i genera una àrea d'efecte centrada en si mateix. Drena +2 punts de dany directe de fatiga i ferides a tots els objectius dins l'àrea.",
+    "descripcio": "El nigromant s'obre un tall per drenar la força vital de tots els qui l'envolten en benefici propi. L'efecte és més potent com més gent hi hagi a prop.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "drenatge",
+        "nivell": 2,
+        "danyTipus": "fatiga-i-ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "equilibrar-la-balanca"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

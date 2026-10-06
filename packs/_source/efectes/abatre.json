@@ -1,0 +1,45 @@
+{
+  "_id": "UPcPvXLmSsJiNsvK",
+  "_key": "!items!UPcPvXLmSsJiNsvK",
+  "name": "Abatre",
+  "type": "efecte",
+  "system": {
+    "cost": 10,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Aplica l'estat abatut (modificador +2).",
+    "descripcio": "A diferència d'altres efectes similars, aquest no és indiscriminat: permet al psíquic fer caure amb precisió quirúrgica fins a cinc objectius concrets al seu voltant.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "estat",
+        "estat": "abatut",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "abatre"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

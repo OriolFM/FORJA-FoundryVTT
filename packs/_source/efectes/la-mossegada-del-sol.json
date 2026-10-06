@@ -1,0 +1,48 @@
+{
+  "_id": "cjyqURqBu4oPkhVj",
+  "_key": "!items!cjyqURqBu4oPkhVj",
+  "name": "La mossegada del sol",
+  "type": "efecte",
+  "system": {
+    "cost": 16,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Tots els objectius dins una àrea d'efecte centrada en el personatge queden encegats i atordits (amb un modificador de +3) durant una escena.",
+    "descripcio": "Un efecte molt infravalorat, especialment útil per escapar-se d'un gran depredador sense fer-li mal. Variants més complicades també anul·len l'olfacte o l'oïda.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "atordit",
+        "nivell": 3
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-mossegada-del-sol"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

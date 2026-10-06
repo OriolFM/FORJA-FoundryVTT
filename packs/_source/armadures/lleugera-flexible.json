@@ -1,0 +1,29 @@
+{
+  "_id": "EhJJQWT6pxY5qaFy",
+  "_key": "!items!EhJJQWT6pxY5qaFy",
+  "name": "Armadura lleugera, flexible",
+  "type": "armadura",
+  "system": {
+    "tipus": "flexible",
+    "reduccio": 1,
+    "modLatencia": 0,
+    "equipada": true,
+    "egida": {
+      "activa": false,
+      "absorcio": 0,
+      "tornsInactiva": 0
+    },
+    "descripcio": "Roba reforçada o similar. Manual: Lat +0, Protecció bàsica 1, mod. per mida ±0."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "lleugera-flexible"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

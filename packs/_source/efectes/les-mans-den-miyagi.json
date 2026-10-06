@@ -1,0 +1,45 @@
+{
+  "_id": "cyz4DVX9blYLEuU4",
+  "_key": "!items!cyz4DVX9blYLEuU4",
+  "name": "Les mans d'en Miyagi",
+  "type": "efecte",
+  "system": {
+    "cost": 13,
+    "do": "qi",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar. Cura 11 punts de fatiga o ferides.",
+    "descripcio": "Una variant de la imposició de mans que reordena el Qi de l'objectiu per estimular la curació, i que pràcticament tot estudiant de Qi aprèn durant el seu entrenament.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "cura",
+        "nivell": 11,
+        "pista": "fatiga-o-ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "les-mans-den-miyagi"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

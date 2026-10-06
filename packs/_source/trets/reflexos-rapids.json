@@ -1,0 +1,25 @@
+{
+  "_id": "DjarQuhgWsWKpDCd",
+  "_key": "!items!DjarQuhgWsWKpDCd",
+  "name": "Reflexos Ràpids",
+  "type": "tret",
+  "system": {
+    "cost": 30,
+    "descripcio": "+1 reacció màxima per torn.",
+    "efecte": {
+      "stat": "reaccionsMax",
+      "delta": 1
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "reflexos-rapids"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

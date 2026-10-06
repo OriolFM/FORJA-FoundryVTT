@@ -1,0 +1,47 @@
+{
+  "_id": "C5SerwEn0OGb6rrn",
+  "_key": "!items!C5SerwEn0OGb6rrn",
+  "name": "Animar gólem de carn",
+  "type": "efecte",
+  "system": {
+    "cost": 29,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": false
+    },
+    "mecanica": "El nigromant utilitza restes d'altres organismes morts per construir el cos del gólem macabre i infondre-li no-vida. El gólem d'aquest efecte està valorat en 114 PC i dura un mínim d'una escena. El nigromant el pot mantenir actiu sacrificant-li un punt de fatiga cada dia.",
+    "descripcio": "El nigromant construeix el cos del gólem amb restes d'organismes morts i li infon no-vida. Són forts, resistents, no es cansen i obeeixen cegament, tot i que el seu aspecte depèn dels cadàvers frescos disponibles; alguns porten armes naturals o plaques òssies afegides.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "invocacio",
+        "costCriatura": 114
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "animar-golem-de-carn"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

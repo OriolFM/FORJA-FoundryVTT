@@ -1,0 +1,59 @@
+{
+  "_id": "dsSllma5b9lf9AXq",
+  "_key": "!items!dsSllma5b9lf9AXq",
+  "name": "Exorcisme",
+  "type": "efecte",
+  "system": {
+    "cost": 17,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": false
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Suggestiona la ment de l'objectiu perquè es resisteixi a la possessió, i li dóna un modificador de +4 a l'habilitat resistència.",
+    "descripcio": "En lloc d'atacar l'incorpori directament, aquest ritu reforça la resistència psíquica de la víctima perquè pugui tirar de seguida contra la possessió, implantant-li la suggestió de resistir-s'hi encara que ja estigui condicionada.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "narratiu"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "suggestio"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 4,
+        "segona": false,
+        "habilitat": "resistencia"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "exorcisme"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

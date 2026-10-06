@@ -1,0 +1,32 @@
+{
+  "_id": "BGPklc2AsHkD8ig2",
+  "_key": "!items!BGPklc2AsHkD8ig2",
+  "name": "Escuts",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 1,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": true,
+    "danyBase": "FOR+2",
+    "maniobra": "Llançament — Si està equilibrat, es pot llançar com a arma. Defensa amb escut — +1 a la defensa bàsica si no s'usa per atacar; integritat estructural 10 si es fa servir per blocar.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [
+      "escut"
+    ],
+    "descripcio": "Escuts (manual: Lat +1, Abast +0, Dany FOR+2)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "escuts"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

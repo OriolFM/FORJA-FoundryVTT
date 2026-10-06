@@ -1,0 +1,61 @@
+{
+  "_id": "4DVopNCKkjj2sHsY",
+  "_key": "!items!4DVopNCKkjj2sHsY",
+  "name": "Guant de Força",
+  "type": "artefacte",
+  "system": {
+    "cost": 12,
+    "categoria": "arma",
+    "activacio": {
+      "tipus": "cap",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": false,
+      "actiu": true,
+      "modLatencia": 0
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Arma de mà amb latència +0, abast a tocar, i +4 de dany indirecte d'electricitat. Aplica l'estat atordit amb un modificador de +0.",
+    "descripcio": "Serveix com a protecció i com a dispositiu d'atac; el generador integrat descarrega arcs voltaics amb un cop de puny.",
+    "parametres": [
+      {
+        "tipus": "arma",
+        "base": "de-ma",
+        "latencia": 0,
+        "dany": 4
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 0,
+        "danyTipus": "electricitat"
+      },
+      {
+        "tipus": "estat",
+        "estat": "atordit",
+        "nivell": 0
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "guant-de-forca"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

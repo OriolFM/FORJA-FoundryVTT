@@ -1,0 +1,62 @@
+{
+  "_id": "b4yUMye6pZVDPubl",
+  "_key": "!items!b4yUMye6pZVDPubl",
+  "name": "Holocapa",
+  "type": "artefacte",
+  "system": {
+    "cost": 21,
+    "categoria": "armadura",
+    "activacio": {
+      "tipus": "permanent",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 2
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Armadura lleugera flexible amb latència +2 i protecció 3 (±0 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +2 a les habilitats d'amagar-se i esquitllar-se.",
+    "descripcio": "Un entramat de fibres de conducció òptica permet «doblegar» la llum al voltant de l'usuari que s'hi embolica.",
+    "parametres": [
+      {
+        "tipus": "armaduraBase",
+        "base": "lleugera-flexible",
+        "latencia": 0,
+        "proteccio": 3
+      },
+      {
+        "tipus": "eina",
+        "nivell": 2,
+        "segona": false,
+        "habilitat": "amagar-se"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 2,
+        "segona": true,
+        "habilitat": "esquitllar-se"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": true
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "holocapa"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

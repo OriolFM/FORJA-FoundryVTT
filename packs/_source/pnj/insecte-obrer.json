@@ -1,0 +1,177 @@
+{
+  "_id": "PCyNnNoc8WvGzYNb",
+  "_key": "!actors!PCyNnNoc8WvGzYNb",
+  "name": "Insecte obrer",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 1,
+      "INT": 1,
+      "APL": 1
+    },
+    "especie": "artropode",
+    "mida": 4,
+    "constitucio": 4,
+    "habilitats": {
+      "forca-bruta": {
+        "nivell": 3
+      },
+      "ofici": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 45,
+    "tier": "criatura",
+    "notes": "<p>Plantilla apte per a qualsevol insecte obrer de Rrrrth, dels que viuen en colònies que depenen d'una reina. No tenen una ment d'eixam pròpiament dita, però accepten les decisions de la reina sense qüestionar-les.</p><p>L'hem col·locat a l'apartat de PNJ i no al de criatures i animals perquè són part de l'eixam i poden respondre i interactuar sempre que hi mantinguin el vincle.</p>"
+  },
+  "prototypeToken": {
+    "name": "Insecte obrer",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "t0lzOXyiAvkTM64f",
+      "_key": "!actors.items!PCyNnNoc8WvGzYNb.t0lzOXyiAvkTM64f",
+      "name": "Braços Addicionals (1)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "bracos-addicionals",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "aLUCchk3W9fgBdQ4",
+      "_key": "!actors.items!PCyNnNoc8WvGzYNb.aLUCchk3W9fgBdQ4",
+      "name": "Dron",
+      "type": "tret",
+      "system": {
+        "cost": -30,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dron"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "pUf26qkLiCSLQrcj",
+      "_key": "!actors.items!PCyNnNoc8WvGzYNb.pUf26qkLiCSLQrcj",
+      "name": "Feromones",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "feromones"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "dlNQSznOsyBXaXxS",
+      "_key": "!actors.items!PCyNnNoc8WvGzYNb.dlNQSznOsyBXaXxS",
+      "name": "Impediment de la Parla",
+      "type": "tret",
+      "system": {
+        "cost": -15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "impediment-parla"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "zZEGBTP17PensXJh",
+      "_key": "!actors.items!PCyNnNoc8WvGzYNb.zZEGBTP17PensXJh",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7097",
+      "costManual": 45,
+      "derivatsManual": {
+        "latencia": 12,
+        "defensa": 0,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

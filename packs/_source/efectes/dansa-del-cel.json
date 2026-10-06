@@ -1,0 +1,48 @@
+{
+  "_id": "pL49s7K66SMBbZ8C",
+  "_key": "!items!pL49s7K66SMBbZ8C",
+  "name": "Dansa del cel",
+  "type": "efecte",
+  "system": {
+    "cost": 9,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 3,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari obté el tret levitar durant una escena.",
+    "descripcio": "Molt popular entre els practicants novells, permet vèncer la gravetat i moure's per l'aire. Mantenir-lo actiu massa estona pot esgotar l'usuari, i no falten accidents entre joves que competeixen a veure qui puja més amunt.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "tret",
+        "tret": "levitar",
+        "cost": 15
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 3,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "dansa-del-cel"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

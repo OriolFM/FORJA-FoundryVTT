@@ -1,0 +1,30 @@
+{
+  "_id": "9aAYnIHrbxO6vCzw",
+  "_key": "!items!9aAYnIHrbxO6vCzw",
+  "name": "Armes improvisades (a distància)",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 2,
+    "abast": 0,
+    "rangMultFor": 1,
+    "esEscut": false,
+    "danyBase": "FOR+1",
+    "maniobra": "Rang limitat — El rang curt és la FOR del personatge, en metres. Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Classe llancívola improvisada (manual: Lat +2, Rang FOR, Dany FOR+1, sense munició)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armes-improvisades-distancia"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "_id": "qITuLHtAmfabEBZj",
+  "_key": "!items!qITuLHtAmfabEBZj",
+  "name": "Espasa d'energia",
+  "type": "artefacte",
+  "system": {
+    "cost": 21,
+    "categoria": "arma",
+    "activacio": {
+      "tipus": "cap",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": false,
+      "actiu": true,
+      "modLatencia": 1
+    },
+    "carrega": {
+      "usosPerCarrega": 4,
+      "tornsRecarrega": 11,
+      "modeEspera": true
+    },
+    "mecanica": "Espasa amb latència +1, abast a tocar, i 8 de dany directe de ferides. Pot fer-se servir 4 vegades per cada càrrega completa; triga 11 torns a recuperar una càrrega parcial (vàlida per un ús). El mode d'espera permet fer una activació prèvia a l'ús.",
+    "descripcio": "Vestigi de la tecnologia dels aesirs: la fulla és un conducte de plasma que sublima la matèria, ignorant armadures i causant dany directe.",
+    "parametres": [
+      {
+        "tipus": "arma",
+        "base": "espasa",
+        "latencia": 1,
+        "dany": 2
+      },
+      {
+        "tipus": "dany",
+        "categoria": "directe",
+        "nivell": 6,
+        "danyTipus": "ferides"
+      },
+      {
+        "tipus": "acumulador",
+        "carregues": 3
+      },
+      {
+        "tipus": "recarrega",
+        "unitats": 11
+      },
+      {
+        "tipus": "espera"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "espasa-energia"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "_id": "jav5ldDMCf3GcHYg",
+  "_key": "!items!jav5ldDMCf3GcHYg",
+  "name": "Fulla curta",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 0,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+1",
+    "maniobra": "Finta — Si no es bloca, l'atac no fa dany però redueix a la meitat la latència del proper atac (amb qualsevol arma).",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Fulla curta (manual: Lat +0, Abast a tocar, Dany FOR+1)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "fulla-curta"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

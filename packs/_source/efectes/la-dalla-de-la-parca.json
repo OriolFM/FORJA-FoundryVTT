@@ -1,0 +1,46 @@
+{
+  "_id": "qIbGhPa8X7LAo5Fq",
+  "_key": "!items!qIbGhPa8X7LAo5Fq",
+  "name": "La dalla de la parca",
+  "type": "efecte",
+  "system": {
+    "cost": 11,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 2,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari conjura una arma màgica (habitualment una dalla, que fa servir amb la seva habilitat d'armes cos a cos) durant una escena. L'arma té una latència de +0 i causa dany indirecte de fatiga i ferides amb un modificador de +3.",
+    "descripcio": "Tot i que els nigromants solen conjurar dalles, espases llargues o coltells, pràcticament tots els practicants de màgia tenen la seva pròpia variant d'aquesta arma. Només canvien la forma, l'habilitat amb què es fa servir i el moviment especial associat.",
+    "parametres": [
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 3,
+        "danyTipus": "fatiga-i-ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 2,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-dalla-de-la-parca"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

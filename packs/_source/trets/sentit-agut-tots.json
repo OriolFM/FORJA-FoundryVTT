@@ -1,0 +1,22 @@
+{
+  "_id": "OEYGARj5veG8rvY0",
+  "_key": "!items!OEYGARj5veG8rvY0",
+  "name": "Sentit Agut (tots)",
+  "type": "tret",
+  "system": {
+    "cost": 30,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-agut-tots"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

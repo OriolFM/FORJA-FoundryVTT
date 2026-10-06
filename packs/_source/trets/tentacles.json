@@ -1,0 +1,22 @@
+{
+  "_id": "74Ukd6oGwFgSI5eq",
+  "_key": "!items!74Ukd6oGwFgSI5eq",
+  "name": "Tentacles",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "5 PC per parell.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "tentacles"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

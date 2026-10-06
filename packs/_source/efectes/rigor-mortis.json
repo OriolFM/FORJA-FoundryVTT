@@ -1,0 +1,53 @@
+{
+  "_id": "928URbCOOX9cDWWp",
+  "_key": "!items!928URbCOOX9cDWWp",
+  "name": "Rigor mortis",
+  "type": "efecte",
+  "system": {
+    "cost": 17,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 5,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Aplica els estats immobilitzat (modificador +3) i lent/3 a un o més objectius individuals dins l'abast sensorial del PJ durant una escena.",
+    "descripcio": "Els nigromants poden induir rigor mortis en un enemic a tocar: els músculs se li encarcaren i amb prou feines pot moure's o reaccionar.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "immobilitzat",
+        "nivell": 3
+      },
+      {
+        "tipus": "estat",
+        "estat": "lent",
+        "nivell": 3
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 5,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "rigor-mortis"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

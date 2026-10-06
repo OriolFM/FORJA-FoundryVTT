@@ -1,0 +1,266 @@
+{
+  "_id": "TKBweSYMOynsvtmO",
+  "_key": "!actors!TKBweSYMOynsvtmO",
+  "name": "Insecte reina",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "artropode",
+    "mida": 5,
+    "constitucio": 3,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 1
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 1
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "tactica": {
+        "nivell": 4
+      }
+    },
+    "pc": 182,
+    "tier": "antagonista",
+    "notes": "<p>Totes les colònies d'insectes eusocials depenen d'una reina. Aquestes, de mida més gran que els seus drons, acostumen a poder volar, i es comuniquen amb ells per mitjà de feromones, igual com els seus parents de mida més reduïda.</p><p>Aquesta plantilla es pot fer servir per representar les reines de tots els fòrmics, els tèrmits, i altres insectes eusocials de Rrrrth, que són similars als terrestres (però més grans). A Rrrrth els insectes eusocials solen ser pacífics i viure existències senzilles, dedicats a la supervivència de la seva colònia. Habitualment es veuen obligats a pagar tribut o \"protecció\" a les colònies d'insectes no eusocials més agressius, com els vèspids.</p>"
+  },
+  "prototypeToken": {
+    "name": "Insecte reina",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "JVKDUXTvaRO62mLn",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.JVKDUXTvaRO62mLn",
+      "name": "Armadura Natural /3",
+      "type": "tret",
+      "system": {
+        "cost": 12,
+        "descripcio": "Reducció de dany natural +3.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-3"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ZeybYnOaJfnEXrly",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.ZeybYnOaJfnEXrly",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "zDpCRA2kdpEsuHWu",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.zDpCRA2kdpEsuHWu",
+      "name": "Braços Addicionals (1)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "bracos-addicionals",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "58mF6JqtUEicl3fC",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.58mF6JqtUEicl3fC",
+      "name": "Coordinació Millorada",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "coordinacio-millorada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "AdZMCBPaOQ05VjxV",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.AdZMCBPaOQ05VjxV",
+      "name": "Feromones",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "feromones"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ct6ux9VMG85LOrq0",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.ct6ux9VMG85LOrq0",
+      "name": "Volador",
+      "type": "tret",
+      "system": {
+        "cost": 25,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "volador"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "4uhRQmH4ZoYPjHLa",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.4uhRQmH4ZoYPjHLa",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "l0kDBgz7E8xAMHkD",
+      "_key": "!actors.items!TKBweSYMOynsvtmO.l0kDBgz7E8xAMHkD",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7113",
+      "costManual": 182,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 0,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

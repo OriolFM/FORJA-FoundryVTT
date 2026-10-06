@@ -1,0 +1,22 @@
+{
+  "_id": "LWlnBySkL4rC5gZp",
+  "_key": "!items!LWlnBySkL4rC5gZp",
+  "name": "Armament Natural (fiblons)",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armament-fiblons"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "_id": "C7xCV9PCS2lwZA0F",
+  "_key": "!items!C7xCV9PCS2lwZA0F",
+  "name": "Essència de la brisa",
+  "type": "efecte",
+  "system": {
+    "cost": 13,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 3,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta la percepció de tots els objectius d'una àrea d'efecte situada dins l'abast sensorial del PJ durant una escena. Els objectius són dins una il·lusió immersiva (amb un modificador de +3 al realisme) on el mag controla totes les seves percepcions.",
+    "descripcio": "Confereix a un objecte o persona una essència que el fa pràcticament indetectable per a qui quedi afectat per l'encanteri, arribant a alterar les percepcions de fins a deu objectius alhora. El mag pot canviar els objectius mentre l'efecte és actiu i allargar-ne la durada gastant fatiga.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "illusio",
+        "nivell": 3
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "essencia-de-la-brisa"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

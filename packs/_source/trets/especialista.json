@@ -1,0 +1,22 @@
+{
+  "_id": "LCWtE0dRP8tdlOdl",
+  "_key": "!items!LCWtE0dRP8tdlOdl",
+  "name": "Especialista",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "Ignora 1s; els 9 també compten com a doble fita.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "especialista"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

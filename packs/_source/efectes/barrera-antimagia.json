@@ -1,0 +1,50 @@
+{
+  "_id": "9kP9ON7CO0H7jCzs",
+  "_key": "!items!9kP9ON7CO0H7jCzs",
+  "name": "Barrera antimàgia",
+  "type": "efecte",
+  "system": {
+    "cost": 21,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte situada a tocar durant una escena. Crea una barrera de força 8.",
+    "descripcio": "Sorgeix de l'experiència de monjos i clergues que han hagut de fer front a mags que abusaven dels seus poders. Genera una protecció temporal contra la màgia que dificulta qualsevol efecte màgic llançat dins la seva àrea, i pot arribar a interrompre encanteris actius que no superin la nova dificultat.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "barrera",
+        "nivell": 8
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "barrera-antimagia"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

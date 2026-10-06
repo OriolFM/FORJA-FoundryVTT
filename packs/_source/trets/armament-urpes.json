@@ -1,0 +1,22 @@
+{
+  "_id": "GEEuZctSAHEx8YUn",
+  "_key": "!items!GEEuZctSAHEx8YUn",
+  "name": "Armament Natural (urpes)",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armament-urpes"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

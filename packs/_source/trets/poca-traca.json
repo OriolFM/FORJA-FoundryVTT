@@ -1,0 +1,22 @@
+{
+  "_id": "KVGV5CmcBef3FUOm",
+  "_key": "!items!KVGV5CmcBef3FUOm",
+  "name": "Poca-Traça",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "poca-traca"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

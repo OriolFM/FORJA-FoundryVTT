@@ -1,0 +1,22 @@
+{
+  "_id": "kWSEv1b7OjUETdiD",
+  "_key": "!items!kWSEv1b7OjUETdiD",
+  "name": "Sentit Agut (un sentit)",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-agut-un"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

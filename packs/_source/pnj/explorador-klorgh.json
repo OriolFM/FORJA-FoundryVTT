@@ -1,0 +1,268 @@
+{
+  "_id": "yzEIQulB06bWjeoe",
+  "_key": "!actors!yzEIQulB06bWjeoe",
+  "name": "Explorador Klorgh",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 3,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 4,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "armes-distancia": {
+        "nivell": 3
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "equitacio": {
+        "nivell": 2
+      },
+      "escalada": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 3
+      },
+      "nedar": {
+        "nivell": 2
+      },
+      "nyaps": {
+        "nivell": 1
+      },
+      "tracte-animals": {
+        "nivell": 2
+      }
+    },
+    "pc": 207,
+    "tier": "antagonista",
+    "notes": "<p>Els Klorgh són una espècie tribal que viu en poblats construïts a les capçades dels arbres mil·lenaris del seu món, cobert majoritàriament de jungles frondoses plenes de perills. Els seus exploradors són individus experts en moure's en aquest entorn i garantir la seguretat dels seus assentaments.</p>"
+  },
+  "prototypeToken": {
+    "name": "Explorador Klorgh",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "DPs956QzrdDMw1oF",
+      "_key": "!actors.items!yzEIQulB06bWjeoe.DPs956QzrdDMw1oF",
+      "name": "Aparença Estranya (neutra)",
+      "type": "tret",
+      "system": {
+        "cost": 0,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-neutra"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "dcnlJxahc4y1wfIR",
+      "_key": "!actors.items!yzEIQulB06bWjeoe.dcnlJxahc4y1wfIR",
+      "name": "Arrauxat",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "arrauxat"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "P4mboRrHPnVknjuX",
+      "_key": "!actors.items!yzEIQulB06bWjeoe.P4mboRrHPnVknjuX",
+      "name": "Sentit Agut (tots)",
+      "type": "tret",
+      "system": {
+        "cost": 30,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-agut-tots"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "YjP9HlsiSwuwDAkD",
+      "_key": "!actors.items!yzEIQulB06bWjeoe.YjP9HlsiSwuwDAkD",
+      "name": "Visió Nocturna",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-nocturna"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "f0JErRi3ANpLiajL",
+      "_key": "!actors.items!yzEIQulB06bWjeoe.f0JErRi3ANpLiajL",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "YFrn2w3L47dCkt9E",
+      "_key": "!actors.items!yzEIQulB06bWjeoe.YFrn2w3L47dCkt9E",
+      "name": "Holocapa",
+      "type": "artefacte",
+      "system": {
+        "cost": 21,
+        "categoria": "armadura",
+        "activacio": {
+          "tipus": "permanent",
+          "dificultat": null
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 2
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "Armadura lleugera flexible amb latència +2 i protecció 3 (±0 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +2 a les habilitats d'amagar-se i esquitllar-se.",
+        "descripcio": "Un entramat de fibres de conducció òptica permet «doblegar» la llum al voltant de l'usuari que s'hi embolica.",
+        "parametres": [
+          {
+            "tipus": "armaduraBase",
+            "base": "lleugera-flexible",
+            "latencia": 0,
+            "proteccio": 3
+          },
+          {
+            "tipus": "eina",
+            "nivell": 2,
+            "segona": false,
+            "habilitat": "amagar-se"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 2,
+            "segona": true,
+            "habilitat": "esquitllar-se"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": null,
+          "permanent": true
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "holocapa"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7035",
+      "costManual": 207,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

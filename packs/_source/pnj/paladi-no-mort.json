@@ -1,0 +1,195 @@
+{
+  "_id": "AdbayBLMONYIT84n",
+  "_key": "!actors!AdbayBLMONYIT84n",
+  "name": "Paladí no-mort",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 4,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 4,
+    "constitucio": 5,
+    "habilitats": {
+      "armes-cos-a-cos": {
+        "nivell": 5
+      },
+      "barallar-se": {
+        "nivell": 4
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 5
+      },
+      "resistencia": {
+        "nivell": 4
+      }
+    },
+    "pc": 246,
+    "tier": "antagonista",
+    "notes": "<p>Algunes famílies de nigromants dins l'imperi romà de Terra mantenen paladins no-morts com a seguidors, alguns d'ells de manera permanent. Com a guardaespatlles</p>"
+  },
+  "prototypeToken": {
+    "name": "Paladí no-mort",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "wb5HdsWeMQXPmkIB",
+      "_key": "!actors.items!AdbayBLMONYIT84n.wb5HdsWeMQXPmkIB",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "RtQYf3ohC3hxJ6JQ",
+      "_key": "!actors.items!AdbayBLMONYIT84n.RtQYf3ohC3hxJ6JQ",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Yp5mJPdFr9JJMlzK",
+      "_key": "!actors.items!AdbayBLMONYIT84n.Yp5mJPdFr9JJMlzK",
+      "name": "No-Mort",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": {
+          "flag": "noMort"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "no-mort"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "CyqHN3DF3nKGftdL",
+      "_key": "!actors.items!AdbayBLMONYIT84n.CyqHN3DF3nKGftdL",
+      "name": "Visió Nocturna",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-nocturna"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "a1FTLDdmkM807bNv",
+      "_key": "!actors.items!AdbayBLMONYIT84n.a1FTLDdmkM807bNv",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7233",
+      "costManual": 246,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 1,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

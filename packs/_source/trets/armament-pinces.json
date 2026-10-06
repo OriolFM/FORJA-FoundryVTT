@@ -1,0 +1,22 @@
+{
+  "_id": "uqZciCC9j5hZP73W",
+  "_key": "!items!uqZciCC9j5hZP73W",
+  "name": "Armament Natural (pinces)",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armament-pinces"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

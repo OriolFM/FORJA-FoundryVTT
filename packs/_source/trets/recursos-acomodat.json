@@ -1,0 +1,22 @@
+{
+  "_id": "cSF88oQo4zOOkyl8",
+  "_key": "!items!cSF88oQo4zOOkyl8",
+  "name": "Recursos (acomodat)",
+  "type": "tret",
+  "system": {
+    "cost": 25,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "recursos-acomodat"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

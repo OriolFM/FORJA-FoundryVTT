@@ -1,0 +1,50 @@
+{
+  "_id": "nCHO49OostpvQ4Qx",
+  "_key": "!items!nCHO49OostpvQ4Qx",
+  "name": "Benedicció del fanàtic",
+  "type": "efecte",
+  "system": {
+    "cost": 12,
+    "do": "canalitzacio",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 3,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari toca un o més objectius individuals i els marca d'alguna manera (inscripció, signe, pintura de guerra...). Els objectius guanyen l'estat berserc (modificador +0) i el tret dur de pelar fins al final de l'escena.",
+    "descripcio": "Molts cultes arreu del multivers compten amb fanàtics disposats a llançar-se en defensa de les seves creences marcats amb un signe, inscripció o pintura de guerra. Variants del ritual poden dur els cultistes fins a un estat de frenesia que els empeny a combatre fins a la mort.",
+    "parametres": [
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "berserc",
+        "nivell": 0
+      },
+      {
+        "tipus": "tret",
+        "tret": "dur-de-pelar",
+        "cost": 15
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 3,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "benediccio-del-fanatic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

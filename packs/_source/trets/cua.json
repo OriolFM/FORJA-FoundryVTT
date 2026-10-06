@@ -1,0 +1,22 @@
+{
+  "_id": "fU8NRHwHfpxHzd6D",
+  "_key": "!items!fU8NRHwHfpxHzd6D",
+  "name": "Cua",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "cua"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

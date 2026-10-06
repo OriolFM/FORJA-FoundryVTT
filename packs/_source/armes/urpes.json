@@ -1,0 +1,30 @@
+{
+  "_id": "jtmPnesmRluflVdQ",
+  "_key": "!items!jtmPnesmRluflVdQ",
+  "name": "Urpes",
+  "type": "arma",
+  "system": {
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+2",
+    "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "urpes"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

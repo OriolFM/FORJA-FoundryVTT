@@ -1,0 +1,22 @@
+{
+  "_id": "tda4j5wLRqQWQLia",
+  "_key": "!items!tda4j5wLRqQWQLia",
+  "name": "Arrauxat",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "arrauxat"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

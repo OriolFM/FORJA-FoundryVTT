@@ -1,0 +1,30 @@
+{
+  "_id": "l1aW0kBNabOJSmcd",
+  "_key": "!items!l1aW0kBNabOJSmcd",
+  "name": "Armes d'assalt",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 1,
+    "abast": 30,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "DES+3",
+    "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets, +1 latència i +1 impactar/dany. Automàtic — 10 trets, +2 latència, +1 dany; impacta tots els objectius al descobert dins l'àrea si supera la defensa bàsica.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Manual: Lat +1, Rang 30, Dany DES+3, munició 30."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armes-dassalt"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

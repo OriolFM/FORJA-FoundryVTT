@@ -1,0 +1,49 @@
+{
+  "_id": "uu8jJQtIUxULD4z0",
+  "_key": "!items!uu8jJQtIUxULD4z0",
+  "name": "Mot destructiu",
+  "type": "efecte",
+  "system": {
+    "cost": 26,
+    "do": "magia",
+    "tipus": "ritual",
+    "dificultat": 3,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa +9 de dany directe de ferides.",
+    "descripcio": "Dins la tradició hermètica, els grans mags podien ferir greument o matar amb una sola paraula i un gest de vareta. Aquest encanteri causa una quantitat notable de dany que ignora la majoria de proteccions; hi ha variants de mestres experimentats capaces de matar d'un sol cop.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "directe",
+        "nivell": 9,
+        "danyTipus": "ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "mot-destructiu"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

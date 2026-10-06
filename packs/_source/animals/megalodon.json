@@ -1,0 +1,242 @@
+{
+  "_id": "z6RekkCp1FKNBSjz",
+  "_key": "!actors!z6RekkCp1FKNBSjz",
+  "name": "Megalodon",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 4,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 5,
+    "constitucio": 3,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "navegacio": {
+        "nivell": 3
+      },
+      "nedar": {
+        "nivell": 4
+      },
+      "resistencia": {
+        "nivell": 4
+      }
+    },
+    "pc": 157,
+    "tier": "animal",
+    "notes": "<p>Aquesta plantilla, d'un ancestre dels actuals taurons, pot servir per qualsevol gran depredador oceànic.</p>"
+  },
+  "prototypeToken": {
+    "name": "Megalodon",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "20E6201baoWmTs2k",
+      "_key": "!actors.items!z6RekkCp1FKNBSjz.20E6201baoWmTs2k",
+      "name": "Aquàtic",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "Neda a velocitat normal.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aquatic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "MJW7BXVuDntJCAN3",
+      "_key": "!actors.items!z6RekkCp1FKNBSjz.MJW7BXVuDntJCAN3",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "GAA6gMnXaoahYS6h",
+      "_key": "!actors.items!z6RekkCp1FKNBSjz.GAA6gMnXaoahYS6h",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "USFPGP1mmiuNDJD3",
+      "_key": "!actors.items!z6RekkCp1FKNBSjz.USFPGP1mmiuNDJD3",
+      "name": "Longeu",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Envelleix molt lentament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "longeu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "jJB1KcFB9riBCnhK",
+      "_key": "!actors.items!z6RekkCp1FKNBSjz.jJB1KcFB9riBCnhK",
+      "name": "Sentit Agut (olfacte i gust)",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-agut-un"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "D0Ee3PUTSUw4beba",
+      "_key": "!actors.items!z6RekkCp1FKNBSjz.D0Ee3PUTSUw4beba",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "pjjeRU5S1jC2qdvB",
+      "_key": "!actors.items!z6RekkCp1FKNBSjz.pjjeRU5S1jC2qdvB",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7439",
+      "costManual": 157,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 0,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

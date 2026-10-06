@@ -1,0 +1,50 @@
+{
+  "_id": "eEAtYB61nOSQAtps",
+  "_key": "!items!eEAtYB61nOSQAtps",
+  "name": "Senyor de les mosques",
+  "type": "efecte",
+  "system": {
+    "cost": 15,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Tots els objectius situats dins l'àrea d'efecte al voltant de l'usuari reben els estats atordit i marejat (modificador +3).",
+    "descripcio": "Un dels encanteris més efectius per distreure els oponents: un eixam de mosques els ataca frenèticament, forçant-los a tancar ulls i boca. Hi ha variants amb llagostes o insectes amb fibló que, a més d'atordir, causen dany.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "estat",
+        "estat": "atordit",
+        "nivell": 3
+      },
+      {
+        "tipus": "estat",
+        "estat": "marejat",
+        "nivell": 3
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "senyor-de-les-mosques"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

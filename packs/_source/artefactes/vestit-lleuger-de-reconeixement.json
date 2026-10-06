@@ -1,0 +1,72 @@
+{
+  "_id": "t2ylLAuUzvhx7Jyq",
+  "_key": "!items!t2ylLAuUzvhx7Jyq",
+  "name": "Vestit Lleuger de Reconeixement",
+  "type": "artefacte",
+  "system": {
+    "cost": 59,
+    "categoria": "armadura",
+    "activacio": {
+      "tipus": "permanent",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 1
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Armadura lleugera rígida amb latència +1 i protecció 3 (±1 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +3 a l'habilitat amagar-se, +3 a esquitllar-se, i AGI +2. Aplica el tret levitar.",
+    "descripcio": "Vestit d'infiltració de l'ANM, molt menys voluminós que una servoarmadura, amb musculatura sintètica que permet moure's de manera àgil i discreta.",
+    "parametres": [
+      {
+        "tipus": "armaduraBase",
+        "base": "lleugera-rigida",
+        "latencia": -1,
+        "proteccio": 3
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": false,
+        "habilitat": "amagar-se"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": true,
+        "habilitat": "esquitllar-se"
+      },
+      {
+        "tipus": "atribut",
+        "nivell": 2,
+        "atribut": "AGI"
+      },
+      {
+        "tipus": "tret",
+        "tret": "levitar",
+        "cost": 15
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": null,
+      "permanent": true
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "vestit-lleuger-de-reconeixement"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

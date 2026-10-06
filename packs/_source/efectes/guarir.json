@@ -1,0 +1,48 @@
+{
+  "_id": "WJ9ApTxiFR8gJ8m6",
+  "_key": "!items!WJ9ApTxiFR8gJ8m6",
+  "name": "Guarir",
+  "type": "efecte",
+  "system": {
+    "cost": 25,
+    "do": "canalitzacio",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar. En guareix malalties, estats negatius i 10 punts de ferides.",
+    "descripcio": "Molts sacerdots i monjos serveixen patrons benèvols que els han ensenyat a guarir ferides amb una simple imposició de mans.",
+    "parametres": [
+      {
+        "tipus": "curaMalalties"
+      },
+      {
+        "tipus": "curaEstats"
+      },
+      {
+        "tipus": "cura",
+        "nivell": 10,
+        "pista": "ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "guarir"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

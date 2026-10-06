@@ -1,0 +1,22 @@
+{
+  "_id": "jIpgHMwO4cJLy6oy",
+  "_key": "!items!jIpgHMwO4cJLy6oy",
+  "name": "Longeu",
+  "type": "tret",
+  "system": {
+    "cost": 6,
+    "descripcio": "Envelleix molt lentament.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "longeu"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

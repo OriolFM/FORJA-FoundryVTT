@@ -1,0 +1,22 @@
+{
+  "_id": "ujK3W6PFEsyKbwar",
+  "_key": "!items!ujK3W6PFEsyKbwar",
+  "name": "Sentit Atrofiat (sord)",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-atrofiat-sord"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "KD0xA8lEZZVDdZIN",
+  "_key": "!items!KD0xA8lEZZVDdZIN",
+  "name": "Addicció (lleu)",
+  "type": "tret",
+  "system": {
+    "cost": -2,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "addiccio-lleu"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

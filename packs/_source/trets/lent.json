@@ -1,0 +1,25 @@
+{
+  "_id": "KBkCvpd0XobXzbD7",
+  "_key": "!items!KBkCvpd0XobXzbD7",
+  "name": "Lent",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "+2 a la latència base.",
+    "efecte": {
+      "stat": "latenciaBase",
+      "delta": 2
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "lent"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

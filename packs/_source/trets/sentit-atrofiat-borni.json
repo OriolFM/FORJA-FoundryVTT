@@ -1,0 +1,22 @@
+{
+  "_id": "txfVCkDGPMm1e5qq",
+  "_key": "!items!txfVCkDGPMm1e5qq",
+  "name": "Sentit Atrofiat (borni)",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-atrofiat-borni"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

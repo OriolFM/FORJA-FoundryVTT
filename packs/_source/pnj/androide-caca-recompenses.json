@@ -1,0 +1,193 @@
+{
+  "_id": "kDIjKSgjarPEUBDU",
+  "_key": "!actors!kDIjKSgjarPEUBDU",
+  "name": "Androide caça-recompenses",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "mecanoide",
+    "mida": 4,
+    "constitucio": 4,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 1
+      },
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 4
+      },
+      "arts-marcials": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 4
+      },
+      "correr": {
+        "nivell": 3
+      },
+      "enginyeria": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 3
+      },
+      "negociacio": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 3
+      }
+    },
+    "pc": 232,
+    "tier": "antagonista",
+    "notes": "<p>Alguns mecanoides, tant de l'ANM com d'altres faccions, s'han especialitzat en actuar com a mercenaris o caça-recompenses, venent les seves habilitats al millor postor. Després de dècades de funcionament, s'han acabat organitzant en un sindicat de caçadors, una mena de gremi que actua per tot el multivers. L'ANM tolera el Sindicat perquè també el fan servir en aquelles ocasions en què necessiten solucionar problemes de manera extraoficial.</p>"
+  },
+  "prototypeToken": {
+    "name": "Androide caça-recompenses",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "VkXnA4nYMKMP8llT",
+      "_key": "!actors.items!kDIjKSgjarPEUBDU.VkXnA4nYMKMP8llT",
+      "name": "Armadura Natural /3",
+      "type": "tret",
+      "system": {
+        "cost": 12,
+        "descripcio": "Reducció de dany natural +3.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-3"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "bYCzLfR8jsIf2fk6",
+      "_key": "!actors.items!kDIjKSgjarPEUBDU.bYCzLfR8jsIf2fk6",
+      "name": "Contactes",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "contactes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "516EHRd9e7T9on7W",
+      "_key": "!actors.items!kDIjKSgjarPEUBDU.516EHRd9e7T9on7W",
+      "name": "Coordinació Millorada",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "coordinacio-millorada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "WYWXBW6GJMl7vedc",
+      "_key": "!actors.items!kDIjKSgjarPEUBDU.WYWXBW6GJMl7vedc",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.6979",
+      "costManual": 232,
+      "derivatsManual": {
+        "latencia": 8,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

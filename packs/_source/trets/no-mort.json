@@ -1,0 +1,24 @@
+{
+  "_id": "VwiAN7h7GXO9ELki",
+  "_key": "!items!VwiAN7h7GXO9ELki",
+  "name": "No-Mort",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "",
+    "efecte": {
+      "flag": "noMort"
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "no-mort"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

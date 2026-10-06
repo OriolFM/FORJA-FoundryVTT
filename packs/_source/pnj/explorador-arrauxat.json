@@ -1,0 +1,134 @@
+{
+  "_id": "fkZ0T88fGxP7LlWI",
+  "_key": "!actors!fkZ0T88fGxP7LlWI",
+  "name": "Explorador arrauxat",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 1
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "equitacio": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 2
+      },
+      "ofici": {
+        "nivell": 1
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 2
+      }
+    },
+    "pc": 89,
+    "tier": "antagonista",
+    "notes": "<p>La figura de l'explorador és habitual, tant pels membres del cos de reconeixement en un exèrcit, com en tribus nòmades que els fan servir com a avançada per reconèixer el terreny abans de portar-hi els vehicles. Són gent discreta, que sap passar desapercebuda, donar un cop d'ull, i tornar a informar els seus superiors. A vegades també procuren menjar, encarregant-se de la caça. Cal adaptar l'arma a distància que fan servir segons el nivell tecnològic de la facció a la que pertanyin. També es pot canviar l'habilitat d'equitació per un segon vehicle.</p>"
+  },
+  "prototypeToken": {
+    "name": "Explorador arrauxat",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "Hwtd37AjfOFYNRCc",
+      "_key": "!actors.items!fkZ0T88fGxP7LlWI.Hwtd37AjfOFYNRCc",
+      "name": "Arrauxat",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "arrauxat"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "73V57RWzw4iMVo69",
+      "_key": "!actors.items!fkZ0T88fGxP7LlWI.73V57RWzw4iMVo69",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7021",
+      "costManual": 89,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

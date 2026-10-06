@@ -1,0 +1,215 @@
+{
+  "_id": "YbYlfA4rUXPM76xI",
+  "_key": "!actors!YbYlfA4rUXPM76xI",
+  "name": "Noble",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "actuar": {
+        "nivell": 3
+      },
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2
+      },
+      "art": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "equitacio": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 3
+      },
+      "lideratge": {
+        "nivell": 3
+      },
+      "navegacio": {
+        "nivell": 2
+      },
+      "nedar": {
+        "nivell": 2
+      },
+      "negociacio": {
+        "nivell": 3
+      },
+      "persuasio": {
+        "nivell": 3
+      },
+      "vehicle": {
+        "nivell": 2
+      }
+    },
+    "pc": 199,
+    "tier": "antagonista",
+    "notes": "<p>En sistemes feudals i autoritaris, com l'imperi romà de Terra o els regnes en conflicte etern a Erde, la casta noble porta les regnes de la societat. En molts casos fan de líders polítics i/o militars amb autoritat pràcticament absoluta en la seva zona d'influència, i només responen davant aquells nobles de rang superior. Els nobles sense terra són cortesans al servei del poder, que exerceixen habitualment sota la protecció d'un altre més important.</p>"
+  },
+  "prototypeToken": {
+    "name": "Noble",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "f8mmHXJyHrOI4jEF",
+      "_key": "!actors.items!YbYlfA4rUXPM76xI.f8mmHXJyHrOI4jEF",
+      "name": "Adepte (APL)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Repeteix els 1s en tirades de APL.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-apl"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "HmTgGU30FGCl54Cn",
+      "_key": "!actors.items!YbYlfA4rUXPM76xI.HmTgGU30FGCl54Cn",
+      "name": "Contactes",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "contactes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "EhANkvKaD66w8pbR",
+      "_key": "!actors.items!YbYlfA4rUXPM76xI.EhANkvKaD66w8pbR",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "wYRJXGNBI1SYKBud",
+      "_key": "!actors.items!YbYlfA4rUXPM76xI.wYRJXGNBI1SYKBud",
+      "name": "Recursos (acomodat)",
+      "type": "tret",
+      "system": {
+        "cost": 25,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "recursos-acomodat"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "8W8w0Foy7GqfX73D",
+      "_key": "!actors.items!YbYlfA4rUXPM76xI.8W8w0Foy7GqfX73D",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7175",
+      "costManual": 199,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

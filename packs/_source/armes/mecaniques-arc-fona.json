@@ -1,0 +1,30 @@
+{
+  "_id": "U3nWjewgOGFTYrAQ",
+  "_key": "!items!U3nWjewgOGFTYrAQ",
+  "name": "Mecàniques: arcs i fones",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 1,
+    "abast": 0,
+    "rangMultFor": 5,
+    "esEscut": false,
+    "danyBase": "DES+3",
+    "maniobra": "Rang limitat — El rang curt és FOR x5, en metres. Fiables — No s'encallen mai. Lentes — Es poden parar i blocar.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Manual: Lat +1, Rang FORx5, Dany DES+3, sense munició."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "mecaniques-arc-fona"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

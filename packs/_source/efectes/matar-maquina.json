@@ -1,0 +1,43 @@
+{
+  "_id": "rQhruLtdEvWHrLw1",
+  "_key": "!items!rQhruLtdEvWHrLw1",
+  "name": "Matar màquina",
+  "type": "efecte",
+  "system": {
+    "cost": 14,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 5,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari toca una o més màquines i les inutilitza completament. Simula una tirada de l'habilitat nyaps, amb un resultat de 5 fites. Si l'objectiu és un mecanoide, té dret a una tirada de resistència; si no la supera, rep 5 punts de dany directe (menys la seva reducció de dany).",
+    "descripcio": "Detecta els punts crítics d'una màquina i hi injecta entropia pura, trencant-ne les peces més febles fins a deixar-la inutilitzada de manera pràcticament irreparable. Si l'objectiu és un mecanoide, té dret a resistir-se o rebre dany directe.",
+    "parametres": [
+      {
+        "tipus": "autoeina",
+        "nivell": 5,
+        "segona": false,
+        "habilitat": "nyaps"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 5,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "matar-maquina"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

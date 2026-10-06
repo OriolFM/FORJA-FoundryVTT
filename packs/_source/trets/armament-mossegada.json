@@ -1,0 +1,22 @@
+{
+  "_id": "xay2hEv3BjkRYqDR",
+  "_key": "!items!xay2hEv3BjkRYqDR",
+  "name": "Armament Natural (mossegada/bec)",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armament-mossegada"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

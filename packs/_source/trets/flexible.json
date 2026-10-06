@@ -1,0 +1,22 @@
+{
+  "_id": "LHVJHHhu79wr0NkJ",
+  "_key": "!items!LHVJHHhu79wr0NkJ",
+  "name": "Flexible",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "flexible"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

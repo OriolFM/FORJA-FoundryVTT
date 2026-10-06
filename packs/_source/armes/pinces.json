@@ -1,0 +1,30 @@
+{
+  "_id": "h4tjdj3TwDgnvAIC",
+  "_key": "!items!h4tjdj3TwDgnvAIC",
+  "name": "Pinces",
+  "type": "arma",
+  "system": {
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 0,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+3",
+    "maniobra": "Fracturar (+2 dif.) — Provoca una fractura òssia que deixa el membre mutilat fins que es curi (no afecta gelatinosos ni invertebrats; no es poden fer servir per manipular amb delicadesa).",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "pinces"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

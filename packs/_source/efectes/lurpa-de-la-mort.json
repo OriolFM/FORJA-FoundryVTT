@@ -1,0 +1,53 @@
+{
+  "_id": "4IMYdWBAmKuw0heY",
+  "_key": "!items!4IMYdWBAmKuw0heY",
+  "name": "L'urpa de la mort",
+  "type": "efecte",
+  "system": {
+    "cost": 22,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 4,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Aplica els estats atrapat (modificador +2) i sagnant/2.",
+    "descripcio": "Els nigromants aprofiten aquest efecte per aferrar l'energia vital de l'objectiu i esprémer-la, fent que noti com si una mà invisible l'anés esclafant mentre s'afebleix.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "atrapat",
+        "nivell": 2
+      },
+      {
+        "tipus": "estat",
+        "estat": "sagnant",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 4,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "lurpa-de-la-mort"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

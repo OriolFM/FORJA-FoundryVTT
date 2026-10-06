@@ -1,0 +1,22 @@
+{
+  "_id": "Cra7xHEPZtZJ6MM6",
+  "_key": "!items!Cra7xHEPZtZJ6MM6",
+  "name": "Sentit Atrofiat (cec)",
+  "type": "tret",
+  "system": {
+    "cost": -25,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-atrofiat-cec"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

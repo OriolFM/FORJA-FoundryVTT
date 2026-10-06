@@ -1,0 +1,22 @@
+{
+  "_id": "cdvvirrhHMVmyFC6",
+  "_key": "!items!cdvvirrhHMVmyFC6",
+  "name": "Sentit del Perill",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sentit-del-perill"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

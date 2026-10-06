@@ -1,0 +1,29 @@
+{
+  "_id": "2myBE6xBaXfOH62e",
+  "_key": "!items!2myBE6xBaXfOH62e",
+  "name": "Armadura pesant",
+  "type": "armadura",
+  "system": {
+    "tipus": "fisica",
+    "reduccio": 5,
+    "modLatencia": 3,
+    "equipada": true,
+    "egida": {
+      "activa": false,
+      "absorcio": 0,
+      "tornsInactiva": 0
+    },
+    "descripcio": "Pràcticament sempre rígida. Manual: Lat +3, Protecció bàsica 5, mod. per mida ±2."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "pesant"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

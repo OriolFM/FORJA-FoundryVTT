@@ -1,0 +1,258 @@
+{
+  "_id": "EQp7V9842ulWOUUU",
+  "_key": "!actors!EQp7V9842ulWOUUU",
+  "name": "Mortalla Voraç",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 4,
+      "PER": 1,
+      "INT": 1,
+      "APL": 1
+    },
+    "especie": "constructe",
+    "mida": 5,
+    "constitucio": 2,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 3
+      },
+      "esquitllar-se": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "forca-bruta": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 3
+      }
+    },
+    "pc": 158,
+    "tier": "criatura",
+    "notes": "<p>Una mortalla voraç és una capa no-morta creada per un nigromant a partir de músculs, pell, estómacs, i amb unes temibles pinces (o, a vegades, altres armes naturals com ullals o banyes). La mortalla serveix com a mitjà de locomoció, podent transportar el nigromant a gran velocitat sense cansar-se. Per mantenir-la, però, el nigromant ha de sacrificar-li un punt de ferides cada dia.</p>"
+  },
+  "prototypeToken": {
+    "name": "Mortalla Voraç",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "hyz8lKm6IKO1h0Be",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.hyz8lKm6IKO1h0Be",
+      "name": "Armadura Natural /4",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Reducció de dany natural +4.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-4"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ACP5KyLi5Ssh4vCg",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.ACP5KyLi5Ssh4vCg",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "KdLcqO4deKELsWqc",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.KdLcqO4deKELsWqc",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "LMDVIfIKcH4o2bae",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.LMDVIfIKcH4o2bae",
+      "name": "Levitar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "levitar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "QXSetfEEcUViAVgw",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.QXSetfEEcUViAVgw",
+      "name": "No-Mort",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": {
+          "flag": "noMort"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "no-mort"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "PJODm3r3alx8oeCC",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.PJODm3r3alx8oeCC",
+      "name": "Repulsiu",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "repulsiu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "dxWE8kU9DRGJbxT4",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.dxWE8kU9DRGJbxT4",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ZXUCsybgm5x9Jdmi",
+      "_key": "!actors.items!EQp7V9842ulWOUUU.ZXUCsybgm5x9Jdmi",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7587",
+      "costManual": 158,
+      "derivatsManual": {
+        "latencia": 7,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

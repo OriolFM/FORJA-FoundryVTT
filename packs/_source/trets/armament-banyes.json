@@ -1,0 +1,22 @@
+{
+  "_id": "mDp7lxq121Yp6vmt",
+  "_key": "!items!mDp7lxq121Yp6vmt",
+  "name": "Armament Natural (banyes grans)",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armament-banyes"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "_id": "l6X0G0Lh9GYxDr1U",
+  "_key": "!items!l6X0G0Lh9GYxDr1U",
+  "name": "Sonda neural",
+  "type": "artefacte",
+  "system": {
+    "cost": 20,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "complexa",
+      "dificultat": 3
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": false,
+      "modLatencia": 0
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Es pot fer servir només en temps narratiu. Afecta un o més objectius individuals a tocar durant una escena. Permet llegir o sondar, projectar pensaments i suggestionar la ment de l'objectiu.",
+    "descripcio": "Terminals neurals que s'adhereixen a les temples de l'usuari i l'objectiu, submergint-los en una representació onírica de la ment d'aquest darrer.",
+    "parametres": [
+      {
+        "tipus": "activacio",
+        "mode": "complexa"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "llegir"
+      },
+      {
+        "tipus": "mental",
+        "mode": "projectar"
+      },
+      {
+        "tipus": "mental",
+        "mode": "suggestio"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": null,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "sonda-neural"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

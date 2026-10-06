@@ -1,0 +1,50 @@
+{
+  "_id": "2Y5UFzuv0dhI8mGh",
+  "_key": "!items!2Y5UFzuv0dhI8mGh",
+  "name": "Restauració",
+  "type": "efecte",
+  "system": {
+    "cost": 16,
+    "do": "canalitzacio",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 2,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari toca un o més objectius, i els confereix el tret regeneració i l'estat recuperació/1 fins al final de l'escena.",
+    "descripcio": "Sol ser un dels primers efectes que aprèn un canalitzador, ja que molts dels seus poders els causen desgast físic. Permet desfer-se de la fatiga amb un simple toc o una ordre verbal.",
+    "parametres": [
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "tret",
+        "tret": "regeneracio",
+        "cost": 10
+      },
+      {
+        "tipus": "estat",
+        "estat": "recuperacio",
+        "nivell": 1
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 2,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "restauracio"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

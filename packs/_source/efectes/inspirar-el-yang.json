@@ -1,0 +1,53 @@
+{
+  "_id": "syEE3Y5OfoDbSAAs",
+  "_key": "!items!syEE3Y5OfoDbSAAs",
+  "name": "Inspirar el yang",
+  "type": "efecte",
+  "system": {
+    "cost": 13,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 2,
+    "modLatencia": 2,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari obté el tret regeneració i l'estat recuperació/2 durant una escena.",
+    "descripcio": "Un dels efectes més coneguts a Takama-ga-hara: amb un control precís de l'energia corporal, accelera el procés de curació natural fins al punt de poder reconstruir membres perduts en combat.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "tret",
+        "tret": "regeneracio",
+        "cost": 10
+      },
+      {
+        "tipus": "estat",
+        "estat": "recuperacio",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 2,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "inspirar-el-yang"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

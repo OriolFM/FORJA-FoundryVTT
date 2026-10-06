@@ -1,0 +1,30 @@
+{
+  "_id": "zXySNdu9C98kpBmq",
+  "_key": "!items!zXySNdu9C98kpBmq",
+  "name": "Espases",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 1,
+    "abast": 1,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+2",
+    "maniobra": "Desarmar — Si l'objectiu no supera FOR+resistència, perd l'arma; si la necessitava per a la propera acció, queda atordit i ha de tornar a declarar.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Espases (manual: Lat +1, Abast +1, Dany FOR+2)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "espases"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

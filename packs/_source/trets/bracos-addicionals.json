@@ -1,0 +1,22 @@
+{
+  "_id": "MZPFvCQsCT9KqZH0",
+  "_key": "!items!MZPFvCQsCT9KqZH0",
+  "name": "Braços Addicionals",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "5 PC per parell addicional.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "bracos-addicionals"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

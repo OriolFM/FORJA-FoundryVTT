@@ -1,0 +1,22 @@
+{
+  "_id": "MCxT8ErE6Psc3RDu",
+  "_key": "!items!MCxT8ErE6Psc3RDu",
+  "name": "Visió Perifèrica",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "visio-periferica"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

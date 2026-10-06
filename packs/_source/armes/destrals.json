@@ -1,0 +1,30 @@
+{
+  "_id": "B5hIFAYJWcXqq1q1",
+  "_key": "!items!B5hIFAYJWcXqq1q1",
+  "name": "Destrals",
+  "type": "arma",
+  "system": {
+    "categoria": "cosAcos",
+    "modLatencia": 2,
+    "abast": 1,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+3",
+    "maniobra": "Tall de gran abast — Gira sobre si mateix i ataca fins a 6 objectius adjacents amb una sola tirada, en seqüència, fins que el paren/bloquen o no en quedin.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Destrals (manual: Lat +2, Abast +1, Dany FOR+3)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "destrals"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

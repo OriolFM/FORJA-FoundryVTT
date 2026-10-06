@@ -1,0 +1,236 @@
+{
+  "_id": "a5aUkWHrJwHzco0e",
+  "_key": "!actors!a5aUkWHrJwHzco0e",
+  "name": "Senglar",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 2,
+    "constitucio": 5,
+    "habilitats": {
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 4
+      }
+    },
+    "pc": 96,
+    "tier": "animal",
+    "notes": "<p>Els porcs senglars o porcs salvatges són habituals en mons amb grans extensions de bosc, com ara Terra. També, gràcies a la seva capacitat omnívora i la seva resistència, en mons devastats on el menjar és escàs, com Erde (lluny dels fronts) o Harmagedon (a les terres ermes, però a prop de les ciutats-estat, sobretot les que tenen camps o abocadors fora de les seves muralles).</p>"
+  },
+  "prototypeToken": {
+    "name": "Senglar",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "UnZyNkNbkgCX5IlZ",
+      "_key": "!actors.items!a5aUkWHrJwHzco0e.UnZyNkNbkgCX5IlZ",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "g2UH9ltjDkTZYNy4",
+      "_key": "!actors.items!a5aUkWHrJwHzco0e.g2UH9ltjDkTZYNy4",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ooqnD8mZ8hsjpK1C",
+      "_key": "!actors.items!a5aUkWHrJwHzco0e.ooqnD8mZ8hsjpK1C",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "d91B5O9uiPRJGanS",
+      "_key": "!actors.items!a5aUkWHrJwHzco0e.d91B5O9uiPRJGanS",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "mAOdqgbdFnYWQGSN",
+      "_key": "!actors.items!a5aUkWHrJwHzco0e.mAOdqgbdFnYWQGSN",
+      "name": "Sentit Agut (olfacte i gust)",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-agut-un"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "XzqNj9t63Ht1DFrt",
+      "_key": "!actors.items!a5aUkWHrJwHzco0e.XzqNj9t63Ht1DFrt",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "k7jKovqSWogAENrk",
+      "_key": "!actors.items!a5aUkWHrJwHzco0e.k7jKovqSWogAENrk",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7467",
+      "costManual": 96,
+      "derivatsManual": {
+        "latencia": 8,
+        "defensa": 3,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

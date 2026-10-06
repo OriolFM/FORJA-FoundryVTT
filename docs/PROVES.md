@@ -32,11 +32,12 @@ Fitxers `*.test.mjs` que s'executen amb el runner de Node (`node --test`), Node 
 | `estats.test.mjs` | Regles dels estats (Fase 1): què pot fer cada estat (actuar, moure's, córrer, esquivar, defensa activa, concentrar-se), tipus d'acció i moviments bloquejats, latència d'abatut, reacció de vigilant, inconscient/incapacitat per salut, Recuperació/X (pista i pas del nivell 7 al 6), tirada d'atrapat. `combat-wpf.test.mjs` hi afegeix les opcions de defensa amb estats. |
 | `construccio.test.mjs` | Constructor d'efectes i artefactes (Fase 2): reprodueix el cost, la dificultat i la latència de les 83 plantilles del manual (`parametres` de `artefactes.json` i `efectes.json`); dificultat i latència declarades, recàrrega, acumulador, armes i armadures base, compatibilitat amb la selecció antiga. |
 | `experiencia.test.mjs` | Repartir PX (Fase 4): taula de recompenses, virtuts repetides, historial. |
+| `contingut.test.mjs` | Compendis (Fase 5): nombre de documents de cada compendi i, per a cada PJ, PNJ, animal i criatura, cost en PC i derivats (latència, defensa, reducció de dany) iguals que al manual. |
 | `i18n.test.mjs` | Els tres fitxers de `lang/` tenen les mateixes claus; totes les claus que fa servir el codi existeixen; els `{placeholders}` coincideixen. |
 | `versio.test.mjs` | `system.json` i `package.json` tenen la mateixa versió, i aquesta té entrada al `CHANGELOG.md`. |
 | `secrets.test.mjs` | Cap fitxer del repositori conté claus d'API, tokens ni claus privades (el repositori és públic). |
 
-**Resultat actual (2026-10-06):** 14 fitxers, 63 proves de primer nivell, totes OK.
+**Resultat actual (2026-10-06):** 15 fitxers, 74 proves de primer nivell, totes OK.
 
 Els missatges `FORJA | No s'ha pogut carregar …` en executar-les són esperats: el `fetch` dels catàlegs JSON està desactivat.
 
@@ -256,3 +257,8 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 
 1. El DJ veu «Repartir PX» al directori d'actors; afegeix objectius de grup, individuals, virtuts i altres; els totals es recalculen; en confirmar se sumen a cada PJ i surt un missatge al xat.
 2. Millorar un atribut, una habilitat, un tret o un efecte amb PX queda a l'historial de la fitxa (en vermell), i els PX guanyats en verd.
+
+### Pendent de provar a Foundry: Fase 5 (compendis), 2026-10-06
+
+1. Els 9 compendis nous apareixen a la pestanya Compendis; importar un PJ (Yoko-1), un PNJ, un animal i una criatura: la fitxa mostra els mateixos PC i derivats que el manual, amb els trets, les armes i els artefactes o efectes.
+2. Arrossegar un artefacte o un efecte del compendi a una fitxa: porta els paràmetres (els artefactes basats en armes o armadures creen els objectes vinculats).

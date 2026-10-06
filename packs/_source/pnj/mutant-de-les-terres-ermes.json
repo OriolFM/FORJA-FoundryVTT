@@ -1,0 +1,199 @@
+{
+  "_id": "C187GvHXumYX9EtG",
+  "_key": "!actors!C187GvHXumYX9EtG",
+  "name": "Mutant de les terres ermes",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 1,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 4,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 3
+      },
+      "armes-cos-a-cos": {
+        "nivell": 3
+      },
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "nyaps": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "supervivencia": {
+        "nivell": 3
+      },
+      "vehicle": {
+        "nivell": 2
+      }
+    },
+    "pc": 106,
+    "tier": "antagonista",
+    "notes": "<p>Els mutants de les terres ermes de Harmagedon s'agrupen en bandes o tribus que vaguen pel territori, sobrevivint a base d'atacar els combois que transporten béns entre ciutats-estat, o als altres nòmades.</p>"
+  },
+  "prototypeToken": {
+    "name": "Mutant de les terres ermes",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "uD0JpFOv41U1kUrc",
+      "_key": "!actors.items!C187GvHXumYX9EtG.uD0JpFOv41U1kUrc",
+      "name": "Aparença Estranya (desagradable)",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-desagradable"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "hZrXXfJqB9dOABiC",
+      "_key": "!actors.items!C187GvHXumYX9EtG.hZrXXfJqB9dOABiC",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "nj8Nhu2JpMosCw03",
+      "_key": "!actors.items!C187GvHXumYX9EtG.nj8Nhu2JpMosCw03",
+      "name": "Recursos (pobre de solemnitat)",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "recursos-pobre"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Cft0Ia4DuRuHMxsl",
+      "_key": "!actors.items!C187GvHXumYX9EtG.Cft0Ia4DuRuHMxsl",
+      "name": "Repulsiu",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "repulsiu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "E5hWtBEePtLebkOj",
+      "_key": "!actors.items!C187GvHXumYX9EtG.E5hWtBEePtLebkOj",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7161",
+      "costManual": 106,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 1,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

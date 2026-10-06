@@ -1,0 +1,22 @@
+{
+  "_id": "BXwDO3e0MYF9e44g",
+  "_key": "!items!BXwDO3e0MYF9e44g",
+  "name": "Aquàtic",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "Neda a velocitat normal.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "aquatic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

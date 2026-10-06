@@ -1,0 +1,47 @@
+{
+  "_id": "cHaCIb9kbxCHMqak",
+  "_key": "!items!cHaCIb9kbxCHMqak",
+  "name": "L'armadura del queloni",
+  "type": "efecte",
+  "system": {
+    "cost": 15,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Dóna a l'usuari l'equivalent a una armadura natural de protecció 10.",
+    "descripcio": "L'efecte que va donar fama i malnom al mestre Queloni de Takama-ga-hara. No té durada pròpia, però es pot manifestar just en el moment necessari per esmorteir un atac, cosa que el fa un favorit entre els practicants novells.",
+    "parametres": [
+      {
+        "tipus": "reaccio"
+      },
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "armadura",
+        "nivell": 10
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "larmadura-del-queloni"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

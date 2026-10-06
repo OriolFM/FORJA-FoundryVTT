@@ -1,0 +1,310 @@
+{
+  "_id": "vivFBx3nuEjC1LRx",
+  "_key": "!actors!vivFBx3nuEjC1LRx",
+  "name": "Anya Barker",
+  "type": "personatge",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 3,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "armes-cos-a-cos": {
+        "nivell": 3
+      },
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 1
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "disfressar-se": {
+        "nivell": 1
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "equitacio": {
+        "nivell": 2
+      },
+      "escalada": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 2
+      },
+      "jocs-de-mans": {
+        "nivell": 2
+      },
+      "medicina": {
+        "nivell": 1
+      },
+      "navegacio": {
+        "nivell": 1
+      },
+      "negociacio": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 3
+      },
+      "tracte-animals": {
+        "nivell": 1
+      },
+      "vehicle": {
+        "nivell": 1
+      }
+    },
+    "pc": 200,
+    "biografia": "<p>L'Anya Barker és una nòmada de Harmagedon. Va néixer a Chicagorg, però en va ser expulsada quan encara era una nena i va començar a donar signes de potencial psíquic. Tot i la seva edat, se les va arreglar per sobreviure a les dures condicions de les terres ermes de Harmagedon, i va acabar essent adoptada per una tribu de nòmades.</p><p>L'Anya és una excel·lent vigia, rastrejadora i caçadora i se sap espavilar molt bé en combat a curta distància.</p>"
+  },
+  "prototypeToken": {
+    "name": "Anya Barker",
+    "actorLink": true,
+    "disposition": 1
+  },
+  "items": [
+    {
+      "_id": "4ub8OJu9DrpJZM2n",
+      "_key": "!actors.items!vivFBx3nuEjC1LRx.4ub8OJu9DrpJZM2n",
+      "name": "Psíquic",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Permet usar l'habilitat Psi.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "psiquic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "xCDFx5AtrmVGizU8",
+      "_key": "!actors.items!vivFBx3nuEjC1LRx.xCDFx5AtrmVGizU8",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "itzkvp6mQun3uAeR",
+      "_key": "!actors.items!vivFBx3nuEjC1LRx.itzkvp6mQun3uAeR",
+      "name": "Accelerar",
+      "type": "efecte",
+      "system": {
+        "cost": 12,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 3,
+        "modLatencia": 0,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "L'usuari gaudeix dels estats ràpid/2 i recuperació/1 durant una escena.",
+        "descripcio": "L'efecte es nota semblant a prendre cafè, però sense haver d'ingerir res.",
+        "parametres": [
+          {
+            "tipus": "usuari"
+          },
+          {
+            "tipus": "durada"
+          },
+          {
+            "tipus": "estat",
+            "estat": "rapid",
+            "nivell": 2
+          },
+          {
+            "tipus": "estat",
+            "estat": "recuperacio",
+            "nivell": 1
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 3,
+          "latenciaDeclarada": 0,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "accelerar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ZYUKpDXF7SwI0ZCL",
+      "_key": "!actors.items!vivFBx3nuEjC1LRx.ZYUKpDXF7SwI0ZCL",
+      "name": "Negar el dany",
+      "type": "efecte",
+      "system": {
+        "cost": 15,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 1,
+        "modLatencia": 0,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "L'usuari genera una ègida de protecció 15.",
+        "descripcio": "Segons algunes teories, aprofita i amplifica la reverberació sònica del crit de l'usuari per generar una ona expansiva que contraresta un atac entrant, encara que un cop prou fort pot fer-la inútil.",
+        "parametres": [
+          {
+            "tipus": "reaccio"
+          },
+          {
+            "tipus": "usuari"
+          },
+          {
+            "tipus": "egida",
+            "nivell": 15
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 1,
+          "latenciaDeclarada": 0,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "negar-el-dany"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ccB6axaKfbsE63Z5",
+      "_key": "!actors.items!vivFBx3nuEjC1LRx.ccB6axaKfbsE63Z5",
+      "name": "Sonda mental",
+      "type": "efecte",
+      "system": {
+        "cost": 10,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 2,
+        "modLatencia": 5,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "El PJ llegeix o sonda la ment d'un o més objectius dins el seu abast sensorial durant una escena.",
+        "descripcio": "Permet al PJ llegir o sondar la ment d'un o més objectius dins el seu abast sensorial.",
+        "parametres": [
+          {
+            "tipus": "distancia"
+          },
+          {
+            "tipus": "durada"
+          },
+          {
+            "tipus": "mental",
+            "mode": "llegir"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 2,
+          "latenciaDeclarada": 5,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sonda-mental"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.2098",
+      "costManual": 200,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

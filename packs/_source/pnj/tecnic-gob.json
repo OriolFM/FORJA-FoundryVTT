@@ -1,0 +1,284 @@
+{
+  "_id": "VQePavfQZekJ4WEF",
+  "_key": "!actors!VQePavfQZekJ4WEF",
+  "name": "Tècnic gob",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 3,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 2,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 3
+      },
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 4
+      },
+      "ciencia": {
+        "nivell": 4
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "enginyeria": {
+        "nivell": 4
+      },
+      "enigmes": {
+        "nivell": 2
+      },
+      "escalada": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "humanitats": {
+        "nivell": 1
+      },
+      "informatica": {
+        "nivell": 4
+      },
+      "nyaps": {
+        "nivell": 4
+      },
+      "vehicle": {
+        "nivell": 2
+      },
+      "xerrameca": {
+        "nivell": 3
+      }
+    },
+    "pc": 164,
+    "tier": "antagonista",
+    "notes": "<p>Els gobs són una raça alienígena de les que tenen contacte amb la Confederació Solar. Gràcies a les relacions amb l'ANM, alguns han estat admesos com a ciutadans. Els gobs són molt intel·ligents i acostumen a tenir força aptitud tècnica o científica, cosa que els ha guanyat molt bona reputació entre els habitants de l'Aliança. Per crear variants de gobs, es poden redistribuir els punts d'habilitat a altres àmbits, com la medicina o la xenomedicina.</p>"
+  },
+  "prototypeToken": {
+    "name": "Tècnic gob",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "R40OenMO0TPTYU0s",
+      "_key": "!actors.items!VQePavfQZekJ4WEF.R40OenMO0TPTYU0s",
+      "name": "Adepte (INT)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-int"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "4tanaq0EqSei1CUc",
+      "_key": "!actors.items!VQePavfQZekJ4WEF.4tanaq0EqSei1CUc",
+      "name": "Aparença Estranya (neutra)",
+      "type": "tret",
+      "system": {
+        "cost": 0,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-neutra"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "xfhLIMYLgvvpOWqf",
+      "_key": "!actors.items!VQePavfQZekJ4WEF.xfhLIMYLgvvpOWqf",
+      "name": "Figaflor",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "figaflor"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "jtnpXTHNIMlJ9MWc",
+      "_key": "!actors.items!VQePavfQZekJ4WEF.jtnpXTHNIMlJ9MWc",
+      "name": "Foraster",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "foraster"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "cLZNACoOpGwOu9eS",
+      "_key": "!actors.items!VQePavfQZekJ4WEF.cLZNACoOpGwOu9eS",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "7y0AKmlU6WvY1Zuj",
+      "_key": "!actors.items!VQePavfQZekJ4WEF.7y0AKmlU6WvY1Zuj",
+      "name": "Ulleres intel·ligents",
+      "type": "artefacte",
+      "system": {
+        "cost": 13,
+        "categoria": "dispositiu",
+        "activacio": {
+          "tipus": "trivial",
+          "dificultat": 2
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 4
+        },
+        "carrega": {
+          "usosPerCarrega": 1,
+          "tornsRecarrega": 5,
+          "modeEspera": false
+        },
+        "mecanica": "Aplica un modificador de +1 a l'atribut PER. Dóna un modificador de +2 a les habilitats armes a distància i cercar.",
+        "descripcio": "Detecten quan el PJ enfoca la seva atenció i contribueixen a millorar la seva percepció amb pistes visuals i auditives.",
+        "parametres": [
+          {
+            "tipus": "activacio",
+            "mode": "trivial"
+          },
+          {
+            "tipus": "recarrega",
+            "unitats": 5
+          },
+          {
+            "tipus": "atribut",
+            "nivell": 1,
+            "atribut": "PER"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 2,
+            "segona": false,
+            "habilitat": "armes-distancia"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 2,
+            "segona": true,
+            "habilitat": "cercar"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 2,
+          "latenciaDeclarada": 4,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ulleres-intelligents"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7277",
+      "costManual": 164,
+      "derivatsManual": {
+        "latencia": 8,
+        "defensa": 3,
+        "reduccioDany": 1,
+        "reaccio": 1
+      }
+    }
+  }
+}

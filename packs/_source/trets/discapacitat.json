@@ -1,0 +1,22 @@
+{
+  "_id": "MhhEGd0CahrRS1bs",
+  "_key": "!items!MhhEGd0CahrRS1bs",
+  "name": "Discapacitat",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "discapacitat"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

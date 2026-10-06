@@ -1,0 +1,46 @@
+{
+  "_id": "lHK9DbFmSWsqWnUh",
+  "_key": "!items!lHK9DbFmSWsqWnUh",
+  "name": "Con ardent",
+  "type": "efecte",
+  "system": {
+    "cost": 12,
+    "do": "magia",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 2,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta tots els objectius dins l'àrea d'efecte cònica, que el personatge projecta des de les seves mans. Causa dany indirecte de foc amb un modificador de +4.",
+    "descripcio": "Utilitzat sovint com a alternativa a la bola de foc, genera una flamarada cònica que surt de la vareta del mag i es projecta contra els enemics.",
+    "parametres": [
+      {
+        "tipus": "area"
+      },
+      {
+        "tipus": "dany",
+        "categoria": "indirecte",
+        "nivell": 4,
+        "danyTipus": "foc"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 2,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "con-ardent"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

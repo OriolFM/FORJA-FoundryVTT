@@ -1,0 +1,22 @@
+{
+  "_id": "eVzFiE7E4vfPJ75X",
+  "_key": "!items!eVzFiE7E4vfPJ75X",
+  "name": "Magus",
+  "type": "tret",
+  "system": {
+    "cost": 20,
+    "descripcio": "Permet usar l'habilitat Màgia.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "magus"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "_id": "RkXFtw6Xo3YWGVCA",
+  "_key": "!items!RkXFtw6Xo3YWGVCA",
+  "name": "Banyes",
+  "type": "arma",
+  "system": {
+    "categoria": "natural",
+    "modLatencia": 1,
+    "abast": 1,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "FOR+3",
+    "maniobra": "Empalar (+2 dif.) — Empala l'objectiu amb les banyes i el deixa sagnant/2.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [],
+    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "banyes"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

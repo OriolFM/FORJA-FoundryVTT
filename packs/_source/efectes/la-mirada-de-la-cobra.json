@@ -1,0 +1,45 @@
+{
+  "_id": "thNsjywjyGGfqKqc",
+  "_key": "!items!thNsjywjyGGfqKqc",
+  "name": "La mirada de la cobra",
+  "type": "efecte",
+  "system": {
+    "cost": 8,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Aplica l'estat marejat (modificador +2) a un o més objectius individuals a tocar durant una escena.",
+    "descripcio": "Força l'objectiu a perdre les accions declarades i a no poder-ne fer de noves durant un curt període, donant a l'usuari l'avantatge tàctic de preparar una altra acció o fugir.",
+    "parametres": [
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "estat",
+        "estat": "marejat",
+        "nivell": 2
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-mirada-de-la-cobra"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

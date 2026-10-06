@@ -1,0 +1,206 @@
+{
+  "_id": "V9pJEzEbwRB3G4ry",
+  "_key": "!actors!V9pJEzEbwRB3G4ry",
+  "name": "Guàrdia d'assalt de l'ANM",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 4,
+    "habilitats": {
+      "acrobacies": {
+        "nivell": 2
+      },
+      "amagar-se": {
+        "nivell": 2
+      },
+      "armes-distancia": {
+        "nivell": 3
+      },
+      "armes-cos-a-cos": {
+        "nivell": 3
+      },
+      "arts-marcials": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "ciencia": {
+        "nivell": 1
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 3
+      },
+      "explosius": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 2
+      },
+      "navegacio": {
+        "nivell": 2
+      },
+      "nyaps": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "tactica": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 3
+      }
+    },
+    "pc": 235,
+    "tier": "antagonista",
+    "notes": "<p>Quan un equip de bretxers té problemes en un altre univers que poden repercutir negativament en l'Aliança, o quan una facció aliada té un problema que cal resoldre discretament, l'Aliança envia els membres del grup d'operacions de l'ANM (GOA), un cos d'elit que, com les SAS britàniques, no s'està per orgues per tal d'aconseguir els seus objectius.</p>"
+  },
+  "prototypeToken": {
+    "name": "Guàrdia d'assalt de l'ANM",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "Dr6x5qMGApJcYyek",
+      "_key": "!actors.items!V9pJEzEbwRB3G4ry.Dr6x5qMGApJcYyek",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "DuGtJwxDuGDRSEVD",
+      "_key": "!actors.items!V9pJEzEbwRB3G4ry.DuGtJwxDuGDRSEVD",
+      "name": "Servoarmadura d'assalt",
+      "type": "artefacte",
+      "system": {
+        "cost": 62,
+        "categoria": "armadura",
+        "activacio": {
+          "tipus": "permanent",
+          "dificultat": null
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 2
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "Armadura pesant amb latència +2 i protecció 10 (±2 per mida superior o inferior a mitjana), permanent. Dóna un modificador de +3 a FOR, +3 a l'habilitat força bruta i +4 a l'habilitat resistència.",
+        "descripcio": "Permet als operatius de l'ANM moure's ràpidament pel camp de batalla ben protegits per acomplir els seus objectius.",
+        "parametres": [
+          {
+            "tipus": "armaduraBase",
+            "base": "pesant",
+            "latencia": 0,
+            "proteccio": 10
+          },
+          {
+            "tipus": "atribut",
+            "nivell": 3,
+            "atribut": "FOR"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 3,
+            "segona": false,
+            "habilitat": "forca-bruta"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 4,
+            "segona": true,
+            "habilitat": "resistencia"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": null,
+          "permanent": true
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "servoarmadura-dassalt"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7051",
+      "costManual": 235,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

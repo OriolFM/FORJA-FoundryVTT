@@ -1,0 +1,42 @@
+{
+  "_id": "IWmeU4Bn0AzG1asD",
+  "_key": "!items!IWmeU4Bn0AzG1asD",
+  "name": "Cicatritzar",
+  "type": "efecte",
+  "system": {
+    "cost": 7,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 0,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals a tocar. Cura 4 punts de fatiga o ferides.",
+    "descripcio": "Permet al PJ prendre consciència dels seus propis mecanismes curatius i accelerar-los per guarir-se una mica de fatiga o ferides.",
+    "parametres": [
+      {
+        "tipus": "cura",
+        "nivell": 4,
+        "pista": "fatiga-o-ferides"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 0,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "cicatritzar"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "0nijHV9g8CcHsbF7",
+  "_key": "!items!0nijHV9g8CcHsbF7",
+  "name": "Foraster",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "foraster"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

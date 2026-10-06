@@ -1,0 +1,50 @@
+{
+  "_id": "dOhdC3bUn6WVYUBi",
+  "_key": "!items!dOhdC3bUn6WVYUBi",
+  "name": "La intuïció del bodhisattva",
+  "type": "efecte",
+  "system": {
+    "cost": 10,
+    "do": "qi",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Permet llegir o sondar la ment de l'objectiu.",
+    "descripcio": "Els usuaris de Qi experimentats sincronitzen la seva energia corporal amb la de l'objectiu per captar-ne els pensaments i emocions superficials, o per sondar-hi més a fons.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "llegir"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "la-intuicio-del-bodhisattva"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

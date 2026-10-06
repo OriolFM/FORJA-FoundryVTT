@@ -1,0 +1,52 @@
+{
+  "_id": "tG77yDQxrZgDdbwV",
+  "_key": "!items!tG77yDQxrZgDdbwV",
+  "name": "Tornavís sònic",
+  "type": "artefacte",
+  "system": {
+    "cost": 31,
+    "categoria": "dispositiu",
+    "activacio": {
+      "tipus": "normal",
+      "dificultat": 2,
+      "atribut": "INT",
+      "habilitat": "enginyeria"
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 4
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Autoeina d'activació INT + enginyeria. Simula una tirada d'INT + enginyeria amb un resultat de 8 fites, per reparar o modificar dispositius mecànics i electrònics com si fos una eina multiusos.",
+    "descripcio": "Cilindre ple de sensors i actuadors remots que fa servir una forma limitada de teletracció per manipular peces mecàniques, amb una IA limitada de diagnòstic.",
+    "parametres": [
+      {
+        "tipus": "autoeina",
+        "nivell": 8,
+        "segona": false,
+        "habilitat": "enginyeria"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 2,
+      "latenciaDeclarada": 4,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "tornavis-sonic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

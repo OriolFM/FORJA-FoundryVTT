@@ -1,0 +1,270 @@
+{
+  "_id": "rNEcTdvgnWYLsHMm",
+  "_key": "!actors!rNEcTdvgnWYLsHMm",
+  "name": "Gran felí",
+  "type": "pnj",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 1,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 4,
+    "constitucio": 4,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 4
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 4
+      },
+      "correr": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "intimidacio": {
+        "nivell": 3
+      }
+    },
+    "pc": 126,
+    "tier": "animal",
+    "notes": "<p>Aquesta plantilla de gran felí es pot fer servir per a qualsevol gran felí solitari, com ara panteres, lleopards, o tigres, i també pels lleons. Amb variacions (mida mitjana i veloç) es pot fer servir per a guepards. Amb mida petita, per linxs, pumes, i gats de muntanya.</p>"
+  },
+  "prototypeToken": {
+    "name": "Gran felí",
+    "actorLink": false,
+    "disposition": -1
+  },
+  "items": [
+    {
+      "_id": "t8VKARSmA2Mdvuav",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.t8VKARSmA2Mdvuav",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "yhPJczFB30zVWiMI",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.yhPJczFB30zVWiMI",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "JBjvvUnGUn8l4SwL",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.JBjvvUnGUn8l4SwL",
+      "name": "Efímer",
+      "type": "tret",
+      "system": {
+        "cost": -10,
+        "descripcio": "Envelleix ràpidament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "efimer"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "bncsvpwR6yWHdkGs",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.bncsvpwR6yWHdkGs",
+      "name": "Sentit Agut (olfacte i gust)",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-agut-un"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "fo7wt4vbpKTmO5MC",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.fo7wt4vbpKTmO5MC",
+      "name": "Visió Nocturna",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-nocturna"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "uTd6PFn2UCFOEpMO",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.uTd6PFn2UCFOEpMO",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "OBqV6WHwn3pEf8os",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.OBqV6WHwn3pEf8os",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "NM62uLhiIaYtkNKv",
+      "_key": "!actors.items!rNEcTdvgnWYLsHMm.NM62uLhiIaYtkNKv",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "origenManual": "docs/FORJA_FC001CA_CORE.md l.7425",
+      "costManual": 126,
+      "derivatsManual": {
+        "latencia": 8,
+        "defensa": 2,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

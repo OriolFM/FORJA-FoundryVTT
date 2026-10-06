@@ -1,0 +1,47 @@
+{
+  "_id": "DhhuSSislQCdAl5L",
+  "_key": "!items!DhhuSSislQCdAl5L",
+  "name": "Imperatiu",
+  "type": "efecte",
+  "system": {
+    "cost": 15,
+    "do": "psi",
+    "tipus": "efecte",
+    "dificultat": 3,
+    "modLatencia": 5,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Permet suggestionar la ment de l'objectiu.",
+    "descripcio": "De manera semblant a l'enllaç mental, sincronitza els impulsos mentals amb l'objectiu, però els sobreescriu amb la voluntat del psíquic, implantant una compulsió que la víctima ha de seguir si no s'hi resisteix. Tampoc funciona amb mecanoides.",
+    "parametres": [
+      {
+        "tipus": "distancia"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "mental",
+        "mode": "suggestio"
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 3,
+      "latenciaDeclarada": 5,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "imperatiu"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

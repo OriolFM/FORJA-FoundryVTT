@@ -1,0 +1,22 @@
+{
+  "_id": "3oEGuLW650Dw8FCy",
+  "_key": "!items!3oEGuLW650Dw8FCy",
+  "name": "Regeneració",
+  "type": "tret",
+  "system": {
+    "cost": 10,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "regeneracio"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

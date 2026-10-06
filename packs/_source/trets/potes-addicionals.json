@@ -1,0 +1,22 @@
+{
+  "_id": "4bUdqPfF7gGOnCDC",
+  "_key": "!items!4bUdqPfF7gGOnCDC",
+  "name": "Potes Addicionals",
+  "type": "tret",
+  "system": {
+    "cost": 5,
+    "descripcio": "5 PC per parell addicional.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "potes-addicionals"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "OOlrTeQZiinCHnLK",
+  "_key": "!items!OOlrTeQZiinCHnLK",
+  "name": "Efímer",
+  "type": "tret",
+  "system": {
+    "cost": -10,
+    "descripcio": "Envelleix ràpidament.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "efimer"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

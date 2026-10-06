@@ -1,0 +1,22 @@
+{
+  "_id": "8ftIrkJqdCBzgcwN",
+  "_key": "!items!8ftIrkJqdCBzgcwN",
+  "name": "Addicció (moderada)",
+  "type": "tret",
+  "system": {
+    "cost": -5,
+    "descripcio": "",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "addiccio-moderada"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

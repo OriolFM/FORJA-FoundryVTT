@@ -1,0 +1,57 @@
+{
+  "_id": "lNfGirJSGv1oJ1Ui",
+  "_key": "!items!lNfGirJSGv1oJ1Ui",
+  "name": "Ungir el campió",
+  "type": "efecte",
+  "system": {
+    "cost": 9,
+    "do": "canalitzacio",
+    "tipus": "ritual",
+    "dificultat": 1,
+    "modLatencia": 10,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "L'usuari toca un o més objectius individuals, i els confereix armadura natural 3 i els estats recuperació/1 i vigilant (modificador +0) fins al final de l'escena.",
+    "descripcio": "Molts patrons compten amb un ritual per investir campions que defensin la seva causa, a canvi d'ofrenes, pregàries o un codi de conducta determinat. Els campions ungits combaten amb més eficàcia i es recuperen més ràpid de les ferides.",
+    "parametres": [
+      {
+        "tipus": "ritual"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "armadura",
+        "nivell": 3
+      },
+      {
+        "tipus": "estat",
+        "estat": "recuperacio",
+        "nivell": 1
+      },
+      {
+        "tipus": "estat",
+        "estat": "vigilant",
+        "nivell": 0
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 10,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "ungir-el-campio"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

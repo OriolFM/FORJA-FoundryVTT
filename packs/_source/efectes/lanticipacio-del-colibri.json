@@ -1,0 +1,54 @@
+{
+  "_id": "L7lYvM1lQBIvEoFu",
+  "_key": "!items!L7lYvM1lQBIvEoFu",
+  "name": "L'anticipació del colibrí",
+  "type": "efecte",
+  "system": {
+    "cost": 12,
+    "do": "qi",
+    "tipus": "efecte",
+    "dificultat": 1,
+    "modLatencia": 1,
+    "us": {
+      "narratiu": true,
+      "actiu": true
+    },
+    "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +3 a l'habilitat esquivar. Aplica l'estat vigilant (modificador +0).",
+    "descripcio": "Els colibrís reaccionen a una velocitat sorprenent per esquivar depredadors i maniobrar entre branques. Aquest efecte permet als usuaris de Qi reaccionar amb la mateixa rapidesa davant del perill.",
+    "parametres": [
+      {
+        "tipus": "usuari"
+      },
+      {
+        "tipus": "durada"
+      },
+      {
+        "tipus": "eina",
+        "nivell": 3,
+        "segona": false,
+        "habilitat": "esquivar"
+      },
+      {
+        "tipus": "estat",
+        "estat": "vigilant",
+        "nivell": 0
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": 1,
+      "latenciaDeclarada": 1,
+      "permanent": false
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "lanticipacio-del-colibri"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}
