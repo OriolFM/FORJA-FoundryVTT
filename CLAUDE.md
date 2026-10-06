@@ -112,6 +112,8 @@ FORJA-FoundryVTT/
 │   ├── build-manual.mjs       # Genera packs/_source/manual/*.json des de Markdown extern
 │   ├── build-packs.mjs        # npm run build:packs: compendis de contingut (manual + catàlegs)
 │   ├── generar-tokens.py      # Tokens provisionals dels actors dels compendis (Pillow)
+│   ├── aventura-hekate.mjs    # Actors de «La porta d'Hèkate» per a build-packs (conversió de regles antigues)
+│   ├── comparar-pdf.py        # Compara una maqueta en PDF amb docs/FORJA_FC001CA_CORE.md (què hi falta)
 │   └── versio.mjs             # npm run versio: tanca una versió (i actualitza graphify)
 ├── tests/
 │   ├── unitaris/              # npm test — lògica pura, sense Foundry
