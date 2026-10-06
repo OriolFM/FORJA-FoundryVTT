@@ -28,6 +28,7 @@ const MANUAL = path.join(ARREL, "docs/FORJA_FC001CA_CORE.md");
 const DADES = path.join(ARREL, "module/config/dades");
 const FONTS = path.join(ARREL, "packs/_source");
 const INFORME = path.join(ARREL, "docs/CONTINGUT-INFORME.md");
+const TOKENS = path.join(ARREL, "assets/tokens");
 
 export const PACKS_ACTOR = ["pj", "pnj", "animals", "criatures"];
 export const PACKS_ITEM = ["trets", "armes", "armadures", "artefactes", "efectes"];
@@ -489,13 +490,20 @@ export function construirActor(bloc, cat, cfg, incidencies) {
     }
   }
 
+  // Token (scripts/generar-tokens.py): el dibuixat o el provisional gris.
+  const token = fs.existsSync(path.join(TOKENS, pack, `${slugActor}.webp`))
+    ? `systems/forja/assets/tokens/${pack}/${slugActor}.webp` : null;
   const actor = {
     _id: actorId,
     _key: `!actors!${actorId}`,
     name: bloc.nom,
     type: esPJ ? "personatge" : "pnj",
+    ...(token ? { img: token } : {}),
     system,
-    prototypeToken: { name: bloc.nom, actorLink: esPJ, disposition: esPJ ? 1 : -1 },
+    prototypeToken: {
+      name: bloc.nom, actorLink: esPJ, disposition: esPJ ? 1 : -1,
+      ...(token ? { texture: { src: token } } : {})
+    },
     items,
     effects: [],
     folder: null,

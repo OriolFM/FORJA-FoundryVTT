@@ -3,6 +3,7 @@
   "_key": "!actors!X7TOUBgATZtxXE5E",
   "name": "Magistrat",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/magistrat.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -84,7 +85,10 @@
   "prototypeToken": {
     "name": "Magistrat",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/magistrat.webp"
+    }
   },
   "items": [
     {

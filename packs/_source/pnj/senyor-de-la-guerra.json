@@ -3,6 +3,7 @@
   "_key": "!actors!lTETloXBXcichaEo",
   "name": "Senyor de la guerra",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/senyor-de-la-guerra.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -63,7 +64,10 @@
   "prototypeToken": {
     "name": "Senyor de la guerra",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/senyor-de-la-guerra.webp"
+    }
   },
   "items": [
     {

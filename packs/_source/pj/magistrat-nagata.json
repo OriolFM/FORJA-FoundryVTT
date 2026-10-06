@@ -3,6 +3,7 @@
   "_key": "!actors!GZayELmEWKvHwoay",
   "name": "Magistrat Nagata",
   "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/magistrat-nagata.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -81,7 +82,10 @@
   "prototypeToken": {
     "name": "Magistrat Nagata",
     "actorLink": true,
-    "disposition": 1
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/magistrat-nagata.webp"
+    }
   },
   "items": [
     {

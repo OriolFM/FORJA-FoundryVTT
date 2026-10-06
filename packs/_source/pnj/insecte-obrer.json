@@ -3,6 +3,7 @@
   "_key": "!actors!PCyNnNoc8WvGzYNb",
   "name": "Insecte obrer",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/insecte-obrer.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -33,7 +34,10 @@
   "prototypeToken": {
     "name": "Insecte obrer",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/insecte-obrer.webp"
+    }
   },
   "items": [
     {

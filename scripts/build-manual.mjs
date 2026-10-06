@@ -240,6 +240,31 @@ function mdToHtml(md) {
   return marked.parse(md.trim());
 }
 
+/**
+ * Número de capítol a partir del nom del fitxer (`FORJA_03_…` → 3), o `null`
+ * si no en té (p. ex. el README).
+ */
+function numeroCapitol(fitxer) {
+  const m = basename(fitxer).match(/_(\d{2})_/);
+  return m ? Number(m[1]) : null;
+}
+
+/**
+ * `sort` de l'entrada: l'ordre del manual original; sense número, al final.
+ * Foundry ordena els compendis alfabèticament per defecte, per això el nom
+ * també porta el número (`nomEntrada`).
+ */
+function ordreCapitol(fitxer) {
+  const n = numeroCapitol(fitxer);
+  return (n ?? 99) * 100000;
+}
+
+/** Nom de l'entrada amb el número de capítol al davant («1. EL MULTIVERS…»). */
+function nomEntrada(cap) {
+  const n = numeroCapitol(cap.fitxer);
+  return n == null ? cap.titol : `${n}. ${cap.titol}`;
+}
+
 function main() {
   // Check if MD_DIR exists and contains .md files BEFORE any deletion
   if (!existsSync(MD_DIR)) {
@@ -283,10 +308,10 @@ function main() {
     const entry = {
       _id: cap.journalId,
       _key: `!journal!${cap.journalId}`,
-      name: cap.titol,
+      name: nomEntrada(cap),
       pages,
       folder: null,
-      sort: 0,
+      sort: ordreCapitol(cap.fitxer),
       ownership: { default: 0 },
       flags: {}
     };

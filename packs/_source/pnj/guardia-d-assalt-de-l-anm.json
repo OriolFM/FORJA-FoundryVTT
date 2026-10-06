@@ -3,6 +3,7 @@
   "_key": "!actors!V9pJEzEbwRB3G4ry",
   "name": "Guàrdia d'assalt de l'ANM",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/guardia-d-assalt-de-l-anm.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -84,7 +85,10 @@
   "prototypeToken": {
     "name": "Guàrdia d'assalt de l'ANM",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/guardia-d-assalt-de-l-anm.webp"
+    }
   },
   "items": [
     {

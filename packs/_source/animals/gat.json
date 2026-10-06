@@ -3,6 +3,7 @@
   "_key": "!actors!MGqTCqNhsDfOeDbG",
   "name": "Gat",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/animals/gat.webp",
   "system": {
     "atributs": {
       "FOR": 1,
@@ -45,7 +46,10 @@
   "prototypeToken": {
     "name": "Gat",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/animals/gat.webp"
+    }
   },
   "items": [
     {

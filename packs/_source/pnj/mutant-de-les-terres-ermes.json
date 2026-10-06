@@ -3,6 +3,7 @@
   "_key": "!actors!C187GvHXumYX9EtG",
   "name": "Mutant de les terres ermes",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/mutant-de-les-terres-ermes.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -54,7 +55,10 @@
   "prototypeToken": {
     "name": "Mutant de les terres ermes",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/mutant-de-les-terres-ermes.webp"
+    }
   },
   "items": [
     {

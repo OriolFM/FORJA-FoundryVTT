@@ -3,6 +3,7 @@
   "_key": "!actors!dZeRolYoo5WxYflm",
   "name": "Il·luminat errant",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/il-luminat-errant.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -69,7 +70,10 @@
   "prototypeToken": {
     "name": "Il·luminat errant",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/il-luminat-errant.webp"
+    }
   },
   "items": [
     {

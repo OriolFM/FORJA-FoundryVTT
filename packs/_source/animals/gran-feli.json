@@ -3,6 +3,7 @@
   "_key": "!actors!rNEcTdvgnWYLsHMm",
   "name": "Gran felí",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/animals/gran-feli.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -45,7 +46,10 @@
   "prototypeToken": {
     "name": "Gran felí",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/animals/gran-feli.webp"
+    }
   },
   "items": [
     {

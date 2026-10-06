@@ -3,6 +3,7 @@
   "_key": "!actors!a5F7ATMtEUeMILwR",
   "name": "Ermità Psíquic",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/ermita-psiquic.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -66,7 +67,10 @@
   "prototypeToken": {
     "name": "Ermità Psíquic",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/ermita-psiquic.webp"
+    }
   },
   "items": [
     {

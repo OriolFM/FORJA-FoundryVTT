@@ -3,6 +3,7 @@
   "_key": "!actors!y6jRMWu1CXgw7YzI",
   "name": "IAssistent",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/iassistent.webp",
   "system": {
     "atributs": {
       "FOR": 0,
@@ -54,7 +55,10 @@
   "prototypeToken": {
     "name": "IAssistent",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/iassistent.webp"
+    }
   },
   "items": [
     {

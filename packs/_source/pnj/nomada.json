@@ -3,6 +3,7 @@
   "_key": "!actors!JyFhVoJYA6SUNLPG",
   "name": "Nòmada",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/nomada.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -54,7 +55,10 @@
   "prototypeToken": {
     "name": "Nòmada",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/nomada.webp"
+    }
   },
   "items": [
     {

@@ -3,6 +3,7 @@
   "_key": "!actors!eqb9G5XMJNDKLpIv",
   "name": "Comissari polític",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/comissari-politic.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -69,7 +70,10 @@
   "prototypeToken": {
     "name": "Comissari polític",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/comissari-politic.webp"
+    }
   },
   "items": [
     {

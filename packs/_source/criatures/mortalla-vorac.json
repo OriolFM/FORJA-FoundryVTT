@@ -3,6 +3,7 @@
   "_key": "!actors!EQp7V9842ulWOUUU",
   "name": "Mortalla Voraç",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/mortalla-vorac.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -39,7 +40,10 @@
   "prototypeToken": {
     "name": "Mortalla Voraç",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/mortalla-vorac.webp"
+    }
   },
   "items": [
     {

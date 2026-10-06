@@ -3,6 +3,7 @@
   "_key": "!actors!9dhZbq8wElhpj84v",
   "name": "Cacic nòmada",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/cacic-nomada.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -63,7 +64,10 @@
   "prototypeToken": {
     "name": "Cacic nòmada",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/cacic-nomada.webp"
+    }
   },
   "items": [
     {

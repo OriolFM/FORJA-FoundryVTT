@@ -3,6 +3,7 @@
   "_key": "!actors!AdbayBLMONYIT84n",
   "name": "Paladí no-mort",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/paladi-no-mort.webp",
   "system": {
     "atributs": {
       "FOR": 4,
@@ -48,7 +49,10 @@
   "prototypeToken": {
     "name": "Paladí no-mort",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/paladi-no-mort.webp"
+    }
   },
   "items": [
     {

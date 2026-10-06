@@ -3,6 +3,7 @@
   "_key": "!actors!bHSxW2DMve6EmFtb",
   "name": "Gólem de carn",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/golem-de-carn.webp",
   "system": {
     "atributs": {
       "FOR": 4,
@@ -33,7 +34,10 @@
   "prototypeToken": {
     "name": "Gólem de carn",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/golem-de-carn.webp"
+    }
   },
   "items": [
     {

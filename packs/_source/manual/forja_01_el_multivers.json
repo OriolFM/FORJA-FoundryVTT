@@ -1,7 +1,7 @@
 {
   "_id": "gOM1eyEFqgPO7jsa",
   "_key": "!journal!gOM1eyEFqgPO7jsa",
-  "name": "EL MULTIVERS DE FORJA",
+  "name": "1. EL MULTIVERS DE FORJA",
   "pages": [
     {
       "_id": "2oF1wfImwcozUDIJ",
@@ -85,7 +85,7 @@
     }
   ],
   "folder": null,
-  "sort": 0,
+  "sort": 100000,
   "ownership": {
     "default": 0
   },

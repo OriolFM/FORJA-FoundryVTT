@@ -3,6 +3,7 @@
   "_key": "!actors!ort16TGw70Kp9evK",
   "name": "Marvin el dèlfic",
   "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/marvin-el-delfic.webp",
   "system": {
     "atributs": {
       "FOR": 4,
@@ -77,7 +78,10 @@
   "prototypeToken": {
     "name": "Marvin el dèlfic",
     "actorLink": true,
-    "disposition": 1
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/marvin-el-delfic.webp"
+    }
   },
   "items": [
     {

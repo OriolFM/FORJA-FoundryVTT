@@ -3,6 +3,7 @@
   "_key": "!actors!0MLOlAVmScVWD4eB",
   "name": "Gos gros",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/animals/gos-gros.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -42,7 +43,10 @@
   "prototypeToken": {
     "name": "Gos gros",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/animals/gos-gros.webp"
+    }
   },
   "items": [
     {

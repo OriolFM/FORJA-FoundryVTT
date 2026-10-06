@@ -3,6 +3,7 @@
   "_key": "!actors!a5aUkWHrJwHzco0e",
   "name": "Senglar",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/animals/senglar.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -39,7 +40,10 @@
   "prototypeToken": {
     "name": "Senglar",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/animals/senglar.webp"
+    }
   },
   "items": [
     {

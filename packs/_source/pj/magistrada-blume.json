@@ -3,6 +3,7 @@
   "_key": "!actors!40ppetRnOJvnMRbb",
   "name": "Magistrada Blume",
   "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/magistrada-blume.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -78,7 +79,10 @@
   "prototypeToken": {
     "name": "Magistrada Blume",
     "actorLink": true,
-    "disposition": 1
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/magistrada-blume.webp"
+    }
   },
   "items": [
     {

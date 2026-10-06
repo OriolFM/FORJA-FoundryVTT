@@ -3,6 +3,7 @@
   "_key": "!actors!bYu08rajMrAKAnDq",
   "name": "Oficial",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/oficial.webp",
   "system": {
     "atributs": {
       "FOR": 1,
@@ -63,7 +64,10 @@
   "prototypeToken": {
     "name": "Oficial",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/oficial.webp"
+    }
   },
   "items": [
     {

@@ -3,6 +3,7 @@
   "_key": "!actors!69yVoJFdwyxGhTnb",
   "name": "Figurant (no combatent)",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/figurant-no-combatent.webp",
   "system": {
     "atributs": {
       "FOR": 1,
@@ -36,7 +37,10 @@
   "prototypeToken": {
     "name": "Figurant (no combatent)",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/figurant-no-combatent.webp"
+    }
   },
   "items": [
     {

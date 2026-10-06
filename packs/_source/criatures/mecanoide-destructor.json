@@ -3,6 +3,7 @@
   "_key": "!actors!ZytKSkZa3Sk0J7u2",
   "name": "Mecanoide destructor",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/mecanoide-destructor.webp",
   "system": {
     "atributs": {
       "FOR": 4,
@@ -45,7 +46,10 @@
   "prototypeToken": {
     "name": "Mecanoide destructor",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/mecanoide-destructor.webp"
+    }
   },
   "items": [
     {

@@ -3,6 +3,7 @@
   "_key": "!actors!xfstQ6Nex0ZgzKsF",
   "name": "Kraken",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/kraken.webp",
   "system": {
     "atributs": {
       "FOR": 5,
@@ -51,7 +52,10 @@
   "prototypeToken": {
     "name": "Kraken",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/kraken.webp"
+    }
   },
   "items": [
     {

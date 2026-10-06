@@ -3,6 +3,7 @@
   "_key": "!actors!vivFBx3nuEjC1LRx",
   "name": "Anya Barker",
   "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/anya-barker.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -86,7 +87,10 @@
   "prototypeToken": {
     "name": "Anya Barker",
     "actorLink": true,
-    "disposition": 1
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/anya-barker.webp"
+    }
   },
   "items": [
     {

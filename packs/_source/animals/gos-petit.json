@@ -3,6 +3,7 @@
   "_key": "!actors!OaJbNURNpDFXw1MX",
   "name": "Gos petit",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/animals/gos-petit.webp",
   "system": {
     "atributs": {
       "FOR": 1,
@@ -45,7 +46,10 @@
   "prototypeToken": {
     "name": "Gos petit",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/animals/gos-petit.webp"
+    }
   },
   "items": [
     {

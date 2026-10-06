@@ -1,7 +1,7 @@
 {
   "_id": "zurDVIFFscceuhwG",
   "_key": "!journal!zurDVIFFscceuhwG",
-  "name": "EL MODERN DEMIÜRG",
+  "name": "5. EL MODERN DEMIÜRG",
   "pages": [
     {
       "_id": "9zvqBsIWAWBC4bAT",
@@ -85,7 +85,7 @@
     }
   ],
   "folder": null,
-  "sort": 0,
+  "sort": 500000,
   "ownership": {
     "default": 0
   },

@@ -1,7 +1,7 @@
 {
   "_id": "Vc3XNSrnyqu6xVLa",
   "_key": "!journal!Vc3XNSrnyqu6xVLa",
-  "name": "PERSONATGES NO JUGADORS",
+  "name": "6. PERSONATGES NO JUGADORS",
   "pages": [
     {
       "_id": "ctO5JholBCJbmLw2",
@@ -53,7 +53,7 @@
     }
   ],
   "folder": null,
-  "sort": 0,
+  "sort": 600000,
   "ownership": {
     "default": 0
   },

@@ -3,6 +3,7 @@
   "_key": "!actors!1vFnFFt5Bw4BMsO9",
   "name": "Ajudant de magistrat",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/ajudant-de-magistrat.webp",
   "system": {
     "atributs": {
       "FOR": 1,
@@ -75,7 +76,10 @@
   "prototypeToken": {
     "name": "Ajudant de magistrat",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/ajudant-de-magistrat.webp"
+    }
   },
   "items": [
     {

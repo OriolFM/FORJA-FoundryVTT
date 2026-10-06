@@ -3,6 +3,7 @@
   "_key": "!actors!v9DvfaQHIFupP3DN",
   "name": "Ós",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/animals/os.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -45,7 +46,10 @@
   "prototypeToken": {
     "name": "Ós",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/animals/os.webp"
+    }
   },
   "items": [
     {

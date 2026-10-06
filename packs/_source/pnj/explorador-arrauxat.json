@@ -3,6 +3,7 @@
   "_key": "!actors!fkZ0T88fGxP7LlWI",
   "name": "Explorador arrauxat",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/explorador-arrauxat.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -57,7 +58,10 @@
   "prototypeToken": {
     "name": "Explorador arrauxat",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/explorador-arrauxat.webp"
+    }
   },
   "items": [
     {

@@ -3,6 +3,7 @@
   "_key": "!actors!FVyf45wS42ChdK1h",
   "name": "Trace",
   "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/trace.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -83,7 +84,10 @@
   "prototypeToken": {
     "name": "Trace",
     "actorLink": true,
-    "disposition": 1
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/trace.webp"
+    }
   },
   "items": [
     {

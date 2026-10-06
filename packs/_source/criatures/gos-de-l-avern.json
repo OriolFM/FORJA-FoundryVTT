@@ -3,6 +3,7 @@
   "_key": "!actors!WjDM68T5ywLS39cI",
   "name": "Gos de l'avern",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/gos-de-l-avern.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -39,7 +40,10 @@
   "prototypeToken": {
     "name": "Gos de l'avern",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/gos-de-l-avern.webp"
+    }
   },
   "items": [
     {

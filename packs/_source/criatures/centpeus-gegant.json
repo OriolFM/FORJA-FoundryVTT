@@ -3,6 +3,7 @@
   "_key": "!actors!oT8NS9BBQFYH2kTF",
   "name": "Centpeus gegant",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/centpeus-gegant.webp",
   "system": {
     "atributs": {
       "FOR": 4,
@@ -42,7 +43,10 @@
   "prototypeToken": {
     "name": "Centpeus gegant",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/centpeus-gegant.webp"
+    }
   },
   "items": [
     {

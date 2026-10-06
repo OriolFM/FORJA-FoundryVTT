@@ -3,6 +3,7 @@
   "_key": "!actors!z6RekkCp1FKNBSjz",
   "name": "Megalodon",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/animals/megalodon.webp",
   "system": {
     "atributs": {
       "FOR": 4,
@@ -45,7 +46,10 @@
   "prototypeToken": {
     "name": "Megalodon",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/animals/megalodon.webp"
+    }
   },
   "items": [
     {

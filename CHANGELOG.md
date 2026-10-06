@@ -14,6 +14,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Tokens per als actors dels compendis:** Yoko-1, Trace, Marvin el dèlfic i el Gólem de carn porten el seu token; la resta, un de provisional (cercle gris amb el nom a l'anella).
 - **Estats amb efecte** (manual › Estats; Oriol FM, 2026-10-06):
   - **Abatut:** +2 a la latència; no pot córrer, saltar (càrrega) ni esquivar.
   - **Atrapat** i **immobilitzat:** el token no es pot moure; atrapat no pot esquivar; immobilitzat té defensa bàsica 1.
@@ -67,6 +68,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - `criatures-exemple.json`: les criatures del manual són ara al compendi «Criatures».
 
 ### Canviat
+- **Compendis:** capçalera gris pla (provisional).
+- **Manual:** els capítols surten en l'ordre del llibre, amb el número al davant.
 - **Blocar amb el cos** també contra atacs armats si el defensor té armament natural (urpes, banyes…) o armadura natural, com a l'exemple del gólem del manual.
 - Si el defensor no té cap reacció lliure, es defensa amb la defensa bàsica sense diàleg, però amb un avís i «(sense reaccions)» al xat.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).

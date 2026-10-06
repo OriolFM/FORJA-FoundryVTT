@@ -3,6 +3,7 @@
   "_key": "!actors!UFXE2spqAxFNR4CC",
   "name": "Renegat",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/renegat.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -102,7 +103,10 @@
   "prototypeToken": {
     "name": "Renegat",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/renegat.webp"
+    }
   },
   "items": [
     {

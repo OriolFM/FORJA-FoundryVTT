@@ -102,6 +102,7 @@ FORJA-FoundryVTT/
 │   ├── dice/                  # Diàleg i missatge de tirada
 │   └── item/                  # Una plantilla per tipus d'item + item-body.hbs (contenidor)
 ├── styles/forja.css
+├── assets/                    # banners/ (capçaleres dels compendis), tokens/<compendi>/<slug>.webp
 ├── lang/                      # i18n: ca.json (font), es.json, en.json
 ├── packs/
 │   ├── _source/manual/        # Fonts JSON (JournalEntry) del compendi "Manual FORJA"
@@ -109,6 +110,7 @@ FORJA-FoundryVTT/
 ├── scripts/
 │   ├── build-manual.mjs       # Genera packs/_source/manual/*.json des de Markdown extern
 │   ├── build-packs.mjs        # npm run build:packs: compendis de contingut (manual + catàlegs)
+│   ├── generar-tokens.py      # Tokens provisionals dels actors dels compendis (Pillow)
 │   └── versio.mjs             # npm run versio: tanca una versió (i actualitza graphify)
 ├── tests/
 │   ├── unitaris/              # npm test — lògica pura, sense Foundry
@@ -124,14 +126,15 @@ FORJA-FoundryVTT/
     └── VERSIONS.md            # Control de versions
 ```
 
-No hi ha `assets/`, `module/sheets/`, `module/helpers/` ni `docs/PLAN.md`: si
+No hi ha `module/sheets/`, `module/helpers/` ni `docs/PLAN.md`: si
 algun document antic els esmenta, són obsolets.
 
 **Compendis de contingut (Fase 5):** `scripts/build-packs.mjs` genera
 `packs/_source/{pj,pnj,animals,criatures,trets,armes,armadures,artefactes,efectes}/`
 a partir del manual i dels catàlegs, i `npm run build:packs` els compila a
 `packs/<nom>/` (LevelDB, no s'edita a mà). Cal regenerar-los quan canvien els
-catàlegs. Informe d'incidències: `docs/CONTINGUT-INFORME.md`.
+catàlegs. Els tokens dels actors (`assets/tokens/`) els fa `python3 scripts/generar-tokens.py`
+(abans de `build:packs`, que els assigna si existeixen). Informe d'incidències: `docs/CONTINGUT-INFORME.md`.
 
 ## Tipus d'actor i d'item
 

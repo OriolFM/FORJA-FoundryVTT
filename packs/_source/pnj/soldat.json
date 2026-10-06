@@ -3,6 +3,7 @@
   "_key": "!actors!G4pmqJm6tj4fR1ga",
   "name": "Soldat",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/soldat.webp",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -57,7 +58,10 @@
   "prototypeToken": {
     "name": "Soldat",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/soldat.webp"
+    }
   },
   "items": [
     {

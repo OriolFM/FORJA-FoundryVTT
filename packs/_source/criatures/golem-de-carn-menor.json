@@ -3,6 +3,7 @@
   "_key": "!actors!KnExxDrj11eQYTqS",
   "name": "Gólem de carn menor",
   "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/golem-de-carn-menor.webp",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -33,7 +34,10 @@
   "prototypeToken": {
     "name": "Gólem de carn menor",
     "actorLink": false,
-    "disposition": -1
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/golem-de-carn-menor.webp"
+    }
   },
   "items": [
     {
