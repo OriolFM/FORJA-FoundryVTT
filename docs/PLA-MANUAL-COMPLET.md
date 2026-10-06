@@ -184,4 +184,4 @@ Documentació (`CLAUDE.md`, registre, `PROVES.md`), traduccions es/en de les cla
 | 4 Experiència | `fb4dc9f` |
 | 5 Compendis | `512be74` |
 | 6 Maniobres, armes automàtiques, escut | fet (vegeu el registre) |
-| 7 Tancament | pendent |
+| 7 Tancament | revisió de codi i correccions (`23e50c0`); **falta**: proves de joc a Foundry (v13 i v14, vegeu `PROVES.md`) i tancar la versió 0.6.0 |
