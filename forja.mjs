@@ -34,6 +34,7 @@ import { sincronitzarEstatsSalut, iniciTornEstats } from "./module/estats/aplica
 import { registrarMigracio, executarMigracions } from "./module/migracio/migracio.mjs";
 import { sincronitzarVinculats, eliminarVinculats } from "./module/combat/artefactes-vinculats.mjs";
 import DiategRepartirPX from "./module/apps/dialeg-repartir-px.mjs";
+import { registrarEinaContingut } from "./module/contingut/compendis-mon.mjs";
 import { resoldreSegonCopCombinacio } from "./module/combat/atac-multi.mjs";
 
 Hooks.once("init", () => {
@@ -235,6 +236,9 @@ Hooks.on("updateToken", async (token, changes) => {
   if (!foundry.utils.hasProperty(changes, "delta.system.salut")) return;
   if (token.actor) await sincronitzarEstatsSalut(token.actor);
 });
+
+// Eina del DJ: crear actors i desar-los als compendis del món.
+registrarEinaContingut();
 
 // Fase 4: botó del DJ per repartir PX al directori d'actors.
 Hooks.on("renderActorDirectory", (app, html) => {

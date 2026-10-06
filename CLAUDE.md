@@ -93,6 +93,7 @@ FORJA-FoundryVTT/
 │   │   ├── progressio-sobrenatural.mjs # Aprendre/millorar efectes amb PX (S-29)
 │   │   ├── rd-artefactes.mjs / modular.mjs # R+D: prototips i artefactes modulars (S-30)
 │   │   └── accions-complexes.mjs # Calculadora d'accions complexes (S-08)
+│   ├── contingut/compendis-mon.mjs # Eina del DJ: nou actor i «Desa al compendi del món» (world.forja-*)
 │   ├── validacio/coherencia.mjs # Avisos (no bloquegen): PC/PX excedits, incompatibilitats
 │   ├── migracio/migracio.mjs  # Migracions de dades dels mons (DJ, a `ready`; setting forja.migracio)
 │   └── xarxa/socket.mjs       # Relé d'autoritat del DJ (vegeu més avall)

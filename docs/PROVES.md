@@ -273,3 +273,10 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 5. **Contraatac:** declarar-lo; quan l'ataquen i para o bloca amb èxit, contraataca; l'atacant no pot parar ni blocar.
 6. **Dim Mak:** triar ferides o fatiga doble; ignora l'armadura.
 7. **Escut:** portar-ne un dona +1 a la defensa a la fitxa.
+
+### Pendent de provar a Foundry: presentació, aventura i eina del DJ, 2026-10-06
+- Compendis: capçalera gris; el manual surt amb els capítols numerats i en ordre, i les pàgines tenen l'estil de llibre (taules, títols).
+- Actors dels compendis: cada un porta el seu token (Yoko-1, Trace, Marvin, Gólem de carn i Aràcnid, els dibuixats; la resta, el gris provisional), també en arrossegar-lo a l'escena.
+- Carpeta «La porta d'Hèkate» als compendis `pj`, `pnj` i `criatures`; importar-ne un i obrir-ne la fitxa (derivats, trets, habilitats amb especialitat).
+- Mòdul `forja-la-porta-dhekate`: s'activa, el compendi de diari mostra els 9 capítols en ordre i les taules dels PJ pregenerats es llegeixen bé.
+- Eina del DJ: botó «Nou actor FORJA» al directori d'actors (PJ → assistent de creació; PNJ, criatura, animal → fitxa amb el tier); menú d'un actor → «Desa al compendi del món» crea `FORJA (món): …` la primera vegada, hi copia l'actor i, si ja n'hi ha un amb el mateix nom, demana si el reemplaça. Els jugadors no veuen ni el botó ni l'opció.
