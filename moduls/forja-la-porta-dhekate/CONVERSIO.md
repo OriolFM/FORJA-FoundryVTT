@@ -24,21 +24,14 @@ Cap.
 - **Bretxer 1** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
 - **Bretxer 2** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
 - **Magistrat 1** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
-- **Magistrat 2** (`pj`): «adepte/mental» (grup d'habilitats, regles antigues) → adepte (INT)
 - **Magistrat 2** (`pj`): «recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret
-- **Científic** (`pj`): «inepte/social» (grup d'habilitats, regles antigues) → inepte (APL)
 - **Dron de manteniment** (`pnj`): constitució «massissa» → robusta (5)
-- **Dron de manteniment** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
 - **Dron de manteniment** (`pnj`): «veloç» retirat: no és al manual final
 - **Jovenalla del Mur** (`pnj`): constitució «feble» → magra (2)
 - **Jörg Marsuí** (`pnj`): constitució «robusta» → ferma (4)
 - **Magistrada Blume** (`pnj`): constitució «robusta» → ferma (4)
 - **Magistrat Otomo** (`pnj`): «curació ràpida/» sense valor: s'ha pres X=1
 - **Magistrat Otomo** (`pnj`): «vincles» → contactes (amb una organització)
-- **Sr. Thèvenin** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
-- **Frederick Bauer (Orfeu)** (`pnj`): «adepte - mental» (grup d'habilitats, regles antigues) → adepte (INT)
-- **Frederick Bauer (Orfeu)** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
-- **Frederick Bauer (Orfeu)** (`pnj`): «adepte - tècnic» repetit després de convertir-lo (adepte/int): només un cop
 - **Frederick Bauer (Orfeu)** (`pnj`): «atribut excepcional» retirat: ja no cal: un atribut a 4 ja inclou el cost al manual v3
 - **Frederick Bauer (Orfeu)** (`pnj`): «vincles» → contactes (amb una organització)
 - **Líder operatiu** (`pnj`): constitució «robusta» → ferma (4)
@@ -47,7 +40,6 @@ Cap.
 - **Agent d'intel·ligència (ISSR)** (`pnj`): «vincles» → contactes (amb una organització)
 - **Hèkate** (`pnj`): mida «col·losal» → enorme (5)
 - **Hèkate** (`pnj`): constitució «robusta» → ferma (4)
-- **Hèkate** (`pnj`): «adepte - tècnic» (grup d'habilitats, regles antigues) → adepte (INT)
 - **Hèkate** (`pnj`): «atribut excepcional» retirat: ja no cal: un atribut a 4 ja inclou el cost al manual v3
 - **Hèkate** (`pnj`): «curació ràpida/» sense valor: s'ha pres X=1
 - **Aràcnid Acherontia XM976** (`criatures`): mida «col·losal» → enorme (5)
@@ -142,7 +134,7 @@ Esperables: la defensa, la salut i part dels costos canvien d'escala entre versi
 | Sr. Thèvenin | `pnj` | latencia | 9 | 8 | -1 |
 | Sr. Thèvenin | `pnj` | defensa | 8 | 3 | -5 |
 | Sr. Thèvenin | `pnj` | reduccioDany | 3 | 1 | -2 |
-| Frederick Bauer (Orfeu) | `pnj` | cost | 518 | 569 | 51 |
+| Frederick Bauer (Orfeu) | `pnj` | cost | 518 | 584 | 66 |
 | Frederick Bauer (Orfeu) | `pnj` | latencia | 10 | 9 | -1 |
 | Frederick Bauer (Orfeu) | `pnj` | defensa | 9 | 2 | -7 |
 | Frederick Bauer (Orfeu) | `pnj` | reduccioDany | 4 | 2 | -2 |

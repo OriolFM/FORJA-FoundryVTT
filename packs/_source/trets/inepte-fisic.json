@@ -1,0 +1,22 @@
+{
+  "_id": "ti4rDaMZcbsrKhPh",
+  "_key": "!items!ti4rDaMZcbsrKhPh",
+  "name": "Inepte (físic)",
+  "type": "tret",
+  "system": {
+    "cost": -15,
+    "descripcio": "Àmbit físic (força, agilitat, resistència i esforç físic). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "inepte-fisic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

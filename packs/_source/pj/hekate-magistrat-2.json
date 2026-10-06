@@ -64,18 +64,18 @@
   },
   "items": [
     {
-      "_id": "NnGAxUaDWKDYKk97",
-      "_key": "!actors.items!bOppBV8j1euPwW4G.NnGAxUaDWKDYKk97",
-      "name": "Adepte (INT)",
+      "_id": "JZMqV7y80vGzp94T",
+      "_key": "!actors.items!bOppBV8j1euPwW4G.JZMqV7y80vGzp94T",
+      "name": "Adepte (mental)",
       "type": "tret",
       "system": {
         "cost": 15,
-        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "descripcio": "Àmbit mental (raonament, memòria, enigmes i coneixement). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
         "efecte": null
       },
       "flags": {
         "forja": {
-          "catalegId": "adepte-int"
+          "catalegId": "adepte-mental"
         }
       },
       "effects": [],

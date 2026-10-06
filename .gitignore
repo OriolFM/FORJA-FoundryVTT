@@ -48,3 +48,4 @@ CREDENCIALS*
 credentials*
 **/settings/*.ldb
 **/data/settings/
+.cache/

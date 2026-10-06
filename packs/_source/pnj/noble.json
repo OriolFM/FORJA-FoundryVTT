@@ -80,18 +80,18 @@
   },
   "items": [
     {
-      "_id": "f8mmHXJyHrOI4jEF",
-      "_key": "!actors.items!YbYlfA4rUXPM76xI.f8mmHXJyHrOI4jEF",
-      "name": "Adepte (APL)",
+      "_id": "7OrKHx45W0FoHCkA",
+      "_key": "!actors.items!YbYlfA4rUXPM76xI.7OrKHx45W0FoHCkA",
+      "name": "Adepte (social)",
       "type": "tret",
       "system": {
         "cost": 15,
-        "descripcio": "Repeteix els 1s en tirades de APL.",
+        "descripcio": "Àmbit social (tractar amb gent: persuadir, intimidar, llegir un grup…). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
         "efecte": null
       },
       "flags": {
         "forja": {
-          "catalegId": "adepte-apl"
+          "catalegId": "adepte-social"
         }
       },
       "effects": [],

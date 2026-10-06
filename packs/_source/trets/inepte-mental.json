@@ -1,0 +1,22 @@
+{
+  "_id": "mgGnT7LyA7HrhjIK",
+  "_key": "!items!mgGnT7LyA7HrhjIK",
+  "name": "Inepte (mental)",
+  "type": "tret",
+  "system": {
+    "cost": -15,
+    "descripcio": "Àmbit mental (raonament, memòria, enigmes i coneixement). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "inepte-mental"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

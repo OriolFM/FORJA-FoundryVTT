@@ -1,0 +1,22 @@
+{
+  "_id": "790apDeBGp1bpCP2",
+  "_key": "!items!790apDeBGp1bpCP2",
+  "name": "Adepte (físic)",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Àmbit físic (força, agilitat, resistència i esforç físic). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "adepte-fisic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

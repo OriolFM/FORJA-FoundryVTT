@@ -50,18 +50,18 @@
   },
   "items": [
     {
-      "_id": "xob3E2k7biQ7t2tJ",
-      "_key": "!actors.items!v96hNqyxlfqHz8te.xob3E2k7biQ7t2tJ",
-      "name": "Inepte (INT)",
+      "_id": "zkbE1VyDjAizg2lm",
+      "_key": "!actors.items!v96hNqyxlfqHz8te.zkbE1VyDjAizg2lm",
+      "name": "Inepte (mental)",
       "type": "tret",
       "system": {
         "cost": -15,
-        "descripcio": "10 no compta doble; cada 1 resta una fita.",
+        "descripcio": "Àmbit mental (raonament, memòria, enigmes i coneixement). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell.",
         "efecte": null
       },
       "flags": {
         "forja": {
-          "catalegId": "inepte-int"
+          "catalegId": "inepte-mental"
         }
       },
       "effects": [],

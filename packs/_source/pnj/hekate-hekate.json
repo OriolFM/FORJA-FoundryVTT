@@ -91,18 +91,18 @@
   },
   "items": [
     {
-      "_id": "E6rhqlkVGVV2sSLP",
-      "_key": "!actors.items!rIiHHVmzZvbDVlsw.E6rhqlkVGVV2sSLP",
-      "name": "Adepte (INT)",
+      "_id": "kkGNU4FKi5eJVGTj",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.kkGNU4FKi5eJVGTj",
+      "name": "Adepte (tècnic)",
       "type": "tret",
       "system": {
         "cost": 15,
-        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "descripcio": "Àmbit tècnic (màquines, informàtica, enginyeria i ofici tècnic). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
         "efecte": null
       },
       "flags": {
         "forja": {
-          "catalegId": "adepte-int"
+          "catalegId": "adepte-tecnic"
         }
       },
       "effects": [],

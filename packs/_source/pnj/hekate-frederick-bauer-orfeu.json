@@ -118,18 +118,40 @@
   },
   "items": [
     {
-      "_id": "HqfaqE9LyAWJfqGI",
-      "_key": "!actors.items!JGgeeDDsivWHeRDM.HqfaqE9LyAWJfqGI",
-      "name": "Adepte (INT)",
+      "_id": "A5dZ4ZB1Ju1jYPGt",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.A5dZ4ZB1Ju1jYPGt",
+      "name": "Adepte (mental)",
       "type": "tret",
       "system": {
         "cost": 15,
-        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "descripcio": "Àmbit mental (raonament, memòria, enigmes i coneixement). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
         "efecte": null
       },
       "flags": {
         "forja": {
-          "catalegId": "adepte-int"
+          "catalegId": "adepte-mental"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "92nFRGJC21qQR5LE",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.92nFRGJC21qQR5LE",
+      "name": "Adepte (tècnic)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Àmbit tècnic (màquines, informàtica, enginyeria i ofici tècnic). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-tecnic"
         }
       },
       "effects": [],

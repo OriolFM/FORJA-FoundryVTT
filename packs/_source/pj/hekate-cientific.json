@@ -112,18 +112,18 @@
       }
     },
     {
-      "_id": "CfHI868TA408CQBi",
-      "_key": "!actors.items!YMXFVnvGoxWviJYU.CfHI868TA408CQBi",
-      "name": "Inepte (APL)",
+      "_id": "VFCB5m3AGwmr0F4o",
+      "_key": "!actors.items!YMXFVnvGoxWviJYU.VFCB5m3AGwmr0F4o",
+      "name": "Inepte (social)",
       "type": "tret",
       "system": {
         "cost": -15,
-        "descripcio": "10 no compta doble; cada 1 resta una fita.",
+        "descripcio": "Àmbit social (tractar amb gent: persuadir, intimidar, llegir un grup…). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell.",
         "efecte": null
       },
       "flags": {
         "forja": {
-          "catalegId": "inepte-apl"
+          "catalegId": "inepte-social"
         }
       },
       "effects": [],

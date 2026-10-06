@@ -63,7 +63,12 @@ def paragrafs_pdf(pdf):
 def paragrafs_text(fitxer):
     """[(0, paràgraf)] d'un Markdown o text; cada fila d'una taula HTML és un paràgraf."""
     resultat = []
-    for bloc in re.split(r"\n\s*\n", fitxer.read_text(encoding="utf-8")):
+    text = fitxer.read_text(encoding="utf-8")
+    # Taules de quadrícula de pandoc: cada fila (entre línies «+---» o «+===»)
+    # i cada línia buida de cel·la («|   |») fan de separador de paràgraf.
+    text = re.sub(r"^\+[-=+:]+\+\s*$", "", text, flags=re.M)
+    text = re.sub(r"^\|\s*\|\s*$", "", text, flags=re.M)
+    for bloc in re.split(r"\n\s*\n", text):
         if "<table" in bloc:
             resultat += [(0, f) for f in re.findall(r"<tr[^>]*>(.*?)</tr>", bloc, re.S)]
         else:

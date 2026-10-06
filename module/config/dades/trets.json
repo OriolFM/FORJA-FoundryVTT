@@ -1,45 +1,31 @@
 [
   {
-    "id": "adepte-for",
-    "nom": "Adepte (FOR)",
+    "id": "adepte-fisic",
+    "nom": "Adepte (físic)",
     "cost": 15,
     "positiu": true,
-    "descripcio": "Repeteix els 1s en tirades de FOR."
+    "descripcio": "Àmbit físic (força, agilitat, resistència i esforç físic). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat."
   },
   {
-    "id": "adepte-des",
-    "nom": "Adepte (DES)",
+    "id": "adepte-mental",
+    "nom": "Adepte (mental)",
     "cost": 15,
     "positiu": true,
-    "descripcio": "Repeteix els 1s en tirades de DES."
+    "descripcio": "Àmbit mental (raonament, memòria, enigmes i coneixement). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat."
   },
   {
-    "id": "adepte-agi",
-    "nom": "Adepte (AGI)",
+    "id": "adepte-social",
+    "nom": "Adepte (social)",
     "cost": 15,
     "positiu": true,
-    "descripcio": "Repeteix els 1s en tirades de AGI."
+    "descripcio": "Àmbit social (tractar amb gent: persuadir, intimidar, llegir un grup…). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat."
   },
   {
-    "id": "adepte-per",
-    "nom": "Adepte (PER)",
+    "id": "adepte-tecnic",
+    "nom": "Adepte (tècnic)",
     "cost": 15,
     "positiu": true,
-    "descripcio": "Repeteix els 1s en tirades de PER."
-  },
-  {
-    "id": "adepte-int",
-    "nom": "Adepte (INT)",
-    "cost": 15,
-    "positiu": true,
-    "descripcio": "Repeteix els 1s en tirades de INT."
-  },
-  {
-    "id": "adepte-apl",
-    "nom": "Adepte (APL)",
-    "cost": 15,
-    "positiu": true,
-    "descripcio": "Repeteix els 1s en tirades de APL."
+    "descripcio": "Àmbit tècnic (màquines, informàtica, enginyeria i ofici tècnic). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat."
   },
   {
     "id": "afortunat",
@@ -581,46 +567,32 @@
     "descripcio": ""
   },
   {
-    "id": "inepte-for",
-    "nom": "Inepte (FOR)",
+    "id": "inepte-fisic",
+    "nom": "Inepte (físic)",
     "cost": -15,
     "positiu": false,
-    "descripcio": "10 no compta doble; cada 1 resta una fita."
+    "descripcio": "Àmbit físic (força, agilitat, resistència i esforç físic). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell."
   },
   {
-    "id": "inepte-des",
-    "nom": "Inepte (DES)",
+    "id": "inepte-mental",
+    "nom": "Inepte (mental)",
     "cost": -15,
     "positiu": false,
-    "descripcio": "10 no compta doble; cada 1 resta una fita."
+    "descripcio": "Àmbit mental (raonament, memòria, enigmes i coneixement). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell."
   },
   {
-    "id": "inepte-agi",
-    "nom": "Inepte (AGI)",
+    "id": "inepte-social",
+    "nom": "Inepte (social)",
     "cost": -15,
     "positiu": false,
-    "descripcio": "10 no compta doble; cada 1 resta una fita."
+    "descripcio": "Àmbit social (tractar amb gent: persuadir, intimidar, llegir un grup…). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell."
   },
   {
-    "id": "inepte-per",
-    "nom": "Inepte (PER)",
+    "id": "inepte-tecnic",
+    "nom": "Inepte (tècnic)",
     "cost": -15,
     "positiu": false,
-    "descripcio": "10 no compta doble; cada 1 resta una fita."
-  },
-  {
-    "id": "inepte-int",
-    "nom": "Inepte (INT)",
-    "cost": -15,
-    "positiu": false,
-    "descripcio": "10 no compta doble; cada 1 resta una fita."
-  },
-  {
-    "id": "inepte-apl",
-    "nom": "Inepte (APL)",
-    "cost": -15,
-    "positiu": false,
-    "descripcio": "10 no compta doble; cada 1 resta una fita."
+    "descripcio": "Àmbit tècnic (màquines, informàtica, enginyeria i ofici tècnic). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell."
   },
   {
     "id": "lent",

@@ -1,0 +1,22 @@
+{
+  "_id": "8aHjTA6RtgnUGq6k",
+  "_key": "!items!8aHjTA6RtgnUGq6k",
+  "name": "Adepte (social)",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Àmbit social (tractar amb gent: persuadir, intimidar, llegir un grup…). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "adepte-social"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

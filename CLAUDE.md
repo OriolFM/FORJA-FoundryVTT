@@ -480,6 +480,14 @@ del compendi "Manual FORJA" que es distribueix amb el sistema (registrat a
 
 ## Compilar el compendi del manual
 
+**Des de `docs/FORJA_FC001CA_CORE.md` (el camí habitual):** `npm run build:manual-docs`
+(cal `pandoc` i Python 3). `scripts/manual-des-de-docs.py` parteix el manual per
+capítols i el prepara per a `build-manual.mjs`, que conserva els `_id` existents i
+converteix les referències creuades en `@UUID`. El README del compendi es conserva
+(`--conserva=forja_readme.json`).
+
+**Des de capítols en Markdown externs (el camí antic):**
+
 ```
 FORJA_MD_DIR=/ruta/als/capitols/markdown npm run build:manual
 ```

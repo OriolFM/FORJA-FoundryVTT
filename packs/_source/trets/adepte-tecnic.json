@@ -1,0 +1,22 @@
+{
+  "_id": "v93lsSV27Dj3aqXP",
+  "_key": "!items!v93lsSV27Dj3aqXP",
+  "name": "Adepte (tècnic)",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Àmbit tècnic (màquines, informàtica, enginyeria i ofici tècnic). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "adepte-tecnic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -72,6 +72,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - `criatures-exemple.json`: les criatures del manual són ara al compendi «Criatures».
 
 ### Canviat
+- **Adepte i inepte** són per àmbit d'activitat (físic, mental, social o tècnic), no per atribut, com al manual original. Els actors que ja tinguin un «Adepte (FOR)»… el conserven; el DJ el pot canviar pel de l'àmbit que toqui.
+- **Manual:** el compendi es genera ara des del manual complet revisat; hi han aparegut apartats que faltaven (p. ex. Adepte, Animal) i les referències creuades són enllaços.
 - **Compendis:** capçalera gris pla (provisional).
 - **Manual:** els capítols surten en l'ordre del llibre, amb el número al davant, i les pàgines tenen l'estil de la maqueta del llibre: Fira Sans justificada, títols en Akrobat i capçaleres de taula en verd petroli. També s'aplica al diari de «La porta d'Hèkate».
 - **Blocar amb el cos** també contra atacs armats si el defensor té armament natural (urpes, banyes…) o armadura natural, com a l'exemple del gólem del manual.

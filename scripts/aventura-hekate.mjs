@@ -46,8 +46,6 @@ const TRETS_RETIRATS = {
   "veloç": "no és al manual final",
   "temible": "no és al manual final; el cost passa a intimidació i aplom (APL)"
 };
-/** Adepte/inepte per grups d'habilitats (regles antigues) → per atribut (manual v3, l. 1332). */
-const ATRIBUT_PER_GRUP = { tècnic: "int", mental: "int", social: "apl", físic: "for" };
 const HABILITATS_RENOMENADES = [
   [/\btàctiques\b/gi, "tàctica"],
   [/\bdisfressa\b/gi, "disfressar-se"],
@@ -76,10 +74,6 @@ export function reescriureTret(text) {
   if (TRETS_RETIRATS[base]) return { omet: base, nota: `«${t}» retirat: ${TRETS_RETIRATS[base]}` };
   if (/^recursos\s*\/\s*prof/i.test(t)) return { omet: "recursos", nota: "«recursos/prof. o emprenedor» és el nivell per defecte (0 PC, manual l. 1673): no cal el tret" };
   if (/^vincles$/i.test(t)) return { tret: "contactes", nota: "«vincles» → contactes (amb una organització)" };
-  if ((m = t.match(/^(adepte|inepte)\s*[-/]\s*(tècnic|mental|social|físic)$/i))) {
-    const atr = ATRIBUT_PER_GRUP[m[2].toLowerCase()];
-    return { tret: `${m[1].toLowerCase()}/${atr}`, nota: `«${t}» (grup d'habilitats, regles antigues) → ${m[1].toLowerCase()} (${atr.toUpperCase()})` };
-  }
   if ((m = t.match(/^arma natural\s*-\s*(.+)$/i))) {
     const arma = ARMA_NATURAL[m[1].trim().toLowerCase()];
     return arma ? { tret: `armament natural/${arma}` } : { tret: t };

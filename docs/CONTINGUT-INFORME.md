@@ -10,7 +10,7 @@ Generat per `scripts/build-packs.mjs` (no s'edita a mà: es regenera). Fonts: `d
 | `pnj` | Actor | 25 |
 | `animals` | Actor | 7 |
 | `criatures` | Actor | 9 |
-| `trets` | Item | 99 |
+| `trets` | Item | 95 |
 | `armes` | Item | 29 |
 | `armadures` | Item | 5 |
 | `artefactes` | Item | 20 |
@@ -36,7 +36,6 @@ Cap.
 
 ## Notes de mapeig
 
-- **Figurant (combatent)** (`pnj`): Tret «inepte/mental»: «inepte/mental» s'ha interpretat com inepte (INT)
 - **Insecte obrer** (`pnj`): Bloc «Criatura de cost…» dins la secció de secundaris: es publica al compendi `pnj` amb tier «criatura».
 - **Gos gros** (`animals`): Tret «sentit agut/olfacte i gust»: sentit concret: olfacte i gust
 - **Gos petit** (`animals`): Tret «sentit agut/olfacte i gust»: sentit concret: olfacte i gust

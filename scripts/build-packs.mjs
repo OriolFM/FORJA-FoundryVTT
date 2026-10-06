@@ -190,8 +190,12 @@ const ALIAS_HABILITAT = {
   "tracte amb animals": "tracte-animals"
 };
 
-/** Variant "mental" de l'inepte/adepte (cas únic del manual: "inepte/mental" → INT). */
-const ALIAS_ATRIBUT = { mental: "int" };
+/**
+ * Àmbits d'adepte/inepte (Oriol FM, 2026-10-06): físic, mental, social i
+ * tècnic. Els noms d'atribut antics del manual (adepte/APL…) es reescriuen
+ * al mateix manual; aquí no s'accepten.
+ */
+const AMBITS_ADEPTE = ["fisic", "mental", "social", "tecnic"];
 
 /**
  * Resol un tret escrit al manual ("curació ràpida/1", "armament natural/urpes",
@@ -220,9 +224,7 @@ export function resoldreTret(text, trets) {
     }
     case "adepte":
     case "inepte": {
-      const atr = ALIAS_ATRIBUT[param] ?? param;
-      return res(perId(`${base}-${atr}`), null,
-        ALIAS_ATRIBUT[param] ? `«${base}/${param}» s'ha interpretat com ${base} (${atr.toUpperCase()})` : "");
+      return AMBITS_ADEPTE.includes(param) ? res(perId(`${base}-${param}`)) : null;
     }
     case "toxic":
       // Tòxic/X (aventura «La porta d'Hèkate», Nous trets): X és l'estat que causa.

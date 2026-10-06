@@ -44,6 +44,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT       = resolve(__dirname, "..");
 // Arguments `--md=`, `--out=`, `--compendi=` (funcionen igual a Windows) o variables d'entorn.
 const ARGS       = Object.fromEntries(process.argv.slice(2).map(a => a.match(/^--([a-z]+)=(.*)$/)).filter(Boolean).map(m => [m[1], m[2]]));
+// `--conserva=` (vegeu main) i, per al manual del sistema, `npm run build:manual-docs`:
+// docs/FORJA_FC001CA_CORE.md → scripts/manual-des-de-docs.py → aquest script.
 const MD_DIR     = resolve(ARGS.md ?? process.env.FORJA_MD_DIR ?? resolve(ROOT, "../../FOUNDRY/MD"));
 const OUT_DIR    = resolve(ARGS.out ?? process.env.FORJA_OUT_DIR ?? resolve(ROOT, "packs/_source/manual"));
 // Compendi de destí dels enllaços interns (els mòduls d'aventura en fan servir un altre).
@@ -110,7 +112,36 @@ function dividirEnSeccions(linies, offsetInicial, titolCapitol) {
  * propi document de disseny, no contingut del manual, i els seus títols de
  * capítol duplicarien slugs amb els títols reals (p. ex. "Capítol 1 · ...").
  */
-function construirIndex(fitxers) {
+/**
+ * `_id` ja publicats a OUT_DIR, per conservar-los en regenerar: per fitxer de
+ * sortida, l'id del JournalEntry i els de les pàgines per nom. Així no es
+ * trenquen els enllaços ni les còpies que els mons hagin importat.
+ * @returns {Map<string, {journalId:string, pagines:Map<string,string>}>}
+ */
+function idsExistents() {
+  const ids = new Map();
+  if (!existsSync(OUT_DIR)) return ids;
+  for (const f of readdirSync(OUT_DIR).filter(f => f.endsWith(".json"))) {
+    try {
+      const d = JSON.parse(readFileSync(resolve(OUT_DIR, f), "utf8"));
+      ids.set(f, { journalId: d._id, pagines: new Map((d.pages ?? []).map(p => [p.name, p._id])) });
+    } catch { /* fitxer il·legible: es generen ids nous */ }
+  }
+  return ids;
+}
+
+/**
+ * Pàgina reanomenada: hereta l'id de la pàgina anterior a la mateixa posició,
+ * si aquella ja no existeix amb cap altre nom de les noves.
+ */
+function idPerPosicio(anterior, seccionsRaw, idx) {
+  if (!anterior) return null;
+  const [nomVell, id] = [...anterior.pagines.entries()][idx] ?? [];
+  if (!id || seccionsRaw.some(s => s.nom.slice(0, 128) === nomVell)) return null;
+  return id;
+}
+
+function construirIndex(fitxers, anteriors = new Map()) {
   const capitols = []; // { fitxer, titol, journalId, seccions: [{nom, pageId, idx, linies}] }
   const capcaleres = []; // { nivell, text, slug, fitxer, linia, journalId, pageId, ancoratge }
 
@@ -120,12 +151,15 @@ function construirIndex(fitxers) {
     const capçaleraIdx = totesLinies.findIndex(l => /^#\s+/.test(l));
     const titol = capçaleraIdx >= 0 ? totesLinies[capçaleraIdx].replace(/^#\s+/, "").trim() : basename(fitxer, ".md");
     const cosLinies = totesLinies.slice(capçaleraIdx + 1);
-    const journalId = deterministicId(`journal:${fitxer}`);
+    const anterior = anteriors.get(basename(fitxer, ".md").toLowerCase() + ".json");
+    const journalId = anterior?.journalId ?? deterministicId(`journal:${fitxer}`);
 
     const seccionsRaw = dividirEnSeccions(cosLinies, capçaleraIdx + 1, titol);
     const seccions = seccionsRaw.map((s, idx) => ({
       nom: s.nom, idx, linies: s.linies,
-      pageId: deterministicId(`page:${fitxer}:${s.nom}:${idx}`)
+      pageId: anterior?.pagines.get(s.nom.slice(0, 128) || `Secció ${idx + 1}`)
+        ?? idPerPosicio(anterior, seccionsRaw, idx)
+        ?? deterministicId(`page:${fitxer}:${s.nom}:${idx}`)
     }));
     capitols.push({ fitxer, titol, journalId, seccions });
 
@@ -170,6 +204,23 @@ function construirIndex(fitxers) {
  * per . ! ? o ") "). Retorna les línies amb les frases coincidents
  * embolcallades en `@UUID[...]{...}` (Foundry ho enriqueix en renderitzar).
  */
+/**
+ * Enllaços interns del Word exportat amb pandoc (`[***<span>Mida</span>***](#mida)`)
+ * → `@UUID[…#ancoratge]{Mida}` cap a la capçalera del manual amb el mateix slug.
+ * Si l'ancoratge no correspon a cap capçalera, es deixa només el text.
+ */
+function convertirEnllacosAncora(text, capcaleres) {
+  return text.replace(/\[((?:[^\[\]]|\[[^\]]*\])*)\]\(#([^)\s]+)\)/g, (_, etiqueta, ancora) => {
+    const net = etiqueta.replace(/<[^>]+>/g, "").replace(/\*+/g, "").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").trim();
+    const slug = _slug(decodeURIComponent(ancora));
+    const desti = capcaleres.find(c => c.slug === slug);
+    if (!desti || !net) return net;
+    const uuid = `Compendium.${COMPENDI}.JournalEntry.${desti.journalId}.JournalEntryPage.${desti.pageId}` +
+      (desti.ancoratge ? `#${desti.ancoratge}` : "");
+    return `@UUID[${uuid}]{${net}}`;
+  });
+}
+
 function convertirReferencies(linies, capcaleres, fitxerActual) {
   const reCitacio = /p[àa]g(?:ina)?\.?\s*(\d+|XXX)/gi;
 
@@ -286,11 +337,19 @@ function main() {
     process.exit(1);
   }
 
-  // Now safe to delete and recreate OUT_DIR
+  // Ids publicats abans d'esborrar res (es conserven).
+  const anteriors = idsExistents();
+
+  // Now safe to delete and recreate OUT_DIR. `--conserva=a.json,b.json`: fitxers
+  // de sortida que no surten d'aquest Markdown (p. ex. el README) i es mantenen.
+  const conserva = new Map((ARGS.conserva ?? "").split(",").filter(Boolean)
+    .filter(f => existsSync(resolve(OUT_DIR, f)))
+    .map(f => [f, readFileSync(resolve(OUT_DIR, f))]));
   if (existsSync(OUT_DIR)) rmSync(OUT_DIR, { recursive: true });
   mkdirSync(OUT_DIR, { recursive: true });
+  for (const [f, contingut] of conserva) writeFileSync(resolve(OUT_DIR, f), contingut);
 
-  const { capitols, capcaleres } = construirIndex(fitxers);
+  const { capitols, capcaleres } = construirIndex(fitxers, anteriors);
 
   let totalPagines = 0;
   let totalEnllacos = 0;
@@ -299,7 +358,7 @@ function main() {
     const pages = cap.seccions.map(s => {
       const liniesEnllacades = convertirReferencies(s.linies, capcaleres, cap.fitxer);
       totalEnllacos += liniesEnllacades.filter((l, i) => l.text !== s.linies[i].text).length;
-      const markdown = liniesEnllacades.map(l => l.text).join("\n");
+      const markdown = convertirEnllacosAncora(liniesEnllacades.map(l => l.text).join("\n"), capcaleres);
       return {
         _id: s.pageId,
         _key: `!journal.pages!${cap.journalId}.${s.pageId}`,

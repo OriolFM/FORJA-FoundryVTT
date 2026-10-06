@@ -1,0 +1,22 @@
+{
+  "_id": "UcWqcRSBHeX5RPjz",
+  "_key": "!items!UcWqcRSBHeX5RPjz",
+  "name": "Adepte (mental)",
+  "type": "tret",
+  "system": {
+    "cost": 15,
+    "descripcio": "Àmbit mental (raonament, memòria, enigmes i coneixement). En les tirades d'aquest àmbit repeteix un cop els 1, i pot provar-ho encara que no tingui l'habilitat.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "adepte-mental"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

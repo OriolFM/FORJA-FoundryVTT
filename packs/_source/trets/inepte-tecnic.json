@@ -1,0 +1,22 @@
+{
+  "_id": "m4a3McxKwtHrGFs6",
+  "_key": "!items!m4a3McxKwtHrGFs6",
+  "name": "Inepte (tècnic)",
+  "type": "tret",
+  "system": {
+    "cost": -15,
+    "descripcio": "Àmbit tècnic (màquines, informàtica, enginyeria i ofici tècnic). En les tirades d'aquest àmbit els 10 no compten doble, cada 1 resta una fita, i no pot fer servir cap habilitat (ni les bàsiques) si no hi té nivell.",
+    "efecte": null
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "inepte-tecnic"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}
