@@ -166,3 +166,22 @@ Documentació (`CLAUDE.md`, registre, `PROVES.md`), traduccions es/en de les cla
 2. **Estats:** els efectes de l'estat s'apliquen (p. ex. qui no es pot moure no es pot moure fins que pertoqui). Cal **notificar-ho visualment**: text flotant al costat del token (com als videojocs) quan es guanya o es perd un estat i quan es rep fatiga, ferides o curació, amb números, text o icones que s'esvaeixen. Si el jugador intenta una acció que l'estat li impedeix, el text flotant de l'estat torna a sortir.
 3. **Resultat dels efectes i artefactes:** automàtic, com el dany dels atacs, pel relé del DJ.
 4. **Fase 6** (maniobres, ràfegues i foc automàtic, escut): dins d'aquest pla. Els dubtes de regles es preguntaran en arribar-hi.
+
+## 4. Decisions de l'Oriol per a la Fase 6 (2026-10-06)
+
+1. **Armes de dispersió:** llàgrima (con) de 15 m des de l'usuari, dibuixada com a plantilla. Defensa dels afectats 5, modificada per la distància.
+2. **Foc automàtic (armes d'assalt i de suport):** l'usuari tria el punt objectiu i l'àrea es dibuixa a partir d'allà (plantilla). Impacta tots els objectius de dins.
+3. **Escopetes:** llàgrima fins al rang mitjà; els objectius de dins tenen defensa bàsica 1 (no la seva) per a aquest atac; si esquiven, poden treure una tirada millor.
+4. **Combinació:** una sola tirada d'atac, però la defensa es resol per separat a cada cop. Si l'objectiu ha gastat la reacció esquivant el primer, ja no pot esquivar el segon. El segon cop impacta en el torn següent de l'atacant.
+
+## 5. Estat (2026-10-06)
+
+| Fase | Commit |
+|------|--------|
+| 1 Estats | `7470c32` |
+| 2 Creació d'artefactes i efectes | `8d15c01` |
+| 3 Ús d'artefactes i efectes | `cd4c2b3`, `5909132` |
+| 4 Experiència | `fb4dc9f` |
+| 5 Compendis | `512be74` |
+| 6 Maniobres, armes automàtiques, escut | fet (vegeu el registre) |
+| 7 Tancament | pendent |

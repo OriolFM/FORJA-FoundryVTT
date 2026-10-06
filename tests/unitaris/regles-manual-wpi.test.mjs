@@ -24,7 +24,7 @@ assert.ok(!prop.teProprietat(arma("rifles"), "escopeta", cataleg));
 assert.ok(prop.teProprietat({ type: "arma", system: {}, flags: { forja: { propietats: ["escut"] } } }, "escut", []));
 assert.ok(prop.teProprietat({ type: "arma", system: { propietats: ["escopeta"] }, flags: {} }, "escopeta", []));
 assert.ok(!prop.teProprietat(null, "escut"));
-assert.deepEqual(cataleg.filter(e => e.propietats).map(e => e.id).sort(), ["escopetes", "escuts"]);
+assert.deepEqual(cataleg.filter(e => e.propietats).map(e => e.id).sort(), ["armes-dassalt", "armes-de-dispersio", "armes-de-suport", "armes-pesants", "escopetes", "escuts", "subfusells"]);
 
 // ---------- B13: poca penetració
 const arm = (reduccio, tipus = "fisica", equipada) => ({ type: "armadura", system: { reduccio, tipus, equipada }, flags: {} });

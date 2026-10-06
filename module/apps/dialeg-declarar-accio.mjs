@@ -1,6 +1,7 @@
 import { retardMaximBarallarse, limitarRetardBarallarse } from "../combat/atac.mjs";
 import { latenciaExtraMoviment, normalitzarMoviment, permisMoviment } from "../combat/moviment.mjs";
 import { movimentsPermesosPerEstats } from "../estats/regles-estats.mjs";
+import { MODES_TRET } from "../combat/modes-tret.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -76,6 +77,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   #moviment   = "basic";
   #objectiuTokenId = null;
   #efecteId   = null;
+  #modeTret   = "tret";
+  #dimMak     = "ferides";
   #artefacteId = null;
 
   constructor(config, options = {}) {
@@ -101,6 +104,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       if (u.maniobraId && this.#arma()?.permetManiobres) this.#maniobraId = u.maniobraId;
       if (u.moviment) this.#moviment = normalitzarMoviment(u.moviment);
       if (u.retard) this.#retard = u.retard;
+      if (u.modeTret) this.#modeTret = u.modeTret;
+      if (u.dimMak) this.#dimMak = u.dimMak;
     }
     if (!config.armes?.length) this.#tipus = "defensa";
     // Estats: si el tipus proposat està bloquejat, el primer permès.
@@ -128,6 +133,12 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   /** Arma triada (entrada de `config.armes`). */
   #arma() {
     return this.#config.armes?.find(a => a.id === this.#armaId) ?? null;
+  }
+
+  /** Mode de tret efectiu (Fase 6): el triat, si l'arma el permet. */
+  #modeEfectiu() {
+    const modes = this.#tipus === "atac" ? (this.#arma()?.modes ?? []) : [];
+    return modes.includes(this.#modeTret) ? this.#modeTret : "tret";
   }
 
   /** Màxim de ticks de retard de barallar-se per a l'atac triat (B16). */
@@ -192,6 +203,12 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       efecteId:      this.#efecteId,
       artefacteId:   this.#artefacteId,
       ambObjectiu:   ["atac", "manifestar", "artefacte"].includes(this.#tipus),
+      // Fase 6: modes de tret i Dim Mak.
+      modesTret:     (this.#tipus === "atac" ? (arma?.modes ?? []) : []).map(id => ({ id, nom: game.i18n.localize(`FORJA.Combat.ModeTret.${id}`) })),
+      modeTret:      this.#modeEfectiu(),
+      armaArea:      this.#tipus === "atac" && !!arma?.area,
+      esDimMak:      this.#maniobraId === "dim-mak",
+      dimMak:        this.#dimMak,
       bloqueigTipus: Object.fromEntries(["atac", "defensa", "moviment", "altra", "manifestar", "artefacte"].map(t => {
         const estat = this.#bloqueig(t);
         return [t, estat ? game.i18n.format("FORJA.Estats.ImpedeixTitol", { estat: c.nomsEstats?.[estat] ?? estat }) : null];
@@ -232,7 +249,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     const c = this.#config;
     const extraMoviment = latenciaExtraMoviment(this.#movimentEfectiu());
     if (this.#tipus === "atac") {
-      return (this.#arma()?.latenciaTotal ?? c.latenciaBase) + this.#retardEfectiu() + extraMoviment;
+      return (this.#arma()?.latenciaTotal ?? c.latenciaBase) + this.#retardEfectiu() + extraMoviment
+        + (MODES_TRET[this.#modeEfectiu()]?.latencia ?? 0);
     }
     // Fase 3: latència bàsica + modificador de l'efecte o de l'artefacte
     // (manual › Latència, l. 4776: «cal afegir a la latència bàsica de l'usuari»).
@@ -282,6 +300,14 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       this.#armaId = ev.target.value;
       if (!this.#arma()?.permetManiobres) this.#maniobraId = "";
       this.render(false);
+    });
+
+    el.querySelector("[name='modeTret']")?.addEventListener("change", ev => {
+      this.#modeTret = ev.target.value || "tret";
+      this.render(false);
+    });
+    el.querySelector("[name='dimMak']")?.addEventListener("change", ev => {
+      this.#dimMak = ev.target.value || "ferides";
     });
 
     el.querySelector("[name='efecteId']")?.addEventListener("change", ev => {
@@ -368,7 +394,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     // especial / càrrega (WP-M, manual l. 2792).
     const extraMoviment = latenciaExtraMoviment(moviment);
     const minimObligat = arma
-      ? (retardBarallarse > 0 || extraMoviment > 0 ? (arma.latenciaTotal ?? 0) + retardBarallarse + extraMoviment : 1)
+      ? (retardBarallarse > 0 || extraMoviment > 0 || this.#modeEfectiu() !== "tret"
+        ? (arma.latenciaTotal ?? 0) + retardBarallarse + extraMoviment + (MODES_TRET[this.#modeEfectiu()]?.latencia ?? 0) : 1)
       : (extraMoviment > 0 ? (this.#config.latenciaBase ?? 0) + extraMoviment : 1);
 
     this.#resolve?.({
@@ -378,6 +405,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       defensa:    defensa ?? null,
       maniobraId: maniobra?.id ?? null,
       objectiuTokenId: ["atac", "manifestar", "artefacte"].includes(tipus) ? (d.objectiuTokenId || null) : null,
+      modeTret:    arma ? this.#modeEfectiu() : null,
+      dimMak:      maniobra?.id === "dim-mak" ? (d.dimMak || "ferides") : null,
       efecteId:    tipus === "manifestar" ? (d.efecteId || null) : null,
       artefacteId: tipus === "artefacte" ? (d.artefacteId || null) : null,
       retardBarallarse,

@@ -1,0 +1,33 @@
+{
+  "_id": "zaWMA26cP42b3gFw",
+  "_key": "!items!zaWMA26cP42b3gFw",
+  "name": "Armes de suport",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 4,
+    "abast": 80,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "DES+5",
+    "maniobra": "Feixugues — Només poden disparar si el PJ no s'ha mogut i és en terra ferma, o muntades en un vehicle. Foc automàtic — 10 bales per torn; impacta tots els objectius dins una àrea; defensa 5, modificada segons la distància.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [
+      "feixuga",
+      "focAutomatic"
+    ],
+    "descripcio": "Manual: Lat +4, Rang 80, Dany DES+5, munició 100."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armes-de-suport"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

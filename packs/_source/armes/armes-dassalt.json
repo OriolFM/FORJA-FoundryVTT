@@ -13,7 +13,10 @@
     "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets, +1 latència i +1 impactar/dany. Automàtic — 10 trets, +2 latència, +1 dany; impacta tots els objectius al descobert dins l'àrea si supera la defensa bàsica.",
     "rangExtrem": false,
     "basic": false,
-    "propietats": [],
+    "propietats": [
+      "automatic",
+      "rafega"
+    ],
     "descripcio": "Manual: Lat +1, Rang 30, Dany DES+3, munició 30."
   },
   "flags": {

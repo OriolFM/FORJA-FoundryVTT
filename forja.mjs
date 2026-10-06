@@ -34,6 +34,7 @@ import { sincronitzarEstatsSalut, iniciTornEstats } from "./module/estats/aplica
 import { registrarMigracio, executarMigracions } from "./module/migracio/migracio.mjs";
 import { sincronitzarVinculats, eliminarVinculats } from "./module/combat/artefactes-vinculats.mjs";
 import DiategRepartirPX from "./module/apps/dialeg-repartir-px.mjs";
+import { resoldreSegonCopCombinacio } from "./module/combat/atac-multi.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -215,6 +216,8 @@ Hooks.on("updateCombat", async (combat, changes, options) => {
       // marejat, inconscient o incapacitat li fan perdre l'acció.
       await sincronitzarEstatsSalut(actorEntrant);
       await iniciTornEstats(combat, combat.combatant);
+      // Fase 6: el segon cop d'una Combinació impacta al torn següent.
+      await resoldreSegonCopCombinacio(combat, combat.combatant);
     }
   }
 });

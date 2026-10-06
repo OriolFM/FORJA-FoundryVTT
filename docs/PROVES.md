@@ -33,11 +33,12 @@ Fitxers `*.test.mjs` que s'executen amb el runner de Node (`node --test`), Node 
 | `construccio.test.mjs` | Constructor d'efectes i artefactes (Fase 2): reprodueix el cost, la dificultat i la latència de les 83 plantilles del manual (`parametres` de `artefactes.json` i `efectes.json`); dificultat i latència declarades, recàrrega, acumulador, armes i armadures base, compatibilitat amb la selecció antiga. |
 | `experiencia.test.mjs` | Repartir PX (Fase 4): taula de recompenses, virtuts repetides, historial. |
 | `contingut.test.mjs` | Compendis (Fase 5): nombre de documents de cada compendi i, per a cada PJ, PNJ, animal i criatura, cost en PC i derivats (latència, defensa, reducció de dany) iguals que al manual. |
+| `modes-tret.test.mjs` | Modes de tret i àrees (Fase 6): modes per propietats, regles d'àrea, abast (rang mitjà, 15 m), dany de la fuga. |
 | `i18n.test.mjs` | Els tres fitxers de `lang/` tenen les mateixes claus; totes les claus que fa servir el codi existeixen; els `{placeholders}` coincideixen. |
 | `versio.test.mjs` | `system.json` i `package.json` tenen la mateixa versió, i aquesta té entrada al `CHANGELOG.md`. |
 | `secrets.test.mjs` | Cap fitxer del repositori conté claus d'API, tokens ni claus privades (el repositori és públic). |
 
-**Resultat actual (2026-10-06):** 15 fitxers, 74 proves de primer nivell, totes OK.
+**Resultat actual (2026-10-06):** 16 fitxers, 78 proves de primer nivell, totes OK.
 
 Els missatges `FORJA | No s'ha pogut carregar …` en executar-les són esperats: el `fetch` dels catàlegs JSON està desactivat.
 
@@ -262,3 +263,13 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 
 1. Els 9 compendis nous apareixen a la pestanya Compendis; importar un PJ (Yoko-1), un PNJ, un animal i una criatura: la fitxa mostra els mateixos PC i derivats que el manual, amb els trets, les armes i els artefactes o efectes.
 2. Arrossegar un artefacte o un efecte del compendi a una fitxa: porta els paràmetres (els artefactes basats en armes o armadures creen els objectes vinculats).
+
+### Pendent de provar a Foundry: Fase 6, 2026-10-06
+
+1. **Ràfega i automàtic** (subfusell, arma d'assalt): el diàleg ofereix el mode i la latència puja (+1, +2); la ràfega dona +1 dau o +1 dany.
+2. **Àrees:** escopeta (llàgrima fins al rang mitjà, defensa 1, es pot esquivar), arma de dispersió (llàgrima de 15 m, defensa 5) i automàtic/foc automàtic (àrea al punt objectiu): una tirada, cada objectiu amb la seva defensa; sense plantilla, avís. Pífia amb arma de dispersió: fuga a l'usuari i adjacents.
+3. **Feixugues:** l'arma de suport no dispara si el token s'ha mogut.
+4. **Combinació:** primer cop ara; el segon arriba sol al proper torn de l'atacant, amb una defensa nova (sense reacció, no pot esquivar).
+5. **Contraatac:** declarar-lo; quan l'ataquen i para o bloca amb èxit, contraataca; l'atacant no pot parar ni blocar.
+6. **Dim Mak:** triar ferides o fatiga doble; ignora l'armadura.
+7. **Escut:** portar-ne un dona +1 a la defensa a la fitxa.

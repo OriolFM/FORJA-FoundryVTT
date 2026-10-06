@@ -1,0 +1,33 @@
+{
+  "_id": "AIQYB8vssclJrBZu",
+  "_key": "!items!AIQYB8vssclJrBZu",
+  "name": "Armes de dispersió",
+  "type": "arma",
+  "system": {
+    "categoria": "distancia",
+    "modLatencia": 3,
+    "abast": 15,
+    "rangMultFor": 0,
+    "esEscut": false,
+    "danyBase": "DES+3",
+    "maniobra": "Perilloses — Una pífia causa una fuga que fa 15 − habilitat de dany a l'usuari i als adjacents. Àrea d'efecte — Dany a tothom dins una llàgrima de 15 m; la defensa dels afectats és 5, modificada segons la distància.",
+    "rangExtrem": false,
+    "basic": false,
+    "propietats": [
+      "areaDispersio",
+      "perillosa"
+    ],
+    "descripcio": "Manual: Lat +3, Rang 15* (AE), Dany DES+3, munició 40. Llàgrima de 15 m (Oriol FM, 2026-10-06)."
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "armes-de-dispersio"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}

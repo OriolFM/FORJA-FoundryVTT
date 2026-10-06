@@ -98,6 +98,14 @@ export function _prepararDerivats(sys) {
     }
   }
 
+  // --- Escut (Fase 6; manual › Cos a cos, taula d'armes, Escuts, l. 2985) ---
+  // «Quan es porta un escut que no s'està fent servir en una acció, el PJ rep
+  // un increment de +1 a la seva defensa bàsica.» Simplificació: es compta
+  // sempre que porti un escut (el sistema no sap quina arma fa servir ara).
+  if (items && [...items].some(i => i.type === "arma" && (i.system.esEscut || (i.system.propietats ?? []).includes("escut")))) {
+    sys.defensa += 1;
+  }
+
   // --- Estats (Fase 1; manual › Salut › Estats) ---
   // Abatut: +2 a la latència de qualsevol acció; Vigilant: +1 reacció.
   // `actor.statuses` ja és a punt: Foundry aplica els efectes actius

@@ -72,8 +72,14 @@ import { aplicarEstat } from "./aplicar-efecte.mjs";
  *    la propietat `directe` ignora ègida, armadura i reducció (› Dany directe,
  *    l. 3283); `system.pista` tria la pista del dany; i `system.estatsImpacte`
  *    s'apliquen a l'objectiu si l'atac impacta (p. ex. l'Espasa serra, sagnant/3).
+ *  - Fase 6: `rollPrevi` reutilitza una tirada ja feta contra un altre
+ *    objectiu o cop (Combinació, atacs d'àrea): no torna a gastar càrrega ni
+ *    concentració, i l'èxit es compara amb la dificultat d'aquest objectiu.
+ *    `bonusMode` ({daus, dany}): mode de tret (ràfega, automàtic). `dimMak`
+ *    ("ferides" | "fatiga", › Arts marcials, Dim Mak): ignora l'armadura i, si
+ *    és fatiga, en duplica el dany final.
  */
-export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null, danyExtra = 0, retardBarallarse = 0, bonusCarrega = null }) {
+export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, exigirSuperar = false, reduccioExtra = 0, pista = "ferides", label, maniobra = null, etiquetaDefensa = null, etiquetaRang = null, danyExtra = 0, retardBarallarse = 0, bonusCarrega = null, rollPrevi = null, bonusMode = null, dimMak = null }) {
   if (actor.system.salut?.foraDeCombat) {
     ui.notifications?.warn(game.i18n.format("FORJA.Combat.ForaDeCombat", { nom: actor.name }));
     return null;
@@ -81,7 +87,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
 
   // Fase 3: una arma que és un artefacte gasta una càrrega en cada ús.
   const artefacte = artefacteDe(arma);
-  if (artefacte) {
+  if (artefacte && !rollPrevi) {
     const carrega = await activarArtefacte(artefacte);
     if (!carrega.ok) {
       ui.notifications?.warn(game.i18n.format("FORJA.Artefacte.SenseCarrega", { nom: artefacte.name }));
@@ -89,20 +95,21 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     }
   }
   const directe = teProprietat(arma, "directe");
-  const pistes = arma.system.pista === "ambdues" ? ["fatiga", "ferides"] : [arma.system.pista || pista];
+  const pistes = dimMak ? [dimMak]
+    : arma.system.pista === "ambdues" ? ["fatiga", "ferides"] : [arma.system.pista || pista];
 
   const penalSalut      = actor.system.salut?.penalitzacio ?? 0;
-  const dauConcentracio = await consumirConcentracio(actor);
+  const dauConcentracio = rollPrevi ? 0 : await consumirConcentracio(actor);
   const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0) + penalSalut;
   const bonusRetard     = Math.max(0, retardBarallarse ?? 0);
-  const dausCarrega     = Math.max(0, bonusCarrega?.daus ?? 0);
-  const danyCarrega     = Math.max(0, bonusCarrega?.dany ?? 0);
+  const dausCarrega     = Math.max(0, bonusCarrega?.daus ?? 0) + Math.max(0, bonusMode?.daus ?? 0);
+  const danyCarrega     = Math.max(0, bonusCarrega?.dany ?? 0) + Math.max(0, bonusMode?.dany ?? 0);
   const pool            = Math.max(1, poolFinal + dauConcentracio + bonusRetard + dausCarrega);
 
-  const roll = new ForjaRoll(`${pool}d10`, {}, {
+  const roll = rollPrevi ?? new ForjaRoll(`${pool}d10`, {}, {
     forja: { dificultat: dificultatFinal }
   });
-  await roll.evaluate();
+  if (!rollPrevi) await roll.evaluate();
 
   const { fites, pifia } = roll.forjaResults;
   const exit     = !pifia && (exigirSuperar ? fites > dificultatFinal : fites >= dificultatFinal);
@@ -116,7 +123,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     const { valor: danyBaseArma, bonificador: bonificadorArma } = resoldreDanyArma(arma.system.danyBase, actor);
 
     // "Cop penetrant" (arts marcials) ignora les armadures naturals i flexibles.
-    const ignorarTipus = maniobra?.id === "cop-penetrant" ? ["natural", "flexible"] : [];
+    const ignorarTipus = dimMak ? ["fisica", "flexible", "natural"]
+      : maniobra?.id === "cop-penetrant" ? ["natural", "flexible"] : [];
     // B13: "Poca penetració" de les escopetes — les rígides protegeixen el doble.
     const escopeta  = teProprietat(arma, "escopeta");
     const armadura  = proteccioArmadura(objectiu.items, { ignorarTipus, dobleRigida: escopeta });
@@ -138,6 +146,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       egida,
       danyExtra
     });
+    // Dim Mak (fatiga): duplica el dany de fatiga després de la reducció.
+    if (dimMak === "fatiga" && resultatDany.danyFinal > 0) resultatDany.danyFinal *= 2;
     if (danyExtra > 0) notes.push(game.i18n.format("FORJA.Combat.PifiaEsquivarDanyAplicat", { nom: objectiu.name, valor: danyExtra }));
 
     // Si el DJ no pot aplicar alguna conseqüència (desconnectat, massa lent,
@@ -225,14 +235,15 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     pistaEtiqueta: pistes.map(p => game.i18n.localize(`FORJA.Salut.${p}`)).join(" + "),
     concentracioTrencada,
     ...roll.forjaResults,
+    dificultat: dificultatFinal,
     exit, excedent
   });
 
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content,
-    rolls:   [roll],
-    sound:   CONFIG.sounds.dice
+    rolls:   rollPrevi ? [] : [roll],
+    sound:   rollPrevi ? null : CONFIG.sounds.dice
   });
 
   return { roll, dany: resultatDany, exit, excedent, maniobra, concentracioTrencada };

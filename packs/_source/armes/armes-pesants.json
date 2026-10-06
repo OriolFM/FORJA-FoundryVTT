@@ -13,7 +13,9 @@
     "maniobra": "Feixugues — Només es poden disparar sense moure's i amb posició estable, o muntades en un vehicle. Destrucció massiva — Doble dany contra objectes inanimats o PJ amb armadura rígida; destrueixen 2 punts d'armadura o integritat estructural per atac.",
     "rangExtrem": false,
     "basic": false,
-    "propietats": [],
+    "propietats": [
+      "feixuga"
+    ],
     "descripcio": "Manual: Lat +6, Rang variable, Dany DES+4, munició variable."
   },
   "flags": {

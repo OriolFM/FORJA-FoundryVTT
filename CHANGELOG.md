@@ -37,6 +37,9 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - **Ressonància** (cinc nivells) i tria de fatiga o ferides al diàleg de manifestar.
 - **Activar un artefacte:** tirada d'atribut + habilitat contra la dificultat d'activació (es demana si l'artefacte no la té), càrrega i prototips que es trenquen en pifiar.
 - **Armes i armadures que són artefactes** (Espasa d'energia, Holocapa, Servoarmadura…): apareixen com a arma o armadura i funcionen al combat (dany directe, estats en impactar, càrrega per atac, ègida). Els artefactes permanents i els que es porten donen les seves bonificacions mentre estan equipats; la fitxa les mostra amb un «+n».
+- **Modes de tret:** ràfega (+1 dau o +1 dany) i automàtic; **atacs d'àrea** amb plantilla per a escopetes, armes de dispersió (llàgrima de 15 m, fuga si pifien) i foc automàtic; les armes feixugues no disparen si s'han mogut. Armes de dispersió i de suport al catàleg.
+- **Maniobres d'arts marcials:** Combinació (dos cops amb una tirada, cada un amb la seva defensa), Contraatac (en guàrdia: contraataca si para o bloca) i Dim Mak (ferides o fatiga doble, sense armadura).
+- **Escut:** +1 a la defensa bàsica.
 - **Compendis amb el contingut del manual:** 6 PJ d'exemple, 25 PNJ, 7 animals, 9 criatures, i els trets, armes, armadures, 18 artefactes i 65 efectes. Ja no cal FORJAPP ni Firebase per tenir-los.
 - **Repartir PX** (botó del DJ al directori d'actors): objectius de grup i individuals, virtuts i PX addicionals, amb la taula del manual.
 - **Historial de PX** a la fitxa del PJ: el que s'ha guanyat i el que s'ha gastat (millores, trets, efectes).

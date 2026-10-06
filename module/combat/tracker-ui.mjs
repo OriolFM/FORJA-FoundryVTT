@@ -15,8 +15,11 @@ import { restriccionsEstats, tipusAccioBloquejats } from "../estats/regles-estat
 import { restriccionsActor, comprovarEstat, tirarEstat } from "../estats/aplicacio-estats.mjs";
 import { manifestarIAplicar, usarArtefacte, objectiusMarcats } from "./usar-efecte.mjs";
 import DiategManifestar from "../apps/dialeg-manifestar.mjs";
+import { modesDisponibles, regleArea, MODES_TRET } from "./modes-tret.mjs";
+import { atacArea, combinacio, contraatacar } from "./atac-multi.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
+import { teProprietat } from "./propietats.mjs";
 import {
   tirarDefensaCompleta, desarDefensaCompleta, defensaCompletaDe, combatantDe, resolucioDefensaCompleta
 } from "./defensa-completa.mjs";
@@ -228,6 +231,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           permetManiobres: _esCop(i) && potArtsMarcials,
           // WP-M: la càrrega només amb armes cos a cos o naturals (manual l. 2794).
           categoria:     i.system.categoria ?? null,
+          // Fase 6: modes de tret (ràfega, automàtic) i atacs d'àrea.
+          modes:         modesDisponibles(i.system.propietats ?? []),
+          area:          !!regleArea(i.system.propietats ?? []),
           // B16: retard voluntari de barallar-se (fins al nivell d'habilitat).
           retardMax: retardMaximBarallarse({ habId }, habilitat("barallar-se"))
         };
@@ -279,6 +285,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       defensaId: config.defensa?.id ?? ultima?.defensaId ?? null,
       moviment: config.moviment, retard: config.retardBarallarse ?? 0,
       objectiuTokenId: config.objectiuTokenId ?? ultima?.objectiuTokenId ?? null,
+      modeTret: config.modeTret ?? null, dimMak: config.dimMak ?? null,
       efecteId: config.efecteId ?? ultima?.efecteId ?? null,
       artefacteId: config.artefacteId ?? ultima?.artefacteId ?? null
     });
@@ -318,6 +325,9 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       if (objectiuDeclarat) {
         pendent = { ...pendent, objectiuTokenId: objectiuDeclarat.tokenId, objectiuNom: objectiuDeclarat.nom };
       }
+      // Fase 6: mode de tret i Dim Mak.
+      if (config.modeTret) pendent = { ...pendent, modeTret: config.modeTret };
+      if (config.dimMak) pendent = { ...pendent, dimMak: config.dimMak };
       if (arma && config.retardBarallarse > 0 && !config.maniobraId) {
         pendent = { ...pendent, retardBarallarse: config.retardBarallarse, label: config.etiqueta };
       }
@@ -348,6 +358,12 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     // quedarien a la nova acció.
     if (anterior) await combatant.unsetFlag("forja", "accioPendent");
     await combatant.setFlag("forja", "accioPendent", pendent);
+    // Fase 6: Contraatac (› Arts marcials): es posa en guàrdia fins al seu torn.
+    if (config.tipus === "atac" && config.maniobraId === "contraatac") {
+      await combatant.setFlag("forja", "contraatac", { combatId: combat.id, armaId: config.armaId });
+    } else if (combatant.getFlag("forja", "contraatac")) {
+      await combatant.unsetFlag("forja", "contraatac");
+    }
     // Si declara durant el seu propi torn, la nova acció és per al proper:
     // ja només li queda passar el torn (icona destacada, `_iconaDestacada`).
     if (actiuAra && combat.started) await combatant.setFlag("forja", "estatTorn", "redeclarada");
@@ -457,6 +473,29 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 
     if (pendent.tipus === "atac") {
       const arma          = actor.items.get(pendent.id);
+
+      // Fase 6: Contraatac declarat. En arribar el seu torn, ja ha actuat
+      // (si l'han atacat i ha parat o blocat, ja ha contraatacat).
+      if (pendent.maniobraId === "contraatac") {
+        await combatant.unsetFlag("forja", "contraatac");
+        ui.notifications?.info(game.i18n.format("FORJA.Combat.ContraatacFinal", { nom: combatant.name }));
+        await _marcarResolta(combat, combatant);
+        return;
+      }
+      // Fase 6: armes feixugues (› A Distància): no disparen si s'ha mogut.
+      if (arma && teProprietat(arma, "feixuga") && metresMogutsAquestTorn(combatant.token) > 0) {
+        ui.notifications?.warn(game.i18n.format("FORJA.Combat.Feixuga", { arma: arma.name }));
+        return;
+      }
+      const modeTret = pendent.modeTret ?? "tret";
+      const bonusMode = MODES_TRET[modeTret] ?? null;
+      // Fase 6: atacs d'àrea (escopetes, dispersió, automàtic, foc automàtic).
+      if (arma && regleArea(arma.system.propietats ?? [], modeTret)) {
+        const fet = await atacArea({ combat, combatant, actor, arma, poolFinal, mode: modeTret,
+          extra: { bonusMode, label: pendent.label } });
+        if (fet) await _marcarResolta(combat, combatant);
+        return;
+      }
       // L'objectiu és el declarat (si n'hi ha); si no, el marcat al canvas; i
       // si tampoc n'hi ha cap, es demana ara (excepte Puntada de peu
       // giratòria, que és autocentrada).
@@ -501,6 +540,14 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
         for (const { objectiu: qui, eleccio, resultat } of resultats) {
           if (resultat.exit) await aplicarEfecteManiobra(maniobra, eleccio.interposant ?? qui);
         }
+        await _marcarResolta(combat, combatant);
+        return;
+      }
+
+      // Fase 6: Combinació (dos cops, una tirada; la defensa per separat).
+      if (arma && objectiu && maniobra?.id === "combinacio") {
+        await combinacio({ combat, combatant, actor, arma, poolFinal, tokenObjectiu, objectiu, maniobra,
+          extra: { label: pendent.label } });
         await _marcarResolta(combat, combatant);
         return;
       }
@@ -633,10 +680,18 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           etiquetaDefensa: eleccio.nomMitja ? `${eleccio.nom} (${eleccio.nomMitja})` : eleccio.nom,
           etiquetaRang,
           maniobra,
-          label:      pendent.label
+          label:      pendent.label,
+          bonusMode,
+          dimMak:     maniobra?.id === "dim-mak" ? (pendent.dimMak ?? "ferides") : null
         });
-        if (maniobra && resultatAtac.exit) await aplicarEfecteManiobra(maniobra, qui);
-        if (maniobra?.id === "llancament" && resultatAtac.exit) {
+        // Fase 6: si el defensor era en guàrdia (Contraatac) i ha parat o
+        // blocat l'atac, contraataca immediatament.
+        if (resultatAtac && !resultatAtac.exit && ["parar", "blocar"].includes(eleccio.id)) {
+          await contraatacar({ combat, defensor: qui, combatantDefensor: combatantDe(combat, tokenObjectiu, qui),
+            atacant: actor, tokenAtacant });
+        }
+        if (maniobra && resultatAtac?.exit) await aplicarEfecteManiobra(maniobra, qui);
+        if (maniobra?.id === "llancament" && resultatAtac?.exit) {
           const combatantQui = combat.combatants.find(c => c.actor?.id === qui.id);
           const tokenQui = combatantQui?.token?.object ?? tokenObjectiu;
           await resoldreLlancament({ actorAtacant: combatant.actor, tokenAtacant, tokenObjectiu: tokenQui });

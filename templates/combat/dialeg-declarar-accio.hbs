@@ -100,6 +100,17 @@
   {{#if avisObjectiu}}
   <p class="dda-avis">{{avisObjectiu}}</p>
   {{/if}}
+  {{#if modesTret.length}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.ModeTretEtiqueta"}}</label>
+    <select name="modeTret">
+      {{#each modesTret as |m|}}<option value="{{m.id}}" {{#if (eq m.id ../modeTret)}}selected{{/if}}>{{m.nom}}</option>{{/each}}
+    </select>
+  </div>
+  {{/if}}
+  {{#if (or armaArea (eq modeTret "automatic"))}}
+  <p class="dda-avis">{{localize "FORJA.Combat.AvisArea"}}</p>
+  {{/if}}
   {{#if permetManiobres}}
   <div class="form-group">
     <label>{{localize "FORJA.Combat.Maniobra"}}</label>
@@ -112,6 +123,15 @@
   </div>
   {{#if maniobra}}
   <p class="dda-avis">{{maniobra.descripcio}}<br>{{localize "FORJA.Combat.ManiobraTirada"}}</p>
+  {{/if}}
+  {{#if esDimMak}}
+  <div class="form-group">
+    <label>{{localize "FORJA.Combat.DimMakEtiqueta"}}</label>
+    <select name="dimMak">
+      <option value="ferides" {{#if (eq dimMak "ferides")}}selected{{/if}}>{{localize "FORJA.Combat.DimMak.ferides"}}</option>
+      <option value="fatiga" {{#if (eq dimMak "fatiga")}}selected{{/if}}>{{localize "FORJA.Combat.DimMak.fatiga"}}</option>
+    </select>
+  </div>
   {{/if}}
   {{/if}}
   {{#if retardMax}}

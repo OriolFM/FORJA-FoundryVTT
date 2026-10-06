@@ -77,7 +77,6 @@
     "rangExtrem": false,
     "descripcio": "Armament natural — Llista d'armament natural (manual)."
   },
-
   {
     "id": "armes-improvisades-cac",
     "nom": "Armes improvisades (cos a cos)",
@@ -132,7 +131,9 @@
     "danyBase": "FOR+2",
     "maniobra": "Llançament — Si està equilibrat, es pot llançar com a arma. Defensa amb escut — +1 a la defensa bàsica si no s'usa per atacar; integritat estructural 10 si es fa servir per blocar.",
     "rangExtrem": false,
-    "propietats": ["escut"],
+    "propietats": [
+      "escut"
+    ],
     "descripcio": "Escuts (manual: Lat +1, Abast +0, Dany FOR+2)."
   },
   {
@@ -190,7 +191,6 @@
     "rangExtrem": false,
     "descripcio": "Pics (manual: Lat +3, Abast +1, Dany FOR+3)."
   },
-
   {
     "id": "armes-improvisades-distancia",
     "nom": "Armes improvisades (a distància)",
@@ -258,7 +258,10 @@
     "danyBase": "DES+2",
     "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets com un sol atac, +1 latència i +1 a impactar o al dany (cal declarar-ho).",
     "rangExtrem": false,
-    "descripcio": "Manual: Lat +1, Rang 20, Dany DES+2, munició 30."
+    "descripcio": "Manual: Lat +1, Rang 20, Dany DES+2, munició 30.",
+    "propietats": [
+      "rafega"
+    ]
   },
   {
     "id": "armes-dassalt",
@@ -269,7 +272,11 @@
     "danyBase": "DES+3",
     "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets, +1 latència i +1 impactar/dany. Automàtic — 10 trets, +2 latència, +1 dany; impacta tots els objectius al descobert dins l'àrea si supera la defensa bàsica.",
     "rangExtrem": false,
-    "descripcio": "Manual: Lat +1, Rang 30, Dany DES+3, munició 30."
+    "descripcio": "Manual: Lat +1, Rang 30, Dany DES+3, munició 30.",
+    "propietats": [
+      "automatic",
+      "rafega"
+    ]
   },
   {
     "id": "rifles",
@@ -291,7 +298,9 @@
     "danyBase": "DES+3",
     "maniobra": "Dispersió — Inefectives a més de rang mitjà, però l'objectiu sempre té defensa bàsica 1 (modificada per distància). Poca penetració — Les armadures rígides ofereixen el doble de protecció contra escopetes.",
     "rangExtrem": true,
-    "propietats": ["escopeta"],
+    "propietats": [
+      "escopeta"
+    ],
     "descripcio": "Manual: Lat +2, Rang 10 (abast extrem), Dany DES+3, munició 6."
   },
   {
@@ -303,6 +312,39 @@
     "danyBase": "DES+4",
     "maniobra": "Feixugues — Només es poden disparar sense moure's i amb posició estable, o muntades en un vehicle. Destrucció massiva — Doble dany contra objectes inanimats o PJ amb armadura rígida; destrueixen 2 punts d'armadura o integritat estructural per atac.",
     "rangExtrem": false,
-    "descripcio": "Manual: Lat +6, Rang variable, Dany DES+4, munició variable."
+    "descripcio": "Manual: Lat +6, Rang variable, Dany DES+4, munició variable.",
+    "propietats": [
+      "feixuga"
+    ]
+  },
+  {
+    "id": "armes-de-dispersio",
+    "nom": "Armes de dispersió",
+    "categoria": "distancia",
+    "modLatencia": 3,
+    "abast": 15,
+    "danyBase": "DES+3",
+    "maniobra": "Perilloses — Una pífia causa una fuga que fa 15 − habilitat de dany a l'usuari i als adjacents. Àrea d'efecte — Dany a tothom dins una llàgrima de 15 m; la defensa dels afectats és 5, modificada segons la distància.",
+    "rangExtrem": false,
+    "propietats": [
+      "areaDispersio",
+      "perillosa"
+    ],
+    "descripcio": "Manual: Lat +3, Rang 15* (AE), Dany DES+3, munició 40. Llàgrima de 15 m (Oriol FM, 2026-10-06)."
+  },
+  {
+    "id": "armes-de-suport",
+    "nom": "Armes de suport",
+    "categoria": "distancia",
+    "modLatencia": 4,
+    "abast": 80,
+    "danyBase": "DES+5",
+    "maniobra": "Feixugues — Només poden disparar si el PJ no s'ha mogut i és en terra ferma, o muntades en un vehicle. Foc automàtic — 10 bales per torn; impacta tots els objectius dins una àrea; defensa 5, modificada segons la distància.",
+    "rangExtrem": false,
+    "propietats": [
+      "feixuga",
+      "focAutomatic"
+    ],
+    "descripcio": "Manual: Lat +4, Rang 80, Dany DES+5, munició 100."
   }
 ]

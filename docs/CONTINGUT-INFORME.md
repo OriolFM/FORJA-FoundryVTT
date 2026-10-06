@@ -11,7 +11,7 @@ Generat per `scripts/build-packs.mjs` (no s'edita a mà: es regenera). Fonts: `d
 | `animals` | Actor | 7 |
 | `criatures` | Actor | 9 |
 | `trets` | Item | 95 |
-| `armes` | Item | 27 |
+| `armes` | Item | 29 |
 | `armadures` | Item | 5 |
 | `artefactes` | Item | 18 |
 | `efectes` | Item | 65 |

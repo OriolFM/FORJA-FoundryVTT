@@ -13,7 +13,9 @@
     "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets com un sol atac, +1 latència i +1 a impactar o al dany (cal declarar-ho).",
     "rangExtrem": false,
     "basic": false,
-    "propietats": [],
+    "propietats": [
+      "rafega"
+    ],
     "descripcio": "Manual: Lat +1, Rang 20, Dany DES+2, munició 30."
   },
   "flags": {
