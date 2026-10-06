@@ -1,0 +1,317 @@
+{
+  "_id": "TrD4QNbBZLTL5mH6",
+  "_key": "!actors!TrD4QNbBZLTL5mH6",
+  "name": "Katydid Acherontia XJ748",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/hekate-katydid-acherontia-xj748.webp",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "artropode",
+    "mida": 3,
+    "constitucio": 4,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 2
+      },
+      "barallar-se": {
+        "nivell": 4
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "esquitllar-se": {
+        "nivell": 4
+      },
+      "esquivar": {
+        "nivell": 4
+      },
+      "forca-bruta": {
+        "nivell": 3
+      }
+    },
+    "pc": 104,
+    "tier": "criatura",
+    "notes": "<p>Els Katydids Acherontia són una mena de grills o cigales que es poden trobar a HLV-426. De mida mitjana, fan entre 1,50 i 1,70 m de llargada, i són força robustos. Les seves potes tenen espines llargues que fan servir per clavar a les preses per immobilitzar-les. També tenen una gran mandíbula que fan servir per mossegar les preses. Acostumen a caçar en grups de 3 a 7 individus, atacant les seves preses per sorpresa. No són extremadament valents, si veuen que la presa es defensa bé i corren perill, fugiran.</p>"
+  },
+  "prototypeToken": {
+    "name": "Katydid Acherontia XJ748",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/hekate-katydid-acherontia-xj748.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "fSjW1dI0kQslhZCR",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.fSjW1dI0kQslhZCR",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "8YVxmcHiuxyAJttu",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.8YVxmcHiuxyAJttu",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "EkfyYJKAExVHDt7q",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.EkfyYJKAExVHDt7q",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "DvI7CJq0dcEIrz5T",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.DvI7CJq0dcEIrz5T",
+      "name": "Especialista",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Ignora 1s; els 9 també compten com a doble fita.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "especialista"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "oD8Tno9fmcDyCnsv",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.oD8Tno9fmcDyCnsv",
+      "name": "Feromones",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "feromones"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "W6scrMP5DBCq72FC",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.W6scrMP5DBCq72FC",
+      "name": "Levitar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "levitar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "3YNsaq3cF6YYBtW6",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.3YNsaq3cF6YYBtW6",
+      "name": "Braços Addicionals (1)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "bracos-addicionals",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "hNOhoYKTbu2hL2xi",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.hNOhoYKTbu2hL2xi",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Hem95Zl8MxvtoUbG",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.Hem95Zl8MxvtoUbG",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "m56535ar4Cm2cQsE",
+      "_key": "!actors.items!TrD4QNbBZLTL5mH6.m56535ar4Cm2cQsE",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "bg5h7HnkI0fESYIB",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 104,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 9,
+        "reduccioDany": 6,
+        "reaccio": 1
+      }
+    }
+  }
+}

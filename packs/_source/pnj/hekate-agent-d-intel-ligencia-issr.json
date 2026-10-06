@@ -1,0 +1,154 @@
+{
+  "_id": "HvZRpFxodExUGm8M",
+  "_key": "!actors!HvZRpFxodExUGm8M",
+  "name": "Agent d'intel·ligència (ISSR)",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-agent-d-intel-ligencia-issr.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 3,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "actuar": {
+        "nivell": 8
+      },
+      "amagar-se": {
+        "nivell": 5
+      },
+      "armes-distancia": {
+        "nivell": 6,
+        "especialitat": "projectil sòlid"
+      },
+      "arts-marcials": {
+        "nivell": 6,
+        "especialitat": "taekwondo"
+      },
+      "cercar": {
+        "nivell": 6
+      },
+      "ciencia": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 5
+      },
+      "correr": {
+        "nivell": 4
+      },
+      "enginyeria": {
+        "nivell": 2
+      },
+      "enigmes": {
+        "nivell": 4
+      },
+      "equilibri": {
+        "nivell": 4
+      },
+      "escalada": {
+        "nivell": 5
+      },
+      "esquitllar-se": {
+        "nivell": 7
+      },
+      "explosius": {
+        "nivell": 5
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 4
+      },
+      "jocs-de-mans": {
+        "nivell": 5
+      },
+      "medicina": {
+        "nivell": 2,
+        "especialitat": "humanoide"
+      },
+      "negociacio": {
+        "nivell": 5
+      },
+      "persuasio": {
+        "nivell": 5
+      },
+      "vehicle": {
+        "nivell": 4,
+        "especialitat": "aeri petit, terrestre"
+      },
+      "xerrameca": {
+        "nivell": 7
+      }
+    },
+    "pc": 272,
+    "tier": "antagonista",
+    "notes": "<p>Equipament: Vestits de manteniment i d’ajudant de magistrat de l’ANM, roba de diferents estils, credencials falses, rossinyols per forçar panys (mecànics i digitals), assistent digital, pistola (projectil sòlid), subfusell o fusell de llarg abast (projectil sòlid), explosius i detonadors, vehicle terrestre (moto o cotxe).</p><p>En aquest mòdul, hi ha 8 operatius d’intel·ligència de la ISSR:</p><p>- Jens Andersson, té una cobertura com a mecànic. El seu habitatge és en una urbanització residencial al sector Elisi. Havia estat arrestat per la magistrada Blume i alliberat per falta de proves.</p><p>- Hunapo Ngata, consultora tècnica, que viu en una urbanització flotant al sector Atlantis.</p><p>- El quart és Fangying Yu, un tècnic informàtic que viu en uns suburbis d’Axis Mundi.</p>"
+  },
+  "prototypeToken": {
+    "name": "Agent d'intel·ligència (ISSR)",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-agent-d-intel-ligencia-issr.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "Gi9TBLhTQqMxCir3",
+      "_key": "!actors.items!HvZRpFxodExUGm8M.Gi9TBLhTQqMxCir3",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 272,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 9,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,782 @@
+{
+  "_id": "rIiHHVmzZvbDVlsw",
+  "_key": "!actors!rIiHHVmzZvbDVlsw",
+  "name": "Hèkate",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-hekate.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 3,
+      "PER": 4,
+      "INT": 5,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 5,
+    "constitucio": 4,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 6,
+        "especialitat": "energia"
+      },
+      "armes-cos-a-cos": {
+        "nivell": 6,
+        "especialitat": "espases"
+      },
+      "cercar": {
+        "nivell": 6
+      },
+      "ciencia": {
+        "nivell": 8
+      },
+      "consciencia": {
+        "nivell": 7
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "enginyeria": {
+        "nivell": 8
+      },
+      "enigmes": {
+        "nivell": 7
+      },
+      "equilibri": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 4
+      },
+      "informatica": {
+        "nivell": 8
+      },
+      "medicina": {
+        "nivell": 6,
+        "especialitat": "humanoide, xenomedicina"
+      },
+      "navegacio": {
+        "nivell": 8
+      },
+      "ofici": {
+        "nivell": 8,
+        "especialitat": "terraformadora"
+      },
+      "psi": {
+        "nivell": 8
+      },
+      "resistencia": {
+        "nivell": 4
+      },
+      "vehicle": {
+        "nivell": 8,
+        "especialitat": "espacial gros, espacial petit, lliscadors"
+      }
+    },
+    "pc": 841,
+    "tier": "nemesis",
+    "notes": "<p>Equipament: vestit refrigerant arrapat (armadura lleugera), eines diverses.</p><p>Hèkate és, potser, l’última dels asos (o aesir) que queden a la Forja de mons. Els asos són éssers eterns, semblants als humans però de més grans dimensions, extremadament intel·ligents i amb potencial psíquic.</p><p>Molts dels asos van marxar de Forja, movent-se a un altre estat de consciència superior, però Hèkate es va quedar endarrere per supervisar el procés. Quan els jugadors la trobin, Hèkate és en una càpsula d’hivernació, però es començarà a despertar quan detecti intrusos a la seva cambra, situada en un racó del sector Tàrtar.</p><p>L’aspecte de l’Hèkate és imponent. És una humanoide d’una mica menys de 4 metres d’alçada, atlètica, de pell pàlida i d’un gris pàl·lid com el marbre de Carrara.</p><p>Les seves faccions són menys definides que les dels humans, sense arrugues visibles, i amb el nas menys prominent. Els ulls són grans i ametllats, de pupil·la vertical en un orb daurat. Les orelles són proporcionalment més grans que les dels humans, amb pabellons auriculars mòbils acabats en punta i més separats del crani.</p><p>Les mans i peus es veuen grans en comparació als braços, i les mans tenen els dits anul·lar i petit fusionats. De la part superior i posterior del seu cap en surt una mena de cabell translúcid que recorda als tentacles de les meduses</p><p>Duu un vestit d’hibernació arrapat amb tonalitats entre gris verdós i aiguamarina, en la superfície del qual hi ha gran quantitat de connectors de dades i per fluids de suport vital.</p><p>Per l’Hèkate, els PJs i PNJs són distraccions molestes, com una plaga d’animals silvestres que amenacen el seu laboratori, i provarà d’ignorar-los i activar el procés d’evacuació d’emergència per marxar a l’univers on van marxar la resta dels asos.</p><p>De cara a interpretar-la, es pot pensar en l’Hèkate com una persona que de cop es desperta de la migdiada en la seva tenda de campanya, es troba que uns gossos li estan destrossant el campament, i a més, es barallen entre ells. El que pensa és en recollir i marxar a un altre lloc, provant d’ignorar els gossos, però si qualsevol d’ells l’ataca, es defensarà sense gaire miraments.</p><p>Parlarà poc perquè assumeix (encertadament) que no la poden entendre, tot i que ella pot arribar a obrir un enllaç mental si es vol comunicar amb algú, o vol llegir-ne els pensaments. Si parla ho farà amb un to calmat, com qui parla a uns animals perquè es tranquilitzin. La seva veu reverbera, perquè els asos tenen unes cordes vocals més complexes que les humanes, amb un rang de freqüències semblant als de les balenes i els dèlfics, des dels infrasons de 5 Hz als ultrasons de 35 KHz.</p>"
+  },
+  "prototypeToken": {
+    "name": "Hèkate",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-hekate.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "DV96ubLrhlGKaqUi",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.DV96ubLrhlGKaqUi",
+      "name": "Aparença Estranya (neutra)",
+      "type": "tret",
+      "system": {
+        "cost": 0,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-neutra"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "JhtO4A5zfuGDoRcZ",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.JhtO4A5zfuGDoRcZ",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "huJfYYdAiCJxET5a",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.huJfYYdAiCJxET5a",
+      "name": "Atribut Titànic",
+      "type": "tret",
+      "system": {
+        "cost": 30,
+        "descripcio": "Les fites es compten a partir de 4+; ignora 1s en un atribut.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "atribut-titanic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "rzteFMBEhLNp3aSd",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.rzteFMBEhLNp3aSd",
+      "name": "Curació Ràpida (1)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "15 PC per punt de curació.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "curacio-rapida",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "M4gkymU2WfkJJ0O8",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.M4gkymU2WfkJJ0O8",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "cr6RmzyQRI0jIUge",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.cr6RmzyQRI0jIUge",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "6CQ0UCs0engR1s4Q",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.6CQ0UCs0engR1s4Q",
+      "name": "Etern",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "No envelleix.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "etern"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "mwdpoqiBPefs15fk",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.mwdpoqiBPefs15fk",
+      "name": "Feromones",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "feromones"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ofT8cO2H61tdxq5e",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.ofT8cO2H61tdxq5e",
+      "name": "Incansable",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "incansable"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "E1MZrAxejdMurciU",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.E1MZrAxejdMurciU",
+      "name": "Levitar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "levitar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ig1TDcLUh7JRnCF7",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.ig1TDcLUh7JRnCF7",
+      "name": "Psíquic",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Permet usar l'habilitat Psi.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "psiquic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "dteBCMCoZJjr3lRV",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.dteBCMCoZJjr3lRV",
+      "name": "Recursos (elit)",
+      "type": "tret",
+      "system": {
+        "cost": 50,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "recursos-elit"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "xs3oy11vV4VLoOWA",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.xs3oy11vV4VLoOWA",
+      "name": "Reflexos Ràpids",
+      "type": "tret",
+      "system": {
+        "cost": 30,
+        "descripcio": "+1 reacció màxima per torn.",
+        "efecte": {
+          "stat": "reaccionsMax",
+          "delta": 1
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "reflexos-rapids"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "dqp0zUAHLNC22X0O",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.dqp0zUAHLNC22X0O",
+      "name": "Regeneració",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "regeneracio"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ZCP6CLXzTjX5mIkt",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.ZCP6CLXzTjX5mIkt",
+      "name": "Visió Perifèrica",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-periferica"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "FJQIMteyBkGSpbLz",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.FJQIMteyBkGSpbLz",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "NZw3Vzkk6AYCPLzt",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.NZw3Vzkk6AYCPLzt",
+      "name": "Cibermòdem d'interfície neural directa",
+      "type": "artefacte",
+      "system": {
+        "cost": 15,
+        "categoria": "dispositiu",
+        "activacio": {
+          "tipus": "normal",
+          "dificultat": 1
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 1
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +5 a l'habilitat informàtica. Mentre s'usa, l'usuari no pot percebre el seu entorn excepte estímuls molt potents, i encara així amb +2 de dificultat.",
+        "descripcio": "Evolució dels primers cibermòdems: submergeix l'usuari en una realitat immersiva, traducció del sistema informàtic, la IA o el mecanoide que la genera.",
+        "parametres": [
+          {
+            "tipus": "usuari"
+          },
+          {
+            "tipus": "durada"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 5,
+            "segona": false,
+            "habilitat": "informatica"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 1,
+          "latenciaDeclarada": 1,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cibermodem-neural"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "yvWEACAVn8YcY5lK",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.yvWEACAVn8YcY5lK",
+      "name": "Espasa d'energia",
+      "type": "artefacte",
+      "system": {
+        "cost": 21,
+        "categoria": "arma",
+        "activacio": {
+          "tipus": "cap",
+          "dificultat": null
+        },
+        "us": {
+          "narratiu": false,
+          "actiu": true,
+          "modLatencia": 1
+        },
+        "carrega": {
+          "usosPerCarrega": 4,
+          "tornsRecarrega": 11,
+          "modeEspera": true
+        },
+        "mecanica": "Espasa amb latència +1, abast a tocar, i 8 de dany directe de ferides. Pot fer-se servir 4 vegades per cada càrrega completa; triga 11 torns a recuperar una càrrega parcial (vàlida per un ús). El mode d'espera permet fer una activació prèvia a l'ús.",
+        "descripcio": "Vestigi de la tecnologia dels aesirs: la fulla és un conducte de plasma que sublima la matèria, ignorant armadures i causant dany directe.",
+        "parametres": [
+          {
+            "tipus": "arma",
+            "base": "espasa",
+            "latencia": 1,
+            "dany": 2
+          },
+          {
+            "tipus": "dany",
+            "categoria": "directe",
+            "nivell": 6,
+            "danyTipus": "ferides"
+          },
+          {
+            "tipus": "acumulador",
+            "carregues": 3
+          },
+          {
+            "tipus": "recarrega",
+            "unitats": 11
+          },
+          {
+            "tipus": "espera"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": null,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "espasa-energia"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "bPiI2lgok2AivpNi",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.bPiI2lgok2AivpNi",
+      "name": "Llançament",
+      "type": "efecte",
+      "system": {
+        "cost": 13,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 1,
+        "modLatencia": 0,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Aplica l'estat llançat (modificador +5).",
+        "descripcio": "No té en compte el pes de l'objectiu, que es pot resistir amb APL+Psi o APL+Resistència. Si no ho aconsegueix, sortirà disparat com si hagués rebut una maniobra d'arts marcials, fins i tot podent ser llançat contra un segon objectiu.",
+        "parametres": [
+          {
+            "tipus": "distancia"
+          },
+          {
+            "tipus": "estat",
+            "estat": "llancat",
+            "nivell": 5
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 1,
+          "latenciaDeclarada": 0,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "llancament"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "LImRF3cAPfM1on8J",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.LImRF3cAPfM1on8J",
+      "name": "Matar màquina",
+      "type": "efecte",
+      "system": {
+        "cost": 14,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 2,
+        "modLatencia": 5,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "L'usuari toca una o més màquines i les inutilitza completament. Simula una tirada de l'habilitat nyaps, amb un resultat de 5 fites. Si l'objectiu és un mecanoide, té dret a una tirada de resistència; si no la supera, rep 5 punts de dany directe (menys la seva reducció de dany).",
+        "descripcio": "Detecta els punts crítics d'una màquina i hi injecta entropia pura, trencant-ne les peces més febles fins a deixar-la inutilitzada de manera pràcticament irreparable. Si l'objectiu és un mecanoide, té dret a resistir-se o rebre dany directe.",
+        "parametres": [
+          {
+            "tipus": "autoeina",
+            "nivell": 5,
+            "segona": false,
+            "habilitat": "nyaps"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 2,
+          "latenciaDeclarada": 5,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "matar-maquina"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "mX7cNOzIVjd4k7pB",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.mX7cNOzIVjd4k7pB",
+      "name": "Enllaç mental",
+      "type": "efecte",
+      "system": {
+        "cost": 10,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 2,
+        "modLatencia": 5,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Permet llegir o sondar i projectar pensaments a la ment de l'objectiu.",
+        "descripcio": "Un dels primers efectes que aprèn un psíquic: sincronitza els impulsos mentals amb els d'un company per llegir i projectar pensaments i aconseguir una comunicació no verbal perfecta. No funciona amb mecanoides, de pautes mentals molt diferents.",
+        "parametres": [
+          {
+            "tipus": "durada"
+          },
+          {
+            "tipus": "mental",
+            "mode": "llegir"
+          },
+          {
+            "tipus": "mental",
+            "mode": "projectar"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 2,
+          "latenciaDeclarada": 5,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "enllac-mental"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ZpBTb3veZTSH2Deb",
+      "_key": "!actors.items!rIiHHVmzZvbDVlsw.ZpBTb3veZTSH2Deb",
+      "name": "Negar el dany",
+      "type": "efecte",
+      "system": {
+        "cost": 15,
+        "do": "psi",
+        "tipus": "efecte",
+        "dificultat": 1,
+        "modLatencia": 0,
+        "us": {
+          "narratiu": true,
+          "actiu": true
+        },
+        "mecanica": "L'usuari genera una ègida de protecció 15.",
+        "descripcio": "Segons algunes teories, aprofita i amplifica la reverberació sònica del crit de l'usuari per generar una ona expansiva que contraresta un atac entrant, encara que un cop prou fort pot fer-la inútil.",
+        "parametres": [
+          {
+            "tipus": "reaccio"
+          },
+          {
+            "tipus": "usuari"
+          },
+          {
+            "tipus": "egida",
+            "nivell": 15
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 1,
+          "latenciaDeclarada": 0,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "negar-el-dany"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 841,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 14,
+        "reduccioDany": 5,
+        "reaccio": 2
+      }
+    }
+  }
+}

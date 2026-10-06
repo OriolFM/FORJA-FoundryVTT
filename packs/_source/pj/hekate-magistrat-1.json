@@ -1,0 +1,160 @@
+{
+  "_id": "fSXhIMEFrxaXtfSR",
+  "_key": "!actors!fSXhIMEFrxaXtfSR",
+  "name": "Magistrat 1",
+  "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/hekate-magistrat-1.webp",
+  "system": {
+    "atributs": {
+      "FOR": 3,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 2,
+      "APL": 3
+    },
+    "especie": "animal",
+    "mida": 4,
+    "constitucio": 4,
+    "habilitats": {
+      "armes-cos-a-cos": {
+        "nivell": 3
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "enigmes": {
+        "nivell": 3
+      },
+      "equilibri": {
+        "nivell": 4
+      },
+      "intimidacio": {
+        "nivell": 3
+      },
+      "persuasio": {
+        "nivell": 1
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "tactica": {
+        "nivell": 2
+      }
+    },
+    "pc": 150,
+    "biografia": "<p>Goril·la, membre de la magistratura.</p><p>Especialitat en combat cos a cos.</p><p>Equipament: Uniforme i bastons de magistrat, assistent digital (braçalet), Parka reforçada (armadura mitjana flexible).</p>"
+  },
+  "prototypeToken": {
+    "name": "Magistrat 1",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/hekate-magistrat-1.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "1YJH37M8hmqEHwNx",
+      "_key": "!actors.items!fSXhIMEFrxaXtfSR.1YJH37M8hmqEHwNx",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "CDDKkCzjanqLa06m",
+      "_key": "!actors.items!fSXhIMEFrxaXtfSR.CDDKkCzjanqLa06m",
+      "name": "Sentit Atrofiat (borni)",
+      "type": "tret",
+      "system": {
+        "cost": -5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-atrofiat-borni"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "xtAkQJagejlEWINt",
+      "_key": "!actors.items!fSXhIMEFrxaXtfSR.xtAkQJagejlEWINt",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "FalpNtcQGIxmeDO4",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_01_introduccio.md",
+      "costManual": 150,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 9,
+        "reduccioDany": 7,
+        "reaccio": 1
+      }
+    }
+  }
+}

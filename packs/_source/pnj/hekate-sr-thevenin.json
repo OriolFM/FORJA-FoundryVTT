@@ -1,0 +1,151 @@
+{
+  "_id": "mkulhqRssvq62C3J",
+  "_key": "!actors!mkulhqRssvq62C3J",
+  "name": "Sr. Thèvenin",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-sr-thevenin.webp",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 3,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 2,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 4,
+        "especialitat": "projectil sòlid"
+      },
+      "armes-cos-a-cos": {
+        "nivell": 2,
+        "especialitat": "ganivets"
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "ciencia": {
+        "nivell": 1
+      },
+      "correr": {
+        "nivell": 3
+      },
+      "enginyeria": {
+        "nivell": 6
+      },
+      "equilibri": {
+        "nivell": 4
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "informatica": {
+        "nivell": 6
+      },
+      "jocs-de-mans": {
+        "nivell": 3
+      },
+      "nyaps": {
+        "nivell": 6
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 5,
+        "especialitat": "aeri petit, barques, espacial gros, espacial petit"
+      },
+      "xerrameca": {
+        "nivell": 3
+      }
+    },
+    "pc": 161,
+    "tier": "antagonista",
+    "notes": "<p>Equipament: roba, assistent personal, armilla salvavides de neoprè, fusell de caça, navalla plegable serrada.</p><p>El senyor Thèvenin és el gob enginyer del Vent Silent, el catamarà del capità Jörg Marsuí. És optimista de mena, i metòdic fins al punt de fregar el transtorn obsessiu-compulsiu. Té un fusell que fa servir per caçar</p>"
+  },
+  "prototypeToken": {
+    "name": "Sr. Thèvenin",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-sr-thevenin.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "3uuFGdDZKqdMpcDO",
+      "_key": "!actors.items!mkulhqRssvq62C3J.3uuFGdDZKqdMpcDO",
+      "name": "Coordinació Millorada",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "coordinacio-millorada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "KDV3nqeZ0sokJQrx",
+      "_key": "!actors.items!mkulhqRssvq62C3J.KDV3nqeZ0sokJQrx",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 161,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 8,
+        "reduccioDany": 3,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "_id": "BOEj0YlnOw0ukFSR",
+  "_key": "!actors!BOEj0YlnOw0ukFSR",
+  "name": "Operatiu",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-operatiu.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 6
+      },
+      "armes-distancia": {
+        "nivell": 6,
+        "especialitat": "projectil sòlid"
+      },
+      "barallar-se": {
+        "nivell": 5
+      },
+      "correr": {
+        "nivell": 4
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "escalada": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 6
+      },
+      "esquivar": {
+        "nivell": 5
+      },
+      "explosius": {
+        "nivell": 2
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "nyaps": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 2,
+        "especialitat": "terrestre"
+      }
+    },
+    "pc": 118,
+    "tier": "extra",
+    "notes": "<p>Equipament: roba de camuflatge urbà, subfusell i pistola de projectil sòlid amb silenciador, bótes militars, barret, comunicador, assistent digital, arnès.</p><p>Els operatius seleccionats per en Bauer tenen tots un passat militar o en les forces de l’ordre. Tots ells saben seguir ordres i les executen amb precisió, seguint el que dicti el seu superior.</p>"
+  },
+  "prototypeToken": {
+    "name": "Operatiu",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-operatiu.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "IJgxEUOWlwZUK2qu",
+      "_key": "!actors.items!BOEj0YlnOw0ukFSR.IJgxEUOWlwZUK2qu",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 118,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 9,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

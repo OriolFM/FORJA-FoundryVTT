@@ -1,0 +1,268 @@
+{
+  "_id": "50qd2vIKd9yaVC0d",
+  "_key": "!actors!50qd2vIKd9yaVC0d",
+  "name": "Magistrada Blume",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-magistrada-blume.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 3,
+      "APL": 2
+    },
+    "especie": "vegetal",
+    "mida": 3,
+    "constitucio": 4,
+    "habilitats": {
+      "acrobacies": {
+        "nivell": 3
+      },
+      "amagar-se": {
+        "nivell": 2
+      },
+      "armes-distancia": {
+        "nivell": 5,
+        "especialitat": "energia"
+      },
+      "armes-cos-a-cos": {
+        "nivell": 4,
+        "especialitat": "contundents"
+      },
+      "arts-marcials": {
+        "nivell": 5,
+        "especialitat": "tai chi chuan"
+      },
+      "cercar": {
+        "nivell": 4
+      },
+      "ciencia": {
+        "nivell": 2
+      },
+      "consciencia": {
+        "nivell": 5
+      },
+      "correr": {
+        "nivell": 4
+      },
+      "enigmes": {
+        "nivell": 5
+      },
+      "equilibri": {
+        "nivell": 4
+      },
+      "escalada": {
+        "nivell": 4
+      },
+      "esquitllar-se": {
+        "nivell": 5
+      },
+      "esquivar": {
+        "nivell": 5
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 3
+      },
+      "intimidacio": {
+        "nivell": 3
+      },
+      "lideratge": {
+        "nivell": 4
+      },
+      "navegacio": {
+        "nivell": 2
+      },
+      "nedar": {
+        "nivell": 3
+      },
+      "negociacio": {
+        "nivell": 4
+      },
+      "persuasio": {
+        "nivell": 5
+      },
+      "resistencia": {
+        "nivell": 4
+      }
+    },
+    "pc": 251,
+    "tier": "antagonista",
+    "notes": "<p>Equipament: uniforme, credencials i insignia de magistrada, assistent personal, pistola atordidora (pistola d’energia, causa fatiga enlloc de ferides), tetsubo (arma contundent semblant a un bat, amb protuberàncies metàl·liques).</p><p>La magistrada Blume és una de les primeres dríades a integrar-se dins l’ANM, i ho va fer ingressant a la magistratura. Amb un sentit del deure molt desenvolupat, es pren la seva feina molt seriosament, i ho veu com la manera de pagar a l’ANM haver alliberat la seva gent de l’hàbitat on eren tancats. És tenaç i incorruptible, i farà el que calgui per complir amb les seves responsabilitats.</p>"
+  },
+  "prototypeToken": {
+    "name": "Magistrada Blume",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-magistrada-blume.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "hDyl4kRfF6N3Ll9S",
+      "_key": "!actors.items!50qd2vIKd9yaVC0d.hDyl4kRfF6N3Ll9S",
+      "name": "Aparença Estranya (neutra)",
+      "type": "tret",
+      "system": {
+        "cost": 0,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-neutra"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ongOw0L0hxg5xCBv",
+      "_key": "!actors.items!50qd2vIKd9yaVC0d.ongOw0L0hxg5xCBv",
+      "name": "Armadura Natural /3",
+      "type": "tret",
+      "system": {
+        "cost": 12,
+        "descripcio": "Reducció de dany natural +3.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-3"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "abFAtG16R2it7IAI",
+      "_key": "!actors.items!50qd2vIKd9yaVC0d.abFAtG16R2it7IAI",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "pELqDxNCbWC8wq3S",
+      "_key": "!actors.items!50qd2vIKd9yaVC0d.pELqDxNCbWC8wq3S",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "1AChwmvMFP8LIy3X",
+      "_key": "!actors.items!50qd2vIKd9yaVC0d.1AChwmvMFP8LIy3X",
+      "name": "Longeu",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Envelleix molt lentament.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "longeu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "c0ktERNp53YgIOHm",
+      "_key": "!actors.items!50qd2vIKd9yaVC0d.c0ktERNp53YgIOHm",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 251,
+      "derivatsManual": {
+        "latencia": 7,
+        "defensa": 12,
+        "reduccioDany": 5,
+        "reaccio": 1
+      }
+    }
+  }
+}

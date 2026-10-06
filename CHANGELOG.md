@@ -15,6 +15,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 
 ### Afegit
 - **Mòdul «La porta d'Hèkate»** (`moduls/forja-la-porta-dhekate`): l'aventura introductòria en un compendi de diari, amb el mateix estil que el manual. S'instal·la a part, com qualsevol mòdul.
+- **Actors de «La porta d'Hèkate»** als compendis del sistema, en una carpeta pròpia: 8 PJ pregenerats, 13 PNJ (Hèkate, Orfeu, la magistrada Blume…) i 4 criatures (Aràcnid Acherontia, amb el seu token). Venen d'unes regles anteriors i s'han convertit a les actuals; el que no s'ha pogut mapar és a `moduls/forja-la-porta-dhekate/CONVERSIO.md`.
 - **Tokens per als actors dels compendis:** Yoko-1, Trace, Marvin el dèlfic i el Gólem de carn porten el seu token; la resta, un de provisional (cercle gris amb el nom a l'anella).
 - **Estats amb efecte** (manual › Estats; Oriol FM, 2026-10-06):
   - **Abatut:** +2 a la latència; no pot córrer, saltar (càrrega) ni esquivar.

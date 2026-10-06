@@ -1,0 +1,153 @@
+{
+  "_id": "AsOcMvDGA7TlSwWd",
+  "_key": "!actors!AsOcMvDGA7TlSwWd",
+  "name": "Bretxer 2",
+  "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/hekate-bretxer-2.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 1,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 3
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "enigmes": {
+        "nivell": 3
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "humanitats": {
+        "nivell": 4
+      },
+      "informatica": {
+        "nivell": 2
+      },
+      "navegacio": {
+        "nivell": 3
+      },
+      "nedar": {
+        "nivell": 2
+      },
+      "negociacio": {
+        "nivell": 4
+      },
+      "persuasio": {
+        "nivell": 4
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 3
+      }
+    },
+    "pc": 150,
+    "biografia": "<p>Humà, membre del CBA i diplomàtic.</p><p>Equilibrat.</p><p>Equipament: Uniforme del cos de bretxers, subfusell (projectil sòlid) i dos carregadors, cinturó utilitari, bossa de bandolera, assistent digital (braçalet), gavardina reforçada (armadura lleugera flexible).</p>"
+  },
+  "prototypeToken": {
+    "name": "Bretxer 2",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/hekate-bretxer-2.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "G7BO9R8heW0Fa19f",
+      "_key": "!actors.items!AsOcMvDGA7TlSwWd.G7BO9R8heW0Fa19f",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Mgu5FiMtMwi8ahMy",
+      "_key": "!actors.items!AsOcMvDGA7TlSwWd.Mgu5FiMtMwi8ahMy",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "FalpNtcQGIxmeDO4",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_01_introduccio.md",
+      "costManual": 150,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 10,
+        "reduccioDany": 5,
+        "reaccio": 1
+      }
+    }
+  }
+}

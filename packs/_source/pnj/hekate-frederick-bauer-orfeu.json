@@ -1,0 +1,333 @@
+{
+  "_id": "JGgeeDDsivWHeRDM",
+  "_key": "!actors!JGgeeDDsivWHeRDM",
+  "name": "Frederick Bauer (Orfeu)",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-frederick-bauer-orfeu.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 4,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 3
+      },
+      "armes-distancia": {
+        "nivell": 4,
+        "especialitat": "energia"
+      },
+      "armes-cos-a-cos": {
+        "nivell": 4,
+        "especialitat": "ganivets"
+      },
+      "art": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 5
+      },
+      "ciencia": {
+        "nivell": 8
+      },
+      "consciencia": {
+        "nivell": 6
+      },
+      "correr": {
+        "nivell": 2
+      },
+      "enginyeria": {
+        "nivell": 4
+      },
+      "enigmes": {
+        "nivell": 5
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "escalada": {
+        "nivell": 3
+      },
+      "esquitllar-se": {
+        "nivell": 4
+      },
+      "humanitats": {
+        "nivell": 3
+      },
+      "informatica": {
+        "nivell": 7
+      },
+      "intimidacio": {
+        "nivell": 5
+      },
+      "lideratge": {
+        "nivell": 5
+      },
+      "navegacio": {
+        "nivell": 3
+      },
+      "nedar": {
+        "nivell": 2
+      },
+      "negociacio": {
+        "nivell": 7
+      },
+      "ofici": {
+        "nivell": 4,
+        "especialitat": "registrador d'habitats i tecnologia"
+      },
+      "persuasio": {
+        "nivell": 7
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "supervivencia": {
+        "nivell": 3,
+        "especialitat": "mons tòxics"
+      },
+      "vehicle": {
+        "nivell": 5,
+        "especialitat": "espacial petit, lliscadors"
+      },
+      "xerrameca": {
+        "nivell": 5
+      }
+    },
+    "pc": 518,
+    "tier": "nemesis",
+    "notes": "<p>En Frederick Bauer era un membre destacat del Cos de Bretxers de l’Aliança, un humanista i un idealista. Llibertari convençut, veu amb mals ulls les polítiques de restricció de tecnologia del consell de l’Aliança, i creu que s’ha de donar lliure accés a la tecnologia i als hàbitats del món Forja perquè tots els habitants de l’ANM tinguin igualtat d’oportunitats, no només aquells escollits o vetats pel consell.</p><p>Això el va portar a discrepar amb el consell, i específicament amb el president d’aleshores, en Henri Dupont, qui el va expulsar del cos de bretxers i el va relegar a tasques administratives a la Oficina d’Assumptes Multiversals.</p><p>Sobrequalificat, en Bauer va progressar dins de la jerarquia i va acabar com a responsable del registre d’hàbitats i tecnologia de l’Aliança.</p><p>Veient com el consell de l’Aliança seguia restringint l’ús de tecnologia i l’accés als hàbitats, va decidir contrarrestar les polítiques restrictives del consell, fent-se amb tota la tecnologia que pogués i eliminant alguns hàbitats del registre i reservar-los pel seu propi ús i el dels seus aliats.</p><p>Tot i així, i en Bauer no farà res que ell cregui que pot perjudicar l’Aliança, i molt menys a favor de les potències de Realitat Prima, a qui considera règims autoritaris obsolets, responsables de la catàstrofe ecològica que va patir la Terra original.</p><p>En la seva opinió, l’ANM ha de fer servir les eines de què disposa per ajudar la humanitat a alliberar-se dels règims tirànics per tot el multivers.</p>"
+  },
+  "prototypeToken": {
+    "name": "Frederick Bauer (Orfeu)",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-frederick-bauer-orfeu.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "HqfaqE9LyAWJfqGI",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.HqfaqE9LyAWJfqGI",
+      "name": "Adepte (INT)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-int"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "567bnvFRgM84UEU2",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.567bnvFRgM84UEU2",
+      "name": "Encantador",
+      "type": "tret",
+      "system": {
+        "cost": 2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "encantador"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "iwkk15w0IC3SMNLA",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.iwkk15w0IC3SMNLA",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "KrNA7QhCaBxpGnwY",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.KrNA7QhCaBxpGnwY",
+      "name": "Recursos (elit)",
+      "type": "tret",
+      "system": {
+        "cost": 50,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "recursos-elit"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "pyPoi6zhOyPVBV2d",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.pyPoi6zhOyPVBV2d",
+      "name": "Sentit del Perill",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sentit-del-perill"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "rg2hJj5XcBQRgFns",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.rg2hJj5XcBQRgFns",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "TGM2Z8UNZXY9F0jm",
+      "_key": "!actors.items!JGgeeDDsivWHeRDM.TGM2Z8UNZXY9F0jm",
+      "name": "Cibermòdem d'interfície neural directa",
+      "type": "artefacte",
+      "system": {
+        "cost": 15,
+        "categoria": "dispositiu",
+        "activacio": {
+          "tipus": "normal",
+          "dificultat": 1
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 1
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +5 a l'habilitat informàtica. Mentre s'usa, l'usuari no pot percebre el seu entorn excepte estímuls molt potents, i encara així amb +2 de dificultat.",
+        "descripcio": "Evolució dels primers cibermòdems: submergeix l'usuari en una realitat immersiva, traducció del sistema informàtic, la IA o el mecanoide que la genera.",
+        "parametres": [
+          {
+            "tipus": "usuari"
+          },
+          {
+            "tipus": "durada"
+          },
+          {
+            "tipus": "eina",
+            "nivell": 5,
+            "segona": false,
+            "habilitat": "informatica"
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": 1,
+          "latenciaDeclarada": 1,
+          "permanent": false
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cibermodem-neural"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 518,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 9,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

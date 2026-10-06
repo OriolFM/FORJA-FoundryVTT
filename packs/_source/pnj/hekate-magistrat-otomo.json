@@ -1,0 +1,278 @@
+{
+  "_id": "ZhQcaRG3tlXjAgXy",
+  "_key": "!actors!ZhQcaRG3tlXjAgXy",
+  "name": "Magistrat Otomo",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-magistrat-otomo.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 3,
+      "APL": 3
+    },
+    "especie": "mecanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 3
+      },
+      "armes-distancia": {
+        "nivell": 6,
+        "especialitat": "energia"
+      },
+      "arts-marcials": {
+        "nivell": 6,
+        "especialitat": "karate"
+      },
+      "cercar": {
+        "nivell": 6
+      },
+      "consciencia": {
+        "nivell": 6
+      },
+      "enginyeria": {
+        "nivell": 4
+      },
+      "enigmes": {
+        "nivell": 7
+      },
+      "esquitllar-se": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 6
+      },
+      "explosius": {
+        "nivell": 3
+      },
+      "humanitats": {
+        "nivell": 5
+      },
+      "informatica": {
+        "nivell": 5
+      },
+      "intimidacio": {
+        "nivell": 5
+      },
+      "lideratge": {
+        "nivell": 7
+      },
+      "negociacio": {
+        "nivell": 6
+      },
+      "ofici": {
+        "nivell": 5,
+        "especialitat": "magistrat"
+      },
+      "persuasio": {
+        "nivell": 7
+      },
+      "resistencia": {
+        "nivell": 3
+      },
+      "vehicle": {
+        "nivell": 4,
+        "especialitat": "lliscadors"
+      }
+    },
+    "pc": 332,
+    "tier": "antagonista",
+    "notes": "<p>Equipament: uniforme, credencials i insignia de magistrat, assistent personal, pistola atordidora (pistola d’energia, causa dany de fatiga).</p><p>El magistrat Otomo és un androide construït per passar per humà, i a simple vista és indistingible d’un home de carn i ossos. És metòdic, pacient, i molt afeccionat a treure l’entrellat als enigmes i misteris que el seu càrrec, magistrat en cap del sector Hades, li porta.</p><p>Sovint, el Ministeri d’Assumptes Multiversals li demana ajut per resoldre casos complicats, en especial relatius al robatori o tràfic d’artefactes o tecnologia restringida.</p>"
+  },
+  "prototypeToken": {
+    "name": "Magistrat Otomo",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-magistrat-otomo.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "XrrBVIatVRCTHcxS",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.XrrBVIatVRCTHcxS",
+      "name": "Aparença Estranya (neutra)",
+      "type": "tret",
+      "system": {
+        "cost": 0,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-neutra"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "V3stSZOnnv7YHGqH",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.V3stSZOnnv7YHGqH",
+      "name": "Armadura Natural /4",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Reducció de dany natural +4.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-4"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "VqiV4olku5ECOK9z",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.VqiV4olku5ECOK9z",
+      "name": "Coordinació Millorada",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "coordinacio-millorada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "MRw3UXRyDX7FD87a",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.MRw3UXRyDX7FD87a",
+      "name": "Curació Ràpida (1)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "15 PC per punt de curació.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "curacio-rapida",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "JdmWVQlej8APM01E",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.JdmWVQlej8APM01E",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "gfJwcJPNesJhNz0E",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.gfJwcJPNesJhNz0E",
+      "name": "Lingüista Natural",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "linguista-natural"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "YBK45pCDGm98PDZC",
+      "_key": "!actors.items!ZhQcaRG3tlXjAgXy.YBK45pCDGm98PDZC",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 332,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 9,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

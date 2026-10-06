@@ -20,7 +20,8 @@ function llegirPack(pack) {
   const dir = path.join(FONTS, pack);
   assert.ok(fs.existsSync(dir), `Falta packs/_source/${pack} (executa node scripts/build-packs.mjs)`);
   return fs.readdirSync(dir).filter(f => f.endsWith(".json")).sort()
-    .map(f => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")));
+    .map(f => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")))
+    .filter(d => !d._key.startsWith("!folders!"));
 }
 
 const PACKS = {
@@ -34,7 +35,13 @@ const PACKS = {
   artefactes: llegirPack("artefactes"),
   efectes: llegirPack("efectes")
 };
-const ACTORS = ["pj", "pnj", "animals", "criatures"].flatMap(p => PACKS[p].map(a => ({ pack: p, actor: a })));
+// Tots els actors (proves d'estructura) i només els del manual (proves de fidelitat al manual).
+// Els de l'aventura «La porta d'Hèkate» segueixen regles anteriors: les diferències
+// es publiquen a moduls/forja-la-porta-dhekate/CONVERSIO.md.
+const TOTS = ["pj", "pnj", "animals", "criatures"].flatMap(p => PACKS[p].map(a => ({ pack: p, actor: a })));
+const ACTORS = TOTS.filter(a => !a.actor.flags.forja.aventura);
+const AVENTURA = TOTS.filter(a => a.actor.flags.forja.aventura);
+const delManual = pack => PACKS[pack].filter(a => !a.flags.forja.aventura);
 
 /**
  * Excepcions conegudes (culpa del manual) al cost o als derivats:
@@ -82,10 +89,18 @@ function derivatsActor(actor) {
 }
 
 test("comptes de documents per compendi", () => {
-  assert.equal(PACKS.pj.length, 6);
-  assert.equal(PACKS.pnj.length, 25);
-  assert.equal(PACKS.animals.length, 7);
-  assert.equal(PACKS.criatures.length, 9);
+  assert.equal(delManual("pj").length, 6);
+  assert.equal(delManual("pnj").length, 25);
+  assert.equal(delManual("animals").length, 7);
+  assert.equal(delManual("criatures").length, 9);
+  // La porta d'Hèkate: 8 PJ pregenerats, 13 PNJ i 4 criatures, en una carpeta de cada compendi.
+  const perPack = p => AVENTURA.filter(a => a.pack === p).length;
+  assert.deepEqual([perPack("pj"), perPack("pnj"), perPack("animals"), perPack("criatures")], [8, 13, 0, 4]);
+  for (const { pack, actor } of AVENTURA) {
+    const carpeta = JSON.parse(fs.readFileSync(path.join(FONTS, pack, "_carpeta-hekate.json"), "utf8"));
+    assert.equal(actor.folder, carpeta._id);
+    assert.equal(carpeta._key, `!folders!${carpeta._id}`);
+  }
   assert.equal(PACKS.artefactes.length, 18);
   assert.equal(PACKS.efectes.length, 65);
   assert.equal(PACKS.trets.length, 95);
@@ -94,11 +109,11 @@ test("comptes de documents per compendi", () => {
 });
 
 test("els fitxers font coincideixen amb el que genera l'script (no estan desfasats)", () => {
-  const { actors, comptes } = generar({ escriureFitxers: false });
+  const { actors, comptes, actorsAventura } = generar({ escriureFitxers: false });
   assert.equal(actors.length, 47);
-  assert.equal(comptes.pj, PACKS.pj.length);
-  const perId = new Map(ACTORS.map(a => [a.actor._id, a.actor]));
-  for (const { actor } of actors) {
+  assert.equal(comptes.pj, delManual("pj").length);
+  const perId = new Map(TOTS.map(a => [a.actor._id, a.actor]));
+  for (const { actor } of [...actors, ...actorsAventura]) {
     assert.deepEqual(perId.get(actor._id), actor, `${actor.name} desfasat: torna a executar node scripts/build-packs.mjs`);
   }
 });
@@ -115,7 +130,7 @@ test("_id de 16 caràcters alfanumèrics, únics, i _key correctes", () => {
       unic(`${p}${it._id}`);
     }
   }
-  for (const { actor } of ACTORS) {
+  for (const { actor } of TOTS) {
     assert.match(actor._id, re);
     assert.equal(actor._key, `!actors!${actor._id}`);
     unic(`actor${actor._id}`);
@@ -130,12 +145,12 @@ test("_id de 16 caràcters alfanumèrics, únics, i _key correctes", () => {
 
 test("tipus d'actor, tier i fitxa de token", () => {
   const tiers = { animals: "animal", criatures: "criatura" };
-  for (const { pack, actor } of ACTORS) {
+  for (const { pack, actor } of TOTS) {
     if (pack === "pj") {
       assert.equal(actor.type, "personatge");
       assert.equal(actor.prototypeToken.actorLink, true);
       assert.equal(actor.prototypeToken.disposition, 1);
-      assert.equal(actor.system.pc, 200);
+      assert.equal(actor.system.pc, actor.flags.forja.aventura ? 150 : 200);
       assert.ok(actor.system.biografia.startsWith("<p>"), `${actor.name} sense biografia`);
     } else {
       assert.equal(actor.type, "pnj");
@@ -145,13 +160,13 @@ test("tipus d'actor, tier i fitxa de token", () => {
       if (tiers[pack]) assert.equal(actor.system.tier, tiers[pack]);
     }
   }
-  const nem = PACKS.pnj.filter(a => a.system.tier === "nemesis");
+  const nem = delManual("pnj").filter(a => a.system.tier === "nemesis");
   assert.deepEqual(nem.map(a => a.name), ["Renegat"]);
-  assert.equal(PACKS.pnj.filter(a => a.system.tier === "extra").length, 2);
+  assert.equal(delManual("pnj").filter(a => a.system.tier === "extra").length, 2);
 });
 
 test("totes les habilitats són ids vàlids i els valors són dins dels límits del DataModel", () => {
-  for (const { actor } of ACTORS) {
+  for (const { actor } of TOTS) {
     const s = actor.system;
     for (const [id, h] of Object.entries(s.habilitats)) {
       assert.ok(cfg.HABILITATS.includes(id), `${actor.name}: habilitat ${id}`);
@@ -168,7 +183,7 @@ test("totes les habilitats són ids vàlids i els valors són dins dels límits 
 test("cada actor té el 'Cop' bàsic i l'arma natural dels seus trets d'armament natural", () => {
   const natural = { "armament-urpes": "urpes", "armament-mossegada": "ullals", "armament-banyes": "banyes",
     "armament-pinces": "pinces", "armament-fiblons": "fiblons-i-espines" };
-  for (const { actor } of ACTORS) {
+  for (const { actor } of TOTS) {
     const armes = actor.items.filter(i => i.type === "arma");
     const cop = armes.find(a => a.flags.forja.catalegId === "cop");
     assert.ok(cop?.system.basic, `${actor.name} sense Cop`);
@@ -185,7 +200,7 @@ test("cada actor té el 'Cop' bàsic i l'arma natural dels seus trets d'armament
 test("trets amb valor X: el cost embegut = multiplicador*X o X/divisor, i X és a flags.forja.valorX", () => {
   const cat = Object.fromEntries(PACKS.trets.map(t => [t.flags.forja.catalegId, t]));
   const mult = { "bracos-addicionals": 5, "potes-addicionals": 5, tentacles: 5, "curacio-rapida": 15 };
-  for (const { actor } of ACTORS) {
+  for (const { actor } of TOTS) {
     for (const it of actor.items.filter(i => i.type === "tret")) {
       assert.ok(cat[it.flags.forja.catalegId], `${actor.name}: tret ${it.name} fora del catàleg`);
       const m = mult[it.flags.forja.catalegId];

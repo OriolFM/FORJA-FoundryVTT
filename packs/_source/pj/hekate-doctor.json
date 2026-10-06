@@ -1,0 +1,166 @@
+{
+  "_id": "Az99rTxHnUrpeA41",
+  "_key": "!actors!Az99rTxHnUrpeA41",
+  "name": "Doctor",
+  "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/hekate-doctor.webp",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 2,
+      "INT": 3,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-cos-a-cos": {
+        "nivell": 3
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "enigmes": {
+        "nivell": 2
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 2
+      },
+      "medicina": {
+        "nivell": 5
+      },
+      "negociacio": {
+        "nivell": 3
+      },
+      "persuasio": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 2
+      }
+    },
+    "pc": 150,
+    "biografia": "<p>Equipament: Roba còmoda, pistola blàster (energia), jaqueta reforçada (armadura lleugera flexible), cinturó utilitari, kit mèdic.</p>"
+  },
+  "prototypeToken": {
+    "name": "Doctor",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/hekate-doctor.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "wDBLKnvdDOeexsDE",
+      "_key": "!actors.items!Az99rTxHnUrpeA41.wDBLKnvdDOeexsDE",
+      "name": "Encantador",
+      "type": "tret",
+      "system": {
+        "cost": 2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "encantador"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "bq8GNe8RDhJEbpZK",
+      "_key": "!actors.items!Az99rTxHnUrpeA41.bq8GNe8RDhJEbpZK",
+      "name": "Feromones",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "feromones"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "CTYAkBWVEdYlOWDX",
+      "_key": "!actors.items!Az99rTxHnUrpeA41.CTYAkBWVEdYlOWDX",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "FalpNtcQGIxmeDO4",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_01_introduccio.md",
+      "costManual": 150,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 9,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -22,6 +22,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { AVENTURA, analitzarAventura } from "./aventura-hekate.mjs";
 
 const ARREL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MANUAL = path.join(ARREL, "docs/FORJA_FC001CA_CORE.md");
@@ -370,7 +371,7 @@ function trobarEquip(nom, cat) {
  * Les incidències (no mapat, no analitzable, suposicions) s'afegeixen a `incidencies`.
  */
 export function construirActor(bloc, cat, cfg, incidencies) {
-  const slugActor = slug(bloc.nom);
+  const slugActor = (bloc.prefixSlug ?? "") + slug(bloc.nom);
   const esPJ = bloc.seccio === "pj";
   const pack = esPJ ? "pj" : bloc.seccio === "animals" ? "animals" : bloc.seccio === "criatures" ? "criatures" : "pnj";
   const actorId = idDeterminista(`${pack}/${slugActor}`);
@@ -412,11 +413,22 @@ export function construirActor(bloc, cat, cfg, incidencies) {
     if (!t) continue;
     const mm = t.match(/^(.*?)\s+(\d+)$/);
     if (!mm) { avisa("no-analitzable", `Habilitat no analitzable: «${t}»`); continue; }
-    const n = normalitzar(mm[1]);
+    // Especialitat entre parèntesis («armes cos a cos (ganivets) 4»), com a l'aventura.
+    const me = mm[1].match(/^(.*?)\s*\(([^)]+)\)$/);
+    const n = normalitzar(me ? me[1] : mm[1]);
     const id = ALIAS_HABILITAT[n] ?? n.replace(/ /g, "-");
     if (!cfg.HABILITATS.includes(id)) { avisa("no-mapat", `Habilitat desconeguda «${mm[1]}»`); continue; }
-    habilitats[id] = { nivell: parseInt(mm[2], 10) };
-    if (id === "ofici" && especialitatOfici) habilitats[id].especialitat = especialitatOfici;
+    const nivell = parseInt(mm[2], 10);
+    if (habilitats[id]) {
+      // Una sola habilitat per id al sistema: es queda el nivell més alt i s'ajunten les especialitats.
+      avisa("nota", `Habilitat «${id}» repetida (${t}): es queda el nivell ${Math.max(nivell, habilitats[id].nivell)}`);
+      habilitats[id].nivell = Math.max(nivell, habilitats[id].nivell);
+      if (me) habilitats[id].especialitat = [habilitats[id].especialitat, netejarText(me[2])].filter(Boolean).join(", ");
+      continue;
+    }
+    habilitats[id] = { nivell };
+    if (me) habilitats[id].especialitat = netejarText(me[2]);
+    else if (id === "ofici" && especialitatOfici) habilitats[id].especialitat = especialitatOfici;
   }
 
   // --- Items embeguts ---
@@ -476,7 +488,7 @@ export function construirActor(bloc, cat, cfg, incidencies) {
 
   // --- Descripció ---
   const html = aHTML(esPJ ? bloc.previ : bloc.descripcio);
-  const system = { atributs, especie, mida, constitucio, habilitats, pc: esPJ ? 200 : bloc.cost };
+  const system = { atributs, especie, mida, constitucio, habilitats, pc: bloc.pcInicials ?? (esPJ ? 200 : bloc.cost) };
   if (esPJ) system.biografia = html;
   else {
     system.tier = bloc.seccio === "figurants" ? "extra"
@@ -506,10 +518,14 @@ export function construirActor(bloc, cat, cfg, incidencies) {
     },
     items,
     effects: [],
-    folder: null,
+    folder: bloc.aventura ? idCarpeta(pack, bloc.aventura) : null,
     sort: 0,
     ownership: { default: 0 },
-    flags: { forja: { origenManual: `docs/FORJA_FC001CA_CORE.md l.${bloc.linia}`, costManual: bloc.cost, derivatsManual } }
+    flags: {
+      forja: bloc.aventura
+        ? { aventura: bloc.aventura, origen: bloc.fitxer, costManual: bloc.cost, derivatsManual }
+        : { origenManual: `docs/FORJA_FC001CA_CORE.md l.${bloc.linia}`, costManual: bloc.cost, derivatsManual }
+    }
   };
   return { pack, slug: slugActor, actor };
 }
@@ -591,6 +607,17 @@ function netejarPack(pack) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
+/** _id de la carpeta d'una aventura dins un compendi d'actors. */
+export function idCarpeta(pack, aventura) {
+  return idDeterminista(`carpeta/${pack}/${aventura}`);
+}
+
+/** Document de carpeta (Folder) per a un compendi, en el format del CLI de Foundry. */
+function carpeta(pack, aventura, nom) {
+  const _id = idCarpeta(pack, aventura);
+  return { _id, _key: `!folders!${_id}`, name: nom, type: "Actor", folder: null, sorting: "a", sort: 0, color: null, description: "", flags: {} };
+}
+
 /** Genera tot el contingut. Retorna `{ actors, incidencies, comptes, cat, cfg }`. */
 export function generar({ escriureFitxers = true } = {}) {
   const cat = carregarCatalegs();
@@ -598,11 +625,19 @@ export function generar({ escriureFitxers = true } = {}) {
   const incidencies = [];
   const blocs = analitzarManual(fs.readFileSync(MANUAL, "utf8"));
   const actors = blocs.map(b => construirActor(b, cat, cfg, incidencies));
+  // Aventura «La porta d'Hèkate»: incidències i diferències a part (CONVERSIO.md).
+  const incidenciesAventura = [];
+  const actorsAventura = analitzarAventura(ARREL).map(b => {
+    const a = construirActor(b, cat, cfg, incidenciesAventura);
+    for (const n of b.notesConversio ?? []) incidenciesAventura.push({ actor: b.nom, pack: a.pack, tipus: "suposicio", text: n });
+    return a;
+  });
 
   if (escriureFitxers) {
     for (const p of [...PACKS_ACTOR, ...PACKS_ITEM]) netejarPack(p);
     const vistos = new Set();
-    for (const a of actors) {
+    for (const p of new Set(actorsAventura.map(a => a.pack))) escriure(p, `_carpeta-${AVENTURA.id}`, carpeta(p, AVENTURA.id, AVENTURA.nom));
+    for (const a of [...actors, ...actorsAventura]) {
       const clau = `${a.pack}/${a.slug}`;
       if (vistos.has(clau)) throw new Error(`Slug duplicat: ${clau}`);
       vistos.add(clau);
@@ -611,6 +646,8 @@ export function generar({ escriureFitxers = true } = {}) {
   }
   const comptes = {};
   for (const p of PACKS_ACTOR) comptes[p] = actors.filter(a => a.pack === p).length;
+  const comptesAventura = {};
+  for (const p of PACKS_ACTOR) comptesAventura[p] = actorsAventura.filter(a => a.pack === p).length;
 
   const tipusPack = { trets: "tret", armes: "arma", armadures: "armadura", artefactes: "artefacte", efectes: "efecte" };
   for (const p of PACKS_ITEM) {
@@ -624,7 +661,7 @@ export function generar({ escriureFitxers = true } = {}) {
       }));
     }
   }
-  return { actors, incidencies, comptes, cat, cfg };
+  return { actors, incidencies, comptes, cat, cfg, actorsAventura, incidenciesAventura, comptesAventura };
 }
 
 /* ------------------------------------------------------------------ */
@@ -686,9 +723,53 @@ function escriureInforme({ actors, incidencies, comptes, cfg }) {
   return dif;
 }
 
+/** Informe de la conversió dels actors de l'aventura (regles antigues → actuals). */
+function escriureInformeAventura({ actorsAventura, incidenciesAventura, comptesAventura, cfg }) {
+  const dif = trobarDiferencies(actorsAventura, cfg);
+  const L = [];
+  L.push(`# ${AVENTURA.nom}: conversió dels actors`);
+  L.push("");
+  L.push("Generat per `scripts/build-packs.mjs` (no s'edita a mà). Font: `" + AVENTURA.font + "/`. Els actors són als compendis del sistema, dins la carpeta «" + AVENTURA.nom + "».");
+  L.push("");
+  L.push("El mòdul (esborrany v0.2) fa servir unes regles anteriors. Conversió decidida per l'Oriol FM (2026-10-06): constitució esglaó a esglaó (feble → magra, saludable → saludable, robusta → ferma, massissa → robusta), mida col·losal → enorme; es mantenen atributs, habilitats i trets, i el cost i els derivats es recalculen amb les regles actuals.");
+  L.push("");
+  L.push("| Compendi | Actors |");
+  L.push("|---|---|");
+  for (const [p, n] of Object.entries(comptesAventura)) if (n) L.push(`| \`${p}\` | ${n} |`);
+  L.push("");
+  const seccions = [
+    ["no-mapat", "Trets, habilitats o equip que no s'han pogut mapar (no s'han inclòs)"],
+    ["no-analitzable", "Línies no analitzables"],
+    ["suposicio", "Conversions i suposicions"],
+    ["cost-catalog", "Costos d'artefactes/efectes: mòdul contra catàleg"],
+    ["nota", "Notes"]
+  ];
+  for (const [tipus, titol] of seccions) {
+    const llista = incidenciesAventura.filter(i => i.tipus === tipus);
+    L.push(`## ${titol}`);
+    L.push("");
+    if (!llista.length) L.push("Cap.");
+    for (const i of llista) L.push(`- **${i.actor}** (\`${i.pack}\`): ${i.text}`);
+    L.push("");
+  }
+  L.push("## Diferències amb el mòdul (cost i derivats recalculats)");
+  L.push("");
+  L.push("Esperables: la defensa, la salut i part dels costos canvien d'escala entre versions de les regles. Serveix per revisar cada actor.");
+  L.push("");
+  if (!dif.length) L.push("Cap diferència.");
+  else {
+    L.push("| Actor | Compendi | Camp | Mòdul | Calculat | Diferència |");
+    L.push("|---|---|---|---|---|---|");
+    for (const d of dif) L.push(`| ${d.actor} | \`${d.pack}\` | ${d.camp} | ${d.manual} | ${d.calculat} | ${d.calculat - d.manual} |`);
+  }
+  L.push("");
+  fs.writeFileSync(path.join(ARREL, AVENTURA.informe), L.join("\n"));
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const r = generar();
   const dif = escriureInforme(r);
+  escriureInformeAventura(r);
   console.log("Compendis generats:", r.comptes);
   console.log(`Incidències: ${r.incidencies.length} (vegeu docs/CONTINGUT-INFORME.md)`);
   console.log(`Diferències cost/derivats: ${dif.length}`);

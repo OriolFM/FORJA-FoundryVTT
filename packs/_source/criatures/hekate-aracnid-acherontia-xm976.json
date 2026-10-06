@@ -1,0 +1,379 @@
+{
+  "_id": "kSEHVuLyw3jQqdpw",
+  "_key": "!actors!kSEHVuLyw3jQqdpw",
+  "name": "Aràcnid Acherontia XM976",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/hekate-aracnid-acherontia-xm976.webp",
+  "system": {
+    "atributs": {
+      "FOR": 4,
+      "DES": 2,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 1,
+      "APL": 3
+    },
+    "especie": "artropode",
+    "mida": 5,
+    "constitucio": 4,
+    "habilitats": {
+      "acrobacies": {
+        "nivell": 3
+      },
+      "amagar-se": {
+        "nivell": 4
+      },
+      "barallar-se": {
+        "nivell": 6
+      },
+      "cercar": {
+        "nivell": 4
+      },
+      "consciencia": {
+        "nivell": 4
+      },
+      "correr": {
+        "nivell": 6
+      },
+      "esquitllar-se": {
+        "nivell": 4
+      },
+      "forca-bruta": {
+        "nivell": 6
+      },
+      "intimidacio": {
+        "nivell": 6
+      },
+      "resistencia": {
+        "nivell": 6
+      }
+    },
+    "pc": 302,
+    "tier": "criatura",
+    "notes": "<p>L’Acherontia XM976 es una criatura aràcnida colossal que els PJs es troben als pantans de l’hàbitat HLV-426. És un depredador extremadament agressiu, i acostuma a emboscar les seves preses. Les seves urpes i ullals injecten una toxina anticoagulant que fa que les preses sagnin quan se les ataca.</p>"
+  },
+  "prototypeToken": {
+    "name": "Aràcnid Acherontia XM976",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/hekate-aracnid-acherontia-xm976.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "wI073ZHNnvrWvBC8",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.wI073ZHNnvrWvBC8",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "TdLBr916ZeQ7KEOs",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.TdLBr916ZeQ7KEOs",
+      "name": "Armament Natural (urpes)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "fXyJ8nglFAftjonc",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.fXyJ8nglFAftjonc",
+      "name": "Coordinació Millorada",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "coordinacio-millorada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "D2rwMwNDYtQQ9MsA",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.D2rwMwNDYtQQ9MsA",
+      "name": "Dur de Pelar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Ignora la penalització per ferides (la fatiga encara penalitza normalment).",
+        "efecte": {
+          "flag": "ignoraPenalitzacioFerides"
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dur-de-pelar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "vg3UPeEi10Smu2Cl",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.vg3UPeEi10Smu2Cl",
+      "name": "Braços Addicionals (1)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "bracos-addicionals",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Uv9oDVd30EQAvH4Z",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.Uv9oDVd30EQAvH4Z",
+      "name": "Potes Addicionals (1)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "5 PC per parell addicional.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "potes-addicionals",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "gzrFowxA8cGSrCbB",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.gzrFowxA8cGSrCbB",
+      "name": "Reflexos Ràpids",
+      "type": "tret",
+      "system": {
+        "cost": 30,
+        "descripcio": "+1 reacció màxima per torn.",
+        "efecte": {
+          "stat": "reaccionsMax",
+          "delta": 1
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "reflexos-rapids"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "1lVycsu2YEDqd6oH",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.1lVycsu2YEDqd6oH",
+      "name": "Visió Nocturna",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-nocturna"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "YKDUo5CfG2DNIgFc",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.YKDUo5CfG2DNIgFc",
+      "name": "Visió Perifèrica",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-periferica"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "LgG7STPWxSMgeXTV",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.LgG7STPWxSMgeXTV",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "dpZYBb6ttHehr3XJ",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.dpZYBb6ttHehr3XJ",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "mpHns7prNVFEfSee",
+      "_key": "!actors.items!kSEHVuLyw3jQqdpw.mpHns7prNVFEfSee",
+      "name": "Urpes",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "urpes"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "bg5h7HnkI0fESYIB",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 302,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 14,
+        "reduccioDany": 7,
+        "reaccio": 2
+      }
+    }
+  }
+}

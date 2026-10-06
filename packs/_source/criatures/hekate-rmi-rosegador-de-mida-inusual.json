@@ -1,0 +1,232 @@
+{
+  "_id": "O7t2qfBxNHvw1lmx",
+  "_key": "!actors!O7t2qfBxNHvw1lmx",
+  "name": "RMI (Rosegador de Mida Inusual)",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/criatures/hekate-rmi-rosegador-de-mida-inusual.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 1,
+      "AGI": 1,
+      "PER": 2,
+      "INT": 1,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 2,
+    "constitucio": 3,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 4
+      },
+      "barallar-se": {
+        "nivell": 4
+      },
+      "cercar": {
+        "nivell": 5
+      },
+      "consciencia": {
+        "nivell": 5
+      },
+      "correr": {
+        "nivell": 4
+      },
+      "equilibri": {
+        "nivell": 2
+      },
+      "escalada": {
+        "nivell": 3
+      },
+      "esquitllar-se": {
+        "nivell": 5
+      },
+      "esquivar": {
+        "nivell": 4
+      },
+      "nedar": {
+        "nivell": 4
+      }
+    },
+    "pc": 63,
+    "tier": "criatura",
+    "notes": "<p>Els Rosegadors de Mida Inusual són animals que en algun moment es van escapar d’un hàbitat defectuós del món Forja i que s’han pogut reproduïr pels corredors del sector Hades. La seva aparença és la de rates mutants gegantines, de la mida d’un gos gros, amb una pell esquitxada de grosses butllofes, creixements tumorals, i llagues que supuren un líquid groguenc fètid. Són agressives en grup, però si se’ls fa prou mal, fugiran cuita-corrents.</p>"
+  },
+  "prototypeToken": {
+    "name": "RMI (Rosegador de Mida Inusual)",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/criatures/hekate-rmi-rosegador-de-mida-inusual.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "UEV4GEuWgba39PaE",
+      "_key": "!actors.items!O7t2qfBxNHvw1lmx.UEV4GEuWgba39PaE",
+      "name": "Armament Natural (mossegada/bec)",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armament-mossegada"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "J06DIWgcp320mbAs",
+      "_key": "!actors.items!O7t2qfBxNHvw1lmx.J06DIWgcp320mbAs",
+      "name": "Especialista",
+      "type": "tret",
+      "system": {
+        "cost": 20,
+        "descripcio": "Ignora 1s; els 9 també compten com a doble fita.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "especialista"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "WJoGtM5yFuxQFZ4R",
+      "_key": "!actors.items!O7t2qfBxNHvw1lmx.WJoGtM5yFuxQFZ4R",
+      "name": "Repulsiu",
+      "type": "tret",
+      "system": {
+        "cost": -2,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "repulsiu"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "pyrCGPYDM2Ep3RFk",
+      "_key": "!actors.items!O7t2qfBxNHvw1lmx.pyrCGPYDM2Ep3RFk",
+      "name": "Visió Nocturna",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-nocturna"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "nFtGHIZ8qmAoybcw",
+      "_key": "!actors.items!O7t2qfBxNHvw1lmx.nFtGHIZ8qmAoybcw",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "qAILFJ692Ur5LsCF",
+      "_key": "!actors.items!O7t2qfBxNHvw1lmx.qAILFJ692Ur5LsCF",
+      "name": "Ullals",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 1,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+2",
+        "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Armament natural — Llista d'armament natural (manual)."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "ullals"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "bg5h7HnkI0fESYIB",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 63,
+      "derivatsManual": {
+        "latencia": 19,
+        "defensa": 5,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

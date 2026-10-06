@@ -1,0 +1,164 @@
+{
+  "_id": "YMXFVnvGoxWviJYU",
+  "_key": "!actors!YMXFVnvGoxWviJYU",
+  "name": "Científic",
+  "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/hekate-cientific.webp",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 3,
+      "INT": 3,
+      "APL": 1
+    },
+    "especie": "vegetal",
+    "mida": 4,
+    "constitucio": 4,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "ciencia": {
+        "nivell": 5
+      },
+      "consciencia": {
+        "nivell": 3
+      },
+      "enigmes": {
+        "nivell": 3
+      },
+      "esquitllar-se": {
+        "nivell": 2
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 3
+      },
+      "medicina": {
+        "nivell": 2
+      },
+      "nyaps": {
+        "nivell": 3
+      },
+      "resistencia": {
+        "nivell": 2
+      }
+    },
+    "pc": 150,
+    "biografia": "<p>Dríada.</p><p>Explorador i prospector.</p><p>Equipament: Roba de custodi, rifle (energia), sarró, ponxo mimètic (armadura lleugera flexible), cinturó utilitari, multieina, assistent digital (braçalet).</p>"
+  },
+  "prototypeToken": {
+    "name": "Científic",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/hekate-cientific.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "KZUfe6j4qJDjmpMZ",
+      "_key": "!actors.items!YMXFVnvGoxWviJYU.KZUfe6j4qJDjmpMZ",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "6gkOdX4phRkEp7Aa",
+      "_key": "!actors.items!YMXFVnvGoxWviJYU.6gkOdX4phRkEp7Aa",
+      "name": "Curació Ràpida (1)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "15 PC per punt de curació.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "curacio-rapida",
+          "valorX": 1
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "2E63I4KDynkp53TM",
+      "_key": "!actors.items!YMXFVnvGoxWviJYU.2E63I4KDynkp53TM",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "FalpNtcQGIxmeDO4",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_01_introduccio.md",
+      "costManual": 150,
+      "derivatsManual": {
+        "latencia": 11,
+        "defensa": 9,
+        "reduccioDany": 5,
+        "reaccio": 1
+      }
+    }
+  }
+}

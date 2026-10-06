@@ -1,0 +1,165 @@
+{
+  "_id": "8T0lr1cGtKG2CZDH",
+  "_key": "!actors!8T0lr1cGtKG2CZDH",
+  "name": "Dron de manteniment",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-dron-de-manteniment.webp",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 2,
+      "AGI": 1,
+      "PER": 1,
+      "INT": 2,
+      "APL": 1
+    },
+    "especie": "mecanoide",
+    "mida": 1,
+    "constitucio": 5,
+    "habilitats": {
+      "cercar": {
+        "nivell": 4
+      },
+      "consciencia": {
+        "nivell": 2
+      },
+      "enginyeria": {
+        "nivell": 8
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 8
+      }
+    },
+    "pc": 71,
+    "tier": "antagonista",
+    "notes": "<p>Els drons de manteniment són petites esferes flotants de la mida d’una pilota de futbol, que poden desplegar tota mena d’eines d’electrònica i mecànica.</p>"
+  },
+  "prototypeToken": {
+    "name": "Dron de manteniment",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-dron-de-manteniment.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "CFMiGnC5izKWNXY5",
+      "_key": "!actors.items!8T0lr1cGtKG2CZDH.CFMiGnC5izKWNXY5",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "gFzxSydZlV8k5cRX",
+      "_key": "!actors.items!8T0lr1cGtKG2CZDH.gFzxSydZlV8k5cRX",
+      "name": "Dron",
+      "type": "tret",
+      "system": {
+        "cost": -30,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "dron"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "pCeHxTqac7JAPSkl",
+      "_key": "!actors.items!8T0lr1cGtKG2CZDH.pCeHxTqac7JAPSkl",
+      "name": "Levitar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "levitar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Flbgbo84hDsfeBVz",
+      "_key": "!actors.items!8T0lr1cGtKG2CZDH.Flbgbo84hDsfeBVz",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 71,
+      "derivatsManual": {
+        "latencia": 18,
+        "defensa": 4,
+        "reduccioDany": 6,
+        "reaccio": 1
+      }
+    }
+  }
+}

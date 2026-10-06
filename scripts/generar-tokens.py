@@ -29,6 +29,7 @@ TOKENS_REALS = {
     ("pj", "trace"): "mon-proves/assets/Trace.png",
     ("pj", "marvin-el-delfic"): "mon-proves/assets/Marvin.png",
     ("criatures", "golem-de-carn"): "mon-proves/assets/Necrogolem.png",
+    ("criatures", "hekate-aracnid-acherontia-xm976"): "mon-proves/assets/Aracnid.png",
 }
 
 MIDA = 265          # px, com els tokens existents
@@ -99,6 +100,8 @@ def main():
         dest = SORTIDA / pack
         dest.mkdir(parents=True, exist_ok=True)
         for f in sorted((FONTS / pack).glob("*.json")):
+            if f.stem.startswith("_"):
+                continue  # carpetes
             slug = f.stem
             nom = json.loads(f.read_text(encoding="utf-8"))["name"]
             real = TOKENS_REALS.get((pack, slug))

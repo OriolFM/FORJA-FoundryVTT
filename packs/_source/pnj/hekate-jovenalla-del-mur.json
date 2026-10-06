@@ -1,0 +1,115 @@
+{
+  "_id": "jk4ZF6mKfPimMuIj",
+  "_key": "!actors!jk4ZF6mKfPimMuIj",
+  "name": "Jovenalla del Mur",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-jovenalla-del-mur.webp",
+  "system": {
+    "atributs": {
+      "FOR": 1,
+      "DES": 2,
+      "AGI": 3,
+      "PER": 3,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 2,
+    "habilitats": {
+      "acrobacies": {
+        "nivell": 4
+      },
+      "amagar-se": {
+        "nivell": 3
+      },
+      "armes-distancia": {
+        "nivell": 2,
+        "especialitat": "llencívoles"
+      },
+      "barallar-se": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 3
+      },
+      "consciencia": {
+        "nivell": 4
+      },
+      "correr": {
+        "nivell": 3
+      },
+      "equilibri": {
+        "nivell": 4
+      },
+      "esquivar": {
+        "nivell": 3
+      },
+      "nyaps": {
+        "nivell": 4
+      }
+    },
+    "pc": 69,
+    "tier": "extra",
+    "notes": "<p>El barri del Mur, a Axis Mundi, és ple de jovenalla que ha crescut en aquesta favela caòtica feta a base de contenidors i dipòsits buits soldats a la paret del pou. Interconnectat per passarel·les, tubs, i rampes, el barri és una àrea caòtica on el jovent s’ha d’espavilar per sobreviure.</p>"
+  },
+  "prototypeToken": {
+    "name": "Jovenalla del Mur",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-jovenalla-del-mur.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "mHSmkZU1xcm9gO5a",
+      "_key": "!actors.items!jk4ZF6mKfPimMuIj.mHSmkZU1xcm9gO5a",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 69,
+      "derivatsManual": {
+        "latencia": 7,
+        "defensa": 12,
+        "reduccioDany": 2,
+        "reaccio": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "_id": "bOppBV8j1euPwW4G",
+  "_key": "!actors!bOppBV8j1euPwW4G",
+  "name": "Magistrat 2",
+  "type": "personatge",
+  "img": "systems/forja/assets/tokens/pj/hekate-magistrat-2.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "mecanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "armes-distancia": {
+        "nivell": 2
+      },
+      "arts-marcials": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "correr": {
+        "nivell": 1
+      },
+      "esquivar": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 1
+      },
+      "informatica": {
+        "nivell": 2
+      },
+      "jocs-de-mans": {
+        "nivell": 3
+      },
+      "negociacio": {
+        "nivell": 1
+      },
+      "persuasio": {
+        "nivell": 1
+      },
+      "resistencia": {
+        "nivell": 1
+      }
+    },
+    "pc": 150,
+    "biografia": "<p>Mecanoide membre de la magistratura.</p><p>Investigador.</p><p>Equipament: Uniforme de magistrat, pistola blàster (energia), jaqueta reforçada (armadura lleugera flexible), cinturó utilitari.</p>"
+  },
+  "prototypeToken": {
+    "name": "Magistrat 2",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/hekate-magistrat-2.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "NnGAxUaDWKDYKk97",
+      "_key": "!actors.items!bOppBV8j1euPwW4G.NnGAxUaDWKDYKk97",
+      "name": "Adepte (INT)",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "Repeteix els 1s en tirades de INT.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "adepte-int"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "OmwnuWOVOTqzsVKt",
+      "_key": "!actors.items!bOppBV8j1euPwW4G.OmwnuWOVOTqzsVKt",
+      "name": "Aparença Estranya (neutra)",
+      "type": "tret",
+      "system": {
+        "cost": 0,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aparenca-neutra"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "82uqh9cpFzgHtFAq",
+      "_key": "!actors.items!bOppBV8j1euPwW4G.82uqh9cpFzgHtFAq",
+      "name": "Armadura Natural /2",
+      "type": "tret",
+      "system": {
+        "cost": 6,
+        "descripcio": "Reducció de dany natural +2.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "armadura-nat-2"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "HLeqmZnb5wYxjHb7",
+      "_key": "!actors.items!bOppBV8j1euPwW4G.HLeqmZnb5wYxjHb7",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "cwsB6C1F1ptKMGlX",
+      "_key": "!actors.items!bOppBV8j1euPwW4G.cwsB6C1F1ptKMGlX",
+      "name": "Visió Nocturna",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "visio-nocturna"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "lYqvhWu1ES0Ynpai",
+      "_key": "!actors.items!bOppBV8j1euPwW4G.lYqvhWu1ES0Ynpai",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "FalpNtcQGIxmeDO4",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_01_introduccio.md",
+      "costManual": 150,
+      "derivatsManual": {
+        "latencia": 9,
+        "defensa": 10,
+        "reduccioDany": 5,
+        "reaccio": 1
+      }
+    }
+  }
+}

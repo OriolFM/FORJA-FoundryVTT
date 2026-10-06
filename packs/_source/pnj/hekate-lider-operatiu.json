@@ -1,0 +1,148 @@
+{
+  "_id": "82CokqBflf2qWhcg",
+  "_key": "!actors!82CokqBflf2qWhcg",
+  "name": "Líder operatiu",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-lider-operatiu.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 2,
+      "PER": 2,
+      "INT": 3,
+      "APL": 3
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 4,
+    "habilitats": {
+      "amagar-se": {
+        "nivell": 6
+      },
+      "armes-distancia": {
+        "nivell": 8,
+        "especialitat": "projectil sòlid"
+      },
+      "armes-cos-a-cos": {
+        "nivell": 6,
+        "especialitat": "espases"
+      },
+      "arts-marcials": {
+        "nivell": 6,
+        "especialitat": "krav maga"
+      },
+      "cercar": {
+        "nivell": 5
+      },
+      "correr": {
+        "nivell": 6
+      },
+      "equilibri": {
+        "nivell": 4
+      },
+      "escalada": {
+        "nivell": 3
+      },
+      "esquitllar-se": {
+        "nivell": 6
+      },
+      "esquivar": {
+        "nivell": 6
+      },
+      "explosius": {
+        "nivell": 6
+      },
+      "forca-bruta": {
+        "nivell": 2
+      },
+      "informatica": {
+        "nivell": 6
+      },
+      "intimidacio": {
+        "nivell": 5
+      },
+      "navegacio": {
+        "nivell": 3
+      },
+      "nedar": {
+        "nivell": 3
+      },
+      "negociacio": {
+        "nivell": 3
+      },
+      "nyaps": {
+        "nivell": 5
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 2,
+        "especialitat": "terrestre"
+      }
+    },
+    "pc": 240,
+    "tier": "extra",
+    "notes": "<p>Equipament: roba de camuflatge urbà, subfusell i pistola de projectil sòlid amb silenciador, espasa recta, bótes militars, barret, comunicador, assistent digital, arnès amb eines, detonadors i cordó detonant.</p><p>Els grups operatius del mercat negre que treballen per en Bauer tenen líders solvents, capaços de prendre decisions de manera autònoma si cal.</p><p>Molts d’aquests líders vénen, com el mateix Bauer, del Cos de Bretxers, o tenen experiència prèvia com a militars en qualsevol univers.</p>"
+  },
+  "prototypeToken": {
+    "name": "Líder operatiu",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-lider-operatiu.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "sg4pYkZFAGBahsmb",
+      "_key": "!actors.items!82CokqBflf2qWhcg.sg4pYkZFAGBahsmb",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 240,
+      "derivatsManual": {
+        "latencia": 10,
+        "defensa": 9,
+        "reduccioDany": 5,
+        "reaccio": 1
+      }
+    }
+  }
+}

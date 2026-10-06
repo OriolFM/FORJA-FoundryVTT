@@ -1,0 +1,207 @@
+{
+  "_id": "dOFj1fthCNncUcbE",
+  "_key": "!actors!dOFj1fthCNncUcbE",
+  "name": "Àstrid Corçana",
+  "type": "pnj",
+  "img": "systems/forja/assets/tokens/pnj/hekate-astrid-corcana.webp",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 2,
+      "AGI": 3,
+      "PER": 3,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "animal",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "acrobacies": {
+        "nivell": 4
+      },
+      "armes-cos-a-cos": {
+        "nivell": 4,
+        "especialitat": "ganivets"
+      },
+      "barallar-se": {
+        "nivell": 3
+      },
+      "cercar": {
+        "nivell": 6
+      },
+      "ciencia": {
+        "nivell": 1
+      },
+      "consciencia": {
+        "nivell": 6
+      },
+      "enginyeria": {
+        "nivell": 5
+      },
+      "equilibri": {
+        "nivell": 5
+      },
+      "escalada": {
+        "nivell": 3
+      },
+      "esquivar": {
+        "nivell": 5
+      },
+      "informatica": {
+        "nivell": 3
+      },
+      "lideratge": {
+        "nivell": 6
+      },
+      "navegacio": {
+        "nivell": 6
+      },
+      "nedar": {
+        "nivell": 8
+      },
+      "negociacio": {
+        "nivell": 4
+      },
+      "ofici": {
+        "nivell": 5,
+        "especialitat": "patró de vaixell"
+      },
+      "oratoria": {
+        "nivell": 4
+      },
+      "vehicle": {
+        "nivell": 6,
+        "especialitat": "barques, vaixells"
+      }
+    },
+    "pc": 221,
+    "tier": "antagonista",
+    "notes": "<p>Equipament: vestit de neoprè, assistent personal, eines de manteniment, coltell.</p>"
+  },
+  "prototypeToken": {
+    "name": "Àstrid Corçana",
+    "actorLink": false,
+    "disposition": -1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pnj/hekate-astrid-corcana.webp"
+    }
+  },
+  "items": [
+    {
+      "_id": "7PUi1SMoLDBlG5xD",
+      "_key": "!actors.items!dOFj1fthCNncUcbE.7PUi1SMoLDBlG5xD",
+      "name": "Aquàtic",
+      "type": "tret",
+      "system": {
+        "cost": 5,
+        "descripcio": "Neda a velocitat normal.",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "aquatic"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "D2OdPNO6HkWpWxP9",
+      "_key": "!actors.items!dOFj1fthCNncUcbE.D2OdPNO6HkWpWxP9",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "vShaHiX3UXBWRZ2p",
+      "_key": "!actors.items!dOFj1fthCNncUcbE.vShaHiX3UXBWRZ2p",
+      "name": "Sonar",
+      "type": "tret",
+      "system": {
+        "cost": 15,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "sonar"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "l0uM9bMSBZlpFig1",
+      "_key": "!actors.items!dOFj1fthCNncUcbE.l0uM9bMSBZlpFig1",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": "9UNMCe4Uk3Nao7zN",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "aventura": "hekate",
+      "origen": "moduls/forja-la-porta-dhekate/font/FM000_06_personatges_no_jugadors.md",
+      "costManual": 221,
+      "derivatsManual": {
+        "latencia": 7,
+        "defensa": 12,
+        "reduccioDany": 4,
+        "reaccio": 1
+      }
+    }
+  }
+}

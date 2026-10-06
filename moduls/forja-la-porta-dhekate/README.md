@@ -24,6 +24,13 @@ Després d'editar `font/*.md`, des de l'arrel del repositori:
 npm run build:hekate
 ```
 
-## Pendent
+## Actors de l'aventura
 
-Els PJ pregenerats, els PNJ i les criatures del mòdul segueixen una versió anterior de les regles: constitucions «feble» i «massissa», mida «col·losal», defensa i fatiga amb una altra escala. Cal decidir-ne la conversió abans de posar-los als compendis.
+Els 8 PJ pregenerats, els 13 PNJ i les 4 criatures són als compendis del **sistema** (`pj`, `pnj`, `criatures`), dins la carpeta «La porta d'Hèkate». Els genera `scripts/build-packs.mjs` a partir de `font/` (`scripts/aventura-hekate.mjs`).
+
+El mòdul segueix unes regles anteriors. Es converteixen així (Oriol FM, 2026-10-06):
+- constitució, esglaó a esglaó: feble → magra, saludable → saludable, robusta → ferma, massissa → robusta;
+- mida col·losal → enorme;
+- es mantenen els atributs, les habilitats i els trets, i el cost i els derivats es recalculen.
+
+Tot el que no s'ha pogut mapar i les diferències amb el mòdul són a [`CONVERSIO.md`](CONVERSIO.md).
