@@ -1,5 +1,23 @@
 import FullActorBase from "./full-actor-base.mjs";
 import { valorsBase } from "../data/actor-personatge.mjs";
+
+/**
+ * Text d'un motiu de l'historial de PX (Fase 4, `progressio/experiencia.mjs`).
+ * @param {object} m
+ * @returns {string}
+ */
+function descriureMotiuPX(m = {}) {
+  const desc = m.descripcio ? ` — ${m.descripcio}` : "";
+  switch (m.tipus) {
+    case "grup":
+    case "individual":
+      return `${game.i18n.localize(`FORJA.Experiencia.Motiu.${m.tipus}`)} (${game.i18n.localize(`FORJA.Experiencia.Nivell.${m.nivell}`)})${desc}`;
+    case "virtut":    return `${game.i18n.localize("FORJA.Experiencia.Motiu.virtut")}: ${game.i18n.localize(`FORJA.Experiencia.Virtut.${m.virtut}`)}`;
+    case "atribut":   return `${m.id} → ${m.valor}`;
+    case "habilitat": return `${game.i18n.localize(`FORJA.Hab.${m.id}`)} → ${m.valor}`;
+    default:          return `${game.i18n.localize(`FORJA.Experiencia.Motiu.${m.tipus ?? "altres"}`)}${desc}`;
+  }
+}
 import DiategTrets   from "./dialeg-trets.mjs";
 import DiategMillora from "./dialeg-millora.mjs";
 import AssistentCreacio from "./assistent-creacio.mjs";
@@ -55,7 +73,14 @@ export default class FullPersonatge extends FullActorBase {
         gastats: sys.px.gastats ?? 0,
         lliures: sys.px.lliures ?? 0
       },
-      avisos: avisosCoherencia(this.actor)
+      avisos: avisosCoherencia(this.actor),
+      // Fase 4: darreres entrades de l'historial de PX, la més nova primer.
+      historialPX: (sys.px.historial ?? []).slice(-30).reverse().map(h => ({
+        data: h.data ? new Date(h.data).toLocaleDateString(game.i18n.lang) : "",
+        guany: h.px > 0,
+        pxText: `${h.px > 0 ? "+" : ""}${h.px} PX`,
+        motiu: descriureMotiuPX(h.motiu)
+      }))
     };
   }
 

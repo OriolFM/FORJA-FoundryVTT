@@ -31,11 +31,12 @@ Fitxers `*.test.mjs` que s'executen amb el runner de Node (`node --test`), Node 
 | `moviment.test.mjs` | Distàncies, bloqueig segons mida i bàndol, permís acumulatiu per torn, càrrega, A* (voreja, bloquejat del tot, destinació ocupada, límit de nodes). |
 | `estats.test.mjs` | Regles dels estats (Fase 1): què pot fer cada estat (actuar, moure's, córrer, esquivar, defensa activa, concentrar-se), tipus d'acció i moviments bloquejats, latència d'abatut, reacció de vigilant, inconscient/incapacitat per salut, Recuperació/X (pista i pas del nivell 7 al 6), tirada d'atrapat. `combat-wpf.test.mjs` hi afegeix les opcions de defensa amb estats. |
 | `construccio.test.mjs` | Constructor d'efectes i artefactes (Fase 2): reprodueix el cost, la dificultat i la latència de les 83 plantilles del manual (`parametres` de `artefactes.json` i `efectes.json`); dificultat i latència declarades, recàrrega, acumulador, armes i armadures base, compatibilitat amb la selecció antiga. |
+| `experiencia.test.mjs` | Repartir PX (Fase 4): taula de recompenses, virtuts repetides, historial. |
 | `i18n.test.mjs` | Els tres fitxers de `lang/` tenen les mateixes claus; totes les claus que fa servir el codi existeixen; els `{placeholders}` coincideixen. |
 | `versio.test.mjs` | `system.json` i `package.json` tenen la mateixa versió, i aquesta té entrada al `CHANGELOG.md`. |
 | `secrets.test.mjs` | Cap fitxer del repositori conté claus d'API, tokens ni claus privades (el repositori és públic). |
 
-**Resultat actual (2026-10-06):** 12 fitxers, 48 proves de primer nivell, totes OK.
+**Resultat actual (2026-10-06):** 14 fitxers, 63 proves de primer nivell, totes OK.
 
 Els missatges `FORJA | No s'ha pogut carregar …` en executar-les són esperats: el `fetch` dels catàlegs JSON està desactivat.
 
@@ -250,3 +251,8 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 6. **Tracker:** declarar «Manifestar un efecte» / «Activar un artefacte» amb objectiu; latència correcta; resoldre-ho al seu torn.
 7. **Reacció:** L'armadura del queloni apareix al diàleg de defensa; en triar-la gasta la reacció, dona armadura 10 i l'atac es resol contra la defensa bàsica; l'armadura desapareix quan avança el rellotge.
 8. **Relé:** un jugador aplica estats i bonificacions a un PNJ (sense ser-ne propietari).
+
+### Pendent de provar a Foundry: Fase 4 (experiència), 2026-10-06
+
+1. El DJ veu «Repartir PX» al directori d'actors; afegeix objectius de grup, individuals, virtuts i altres; els totals es recalculen; en confirmar se sumen a cada PJ i surt un missatge al xat.
+2. Millorar un atribut, una habilitat, un tret o un efecte amb PX queda a l'historial de la fitxa (en vermell), i els PX guanyats en verd.

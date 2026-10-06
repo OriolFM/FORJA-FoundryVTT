@@ -37,6 +37,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - **Ressonància** (cinc nivells) i tria de fatiga o ferides al diàleg de manifestar.
 - **Activar un artefacte:** tirada d'atribut + habilitat contra la dificultat d'activació (es demana si l'artefacte no la té), càrrega i prototips que es trenquen en pifiar.
 - **Armes i armadures que són artefactes** (Espasa d'energia, Holocapa, Servoarmadura…): apareixen com a arma o armadura i funcionen al combat (dany directe, estats en impactar, càrrega per atac, ègida). Els artefactes permanents i els que es porten donen les seves bonificacions mentre estan equipats; la fitxa les mostra amb un «+n».
+- **Repartir PX** (botó del DJ al directori d'actors): objectius de grup i individuals, virtuts i PX addicionals, amb la taula del manual.
+- **Historial de PX** a la fitxa del PJ: el que s'ha guanyat i el que s'ha gastat (millores, trets, efectes).
 - **Textos flotants al costat del token** (com als videojocs): estats guanyats i perduts, fatiga, ferides i curació. Si un jugador intenta fer una cosa que un estat li impedeix, l'estat torna a sortir.
 - **Fase de declaració:** en començar el combat, si algú no ha declarat, s'anuncia «Declareu les accions» i el combat no arrenca fins que declara l'últim. Llavors comença el temps actiu i el rellotge salta directament fins al primer que actua.
 - **Anuncis sobre la pantalla:** «Declareu les accions», «Comença el temps actiu» i «El rellotge de temps actiu avança n tics».

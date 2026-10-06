@@ -1,4 +1,5 @@
 import { FORJA } from "../config/constants.mjs";
+import { afegirHistorial } from "./experiencia.mjs";
 
 /**
  * Millora personal amb PX (S-28, manual cap. 5 "Millora personal"): els PX
@@ -14,6 +15,20 @@ import { FORJA } from "../config/constants.mjs";
  * el que no es té) i que el valor no superi el màxim (5 en atributs, 10
  * en habilitats).
  */
+
+/**
+ * Canvis per gastar PX: suma `px.gastats` i ho anota a l'historial (Fase 4).
+ * @param {Actor} actor
+ * @param {number} cost
+ * @param {object} motiu
+ * @returns {object}
+ */
+export function canvisDespesaPX(actor, cost, motiu) {
+  return {
+    "system.px.gastats": (actor.system.px.gastats ?? 0) + cost,
+    "system.px.historial": afegirHistorial(actor.system.px.historial, [{ px: -cost, motiu }])
+  };
+}
 
 function pxLliures(actor) {
   return (actor.system.px?.total ?? 0) - (actor.system.px?.gastats ?? 0);
@@ -46,7 +61,7 @@ export async function millorarAtribut(actor, attr) {
 
   await actor.update({
     [`system.atributs.${attr}`]: actual + 1,
-    "system.px.gastats": (actor.system.px.gastats ?? 0) + cost
+    ...canvisDespesaPX(actor, cost, { tipus: "atribut", id: attr, valor: actual + 1 })
   });
   return { cost, valorNou: actual + 1 };
 }
@@ -63,7 +78,7 @@ export async function millorarHabilitat(actor, habId) {
 
   await actor.update({
     [`system.habilitats.${habId}.nivell`]: actual + 1,
-    "system.px.gastats": (actor.system.px.gastats ?? 0) + cost
+    ...canvisDespesaPX(actor, cost, { tipus: "habilitat", id: habId, valor: actual + 1 })
   });
   return { cost, valorNou: actual + 1 };
 }
@@ -90,7 +105,7 @@ export async function afegirTretPositiuAmbPX(actor, tretSeleccionat) {
     },
     flags: { forja: { catalegId: tretSeleccionat.id } }
   }]);
-  await actor.update({ "system.px.gastats": (actor.system.px.gastats ?? 0) + tretSeleccionat.cost });
+  await actor.update(canvisDespesaPX(actor, tretSeleccionat.cost, { tipus: "tretAfegit", descripcio: tretSeleccionat.nom }));
   return { cost: tretSeleccionat.cost };
 }
 
@@ -108,6 +123,6 @@ export async function treureTretNegatiuAmbPX(actor, itemTret) {
   if (cost > pxLliures(actor)) return { error: "px" };
 
   await actor.deleteEmbeddedDocuments("Item", [itemTret.id]);
-  await actor.update({ "system.px.gastats": (actor.system.px.gastats ?? 0) + cost });
+  await actor.update(canvisDespesaPX(actor, cost, { tipus: "tretTret", descripcio: itemTret.name }));
   return { cost };
 }

@@ -69,7 +69,10 @@ export function campsBase(fields) {
     pc: new fields.NumberField({ integer: true, min: 0, initial: 200, nullable: false }),
     px: new fields.SchemaField({
       total:   new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false }),
-      gastats: new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false })
+      gastats: new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false }),
+      // Fase 4: historial de PX guanyats (+) i gastats (−): {data, px, motiu}
+      // (vegeu `progressio/experiencia.mjs`).
+      historial: new fields.ArrayField(new fields.ObjectField(), { initial: [] })
     }),
 
     // --- Sobrenatural (S-20): "do" es deriva dels trets (FORJA.TRETS_DO), no

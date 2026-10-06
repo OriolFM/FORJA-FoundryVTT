@@ -33,6 +33,7 @@ import { registrarNotificacions } from "./module/estats/notificacions.mjs";
 import { sincronitzarEstatsSalut, iniciTornEstats } from "./module/estats/aplicacio-estats.mjs";
 import { registrarMigracio, executarMigracions } from "./module/migracio/migracio.mjs";
 import { sincronitzarVinculats, eliminarVinculats } from "./module/combat/artefactes-vinculats.mjs";
+import DiategRepartirPX from "./module/apps/dialeg-repartir-px.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -224,6 +225,19 @@ Hooks.on("updateActor", async (actor, changes) => {
   if (!game.users.activeGM?.isSelf) return;
   if (!foundry.utils.hasProperty(changes, "system.salut")) return;
   await sincronitzarEstatsSalut(actor);
+});
+
+// Fase 4: botó del DJ per repartir PX al directori d'actors.
+Hooks.on("renderActorDirectory", (app, html) => {
+  if (!game.user.isGM) return;
+  const arrel = html instanceof HTMLElement ? html : html?.[0];
+  if (!arrel || arrel.querySelector(".forja-repartir-px")) return;
+  const boto = document.createElement("button");
+  boto.type = "button";
+  boto.className = "forja-repartir-px";
+  boto.innerHTML = `<i class="fas fa-star"></i> ${game.i18n.localize("FORJA.Experiencia.Boto")}`;
+  boto.addEventListener("click", () => new DiategRepartirPX().render(true));
+  (arrel.querySelector(".header-actions") ?? arrel.querySelector(".directory-header") ?? arrel).append(boto);
 });
 
 /* ---- Helpers Handlebars ----

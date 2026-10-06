@@ -1,4 +1,5 @@
 import { manifestarEfecte } from "../combat/manifestar.mjs";
+import { canvisDespesaPX } from "./millora.mjs";
 
 /**
  * Progressió sobrenatural (S-29, manual cap. 5 "Millorar efectes" /
@@ -47,7 +48,7 @@ export async function provarManifestacio(actor, dificultatBase, label) {
 export async function aplicarPenalitzacioFallada(actor) {
   const PENALITZACIO = 2;
   if (PENALITZACIO > pxLliures(actor)) return { error: "px" };
-  await actor.update({ "system.px.gastats": (actor.system.px.gastats ?? 0) + PENALITZACIO });
+  await actor.update(canvisDespesaPX(actor, PENALITZACIO, { tipus: "intentFallit" }));
   return { cost: PENALITZACIO };
 }
 
@@ -82,6 +83,6 @@ export async function aplicarEfecteProgressio(actor, construit, itemExistent = n
       name: construit.nom, type: "efecte", system: { ...dades, descripcio: "" }
     }]);
   }
-  await actor.update({ "system.px.gastats": (actor.system.px.gastats ?? 0) + cost });
+  await actor.update(canvisDespesaPX(actor, cost, { tipus: "efecte", descripcio: construit.nom }));
   return { cost };
 }

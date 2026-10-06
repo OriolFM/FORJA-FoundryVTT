@@ -656,6 +656,25 @@
     </div>
   </div>
 
+  <!-- ═══ HISTORIAL DE PX (Fase 4) ═══ -->
+  <div class="forja-seccio" data-seccio="historial-px">
+    <div class="forja-seccio-cap" data-action="toggleSection">
+      <i class="fas fa-chevron-down forja-chevron"></i>
+      {{localize "FORJA.Experiencia.Historial"}}
+    </div>
+    <div class="forja-seccio-cos">
+      {{#if historialPX.length}}
+      <ul class="forja-historial-px">
+        {{#each historialPX as |h|}}
+        <li class="{{#if h.guany}}px-guany{{else}}px-despesa{{/if}}"><span class="px-data">{{h.data}}</span> <strong>{{h.pxText}}</strong> {{h.motiu}}</li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p class="trets-buits">{{localize "FORJA.Experiencia.SenseHistorial"}}</p>
+      {{/if}}
+    </div>
+  </div>
+
   <!-- ═══ BIOGRAFIA (C5) ═══ -->
   <div class="forja-seccio" data-seccio="biografia">
     <div class="forja-seccio-cap" data-action="toggleSection">

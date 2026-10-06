@@ -1,0 +1,59 @@
+<div class="forja-dialeg-repartir-px">
+  <p class="dm-desc">{{localize "FORJA.Experiencia.Intro"}}</p>
+
+  <fieldset>
+    <legend>{{localize "FORJA.Experiencia.ObjectiusGrup"}}</legend>
+    {{#each grup as |o|}}
+    <div class="drp-fila">
+      <select data-grup="{{o.idx}}" data-camp="nivell">
+        {{#each ../nivells as |n|}}<option value="{{n.id}}" {{#if (eq n.id o.nivell)}}selected{{/if}}>{{n.nom}} (+{{lookup ../../taula.grup n.id}})</option>{{/each}}
+      </select>
+      <input type="text" data-grup="{{o.idx}}" data-camp="descripcio" value="{{o.descripcio}}" placeholder="{{localize 'FORJA.Experiencia.Descripcio'}}">
+      <a data-action="treureObjectiuGrup" data-idx="{{o.idx}}"><i class="fas fa-xmark"></i></a>
+    </div>
+    {{/each}}
+    <button type="button" data-action="afegirObjectiuGrup"><i class="fas fa-plus"></i> {{localize "FORJA.Experiencia.AfegirObjectiu"}}</button>
+  </fieldset>
+
+  <table class="drp-taula">
+    <thead>
+      <tr>
+        <th></th>
+        <th>{{localize "FORJA.Experiencia.PJ"}}</th>
+        <th>{{localize "FORJA.Experiencia.ObjectiuIndividual"}}</th>
+        <th>{{localize "FORJA.Experiencia.VirtutCap"}}</th>
+        <th>{{localize "FORJA.Experiencia.Altres"}}</th>
+        <th>{{localize "FORJA.Experiencia.Total"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each pjs as |p|}}
+      <tr>
+        <td><input type="checkbox" data-pj="{{p.id}}" data-camp="inclou" {{#if p.inclou}}checked{{/if}}></td>
+        <td>{{p.nom}} <small>({{p.pxActuals}} PX)</small></td>
+        <td>
+          <select data-pj="{{p.id}}" data-camp="nivell">
+            <option value="">—</option>
+            {{#each ../nivells as |n|}}<option value="{{n.id}}" {{#if (eq n.id p.nivell)}}selected{{/if}}>{{n.nom}} (+{{lookup ../../taula.individual n.id}})</option>{{/each}}
+          </select>
+          <input type="text" data-pj="{{p.id}}" data-camp="descripcio" value="{{p.descripcio}}" placeholder="{{localize 'FORJA.Experiencia.Descripcio'}}">
+        </td>
+        <td>
+          <select data-pj="{{p.id}}" data-camp="virtut">
+            <option value="">—</option>
+            {{#each ../virtuts as |v|}}<option value="{{v.id}}" {{#if (eq v.id p.virtut)}}selected{{/if}}>{{v.nom}}</option>{{/each}}
+          </select>
+        </td>
+        <td><input type="number" data-pj="{{p.id}}" data-camp="altres" value="{{p.altres}}" step="1"></td>
+        <td><strong>+{{p.total}}</strong></td>
+      </tr>
+      {{else}}
+      <tr><td colspan="6">{{localize "FORJA.Experiencia.SensePJ"}}</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{#if repetides}}<p class="dc-avis">{{localize "FORJA.Experiencia.VirtutRepetida" virtuts=repetides}}</p>{{/if}}
+  <p class="dm-desc">{{localize "FORJA.Experiencia.Nota"}}</p>
+
+  <button type="submit"><i class="fas fa-star"></i> {{localize "FORJA.Experiencia.Repartir"}}</button>
+</div>

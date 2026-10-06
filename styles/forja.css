@@ -6858,3 +6858,14 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 
 /* -- Bonificacions d'efectes i artefactes (Fase 3) -- */
 .forja-bonus { color: #86efac; font-size: 0.7em; margin-left: 2px; vertical-align: super; }
+
+/* -- Experiència (Fase 4) -- */
+.forja-dialeg-repartir-px { display: flex; flex-direction: column; gap: 8px; padding: 8px; }
+.forja-dialeg-repartir-px .drp-fila { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+.forja-dialeg-repartir-px .drp-fila input[type="text"] { flex: 1; }
+.forja-dialeg-repartir-px .drp-taula { width: 100%; font-size: 0.85rem; }
+.forja-dialeg-repartir-px .drp-taula input[type="number"] { width: 48px; }
+.forja-historial-px { list-style: none; margin: 0; padding: 0; font-size: 0.85rem; max-height: 220px; overflow-y: auto; }
+.forja-historial-px .px-data { color: #94a3b8; }
+.forja-historial-px .px-guany strong { color: #86efac; }
+.forja-historial-px .px-despesa strong { color: #fca5a5; }
