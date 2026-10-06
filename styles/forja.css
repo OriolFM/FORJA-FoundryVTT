@@ -6873,9 +6873,9 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 /* ------------------------------------------------------------------ */
 /* Manual FORJA (compendi): l'estil de la maqueta del llibre            */
 /* (FORJA_FC001CA_v3, Oriol FM): Fira Sans justificada sobre blanc,      */
-/* títols en petroli (#034751) amb filet a sota (Akrobat a la maqueta;  */
-/* aquí Fira Sans Condensed, que és lliure) i taules amb capçalera      */
-/* petroli. Fonts a assets/fonts (SIL OFL 1.1, OFL-FiraSans.txt).        */
+/* títols en Akrobat i petroli (#034751) amb filet a sota, i taules    */
+/* amb capçalera petroli. Fonts a assets/fonts: Fira Sans (SIL OFL 1.1) */
+/* i Akrobat (Fontfabric Free Font EULA 2.2, assets/fonts/akrobat).     */
 /* El contingut de cada pàgina va dins `.forja-manual`                  */
 /* (scripts/build-manual.mjs#mdToHtml). El títol de la pàgina, que      */
 /* Foundry pinta fora del contingut, s'agafa per l'id de la fitxa.      */
@@ -6891,13 +6891,16 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 @font-face { font-family: "FORJA Fira Sans Condensed"; font-style: normal; font-weight: 600; font-display: swap; src: url("../assets/fonts/fira-sans-condensed-latin-600-normal.woff2") format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 @font-face { font-family: "FORJA Fira Sans Condensed"; font-style: normal; font-weight: 600; font-display: swap; src: url("../assets/fonts/fira-sans-condensed-latin-ext-600-normal.woff2") format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
 
+@font-face { font-family: "FORJA Akrobat"; font-style: normal; font-weight: 700; font-display: swap; src: url("../assets/fonts/akrobat/Akrobat-Bold.woff2") format("woff2"); }
+@font-face { font-family: "FORJA Akrobat"; font-style: normal; font-weight: 600; font-display: swap; src: url("../assets/fonts/akrobat/Akrobat-SemiBold.woff2") format("woff2"); }
+
 .forja-manual {
   --manual-petroli: #034751;
   --manual-petroli-clar: #dfe9ea;
   --manual-paper: #ffffff;
   --manual-tinta: #262626;
   --manual-linia: #034751;
-  --manual-titol: "FORJA Fira Sans Condensed", "Fira Sans Condensed", "Arial Narrow", sans-serif;
+  --manual-titol: "FORJA Akrobat", "FORJA Fira Sans Condensed", "Fira Sans Condensed", "Arial Narrow", sans-serif;
   background: var(--manual-paper);
   color: var(--manual-tinta);
   font-family: "FORJA Fira Sans", "Fira Sans", "Segoe UI", Arial, sans-serif;
@@ -6916,7 +6919,7 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 .forja-manual h3,
 .forja-manual h4 {
   font-family: var(--manual-titol);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--manual-petroli);
   border: none;
   text-shadow: none;
@@ -6985,8 +6988,8 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 [id^="JournalEntrySheet-Compendium-forja-manual-"] .journal-entry-page > header h1,
 [id^="JournalEntrySheet-Compendium-forja-la-porta-dhekate-aventura-"] .journal-page-header h1,
 [id^="JournalEntrySheet-Compendium-forja-la-porta-dhekate-aventura-"] .journal-entry-page > header h1 {
-  font-family: "FORJA Fira Sans Condensed", "Fira Sans Condensed", "Arial Narrow", sans-serif;
-  font-weight: 600;
+  font-family: "FORJA Akrobat", "FORJA Fira Sans Condensed", "Fira Sans Condensed", "Arial Narrow", sans-serif;
+  font-weight: 700;
   font-size: 2.4em;
   color: #034751;
   border-bottom: 3px solid #034751;
