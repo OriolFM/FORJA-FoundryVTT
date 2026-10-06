@@ -94,6 +94,7 @@ FORJA-FoundryVTT/
 │   │   ├── rd-artefactes.mjs / modular.mjs # R+D: prototips i artefactes modulars (S-30)
 │   │   └── accions-complexes.mjs # Calculadora d'accions complexes (S-08)
 │   ├── validacio/coherencia.mjs # Avisos (no bloquegen): PC/PX excedits, incompatibilitats
+│   ├── migracio/migracio.mjs  # Migracions de dades dels mons (DJ, a `ready`; setting forja.migracio)
 │   └── xarxa/socket.mjs       # Relé d'autoritat del DJ (vegeu més avall)
 ├── templates/                 # Plantilles Handlebars, organitzades com module/apps i module/combat
 │   ├── actor/                 # Fitxes de personatge/pnj i diàlegs d'actor
@@ -140,8 +141,8 @@ Registrats a `forja.mjs` (`CONFIG.Actor.dataModels`, `CONFIG.Item.dataModels`,
 | `tret` | `ItemTret` | `cost`, `descripcio`, `efecte` (opcional: `{stat, delta}` o `{flag}`, aplicat als derivats) |
 | `arma` | `ItemArma` | `categoria` (`natural`/`cosAcos`/`distancia`), `modLatencia`, `abast`, `danyBase`, `maniobra`, `rangExtrem`, `basic` |
 | `armadura` | `ItemArmadura` | `tipus` (`fisica`/`flexible`/`natural`), `reduccio`, `modLatencia`, `equipada`, `egida.{activa,absorcio,tornsInactiva}` |
-| `artefacte` | `ItemArtefacte` | `cost`, `categoria`, `activacio`, `us`, `carrega`, `mecanica`, `fase`/`trencat` (prototips), `modular`/`moduls` — activació i càrrega a `combat/artefactes.mjs` |
-| `efecte` | `ItemEfecte` | `cost`, `do`, `tipus`, `dificultat`, `modLatencia`, `us`, `mecanica` — es manifesta amb `combat/manifestar.mjs`; sense fitxa pròpia (fa servir la genèrica de Foundry) |
+| `artefacte` | `ItemArtefacte` | `cost`, `categoria`, `activacio` (`tipus`, `dificultat`, `atribut`, `habilitat`), `us`, `carrega`, `mecanica`, `fase`/`trencat` (prototips), `modular`/`moduls`, `parametres`, `construccio` — activació i càrrega a `combat/artefactes.mjs` |
+| `efecte` | `ItemEfecte` | `cost`, `do`, `tipus`, `dificultat`, `modLatencia`, `us`, `mecanica`, `parametres`, `construccio` — es manifesta amb `combat/manifestar.mjs` |
 
 Els actors comparteixen els camps base de `module/data/_camps.mjs`
 (`campsBase`): atributs (FOR/DES/AGI/PER/INT/APL, 0–5), `especie`, `mida`
@@ -149,7 +150,7 @@ Els actors comparteixen els camps base de `module/data/_camps.mjs`
 (`fatiga`/`ferides`, només `marcats` a l'schema), `reaccions.gastades`,
 `concentrat`, `pc`, `px.{total,gastats}`, `biografia`.
 
-Un únic `FullItem` (`module/apps/full-item.mjs`) serveix els 4 tipus
+Un únic `FullItem` (`module/apps/full-item.mjs`) serveix els 5 tipus
 d'item; tria la plantilla concreta (`templates/item/<type>.hbs`) a
 `_prepareContext` i la injecta com a HTML ja renderitzat dins l'únic
 `PARTS.body`. El camp `efecte` d'`ItemTret` (un `ObjectField` lliure)
@@ -176,6 +177,18 @@ Els ítems creats des d'un catàleg sempre porten `flags.forja.catalegId`
 (`module/combat/equipament-automatic.mjs#crearItemDesDeCataleg`), imprescindible
 per aparellar armes naturals amb el tret que les concedeix i per evitar
 duplicats.
+
+### Paràmetres d'efectes i artefactes (Fase 2)
+
+Cada efecte o artefacte porta `system.parametres` (llista de `{ tipus, ... }`, p. ex.
+`{ tipus: "dany", categoria: "directe", nivell: 6, danyTipus: "ferides" }`) i
+`system.construccio` (`dificultatDeclarada`, `latenciaDeclarada`, `permanent`).
+`progressio/construccio.mjs` (`costParametre`, `calcularParametres`) en calcula el
+cost, la dificultat i la latència amb `parametres.json`, igual que el skill
+`skills/forja-parametres` (prova: `tests/unitaris/construccio.test.mjs`, 83/83).
+Els catàlegs `artefactes.json` i `efectes.json` porten els paràmetres de cada
+plantilla; `crearItemDesDeCataleg` els copia. El constructor
+(`apps/dialeg-constructor.mjs`) edita aquesta llista.
 
 ## Derivats (`module/data/actor-personatge.mjs`, `_prepararDerivats`)
 

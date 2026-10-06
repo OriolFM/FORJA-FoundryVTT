@@ -171,7 +171,13 @@ export default class FullPersonatge extends FullActorBase {
       if (!continuar) return;
     }
 
-    const construit = await DiategConstructor.obrir();
+    // Fase 2: per millorar un efecte, el constructor parteix dels seus paràmetres.
+    const construit = await DiategConstructor.obrir({
+      inicial: itemExistent ? {
+        nom: itemExistent.name, do: itemExistent.system.do,
+        parametres: itemExistent.system.parametres, construccio: itemExistent.system.construccio
+      } : undefined
+    });
     if (!construit) return;
 
     let exit = false;

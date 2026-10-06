@@ -30,11 +30,12 @@ Fitxers `*.test.mjs` que s'executen amb el runner de Node (`node --test`), Node 
 | `derivats.test.mjs` | PC i PX, barres de salut, `foraDeCombat`, latència d'armadures. |
 | `moviment.test.mjs` | Distàncies, bloqueig segons mida i bàndol, permís acumulatiu per torn, càrrega, A* (voreja, bloquejat del tot, destinació ocupada, límit de nodes). |
 | `estats.test.mjs` | Regles dels estats (Fase 1): què pot fer cada estat (actuar, moure's, córrer, esquivar, defensa activa, concentrar-se), tipus d'acció i moviments bloquejats, latència d'abatut, reacció de vigilant, inconscient/incapacitat per salut, Recuperació/X (pista i pas del nivell 7 al 6), tirada d'atrapat. `combat-wpf.test.mjs` hi afegeix les opcions de defensa amb estats. |
+| `construccio.test.mjs` | Constructor d'efectes i artefactes (Fase 2): reprodueix el cost, la dificultat i la latència de les 83 plantilles del manual (`parametres` de `artefactes.json` i `efectes.json`); dificultat i latència declarades, recàrrega, acumulador, armes i armadures base, compatibilitat amb la selecció antiga. |
 | `i18n.test.mjs` | Els tres fitxers de `lang/` tenen les mateixes claus; totes les claus que fa servir el codi existeixen; els `{placeholders}` coincideixen. |
 | `versio.test.mjs` | `system.json` i `package.json` tenen la mateixa versió, i aquesta té entrada al `CHANGELOG.md`. |
 | `secrets.test.mjs` | Cap fitxer del repositori conté claus d'API, tokens ni claus privades (el repositori és públic). |
 
-**Resultat actual (2026-10-06):** 11 fitxers, 40 proves de primer nivell, totes OK.
+**Resultat actual (2026-10-06):** 12 fitxers, 48 proves de primer nivell, totes OK.
 
 Els missatges `FORJA | No s'ha pogut carregar …` en executar-les són esperats: el `fetch` dels catàlegs JSON està desactivat.
 
@@ -231,3 +232,10 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 8. **Vigilant:** +1 reacció a la fitxa i al combat.
 9. **Recuperació/X:** amb fatiga i ferides al mateix nivell, cura primer la fatiga; des del nivell 7 passa al 6.
 10. **Fitxa:** la llista d'estats actius, amb la tirada (atrapat, acovardit, empès, malaltia/toxina, marejat, esguerrat) i el botó de treure'l.
+
+### Pendent de provar a Foundry: Fase 2 (creació d'artefactes i efectes), 2026-10-06
+
+1. **Constructor** (fitxa › «Construir efecte nou» i «Dissenyar artefacte»): afegir i treure paràmetres de tots els tipus, repetir-ne (dues capacitats mentals), declarar dificultat i latència; el cost es recalcula en directe. Reproduir una plantilla (p. ex. Espasa d'energia: arma espasa lat 1 dany 2, dany directe 6 ferides, acumulador 3, recàrrega 11, mode d'espera → 21 PC).
+2. **Fitxa d'efecte** (nova) i **fitxa d'artefacte** (tirada d'activació, càrrega actual, fase, modular): els paràmetres es veuen amb el cost calculat, i «Editar amb el constructor» desa el resultat.
+3. **Millorar un efecte** (progressió sobrenatural): el constructor parteix dels paràmetres de l'efecte.
+4. **Migració:** en un món amb efectes o artefactes antics del catàleg, en entrar el DJ reben els paràmetres (un sol cop).

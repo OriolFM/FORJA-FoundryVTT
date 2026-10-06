@@ -1,3 +1,5 @@
+import { campsConstruccio } from "./item-efecte.mjs";
+
 /**
  * DataModel per a Artefactes (S-24): peces de tecnologia avançada del
  * catàleg del manual (cap. 4, "Plantilles d'artefacte").
@@ -26,7 +28,13 @@ export default class ItemArtefacte extends foundry.abstract.TypeDataModel {
           initial: "normal",
           choices: ["cap", "trivial", "normal", "complexa", "permanent"]
         }),
-        dificultat: new fields.NumberField({ integer: true, min: 0, initial: null, nullable: true })
+        dificultat: new fields.NumberField({ integer: true, min: 0, initial: null, nullable: true }),
+        // Fase 2: atribut i habilitat de la tirada d'activació (manual › Activar
+        // un artefacte, l. 4143: «una tirada d'atribut + habilitat»). El manual
+        // només la indica en alguns (Tornavís sònic: INT + enginyeria); si és
+        // buida, es demana en activar.
+        atribut:   new fields.StringField({ initial: "", blank: true }),
+        habilitat: new fields.StringField({ initial: "", blank: true })
       }),
       us: new fields.SchemaField({
         narratiu:    new fields.BooleanField({ initial: true }),
@@ -74,8 +82,11 @@ export default class ItemArtefacte extends foundry.abstract.TypeDataModel {
         cost:        new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false }),
         dificultat:  new fields.NumberField({ integer: true, min: 0, initial: 0, nullable: false }),
         modLatencia: new fields.NumberField({ integer: true, initial: 0, nullable: false }),
-        mecanica:    new fields.StringField({ initial: "" })
-      }), { initial: [] })
+        mecanica:    new fields.StringField({ initial: "" }),
+        // Fase 2: paràmetres del mòdul (per aplicar-ne el resultat a la Fase 3).
+        parametres:  new fields.ArrayField(new fields.ObjectField(), { initial: [] })
+      }), { initial: [] }),
+      ...campsConstruccio(fields)
     };
   }
 }

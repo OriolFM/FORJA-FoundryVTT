@@ -9,7 +9,15 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Crea una il·lusió immersiva amb un modificador de +0. Aplica el tret oracle.",
-    "descripcio": "Alguns patrons transporten la ment del canalitzador a esdeveniments que passen en un altre lloc o moment, que el PJ viu com si hi fos present. A diferència del tret d'oracle, que és imprevisible, aquest ús és controlat i sol donar informació més concreta, ja que és el mateix patró qui el guia."
+    "descripcio": "Alguns patrons transporten la ment del canalitzador a esdeveniments que passen en un altre lloc o moment, que el PJ viu com si hi fos present. A diferència del tret d'oracle, que és imprevisible, aquest ús és controlat i sol donar informació més concreta, ja que és el mateix patró qui el guia.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "narratiu" },
+      { "tipus": "durada" },
+      { "tipus": "illusio", "nivell": 0 },
+      { "tipus": "tret", "tret": "oracle", "cost": 30 }
+    ]
   },
   {
     "id": "barrera-antimagia",
@@ -21,7 +29,14 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins l'àrea d'efecte situada a tocar durant una escena. Crea una barrera de força 8.",
-    "descripcio": "Sorgeix de l'experiència de monjos i clergues que han hagut de fer front a mags que abusaven dels seus poders. Genera una protecció temporal contra la màgia que dificulta qualsevol efecte màgic llançat dins la seva àrea, i pot arribar a interrompre encanteris actius que no superin la nova dificultat."
+    "descripcio": "Sorgeix de l'experiència de monjos i clergues que han hagut de fer front a mags que abusaven dels seus poders. Genera una protecció temporal contra la màgia que dificulta qualsevol efecte màgic llançat dins la seva àrea, i pot arribar a interrompre encanteris actius que no superin la nova dificultat.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "barrera", "nivell": 8 }
+    ]
   },
   {
     "id": "benediccio-del-fanatic",
@@ -33,7 +48,13 @@
     "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari toca un o més objectius individuals i els marca d'alguna manera (inscripció, signe, pintura de guerra...). Els objectius guanyen l'estat berserc (modificador +0) i el tret dur de pelar fins al final de l'escena.",
-    "descripcio": "Molts cultes arreu del multivers compten amb fanàtics disposats a llançar-se en defensa de les seves creences marcats amb un signe, inscripció o pintura de guerra. Variants del ritual poden dur els cultistes fins a un estat de frenesia que els empeny a combatre fins a la mort."
+    "descripcio": "Molts cultes arreu del multivers compten amb fanàtics disposats a llançar-se en defensa de les seves creences marcats amb un signe, inscripció o pintura de guerra. Variants del ritual poden dur els cultistes fins a un estat de frenesia que els empeny a combatre fins a la mort.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 3, "permanent": false },
+    "parametres": [
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "berserc", "nivell": 0 },
+      { "tipus": "tret", "tret": "dur-de-pelar", "cost": 15 }
+    ]
   },
   {
     "id": "calma",
@@ -45,7 +66,14 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Tots els objectius dins l'àrea d'efecte situada al voltant de l'usuari reben una sensació de calma i tranquil·litat (control emocional) fins al final de l'escena. Si l'usuari fa accions agressives, el ritual queda invalidat.",
-    "descripcio": "Sacerdots de cultes que prediquen la no-violència fan servir aquest ritual per apaivagar situacions tenses, escampant una sensació de pau al seu voltant. Si l'usuari actua de manera agressiva, l'efecte es trenca immediatament."
+    "descripcio": "Sacerdots de cultes que prediquen la no-violència fan servir aquest ritual per apaivagar situacions tenses, escampant una sensació de pau al seu voltant. Si l'usuari actua de manera agressiva, l'efecte es trenca immediatament.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "control-emocional" }
+    ]
   },
   {
     "id": "cercle-de-proteccio",
@@ -57,7 +85,15 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "Crea una barrera de protecció de força 12 que encercla una àrea d'efecte al voltant de l'usuari. És efectiva contra un tipus d'objectiu fins al final de l'escena.",
-    "descripcio": "Una de les bases de la màgia divina o espiritual, ensenyada pel patró per protegir el canalitzador dels seus enemics. Diversos usuaris poden solapar els seus cercles per cobrir àrees més grans i allargar-ne la durada."
+    "descripcio": "Una de les bases de la màgia divina o espiritual, ensenyada pel patró per protegir el canalitzador dels seus enemics. Diversos usuaris poden solapar els seus cercles per cobrir àrees més grans i allargar-ne la durada.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "narratiu" },
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "barrera", "nivell": 12 }
+    ]
   },
   {
     "id": "exorcisme",
@@ -69,7 +105,16 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Suggestiona la ment de l'objectiu perquè es resisteixi a la possessió, i li dóna un modificador de +4 a l'habilitat resistència.",
-    "descripcio": "En lloc d'atacar l'incorpori directament, aquest ritu reforça la resistència psíquica de la víctima perquè pugui tirar de seguida contra la possessió, implantant-li la suggestió de resistir-s'hi encara que ja estigui condicionada."
+    "descripcio": "En lloc d'atacar l'incorpori directament, aquest ritu reforça la resistència psíquica de la víctima perquè pugui tirar de seguida contra la possessió, implantant-li la suggestió de resistir-s'hi encara que ja estigui condicionada.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "narratiu" },
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "suggestio" },
+      { "tipus": "eina", "nivell": 4, "segona": false, "habilitat": "resistencia" }
+    ]
   },
   {
     "id": "guarir",
@@ -81,7 +126,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar. En guareix malalties, estats negatius i 10 punts de ferides.",
-    "descripcio": "Molts sacerdots i monjos serveixen patrons benèvols que els han ensenyat a guarir ferides amb una simple imposició de mans."
+    "descripcio": "Molts sacerdots i monjos serveixen patrons benèvols que els han ensenyat a guarir ferides amb una simple imposició de mans.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "curaMalalties" },
+      { "tipus": "curaEstats" },
+      { "tipus": "cura", "nivell": 10, "pista": "ferides" }
+    ]
   },
   {
     "id": "majestat-divina",
@@ -93,7 +144,15 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins l'àrea d'efecte al voltant de l'usuari, que queden astorats durant una escena per la majestuositat que en desprèn (control emocional). Tots pateixen l'estat marejat (modificador +3).",
-    "descripcio": "El canalitzador irradia l'aura majestàtica del seu patró, que deixa embadalits tots els objectius hostils dins l'àrea d'efecte, incapaços de declarar noves accions fins que no se'n sobreposin."
+    "descripcio": "El canalitzador irradia l'aura majestàtica del seu patró, que deixa embadalits tots els objectius hostils dins l'àrea d'efecte, incapaços de declarar noves accions fins que no se'n sobreposin.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "control-emocional" },
+      { "tipus": "estat", "estat": "marejat", "nivell": 3 }
+    ]
   },
   {
     "id": "repelir-lantinatural",
@@ -105,7 +164,14 @@
     "modLatencia": 8,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins l'àrea d'efecte situada dins l'abast sensorial del PJ durant una escena. Crea una barrera de força 8.",
-    "descripcio": "El canalitzador concentra l'aura del seu patró al voltant d'un símbol significatiu per esdevenir temible davant dels seus enemics. És habitual entre clergues i monjos que repel·leixen no-morts, dimonis o fantasmes, amb variants per a cada mena d'amenaça."
+    "descripcio": "El canalitzador concentra l'aura del seu patró al voltant d'un símbol significatiu per esdevenir temible davant dels seus enemics. És habitual entre clergues i monjos que repel·leixen no-morts, dimonis o fantasmes, amb variants per a cada mena d'amenaça.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 8, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "barrera", "nivell": 8 }
+    ]
   },
   {
     "id": "restauracio",
@@ -117,7 +183,13 @@
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari toca un o més objectius, i els confereix el tret regeneració i l'estat recuperació/1 fins al final de l'escena.",
-    "descripcio": "Sol ser un dels primers efectes que aprèn un canalitzador, ja que molts dels seus poders els causen desgast físic. Permet desfer-se de la fatiga amb un simple toc o una ordre verbal."
+    "descripcio": "Sol ser un dels primers efectes que aprèn un canalitzador, ja que molts dels seus poders els causen desgast físic. Permet desfer-se de la fatiga amb un simple toc o una ordre verbal.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 2, "permanent": false },
+    "parametres": [
+      { "tipus": "durada" },
+      { "tipus": "tret", "tret": "regeneracio", "cost": 10 },
+      { "tipus": "estat", "estat": "recuperacio", "nivell": 1 }
+    ]
   },
   {
     "id": "revelar-leter",
@@ -129,7 +201,15 @@
     "modLatencia": 9,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins una àrea d'efecte centrada en l'usuari durant una escena. L'usuari torna visibles tots els incorporis de tipus esperit o ectoplasma que hi hagi dins l'àrea d'efecte i fa un enllaç mental entre ells i la resta dels presents per facilitar la comunicació.",
-    "descripcio": "Habitual entre els canalitzadors que fan de mèdiums. Fa visibles els esperits i ectoplasmes presents a l'àrea i estableix un enllaç mental amb ells perquè es puguin comunicar amb els presents, fins i tot prenent una certa forma física si cal."
+    "descripcio": "Habitual entre els canalitzadors que fan de mèdiums. Fa visibles els esperits i ectoplasmes presents a l'àrea i estableix un enllaç mental amb ells perquè es puguin comunicar amb els presents, fins i tot prenent una certa forma física si cal.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 9, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "llegir" },
+      { "tipus": "mental", "mode": "projectar" }
+    ]
   },
   {
     "id": "ungir-el-campio",
@@ -141,7 +221,15 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari toca un o més objectius individuals, i els confereix armadura natural 3 i els estats recuperació/1 i vigilant (modificador +0) fins al final de l'escena.",
-    "descripcio": "Molts patrons compten amb un ritual per investir campions que defensin la seva causa, a canvi d'ofrenes, pregàries o un codi de conducta determinat. Els campions ungits combaten amb més eficàcia i es recuperen més ràpid de les ferides."
+    "descripcio": "Molts patrons compten amb un ritual per investir campions que defensin la seva causa, a canvi d'ofrenes, pregàries o un codi de conducta determinat. Els campions ungits combaten amb més eficàcia i es recuperen més ràpid de les ferides.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "durada" },
+      { "tipus": "armadura", "nivell": 3 },
+      { "tipus": "estat", "estat": "recuperacio", "nivell": 1 },
+      { "tipus": "estat", "estat": "vigilant", "nivell": 0 }
+    ]
   },
   {
     "id": "animar-corser-macabre",
@@ -153,7 +241,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "Reconstitueix un corser macabre (87 PC), considerat un constructe a tots els efectes. El corser dura un mínim d'una escena, i es pot mantenir animat si el mag l'alimenta amb un punt de fatiga per dia.",
-    "descripcio": "Quan un nigromant necessita desplaçar-se ràpidament per terra, cap muntura supera un corser macabre: fort, ràpid, i que no necessita menjar ni dormir. El seu aspecte varia segons les matèries primeres emprades, i es pot modificar per dotar-lo de capacitats ofensives."
+    "descripcio": "Quan un nigromant necessita desplaçar-se ràpidament per terra, cap muntura supera un corser macabre: fort, ràpid, i que no necessita menjar ni dormir. El seu aspecte varia segons les matèries primeres emprades, i es pot modificar per dotar-lo de capacitats ofensives.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "narratiu" },
+      { "tipus": "invocacio", "costCriatura": 87 }
+    ]
   },
   {
     "id": "animar-golem-de-carn",
@@ -165,7 +259,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "El nigromant utilitza restes d'altres organismes morts per construir el cos del gólem macabre i infondre-li no-vida. El gólem d'aquest efecte està valorat en 114 PC i dura un mínim d'una escena. El nigromant el pot mantenir actiu sacrificant-li un punt de fatiga cada dia.",
-    "descripcio": "El nigromant construeix el cos del gólem amb restes d'organismes morts i li infon no-vida. Són forts, resistents, no es cansen i obeeixen cegament, tot i que el seu aspecte depèn dels cadàvers frescos disponibles; alguns porten armes naturals o plaques òssies afegides."
+    "descripcio": "El nigromant construeix el cos del gólem amb restes d'organismes morts i li infon no-vida. Són forts, resistents, no es cansen i obeeixen cegament, tot i que el seu aspecte depèn dels cadàvers frescos disponibles; alguns porten armes naturals o plaques òssies afegides.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "narratiu" },
+      { "tipus": "invocacio", "costCriatura": 114 }
+    ]
   },
   {
     "id": "animar-gos-de-lavern",
@@ -177,7 +277,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "El nigromant utilitza restes d'altres organismes morts per reconstituir un gos de l'avern (65 PC), considerat un constructe a tots els efectes, i infondre-li no-vida. El gos té una durada mínima d'una escena, i es pot mantenir actiu si el nigromant li sacrifica un punt de fatiga cada dia.",
-    "descripcio": "Menys espectaculars que un gólem de carn, aquests gossos són populars com a guardians, mascotes o escorta, i segueixen els designis del seu amo sense qüestionar-los. Hi ha variants que aixequen altres animals petits armats amb ullals."
+    "descripcio": "Menys espectaculars que un gólem de carn, aquests gossos són populars com a guardians, mascotes o escorta, i segueixen els designis del seu amo sense qüestionar-los. Hi ha variants que aixequen altres animals petits armats amb ullals.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "narratiu" },
+      { "tipus": "invocacio", "costCriatura": 65 }
+    ]
   },
   {
     "id": "animar-mortalla-vorac",
@@ -189,7 +295,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": false },
     "mecanica": "El nigromant aplega restes d'organismes morts, en especial dels seus sistemes digestius, per reconstituir una mortalla voraç (158 PC), considerada un constructe a tots els efectes. La mortalla té una durada mínima d'una escena, i el nigromant la pot mantenir activa sacrificant-li un punt de ferides cada dia.",
-    "descripcio": "Un dels servents més temuts dels nigromants: capes vivents fetes de teixits morts que fan servir com a atuell, protecció i mitjà de locomoció. Moltes recorden grans insectes amb punxes o pinces, i algunes segreguen sucs que dissolen qui hi queda atrapat."
+    "descripcio": "Un dels servents més temuts dels nigromants: capes vivents fetes de teixits morts que fan servir com a atuell, protecció i mitjà de locomoció. Moltes recorden grans insectes amb punxes o pinces, i algunes segreguen sucs que dissolen qui hi queda atrapat.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": null, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "narratiu" },
+      { "tipus": "invocacio", "costCriatura": 158 }
+    ]
   },
   {
     "id": "bola-de-foc",
@@ -201,7 +313,13 @@
     "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins l'àrea d'efecte, situada dins l'abast sensorial del PJ. Causa dany indirecte de foc amb un modificador de +5.",
-    "descripcio": "Un dels principals encanteris ofensius del mag hermètic tradicional. Algunes variants prescindeixen de la vareta i fan servir materials combustibles que s'encenen i es llancen contra l'enemic."
+    "descripcio": "Un dels principals encanteris ofensius del mag hermètic tradicional. Algunes variants prescindeixen de la vareta i fan servir materials combustibles que s'encenen i es llancen contra l'enemic.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 3, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "distancia" },
+      { "tipus": "dany", "categoria": "indirecte", "nivell": 5, "danyTipus": "foc" }
+    ]
   },
   {
     "id": "con-ardent",
@@ -213,7 +331,12 @@
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins l'àrea d'efecte cònica, que el personatge projecta des de les seves mans. Causa dany indirecte de foc amb un modificador de +4.",
-    "descripcio": "Utilitzat sovint com a alternativa a la bola de foc, genera una flamarada cònica que surt de la vareta del mag i es projecta contra els enemics."
+    "descripcio": "Utilitzat sovint com a alternativa a la bola de foc, genera una flamarada cònica que surt de la vareta del mag i es projecta contra els enemics.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 2, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "dany", "categoria": "indirecte", "nivell": 4, "danyTipus": "foc" }
+    ]
   },
   {
     "id": "la-dalla-de-la-parca",
@@ -225,7 +348,12 @@
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari conjura una arma màgica (habitualment una dalla, que fa servir amb la seva habilitat d'armes cos a cos) durant una escena. L'arma té una latència de +0 i causa dany indirecte de fatiga i ferides amb un modificador de +3.",
-    "descripcio": "Tot i que els nigromants solen conjurar dalles, espases llargues o coltells, pràcticament tots els practicants de màgia tenen la seva pròpia variant d'aquesta arma. Només canvien la forma, l'habilitat amb què es fa servir i el moviment especial associat."
+    "descripcio": "Tot i que els nigromants solen conjurar dalles, espases llargues o coltells, pràcticament tots els practicants de màgia tenen la seva pròpia variant d'aquesta arma. Només canvien la forma, l'habilitat amb què es fa servir i el moviment especial associat.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 2, "permanent": false },
+    "parametres": [
+      { "tipus": "durada" },
+      { "tipus": "dany", "categoria": "indirecte", "nivell": 3, "danyTipus": "fatiga-i-ferides" }
+    ]
   },
   {
     "id": "descarrega",
@@ -237,7 +365,12 @@
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa dany indirecte d'electricitat amb un modificador de +4.",
-    "descripcio": "Molts mags de batalla i bruixes el prefereixen a la bola de foc per la seva precisió: un arc voltaic salta d'un objectiu a un altre sense afectar qui tinguin al costat. Com que es propaga pels medis conductors, no és gaire recomanable sota la pluja."
+    "descripcio": "Molts mags de batalla i bruixes el prefereixen a la bola de foc per la seva precisió: un arc voltaic salta d'un objectiu a un altre sense afectar qui tinguin al costat. Com que es propaga pels medis conductors, no és gaire recomanable sota la pluja.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 2, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "dany", "categoria": "indirecte", "nivell": 4, "danyTipus": "electricitat" }
+    ]
   },
   {
     "id": "detonar-el-servent",
@@ -249,7 +382,14 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més constructes amb el tret dron sota el control del nigromant que es trobin dins el seu abast sensorial. Els drons esclaten, causant dany indirecte d'explosió amb un modificador de +8 i l'estat sagnant/1 a tots els que estiguin a tocar del dron.",
-    "descripcio": "Els nigromants que van escortats per gólems no-morts els envien a atacar i, quan ja estan molt malmesos o a curta distància, els fan esclatar, omplint els enemics de metralla òssia. Per això molts indrets prohibeixen l'entrada de servents no-morts."
+    "descripcio": "Els nigromants que van escortats per gólems no-morts els envien a atacar i, quan ja estan molt malmesos o a curta distància, els fan esclatar, omplint els enemics de metralla òssia. Per això molts indrets prohibeixen l'entrada de servents no-morts.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "distancia" },
+      { "tipus": "dany", "categoria": "indirecte", "nivell": 8, "danyTipus": "explosio" },
+      { "tipus": "estat", "estat": "sagnant", "nivell": 1 }
+    ]
   },
   {
     "id": "equilibrar-la-balanca",
@@ -261,7 +401,13 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "El nigromant es fa un tall i genera una àrea d'efecte centrada en si mateix. Drena +2 punts de dany directe de fatiga i ferides a tots els objectius dins l'àrea.",
-    "descripcio": "El nigromant s'obre un tall per drenar la força vital de tots els qui l'envolten en benefici propi. L'efecte és més potent com més gent hi hagi a prop."
+    "descripcio": "El nigromant s'obre un tall per drenar la força vital de tots els qui l'envolten en benefici propi. L'efecte és més potent com més gent hi hagi a prop.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "area" },
+      { "tipus": "dany", "categoria": "drenatge", "nivell": 2, "danyTipus": "fatiga-i-ferides" }
+    ]
   },
   {
     "id": "essencia-de-la-brisa",
@@ -273,7 +419,15 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta la percepció de tots els objectius d'una àrea d'efecte situada dins l'abast sensorial del PJ durant una escena. Els objectius són dins una il·lusió immersiva (amb un modificador de +3 al realisme) on el mag controla totes les seves percepcions.",
-    "descripcio": "Confereix a un objecte o persona una essència que el fa pràcticament indetectable per a qui quedi afectat per l'encanteri, arribant a alterar les percepcions de fins a deu objectius alhora. El mag pot canviar els objectius mentre l'efecte és actiu i allargar-ne la durada gastant fatiga."
+    "descripcio": "Confereix a un objecte o persona una essència que el fa pràcticament indetectable per a qui quedi afectat per l'encanteri, arribant a alterar les percepcions de fins a deu objectius alhora. El mag pot canviar els objectius mentre l'efecte és actiu i allargar-ne la durada gastant fatiga.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "area" },
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "illusio", "nivell": 3 }
+    ]
   },
   {
     "id": "mot-destructiu",
@@ -285,7 +439,13 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa +9 de dany directe de ferides.",
-    "descripcio": "Dins la tradició hermètica, els grans mags podien ferir greument o matar amb una sola paraula i un gest de vareta. Aquest encanteri causa una quantitat notable de dany que ignora la majoria de proteccions; hi ha variants de mestres experimentats capaces de matar d'un sol cop."
+    "descripcio": "Dins la tradició hermètica, els grans mags podien ferir greument o matar amb una sola paraula i un gest de vareta. Aquest encanteri causa una quantitat notable de dany que ignora la majoria de proteccions; hi ha variants de mestres experimentats capaces de matar d'un sol cop.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "distancia" },
+      { "tipus": "dany", "categoria": "directe", "nivell": 9, "danyTipus": "ferides" }
+    ]
   },
   {
     "id": "mot-guaridor",
@@ -297,7 +457,13 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Cura 10 punts de fatiga o ferides.",
-    "descripcio": "El contrapunt del mot destructiu: permet als mags hermètics guarir els seus aliats fins a deu punts de fatiga o de ferides, a escollir en el moment de comprar l'efecte."
+    "descripcio": "El contrapunt del mot destructiu: permet als mags hermètics guarir els seus aliats fins a deu punts de fatiga o de ferides, a escollir en el moment de comprar l'efecte.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "distancia" },
+      { "tipus": "cura", "nivell": 10, "pista": "fatiga-o-ferides" }
+    ]
   },
   {
     "id": "obrir-pany",
@@ -309,7 +475,12 @@
     "modLatencia": 12,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar. Simula una tirada de l'habilitat nyaps, amb un resultat de 7 fites.",
-    "descripcio": "Un dels clàssics encanteris hermètics per accedir a llocs vedats, capaç de forçar qualsevol pany sense contemplacions. Un cop obert, però, difícilment es pot tornar a tancar i quedarà evident que ha estat forçat; hi ha encanteris similars per a altres habilitats, com disfressar-se o persuadir."
+    "descripcio": "Un dels clàssics encanteris hermètics per accedir a llocs vedats, capaç de forçar qualsevol pany sense contemplacions. Un cop obert, però, difícilment es pot tornar a tancar i quedarà evident que ha estat forçat; hi ha encanteris similars per a altres habilitats, com disfressar-se o persuadir.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 12, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "autoeina", "nivell": 7, "segona": false, "habilitat": "nyaps" }
+    ]
   },
   {
     "id": "passes-de-feli",
@@ -321,7 +492,13 @@
     "modLatencia": 4,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta només l'usuari durant una escena. Simula una tirada de l'habilitat esquitllar-se, amb un resultat de 5 fites.",
-    "descripcio": "Llançat sobre un mateix o un aliat, permet caminar de manera silenciosa i passar desapercebut durant uns minuts, el temps just per esmunyir-se sense ser vist."
+    "descripcio": "Llançat sobre un mateix o un aliat, permet caminar de manera silenciosa i passar desapercebut durant uns minuts, el temps just per esmunyir-se sense ser vist.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 4, "permanent": false },
+    "parametres": [
+      { "tipus": "usuari" },
+      { "tipus": "durada" },
+      { "tipus": "autoeina", "nivell": 5, "segona": false, "habilitat": "esquitllar-se" }
+    ]
   },
   {
     "id": "polimorfacio-macabra",
@@ -333,7 +510,14 @@
     "modLatencia": 12,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ per una durada mínima d'una escena. Transforma l'objectiu en un paladí no-mort, valorat en 246 PC.",
-    "descripcio": "Com que molts nigromants no destaquen en combat, aquest encanteri, fet servint una espasa macabra com a focus, transforma el mag o un ajudant en un paladí no-mort. En acabar l'efecte, el PJ recupera el seu estat habitual, incloent-hi les ferides i la fatiga que tingués abans."
+    "descripcio": "Com que molts nigromants no destaquen en combat, aquest encanteri, fet servint una espasa macabra com a focus, transforma el mag o un ajudant en un paladí no-mort. En acabar l'efecte, el PJ recupera el seu estat habitual, incloent-hi les ferides i la fatiga que tingués abans.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 12, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "transformacio", "costAlterEgo": 246 }
+    ]
   },
   {
     "id": "rigor-mortis",
@@ -345,7 +529,14 @@
     "modLatencia": 5,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Aplica els estats immobilitzat (modificador +3) i lent/3 a un o més objectius individuals dins l'abast sensorial del PJ durant una escena.",
-    "descripcio": "Els nigromants poden induir rigor mortis en un enemic a tocar: els músculs se li encarcaren i amb prou feines pot moure's o reaccionar."
+    "descripcio": "Els nigromants poden induir rigor mortis en un enemic a tocar: els músculs se li encarcaren i amb prou feines pot moure's o reaccionar.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 5, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "immobilitzat", "nivell": 3 },
+      { "tipus": "estat", "estat": "lent", "nivell": 3 }
+    ]
   },
   {
     "id": "el-rostre-de-la-parca",
@@ -357,7 +548,14 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Tots els objectius dins l'àrea d'efecte centrada en el nigromant reben els estats acovardit i immobilitzat (amb un modificador de +2) durant una escena.",
-    "descripcio": "El nigromant desprèn una aura terrorífica que indueix por a qui s'hi acosta i immobilitza aquells que s'hi apropen massa."
+    "descripcio": "El nigromant desprèn una aura terrorífica que indueix por a qui s'hi acosta i immobilitza aquells que s'hi apropen massa.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "acovardit", "nivell": 2 },
+      { "tipus": "estat", "estat": "immobilitzat", "nivell": 2 }
+    ]
   },
   {
     "id": "senyor-de-les-mosques",
@@ -369,7 +567,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Tots els objectius situats dins l'àrea d'efecte al voltant de l'usuari reben els estats atordit i marejat (modificador +3).",
-    "descripcio": "Un dels encanteris més efectius per distreure els oponents: un eixam de mosques els ataca frenèticament, forçant-los a tancar ulls i boca. Hi ha variants amb llagostes o insectes amb fibló que, a més d'atordir, causen dany."
+    "descripcio": "Un dels encanteris més efectius per distreure els oponents: un eixam de mosques els ataca frenèticament, forçant-los a tancar ulls i boca. Hi ha variants amb llagostes o insectes amb fibló que, a més d'atordir, causen dany.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "estat", "estat": "atordit", "nivell": 3 },
+      { "tipus": "estat", "estat": "marejat", "nivell": 3 }
+    ]
   },
   {
     "id": "set-de-sang",
@@ -381,7 +585,14 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica els estats berserc (modificador +2) i recuperació/4.",
-    "descripcio": "El mag grava una runa a la pell de l'objectiu amb un objecte tallant, convertint-lo en un lluitador fanàtic assedegat de sang."
+    "descripcio": "El mag grava una runa a la pell de l'objectiu amb un objecte tallant, convertint-lo en un lluitador fanàtic assedegat de sang.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "berserc", "nivell": 2 },
+      { "tipus": "estat", "estat": "recuperacio", "nivell": 4 }
+    ]
   },
   {
     "id": "lurpa-de-la-mort",
@@ -393,7 +604,14 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Aplica els estats atrapat (modificador +2) i sagnant/2.",
-    "descripcio": "Els nigromants aprofiten aquest efecte per aferrar l'energia vital de l'objectiu i esprémer-la, fent que noti com si una mà invisible l'anés esclafant mentre s'afebleix."
+    "descripcio": "Els nigromants aprofiten aquest efecte per aferrar l'energia vital de l'objectiu i esprémer-la, fent que noti com si una mà invisible l'anés esclafant mentre s'afebleix.",
+    "construccio": { "dificultatDeclarada": 4, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "atrapat", "nivell": 2 },
+      { "tipus": "estat", "estat": "sagnant", "nivell": 2 }
+    ]
   },
   {
     "id": "abatre",
@@ -405,7 +623,12 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Aplica l'estat abatut (modificador +2).",
-    "descripcio": "A diferència d'altres efectes similars, aquest no és indiscriminat: permet al psíquic fer caure amb precisió quirúrgica fins a cinc objectius concrets al seu voltant."
+    "descripcio": "A diferència d'altres efectes similars, aquest no és indiscriminat: permet al psíquic fer caure amb precisió quirúrgica fins a cinc objectius concrets al seu voltant.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "estat", "estat": "abatut", "nivell": 2 }
+    ]
   },
   {
     "id": "accelerar",
@@ -417,7 +640,14 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari gaudeix dels estats ràpid/2 i recuperació/1 durant una escena.",
-    "descripcio": "L'efecte es nota semblant a prendre cafè, però sense haver d'ingerir res."
+    "descripcio": "L'efecte es nota semblant a prendre cafè, però sense haver d'ingerir res.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "usuari" },
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "rapid", "nivell": 2 },
+      { "tipus": "estat", "estat": "recuperacio", "nivell": 1 }
+    ]
   },
   {
     "id": "cicatritzar",
@@ -429,7 +659,11 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar. Cura 4 punts de fatiga o ferides.",
-    "descripcio": "Permet al PJ prendre consciència dels seus propis mecanismes curatius i accelerar-los per guarir-se una mica de fatiga o ferides."
+    "descripcio": "Permet al PJ prendre consciència dels seus propis mecanismes curatius i accelerar-los per guarir-se una mica de fatiga o ferides.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "cura", "nivell": 4, "pista": "fatiga-o-ferides" }
+    ]
   },
   {
     "id": "enllac-mental",
@@ -441,7 +675,13 @@
     "modLatencia": 5,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Permet llegir o sondar i projectar pensaments a la ment de l'objectiu.",
-    "descripcio": "Un dels primers efectes que aprèn un psíquic: sincronitza els impulsos mentals amb els d'un company per llegir i projectar pensaments i aconseguir una comunicació no verbal perfecta. No funciona amb mecanoides, de pautes mentals molt diferents."
+    "descripcio": "Un dels primers efectes que aprèn un psíquic: sincronitza els impulsos mentals amb els d'un company per llegir i projectar pensaments i aconseguir una comunicació no verbal perfecta. No funciona amb mecanoides, de pautes mentals molt diferents.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 5, "permanent": false },
+    "parametres": [
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "llegir" },
+      { "tipus": "mental", "mode": "projectar" }
+    ]
   },
   {
     "id": "imperatiu",
@@ -453,7 +693,13 @@
     "modLatencia": 5,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Permet suggestionar la ment de l'objectiu.",
-    "descripcio": "De manera semblant a l'enllaç mental, sincronitza els impulsos mentals amb l'objectiu, però els sobreescriu amb la voluntat del psíquic, implantant una compulsió que la víctima ha de seguir si no s'hi resisteix. Tampoc funciona amb mecanoides."
+    "descripcio": "De manera semblant a l'enllaç mental, sincronitza els impulsos mentals amb l'objectiu, però els sobreescriu amb la voluntat del psíquic, implantant una compulsió que la víctima ha de seguir si no s'hi resisteix. Tampoc funciona amb mecanoides.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 5, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "suggestio" }
+    ]
   },
   {
     "id": "llancament",
@@ -465,7 +711,12 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Aplica l'estat llançat (modificador +5).",
-    "descripcio": "No té en compte el pes de l'objectiu, que es pot resistir amb APL+Psi o APL+Resistència. Si no ho aconsegueix, sortirà disparat com si hagués rebut una maniobra d'arts marcials, fins i tot podent ser llançat contra un segon objectiu."
+    "descripcio": "No té en compte el pes de l'objectiu, que es pot resistir amb APL+Psi o APL+Resistència. Si no ho aconsegueix, sortirà disparat com si hagués rebut una maniobra d'arts marcials, fins i tot podent ser llançat contra un segon objectiu.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "estat", "estat": "llancat", "nivell": 5 }
+    ]
   },
   {
     "id": "matar-maquina",
@@ -477,7 +728,11 @@
     "modLatencia": 5,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari toca una o més màquines i les inutilitza completament. Simula una tirada de l'habilitat nyaps, amb un resultat de 5 fites. Si l'objectiu és un mecanoide, té dret a una tirada de resistència; si no la supera, rep 5 punts de dany directe (menys la seva reducció de dany).",
-    "descripcio": "Detecta els punts crítics d'una màquina i hi injecta entropia pura, trencant-ne les peces més febles fins a deixar-la inutilitzada de manera pràcticament irreparable. Si l'objectiu és un mecanoide, té dret a resistir-se o rebre dany directe."
+    "descripcio": "Detecta els punts crítics d'una màquina i hi injecta entropia pura, trencant-ne les peces més febles fins a deixar-la inutilitzada de manera pràcticament irreparable. Si l'objectiu és un mecanoide, té dret a resistir-se o rebre dany directe.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 5, "permanent": false },
+    "parametres": [
+      { "tipus": "autoeina", "nivell": 5, "segona": false, "habilitat": "nyaps" }
+    ]
   },
   {
     "id": "ment-sobre-materia",
@@ -489,7 +744,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Permet exercir telecinesi de nivell alfa (massa no superior a la del PJ, manipulació precisa).",
-    "descripcio": "Un dels efectes psíquics més vistosos: permet controlar una massa a distància i variar-ne la velocitat dins els límits de l'efecte. Si en surt, passa a regir-se per la gravetat i altres forces externes."
+    "descripcio": "Un dels efectes psíquics més vistosos: permet controlar una massa a distància i variar-ne la velocitat dins els límits de l'efecte. Si en surt, passa a regir-se per la gravetat i altres forces externes.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "telecinesi", "categoria": "alfa" }
+    ]
   },
   {
     "id": "negar-el-dany",
@@ -501,7 +762,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari genera una ègida de protecció 15.",
-    "descripcio": "Segons algunes teories, aprofita i amplifica la reverberació sònica del crit de l'usuari per generar una ona expansiva que contraresta un atac entrant, encara que un cop prou fort pot fer-la inútil."
+    "descripcio": "Segons algunes teories, aprofita i amplifica la reverberació sònica del crit de l'usuari per generar una ona expansiva que contraresta un atac entrant, encara que un cop prou fort pot fer-la inútil.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "reaccio" },
+      { "tipus": "usuari" },
+      { "tipus": "egida", "nivell": 15 }
+    ]
   },
   {
     "id": "pas-al-costat",
@@ -513,7 +780,13 @@
     "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari es transposa instantàniament a un punt dins el seu abast sensorial (distància mitjana). La tirada de manifestar l'efecte serveix com una tirada d'esquivar; si la tirada d'atac és més alta, l'usuari es transposa massa tard i rep el dany normal segons la seva defensa bàsica.",
-    "descripcio": "Parteix de la idea que la millor manera d'evitar un atac és no ser-hi quan arriba: transposa l'usuari a un punt proper. La tirada de l'efecte fa d'esquiva; si l'atac la supera, l'usuari es mou massa tard i rep el dany normal."
+    "descripcio": "Parteix de la idea que la millor manera d'evitar un atac és no ser-hi quan arriba: transposa l'usuari a un punt proper. La tirada de l'efecte fa d'esquiva; si l'atac la supera, l'usuari es mou massa tard i rep el dany normal.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 3, "permanent": false },
+    "parametres": [
+      { "tipus": "reaccio" },
+      { "tipus": "usuari" },
+      { "tipus": "translocacio", "mode": "translocacio", "distancia": "mitjana" }
+    ]
   },
   {
     "id": "projectil",
@@ -525,7 +798,12 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Permet exercir telecinesi de nivell beta (massa fins a 10 cops la del PJ, precisió ±1 cm). El dany bàsic és el doble de les fites de la tirada per manifestar l'efecte, més l'excedent d'una segona tirada d'impactar amb armes a distància.",
-    "descripcio": "L'usuari pren el control telecinètic d'un objecte, criatura o persona i el llança contra un objectiu com si fos una bala de canó, calculant l'impacte amb una segona tirada d'atac a distància."
+    "descripcio": "L'usuari pren el control telecinètic d'un objecte, criatura o persona i el llança contra un objectiu com si fos una bala de canó, calculant l'impacte amb una segona tirada d'atac a distància.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "telecinesi", "categoria": "beta" }
+    ]
   },
   {
     "id": "sonda-mental",
@@ -537,7 +815,13 @@
     "modLatencia": 5,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "El PJ llegeix o sonda la ment d'un o més objectius dins el seu abast sensorial durant una escena.",
-    "descripcio": "Permet al PJ llegir o sondar la ment d'un o més objectius dins el seu abast sensorial."
+    "descripcio": "Permet al PJ llegir o sondar la ment d'un o més objectius dins el seu abast sensorial.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 5, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "llegir" }
+    ]
   },
   {
     "id": "subjugar",
@@ -549,7 +833,13 @@
     "modLatencia": 5,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari pot controlar les emocions d'un o més objectius dins el seu abast sensorial durant una escena.",
-    "descripcio": "La veu de l'usuari incorpora infrasons inaudibles que estimulen el cervell de l'objectiu, fent-lo més susceptible a la suggestió i alterant-ne les secrecions hormonals per controlar-ne les emocions. Les emocions primàries, com la ira o la por, són sempre més fàcils d'induir que les més subtils."
+    "descripcio": "La veu de l'usuari incorpora infrasons inaudibles que estimulen el cervell de l'objectiu, fent-lo més susceptible a la suggestió i alterant-ne les secrecions hormonals per controlar-ne les emocions. Les emocions primàries, com la ira o la por, són sempre més fàcils d'induir que les més subtils.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 5, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "control-emocional" }
+    ]
   },
   {
     "id": "laleteig-de-la-grua",
@@ -561,7 +851,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta tots els objectius dins l'àrea d'efecte situada a tocar de l'usuari. Aplica els estats atordit (modificador +0) i empès (modificador +2).",
-    "descripcio": "Es veu poques vegades en duels, però més d'un il·luminat errant ha salvat la vida gràcies a aquest efecte quan s'ha vist enmig d'una emboscada."
+    "descripcio": "Es veu poques vegades en duels, però més d'un il·luminat errant ha salvat la vida gràcies a aquest efecte quan s'ha vist enmig d'una emboscada.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "estat", "estat": "atordit", "nivell": 0 },
+      { "tipus": "estat", "estat": "empes", "nivell": 2 }
+    ]
   },
   {
     "id": "lanticipacio-del-colibri",
@@ -573,7 +869,14 @@
     "modLatencia": 1,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta només l'usuari durant una escena. Dóna un modificador de +3 a l'habilitat esquivar. Aplica l'estat vigilant (modificador +0).",
-    "descripcio": "Els colibrís reaccionen a una velocitat sorprenent per esquivar depredadors i maniobrar entre branques. Aquest efecte permet als usuaris de Qi reaccionar amb la mateixa rapidesa davant del perill."
+    "descripcio": "Els colibrís reaccionen a una velocitat sorprenent per esquivar depredadors i maniobrar entre branques. Aquest efecte permet als usuaris de Qi reaccionar amb la mateixa rapidesa davant del perill.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 1, "permanent": false },
+    "parametres": [
+      { "tipus": "usuari" },
+      { "tipus": "durada" },
+      { "tipus": "eina", "nivell": 3, "segona": false, "habilitat": "esquivar" },
+      { "tipus": "estat", "estat": "vigilant", "nivell": 0 }
+    ]
   },
   {
     "id": "larmadura-del-queloni",
@@ -585,7 +888,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Dóna a l'usuari l'equivalent a una armadura natural de protecció 10.",
-    "descripcio": "L'efecte que va donar fama i malnom al mestre Queloni de Takama-ga-hara. No té durada pròpia, però es pot manifestar just en el moment necessari per esmorteir un atac, cosa que el fa un favorit entre els practicants novells."
+    "descripcio": "L'efecte que va donar fama i malnom al mestre Queloni de Takama-ga-hara. No té durada pròpia, però es pot manifestar just en el moment necessari per esmorteir un atac, cosa que el fa un favorit entre els practicants novells.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "reaccio" },
+      { "tipus": "usuari" },
+      { "tipus": "armadura", "nivell": 10 }
+    ]
   },
   {
     "id": "circulacio-del-qi",
@@ -597,7 +906,12 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica l'estat recuperació/4.",
-    "descripcio": "Reconduint el Qi dins el cos de l'objectiu i alineant-ne els txakres, l'usuari n'accelera el procés curatiu natural."
+    "descripcio": "Reconduint el Qi dins el cos de l'objectiu i alineant-ne els txakres, l'usuari n'accelera el procés curatiu natural.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "recuperacio", "nivell": 4 }
+    ]
   },
   {
     "id": "la-cogitacio-de-lasceta",
@@ -609,7 +923,13 @@
     "modLatencia": 12,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta només l'usuari. Simula una tirada de l'habilitat enigmes, amb un resultat de 7 fites.",
-    "descripcio": "Un dels primers efectes que aprenen els habitants de Takama-ga-hara, que mitjançant la meditació permet trobar la solució a dilemes complexos o enigmes enrevessats."
+    "descripcio": "Un dels primers efectes que aprenen els habitants de Takama-ga-hara, que mitjançant la meditació permet trobar la solució a dilemes complexos o enigmes enrevessats.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 12, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "usuari" },
+      { "tipus": "autoeina", "nivell": 7, "segona": false, "habilitat": "enigmes" }
+    ]
   },
   {
     "id": "dansa-del-cel",
@@ -621,7 +941,13 @@
     "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari obté el tret levitar durant una escena.",
-    "descripcio": "Molt popular entre els practicants novells, permet vèncer la gravetat i moure's per l'aire. Mantenir-lo actiu massa estona pot esgotar l'usuari, i no falten accidents entre joves que competeixen a veure qui puja més amunt."
+    "descripcio": "Molt popular entre els practicants novells, permet vèncer la gravetat i moure's per l'aire. Mantenir-lo actiu massa estona pot esgotar l'usuari, i no falten accidents entre joves que competeixen a veure qui puja més amunt.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 3, "permanent": false },
+    "parametres": [
+      { "tipus": "usuari" },
+      { "tipus": "durada" },
+      { "tipus": "tret", "tret": "levitar", "cost": 15 }
+    ]
   },
   {
     "id": "la-fugida-del-pop",
@@ -633,7 +959,13 @@
     "modLatencia": 6,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Conjura una gran quantitat de fum negre (fins a 1 kg de massa) que enfosqueix la visibilitat, suficient per cobrir una gran àrea d'efecte durant una escena. Com més àrea cobreixi, menys dens serà i menys afectarà la visibilitat.",
-    "descripcio": "Genera un núvol de fum negre que s'expandeix des del PJ i bloqueja completament la visibilitat. En espais tancats pot durar tota l'escena, mentre que a l'aire lliure es dissipa segons el vent i les condicions atmosfèriques."
+    "descripcio": "Genera un núvol de fum negre que s'expandeix des del PJ i bloqueja completament la visibilitat. En espais tancats pot durar tota l'escena, mentre que a l'aire lliure es dissipa segons el vent i les condicions atmosfèriques.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 6, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "replicacio", "massa": "menys-1kg", "complexitat": "monomaterial" }
+    ]
   },
   {
     "id": "inspirar-el-yang",
@@ -645,7 +977,14 @@
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari obté el tret regeneració i l'estat recuperació/2 durant una escena.",
-    "descripcio": "Un dels efectes més coneguts a Takama-ga-hara: amb un control precís de l'energia corporal, accelera el procés de curació natural fins al punt de poder reconstruir membres perduts en combat."
+    "descripcio": "Un dels efectes més coneguts a Takama-ga-hara: amb un control precís de l'energia corporal, accelera el procés de curació natural fins al punt de poder reconstruir membres perduts en combat.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 2, "permanent": false },
+    "parametres": [
+      { "tipus": "usuari" },
+      { "tipus": "durada" },
+      { "tipus": "tret", "tret": "regeneracio", "cost": 10 },
+      { "tipus": "estat", "estat": "recuperacio", "nivell": 2 }
+    ]
   },
   {
     "id": "la-intuicio-del-bodhisattva",
@@ -657,7 +996,14 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ durant una escena. Permet llegir o sondar la ment de l'objectiu.",
-    "descripcio": "Els usuaris de Qi experimentats sincronitzen la seva energia corporal amb la de l'objectiu per captar-ne els pensaments i emocions superficials, o per sondar-hi més a fons."
+    "descripcio": "Els usuaris de Qi experimentats sincronitzen la seva energia corporal amb la de l'objectiu per captar-ne els pensaments i emocions superficials, o per sondar-hi més a fons.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "distancia" },
+      { "tipus": "durada" },
+      { "tipus": "mental", "mode": "llegir" }
+    ]
   },
   {
     "id": "la-ira-del-drac",
@@ -669,7 +1015,14 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Durant una escena, l'usuari és sota els efectes dels estats berserc (modificador +0) i ràpid/2.",
-    "descripcio": "Té mala reputació entre els mestres de Takama-ga-hara perquè trenca l'equilibri cognitiu de qui el fa servir. És un últim recurs per a qui ja està greument ferit, tot i que un oponent serè pot aprofitar la manca de defensa que provoca."
+    "descripcio": "Té mala reputació entre els mestres de Takama-ga-hara perquè trenca l'equilibri cognitiu de qui el fa servir. És un últim recurs per a qui ja està greument ferit, tot i que un oponent serè pot aprofitar la manca de defensa que provoca.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "usuari" },
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "berserc", "nivell": 0 },
+      { "tipus": "estat", "estat": "rapid", "nivell": 2 }
+    ]
   },
   {
     "id": "les-mans-den-miyagi",
@@ -681,7 +1034,12 @@
     "modLatencia": 10,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar. Cura 11 punts de fatiga o ferides.",
-    "descripcio": "Una variant de la imposició de mans que reordena el Qi de l'objectiu per estimular la curació, i que pràcticament tot estudiant de Qi aprèn durant el seu entrenament."
+    "descripcio": "Una variant de la imposició de mans que reordena el Qi de l'objectiu per estimular la curació, i que pràcticament tot estudiant de Qi aprèn durant el seu entrenament.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 10, "permanent": false },
+    "parametres": [
+      { "tipus": "ritual" },
+      { "tipus": "cura", "nivell": 11, "pista": "fatiga-o-ferides" }
+    ]
   },
   {
     "id": "la-mirada-de-la-cobra",
@@ -693,7 +1051,12 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Aplica l'estat marejat (modificador +2) a un o més objectius individuals a tocar durant una escena.",
-    "descripcio": "Força l'objectiu a perdre les accions declarades i a no poder-ne fer de noves durant un curt període, donant a l'usuari l'avantatge tàctic de preparar una altra acció o fugir."
+    "descripcio": "Força l'objectiu a perdre les accions declarades i a no poder-ne fer de noves durant un curt període, donant a l'usuari l'avantatge tàctic de preparar una altra acció o fugir.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "marejat", "nivell": 2 }
+    ]
   },
   {
     "id": "la-mossegada-del-sol",
@@ -705,7 +1068,13 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Tots els objectius dins una àrea d'efecte centrada en el personatge queden encegats i atordits (amb un modificador de +3) durant una escena.",
-    "descripcio": "Un efecte molt infravalorat, especialment útil per escapar-se d'un gran depredador sense fer-li mal. Variants més complicades també anul·len l'olfacte o l'oïda."
+    "descripcio": "Un efecte molt infravalorat, especialment útil per escapar-se d'un gran depredador sense fer-li mal. Variants més complicades també anul·len l'olfacte o l'oïda.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "atordit", "nivell": 3 }
+    ]
   },
   {
     "id": "projeccio-del-qi",
@@ -717,7 +1086,12 @@
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals dins l'abast sensorial del PJ. Causa 5 de dany directe de ferides.",
-    "descripcio": "La forma més bàsica d'atacar a distància: l'usuari projecta el seu propi Qi com si fos un projectil."
+    "descripcio": "La forma més bàsica d'atacar a distància: l'usuari projecta el seu propi Qi com si fos un projectil.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 2, "permanent": false },
+    "parametres": [
+      { "tipus": "distancia" },
+      { "tipus": "dany", "categoria": "directe", "nivell": 5, "danyTipus": "ferides" }
+    ]
   },
   {
     "id": "puny-de-drac",
@@ -729,7 +1103,11 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar. Causa dany indirecte de foc amb un modificador de +7.",
-    "descripcio": "Un dels moviments clàssics de les arts marcials de Takama-ga-hara: l'usuari destil·la el seu Qi en flames que envolten el puny per colpejar l'oponent."
+    "descripcio": "Un dels moviments clàssics de les arts marcials de Takama-ga-hara: l'usuari destil·la el seu Qi en flames que envolten el puny per colpejar l'oponent.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "dany", "categoria": "indirecte", "nivell": 7, "danyTipus": "foc" }
+    ]
   },
   {
     "id": "puny-explosiu",
@@ -741,7 +1119,12 @@
     "modLatencia": 2,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Causa dany indirecte d'explosió amb un modificador de +5 a tots els objectius dins una àrea d'efecte que es propaga des de l'usuari.",
-    "descripcio": "Crea una ona expansiva que es propaga des de l'usuari, popular entre qui ha de fer front a diversos oponents alhora."
+    "descripcio": "Crea una ona expansiva que es propaga des de l'usuari, popular entre qui ha de fer front a diversos oponents alhora.",
+    "construccio": { "dificultatDeclarada": 1, "latenciaDeclarada": 2, "permanent": false },
+    "parametres": [
+      { "tipus": "area" },
+      { "tipus": "dany", "categoria": "indirecte", "nivell": 5, "danyTipus": "explosio" }
+    ]
   },
   {
     "id": "el-toc-de-la-sangonera",
@@ -753,7 +1136,12 @@
     "modLatencia": 0,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "Afecta un o més objectius individuals a tocar durant una escena. Aplica l'estat sagnant/2.",
-    "descripcio": "Molts mestres veterans del Qi el fan servir per afeblir ràpidament els seus contrincants. Repetir el toc apila l'estat, fent que la víctima perdi fatiga de manera continuada."
+    "descripcio": "Molts mestres veterans del Qi el fan servir per afeblir ràpidament els seus contrincants. Repetir el toc apila l'estat, fent que la víctima perdi fatiga de manera continuada.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 0, "permanent": false },
+    "parametres": [
+      { "tipus": "durada" },
+      { "tipus": "estat", "estat": "sagnant", "nivell": 2 }
+    ]
   },
   {
     "id": "lull-del-tigre",
@@ -765,7 +1153,12 @@
     "modLatencia": 1,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari fa un atac cos a cos amb un +2 a l'habilitat d'arts marcials. L'atac causa +4 de dany directe de fatiga o ferides.",
-    "descripcio": "El PJ es mou seguint el flux de Qi entre el seu cos i el de l'oponent, guanyant precisió per colpejar els punts febles i causar dany directe."
+    "descripcio": "El PJ es mou seguint el flux de Qi entre el seu cos i el de l'oponent, guanyant precisió per colpejar els punts febles i causar dany directe.",
+    "construccio": { "dificultatDeclarada": 3, "latenciaDeclarada": 1, "permanent": false },
+    "parametres": [
+      { "tipus": "eina", "nivell": 2, "segona": false, "habilitat": "arts-marcials" },
+      { "tipus": "dany", "categoria": "directe", "nivell": 4, "danyTipus": "fatiga-o-ferides" }
+    ]
   },
   {
     "id": "la-velocitat-del-vent",
@@ -777,6 +1170,14 @@
     "modLatencia": 3,
     "us": { "narratiu": true, "actiu": true },
     "mecanica": "L'usuari rep un modificador de +3 a l'habilitat de córrer, l'estat ràpid/2, i el tret incansable durant una escena.",
-    "descripcio": "Els il·luminats errants solen fer llargues caminades a la recerca de saviesa, però de vegades necessiten arribar més ràpid. Aquest efecte els permet recórrer grans distàncies a gran velocitat sense patir cansament, almenys fins que hi arriben."
+    "descripcio": "Els il·luminats errants solen fer llargues caminades a la recerca de saviesa, però de vegades necessiten arribar més ràpid. Aquest efecte els permet recórrer grans distàncies a gran velocitat sense patir cansament, almenys fins que hi arriben.",
+    "construccio": { "dificultatDeclarada": 2, "latenciaDeclarada": 3, "permanent": false },
+    "parametres": [
+      { "tipus": "usuari" },
+      { "tipus": "durada" },
+      { "tipus": "eina", "nivell": 3, "segona": false, "habilitat": "correr" },
+      { "tipus": "estat", "estat": "rapid", "nivell": 2 },
+      { "tipus": "tret", "tret": "incansable", "cost": 10 }
+    ]
   }
 ]

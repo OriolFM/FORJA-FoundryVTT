@@ -1,0 +1,17 @@
+<fieldset class="forja-item-parametres">
+  <legend>{{localize "FORJA.Construccio.Parametres"}}</legend>
+  {{#if teParametres}}
+  <ul class="dc-desglossament">
+    {{#each resultat.desglossament as |l|}}<li>{{l.etiqueta}}: {{l.cost}} PC{{#if l.dificultat}}, dif. {{l.dificultat}}{{/if}}{{#if l.latencia}}, lat. {{l.latencia}}{{/if}}</li>{{/each}}
+  </ul>
+  <p class="hint">
+    {{localize "FORJA.Construccio.Calculat" cost=resultat.cost latencia=resultat.latencia}}
+    {{#unless quadra}}<strong class="forja-avis-cost">{{localize "FORJA.Construccio.NoQuadra"}}</strong>{{/unless}}
+  </p>
+  {{else}}
+  <p class="hint">{{localize "FORJA.Construccio.SenseParametresItem"}}</p>
+  {{/if}}
+  {{#if potEditar}}
+  <button type="button" data-action="forjaEditarParametres"><i class="fas fa-hammer"></i> {{localize "FORJA.Construccio.EditarParametres"}}</button>
+  {{/if}}
+</fieldset>

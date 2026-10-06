@@ -358,21 +358,8 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
   static async _onCrearEfecte(event, target) {
     const sel = await DiategEquipament.obrir("efecte");
     if (!sel) return;
-    const e = sel.entrada;
-    await this.actor.createEmbeddedDocuments("Item", [{
-      name: e.nom,
-      type: "efecte",
-      system: {
-        cost:        e.cost,
-        do:          e.do,
-        tipus:       e.tipus,
-        dificultat:  e.dificultat,
-        modLatencia: e.modLatencia ?? 0,
-        us:          e.us ?? {},
-        mecanica:    e.mecanica ?? "",
-        descripcio:  e.descripcio ?? ""
-      }
-    }]);
+    // Fase 2: amb els paràmetres i el flag `catalegId` (crearItemDesDeCataleg).
+    await crearItemDesDeCataleg(this.actor, "efecte", sel.entrada);
   }
   static async _onObrirConstructor(event, target) {
     const construit = await DiategConstructor.obrir();
@@ -388,7 +375,9 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
         modLatencia: construit.modLatencia,
         us:          construit.us,
         mecanica:    construit.mecanica,
-        descripcio:  ""
+        descripcio:  "",
+        parametres:  construit.parametres,
+        construccio: construit.construccio
       }
     }]);
   }
@@ -680,12 +669,14 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       type: "artefacte",
       system: {
         cost:       construit.cost,
-        categoria:  "dispositiu",
+        categoria:  construit.categoria ?? "dispositiu",
         activacio:  { tipus: construit.activacioId, dificultat: construit.dificultat },
-        us:         construit.us,
+        us:         { ...construit.us, modLatencia: construit.modLatencia },
         mecanica:   construit.mecanica,
         descripcio: "",
-        fase:       "prototip1"
+        fase:       "prototip1",
+        parametres:  construit.parametres,
+        construccio: construit.construccio
       }
     }]);
   }

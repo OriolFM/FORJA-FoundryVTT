@@ -12,6 +12,25 @@
  * (informatiu, encara no consumit automàticament — cap flux de temps
  * actiu llegeix `modLatencia` d'un efecte, a diferència de les armes).
  */
+/**
+ * Camps de construcció compartits per efectes i artefactes (Fase 2,
+ * `progressio/construccio.mjs`): la llista de paràmetres (com al skill de
+ * referència `forja-parametres`) i la dificultat i latència declarades. Amb
+ * els paràmetres, el cost es pot recalcular i (Fase 3) el resultat de
+ * l'efecte o l'artefacte s'aplica sol.
+ * @param {typeof foundry.data.fields} fields
+ */
+export function campsConstruccio(fields) {
+  return {
+    parametres: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
+    construccio: new fields.SchemaField({
+      dificultatDeclarada: new fields.NumberField({ integer: true, initial: null, nullable: true }),
+      latenciaDeclarada:   new fields.NumberField({ integer: true, initial: null, nullable: true }),
+      permanent:           new fields.BooleanField({ initial: false })
+    })
+  };
+}
+
 export default class ItemEfecte extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -37,7 +56,8 @@ export default class ItemEfecte extends foundry.abstract.TypeDataModel {
         actiu:    new fields.BooleanField({ initial: true })
       }),
       mecanica:   new fields.HTMLField({ initial: "" }),
-      descripcio: new fields.HTMLField({ initial: "" })
+      descripcio: new fields.HTMLField({ initial: "" }),
+      ...campsConstruccio(fields)
     };
   }
 }

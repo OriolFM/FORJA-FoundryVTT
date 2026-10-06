@@ -30,6 +30,7 @@ import { registrarEstats } from "./module/estats/estats.mjs";
 import { registrarHookValorX, aplicarTicsEstats } from "./module/estats/estats-parametritzats.mjs";
 import { registrarNotificacions } from "./module/estats/notificacions.mjs";
 import { sincronitzarEstatsSalut, iniciTornEstats } from "./module/estats/aplicacio-estats.mjs";
+import { registrarMigracio, executarMigracions } from "./module/migracio/migracio.mjs";
 
 Hooks.once("init", () => {
   console.log("FORJA RPG | Inicialitzant sistema FORJA v0.2");
@@ -90,11 +91,11 @@ Hooks.once("init", () => {
     label:       "FORJA.Sheet.PNJ"
   });
 
-  // Fitxa d'Item (C3): una classe per als 4 tipus, una plantilla cadascun
+  // Fitxa d'Item (C3): una classe per als 5 tipus (Fase 2: també efectes), una plantilla cadascun
   // (templates/item/*.hbs) — reemplaça la fitxa genèrica de Foundry, que no
   // sap res dels camps `system` de FORJA.
   DocumentSheetConfig.registerSheet(Item, "forja", FullItem, {
-    types:       ["tret", "arma", "armadura", "artefacte"],
+    types:       ["tret", "arma", "armadura", "artefacte", "efecte"],
     makeDefault: true,
     label:       "FORJA.Sheet.Item"
   });
@@ -111,6 +112,9 @@ Hooks.once("init", () => {
   // Handlebars helpers
   _registrarHelpers();
 
+  // Migracions de dades dels mons existents (s'executen a `ready`).
+  registrarMigracio();
+
   console.log("FORJA RPG | Sistema inicialitzat");
 });
 
@@ -118,6 +122,8 @@ Hooks.once("ready", () => {
   // Relé d'autoritat del DJ (A2): escriptures a documents d'altri.
   registrarSocket();
   registrarPreguntaDefensa();
+  // Fase 2: paràmetres als efectes i artefactes antics (només el DJ actiu).
+  executarMigracions().catch(err => console.error("FORJA | Error a la migració", err));
   console.log("FORJA RPG | Sistema llest");
 });
 

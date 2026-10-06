@@ -21,13 +21,7 @@ Quan es canviï una regla de creació, o quan es toqui algun d'aquests fitxers, 
 **Artefactes i efectes (`forja-parametres`):**
 - **Dades:** les 83 plantilles de `plantilles.py` coincideixen amb `artefactes.json` i `efectes.json` en cost, dificultat i latència. L'única diferència és de nom: «Cibermòdem d'interfície neural» al skill, «…neural directa» al manual i al projecte.
 - **Taula de paràmetres:** `parametres.json` té els mateixos valors que el skill (abast, objectius, durada, ús, ritual +10 de latència, dany, curació, protecció, habilitats amb autoeina 5/nivell, els 20 estats, percepció, alteració, transformació, translocació, mentals, telecinesi, replicació i invocació).
-- **Pendent al constructor del projecte** (`construccio.mjs` i el diàleg). Li falta el que el skill sí que té, i per això encara no pot reproduir totes les plantilles:
-  - recàrrega (−2 PC per unitat d'espera) i acumulador (+3 PC per càrrega addicional);
-  - armes i armadures bàsiques a cost 0, pagant només el que s'hi afegeix (dany o protecció per sobre de la base, latència per sota);
-  - dificultat declarada (±5 PC per punt respecte de la calculada) i latència declarada (±2 PC per punt, límit ±12, latència final entre 2 i 24). Ara el projecte només puja automàticament la dificultat a 1;
-  - excepció dels artefactes permanents (poden tenir dificultat inferior a 1);
-  - diversos paràmetres del mateix grup alhora: diverses capacitats mentals (Sonda neural), atribut i tret a l'alteració (Vestit lleuger de reconeixement).
-  - Proposta: una prova unitària que reprodueixi les 83 plantilles de `plantilles.py` amb `calcularConstruccio` i comprovi el cost, la dificultat i la latència.
+- **Constructor del projecte (2026-10-06, Fase 2):** ja fa servir una llista de paràmetres com el skill (`calcularParametres` a `construccio.mjs`), amb recàrrega, acumulador, armes i armadures base, dificultat i latència declarades, artefactes permanents i paràmetres repetits. Cada plantilla de `artefactes.json` i `efectes.json` porta els seus `parametres` (convertits de `plantilles.py`) i `tests/unitaris/construccio.test.mjs` comprova que el constructor en reprodueix el cost, la dificultat i la latència: **83/83**.
 
 **PJ, PNJ, criatures i animals (`forja-creator`):**
 - **El projecte coincideix amb el manual v3:**

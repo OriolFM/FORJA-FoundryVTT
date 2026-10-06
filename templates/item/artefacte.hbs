@@ -25,6 +25,17 @@
       <label>{{localize "FORJA.Item.ActivacioDificultat"}}</label>
       <input type="number" name="system.activacio.dificultat" value="{{sys.activacio.dificultat}}" min="0" step="1"/>
     </div>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.ActivacioTirada"}}</label>
+      <select name="system.activacio.atribut">
+        <option value="" {{#unless sys.activacio.atribut}}selected{{/unless}}>{{localize "FORJA.Construccio.ATriar"}}</option>
+        {{#each atributs as |a|}}<option value="{{a}}" {{#if (eq a ../sys.activacio.atribut)}}selected{{/if}}>{{a}}</option>{{/each}}
+      </select>
+      <select name="system.activacio.habilitat">
+        <option value="" {{#unless sys.activacio.habilitat}}selected{{/unless}}>{{localize "FORJA.Construccio.ATriar"}}</option>
+        {{#each habilitats as |h|}}<option value="{{h.id}}" {{#if (eq h.id ../sys.activacio.habilitat)}}selected{{/if}}>{{h.nom}}</option>{{/each}}
+      </select>
+    </div>
   </fieldset>
 
   <fieldset>
@@ -49,10 +60,32 @@
       <label>{{localize "FORJA.Item.CarregaTorns"}}</label>
       <input type="number" name="system.carrega.tornsRecarrega" value="{{sys.carrega.tornsRecarrega}}" min="0" step="1"/>
     </div>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.CarregaActual"}}</label>
+      <input type="number" name="system.carrega.actual" value="{{sys.carrega.actual}}" min="0" step="1" placeholder="{{sys.carrega.usosPerCarrega}}"/>
+    </div>
     <div class="form-group form-group-inline">
       <label><input type="checkbox" name="system.carrega.modeEspera" {{checked sys.carrega.modeEspera}}/> {{localize "FORJA.Item.CarregaModeEspera"}}</label>
     </div>
   </fieldset>
+
+  <fieldset>
+    <legend>{{localize "FORJA.Item.RD"}}</legend>
+    <div class="form-group">
+      <label>{{localize "FORJA.Item.Fase"}}</label>
+      <select name="system.fase">
+        {{#each fields.fase.choices as |c|}}
+        <option value="{{c}}" {{#if (eq c ../sys.fase)}}selected{{/if}}>{{localize (concat "FORJA.Item.FaseOpcio." c)}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group form-group-inline">
+      <label><input type="checkbox" name="system.trencat" {{checked sys.trencat}}/> {{localize "FORJA.Item.Trencat"}}</label>
+      <label><input type="checkbox" name="system.modular" {{checked sys.modular}}/> {{localize "FORJA.Item.Modular"}}</label>
+    </div>
+  </fieldset>
+
+  {{{parametresHtml}}}
 
   <div class="form-group form-group-stacked">
     <label>{{localize "FORJA.Item.Mecanica"}}</label>

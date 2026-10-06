@@ -25,6 +25,10 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
   - **Vigilant:** +1 reacció.
   - **Tirades d'estat** des de la fitxa: escapar-se d'atrapat, superar acovardit, mantenir-se dempeus (empès), resistir una malaltia o toxina, actuar marejat, forçar una extremitat esguerrada.
   - La fitxa mostra els estats actius, amb un botó per tirar i un per treure'ls.
+- **Constructor d'efectes i artefactes per paràmetres:** s'hi afegeixen paràmetres de qualsevol tipus i es poden repetir; inclou els que faltaven (recàrrega, acumulador, arma i armadura base, dificultat i latència declarades, artefactes permanents). Reprodueix el cost, la dificultat i la latència de les 83 plantilles del manual.
+- **Els 18 artefactes i els 65 efectes del manual porten els seus paràmetres**, i la fitxa en mostra el desglossament amb el cost calculat i un botó per editar-los amb el constructor. Millorar un efecte parteix dels seus paràmetres.
+- **Fitxa d'objecte per als efectes**; la d'artefacte mostra també la tirada d'activació (atribut + habilitat), la càrrega actual, la fase de prototip i si és modular.
+- **Migració:** els efectes i artefactes del catàleg que ja hi hagi en un món reben els paràmetres en entrar el DJ.
 - **Textos flotants al costat del token** (com als videojocs): estats guanyats i perduts, fatiga, ferides i curació. Si un jugador intenta fer una cosa que un estat li impedeix, l'estat torna a sortir.
 - **Fase de declaració:** en començar el combat, si algú no ha declarat, s'anuncia «Declareu les accions» i el combat no arrenca fins que declara l'últim. Llavors comença el temps actiu i el rellotge salta directament fins al primer que actua.
 - **Anuncis sobre la pantalla:** «Declareu les accions», «Comença el temps actiu» i «El rellotge de temps actiu avança n tics».

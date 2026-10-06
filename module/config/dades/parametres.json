@@ -133,5 +133,32 @@
     { "id": "amb-parts",       "nom": "Objecte amb parts mòbils",     "cost": 10, "dificultat": 2, "latencia": 1 },
     { "id": "electronic",      "nom": "Aparell electrònic",           "cost": 10, "dificultat": 3, "latencia": 2 },
     { "id": "nanomaquinaria",  "nom": "Nanomaquinària",               "cost": 15, "dificultat": 4, "latencia": 2 }
-  ]
+  ],
+  "_armesBase": "Armes i armadures bàsiques (manual › Artefactes basats en armes i armadures, l. 4163; taules d'armes l. ~2940 i d'armadures l. ~3305): cost 0; un artefacte basat en una d'aquestes només paga el que s'hi afegeix (+2 PC per punt de dany o protecció per sobre de la base, ±2 PC per punt de latència respecte de la base). Valors del skill forja-parametres.",
+  "armesBase": [
+    { "id": "cop",          "nom": "Cop",            "latencia": 0, "dany": 1 },
+    { "id": "contundent",   "nom": "Contundent",     "latencia": 2, "dany": 2 },
+    { "id": "de-ma",        "nom": "Arma de mà",     "latencia": 0, "dany": 1 },
+    { "id": "destral",      "nom": "Destral",        "latencia": 2, "dany": 3 },
+    { "id": "escut",        "nom": "Escut",          "latencia": 1, "dany": 2 },
+    { "id": "espasa",       "nom": "Espasa",         "latencia": 1, "dany": 2 },
+    { "id": "fulla-curta",  "nom": "Fulla curta",    "latencia": 0, "dany": 1 },
+    { "id": "fulla-llarga", "nom": "Fulla llarga",   "latencia": 2, "dany": 3 },
+    { "id": "llanca",       "nom": "Llança",         "latencia": 3, "dany": 3 },
+    { "id": "pic",          "nom": "Pic",            "latencia": 3, "dany": 3 },
+    { "id": "pistola",      "nom": "Pistola",        "latencia": 0, "dany": 2 },
+    { "id": "subfusell",    "nom": "Subfusell",      "latencia": 1, "dany": 2 },
+    { "id": "arma-assalt",  "nom": "Arma d'assalt",  "latencia": 1, "dany": 3 },
+    { "id": "rifle",        "nom": "Rifle",          "latencia": 2, "dany": 4 },
+    { "id": "escopeta",     "nom": "Escopeta",       "latencia": 2, "dany": 3 }
+  ],
+  "armaduresBase": [
+    { "id": "lleugera-flexible", "nom": "Lleugera flexible", "latencia": 0, "proteccio": 1 },
+    { "id": "lleugera-rigida",   "nom": "Lleugera rígida",   "latencia": 1, "proteccio": 2 },
+    { "id": "mitjana-flexible",  "nom": "Mitjana flexible",  "latencia": 1, "proteccio": 3 },
+    { "id": "mitjana-rigida",    "nom": "Mitjana rígida",    "latencia": 2, "proteccio": 4 },
+    { "id": "pesant",            "nom": "Pesant",            "latencia": 3, "proteccio": 5 }
+  ],
+  "_artefacteCarrega": "Manual › Artefacte - recàrrega (l. 4909): −2 PC per unitat de temps d'espera; › Artefacte - acumulador (l. 4923): +3 PC per càrrega addicional.",
+  "artefacteCarrega": { "recarregaPerUnitat": -2, "acumuladorPerCarrega": 3 }
 }

@@ -1,3 +1,6 @@
+import { calcularParametres } from "../progressio/construccio.mjs";
+import DiategConstructor from "./dialeg-constructor.mjs";
+
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
@@ -11,6 +14,10 @@ const { HandlebarsApplicationMixin } = foundry.applications.api;
  * concreta es tria i es renderitza a `_prepareContext` (`item.type`) i s'injecta
  * ja renderitzada al part únic `body` (evita dependre de partials dinàmics
  * de Handlebars per triar plantilla per instància).
+ *
+ * Fase 2 (2026-10-06): també serveix els efectes, i els efectes i artefactes
+ * mostren els seus paràmetres (`templates/item/parametres.hbs`) amb el cost
+ * recalculat i un botó per editar-los amb el constructor.
  */
 export default class FullItem extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
 
@@ -18,8 +25,16 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
     classes: ["forja", "full-item"],
     position: { width: 480, height: "auto" },
     window: { resizable: true },
-    form: { submitOnChange: true }
+    form: { submitOnChange: true },
+    actions: {
+      forjaEditarParametres: FullItem._onEditarParametres
+    }
   };
+
+  /** L'item té paràmetres de construcció (efectes i artefactes). */
+  get #teParametres() {
+    return ["efecte", "artefacte"].includes(this.item.type);
+  }
 
   static PARTS = {
     body: { template: "systems/forja/templates/item/item-body.hbs" }
@@ -31,7 +46,21 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
     const item = this.item;
     const sys  = item.system;
 
+    let parametresHtml = "";
+    if (this.#teParametres) {
+      const r = calcularParametres(sys.parametres ?? [], { ...(sys.construccio ?? {}), autoDificultat: item.type === "efecte" });
+      parametresHtml = await renderTemplate("systems/forja/templates/item/parametres.hbs", {
+        resultat: r,
+        teParametres: (sys.parametres ?? []).length > 0,
+        quadra: r.cost === sys.cost,
+        potEditar: this.isEditable
+      });
+    }
+
     const cosHtml = await renderTemplate(`systems/forja/templates/item/${item.type}.hbs`, {
+      parametresHtml,
+      atributs: CONFIG.FORJA.ATRIBUTS,
+      habilitats: CONFIG.FORJA.LLISTA_HABILITATS.map(h => ({ id: h.id, nom: game.i18n.localize(h.nom) })),
       item, sys, cfg: CONFIG.FORJA,
       fields: sys.schema.fields,
       // Camp avançat (ObjectField, només tret): es mostra/edita com a JSON
@@ -42,6 +71,42 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
     });
 
     return { ...ctx, item, sys, cosHtml };
+  }
+
+  /**
+   * Obre el constructor amb els paràmetres de l'efecte o artefacte i en desa
+   * el resultat (cost, dificultat, latència i paràmetres).
+   */
+  static async _onEditarParametres(event, target) {
+    const item = this.item;
+    const sys = item.system;
+    const esArtefacte = item.type === "artefacte";
+    const construit = await DiategConstructor.obrir({
+      esArtefacte,
+      inicial: {
+        nom: item.name, do: sys.do, categoria: sys.categoria,
+        parametres: sys.parametres ?? [], construccio: sys.construccio ?? {}
+      }
+    });
+    if (!construit) return;
+    const comu = { cost: construit.cost, parametres: construit.parametres, construccio: construit.construccio };
+    if (esArtefacte) {
+      await item.update({
+        name: construit.nom,
+        system: {
+          ...comu,
+          categoria: construit.categoria,
+          "activacio.tipus": construit.activacioId,
+          "activacio.dificultat": construit.dificultat,
+          "us.modLatencia": construit.modLatencia
+        }
+      });
+    } else {
+      await item.update({
+        name: construit.nom,
+        system: { ...comu, do: construit.do, tipus: construit.tipus, dificultat: construit.dificultat, modLatencia: construit.modLatencia }
+      });
+    }
   }
 
   /**

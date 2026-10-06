@@ -6844,3 +6844,14 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 .forja-estat-chip a { color: inherit; cursor: pointer; opacity: 0.8; }
 .forja-estat-chip a:hover { opacity: 1; }
 .forja-dialeg-declarar-accio .dda-estats { color: #ffab91; font-style: normal; }
+
+/* -- Constructor per paràmetres (Fase 2) -- */
+.forja-dialeg-constructor .dc-parametres { display: flex; flex-direction: column; gap: 6px; }
+.forja-dialeg-constructor .dc-parametre { padding: 6px; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; display: flex; flex-direction: column; gap: 4px; }
+.forja-dialeg-constructor .dc-parametre-cap { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+.forja-dialeg-constructor .dc-parametre-cap a { cursor: pointer; color: #94a3b8; }
+.forja-dialeg-constructor .dc-parametre-cap a:hover { color: #fca5a5; }
+.forja-dialeg-constructor .dc-permanent { align-self: end; }
+.forja-dialeg-constructor .dc-avis { color: #fca5a5; font-size: 0.8rem; margin: 0; }
+.forja-item-parametres .dc-desglossament { max-height: none; }
+.forja-item-parametres .forja-avis-cost { color: #fca5a5; }

@@ -71,7 +71,9 @@ export async function aplicarEfecteProgressio(actor, construit, itemExistent = n
     dificultat:  construit.dificultat,
     modLatencia: construit.modLatencia,
     us:          construit.us,
-    mecanica:    construit.mecanica
+    mecanica:    construit.mecanica,
+    parametres:  construit.parametres ?? [],
+    construccio: construit.construccio ?? {}
   };
   if (itemExistent) {
     await itemExistent.update({ name: construit.nom, system: dades });

@@ -1,0 +1,48 @@
+<div class="forja-item-efecte">
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.Cost"}}</label>
+    <input type="number" name="system.cost" value="{{sys.cost}}" min="0" step="1"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Construccio.Do"}}</label>
+    <select name="system.do">
+      {{#each fields.do.choices as |c|}}
+      <option value="{{c}}" {{#if (eq c ../sys.do)}}selected{{/if}}>{{localize (concat "FORJA.Sobrenatural.Do." c)}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.TipusEfecte"}}</label>
+    <select name="system.tipus">
+      {{#each fields.tipus.choices as |c|}}
+      <option value="{{c}}" {{#if (eq c ../sys.tipus)}}selected{{/if}}>{{localize (concat "FORJA.Sobrenatural.Tipus." c)}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.ActivacioDificultat"}}</label>
+    <input type="number" name="system.dificultat" value="{{sys.dificultat}}" min="0" step="1"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "FORJA.Item.ModLatencia"}}</label>
+    <input type="number" name="system.modLatencia" value="{{sys.modLatencia}}" step="1"/>
+  </div>
+  <fieldset>
+    <legend>{{localize "FORJA.Tab.Us"}}</legend>
+    <div class="form-group form-group-inline">
+      <label><input type="checkbox" name="system.us.narratiu" {{checked sys.us.narratiu}}/> {{localize "FORJA.Item.UsNarratiu"}}</label>
+      <label><input type="checkbox" name="system.us.actiu" {{checked sys.us.actiu}}/> {{localize "FORJA.Item.UsActiu"}}</label>
+    </div>
+  </fieldset>
+
+  {{{parametresHtml}}}
+
+  <div class="form-group form-group-stacked">
+    <label>{{localize "FORJA.Item.Mecanica"}}</label>
+    {{editor sys.mecanica target="system.mecanica" button=true engine="prosemirror" collaborate=false}}
+  </div>
+  <div class="form-group form-group-stacked">
+    <label>{{localize "FORJA.Item.Descripcio"}}</label>
+    {{editor sys.descripcio target="system.descripcio" button=true engine="prosemirror" collaborate=false}}
+  </div>
+</div>

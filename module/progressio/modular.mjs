@@ -49,7 +49,8 @@ export async function afegirModul(item, construit) {
     cost: construit.cost,
     dificultat: construit.dificultat,
     modLatencia: construit.modLatencia,
-    mecanica: construit.mecanica
+    mecanica: construit.mecanica,
+    parametres: construit.parametres ?? []
   }];
   await item.update({ "system.moduls": moduls });
 }

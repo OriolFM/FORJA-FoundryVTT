@@ -1,11 +1,7 @@
 <div class="forja-dialeg-constructor">
   <div class="dc-cos">
 
-  {{#if esArtefacte}}
-  <p class="dm-desc">{{localize "FORJA.Construccio.IntroArtefacte"}}</p>
-  {{else}}
-  <p class="dm-desc">{{localize "FORJA.Construccio.Intro"}}</p>
-  {{/if}}
+  <p class="dm-desc">{{#if esArtefacte}}{{localize "FORJA.Construccio.IntroArtefacte"}}{{else}}{{localize "FORJA.Construccio.Intro"}}{{/if}}</p>
 
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Construccio.Nom"}}</label>
@@ -15,342 +11,89 @@
   {{#if esArtefacte}}
   <div class="dc-graella">
     <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.Activacio"}}</label>
-      <select name="activacioId">
-        {{#each P.artefacteActivacio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../activacioId)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+      <label>{{localize "FORJA.Construccio.Categoria"}}</label>
+      <select name="categoria">
+        {{#each categories as |c|}}<option value="{{c.id}}" {{#if (eq c.id ../categoria)}}selected{{/if}}>{{c.nom}}</option>{{/each}}
       </select>
     </div>
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.ModeEspera"}}</label>
-      <select name="modeEsperaId">
-        {{#each P.artefacteModeEspera as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../modeEsperaId)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-      </select>
-    </div>
+    <label class="dm-radio dc-permanent" title="{{localize 'FORJA.Construccio.PermanentDesc'}}">
+      <input type="checkbox" name="permanent" {{#if permanent}}checked{{/if}}> {{localize "FORJA.Construccio.Permanent"}}
+    </label>
   </div>
   {{else}}
   <div class="form-group dm-camp">
     <label>{{localize "FORJA.Construccio.Do"}}</label>
     <select name="do">
-      {{#each dons as |d|}}
-      <option value="{{d.id}}" {{#if (eq d.id ../do)}}selected{{/if}}>{{d.nom}}</option>
-      {{/each}}
+      {{#each dons as |d|}}<option value="{{d.id}}" {{#if (eq d.id ../do)}}selected{{/if}}>{{d.nom}}</option>{{/each}}
     </select>
   </div>
-
-  <div class="form-group dm-categoria">
-    <label class="dm-radio"><input type="radio" name="tipus" value="efecte" {{#if (eq s.tipus "efecte")}}checked{{/if}}> {{localize "FORJA.Sobrenatural.Tipus.efecte"}}</label>
-    <label class="dm-radio"><input type="radio" name="tipus" value="ritual" {{#if (eq s.tipus "ritual")}}checked{{/if}}> {{localize "FORJA.Sobrenatural.Tipus.ritual"}}</label>
-  </div>
   {{/if}}
 
+  <hr>
+  <div class="dc-parametres">
+    {{#each files as |f|}}
+    <div class="dc-parametre">
+      <div class="dc-parametre-cap">
+        <strong>{{f.nom}}</strong>
+        <a data-action="treureParametre" data-idx="{{f.idx}}" title="{{localize 'FORJA.Construccio.Treure'}}"><i class="fas fa-xmark"></i></a>
+      </div>
+      {{#if f.camps.length}}
+      <div class="dc-graella">
+        {{#each f.camps as |c|}}
+        <div class="form-group dm-camp">
+          <label>{{c.etiqueta}}</label>
+          {{#if (eq c.tipus "select")}}
+          <select data-idx="{{f.idx}}" data-camp="{{c.camp}}">
+            {{#each c.opcions as |o|}}<option value="{{o.id}}" {{#if (eq o.id c.valor)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+          </select>
+          {{else if (eq c.tipus "checkbox")}}
+          <input type="checkbox" data-idx="{{f.idx}}" data-camp="{{c.camp}}" {{#if c.valor}}checked{{/if}}>
+          {{else}}
+          <input type="number" data-idx="{{f.idx}}" data-camp="{{c.camp}}" value="{{c.valor}}" min="{{c.min}}" step="1">
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+    {{else}}
+    <p class="dm-desc">{{localize "FORJA.Construccio.SenseParametres"}}</p>
+    {{/each}}
+  </div>
+
+  <div class="dc-afegir-fila">
+    <select name="nouParametre">
+      {{#each tipusPermesos as |t|}}<option value="{{t.id}}">{{t.nom}}</option>{{/each}}
+    </select>
+    <button type="button" data-action="afegirParametre"><i class="fas fa-plus"></i> {{localize "FORJA.Construccio.Afegir"}}</button>
+  </div>
+
+  <hr>
   <div class="dc-graella">
     <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.Abast"}}</label>
-      <select name="abast">
-        {{#each P.abast as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.abast)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-      </select>
+      <label class="dm-radio"><input type="checkbox" name="declaraDificultat" {{#if declaraDificultat}}checked{{/if}}> {{localize "FORJA.Construccio.DeclararDificultat"}}</label>
+      {{#if declaraDificultat}}<input type="number" name="dificultatDeclarada" value="{{dificultatDeclarada}}" step="1">{{/if}}
     </div>
     <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.Objectius"}}</label>
-      <select name="objectius">
-        {{#each P.objectius as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.objectius)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-      </select>
-    </div>
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.Durada"}}</label>
-      <select name="durada">
-        {{#each P.durada as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.durada)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-      </select>
-    </div>
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.UsTemps"}}</label>
-      <select name="usTemps">
-        {{#each P.usTemps as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.usTemps)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-      </select>
-    </div>
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.UsAccio"}}</label>
-      <select name="usAccio">
-        {{#each P.usAccio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.usAccio)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-      </select>
+      <label class="dm-radio"><input type="checkbox" name="declaraLatencia" {{#if declaraLatencia}}checked{{/if}}> {{localize "FORJA.Construccio.DeclararLatencia"}}</label>
+      {{#if declaraLatencia}}<input type="number" name="latenciaDeclarada" value="{{latenciaDeclarada}}" step="1">{{/if}}
     </div>
   </div>
+  <p class="dm-desc">{{localize "FORJA.Construccio.DeclararDesc"}}</p>
 
-  <hr/>
-
-  <!-- Dany -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="danyActiu" {{#if s.danyActiu}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Dany"}}</strong></label>
-    {{#if s.danyActiu}}
-    <div class="dc-graella">
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Categoria"}}</label>
-        <select name="dany.categoria">
-          {{#each P.danyCategoria as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.dany.categoria)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.TipusDany"}}</label>
-        <select name="dany.tipus">
-          {{#each P.danyTipus as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.dany.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Nivell"}}</label>
-        <input type="number" name="dany.nivell" value="{{s.dany.nivell}}" min="1"/>
-      </div>
-    </div>
-    {{/if}}
   </div>
-
-  <!-- Curació -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="curacioActiva" {{#if s.curacioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Curacio"}}</strong></label>
-    {{#if s.curacioActiva}}
-    <div class="dc-graella">
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.TipusCuracio"}}</label>
-        <select name="curacio.tipus">
-          {{#each P.curacio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.curacio.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Nivell"}}</label>
-        <input type="number" name="curacio.nivell" value="{{s.curacio.nivell}}" min="1"/>
-      </div>
-    </div>
-    <div class="dc-graella">
-      {{#each P.curacioExtra as |o|}}
-      <label class="dm-radio"><input type="checkbox" name="curacio.extra" value="{{o.id}}" {{#if (includes ../s.curacio.extra o.id)}}checked{{/if}}> {{o.nom}}</label>
-      {{/each}}
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Protecció -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="proteccioActiva" {{#if s.proteccioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Proteccio"}}</strong></label>
-    {{#if s.proteccioActiva}}
-    <div class="dc-graella">
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.TipusProteccio"}}</label>
-        <select name="proteccio.tipus">
-          {{#each P.proteccio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.proteccio.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Nivell"}}</label>
-        <input type="number" name="proteccio.nivell" value="{{s.proteccio.nivell}}" min="1"/>
-      </div>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Estats -->
-  <div class="dc-seccio">
-    <strong>{{localize "FORJA.Construccio.Estats"}}</strong>
-    {{#if s.estats.length}}
-    <div class="dc-llista-triats">
-      {{#each s.estats as |e|}}
-      <div class="dc-fila-triat">
-        <span>{{lookupNom ../P.estats e.id}}</span>
-        <input type="number" class="dc-nivell-estat" data-id="{{e.id}}" value="{{e.nivell}}" min="1"/>
-        <button type="button" class="btn-tret-eliminar" data-action="treureEstat" data-id="{{e.id}}"><i class="fas fa-trash"></i></button>
-      </div>
-      {{/each}}
-    </div>
-    {{/if}}
-    {{#if estatsDisponibles.length}}
-    <div class="dc-afegir-fila">
-      <select name="novEstat">
-        {{#each estatsDisponibles as |o|}}<option value="{{o.id}}">{{o.nom}}</option>{{/each}}
-      </select>
-      <button type="button" class="as-boto-afegir" data-action="afegirEstat"><i class="fas fa-plus"></i></button>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Habilitats -->
-  <div class="dc-seccio">
-    <strong>{{localize "FORJA.Construccio.Habilitats"}}</strong>
-    {{#if s.habilitats.length}}
-    <div class="dc-llista-triats">
-      {{#each s.habilitats as |h|}}
-      <div class="dc-fila-triat">
-        <span>{{lookupNom ../habilitatsTotes h.id}}</span>
-        <input type="number" class="dc-nivell-habilitat" data-id="{{h.id}}" value="{{h.nivell}}" min="1"/>
-        <button type="button" class="btn-tret-eliminar" data-action="treureHabilitat" data-id="{{h.id}}"><i class="fas fa-trash"></i></button>
-      </div>
-      {{/each}}
-    </div>
-    {{/if}}
-    {{#if habilitatsDisponibles.length}}
-    {{#if (lt s.habilitats.length 2)}}
-    <div class="dc-afegir-fila">
-      <select name="novaHabilitat">
-        {{#each habilitatsDisponibles as |o|}}<option value="{{o.id}}">{{o.nom}}</option>{{/each}}
-      </select>
-      <button type="button" class="as-boto-afegir" data-action="afegirHabilitat"><i class="fas fa-plus"></i></button>
-    </div>
-    {{/if}}
-    {{/if}}
-  </div>
-
-  <hr/>
-
-  <!-- Percepció i il·lusions -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="percepcioActiva" {{#if s.percepcioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Percepcio"}}</strong></label>
-    {{#if s.percepcioActiva}}
-    <div class="dc-graella">
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Categoria"}}</label>
-        <select name="percepcio.tipus">
-          {{#each P.percepcio as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.percepcio.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Nivell"}}</label>
-        <input type="number" name="percepcio.nivell" value="{{s.percepcio.nivell}}" min="1"/>
-      </div>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Alteració -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="alteracioActiva" {{#if s.alteracioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Alteracio"}}</strong></label>
-    {{#if s.alteracioActiva}}
-    <div class="form-group dm-categoria">
-      <label class="dm-radio"><input type="radio" name="alteracio.mode" value="atribut" {{#if (eq s.alteracio.mode "atribut")}}checked{{/if}}> {{localize "FORJA.Construccio.AlteracioAtribut"}}</label>
-      <label class="dm-radio"><input type="radio" name="alteracio.mode" value="tret" {{#if (eq s.alteracio.mode "tret")}}checked{{/if}}> {{localize "FORJA.Construccio.AlteracioTret"}}</label>
-    </div>
-    {{#if (eq s.alteracio.mode "atribut")}}
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.AlteracioPunts"}}</label>
-      <input type="number" name="alteracio.nivellAtribut" value="{{s.alteracio.nivellAtribut}}" min="1"/>
-    </div>
-    {{else}}
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.AlteracioCostTret"}}</label>
-      <input type="number" name="alteracio.costTret" value="{{s.alteracio.costTret}}"/>
-    </div>
-    {{/if}}
-    {{/if}}
-  </div>
-
-  <!-- Transformació -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="transformacioActiva" {{#if s.transformacioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Transformacio"}}</strong></label>
-    {{#if s.transformacioActiva}}
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.TransformacioCost"}}</label>
-      <input type="number" name="transformacio.costAlterEgo" value="{{s.transformacio.costAlterEgo}}" min="0"/>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Translocació -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="translocacioActiva" {{#if s.translocacioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Translocacio"}}</strong></label>
-    {{#if s.translocacioActiva}}
-    <div class="dc-graella">
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Categoria"}}</label>
-        <select name="translocacio.tipus">
-          {{#each P.translocacioTipus as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.translocacio.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Distancia"}}</label>
-        <select name="translocacio.distancia">
-          {{#each P.translocacioDistancia as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.translocacio.distancia)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Mentals -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="mentalsActiu" {{#if s.mentalsActiu}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Mentals"}}</strong></label>
-    {{#if s.mentalsActiu}}
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.Categoria"}}</label>
-      <select name="mentals.tipus">
-        {{#each P.mentals as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.mentals.tipus)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-      </select>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Teletracció/telecinesi -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="telecinesiActiva" {{#if s.telecinesiActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Telecinesi"}}</strong></label>
-    {{#if s.telecinesiActiva}}
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.Categoria"}}</label>
-      <select name="telecinesi.categoria">
-        {{#each P.telecinesi as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.telecinesi.categoria)}}selected{{/if}}>{{o.nom}} (dany {{o.danyBasic}})</option>{{/each}}
-      </select>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Replicació/Conjuració -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="replicacioActiva" {{#if s.replicacioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Replicacio"}}</strong></label>
-    {{#if s.replicacioActiva}}
-    <div class="dc-graella">
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Massa"}}</label>
-        <select name="replicacio.massa">
-          {{#each P.replicacioMassa as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.replicacio.massa)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-      <div class="form-group dm-camp">
-        <label>{{localize "FORJA.Construccio.Complexitat"}}</label>
-        <select name="replicacio.complexitat">
-          {{#each P.replicacioComplexitat as |o|}}<option value="{{o.id}}" {{#if (eq o.id ../s.replicacio.complexitat)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
-        </select>
-      </div>
-    </div>
-    {{/if}}
-  </div>
-
-  <!-- Creació de constructes/Invocació -->
-  <div class="dc-seccio">
-    <label class="dm-radio dc-toggle"><input type="checkbox" name="invocacioActiva" {{#if s.invocacioActiva}}checked{{/if}}> <strong>{{localize "FORJA.Construccio.Invocacio"}}</strong></label>
-    {{#if s.invocacioActiva}}
-    <div class="form-group dm-camp">
-      <label>{{localize "FORJA.Construccio.InvocacioCost"}}</label>
-      <input type="number" name="invocacio.costCriatura" value="{{s.invocacio.costCriatura}}" min="0"/>
-    </div>
-    {{/if}}
-  </div>
-
-  <hr/>
 
   <div class="dc-total">
-    <div class="dc-total-xifra"><span>{{localize "FORJA.PC.Total"}}</span><strong>{{resultat.cost}} PC</strong></div>
-    <div class="dc-total-xifra"><span>{{localize "FORJA.Sobrenatural.DificultatBase"}}</span><strong>{{resultat.dificultat}}</strong></div>
-    <div class="dc-total-xifra"><span>{{localize "FORJA.Combat.Modificador"}} (lat.)</span><strong>{{resultat.latencia}}</strong></div>
+    <div class="dc-total-xifra">{{localize "FORJA.Construccio.Cost"}}<strong>{{resultat.cost}}</strong></div>
+    <div class="dc-total-xifra">{{localize "FORJA.Construccio.Dificultat"}}<strong>{{#if (eq resultat.dificultat null)}}—{{else}}{{resultat.dificultat}}{{/if}}</strong></div>
+    <div class="dc-total-xifra">{{localize "FORJA.Construccio.Latencia"}}<strong>{{resultat.latencia}}</strong></div>
   </div>
-  {{#if resultat.desglossament.length}}
   <ul class="dc-desglossament">
-    {{#each resultat.desglossament as |l|}}
-    <li>{{l.etiqueta}}: {{l.cost}} PC{{#if l.dificultat}}, {{l.dificultat}} dif.{{/if}}{{#if l.latencia}}, +{{l.latencia}} lat.{{/if}}</li>
-    {{/each}}
+    {{#each resultat.desglossament as |l|}}<li>{{l.etiqueta}}: {{l.cost}} PC{{#if l.dificultat}}, dif. {{l.dificultat}}{{/if}}{{#if l.latencia}}, lat. {{l.latencia}}{{/if}}</li>{{/each}}
   </ul>
-  {{/if}}
-
-  </div>
+  {{#each resultat.avisos as |a|}}<p class="dc-avis">{{a}}</p>{{/each}}
 
   <button type="submit">
-    {{#if esArtefacte}}
-    <i class="fas fa-microchip"></i> {{localize "FORJA.Construccio.CrearArtefacte"}}
-    {{else}}
-    <i class="fas fa-flask"></i> {{localize "FORJA.Construccio.Crear"}}
-    {{/if}}
+    <i class="fas fa-hammer"></i> {{#if esArtefacte}}{{localize "FORJA.Construccio.CrearArtefacte"}}{{else}}{{localize "FORJA.Construccio.Crear"}}{{/if}}
   </button>
 </div>

@@ -89,7 +89,22 @@ function _dadesSystemPerTipus(tipus, e) {
         us:         e.us ?? {},
         carrega:    e.carrega ?? {},
         mecanica:   e.mecanica ?? "",
-        descripcio: e.descripcio ?? ""
+        descripcio: e.descripcio ?? "",
+        parametres:  foundry.utils.deepClone(e.parametres ?? []),
+        construccio: e.construccio ?? {}
+      };
+    case "efecte":
+      return {
+        cost:        e.cost,
+        do:          e.do,
+        tipus:       e.tipus,
+        dificultat:  e.dificultat,
+        modLatencia: e.modLatencia ?? 0,
+        us:          e.us ?? {},
+        mecanica:    e.mecanica ?? "",
+        descripcio:  e.descripcio ?? "",
+        parametres:  foundry.utils.deepClone(e.parametres ?? []),
+        construccio: e.construccio ?? {}
       };
     default:
       return null;
