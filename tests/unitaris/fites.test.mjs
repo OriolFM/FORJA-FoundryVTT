@@ -13,8 +13,10 @@ test("tirada normal: ≥6 una fita, 10 dues, pífia sense fites i amb algun 1", 
 test("inepte: el 10 val una fita i cada 1 en resta una", () => {
   assert.equal(comptarFites([10, 7], { inepte: true }).fites, 2);
   assert.deepEqual(comptarFites([10, 7, 1], { inepte: true }), { fites: 1, hasOnes: true, pifia: false, unsRestats: 1 });
-  // Els 1 que es mengen totes les fites: pífia (interpretació a validar).
+  // Més 1 que fites: pífia encara que hi hagi alguna fita (Oriol FM, 2026-10-06).
   assert.deepEqual(comptarFites([6, 1, 1], { inepte: true }), { fites: 0, hasOnes: true, pifia: true, unsRestats: 1 });
+  assert.equal(comptarFites([6, 7, 1], { inepte: true }).pifia, false);   // 2 fites − 1 = 1 fita
+  assert.equal(comptarFites([6, 7, 1, 1], { inepte: true }).pifia, true);  // tants 1 com fites: cap fita i algun 1
 });
 
 test("aptituds dels trets: només adepte/inepte d'un àmbit vàlid", () => {
