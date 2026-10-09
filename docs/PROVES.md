@@ -240,6 +240,32 @@ Segon client amb l'usuari **Claude** (Assistent del DJ): el `Gamemaster` ja conn
 
 `tests/joc/local.mjs`: a la v14 el desplegable de la pantalla d'entrada es diu `userId` (no `userid`); ara accepta tots dos.
 
+### Fases 1–6 provades el 2026-10-09 (Foundry v14.369, usuari Claude)
+
+Script amb actors `_Prova` temporals; els objectius sense reaccions lliures perquè no s'obri cap diàleg al DJ. Cap error de consola.
+
+| Prova | Resultat |
+|-------|----------|
+| F1: abatut +2 latència, vigilant +1 reacció | OK (7 → 9; 1 → 2) |
+| F1: tipus d'acció bloquejats (acovardit: només defensa i moviment; berserc: sense defensa) | OK |
+| F1: defensa (abatut sense esquivar; berserc sense esquivar/parar/blocar; immobilitzat defensa 1) | OK |
+| F1: nivell 7 de ferides → incapacitat (hook del DJ actiu); curar-se el treu | OK |
+| F1: Recuperació/X: fatiga primer si empaten; del nivell 7 al 6 | OK |
+| F1: fitxa amb la llista d'estats (atrapat, amb tirada) | OK |
+| F2: cost de les 85 plantilles d'artefactes i efectes del compendi = motor de paràmetres | OK |
+| F3: Espasa serra → arma vinculada (FOR+4); treure l'artefacte l'esborra | OK |
+| F3: Servoarmadura → armadura 10, FOR +3 (reducció 2 → 5), PC + 62; desequipada, sense bonificació | OK |
+| F3: Ulleres intel·ligents: activació trivial, PER +1, armes a distància +2, cercar +2; instantània | OK |
+| F3: Espasa d'energia: gasta càrrega (4 → 3), dany directe 14 sense armadura; sense càrrega no ataca | OK |
+| F3: manifestar Descàrrega (dany indirecte 4 + excedent, menys armadura i reducció) | OK |
+| F3: L'armadura del queloni i Negar el dany surten com a reaccions de defensa | OK |
+| F4: millorar FOR amb PX: +10 PX gastats, historial, PC gastats sense canvis | OK |
+| F6: escut +1 a la defensa bàsica | OK |
+| F6: modes de tret (subfusell: ràfega; arma d'assalt: ràfega i automàtic; pistola: cap) | OK |
+| F6: Dim Mak (ferides sense armadura; fatiga doble) | OK |
+
+**No provat encara** (cal un usuari jugador o clics al canvas): moviment del token com a jugador (atrapat, límit per torn), tracker vist per un jugador, relé (jugador → PNJ), diàlegs del constructor i de «Repartir PX», àrees amb plantilla dibuixada, Combinació, Contraatac, armes feixugues, pífia amb arma de dispersió, marejat i atordit en un torn real, arrossegar del compendi.
+
 ### Proves unitàries a Windows
 
 Des del 2026-10-09, `npm test` funciona directament a Windows (83/83): les proves importen amb URL `file://` (`new URL("../../", import.meta.url).href`, mai una ruta `E:\…`), i `build-packs.mjs` normalitza els salts de línia CRLF que deixa `core.autocrlf`. Les proves noves han de seguir el mateix patró.
@@ -270,7 +296,7 @@ Al contenidor del núvol no hi ha Foundry. Cal comprovar-ho en local (v13 i v14)
 
 1. **Manifestar** des de la fitxa amb un o diversos objectius marcats: el jugador de l'objectiu (o el DJ) decideix si es resisteix; s'aplica el dany (indirecte amb armadura/reducció; directe sense), la curació, els estats (Sagnant/X amb la X) i les bonificacions; el xat ho resumeix. Ressonància i tria de fatiga o ferides.
 2. **Àrea:** dibuixar una plantilla i manifestar Bola de foc: afecta els tokens de dins; la plantilla desapareix.
-3. **Activar un artefacte** (Ulleres intel·ligents, Cibermòdem): tirada (o la demana), càrrega, bonificació d'habilitat amb «+n» a la fitxa durant l'escena i que desapareix en acabar el combat. Un prototip que pifia queda trencat.
+3. **Activar un artefacte** (Ulleres intel·ligents, Cibermòdem): tirada (o la demana), càrrega, bonificació d'habilitat amb «+n» a la fitxa; dura una escena si l'artefacte té el paràmetre de durada i, si no, és instantània i desapareix quan avança el rellotge (manual l. 4877; les Ulleres no en tenen). Un prototip que pifia queda trencat.
 4. **Armes artefacte:** afegir l'Espasa serra a un PJ → apareix com a arma; atacar → FOR+4 i sagnant/3; l'Espasa d'energia gasta càrrega i fa dany directe; sense càrrega no ataca. Treure l'artefacte esborra l'arma.
 5. **Armadures artefacte:** la Holocapa i la Servoarmadura apareixen com a armadura; la Servoarmadura suma FOR +3 (es veu «+3») sense canviar els PC; desequipar-la ho treu. Espasa pretoriana: ègida 9 que es trenca i es reactiva.
 6. **Tracker:** declarar «Manifestar un efecte» / «Activar un artefacte» amb objectiu; latència correcta; resoldre-ho al seu torn.
