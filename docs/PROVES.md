@@ -264,7 +264,25 @@ Script amb actors `_Prova` temporals; els objectius sense reaccions lliures perq
 | F6: modes de tret (subfusell: ràfega; arma d'assalt: ràfega i automàtic; pistola: cap) | OK |
 | F6: Dim Mak (ferides sense armadura; fatiga doble) | OK |
 
-**No provat encara** (cal un usuari jugador o clics al canvas): moviment del token com a jugador (atrapat, límit per torn), tracker vist per un jugador, relé (jugador → PNJ), diàlegs del constructor i de «Repartir PX», àrees amb plantilla dibuixada, Combinació, Contraatac, armes feixugues, pífia amb arma de dispersió, marejat i atordit en un torn real, arrossegar del compendi.
+### Proves com a jugador i fase 6, 2026-10-09 (usuaris «Claude» i «Jugador proves»)
+
+Dos clients: «Claude» prepara i fa de DJ; «Jugador proves» clica al tracker, mou el token i dibuixa la plantilla. El DJ actiu (l'Oriol) resol els hooks. Escenes, actors i combats `_Prova`, esborrats al final; cap error de consola.
+
+| Prova | Resultat |
+|-------|----------|
+| Tracker del jugador: «Fase de declaració», controls només al seu combatent, sense «Avança» | OK |
+| Declarar un atac amb el diàleg real (Cop, objectiu a tocar) | OK |
+| Moviment al seu torn: 2 m sí; 10 m més (caminar = 6 m) no | OK |
+| Atrapat: el jugador no pot moure el token | OK |
+| Resoldre l'atac contra un PNJ: defensa automàtica, sense diàleg al jugador; dany aplicat pel relé | OK |
+| Relé: el jugador posa un estat a un PNJ que no és seu | OK |
+| Arma feixuga: si el token s'ha mogut, no dispara | OK |
+| Atordit: al seu torn el PNJ perd l'acció i l'estat s'acaba | OK |
+| Combinació: 1r cop ara, 2n cop al torn següent de l'atacant | **Error corregit** (`9dbde33`): el 2n cop es perdia si el DJ mirava una altra escena. Ara OK |
+| Escopeta: atac d'àrea amb la plantilla del jugador; la plantilla es consumeix | **Error corregit** (`9dbde33`): una plantilla nova no tenia forma i no hi trobava ningú. Ara OK (impacte, 11 de dany) |
+| Contraatac: el PNJ en guàrdia para i contraataca | **Error corregit**: el diàleg del defensor oferia parar i blocar (es recalculava al seu client); ara només passiva i esquivar. Contraatac: impacta, 3 de dany |
+
+**No provat encara:** diàlegs del constructor i de «Repartir PX», pífia amb arma de dispersió, marejat (tirada en declarar), arrossegar del compendi a una fitxa.
 
 ### Proves unitàries a Windows
 

@@ -46,12 +46,12 @@ const PREGUNTA = "defensa";
 
 /** Registra el gestor de la pregunta a tots els clients. Cridar a `ready`. */
 export function registrarPreguntaDefensa() {
-  registrarPregunta(PREGUNTA, async ({ uuidDefensor, defensaBasica, categoriaAtac, bonusDauDefensa = 0, uuidsProtectors = [], nomAtacant }) => {
+  registrarPregunta(PREGUNTA, async ({ uuidDefensor, defensaBasica, categoriaAtac, bonusDauDefensa = 0, uuidsProtectors = [], nomAtacant, idsPermesos = null }) => {
     const defensor = await fromUuid(uuidDefensor);
     if (!defensor) throw new Error(`defensor no trobat (${uuidDefensor})`);
     const protectors = (await Promise.all(uuidsProtectors.map(u => fromUuid(u)))).filter(Boolean);
     const opcions = [
-      ..._opcions(defensor, defensaBasica, categoriaAtac, bonusDauDefensa, protectors),
+      ..._opcions(defensor, defensaBasica, categoriaAtac, bonusDauDefensa, protectors, idsPermesos),
       ...opcionsEfectesReaccio(defensor)
     ];
     const eleccio = await DiategDefensa.obrir({
@@ -89,9 +89,12 @@ export function registrarPreguntaDefensa() {
  * (defensar els altres, manual p. 821-829).
  * @private
  */
-function _opcions(defensor, defensaBasica, categoriaAtac, bonusDauDefensa, protectors) {
+function _opcions(defensor, defensaBasica, categoriaAtac, bonusDauDefensa, protectors, idsPermesos = null) {
+  // Les opcions es recalculen al client de qui decideix: cal respectar les que
+  // l'atacant ha exclòs (p. ex. el contraatac o l'escopeta no es poden parar ni blocar).
   return [
-    ...opcionsDefensa(defensor, defensaBasica, { categoriaAtac, bonusDauDefensa }),
+    ...opcionsDefensa(defensor, defensaBasica, { categoriaAtac, bonusDauDefensa })
+      .filter(o => !idsPermesos || idsPermesos.includes(o.id)),
     ...protectors.flatMap(p => opcionsInterposar(p, { categoriaAtac }))
   ];
 }
@@ -149,7 +152,8 @@ export async function decidirDefensa({ defensor, opcions, defensaBasica, categor
   try {
     resposta = await preguntarA(desti, PREGUNTA, {
       uuidDefensor: defensor.uuid, defensaBasica, categoriaAtac, bonusDauDefensa,
-      uuidsProtectors: protectors.map(p => p.uuid), nomAtacant
+      uuidsProtectors: protectors.map(p => p.uuid), nomAtacant,
+      idsPermesos: opcions.map(o => o.id)
     });
   } catch (err) {
     console.warn(err);
