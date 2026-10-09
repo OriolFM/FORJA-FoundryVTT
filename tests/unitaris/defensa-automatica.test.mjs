@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
-import { fileURLToPath } from "node:url";
 // Arrel del repo, relativa a aquest fitxer (tests/unitaris/ → ../../).
-const REPO = fileURLToPath(new URL("../../", import.meta.url)).replace(/\/$/, "");
+// URL file:// (no ruta): a Windows, import() no accepta rutes com E:\...
+const REPO = new URL("../../", import.meta.url).href.replace(/\/$/, "");
 globalThis.Roll = class {};
 globalThis.game = { i18n: { localize: k => k, format: k => k } };
 const { triarDefensaAutomatica } = await import(`${REPO}/module/combat/defensa.mjs`);

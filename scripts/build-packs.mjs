@@ -629,7 +629,8 @@ export function generar({ escriureFitxers = true } = {}) {
   const cat = carregarCatalegs();
   const cfg = carregarConfig();
   const incidencies = [];
-  const blocs = analitzarManual(fs.readFileSync(MANUAL, "utf8"));
+  // CRLF → LF: a Windows (core.autocrlf) el manual surt amb CRLF i els patrons no casarien.
+  const blocs = analitzarManual(fs.readFileSync(MANUAL, "utf8").replace(/\r\n/g, "\n"));
   const actors = blocs.map(b => construirActor(b, cat, cfg, incidencies));
   // Aventura «La porta d'Hèkate»: incidències i diferències a part (CONVERSIO.md).
   const incidenciesAventura = [];

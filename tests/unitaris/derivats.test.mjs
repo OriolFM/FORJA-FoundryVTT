@@ -12,9 +12,9 @@ import assert from "node:assert/strict";
 //     manera controlada (el propi mòdul ja captura l'error i torna `[]`).
 //  3. Fer l'import de manera dinàmica, DESPRÉS d'aquests stubs — un import
 //     estàtic es "hoisteja" per davant de qualsevol altra instrucció.
-import { fileURLToPath } from "node:url";
 // Arrel del repo, relativa a aquest fitxer (tests/unitaris/ → ../../).
-const REPO = fileURLToPath(new URL("../../", import.meta.url)).replace(/\/$/, "");
+// URL file:// (no ruta): a Windows, import() no accepta rutes com E:\...
+const REPO = new URL("../../", import.meta.url).href.replace(/\/$/, "");
 globalThis.foundry = {
   abstract: { TypeDataModel: class TypeDataModel {} },
   data: { fields: {} }

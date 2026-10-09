@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 
 
 // ---- Stubs mínims de Foundry ----
-import { fileURLToPath } from "node:url";
 // Arrel del repo, relativa a aquest fitxer (tests/unitaris/ → ../../).
-const REPO = fileURLToPath(new URL("../../", import.meta.url)).replace(/\/$/, "");
+// URL file:// (no ruta): a Windows, import() no accepta rutes com E:\...
+const REPO = new URL("../../", import.meta.url).href.replace(/\/$/, "");
 const get = (o, p) => p.split(".").reduce((x, k) => x?.[k], o);
 const set = (o, p, v) => { const ks = p.split("."); let x = o; for (const k of ks.slice(0, -1)) x = (x[k] ??= {}); x[ks.at(-1)] = v; };
 globalThis.foundry = { utils: { hasProperty: (o, p) => get(o, p) !== undefined, setProperty: set, getProperty: get } };

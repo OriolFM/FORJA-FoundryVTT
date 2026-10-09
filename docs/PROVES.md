@@ -219,7 +219,7 @@ await b.close();
 
 ### Proves unitàries a Windows
 
-`npm test` falla a Windows: les proves fan `import("E:\…")`, i Node a Windows només accepta URL `file://`. Mentre no es corregeixi (vegeu «Pendent» a `REGISTRE-TREBALL.md`), es poden executar en una còpia temporal que embolcalli cada `import()` amb `pathToFileURL(...).href`.
+Des del 2026-10-09, `npm test` funciona directament a Windows (83/83): les proves importen amb URL `file://` (`new URL("../../", import.meta.url).href`, mai una ruta `E:\…`), i `build-packs.mjs` normalitza els salts de línia CRLF que deixa `core.autocrlf`. Les proves noves han de seguir el mateix patró.
 
 ### Pendent de provar a Foundry: Fase 1 (estats), 2026-10-06
 

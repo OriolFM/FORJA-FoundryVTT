@@ -244,7 +244,7 @@ export function analitzarAventura(arrel) {
   if (!fs.existsSync(dir)) return [];
   const blocs = [];
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith(".md")).sort()) {
-    const text = fs.readFileSync(path.join(dir, f), "utf8");
+    const text = fs.readFileSync(path.join(dir, f), "utf8").replace(/\r\n/g, "\n"); // CRLF de Windows
     const rel = `${AVENTURA.font}/${f}`;
     blocs.push(...analitzarPregenerats(text, rel), ...analitzarPNJ(text, rel));
   }

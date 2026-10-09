@@ -2,9 +2,9 @@
 // No cal cap stub de Foundry: el mòdul no fa servir globals en importar-se.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fileURLToPath } from "node:url";
 
-const REPO = fileURLToPath(new URL("../../", import.meta.url)).replace(/\/$/, "");
+// URL file:// (no ruta): a Windows, import() no accepta rutes com E:\...
+const REPO = new URL("../../", import.meta.url).href.replace(/\/$/, "");
 const M = await import(`${REPO}/module/combat/moviment.mjs`);
 const { DISPOSICIO: D } = M;
 

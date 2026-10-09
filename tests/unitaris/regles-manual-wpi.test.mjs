@@ -6,7 +6,7 @@ const REPO = fileURLToPath(new URL("../../", import.meta.url)).replace(/\/$/, ""
 globalThis.Roll = class {};
 globalThis.game = { i18n: { localize: k => k, format: (k, d) => `${k}|${JSON.stringify(d ?? {})}` }, user: { isGM: false } };
 
-const R = REPO + "/module/combat/";
+const R = new URL("../../module/combat/", import.meta.url).href; // URL file:// per a import() (Windows)
 const dany = await import(R + "dany.mjs");
 const def  = await import(R + "defensa.mjs");
 const prop = await import(R + "propietats.mjs");
