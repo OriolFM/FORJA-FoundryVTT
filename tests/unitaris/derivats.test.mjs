@@ -128,6 +128,25 @@ function fakeSys({ items = [], pxGastats = 0, habNivell = 0, armaduraModLatencia
   console.log("OK: afegir tret positiu amb PX no infla pcGastats ->", abans.pcGastats, "=", despres.pcGastats);
 }
 
+// --- Efectes i artefactes compten als PC (manual: Anya Barker 163 + 37 = 200) ---
+{
+  const base = fakeSys();
+  _prepararDerivats(base);
+  const amb = fakeSys({ items: [
+    { type: "efecte", system: { cost: 12 } },
+    { type: "artefacte", system: { cost: 11, fase: "produccio" } },
+    { type: "artefacte", system: { cost: 5, moduls: [{ cost: 3 }] } },        // modular: xassís + mòduls
+    { type: "artefacte", system: { cost: 20, fase: "prototip1" } }           // prototip fet en joc: no compta
+  ] });
+  _prepararDerivats(amb);
+  assert.equal(amb.costTotal, base.costTotal + 12 + 11 + 8);
+  // Efecte après amb PX (progressio-sobrenatural): els PC gastats no canvien
+  const ambPX = fakeSys({ pxGastats: 12, items: [{ type: "efecte", system: { cost: 12 } }] });
+  _prepararDerivats(ambPX);
+  assert.equal(ambPX.pcGastats, base.pcGastats);
+  console.log("OK: efectes i artefactes (no prototips) compten als PC ->", amb.costTotal);
+}
+
 // --- A4: treure tret negatiu amb PX (cost -10 al full, es paga 10 PX per treure'l) ---
 {
   const ambTretNegatiu = fakeSys({ items: [{ type: "tret", system: { cost: -10 } }] });

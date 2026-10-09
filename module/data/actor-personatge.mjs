@@ -6,6 +6,7 @@ import { recordarSalut } from "../estats/notificacions.mjs";
 import {
   bonificacionsBuides, bonificacionsDeParametres, sumarBonificacions, artefacteSempreActiu
 } from "../combat/resultat-parametres.mjs";
+import { costTotalModular } from "../progressio/modular.mjs";
 
 /**
  * DataModel per a Personatges Jugadors (PJ).
@@ -313,7 +314,8 @@ function _nivellActiu(marcats, perNivell) {
  * dedueix els PC gastats/lliures del pressupost de creació (S-05).
  *
  * A4 (pla de revisió): `costTotal` és el cost de TOT el que hi ha ara mateix
- * al full (atributs, espècie, mida, constitució, habilitats, trets) —
+ * al full (atributs, espècie, mida, constitució, habilitats, trets,
+ * efectes i artefactes que no són prototips) —
  * inclou tant el que es va triar a la creació com qualsevol millora
  * comprada més tard amb PX (`millora.mjs` fa servir exactament les
  * mateixes taules de cost). Com que aquell PX ja s'ha pagat amb
@@ -360,11 +362,19 @@ function _calcularPunts(sys, cfg) {
     cost += cfg.COST_HABILITAT[hab.nivell] ?? 0;
   }
 
-  // Trets com a Items (Onada 3+)
+  // Trets, efectes i artefactes: el manual els compta dins els PC del
+  // personatge (cap. 2, exemple de l'Anya Barker, l. 2098: 163 + 37 dels
+  // efectes = 200 PC). Un efecte après amb PX (`progressio-sobrenatural.mjs`)
+  // suma el mateix a `px.gastats`, i es cancel·la. Els prototips (R+D, fets
+  // en joc, sense PC ni PX) no compten; un artefacte de producció trobat en
+  // joc sí: és el límit conegut de més avall (el DJ ho decideix).
   const items = sys.parent?.items;
   if (items) {
     for (const item of items) {
-      if (item.type === "tret") cost += item.system.cost ?? 0;
+      if (item.type === "tret" || item.type === "efecte") cost += item.system.cost ?? 0;
+      else if (item.type === "artefacte" && (item.system.fase ?? "produccio") === "produccio") {
+        cost += costTotalModular(item).cost;
+      }
     }
   }
 

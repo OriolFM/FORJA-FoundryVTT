@@ -223,12 +223,12 @@ Segon client amb l'usuari **Claude** (Assistent del DJ): el `Gamemaster` ja conn
 
 | Prova | Resultat |
 |-------|----------|
-| Compendis: 10 compendis amb el nombre d'entrades esperat | OK, excepte `trets` (107 en lloc de 95: la còpia local de la LevelDB tenia els 12 adepte/inepte per atribut antics; la de git és correcta) |
+| Compendis: 10 compendis amb el nombre d'entrades esperat | OK, excepte `trets` (107 en lloc de 95: la còpia local de la LevelDB tenia els 12 adepte/inepte per atribut antics; la de git és correcta). **Corregit:** esborrats des de Foundry → 95 |
 | Actors del manual (47): latència, defensa, reacció = manual | OK |
-| Actors del manual: PC (`costTotal`) = manual | **10 diferències**: `costTotal` no compta artefactes ni efectes (el manual sí; p. ex. Anya Barker 163 + 37 = 200) |
-| Actors del manual: reducció de dany = manual | 2 diferències (Renegat, Guàrdia d'assalt: 6 en lloc de 3): la Servoarmadura suma FOR +3; el manual dona la base |
+| Actors del manual: PC (`costTotal`) = manual | 10 diferències: `costTotal` no comptava artefactes ni efectes (el manual sí; p. ex. Anya Barker 163 + 37 = 200). **Corregit:** 47/47 |
+| Actors del manual: reducció de dany = manual | 2 diferències (Renegat, Guàrdia d'assalt: 6 en lloc de 3): la Servoarmadura suma FOR +3; el manual dona la base. Correcte (decisió a `REGISTRE-TREBALL.md`) |
 | Fitxes d'actor (un per compendi) i d'ítem (un per tipus) | OK |
-| Tirades amb daus fixos: doble fita, pífia, inepte (10 = 1 fita, els 1 resten, empat = pífia) i adepte (`r1`) | OK |
+| Tirades amb daus fixos: doble fita, pífia, inepte (10 = 1 fita, els 1 resten, empat = pífia) i adepte (`r1`: en 200 tirades cap 1 original queda actiu i sempre compten 5 daus) | OK |
 | Combat: fase de declaració → temps actiu quan declara l'últim (marcador al primer, 7) | OK |
 | Atac amb Cop contra un PNJ amb defensa automàtica: tirada al xat i dany aplicat | OK |
 | «Avança»: el marcador passa al combatent següent | OK |
