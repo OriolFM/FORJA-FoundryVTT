@@ -35,8 +35,8 @@ export async function obrir(usuari = process.env.FORJA_USUARI ?? "Gamemaster", c
   if (await p.locator('input[name="username"]').count()) {
     await p.fill('input[name="username"]', usuari);
   } else {
-    const id = await p.evaluate(nom => [...document.querySelectorAll('select[name="userid"] option')].find(o => o.textContent.trim() === nom)?.value, usuari);
-    await p.selectOption('select[name="userid"]', id);
+    const id = await p.evaluate(nom => [...document.querySelectorAll('select[name="userid"] option, select[name="userId"] option')].find(o => o.textContent.trim() === nom)?.value, usuari);
+    await p.selectOption('select[name="userid"], select[name="userId"]', id); // v13: userid; v14: userId
   }
   if (contrasenya) await p.fill('input[name="password"]', contrasenya);
   await p.locator('button[name="join"]').click();

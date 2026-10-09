@@ -217,6 +217,25 @@ await b.close();
 | Missatge de defensa: mostra la defensa resultant (mínim defensa +1) | OK |
 | Últimes tries als diàlegs de declarar i de reacció; s'obliden en acabar el combat | OK |
 
+### Proves fetes el 2026-10-09 (Foundry v14.369, sistema 0.4.0, món «FORJA betatest»)
+
+Segon client amb l'usuari **Claude** (Assistent del DJ): el `Gamemaster` ja connectat surt desactivat a la pantalla d'entrada. Les bateries de `tests/joc/proves*.mjs` **no** s'han de llançar contra un món real (esborren tots els combats i els actors «Prova…»); s'ha fet servir un script que només crea documents `_Prova…` i els esborra al final.
+
+| Prova | Resultat |
+|-------|----------|
+| Compendis: 10 compendis amb el nombre d'entrades esperat | OK, excepte `trets` (107 en lloc de 95: la còpia local de la LevelDB tenia els 12 adepte/inepte per atribut antics; la de git és correcta) |
+| Actors del manual (47): latència, defensa, reacció = manual | OK |
+| Actors del manual: PC (`costTotal`) = manual | **10 diferències**: `costTotal` no compta artefactes ni efectes (el manual sí; p. ex. Anya Barker 163 + 37 = 200) |
+| Actors del manual: reducció de dany = manual | 2 diferències (Renegat, Guàrdia d'assalt: 6 en lloc de 3): la Servoarmadura suma FOR +3; el manual dona la base |
+| Fitxes d'actor (un per compendi) i d'ítem (un per tipus) | OK |
+| Tirades amb daus fixos: doble fita, pífia, inepte (10 = 1 fita, els 1 resten, empat = pífia) i adepte (`r1`) | OK |
+| Combat: fase de declaració → temps actiu quan declara l'últim (marcador al primer, 7) | OK |
+| Atac amb Cop contra un PNJ amb defensa automàtica: tirada al xat i dany aplicat | OK |
+| «Avança»: el marcador passa al combatent següent | OK |
+| Errors de consola | Cap |
+
+`tests/joc/local.mjs`: a la v14 el desplegable de la pantalla d'entrada es diu `userId` (no `userid`); ara accepta tots dos.
+
 ### Proves unitàries a Windows
 
 Des del 2026-10-09, `npm test` funciona directament a Windows (83/83): les proves importen amb URL `file://` (`new URL("../../", import.meta.url).href`, mai una ruta `E:\…`), i `build-packs.mjs` normalitza els salts de línia CRLF que deixa `core.autocrlf`. Les proves noves han de seguir el mateix patró.
