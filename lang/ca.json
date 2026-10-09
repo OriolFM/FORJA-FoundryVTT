@@ -670,6 +670,7 @@
   "FORJA.Aptitud.AvisInepte": "Un inepte no pot fer servir una habilitat sense nivell en el seu àmbit.",
   "FORJA.Aptitud.UnsRestats": "−{n} fites pels 1",
   "FORJA.Dice.Fites":        "fites",
+  "FORJA.Dice.Fita":         "fita",
   "FORJA.Dice.TirarAtribut": "Tirar atribut",
   "FORJA.Dice.TirarHabilitat":"Tirar habilitat",
 

@@ -20,13 +20,13 @@
     {{else if exit}}
       <span class="mt-badge badge-exit">
         <i class="fas fa-check"></i>
-        {{fites}} {{localize "FORJA.Dice.Fites"}}
+        {{fites}} {{#if (eq fites 1)}}{{localize "FORJA.Dice.Fita"}}{{else}}{{localize "FORJA.Dice.Fites"}}{{/if}}
         {{#if excedent}}<span class="mt-excedent">+{{excedent}} {{localize "FORJA.Display.Excedent"}}</span>{{/if}}
       </span>
     {{else}}
       <span class="mt-badge badge-fallada">
         <i class="fas fa-xmark"></i>
-        {{fites}} {{localize "FORJA.Dice.Fites"}}
+        {{fites}} {{#if (eq fites 1)}}{{localize "FORJA.Dice.Fita"}}{{else}}{{localize "FORJA.Dice.Fites"}}{{/if}}
       </span>
     {{/if}}
   </div>

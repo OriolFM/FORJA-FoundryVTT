@@ -639,6 +639,7 @@
   "FORJA.Aptitud.AvisInepte": "Un inepto no puede usar una habilidad sin nivel en su ámbito.",
   "FORJA.Aptitud.UnsRestats": "−{n} éxitos por los 1",
   "FORJA.Dice.Fites": "hitos",
+  "FORJA.Dice.Fita": "hito",
   "FORJA.Dice.TirarAtribut": "Tirar atributo",
   "FORJA.Dice.TirarHabilitat": "Tirar habilidad",
   "FORJA.Section.Sobrenatural": "Sobrenatural",

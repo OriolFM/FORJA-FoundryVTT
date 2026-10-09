@@ -639,6 +639,7 @@
   "FORJA.Aptitud.AvisInepte": "An inept character can't use an unskilled skill in their area.",
   "FORJA.Aptitud.UnsRestats": "−{n} successes from 1s",
   "FORJA.Dice.Fites": "milestones",
+  "FORJA.Dice.Fita": "milestone",
   "FORJA.Dice.TirarAtribut": "Roll attribute",
   "FORJA.Dice.TirarHabilitat": "Roll skill",
   "FORJA.Section.Sobrenatural": "Supernatural",

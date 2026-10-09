@@ -233,6 +233,10 @@ Segon client amb l'usuari **Claude** (Assistent del DJ): el `Gamemaster` ja conn
 | Atac amb Cop contra un PNJ amb defensa automàtica: tirada al xat i dany aplicat | OK |
 | «Avança»: el marcador passa al combatent següent | OK |
 | Errors de consola | Cap |
+| **Visual (captures):** fitxa de l'Anya Barker + «Inepte (tècnic)»: PC gastats 185 (200 − 15 del tret), PC lliures 15 | OK |
+| **Visual:** diàleg de tirada amb el desplegable «Àmbit de la tirada» (Cap / Inepte (tècnic)); al xat, daus 1·8·8·3 → 1 fita i «Inepte (tècnic) · −1 fites pels 1» | OK. Corregit: deia «1 fites» (clau nova `FORJA.Dice.Fita`) |
+| **Visual:** manual: capítols 0–7 numerats i en ordre, pàgina «Exemple de combat» amb la taula d'estadístiques; 84 enllaços `@UUID`, cap de trencat | OK |
+| **Visual:** marcar «Abatut» al token: text flotant «▼ Abatut» i icona al token | OK |
 
 `tests/joc/local.mjs`: a la v14 el desplegable de la pantalla d'entrada es diu `userId` (no `userid`); ara accepta tots dos.
 
