@@ -83,6 +83,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 
 ### Corregit
 - **PC gastats:** ara compten els efectes i els artefactes, com al manual (p. ex. Anya Barker, 200 PC). Els prototips fets en joc no compten, i un efecte après amb PX no gasta PC.
+- **Combinació:** el segon cop es perdia si el DJ mirava una altra escena que la del combat.
+- **Atacs i efectes d'àrea:** si la plantilla s'acabava de dibuixar i el canvas encara no l'havia refrescat, no hi trobava cap token.
 - El missatge de tirada diu «1 fita» (abans, «1 fites»).
 - Les tirades d'activació, de resistència i les tirades úniques d'àrea surten amb els daus i les fites al xat.
 - Els estats que aplica un efecte instantani (p. ex. Sagnant/X) ja no desapareixen quan avança el rellotge.

@@ -72,11 +72,23 @@ export function destiDeLlagrimaDesDe(origenToken, template, llargadaCaselles) {
  * @returns {Actor[]}
  */
 export function actorsDinsPlantilla(template) {
-  const forma = template?.object?.shape;
+  const forma = formaPlantilla(template);
   if (!forma) return [];
   return (canvas.tokens?.placeables ?? [])
     .filter(t => t.actor && forma.contains(t.center.x - template.x, t.center.y - template.y))
     .map(t => t.actor);
+}
+
+/**
+ * Forma (relativa a l'origen) d'una plantilla dibuixada. Foundry la calcula
+ * al primer refresc del canvas (`MeasuredTemplate#_refreshShape`); si encara
+ * no hi és (plantilla acabada de crear, client lent), es calcula ara.
+ * @param {MeasuredTemplateDocument} template
+ * @returns {PIXI.Circle|PIXI.Rectangle|PIXI.Polygon|null}
+ */
+export function formaPlantilla(template) {
+  const objecte = template?.object;
+  return objecte?.shape ?? objecte?._computeShape?.() ?? null;
 }
 
 /** Elimina la plantilla un cop consumida, perquè no es reaprofiti per error en properes resolucions. */

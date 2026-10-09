@@ -5,7 +5,7 @@ import { decidirDefensa } from "./decisio-defensa.mjs";
 import { defensaCompletaDe, combatantDe, resolucioDefensaCompleta } from "./defensa-completa.mjs";
 import { distanciaEntreTokens, bandaDistancia, tokensATocar } from "./abast.mjs";
 import { regleArea, dinsAbastArea, danyFuga } from "./modes-tret.mjs";
-import { darreraPlantilla, consumirPlantilla } from "./plantilla.mjs";
+import { darreraPlantilla, consumirPlantilla, formaPlantilla } from "./plantilla.mjs";
 import { calcularDany, aplicarDanyAPista, proteccioArmadura } from "./dany.mjs";
 import { consumirConcentracio } from "./reaccions.mjs";
 import { activarArtefacte } from "./artefactes.mjs";
@@ -107,7 +107,7 @@ export async function atacArea({ combat, combatant, actor, arma, poolFinal, mode
     ui.notifications?.warn(game.i18n.localize("FORJA.Combat.AreaSensePlantilla"));
     return false;
   }
-  const forma = plantilla.object?.shape;
+  const forma = formaPlantilla(plantilla);
   const tokenAtacant = combatant.token?.object;
   const tokens = (canvas.tokens?.placeables ?? []).filter(t => t.actor && t !== tokenAtacant
     && forma?.contains(t.center.x - plantilla.x, t.center.y - plantilla.y));
@@ -197,7 +197,9 @@ export async function resoldreSegonCopCombinacio(combat, combatant) {
   await combatant.unsetFlag("forja", "combinacioPendent");
   const actor = combatant.actor;
   const arma = actor?.items.get(dades.armaId);
-  const token = dades.tokenId ? canvas.tokens?.get(dades.tokenId) : null;
+  // El token es busca a l'escena del combat, no al canvas: aquest codi corre
+  // al DJ actiu, que pot estar mirant una altra escena (proves 2026-10-09).
+  const token = dades.tokenId ? (combat.scene ?? canvas.scene)?.tokens.get(dades.tokenId) ?? null : null;
   if (!actor || !arma || !token?.actor) return;
   const roll = ForjaRoll.fromData(dades.roll);
   roll._computeForjaResults?.();
