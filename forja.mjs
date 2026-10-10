@@ -30,6 +30,7 @@ import { avancarRecarregaActor } from "./module/combat/artefactes.mjs";
 import { registrarEstats } from "./module/estats/estats.mjs";
 import { registrarHookValorX, aplicarTicsEstats } from "./module/estats/estats-parametritzats.mjs";
 import { registrarNotificacions } from "./module/estats/notificacions.mjs";
+import { registrarTokenPrototip } from "./module/contingut/token-prototip.mjs";
 import { sincronitzarEstatsSalut, iniciTornEstats } from "./module/estats/aplicacio-estats.mjs";
 import { registrarMigracio, executarMigracions } from "./module/migracio/migracio.mjs";
 import { sincronitzarVinculats, eliminarVinculats } from "./module/combat/artefactes-vinculats.mjs";
@@ -113,6 +114,7 @@ Hooks.once("init", () => {
   // Textos flotants al costat del token: estats guanyats i perduts, fatiga,
   // ferides i curació (Fase 1; Oriol FM, 2026-10-06). A tots els clients.
   registrarNotificacions();
+  registrarTokenPrototip();
 
   // Handlebars helpers
   _registrarHelpers();

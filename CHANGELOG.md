@@ -85,6 +85,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- **Token en canviar la imatge d'un actor:** el token prototip ara segueix el retrat nou si encara era el del sistema, el genèric o el mateix retrat (abans, en arrossegar l'actor a l'escena sortia el token antic). Un token personalitzat no es toca.
 - **Tokens dibuixats dels compendis** (Yoko-1, Trace, Marvin, Gólem de carn, Aràcnid): es veien poc saturats, com amb un vel gris. Ara són una còpia exacta del dibuix original (PNG), sense convertir-los a WEBP.
 - **Capçalera de la fitxa de PJ:** els PC i PX es mostren en una graella 2×2 (a dalt els totals, a sota els lliures) i, amb la fitxa estreta, baixen de línia en lloc de superposar-se al nom.
 - **PC gastats:** ara compten els efectes i els artefactes, com al manual (p. ex. Anya Barker, 200 PC). Els prototips fets en joc no compten, i un efecte après amb PX no gasta PC.

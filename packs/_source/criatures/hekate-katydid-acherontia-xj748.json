@@ -3,7 +3,7 @@
   "_key": "!actors!TrD4QNbBZLTL5mH6",
   "name": "Katydid Acherontia XJ748",
   "type": "pnj",
-  "img": "systems/forja/assets/tokens/criatures/hekate-katydid-acherontia-xj748.webp",
+  "img": "systems/forja/assets/tokens/criatures/hekate-katydid-acherontia-xj748.png",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -45,7 +45,7 @@
     "actorLink": false,
     "disposition": -1,
     "texture": {
-      "src": "systems/forja/assets/tokens/criatures/hekate-katydid-acherontia-xj748.webp"
+      "src": "systems/forja/assets/tokens/criatures/hekate-katydid-acherontia-xj748.png"
     }
   },
   "items": [
