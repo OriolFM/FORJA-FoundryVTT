@@ -21,6 +21,7 @@ import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancamen
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
 import { teProprietat } from "./propietats.mjs";
 import { etiquetarObjectius, marcarObjectiu } from "./objectius.mjs";
+import { potCorregir, posicioBaseRedeclaracio, posicioCorregida, potRedeclararPerObjectiu } from "./correccio-declaracio.mjs";
 import {
   tirarDefensaCompleta, desarDefensaCompleta, defensaCompletaDe, combatantDe, resolucioDefensaCompleta
 } from "./defensa-completa.mjs";
@@ -55,6 +56,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
   static DEFAULT_OPTIONS = {
     actions: {
       forjaDeclararAccio: ForjaCombatTracker.#onDeclararAccio,
+      forjaCorregirDeclaracio: ForjaCombatTracker.#onCorregirDeclaracio,
       forjaMarcarEmboscada: ForjaCombatTracker.#onMarcarEmboscada,
       forjaResoldreAccio: ForjaCombatTracker.#onResoldreAccio,
       forjaAvancarTemps: ForjaCombatTracker.#onAvancarTemps
@@ -151,6 +153,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
            title="${game.i18n.localize("FORJA.Combat.Declarar")}">
           <i class="fas fa-stopwatch"></i>
         </a>
+        ${_potCorregirAra(combat, combatant) ? `<a class="forja-corregir" data-action="forjaCorregirDeclaracio" data-combatant-id="${combatantId}"
+           title="${game.i18n.localize("FORJA.Combat.CorregirDeclaracio")}">
+          <i class="fas fa-pen"></i>
+        </a>` : ""}
         <a class="forja-resoldre${destacar === "resoldre" ? " forja-destacat" : ""}${_potResoldre(combat, combatant) ? "" : " forja-deshabilitat"}" data-action="forjaResoldreAccio" data-combatant-id="${combatantId}"
            title="${game.i18n.localize("FORJA.Combat.Resoldre")}">
           <i class="fas fa-dice-d10"></i>
@@ -172,14 +178,31 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
    * B1: un actor fora de combat (nivell 7) no pot declarar. B5: concentració.
    * B6: maniobres d'arts marcials. B7: defenses des de `opcionsDefensa`.
    */
-  static async #onDeclararAccio(event, target) {
+  /**
+   * Corregir la declaració (Oriol FM, 2026-10-10): el DJ en qualsevol moment;
+   * el declarant, si el rellotge no s'ha mogut des que la va declarar
+   * (`combat/correccio-declaracio.mjs`). Reobre el diàleg de declarar i
+   * compta la latència des d'on es va declarar.
+   */
+  static async #onCorregirDeclaracio(event, target) {
+    const combat = this.viewed;
+    const combatant = combat?.combatants.get(target.dataset.combatantId);
+    if (!combatant || !_potControlar(combatant) || !_potCorregirAra(combat, combatant)) return;
+    return ForjaCombatTracker.#onDeclararAccio.call(this, event, target, { correccio: true });
+  }
+
+  static async #onDeclararAccio(event, target, opcions = {}) {
     const combat = this.viewed;
     if (!combat) return;
 
     const combatantId = target.dataset.combatantId;
     const combatant   = combat.combatants.get(combatantId);
     if (!combatant?.actor || !_potControlar(combatant)) return;
-    if (!_estaHabilitat(combat, combatant)) {
+    // Redeclarar: corregir la declaració, o tornar a declarar perquè l'objectiu ha caigut.
+    const pendentAnterior = combatant.getFlag("forja", "accioPendent") ?? null;
+    const perObjectiu = !opcions.correccio && potRedeclararPerObjectiu(pendentAnterior);
+    const redeclaracio = !!opcions.correccio || perObjectiu;
+    if (!redeclaracio && !_estaHabilitat(combat, combatant)) {
       ui.notifications?.warn(game.i18n.format("FORJA.Combat.NoEsElSeuTorn", { nom: combatant.name }));
       return;
     }
@@ -299,7 +322,16 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     const actiuAra = (combat.combatentActiuId ?? combat.combatant?.id) === combatantId;
     const marcadorDeclaracio = combat.marcador ?? 0;
 
-    await combat.declararAccio(combatantId, config.latencia);
+    // Posició de partida d'aquesta declaració (per poder-la corregir després).
+    let posicioBase = combatant.initiative ?? marcadorDeclaracio;
+    let posicioNova = null;
+    if (redeclaracio) {
+      posicioBase = posicioBaseRedeclaracio(pendentAnterior, { marcador: marcadorDeclaracio, initiative: combatant.initiative, perObjectiuCaigut: perObjectiu });
+      posicioNova = posicioCorregida(posicioBase, config.latencia, marcadorDeclaracio);
+      await combat.situarCombatent(combatantId, posicioNova);
+    } else {
+      await combat.declararAccio(combatantId, config.latencia);
+    }
     // Defensa completa: sempre concentrada, però el dau es suma a la tirada de
     // defensa que es fa ara mateix (defensa-completa.mjs), no a una acció futura.
     await establirConcentracio(actor, config.tipus === "defensa" ? false : config.concentrar);
@@ -313,10 +345,14 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       // WP-M: moviment declarat (basic/rapid/especial/carrega) i on es va declarar.
       moviment: config.moviment ?? "basic",
       combatId: combat.id,
-      declaradaAlMarcador: marcadorDeclaracio,
+      // Una correcció conserva el moment de la declaració original.
+      declaradaAlMarcador: opcions.correccio ? (pendentAnterior?.declaradaAlMarcador ?? marcadorDeclaracio) : marcadorDeclaracio,
+      posicioBase,
       movimentEnCurs: null
     };
-    if (actiuAra && combat.started) {
+    if (opcions.correccio) {
+      pendent.movimentEnCurs = pendentAnterior?.movimentEnCurs ?? null;
+    } else if (actiuAra && combat.started) {
       pendent.movimentEnCurs = movimentDelTorn(anterior, combat.id, marcadorDeclaracio);
     }
     if (config.tipus === "atac") {
@@ -367,14 +403,16 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
     }
     // Si declara durant el seu propi torn, la nova acció és per al proper:
     // ja només li queda passar el torn (icona destacada, `_iconaDestacada`).
-    if (actiuAra && combat.started) await combatant.setFlag("forja", "estatTorn", "redeclarada");
+    // Si l'acció corregida torna a caure al tic actual, es pot resoldre ara.
+    const araMateix = posicioNova !== null && posicioNova === marcadorDeclaracio;
+    if (actiuAra && combat.started && !araMateix) await combatant.setFlag("forja", "estatTorn", "redeclarada");
     else await combatant.unsetFlag("forja", "estatTorn");
 
     if (config.descripcio || config.etiqueta) {
       const concentra = config.concentrar ? ` <em>(${game.i18n.localize("FORJA.Combat.Concentrat")})</em>` : "";
       await ChatMessage.create({
         speaker: ChatMessage.getSpeaker({ actor }),
-        content: `<div class="forja-missatge-accio"><strong>${Handlebars.escapeExpression(config.etiqueta ?? "")}</strong>${concentra}${pendent.objectiuNom ? ` → ${Handlebars.escapeExpression(pendent.objectiuNom)}` : ""}${config.descripcio ? `<p>${Handlebars.escapeExpression(config.descripcio)}</p>` : ""}</div>`
+        content: `<div class="forja-missatge-accio">${redeclaracio ? `<em>${game.i18n.localize(opcions.correccio ? "FORJA.Combat.DeclaracioCorregida" : "FORJA.Combat.RedeclaracioObjectiuCaigut")}</em> ` : ""}<strong>${Handlebars.escapeExpression(config.etiqueta ?? "")}</strong>${concentra}${pendent.objectiuNom ? ` → ${Handlebars.escapeExpression(pendent.objectiuNom)}` : ""}${config.descripcio ? `<p>${Handlebars.escapeExpression(config.descripcio)}</p>` : ""}</div>`
       });
     }
   }
@@ -830,9 +868,45 @@ function _estaHabilitat(combat, combatant) {
   if (combat.fase === "declaracio") return _senseDeclarar(combatant);
   if (!combat.started) return true;
   if (_senseDeclarar(combatant)) return true;
+  // L'objectiu de l'acció declarada ha caigut: pot tornar a declarar.
+  if (potRedeclararPerObjectiu(combatant.getFlag("forja", "accioPendent"))) return true;
   return combat.combatant?.id === combatant.id
     && combatant.initiative === combat.marcador
     && combatant.getFlag("forja", "estatTorn") !== "redeclarada";
+}
+
+/** Es pot corregir ara la declaració d'aquest combatent (`potCorregir`). */
+function _potCorregirAra(combat, combatant) {
+  if (!combat?.started && combat?.fase !== "declaracio") return false;
+  return potCorregir({
+    esDJ: !!game.user?.isGM,
+    pendent: combatant.getFlag("forja", "accioPendent"),
+    marcador: combat.marcador ?? 0,
+    estatTorn: combatant.getFlag("forja", "estatTorn") ?? null
+  });
+}
+
+/**
+ * Marca a les accions declarades contra un objectiu que acaba de caure (fora
+ * de combat o derrotat) el tic en què ha caigut, perquè el declarant pugui
+ * tornar a declarar des d'aquí (Oriol FM, 2026-10-10). Només al DJ actiu.
+ * @param {string[]} tokenIds  Tokens de l'objectiu caigut
+ */
+export async function marcarObjectiuCaigut(tokenIds) {
+  if (!game.users.activeGM?.isSelf || !tokenIds?.length) return;
+  for (const combat of game.combats ?? []) {
+    if (!combat.started) continue;
+    for (const c of combat.combatants) {
+      const p = c.getFlag("forja", "accioPendent");
+      if (!p?.objectiuTokenId || !tokenIds.includes(p.objectiuTokenId) || p.objectiuCaigutAl != null) continue;
+      if (c.getFlag("forja", "estatTorn") === "resolta") continue;
+      await c.setFlag("forja", "accioPendent", { objectiuCaigutAl: combat.marcador ?? 0 });
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: c.actor }),
+        content: `<div class="forja-missatge-accio">${game.i18n.format("FORJA.Combat.ObjectiuCaigut", { nom: c.name, objectiu: p.objectiuNom ?? "" })}</div>`
+      });
+    }
+  }
 }
 
 /** El combatent actiu té una acció pendent per resoldre en aquest tic. */

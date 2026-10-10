@@ -14,6 +14,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Corregir una declaració** (icona del llapis al tracker): el DJ pot corregir la de qualsevol PJ o PNJ en qualsevol moment; el jugador, la seva, mentre el rellotge no s'hagi mogut. La latència nova es compta des d'on es va declarar (no se suma dues vegades) i al xat surt «(declaració corregida)».
+- **Objectiu caigut:** si l'objectiu d'una acció declarada queda fora de combat o derrotat, qui l'havia declarat pot tornar a declarar des d'aquell tic (avís al xat).
 - **Acció declarada al mapa:** en passar el ratolí per un combatent, a sobre del token surt l'acció que ha declarat i el tic en què actuarà (p. ex. «Atac: Cop — Combinació · Tic 11») i, si té objectiu, el nom amb la direcció i la distància, i una línia fins a l'objectiu. Ho veu tothom qui veu el token (la declaració ja surt al xat).
 - **Defensa completa al mapa:** quan algú declara (i tira) una defensa completa, un escut amb la puntuació surt a dalt a l'esquerra del token fins que declara la propera acció. El veuen els qui poden veure la fitxa (el DJ i el propietari).
 - **Triar l'objectiu d'un atac:** el token triat es marca al mapa (punt de mira de Foundry, i un «ping» en canviar-lo). Al desplegable, els PNJ amb el mateix nom es numeren («Guàrdia nº 1», «nº 2») i porten la direcció i la distància (p. ex. «↗ 3.8 m»).

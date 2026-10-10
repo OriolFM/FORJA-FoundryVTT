@@ -15,7 +15,7 @@ import ForjaActor          from "./module/documents/actor.mjs";
 import ForjaCombat         from "./module/documents/combat.mjs";
 import { crearTokenDocumentForja } from "./module/documents/token.mjs";
 import { crearTokenForja, registrarIndicadorsCombat } from "./module/canvas/token.mjs";
-import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
+import ForjaCombatTracker, { marcarObjectiuCaigut } from "./module/combat/tracker-ui.mjs";
 import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
 import FullItem            from "./module/apps/full-item.mjs";
@@ -232,12 +232,26 @@ Hooks.on("updateActor", async (actor, changes) => {
   if (!game.users.activeGM?.isSelf) return;
   if (!foundry.utils.hasProperty(changes, "system.salut")) return;
   await sincronitzarEstatsSalut(actor);
+  await avisarObjectiuCaigut(actor);
 });
 // Tokens no enllaçats: el canvi de salut arriba com a delta del token.
 Hooks.on("updateToken", async (token, changes) => {
   if (!game.users.activeGM?.isSelf) return;
   if (!foundry.utils.hasProperty(changes, "delta.system.salut")) return;
   if (token.actor) await sincronitzarEstatsSalut(token.actor);
+  if (token.actor) await avisarObjectiuCaigut(token.actor);
+});
+
+// Objectiu fora de combat o derrotat: qui l'havia declarat com a objectiu pot
+// tornar a declarar des d'aquest tic (Oriol FM, 2026-10-10; tracker-ui.mjs).
+async function avisarObjectiuCaigut(actor) {
+  if (!actor?.system?.salut?.foraDeCombat) return;
+  const ids = actor.isToken ? [actor.token.id] : actor.getActiveTokens(false, true).map(t => t.id);
+  await marcarObjectiuCaigut(ids);
+}
+Hooks.on("updateCombatant", async (combatant, changes) => {
+  if (!game.users.activeGM?.isSelf || changes.defeated !== true) return;
+  await marcarObjectiuCaigut([combatant.tokenId]);
 });
 
 // Eina del DJ: crear actors i desar-los als compendis del món.

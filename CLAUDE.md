@@ -298,7 +298,7 @@ Extén el `CombatTracker` natiu: elimina els controls d'iniciativa (irrellevants
 en aquest sistema), substitueix el títol per «Tic N» (o «Fase de declaració»)
 amb el botó «Avança» del DJ (`_potAvancarTemps`), mostra la posició de cada
 combatent i afegeix botons "declarar acció" / "resoldre" / "marcar
-emboscada" — **només visibles** per al DJ o el propietari del combatent
+emboscada" i "corregir la declaració" (`combat/correccio-declaracio.mjs`: el DJ sempre; el declarant si el rellotge no s'ha mogut) — **només visibles** per al DJ o el propietari del combatent
 (`_potControlar`). Qui no ha d'actuar ara surt atenuat i bloquejat
 (`_estaHabilitat`, `_potResoldre`); la icona que toca fa pampallugues
 (`_iconaDestacada`, segons `flags.forja.estatTorn`).
