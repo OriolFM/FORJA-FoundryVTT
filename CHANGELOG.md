@@ -14,6 +14,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Acció declarada al mapa:** en passar el ratolí per un combatent, a sobre del token surt l'acció que ha declarat i el tic en què actuarà (p. ex. «Atac: Cop — Combinació · Tic 11») i, si té objectiu, el nom amb la direcció i la distància, i una línia fins a l'objectiu. Ho veu tothom qui veu el token (la declaració ja surt al xat).
 - **Defensa completa al mapa:** quan algú declara (i tira) una defensa completa, un escut amb la puntuació surt a dalt a l'esquerra del token fins que declara la propera acció. El veuen els qui poden veure la fitxa (el DJ i el propietari).
 - **Triar l'objectiu d'un atac:** el token triat es marca al mapa (punt de mira de Foundry, i un «ping» en canviar-lo). Al desplegable, els PNJ amb el mateix nom es numeren («Guàrdia nº 1», «nº 2») i porten la direcció i la distància (p. ex. «↗ 3.8 m»).
 - **Orientació dels tokens:** el dibuix es queda sempre dret i un triangle a la vora marca cap on mira el personatge. Canvia en moure'l (rotació automàtica de Foundry) i a mà amb el token seleccionat: Ctrl + roda del ratolí (30°) o Maj + roda (60°, una cara de l'hexàgon). Sense triangle si el token té la rotació bloquejada.

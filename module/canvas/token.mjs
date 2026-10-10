@@ -1,4 +1,7 @@
 import { bloquejaPas, impedeixAcabar, cercarCami, simplificarCami } from "../combat/moviment.mjs";
+import { liniesAccio } from "../combat/indicador-accio.mjs";
+import { fletxaDireccio } from "../combat/objectius.mjs";
+import { distanciaEntreTokens, tokensATocar } from "../combat/abast.mjs";
 import { textPenalitzacio, liniesSalut } from "../estats/indicador-salut.mjs";
 
 /**
@@ -161,11 +164,32 @@ export function defensaCompletaDelToken(doc) {
 }
 
 /**
+ * Combatent d'aquest token en un combat en marxa (començat o en
+ * declaració), o en qualsevol combat si no n'hi ha cap en marxa.
+ * @param {TokenDocument} doc
+ * @returns {Combatant|null}
+ */
+function combatantDelTokenCanvas(doc) {
+  let trobat = null;
+  for (const combat of game.combats ?? []) {
+    const c = combat.combatants.find(x => x.tokenId === doc.id);
+    if (!c) continue;
+    if (combat.started || combat.getFlag("forja", "fase") === "declaracio") return c;
+    trobat ??= c;
+  }
+  return trobat;
+}
+
+/**
  * Redibuixa els indicadors dels tokens quan canvia un combatent (p. ex. la
  * defensa completa) o s'acaba un combat. Només dibuixa al client local.
  */
 export function registrarIndicadorsCombat() {
-  const refrescar = (combatant) => combatant?.token?.object?._forjaDibuixarSalut?.();
+  const refrescar = (combatant) => {
+    const token = combatant?.token?.object;
+    token?._forjaDibuixarSalut?.();
+    token?._forjaDibuixarAccio?.();
+  };
   Hooks.on("updateCombatant", refrescar);
   Hooks.on("deleteCombatant", refrescar);
   Hooks.on("deleteCombat", (combat) => { for (const c of combat.combatants) refrescar(c); });
@@ -181,6 +205,8 @@ export function crearTokenForja(Base) {
       this.forjaSalut.eventMode = "none";
       this.forjaOrientacio = this.addChild(new PIXI.Graphics());
       this.forjaOrientacio.eventMode = "none";
+      this.forjaAccio = this.addChild(new PIXI.Container());
+      this.forjaAccio.eventMode = "none";
       this._forjaDibuixarSalut();
       this._forjaDibuixarOrientacio();
     }
@@ -220,8 +246,56 @@ export function crearTokenForja(Base) {
       super._applyRenderFlags(flags);
       if (flags.refreshBars || flags.refreshEffects || flags.redrawEffects || flags.refreshSize || flags.refreshState || flags.refreshNameplate) {
         this._forjaDibuixarSalut();
+        this._forjaDibuixarAccio();
       }
       if (flags.refreshSize || flags.refreshState) this._forjaDibuixarOrientacio();
+    }
+
+    /**
+     * Acció declarada en passar el ratolí (`combat/indicador-accio.mjs`): el
+     * text a sobre del token i una línia fins a l'objectiu. La declaració és
+     * pública (surt al xat), així que la veu tothom qui veu el token.
+     */
+    _forjaDibuixarAccio() {
+      const c = this.forjaAccio;
+      if (!c || c.destroyed) return;
+      for (const fill of c.removeChildren()) fill.destroy({ children: true });
+      c.visible = !this.document.isSecret && !!(this.hover || this.layer?.highlightObjects);
+      if (!c.visible) return;
+      const combatant = combatantDelTokenCanvas(this.document);
+      const pendent = combatant?.getFlag("forja", "accioPendent");
+      if (!pendent) return;
+      const objectiu = pendent.objectiuTokenId ? canvas.tokens?.get(pendent.objectiuTokenId) : null;
+      const linies = liniesAccio(pendent, {
+        posicio: combatant.initiative ?? null,
+        objectiu: objectiu ? {
+          nom: objectiu.name,
+          fletxa: fletxaDireccio(objectiu.center.x - this.center.x, objectiu.center.y - this.center.y),
+          distancia: Math.round(distanciaEntreTokens(this, objectiu) * 10) / 10,
+          aTocar: tokensATocar(this, objectiu)
+        } : (pendent.objectiuNom ? { nom: pendent.objectiuNom } : null),
+        t: (k, d) => game.i18n.format(k, d)
+      });
+      if (objectiu && objectiu !== this) {
+        const linia = new PIXI.Graphics();
+        const fi = { x: objectiu.center.x - this.x, y: objectiu.center.y - this.y };
+        // Des de la vora del token (no per damunt del dibuix).
+        const dx = fi.x - this.w / 2, dy = fi.y - this.h / 2, llarg = Math.hypot(dx, dy) || 1;
+        const r = Math.min(this.w, this.h) / 2;
+        const inici = { x: this.w / 2 + dx / llarg * r, y: this.h / 2 + dy / llarg * r };
+        linia.lineStyle(4, 0x000000, 0.6).moveTo(inici.x, inici.y).lineTo(fi.x, fi.y);
+        linia.lineStyle(2, 0xf59e0b, 0.95).moveTo(inici.x, inici.y).lineTo(fi.x, fi.y);
+        linia.lineStyle(2, 0x000000, 0.8).beginFill(0xf59e0b).drawCircle(fi.x, fi.y, Math.max(6, this.w * 0.07)).endFill();
+        c.addChild(linia);
+      }
+      const PreciseText = foundry.canvas.containers.PreciseText;
+      const s = CONFIG.canvasTextStyle.clone();
+      s.fontSize = Math.max(12, Math.round(this.h * 0.14)); s.fill = 0xfde68a; s.fontWeight = "bold";
+      s.stroke = 0x000000; s.strokeThickness = 4; s.align = "center";
+      const text = new PreciseText(linies.join("\n"), s);
+      text.anchor.set(0.5, 1);
+      text.position.set(this.w / 2, -6);
+      c.addChild(text);
     }
 
     /**
