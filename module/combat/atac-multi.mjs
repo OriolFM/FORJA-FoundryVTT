@@ -152,11 +152,17 @@ async function fugaArmaDispersio(actor, tokenAtacant, arma) {
   const linies = [];
   for (const a of afectats) {
     const r = calcularDany({ danyBaseArma: dany, bonificadorArma: 0, excedentAtac: 0, reduccioDany: a.system.reduccioDany ?? 0, armadura: proteccioArmadura(a.items) });
+    let nota = "";
     if (r.danyFinal > 0) {
       const marcats = aplicarDanyAPista({ ferides: { marcats: a.system.salut.ferides.marcats } }, "ferides", r.danyFinal);
-      await actualitzarComGM(a, { "system.salut.ferides.marcats": marcats });
+      // Si el DJ no el pot aplicar, el missatge surt igualment amb una nota (com a `ferAtac`).
+      try {
+        await actualitzarComGM(a, { "system.salut.ferides.marcats": marcats });
+      } catch (err) {
+        nota = ` <em>${Handlebars.escapeExpression(game.i18n.format("FORJA.Combat.ConsequenciesNoAplicades", { nom: a.name, error: err?.message ?? String(err) }))}</em>`;
+      }
     }
-    linies.push(`<li>${Handlebars.escapeExpression(a.name)}: ${r.danyFinal}</li>`);
+    linies.push(`<li>${Handlebars.escapeExpression(a.name)}: ${r.danyFinal}${nota}</li>`);
   }
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),

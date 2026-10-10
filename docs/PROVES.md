@@ -282,7 +282,19 @@ Dos clients: «Claude» prepara i fa de DJ; «Jugador proves» clica al tracker,
 | Escopeta: atac d'àrea amb la plantilla del jugador; la plantilla es consumeix | **Error corregit** (`9dbde33`): una plantilla nova no tenia forma i no hi trobava ningú. Ara OK (impacte, 11 de dany) |
 | Contraatac: el PNJ en guàrdia para i contraataca | **Error corregit**: el diàleg del defensor oferia parar i blocar (es recalculava al seu client); ara només passiva i esquivar. Contraatac: impacta, 3 de dany |
 
-**No provat encara:** diàlegs del constructor i de «Repartir PX», pífia amb arma de dispersió, marejat (tirada en declarar), arrossegar del compendi a una fitxa.
+### Proves restants, 2026-10-10
+
+Mateix entorn. Per a la pífia i el marejat, els daus es forcen només al client del jugador (`CONFIG.Dice.randomUniform`; Foundry fa `ceil((1 − u) · 10)`: u = 0,9999 → 1, u = 0,0001 → 10).
+
+| Prova | Resultat |
+|-------|----------|
+| Constructor: l'Espasa d'energia surt a 21 PC; afegir «armadura» → 23; desar retorna el resultat (6 paràmetres) | OK |
+| Repartir PX: amb els altres PJ desmarcats, només canvien els PX del PJ de prova (+15 = grup 4 + individual 8 + virtut 1 + altres 2); historial amb les 4 línies | OK |
+| Arrossegar del compendi a la fitxa: Espasa serra (paràmetres i arma vinculada) i Bola de foc (paràmetres, 17 PC) | OK |
+| Marejat: en declarar, demana la dificultat i tira; amb 1s no declara; amb 10s s'obre el diàleg de declarar | OK |
+| Arma de dispersió que pifia: fuga de 15 − 3 = 12 a l'usuari (10 després de la reducció) i a l'adjacent (11) | OK. **Corregit:** si el relé no podia aplicar el dany a un adjacent, es perdia el missatge de la fuga; ara surt amb la nota per al DJ |
+
+**Observació:** el relé del DJ només accepta canvis de combat (dany a un PNJ) si hi ha un combat **actiu i començat a l'escena activa del món** (`game.combats.active`, que mira `game.scenes.current`). Un combat en una escena que el DJ no ha activat per a tothom no compta: els jugadors no hi poden fer dany a PNJ. A les proves passava perquè l'escena temporal no era l'activa.
 
 ### Proves unitàries a Windows
 
