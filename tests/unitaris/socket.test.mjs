@@ -127,7 +127,7 @@ globalThis._respostaDJ = true;
 await S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 9 });
 assert.equal(npc.system.salut.ferides.marcats, 9, "si el DJ ho confirma, s'aplica");
 assert.equal(preguntes.length, 2, "s'ha preguntat al DJ cada vegada");
-assert.match(preguntes[0], /ferides/);
+assert.match(preguntes[0], /FORJA.Salut.Ferides/, "el diàleg mostra el nom del camp, no la clau interna");
 delete globalThis.foundry.applications;
 await S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 2 });
 assert.equal(npc.system.salut.ferides.marcats, 2, "baixar (curar) fora de combat s'ha de permetre");

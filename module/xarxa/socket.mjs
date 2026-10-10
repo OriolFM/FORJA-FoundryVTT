@@ -379,6 +379,21 @@ async function _validarContextCombat(doc, pla, user) {
 
 const _escapar = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
+/** Nom llegible d'un camp de la llista blanca per al diàleg de confirmació (si no en té, la clau). */
+const ETIQUETES_CAMPS = {
+  "system.salut.fatiga.marcats": "FORJA.Salut.Fatiga",
+  "system.salut.ferides.marcats": "FORJA.Salut.Ferides",
+  "system.reaccions.gastades": "FORJA.Socket.Camp.Reaccions",
+  "system.concentrat": "FORJA.Socket.Camp.Concentracio",
+  "flags.forja.egidaReactivaAlTick": "FORJA.Item.Egida",
+  x: "FORJA.Socket.Camp.Posicio",
+  y: "FORJA.Socket.Camp.Posicio"
+};
+function _etiquetaCamp(clau) {
+  const id = ETIQUETES_CAMPS[clau] ?? (clau.startsWith("system.egida.") ? "FORJA.Item.Egida" : null);
+  return id ? game.i18n.localize(id) : clau;
+}
+
 /**
  * Pregunta al DJ (aquest client) si accepta un canvi de combat d'un jugador
  * quan no hi ha cap combat en marxa. Sense resposta abans que la petició
@@ -390,7 +405,7 @@ async function _confirmarDJ(doc, pla, user) {
   if (!Dialog) return false;
   const nom = doc.documentName === "Actor" ? doc.name : `${doc.parent?.name ?? ""} › ${doc.name ?? doc.documentName}`;
   const canvis = Object.entries(pla)
-    .map(([clau, valor]) => `<li>${_escapar(clau)}: ${_escapar(foundry.utils.getProperty(doc, clau))} → ${_escapar(valor)}</li>`).join("");
+    .map(([clau, valor]) => `<li>${_escapar(_etiquetaCamp(clau))}: ${_escapar(foundry.utils.getProperty(doc, clau))} → ${_escapar(valor)}</li>`).join("");
   let dialeg = null;
   const resposta = Dialog.confirm({
     window: { title: game.i18n.localize("FORJA.Socket.ConfirmarTitol") },
