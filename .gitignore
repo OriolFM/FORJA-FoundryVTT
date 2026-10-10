@@ -15,10 +15,12 @@ Thumbs.db
 # Build artifacts
 dist/
 
-# LevelDB runtime files (compendiums)
-packs/*/LOCK
-packs/*/LOG
-packs/*/LOG.old
+# Compendis compilats (LevelDB): NO van a git. Foundry els reescriu cada cop que
+# s'obre el món. Es generen a partir de les fonts (packs/_source) amb `npm run compila`.
+packs/*/
+!packs/_source/
+moduls/*/packs/*/
+!moduls/*/packs/_source/
 mon-proves/**/LOCK
 mon-proves/**/LOG
 mon-proves/**/LOG.old

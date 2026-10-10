@@ -14,6 +14,10 @@
  *    amb graphify (`graphify update .`, local, sense cost d'API), si està
  *    instal·lat. La sortida (`graphify-out/`) no va a git.
  *
+ * 5. Compila els compendis (`npm run compila`): no van a git, però han d'anar
+ *    dins el paquet de la versió (`forja.zip`). Amb el món obert falla (cal
+ *    tancar Foundry) i només en surt un avís.
+ *
  * No fa cap commit ni cap etiqueta: mostra les ordres per fer-ho, perquè es
  * pugui revisar el canvi abans. S'atura si la secció "Pendent" és buida o si
  * la versió nova no és més gran que l'actual.
@@ -89,10 +93,15 @@ if (arg === "major" || arg === "minor" || parse(nova)[2] === 0) {
   }
 }
 
+// --- compendis compilats (no van a git; sí al paquet de la versió) ---
+const rc = spawnSync(process.execPath, [camí("scripts/compila-packs.mjs")], { cwd: ARREL, stdio: "inherit" });
+const notaPacks = rc.status === 0 ? "\nCompendis compilats (packs/): inclou-los al forja.zip de la release."
+  : "\nAvís: no s'han pogut compilar els compendis (Foundry obert?). Tanca'l i executa npm run compila abans de fer el forja.zip.";
+
 console.log(`Versió ${actual} → ${nova}. Fitxers actualitzats: package.json, system.json, CHANGELOG.md.
 
 Revisa el canvi i, si és correcte:
   npm test
   git add package.json system.json CHANGELOG.md
   git commit -m "Versió ${nova}"
-  git tag -a v${nova} -m "Versió ${nova}"${notaGraf}`);
+  git tag -a v${nova} -m "Versió ${nova}"${notaGraf}${notaPacks}`);

@@ -85,7 +85,7 @@ node tests/joc/proves-moviment.mjs   # moviment
 
 Cada bateria escriu un JSON amb el resultat de cada prova (`ok`, `detall`) i els errors de consola de les dues sessions. També n'escriu el progrés (`OK`/`KO` per prova) a la sortida d'errors.
 
-**Després de provar:** en obrir el compendi del manual, Foundry reescriu `packs/manual` (LevelDB). Cal aturar el servidor i restaurar-lo (esborrar els fitxers nous de `packs/manual` i fer `git checkout -- packs/manual`) abans de fer commit.
+**Després de provar:** Foundry reescriu els compendis compilats (`packs/<compendi>/`), però des del 2026-10-10 no són a git: no cal restaurar res. Si s'han fet malbé, `npm run compila` amb Foundry tancat.
 
 ### Com estan fetes (tècniques)
 

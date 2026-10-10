@@ -107,7 +107,7 @@ FORJA-FoundryVTT/
 ├── lang/                      # i18n: ca.json (font), es.json, en.json
 ├── packs/
 │   ├── _source/manual/        # Fonts JSON (JournalEntry) del compendi "Manual FORJA"
-│   └── manual/                # Compendi compilat (LevelDB) — generat, no s'edita a mà
+│   └── <compendi>/            # Compilats (LevelDB): NO van a git; `npm run compila`
 ├── scripts/
 │   ├── build-manual.mjs       # Genera packs/_source/manual/*.json des de Markdown extern
 │   ├── build-packs.mjs        # npm run build:packs: compendis de contingut (manual + catàlegs)
@@ -138,7 +138,15 @@ algun document antic els esmenta, són obsolets.
 `packs/_source/{pj,pnj,animals,criatures,trets,armes,armadures,artefactes,efectes}/`
 a partir del manual i dels catàlegs, i `npm run build:packs` els compila a
 `packs/<nom>/` (LevelDB, no s'edita a mà). Cal regenerar-los quan canvien els
-catàlegs. Els tokens dels actors (`assets/tokens/`) els fa `python3 scripts/generar-tokens.py`
+catàlegs.
+
+**Els compendis compilats no van a git** (Oriol FM, 2026-10-10): Foundry els
+reescriu cada cop que s'obre el món i sortien sempre com a canvis pendents. A
+git només hi ha les fonts (`packs/_source/`, `moduls/*/packs/_source/`).
+`npm run compila` (`scripts/compila-packs.mjs`) els compila tots, inclòs el
+manual i l'aventura: cal fer-ho després de clonar, quan canvien les fonts i
+abans de fer el `forja.zip` d'una versió (`npm run versio` el crida). Amb el
+món obert, Foundry els té bloquejats: cal tancar-lo abans. Els tokens dels actors (`assets/tokens/`) els fa `python3 scripts/generar-tokens.py`
 (abans de `build:packs`, que els assigna si existeixen). Informe d'incidències: `docs/CONTINGUT-INFORME.md`.
 
 ## Tipus d'actor i d'item
@@ -481,7 +489,7 @@ aproximat). No inventis regles a partir del nom d'un camp.
 `packs/_source/manual/*.json` són les fonts (JournalEntry/JournalEntryPage)
 del compendi "Manual FORJA" que es distribueix amb el sistema (registrat a
 `system.json` → `packs`); `packs/manual/` és el compendi ja compilat
-(LevelDB) — **no s'edita a mà**, es regenera.
+(LevelDB, fora de git) — **no s'edita a mà**, es regenera (`npm run compila`).
 
 ## Compilar el compendi del manual
 
@@ -516,7 +524,6 @@ Tot el detall és a **`docs/PROVES.md`**. En resum:
 1. **Sintaxi:** `node --check` de cada `.mjs` tocat.
 2. **Proves unitàries:** `npm test` (`tests/unitaris/`, sense Foundry). Obligatori abans de cada commit que toqui `module/`. La lògica nova s'ha d'escriure com a funcions pures i provar-se aquí.
 3. **Proves de joc:** `tests/joc/proves.mjs`, `proves-combat.mjs` i `proves-moviment.mjs`, en un Foundry v13 i v14 real sense pantalla, amb sessions de DJ i de Jugador (Playwright). Cal passar-les si el canvi toca el joc, i sempre abans de tancar una versió.
-   - Després, restaura `packs/manual`, que Foundry reescriu.
    - Afegeix els resultats a `docs/PROVES.md`.
 4. **Contra el Foundry local** (Windows, aplicació oberta): `tests/joc/local.mjs` hi entra com a segon client del DJ. Fes servir escenes i actors temporals i esborra'ls en acabar. Vegeu `docs/PROVES.md`, secció 4.
 5. **Món de proves compartit:** `mon-proves/` (instruccions al seu README).

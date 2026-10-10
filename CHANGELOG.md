@@ -10,6 +10,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 ## [Pendent]
 
 ### Atenció
+- **Els compendis compilats ja no són al repositori** (només les fonts, `packs/_source/`). Després de clonar-lo o d'actualitzar-lo des de git, cal executar `npm run compila` amb Foundry tancat. Les versions publicades (`forja.zip`) els continuen portant.
 - **Fusió de les branques `main` (Oriol) i `Aw` (Arnau)** el 2026-10-04: aquesta versió inclou tot el sobrenatural i els artefactes de `main` (equilibri, manifestar, resistir, contrarestar, desfer, prendre el control, constructor d'efectes i artefactes, R+D, artefactes modulars, assistent de creació, accions complexes) i tota la feina d'`Aw`.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 

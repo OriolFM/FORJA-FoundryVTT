@@ -65,6 +65,14 @@ Aquest sistema no té pas de compilació: Foundry serveix els `.mjs`, `.hbs` i
 
 ```bash
 npm install
+npm run compila        # compendis (LevelDB) a partir de packs/_source: no van a git
+```
+
+Els compendis compilats (`packs/<compendi>/`) no són al repositori: després de
+clonar-lo, o quan canvien les fonts, cal executar `npm run compila` amb Foundry
+tancat.
+
+```bash
 FORJA_MD_DIR=/ruta/als/capitols/markdown npm run build:manual
 ```
 

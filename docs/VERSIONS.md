@@ -39,7 +39,8 @@ L'script `scripts/versio.mjs`:
 1. calcula la versió nova i l'escriu a `package.json` i `system.json`;
 2. converteix la secció `Pendent` del `CHANGELOG.md` en `[0.5.0] - data` i en deixa una de nova buida;
 3. **en les versions MINOR i MAJOR, actualitza el graf de coneixement amb graphify** (`graphify update .`, local i sense cost d'API). El resultat queda a `graphify-out/`, que no va a git;
-4. no fa cap commit ni cap etiqueta: mostra les ordres perquè es pugui revisar abans.
+4. **compila els compendis** (`npm run compila`): no van a git, però han d'anar dins el `forja.zip` de la release. Amb el món obert falla (Foundry els té bloquejats): cal tancar-lo;
+5. no fa cap commit ni cap etiqueta: mostra les ordres perquè es pugui revisar abans.
 
 S'atura si la secció `Pendent` és buida o si la versió nova no és més gran que l'actual.
 
@@ -53,4 +54,4 @@ Cada versió té una **etiqueta anotada** (`git tag -a vX.Y.Z`) al commit on es 
 | `v0.3.0` | `2b34cde` | Final de la revisió (onades 1–4). Etiqueta posada a posteriori: en aquell commit els fitxers encara deien 0.2.0. |
 | `v0.4.0` | commit "Versió 0.4.0" | Primera versió tancada amb aquest procediment. |
 
-Les etiquetes són locals fins que es pugen (`git push origin --tags`). Una release de GitHub amb `system.json` i `forja.zip` és el que fa funcionar les adreces `manifest` i `download` de `system.json`.
+Les etiquetes són locals fins que es pugen (`git push origin --tags`). Una release de GitHub amb `system.json` i `forja.zip` és el que fa funcionar les adreces `manifest` i `download` de `system.json`. El `forja.zip` s'ha de fer **després** de `npm run compila`, perquè els compendis compilats (`packs/<compendi>/`) no són a git.
