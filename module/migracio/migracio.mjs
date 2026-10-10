@@ -7,8 +7,11 @@
  *    i artefactes creats abans d'existir `system.parametres` el reben del
  *    catàleg (per `flags.forja.catalegId` o, si no en tenen, pel nom exacte).
  *    Només si encara no en tenen cap: mai sobreescriu una construcció pròpia.
+ * 2. **Armes i armadures vinculades dels artefactes** (2026-10-10): els actors
+ *    importats amb artefactes a dins (p. ex. la Trace del compendi, amb
+ *    l'Espasa serra) no les tenien, i l'arma no sortia als atacs.
  */
-const MIGRACIO_ACTUAL = 1;
+const MIGRACIO_ACTUAL = 2;
 
 /** Registra la configuració. Cridar a l'init. */
 export function registrarMigracio() {
@@ -68,6 +71,15 @@ export async function executarMigracions() {
       if (canvis.length) { await actor.updateEmbeddedDocuments("Item", canvis); n += canvis.length; }
     }
     if (n) console.log(`FORJA | Migració 1: paràmetres afegits a ${n} efectes i artefactes`);
+  }
+
+  if (feta < 2) {
+    const { sincronitzarVinculats } = await import("../combat/artefactes-vinculats.mjs");
+    let n = 0;
+    for (const actor of game.actors) {
+      for (const item of actor.items.filter(i => i.type === "artefacte")) { await sincronitzarVinculats(item); n++; }
+    }
+    if (n) console.log(`FORJA | Migració 2: objectes vinculats revisats per a ${n} artefactes`);
   }
 
   await game.settings.set("forja", "migracio", MIGRACIO_ACTUAL);

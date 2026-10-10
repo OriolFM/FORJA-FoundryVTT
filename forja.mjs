@@ -142,6 +142,10 @@ Hooks.once("ready", () => {
 Hooks.on("createActor", async (actor, _options, userId) => {
   if (userId !== game.user.id) return;
   await assegurarAtacsAutomatics(actor);
+  // Un actor creat o importat amb artefactes ja a dins (p. ex. del compendi)
+  // no dispara `createItem`: es creen ara les seves armes i armadures
+  // vinculades (si no, l'Espasa serra de la Trace no sortia als atacs).
+  for (const item of actor.items.filter(i => i.type === "artefacte")) await sincronitzarVinculats(item);
 });
 
 Hooks.on("createItem", async (item, _options, userId) => {
