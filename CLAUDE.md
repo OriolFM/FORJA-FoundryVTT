@@ -326,9 +326,11 @@ que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
   `declaradaAlMarcador` i `movimentEnCurs` (el moviment del torn que s'està
   jugant, si es redeclara durant el propi torn; vegeu `movimentDelTorn`).
 - **Límit per torn** (`documents/token.mjs`, `_preUpdateMovement`, al client
-  que mou): en un combat començat i per als tokens combatents, un jugador
+  que mou): durant la fase de declaració cap jugador no mou els tokens
+  combatents; en un combat començat, un jugador
   (el DJ mai) només pot moure el token del combatent actiu
-  (`flags.forja.actiu`), sense teletransport, fins al permís del moviment
+  (`flags.forja.actiu`; el combatent es busca a tots els combats,
+  `combatantDelToken`), sense teletransport, fins al permís del moviment
   del torn (caminar o córrer) **acumulat**: historial de moviment del torn
   (Foundry el buida a l'inici de cada torn) + el tram nou. Cap token pot
   acabar a l'espai d'un altre. Els tokens que no són al combat es mouen

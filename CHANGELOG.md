@@ -87,6 +87,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - **Defensa contra un contraatac o una escopeta:** el diàleg de qui es defensa oferia parar i blocar, que no es poden fer servir (i triar-los acabava en defensa passiva).
 - **Moviment en combat:** durant la fase de declaració els jugadors ja no poden moure els seus tokens (el DJ sí). I el límit de moviment s'aplica encara que el tracker del jugador mostri un altre combat.
 - **Arma de dispersió:** si el DJ no podia aplicar el dany de la fuga a algun adjacent, es perdia tot el missatge; ara surt amb una nota.
+- **Combinació:** després del primer cop, l'atacant passa al tic següent sense declarar; el segon cop arriba en aquest tic i només llavors es declara la propera acció (abans demanava declarar abans del segon cop).
 - **Combinació:** el segon cop es perdia si el DJ mirava una altra escena que la del combat.
 - **Atacs i efectes d'àrea:** si la plantilla s'acabava de dibuixar i el canvas encara no l'havia refrescat, no hi trobava cap token.
 - El missatge de tirada diu «1 fita» (abans, «1 fites»).

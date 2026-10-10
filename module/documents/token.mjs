@@ -28,6 +28,30 @@ export function metresMogutsAquestTorn(token) {
 }
 
 /**
+ * Combatent d'un token. `TokenDocument#combatant` només el busca al combat que
+ * mostra el tracker d'aquest client (`game.combat`); si no hi és, es busca als
+ * altres combats de l'escena del token, primer els que estan en marxa. Sense
+ * això, el límit de moviment i l'historial del torn no s'aplicaven si el
+ * tracker mostrava un altre combat (combats paral·lels; proves 2026-10-10).
+ * No se sobreescriu el getter natiu: Foundry suposa que, si n'hi ha, existeix `game.combat`.
+ * @param {TokenDocument} doc
+ * @returns {Combatant|null}
+ */
+export function combatantDelToken(doc) {
+  const natiu = doc.combatant;
+  if (natiu) return natiu;
+  const escena = doc.parent?.id;
+  let trobat = null;
+  for (const combat of game.combats ?? []) {
+    const c = combat.combatants.find(x => x.tokenId === doc.id && (!x.sceneId || x.sceneId === escena));
+    if (!c) continue;
+    if (combat.started || combat.getFlag("forja", "fase") === "declaracio") return c;
+    trobat ??= c;
+  }
+  return trobat;
+}
+
+/**
  * Combatent actiu d'un combat de FORJA: el flag `actiu` és la font de
  * veritat (vegeu `ForjaCombat#combatentActiuId`); si no n'hi ha, el natiu.
  * @param {Combat} combat
@@ -58,7 +82,7 @@ function _idCombatentActiu(combat) {
  * @returns {string|null} Missatge (ja traduït) o null
  */
 export function motiuBloqueigMoviment(doc, move) {
-  const combatant = doc.combatant;
+  const combatant = combatantDelToken(doc);
   const combat = combatant?.parent;
   // Fase de declaració: ningú no es mou fins que comença el temps actiu; el
   // moviment va amb l'acció declarada (Oriol FM, 2026-10-10). El DJ, sí.
@@ -115,24 +139,11 @@ export function motiuBloqueigMoviment(doc, move) {
 export function crearTokenDocumentForja(Base) {
   return class TokenDocumentForja extends Base {
     /**
-     * @override — Foundry només el busca al combat que mostra el tracker
-     * d'aquest client (`game.combat`); si no hi és, es busca als altres
-     * combats de l'escena del token, primer els que estan en marxa. Sense
-     * això, el límit de moviment i l'historial del torn no s'aplicaven si el
-     * tracker mostrava un altre combat (combats paral·lels; proves 2026-10-10).
+     * @override — l'historial de moviment del torn també es desa si el
+     * combat no és el que mostra el tracker d'aquest client (`combatantDelToken`).
      */
-    get combatant() {
-      const natiu = super.combatant;
-      if (natiu) return natiu;
-      const escena = this.parent?.id;
-      let trobat = null;
-      for (const combat of game.combats ?? []) {
-        const c = combat.combatants.find(x => x.tokenId === this.id && (!x.sceneId || x.sceneId === escena));
-        if (!c) continue;
-        if (combat.started || combat.getFlag("forja", "fase") === "declaracio") return c;
-        trobat ??= c;
-      }
-      return trobat;
+    _shouldRecordMovementHistory() {
+      return !!combatantDelToken(this)?.parent?.started;
     }
 
     /** @override */

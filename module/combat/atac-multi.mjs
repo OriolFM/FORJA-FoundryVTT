@@ -173,8 +173,11 @@ async function fugaArmaDispersio(actor, tokenAtacant, arma) {
 /**
  * Combinació (› Arts marcials: «clava 2 cops; impacten en torns
  * consecutius»; Oriol FM: una tirada, la defensa per separat a cada cop).
- * Resol el primer cop ara i desa la tirada perquè el segon es resolgui en el
- * proper torn de l'atacant (`resoldreSegonCopCombinacio`).
+ * Resol el primer cop ara i desa la tirada perquè el segon es resolgui al tic
+ * següent (`resoldreSegonCopCombinacio`): l'atacant hi queda situat sense
+ * declarar res, perquè «l'acció no s'acaba fins que ja s'han fet tots» els
+ * cops (manual l. 2949; Oriol FM, 2026-10-10: torns consecutius = tic +1).
+ * Després del segon cop declara la propera acció.
  * @returns {Promise<void>}
  */
 export async function combinacio({ combat, combatant, actor, arma, poolFinal, tokenObjectiu, objectiu, maniobra, extra = {} }) {
@@ -189,11 +192,15 @@ export async function combinacio({ combat, combatant, actor, arma, poolFinal, to
     combatId: combat.id, roll: roll.toJSON(), armaId: arma.id, tokenId: tokenObjectiu?.id ?? null,
     poolFinal, maniobraId: maniobra.id
   });
+  // Al tic següent, sense acció pendent (no es pot tornar a resoldre la Combinació).
+  await combatant.unsetFlag("forja", "accioPendent");
+  await combat.declararAccio(combatant.id, 1);
 }
 
 /**
- * Segon cop d'una Combinació, al proper torn de l'atacant (DJ actiu, hook
- * `updateCombat`). Si l'objectiu ja no hi és, es perd.
+ * Segon cop d'una Combinació, al tic següent (DJ actiu, hook
+ * `updateCombat`). Si l'objectiu ja no hi és, es perd. Després, l'atacant ja no
+ * té cap acció pendent: el tracker li demana declarar la propera.
  * @param {Combat} combat
  * @param {Combatant} combatant
  */
