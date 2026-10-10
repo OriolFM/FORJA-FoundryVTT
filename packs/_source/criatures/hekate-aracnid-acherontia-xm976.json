@@ -3,7 +3,7 @@
   "_key": "!actors!kSEHVuLyw3jQqdpw",
   "name": "Aràcnid Acherontia XM976",
   "type": "pnj",
-  "img": "systems/forja/assets/tokens/criatures/hekate-aracnid-acherontia-xm976.webp",
+  "img": "systems/forja/assets/tokens/criatures/hekate-aracnid-acherontia-xm976.png",
   "system": {
     "atributs": {
       "FOR": 4,
@@ -57,7 +57,7 @@
     "actorLink": false,
     "disposition": -1,
     "texture": {
-      "src": "systems/forja/assets/tokens/criatures/hekate-aracnid-acherontia-xm976.webp"
+      "src": "systems/forja/assets/tokens/criatures/hekate-aracnid-acherontia-xm976.png"
     }
   },
   "items": [

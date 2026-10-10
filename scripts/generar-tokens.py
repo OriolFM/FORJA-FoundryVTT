@@ -5,8 +5,8 @@ Tokens provisionals dels actors dels compendis (Oriol FM, 2026-10-06).
 Per a cada actor de `packs/_source/{pj,pnj,animals,criatures}/*.json` genera
 `assets/tokens/<pack>/<slug>.webp`: un cercle gris neutre amb l'anella i el
 nom corbat a la banda, com els tokens de `mon-proves/assets`. Si l'actor ja
-té un token dibuixat (`TOKENS_REALS`), en copia aquest en lloc del
-provisional. `scripts/build-packs.mjs` els assigna (`img` i
+té un token dibuixat (`TOKENS_REALS`), en copia el PNG tal qual (`<slug>.png`)
+en lloc del provisional. `scripts/build-packs.mjs` els assigna (`img` i
 `prototypeToken.texture.src`) quan el fitxer existeix.
 
 Ús: python3 scripts/generar-tokens.py   (cal Pillow)
@@ -14,6 +14,7 @@ Després: npm run build:packs
 """
 import json
 import math
+import shutil
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -105,8 +106,14 @@ def main():
             slug = f.stem
             nom = json.loads(f.read_text(encoding="utf-8"))["name"]
             real = TOKENS_REALS.get((pack, slug))
-            img = Image.open(ARREL / real).convert("RGBA") if real else token_provisional(nom)
-            img.save(dest / f"{slug}.webp", "WEBP", quality=90, method=6)
+            if real:
+                # Còpia exacta, sense convertir: els dibuixos són PNG de 16 bits amb
+                # un bloc cICP (espai de color) que Pillow ignora; convertits a WEBP
+                # perdien saturació (proves 2026-10-10).
+                (dest / f"{slug}.webp").unlink(missing_ok=True)
+                shutil.copyfile(ARREL / real, dest / f"{slug}.png")
+            else:
+                token_provisional(nom).save(dest / f"{slug}.webp", "WEBP", quality=90, method=6)
             total += 1
     print(f"{total} tokens a {SORTIDA.relative_to(ARREL)}")
 

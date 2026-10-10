@@ -509,8 +509,9 @@ export function construirActor(bloc, cat, cfg, incidencies) {
   }
 
   // Token (scripts/generar-tokens.py): el dibuixat o el provisional gris.
-  const token = fs.existsSync(path.join(TOKENS, pack, `${slugActor}.webp`))
-    ? `systems/forja/assets/tokens/${pack}/${slugActor}.webp` : null;
+  // El dibuixat (PNG, còpia exacta) o el provisional (WEBP), si n'hi ha.
+  const fitxerToken = ["png", "webp"].map(ext => `${slugActor}.${ext}`).find(f => fs.existsSync(path.join(TOKENS, pack, f)));
+  const token = fitxerToken ? `systems/forja/assets/tokens/${pack}/${fitxerToken}` : null;
   const actor = {
     _id: actorId,
     _key: `!actors!${actorId}`,

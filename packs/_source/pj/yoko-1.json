@@ -3,7 +3,7 @@
   "_key": "!actors!ODEfq1Owk8ftKKVX",
   "name": "Yoko-1",
   "type": "personatge",
-  "img": "systems/forja/assets/tokens/pj/yoko-1.webp",
+  "img": "systems/forja/assets/tokens/pj/yoko-1.png",
   "system": {
     "atributs": {
       "FOR": 2,
@@ -62,7 +62,7 @@
     "actorLink": true,
     "disposition": 1,
     "texture": {
-      "src": "systems/forja/assets/tokens/pj/yoko-1.webp"
+      "src": "systems/forja/assets/tokens/pj/yoko-1.png"
     }
   },
   "items": [
