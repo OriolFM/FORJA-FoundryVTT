@@ -93,6 +93,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- **Cop (combat sense armes):** fa dany de **fatiga**, no de ferides, com diu el manual (l. 3273). També s'aplica al «Cop» dels actors ja creats. Les armes naturals (urpes, ullals…) continuen fent ferides.
 - **Moviment dels PNJ:** el DJ ja no pot moure el combatent que té el torn més enllà del moviment que ha declarat (p. ex. 4 m caminant si ha declarat un atac). Fora del torn i a la declaració continua movent lliurement, i amb «moviment sense restriccions» de Foundry no hi ha cap límit.
 - **Token en canviar la imatge d'un actor:** el token prototip ara segueix el retrat nou si encara era el del sistema, el genèric o el mateix retrat (abans, en arrossegar l'actor a l'escena sortia el token antic). Un token personalitzat no es toca.
 - **Tokens dibuixats dels compendis** (Yoko-1, Trace, Marvin, Gólem de carn, Aràcnid): es veien poc saturats, com amb un vel gris. Ara són una còpia exacta del dibuix original (PNG), sense convertir-los a WEBP.

@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "FOR+2",
+    "pista": "",
     "maniobra": "Inocular (+1 dif.) — Injecta una toxina que canvia l'estat a lent/1 i malaltia/toxina (acumulable). Sense efecte en mecanoides, plantes, constructes inorgànics o no-morts.",
     "rangExtrem": false,
     "basic": false,

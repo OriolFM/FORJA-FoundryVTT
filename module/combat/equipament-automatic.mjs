@@ -68,6 +68,7 @@ function _dadesSystemPerTipus(tipus, e) {
         rangMultFor: e.rangMultFor ?? 0,
         esEscut:     e.esEscut ?? false,
         danyBase:    e.danyBase,
+        pista:       e.pista ?? "",
         maniobra:    e.maniobra ?? "",
         rangExtrem:  e.rangExtrem ?? false,
         propietats:  e.propietats ?? [],

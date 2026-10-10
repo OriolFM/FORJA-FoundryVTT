@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "DES+3",
+    "pista": "",
     "maniobra": "Dispersió — Inefectives a més de rang mitjà, però l'objectiu sempre té defensa bàsica 1 (modificada per distància). Poca penetració — Les armadures rígides ofereixen el doble de protecció contra escopetes.",
     "rangExtrem": true,
     "basic": false,

@@ -41,6 +41,21 @@ export function propietatsArma(item, cataleg = globalThis.CONFIG?.FORJA?.CATALEG
 }
 
 /**
+ * Pista de dany d'una arma: la de l'ítem i, si no en té (armes creades abans
+ * que el catàleg la portés), la del catàleg. El «Cop» fa fatiga (manual ›
+ * Tipus de dany, l. 3273: «el dany causat pel combat sense armes […] causa
+ * dany per fatiga»). "" = ferides.
+ * @param {{system?:object, flags?:object}} item
+ * @param {Array<{id:string, pista?:string}>} [cataleg]
+ * @returns {""|"fatiga"|"ferides"|"ambdues"}
+ */
+export function pistaArma(item, cataleg = globalThis.CONFIG?.FORJA?.CATALEG_ARMES ?? []) {
+  if (item?.system?.pista) return item.system.pista;
+  const catalegId = item?.flags?.forja?.catalegId;
+  return (catalegId && cataleg.find(e => e.id === catalegId)?.pista) || "";
+}
+
+/**
  * @param {object} item
  * @param {string} propietat
  * @param {Array} [cataleg]

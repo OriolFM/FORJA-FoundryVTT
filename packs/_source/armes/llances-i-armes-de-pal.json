@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "FOR+3",
+    "pista": "",
     "maniobra": "Escombrada — Fa la traveta als enemics adjacents; s'aplica l'estat abatut si no superen AGI+Equilibri.",
     "rangExtrem": false,
     "basic": false,

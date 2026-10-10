@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "FOR+3",
+    "pista": "",
     "maniobra": "Destrossar — Malmet armadures físiques: redueix la protecció en 2 per cada atac de Destrossar que en superi el valor (s'aplica després de l'atac).",
     "rangExtrem": false,
     "basic": false,

@@ -112,3 +112,15 @@ assert.deepEqual(cur.habilitatCuracio(guar({ enginyeria: { nivell: 1 }, nyaps: {
 assert.deepEqual(cur.habilitatCuracio(guar({ medicina: { nivell: 3 } }), "huma"), { id: "medicina", nivell: 3 });
 
 console.log("WP-I: tots els tests OK");
+
+// Tipus de dany (l. 3273): el combat sense armes («Cop») fa fatiga, també en
+// ítems creats abans que el catàleg ho indiqués; les armes naturals, ferides.
+{
+  const { pistaArma } = prop;
+  const cataleg = [{ id: "cop", pista: "fatiga" }, { id: "urpes" }];
+  assert.equal(pistaArma({ system: {}, flags: { forja: { catalegId: "cop" } } }, cataleg), "fatiga");
+  assert.equal(pistaArma({ system: { pista: "" }, flags: { forja: { catalegId: "cop" } } }, cataleg), "fatiga");
+  assert.equal(pistaArma({ system: { pista: "ferides" }, flags: { forja: { catalegId: "cop" } } }, cataleg), "ferides");
+  assert.equal(pistaArma({ system: {}, flags: { forja: { catalegId: "urpes" } } }, cataleg), "");
+  console.log("OK: el Cop fa fatiga");
+}

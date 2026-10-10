@@ -131,7 +131,7 @@ export function dadesSystem(tipus, e) {
       return {
         categoria: e.categoria, modLatencia: e.modLatencia, abast: e.abast,
         rangMultFor: e.rangMultFor ?? 0, esEscut: e.esEscut ?? false,
-        danyBase: e.danyBase, maniobra: e.maniobra ?? "", rangExtrem: e.rangExtrem ?? false,
+        danyBase: e.danyBase, pista: e.pista ?? "", maniobra: e.maniobra ?? "", rangExtrem: e.rangExtrem ?? false,
         basic: e.basic ?? false, propietats: e.propietats ?? [], descripcio: e.descripcio ?? ""
       };
     case "armadura":

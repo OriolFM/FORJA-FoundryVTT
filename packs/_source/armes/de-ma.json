@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "FOR+1",
+    "pista": "",
     "maniobra": "Atac a traïció — Ataca un punt vulnerable de l'oponent: ignora l'armadura però no la reducció de dany.",
     "rangExtrem": false,
     "basic": false,

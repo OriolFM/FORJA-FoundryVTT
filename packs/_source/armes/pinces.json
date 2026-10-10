@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "FOR+3",
+    "pista": "",
     "maniobra": "Fracturar (+2 dif.) — Provoca una fractura òssia que deixa el membre mutilat fins que es curi (no afecta gelatinosos ni invertebrats; no es poden fer servir per manipular amb delicadesa).",
     "rangExtrem": false,
     "basic": false,

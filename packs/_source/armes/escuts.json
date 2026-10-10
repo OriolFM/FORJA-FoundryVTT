@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": true,
     "danyBase": "FOR+2",
+    "pista": "",
     "maniobra": "Llançament — Si està equilibrat, es pot llançar com a arma. Defensa amb escut — +1 a la defensa bàsica si no s'usa per atacar; integritat estructural 10 si es fa servir per blocar.",
     "rangExtrem": false,
     "basic": false,

@@ -5,7 +5,7 @@ import {
 } from "./dany.mjs";
 import { consumirConcentracio, trencarConcentracio } from "./reaccions.mjs";
 import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
-import { teProprietat } from "./propietats.mjs";
+import { teProprietat, pistaArma } from "./propietats.mjs";
 import { resoldrePerRupturaConcentracio } from "./control-efecte.mjs";
 import { artefacteDe } from "./artefactes-vinculats.mjs";
 import { activarArtefacte } from "./artefactes.mjs";
@@ -96,7 +96,7 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
   }
   const directe = teProprietat(arma, "directe");
   const pistes = dimMak ? [dimMak]
-    : arma.system.pista === "ambdues" ? ["fatiga", "ferides"] : [arma.system.pista || pista];
+    : pistaArma(arma) === "ambdues" ? ["fatiga", "ferides"] : [pistaArma(arma) || pista];
 
   const penalSalut      = actor.system.salut?.penalitzacio ?? 0;
   const dauConcentracio = rollPrevi ? 0 : await consumirConcentracio(actor);

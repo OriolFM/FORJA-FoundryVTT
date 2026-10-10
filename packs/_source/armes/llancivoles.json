@@ -10,6 +10,7 @@
     "rangMultFor": 3,
     "esEscut": false,
     "danyBase": "AGI+1",
+    "pista": "",
     "maniobra": "Rang limitat — El rang curt és FOR x3, en metres. Carambola — No fa dany a objectes i només la meitat de ferides als PJ; pot afectar diversos objectius (+1 dif./objectiu addicional). Lentes — Es poden parar i blocar.",
     "rangExtrem": false,
     "basic": false,

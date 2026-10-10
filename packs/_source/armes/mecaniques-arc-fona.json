@@ -10,6 +10,7 @@
     "rangMultFor": 5,
     "esEscut": false,
     "danyBase": "DES+3",
+    "pista": "",
     "maniobra": "Rang limitat — El rang curt és FOR x5, en metres. Fiables — No s'encallen mai. Lentes — Es poden parar i blocar.",
     "rangExtrem": false,
     "basic": false,

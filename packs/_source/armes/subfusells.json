@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "DES+2",
+    "pista": "",
     "maniobra": "Tret — Modificadors bàsics. Ràfega — 3 trets com un sol atac, +1 latència i +1 a impactar o al dany (cal declarar-ho).",
     "rangExtrem": false,
     "basic": false,

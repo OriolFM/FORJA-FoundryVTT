@@ -103,6 +103,7 @@
         "rangMultFor": 0,
         "esEscut": false,
         "danyBase": "FOR+1",
+        "pista": "fatiga",
         "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
         "rangExtrem": false,
         "basic": true,

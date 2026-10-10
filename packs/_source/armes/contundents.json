@@ -10,6 +10,7 @@
     "rangMultFor": 0,
     "esEscut": false,
     "danyBase": "FOR+2",
+    "pista": "",
     "maniobra": "Empènyer — Aplica l'estat Empès. Si l'objectiu és més gran, +1 dificultat per cada nivell de diferència de mida.",
     "rangExtrem": false,
     "basic": false,
