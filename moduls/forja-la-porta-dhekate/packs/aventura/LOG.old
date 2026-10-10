@@ -1,5 +1,5 @@
-2026/10/10-15:58:12.742 2bb0 Log #8: 0 ops saved to Table #11 OK
-2026/10/10-15:58:12.745 2bb0 Archiving C:\Users\oriol\AppData\Local\FoundryVTT\Data\modules\forja-la-porta-dhekate\packs\aventura/000008.log: OK
-2026/10/10-15:58:12.746 2bb0 Table #10: 35 entries OK
-2026/10/10-15:58:12.761 2bb0 Archiving C:\Users\oriol\AppData\Local\FoundryVTT\Data\modules\forja-la-porta-dhekate\packs\aventura/MANIFEST-000006: OK
-2026/10/10-15:58:12.765 2bb0 **** Repaired leveldb C:\Users\oriol\AppData\Local\FoundryVTT\Data\modules\forja-la-porta-dhekate\packs\aventura; recovered 1 files; 101283 bytes. Some data may have been lost. ****
+2026/10/06-15:33:27.599270 7ff35ffff6c0 Delete type=3 #1
+2026/10/06-15:33:27.610698 7ff35f7fe6c0 Level-0 table #5: started
+2026/10/06-15:33:27.614179 7ff35f7fe6c0 Level-0 table #5: 101287 bytes OK
+2026/10/06-15:33:27.615004 7ff35f7fe6c0 Delete type=0 #3
+2026/10/06-15:33:27.615103 7ff35f7fe6c0 Manual compaction at level-0 from '!journal!1TGxTSJSKqgCQzEd' @ 72057594037927935 : 1 .. '!journal.pages!c66mZhl4JMn5pC9h.OibH9pBgwVFwgYVz' @ 0 : 0; will stop at (end)
