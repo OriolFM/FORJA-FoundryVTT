@@ -85,6 +85,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 ### Corregit
 - **PC gastats:** ara compten els efectes i els artefactes, com al manual (p. ex. Anya Barker, 200 PC). Els prototips fets en joc no compten, i un efecte après amb PX no gasta PC.
 - **Defensa contra un contraatac o una escopeta:** el diàleg de qui es defensa oferia parar i blocar, que no es poden fer servir (i triar-los acabava en defensa passiva).
+- **Moviment en combat:** durant la fase de declaració els jugadors ja no poden moure els seus tokens (el DJ sí). I el límit de moviment s'aplica encara que el tracker del jugador mostri un altre combat.
 - **Arma de dispersió:** si el DJ no podia aplicar el dany de la fuga a algun adjacent, es perdia tot el missatge; ara surt amb una nota.
 - **Combinació:** el segon cop es perdia si el DJ mirava una altra escena que la del combat.
 - **Atacs i efectes d'àrea:** si la plantilla s'acabava de dibuixar i el canvas encara no l'havia refrescat, no hi trobava cap token.

@@ -513,6 +513,7 @@
   "FORJA.Moviment.EspecialDesc": "Hasta {metres} m. Requiere tirada (la pide el DJ); +2 a la latencia.",
   "FORJA.Moviment.CarregaDesc": "Correr hasta {metres} m y atacar cuerpo a cuerpo; +2 a la latencia. Si te mueves 2 m o más: +1 dado al ataque y +1 al daño si impacta.",
   "FORJA.Moviment.NoEsElTeuTorn": "{nom} solo se puede mover en su turno.",
+  "FORJA.Moviment.FaseDeclaracio": "{nom} no puede moverse durante la fase de declaración: el movimiento empieza con el tiempo activo.",
   "FORJA.Moviment.PermisExhaurit": "{nom} no se puede mover tanto: le quedan {restant} m de un total de {permis} m este turno.",
   "FORJA.Moviment.EspaiOcupat": "No se puede terminar el movimiento en el espacio de otro token.",
   "FORJA.Moviment.SenseTeletransport": "En combate no se puede hacer un movimiento de teletransporte.",

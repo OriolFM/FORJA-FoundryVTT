@@ -513,6 +513,7 @@
   "FORJA.Moviment.EspecialDesc": "Up to {metres} m. Requires a roll (the GM calls for it); +2 latency.",
   "FORJA.Moviment.CarregaDesc": "Run up to {metres} m and make a melee attack; +2 latency. If you move 2 m or more: +1 die to the attack and +1 damage if it hits.",
   "FORJA.Moviment.NoEsElTeuTorn": "{nom} can only move on their own turn.",
+  "FORJA.Moviment.FaseDeclaracio": "{nom} cannot move during the declaration phase: movement starts with active time.",
   "FORJA.Moviment.PermisExhaurit": "{nom} cannot move that far: {restant} m left out of {permis} m this turn.",
   "FORJA.Moviment.EspaiOcupat": "A token cannot end its movement in another token's space.",
   "FORJA.Moviment.SenseTeletransport": "Teleport movement is not allowed in combat.",

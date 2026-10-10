@@ -538,6 +538,7 @@
   "FORJA.Moviment.EspecialDesc": "Fins a {metres} m. Cal tirada (la demana el DJ); +2 a la latència.",
   "FORJA.Moviment.CarregaDesc": "Córrer fins a {metres} m i atacar cos a cos; +2 a la latència. Si et mous 2 m o més: +1 dau a l'atac i +1 al dany si impacta.",
   "FORJA.Moviment.NoEsElTeuTorn": "{nom} només es pot moure en el seu torn.",
+  "FORJA.Moviment.FaseDeclaracio": "{nom} no es pot moure durant la fase de declaració: el moviment comença amb el temps actiu.",
   "FORJA.Moviment.PermisExhaurit": "{nom} no es pot moure tant: li queden {restant} m d'un total de {permis} m aquest torn.",
   "FORJA.Moviment.EspaiOcupat": "No es pot acabar el moviment a l'espai d'un altre token.",
   "FORJA.Moviment.SenseTeletransport": "En combat no es pot fer un moviment de teletransport.",

@@ -39,7 +39,8 @@ function _idCombatentActiu(combat) {
 
 /**
  * Motiu pel qual un jugador no pot fer aquest moviment, o `null` si pot.
- * Només en un combat començat i per a tokens que en són combatents; fora de
+ * Només en un combat començat (o en fase de declaració, on ningú no es mou) i
+ * per a tokens que en són combatents; fora de
  * combat (o per a un token que no hi participa) no hi ha restriccions.
  *
  * - Només es pot moure qui té el torn ara (manual l. 2742–2772: els que són
@@ -59,6 +60,11 @@ function _idCombatentActiu(combat) {
 export function motiuBloqueigMoviment(doc, move) {
   const combatant = doc.combatant;
   const combat = combatant?.parent;
+  // Fase de declaració: ningú no es mou fins que comença el temps actiu; el
+  // moviment va amb l'acció declarada (Oriol FM, 2026-10-10). El DJ, sí.
+  if (combat?.getFlag("forja", "fase") === "declaracio") {
+    return game.i18n.format("FORJA.Moviment.FaseDeclaracio", { nom: doc.name });
+  }
   if (!combat?.started) return null;
 
   if (_idCombatentActiu(combat) !== combatant.id) {
@@ -108,6 +114,27 @@ export function motiuBloqueigMoviment(doc, move) {
  */
 export function crearTokenDocumentForja(Base) {
   return class TokenDocumentForja extends Base {
+    /**
+     * @override — Foundry només el busca al combat que mostra el tracker
+     * d'aquest client (`game.combat`); si no hi és, es busca als altres
+     * combats de l'escena del token, primer els que estan en marxa. Sense
+     * això, el límit de moviment i l'historial del torn no s'aplicaven si el
+     * tracker mostrava un altre combat (combats paral·lels; proves 2026-10-10).
+     */
+    get combatant() {
+      const natiu = super.combatant;
+      if (natiu) return natiu;
+      const escena = this.parent?.id;
+      let trobat = null;
+      for (const combat of game.combats ?? []) {
+        const c = combat.combatants.find(x => x.tokenId === this.id && (!x.sceneId || x.sceneId === escena));
+        if (!c) continue;
+        if (combat.started || combat.getFlag("forja", "fase") === "declaracio") return c;
+        trobat ??= c;
+      }
+      return trobat;
+    }
+
     /** @override */
     async _preUpdateMovement(movement, operation) {
       const permes = await super._preUpdateMovement(movement, operation);
