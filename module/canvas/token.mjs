@@ -153,7 +153,40 @@ export function crearTokenForja(Base) {
       await super._draw(options);
       this.forjaSalut = this.addChild(new PIXI.Container());
       this.forjaSalut.eventMode = "none";
+      this.forjaOrientacio = this.addChild(new PIXI.Graphics());
+      this.forjaOrientacio.eventMode = "none";
       this._forjaDibuixarSalut();
+      this._forjaDibuixarOrientacio();
+    }
+
+    /**
+     * @override — el dibuix del token es queda sempre dret; l'orientació
+     * (`document.rotation`, que Foundry canvia en moure'l o amb Ctrl/Maj +
+     * roda del ratolí) es marca amb un triangle a la vora (Oriol FM, 2026-10-10).
+     */
+    _refreshRotation() {
+      this.mesh.angle = 0;
+      this._forjaDibuixarOrientacio();
+    }
+
+    /**
+     * Triangle d'orientació: a la vora del token, apuntant cap a on mira.
+     * A Foundry, la rotació 0 mira cap avall (sud) i creix en sentit horari.
+     * Sense triangle si el token té la rotació bloquejada.
+     */
+    _forjaDibuixarOrientacio() {
+      const g = this.forjaOrientacio;
+      if (!g || g.destroyed) return;
+      g.clear();
+      g.visible = !this.document.lockRotation && !this.document.isSecret;
+      if (!g.visible) return;
+      const r = Math.min(this.w, this.h) / 2;
+      const mida = Math.max(7, r * 0.22);
+      g.lineStyle(2, 0x000000, 0.9).beginFill(0xffffff, 0.95)
+        .drawPolygon([-mida, r - 2, mida, r - 2, 0, r + mida * 1.1])
+        .endFill();
+      g.position.set(this.w / 2, this.h / 2);
+      g.angle = this.document.rotation ?? 0;
     }
 
     /** @override — es redibuixen quan canvia la salut (barres), els estats o el hover. */
@@ -162,6 +195,7 @@ export function crearTokenForja(Base) {
       if (flags.refreshBars || flags.refreshEffects || flags.redrawEffects || flags.refreshSize || flags.refreshState || flags.refreshNameplate) {
         this._forjaDibuixarSalut();
       }
+      if (flags.refreshSize || flags.refreshState) this._forjaDibuixarOrientacio();
     }
 
     /**
