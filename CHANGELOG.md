@@ -85,6 +85,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- **Capçalera de la fitxa de PJ:** els PC i PX es mostren en una graella 2×2 (a dalt els totals, a sota els lliures) i, amb la fitxa estreta, baixen de línia en lloc de superposar-se al nom.
 - **PC gastats:** ara compten els efectes i els artefactes, com al manual (p. ex. Anya Barker, 200 PC). Els prototips fets en joc no compten, i un efecte après amb PX no gasta PC.
 - **Defensa contra un contraatac o una escopeta:** el diàleg de qui es defensa oferia parar i blocar, que no es poden fer servir (i triar-los acabava en defensa passiva).
 - **Moviment en combat:** durant la fase de declaració els jugadors ja no poden moure els seus tokens (el DJ sí). I el límit de moviment s'aplica encara que el tracker del jugador mostri un altre combat.

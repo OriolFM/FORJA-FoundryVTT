@@ -1,4 +1,4 @@
-<header class="forja-sheet-header">
+<header class="forja-sheet-header forja-capcalera-pj">
   <img class="actor-portrait" src="{{actor.img}}" alt="{{actor.name}}"
        data-action="editImage" data-edit="img" data-tooltip="{{localize 'FORJA.Sheet.EditImage'}}"/>
   <div class="header-fields">
@@ -12,49 +12,50 @@
       <input type="text" name="system.origen" value="{{sys.origen}}" placeholder="…"/>
     </div>
   </div>
-  <button type="button" class="btn-mode-edicio {{#if modeEdicio}}actiu{{/if}}"
-          data-action="toggleModeEdicio"
-          title="{{#if modeEdicio}}{{localize 'FORJA.ModeJoc'}}{{else}}{{localize 'FORJA.ModeEdicio'}}{{/if}}">
-    {{#if modeEdicio}}
-      <i class="fas fa-dice-d10"></i>
-    {{else}}
-      <i class="fas fa-pen-to-square"></i>
-    {{/if}}
-  </button>
-  <button type="button" class="btn-mode-edicio" data-action="forjaObrirAssistent"
-          title="{{localize 'FORJA.Assistent.Boto'}}">
-    <i class="fas fa-hat-wizard"></i>
-  </button>
-  <button type="button" class="btn-mode-edicio" data-action="forjaObrirAccionsComplexes"
-          title="{{localize 'FORJA.AccionsComplexes.Boto'}}">
-    <i class="fas fa-stairs"></i>
-  </button>
-  <button type="button" class="btn-mode-edicio" data-action="forjaObrirDesfer"
-          title="{{localize 'FORJA.Sobrenatural.DesferTitol'}}">
-    <i class="fas fa-eraser"></i>
-  </button>
-  <div class="header-pc">
+  <div class="header-eines">
+    <button type="button" class="btn-mode-edicio {{#if modeEdicio}}actiu{{/if}}"
+            data-action="toggleModeEdicio"
+            title="{{#if modeEdicio}}{{localize 'FORJA.ModeJoc'}}{{else}}{{localize 'FORJA.ModeEdicio'}}{{/if}}">
+      {{#if modeEdicio}}
+        <i class="fas fa-dice-d10"></i>
+      {{else}}
+        <i class="fas fa-pen-to-square"></i>
+      {{/if}}
+    </button>
+    <button type="button" class="btn-mode-edicio" data-action="forjaObrirAssistent"
+            title="{{localize 'FORJA.Assistent.Boto'}}">
+      <i class="fas fa-hat-wizard"></i>
+    </button>
+    <button type="button" class="btn-mode-edicio" data-action="forjaObrirAccionsComplexes"
+            title="{{localize 'FORJA.AccionsComplexes.Boto'}}">
+      <i class="fas fa-stairs"></i>
+    </button>
+    <button type="button" class="btn-mode-edicio" data-action="forjaObrirDesfer"
+            title="{{localize 'FORJA.Sobrenatural.DesferTitol'}}">
+      <i class="fas fa-eraser"></i>
+    </button>
+  </div>
+  <!-- Graella 2×2: a dalt PC i PX totals; a sota, PC i PX lliures. -->
+  <div class="header-punts">
     <div class="pc-block">
       <span class="pc-label">{{localize "FORJA.PC.Total"}}</span>
       <input type="number" name="system.pc" value="{{pc.total}}" min="0" class="pc-input"/>
     </div>
-    <div class="pc-block {{#if (lt pc.lliures 0)}}pc-negatius{{/if}}">
-      <span class="pc-label">{{localize "FORJA.PC.Lliures"}}</span>
-      <span class="pc-value">{{pc.lliures}}</span>
-    </div>
-  </div>
-  <div class="header-pc header-px">
     <div class="pc-block">
       <span class="pc-label">{{localize "FORJA.Millora.PXTotal"}}</span>
       <input type="number" name="system.px.total" value="{{px.total}}" min="0" class="pc-input"/>
-    </div>
-    <div class="pc-block {{#if (lt px.lliures 0)}}pc-negatius{{/if}}">
-      <span class="pc-label">{{localize "FORJA.Millora.PXLliures"}}</span>
-      <span class="pc-value">{{px.lliures}}</span>
     </div>
     <button type="button" class="btn-millora" data-action="forjaObrirMillora"
             title="{{localize 'FORJA.Millora.Boto'}}">
       <i class="fas fa-arrow-up"></i>
     </button>
+    <div class="pc-block {{#if (lt pc.lliures 0)}}pc-negatius{{/if}}">
+      <span class="pc-label">{{localize "FORJA.PC.Lliures"}}</span>
+      <span class="pc-value">{{pc.lliures}}</span>
+    </div>
+    <div class="pc-block {{#if (lt px.lliures 0)}}pc-negatius{{/if}}">
+      <span class="pc-label">{{localize "FORJA.Millora.PXLliures"}}</span>
+      <span class="pc-value">{{px.lliures}}</span>
+    </div>
   </div>
 </header>

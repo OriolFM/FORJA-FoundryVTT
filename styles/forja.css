@@ -5375,6 +5375,33 @@
 }
 .btn-millora:hover { background: rgba(74,222,128,0.25); color: #dcfce7; }
 
+/* Capçalera del PJ (responsive): retrat | nom i camps | eines 2×2 | punts 2×2.
+   Amb la fitxa estreta, els punts baixen a la línia següent en lloc de
+   superposar-se al nom (Oriol FM, 2026-10-10). */
+.forja-sheet-header.forja-capcalera-pj {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.forja-capcalera-pj .actor-portrait { flex: 0 0 72px; }
+.forja-capcalera-pj .header-fields { flex: 1 1 170px; min-width: 140px; }
+.forja-capcalera-pj .header-eines {
+  display: grid;
+  grid-template-columns: repeat(2, 34px);
+  gap: 4px;
+  flex: 0 0 auto;
+}
+.forja-capcalera-pj .header-punts {
+  display: grid;
+  grid-template-columns: 82px 82px auto;
+  gap: 4px;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+.forja-capcalera-pj .header-punts .pc-block { min-width: 0; }
+.forja-capcalera-pj .header-punts .btn-millora { grid-column: 3; grid-row: 1 / span 2; }
+
 /* -- Avisos de coherència (S-05) -- */
 .forja-avisos {
   margin: 8px 0;
