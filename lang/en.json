@@ -311,6 +311,8 @@
   "FORJA.Salut.Ferides": "Wounds",
   "FORJA.Salut.Fatiga": "Fatigue",
   "FORJA.Salut.Penalitzacio": "roll pen.",
+  "FORJA.Salut.NoMort": "Undead: no penalty",
+  "FORJA.Salut.NoMortAjuda": "Undead trait: suffers no limitation from damage (rulebook).",
   "FORJA.Salut.Incapacitat": "INCAPACITATED",
   "FORJA.NivellFerides.1": "Unharmed",
   "FORJA.NivellFerides.2": "Bruised",

@@ -717,7 +717,8 @@ export function _prepSalut(sys) {
   const fatNivell   = sys.salut.fatiga.nivellActiu  ?? 1;
   const ferNivell   = sys.salut.ferides.nivellActiu ?? 1;
   const penalStr = n => {
-    const p = cfg.SALUT_PENALITZACIO[n];
+    // No-Mort (manual l. 1633): «no pateix cap mena de limitació per dany».
+    const p = sys.noMort && n <= 6 ? 0 : cfg.SALUT_PENALITZACIO[n];
     return p == null ? "" : p === 0 ? "(+0)" : `(+${p})`;
   };
   const taula = [];
@@ -745,7 +746,7 @@ export function _prepSalut(sys) {
     fatiga:  { casella: { idx: idxF7, marcat: fatNivell === 7 } },
     ferides: { casella: { idx: idxW7, marcat: ferNivell === 7 } }
   });
-  return { taula, nivellEfectiu: sys.salut.nivellEfectiu ?? 1, penalitzacio: sys.salut.penalitzacio ?? 0 };
+  return { taula, nivellEfectiu: sys.salut.nivellEfectiu ?? 1, penalitzacio: sys.salut.penalitzacio ?? 0, noMort: !!sys.noMort };
 }
 
 /**

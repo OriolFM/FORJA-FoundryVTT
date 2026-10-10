@@ -14,6 +14,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Salut al mapa:** una insígnia vermella damunt del token mostra la penalització per salut a les tirades (p. ex. «+2»; «✕» fora de combat). En passar el ratolí, sota el token surten el nivell de fatiga i de ferides i els estats actius. Només ho veu qui pot veure la fitxa (el DJ i el propietari).
+- **No-mort a la fitxa:** la secció de salut indica «No-mort: sense penalització» i la taula marca (+0) a tots els nivells (el tret ja eximia de la penalització, però la fitxa no ho deia).
 - **Adepte i inepte a les tirades:** si el personatge en té, el diàleg de tirada deixa triar l'àmbit (físic, mental, social o tècnic) quan l'activitat ho és. Adepte repeteix un cop els 1; inepte fa que els 10 no comptin doble i que cada 1 resti una fita.
 - **Eina del DJ per al contingut:** botó «Nou actor FORJA» al directori d'actors (PJ amb l'assistent de creació, PNJ, criatura o animal) i opció «Desa al compendi del món» al menú de cada actor. Desa els actors en compendis del món (`FORJA (món): …`), que no es perden en actualitzar el sistema.
 - **Mòdul «La porta d'Hèkate»** (`moduls/forja-la-porta-dhekate`): l'aventura introductòria en un compendi de diari, amb el mateix estil que el manual. S'instal·la a part, com qualsevol mòdul.

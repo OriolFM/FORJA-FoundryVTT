@@ -327,6 +327,8 @@
   "FORJA.Salut.Ferides": "Ferides",
   "FORJA.Salut.Fatiga": "Fatiga",
   "FORJA.Salut.Penalitzacio": "pen. a tirades",
+  "FORJA.Salut.NoMort": "No-mort: sense penalització",
+  "FORJA.Salut.NoMortAjuda": "Tret No-Mort: no pateix cap mena de limitació per dany (manual).",
   "FORJA.Salut.Incapacitat": "INCAPACITAT",
   "FORJA.NivellFerides.1": "Il·lès",
   "FORJA.NivellFerides.2": "Masegat",

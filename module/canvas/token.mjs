@@ -1,4 +1,5 @@
 import { bloquejaPas, impedeixAcabar, cercarCami, simplificarCami } from "../combat/moviment.mjs";
+import { textPenalitzacio, liniesSalut } from "../estats/indicador-salut.mjs";
 
 /**
  * Token del canvas de FORJA (WP-M): bloqueig entre tokens i pathfinding.
@@ -146,6 +147,68 @@ function _opcionsRestriccio(options = {}) {
  */
 export function crearTokenForja(Base) {
   return class TokenForja extends Base {
+
+    /** Indicadors de salut (`estats/indicador-salut.mjs`): insígnia de penalització i resum en passar el ratolí. */
+    async _draw(options) {
+      await super._draw(options);
+      this.forjaSalut = this.addChild(new PIXI.Container());
+      this.forjaSalut.eventMode = "none";
+      this._forjaDibuixarSalut();
+    }
+
+    /** @override — es redibuixen quan canvia la salut (barres), els estats o el hover. */
+    _applyRenderFlags(flags) {
+      super._applyRenderFlags(flags);
+      if (flags.refreshBars || flags.refreshEffects || flags.redrawEffects || flags.refreshSize || flags.refreshState || flags.refreshNameplate) {
+        this._forjaDibuixarSalut();
+      }
+    }
+
+    /**
+     * Només per a qui pot veure la fitxa de l'actor (el DJ, el propietari i
+     * els observadors): la salut dels enemics no es revela als jugadors.
+     */
+    _forjaDibuixarSalut() {
+      const c = this.forjaSalut;
+      if (!c || c.destroyed) return;
+      for (const fill of c.removeChildren()) fill.destroy({ children: true });
+      const actor = this.actor;
+      c.visible = !!actor && !this.document.isSecret && actor.testUserPermission(game.user, "OBSERVER");
+      if (!c.visible) return;
+      const salut = actor.system?.salut;
+      const PreciseText = foundry.canvas.containers.PreciseText;
+      const estil = (mida) => {
+        const s = CONFIG.canvasTextStyle.clone();
+        s.fontSize = mida; s.fill = 0xffffff; s.fontWeight = "bold"; s.stroke = 0x000000; s.strokeThickness = 4;
+        return s;
+      };
+
+      // Insígnia vermella a la cantonada superior dreta, com un exponent.
+      const pen = textPenalitzacio(salut);
+      if (pen) {
+        const r = Math.max(11, Math.round(Math.min(this.w, this.h) * 0.17));
+        const insignia = new PIXI.Graphics();
+        insignia.lineStyle(2, 0x000000, 0.9).beginFill(0xb91c1c).drawCircle(0, 0, r).endFill();
+        insignia.position.set(this.w - r * 0.35, r * 0.35);
+        const text = new PreciseText(pen, estil(Math.round(r * 1.15)));
+        text.anchor.set(0.5);
+        text.position.copyFrom(insignia.position);
+        c.addChild(insignia, text);
+      }
+
+      // Resum en passar el ratolí: sota el nom (o sota el token).
+      if (this.hover || this.layer?.highlightObjects) {
+        const linies = liniesSalut(salut, actor.statuses, (k, d) => game.i18n.format(k, d));
+        if (linies.length) {
+          const text = new PreciseText(linies.join("\n"), estil(Math.max(12, Math.round(this.h * 0.14))));
+          text.style.align = "center";
+          text.anchor.set(0.5, 0);
+          const sotaNom = this.nameplate?.visible ? this.nameplate.y + this.nameplate.height / 2 + 2 : this.h + 4;
+          text.position.set(this.w / 2, sotaNom);
+          c.addChild(text);
+        }
+      }
+    }
 
     /**
      * @override — les caselles ocupades per tokens que bloquegen tenen cost

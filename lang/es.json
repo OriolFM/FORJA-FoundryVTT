@@ -311,6 +311,8 @@
   "FORJA.Salut.Ferides": "Heridas",
   "FORJA.Salut.Fatiga": "Fatiga",
   "FORJA.Salut.Penalitzacio": "pen. a tiradas",
+  "FORJA.Salut.NoMort": "No muerto: sin penalización",
+  "FORJA.Salut.NoMortAjuda": "Rasgo No Muerto: no sufre ningún tipo de limitación por daño (manual).",
   "FORJA.Salut.Incapacitat": "INCAPACITADO",
   "FORJA.NivellFerides.1": "Ileso",
   "FORJA.NivellFerides.2": "Magullado",

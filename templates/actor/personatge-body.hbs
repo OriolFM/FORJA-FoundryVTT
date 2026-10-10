@@ -157,6 +157,7 @@
       {{#if salut.penalitzacio}}
         <span class="forja-penal-badge">−{{salut.penalitzacio}} {{localize "FORJA.Salut.Penalitzacio"}}</span>
       {{/if}}
+      {{#if salut.noMort}}<span class="forja-penal-badge" title="{{localize 'FORJA.Salut.NoMortAjuda'}}">{{localize "FORJA.Salut.NoMort"}}</span>{{/if}}
       {{#if (eq salut.nivellEfectiu 7)}}{{#unless salut.penalitzacio}}
         <span class="forja-penal-badge forja-penal-incap">{{localize "FORJA.Salut.Incapacitat"}}</span>
       {{/unless}}{{/if}}
