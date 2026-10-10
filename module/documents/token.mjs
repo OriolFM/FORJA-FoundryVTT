@@ -79,20 +79,22 @@ function _idCombatentActiu(combat) {
  *
  * @param {TokenDocument} doc
  * @param {object} move   `TokenMovementOperation` (v13 `documents/token.mjs`, `#preUpdateMovement`)
+ * @param {{nomesPermisDelTorn?: boolean}} [opcions]  DJ: només el permís del combatent que té el torn
+ *   (fora del torn i a la declaració, lliure)
  * @returns {string|null} Missatge (ja traduït) o null
  */
-export function motiuBloqueigMoviment(doc, move) {
+export function motiuBloqueigMoviment(doc, move, { nomesPermisDelTorn = false } = {}) {
   const combatant = combatantDelToken(doc);
   const combat = combatant?.parent;
   // Fase de declaració: ningú no es mou fins que comença el temps actiu; el
   // moviment va amb l'acció declarada (Oriol FM, 2026-10-10). El DJ, sí.
   if (combat?.getFlag("forja", "fase") === "declaracio") {
-    return game.i18n.format("FORJA.Moviment.FaseDeclaracio", { nom: doc.name });
+    return nomesPermisDelTorn ? null : game.i18n.format("FORJA.Moviment.FaseDeclaracio", { nom: doc.name });
   }
   if (!combat?.started) return null;
 
   if (_idCombatentActiu(combat) !== combatant.id) {
-    return game.i18n.format("FORJA.Moviment.NoEsElTeuTorn", { nom: doc.name });
+    return nomesPermisDelTorn ? null : game.i18n.format("FORJA.Moviment.NoEsElTeuTorn", { nom: doc.name });
   }
 
   const tots = [...(move.passed?.waypoints ?? []), ...(move.pending?.waypoints ?? [])];
@@ -150,7 +152,20 @@ export function crearTokenDocumentForja(Base) {
     async _preUpdateMovement(movement, operation) {
       const permes = await super._preUpdateMovement(movement, operation);
       if (permes === false) return false;
-      if (game.user.isGM || movement.method === "undo") return permes;
+      if (movement.method === "undo") return permes;
+      if (game.user.isGM) {
+        // El DJ mou lliurement fora del torn i durant la declaració, però el
+        // combatent que té el torn no pot anar més enllà del moviment que ha
+        // declarat (Oriol FM, 2026-10-10: un PNJ que havia declarat un atac es
+        // movia com si hagués corregut). «Moviment sense restriccions» ho salta.
+        if (game.settings.get("core", "unconstrainedMovement")) return permes;
+        const motiuDJ = motiuBloqueigMoviment(this, movement, { nomesPermisDelTorn: true });
+        if (motiuDJ) {
+          ui.notifications?.warn(motiuDJ);
+          return false;
+        }
+        return permes;
+      }
       // Estats (Fase 1): atrapat, immobilitzat, inconscient, incapacitat i
       // marejat no es mouen, en combat o fora (el DJ sí que els pot moure).
       // L'estat torna a sortir al costat del token (Oriol FM, 2026-10-06).

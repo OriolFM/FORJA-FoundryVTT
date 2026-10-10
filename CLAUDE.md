@@ -336,13 +336,15 @@ que Foundry fa servir per defecte (`CONFIG.Token.documentClass` /
 - **Límit per torn** (`documents/token.mjs`, `_preUpdateMovement`, al client
   que mou): durant la fase de declaració cap jugador no mou els tokens
   combatents; en un combat començat, un jugador
-  (el DJ mai) només pot moure el token del combatent actiu
+  només pot moure el token del combatent actiu
   (`flags.forja.actiu`; el combatent es busca a tots els combats,
   `combatantDelToken`), sense teletransport, fins al permís del moviment
   del torn (caminar o córrer) **acumulat**: historial de moviment del torn
   (Foundry el buida a l'inici de cada torn) + el tram nou. Cap token pot
   acabar a l'espai d'un altre. Els tokens que no són al combat es mouen
-  lliurement.
+  lliurement. **El DJ**: lliure fora del torn i a la declaració, però el
+  combatent que té el torn tampoc no passa del seu permís (els PNJ respecten la
+  seva declaració); «moviment sense restriccions» ho salta tot.
 - **Bloqueig i pathfinding** (`canvas/token.mjs`): les caselles ocupades per
   tokens que bloquegen (`bloquejaPas`: mida ≥ 3 sempre; mida ≤ 2 només si és
   enemic; els morts i els que l'usuari no veu, mai) tenen cost infinit
