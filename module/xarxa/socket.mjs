@@ -77,10 +77,10 @@ const TIPUS_PERMESOS = new Set(["Actor", "Item", "ActiveEffect", "Combat", "Comb
  *     `combat/curacio.mjs`.
  *   - Token `x`, `y` — maniobra Llançament (S-12): `combat/maniobres.mjs`.
  *     Només amb combat actiu (`_validarContextCombat`).
- *   - ActiveEffect: cap flux actual n'escriu per encàrrec a un document que no
- *     es posseeix; llista buida a propòsit (DJ/propietari únicament). La
- *     creació del Lent/2 d'Interrupció té el seu propi filtre
- *     (`_esEfecteInterrupcio`).
+ *   - ActiveEffect `name` i `flags.forja.valorX` — Sagnant/X acumulatiu: un
+ *     cop nou suma la X a l'estat que ja hi ha (`aplicarEstat`, aplicar-efecte.mjs;
+ *     Oriol FM, 2026-10-11). Res més. La creació del Lent/2 d'Interrupció té
+ *     el seu propi filtre (`_esEfecteInterrupcio`).
  */
 const CAMPS_PERMESOS_PER_TIPUS = {
   Actor: [
@@ -103,7 +103,7 @@ const CAMPS_PERMESOS_PER_TIPUS = {
     "round",
     "flags.forja.*"
   ],
-  ActiveEffect: [],
+  ActiveEffect: ["name", "flags.forja.valorX"],
   Token: ["x", "y"]
 };
 
@@ -359,7 +359,7 @@ function _validarCampsPermesos(doc, pla, user) {
  * @param {User} user
  */
 async function _validarContextCombat(doc, pla, user) {
-  if (!["Actor", "Item", "Token"].includes(doc.documentName)) return;
+  if (!["Actor", "Item", "Token", "ActiveEffect"].includes(doc.documentName)) return;
   if (hiHaCombatEnMarxa()) return;
 
   const rebutjats = Object.entries(pla).filter(([clau, valor]) => {

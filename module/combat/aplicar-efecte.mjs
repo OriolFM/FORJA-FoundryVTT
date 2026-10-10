@@ -51,10 +51,23 @@ function iconaEstat(id) {
  * @param {number} [opcions.dificultatBase=0]
  * @returns {Promise<boolean>}
  */
+/** Estats amb valor X que s'acumulen en un de sol en lloc de crear-ne un altre. */
+const ESTATS_ACUMULATIUS = new Set(["sagnant"]);
+
 export async function aplicarEstat(actor, estat, { origen = null, durada = null, dificultatBase = 0 } = {}) {
   if (!actor || !CONFIG.statusEffects?.some(e => e.id === estat.id)) return false;
   const nom = nomEstat(estat.id);
   if (estat.valorX != null) {
+    // Sagnant/X s'acumula (Oriol FM, 2026-10-11): dos cops de Sagnant/3 fan un
+    // sol Sagnant/6 (el tic ja sumava les fonts; ara també es veu així).
+    const existent = ESTATS_ACUMULATIUS.has(estat.id)
+      ? actor.effects?.find(e => e.statuses?.has(estat.id) && e.getFlag("forja", "valorX") != null)
+      : null;
+    if (existent) {
+      const total = (existent.getFlag("forja", "valorX") ?? 0) + estat.valorX;
+      await actualitzarComGM(existent, { name: `${nom.replace(/\/X$/, "")}/${total}`, "flags.forja.valorX": total });
+      return true;
+    }
     const forja = { efecteForja: true, valorX: estat.valorX, origen, durada };
     if (estat.id === "recuperacio") forja.comptador = 0;
     await crearEmbegutsComGM(actor, "ActiveEffect", [{
