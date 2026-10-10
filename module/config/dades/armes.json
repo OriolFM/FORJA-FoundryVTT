@@ -21,7 +21,19 @@
     "danyBase": "FOR+2",
     "maniobra": "Agafar (+1 dif.) — Envolta l'enemic i li aplica l'estat presa. L'atacant obté +1 FOR per cada parell de tentacles que faci servir.",
     "rangExtrem": false,
-    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+    "descripcio": "Armament natural — Llista d'armament natural (manual).",
+    "moviment": {
+      "id": "agafar",
+      "nom": "Agafar",
+      "dificultat": 1,
+      "estatsImpacte": [
+        {
+          "id": "atrapat"
+        }
+      ],
+      "notaDJ": true,
+      "descripcio": "Envolta l'enemic i li aplica l'estat presa (atrapat). L'atacant obté +1 FOR per cada parell de tentacles que faci servir."
+    }
   },
   {
     "id": "urpes",
@@ -32,7 +44,19 @@
     "danyBase": "FOR+2",
     "maniobra": "Esguerrar (+1 dif.) — Fereix una extremitat de la víctima i hi aplica l'estat de mutilat durant les dues accions següents.",
     "rangExtrem": false,
-    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+    "descripcio": "Armament natural — Llista d'armament natural (manual).",
+    "moviment": {
+      "id": "esguerrar",
+      "nom": "Esguerrar",
+      "dificultat": 1,
+      "estatsImpacte": [
+        {
+          "id": "esguerrat"
+        }
+      ],
+      "notaDJ": true,
+      "descripcio": "Fereix una extremitat (la que triï l'atacant): estat mutilat (esguerrat) durant les dues accions següents de la víctima, no de manera permanent."
+    }
   },
   {
     "id": "ullals",
@@ -43,7 +67,19 @@
     "danyBase": "FOR+2",
     "maniobra": "Mossegar (+1 dif.) — Mossega la víctima i la deixa sagnant/1.",
     "rangExtrem": false,
-    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+    "descripcio": "Armament natural — Llista d'armament natural (manual).",
+    "moviment": {
+      "id": "mossegar",
+      "nom": "Mossegar",
+      "dificultat": 1,
+      "estatsImpacte": [
+        {
+          "id": "sagnant",
+          "valorX": 1
+        }
+      ],
+      "descripcio": "Mossega la víctima i la deixa sagnant/1."
+    }
   },
   {
     "id": "banyes",
@@ -54,7 +90,19 @@
     "danyBase": "FOR+3",
     "maniobra": "Empalar (+2 dif.) — Empala l'objectiu amb les banyes i el deixa sagnant/2.",
     "rangExtrem": false,
-    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+    "descripcio": "Armament natural — Llista d'armament natural (manual).",
+    "moviment": {
+      "id": "empalar",
+      "nom": "Empalar",
+      "dificultat": 2,
+      "estatsImpacte": [
+        {
+          "id": "sagnant",
+          "valorX": 2
+        }
+      ],
+      "descripcio": "Empala l'objectiu amb les banyes i el deixa sagnant/2."
+    }
   },
   {
     "id": "pinces",
@@ -65,7 +113,19 @@
     "danyBase": "FOR+3",
     "maniobra": "Fracturar (+2 dif.) — Provoca una fractura òssia que deixa el membre mutilat fins que es curi (no afecta gelatinosos ni invertebrats; no es poden fer servir per manipular amb delicadesa).",
     "rangExtrem": false,
-    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+    "descripcio": "Armament natural — Llista d'armament natural (manual).",
+    "moviment": {
+      "id": "fracturar",
+      "nom": "Fracturar",
+      "dificultat": 2,
+      "estatsImpacte": [
+        {
+          "id": "esguerrat"
+        }
+      ],
+      "notaDJ": true,
+      "descripcio": "Fractura òssia: el membre queda mutilat (esguerrat) fins que es curi el dany. No afecta gelatinosos ni invertebrats."
+    }
   },
   {
     "id": "fiblons-i-espines",
@@ -76,7 +136,23 @@
     "danyBase": "FOR+2",
     "maniobra": "Inocular (+1 dif.) — Injecta una toxina que canvia l'estat a lent/1 i malaltia/toxina (acumulable). Sense efecte en mecanoides, plantes, constructes inorgànics o no-morts.",
     "rangExtrem": false,
-    "descripcio": "Armament natural — Llista d'armament natural (manual)."
+    "descripcio": "Armament natural — Llista d'armament natural (manual).",
+    "moviment": {
+      "id": "inocular",
+      "nom": "Inocular",
+      "dificultat": 1,
+      "estatsImpacte": [
+        {
+          "id": "lent",
+          "valorX": 1
+        },
+        {
+          "id": "malaltia-toxina"
+        }
+      ],
+      "notaDJ": true,
+      "descripcio": "Injecta una toxina: lent/1 i malaltia/toxina (acumulable). Sense efecte en mecanoides, plantes, constructes inorgànics o no-morts."
+    }
   },
   {
     "id": "armes-improvisades-cac",
@@ -98,7 +174,19 @@
     "danyBase": "FOR+2",
     "maniobra": "Empènyer — Aplica l'estat Empès. Si l'objectiu és més gran, +1 dificultat per cada nivell de diferència de mida.",
     "rangExtrem": false,
-    "descripcio": "Armes contundents (manual: Lat +2, Abast +1, Dany FOR+2)."
+    "descripcio": "Armes contundents (manual: Lat +2, Abast +1, Dany FOR+2).",
+    "moviment": {
+      "id": "empenyer",
+      "nom": "Empènyer",
+      "dificultat": 0,
+      "difPerMida": true,
+      "estatsImpacte": [
+        {
+          "id": "empes"
+        }
+      ],
+      "descripcio": "Aplica l'estat empès. Si l'objectiu és més gran que l'atacant, +1 dificultat per cada nivell de diferència."
+    }
   },
   {
     "id": "de-ma",
@@ -109,7 +197,14 @@
     "danyBase": "FOR+1",
     "maniobra": "Atac a traïció — Ataca un punt vulnerable de l'oponent: ignora l'armadura però no la reducció de dany.",
     "rangExtrem": false,
-    "descripcio": "Armes de mà petites (manual: Lat +0, Abast a tocar, Dany FOR+1)."
+    "descripcio": "Armes de mà petites (manual: Lat +0, Abast a tocar, Dany FOR+1).",
+    "moviment": {
+      "id": "atac-a-traicio",
+      "nom": "Atac a traïció",
+      "dificultat": 0,
+      "ignoraArmadura": true,
+      "descripcio": "Ataca un punt vulnerable: ignora l'armadura però no la reducció de dany."
+    }
   },
   {
     "id": "destrals",
@@ -120,7 +215,14 @@
     "danyBase": "FOR+3",
     "maniobra": "Tall de gran abast — Gira sobre si mateix i ataca fins a 6 objectius adjacents amb una sola tirada, en seqüència, fins que el paren/bloquen o no en quedin.",
     "rangExtrem": false,
-    "descripcio": "Destrals (manual: Lat +2, Abast +1, Dany FOR+3)."
+    "descripcio": "Destrals (manual: Lat +2, Abast +1, Dany FOR+3).",
+    "moviment": {
+      "id": "tall-de-gran-abast",
+      "nom": "Tall de gran abast",
+      "dificultat": 0,
+      "notaDJ": true,
+      "descripcio": "Gira sobre si mateix i ataca fins a 6 objectius adjacents amb una sola tirada, en seqüència, fins que el paren o bloquen o no en queden."
+    }
   },
   {
     "id": "escuts",
@@ -146,7 +248,14 @@
     "danyBase": "FOR+2",
     "maniobra": "Desarmar — Si l'objectiu no supera FOR+resistència, perd l'arma; si la necessitava per a la propera acció, queda atordit i ha de tornar a declarar.",
     "rangExtrem": false,
-    "descripcio": "Espases (manual: Lat +1, Abast +1, Dany FOR+2)."
+    "descripcio": "Espases (manual: Lat +1, Abast +1, Dany FOR+2).",
+    "moviment": {
+      "id": "desarmar",
+      "nom": "Desarmar",
+      "dificultat": 0,
+      "notaDJ": true,
+      "descripcio": "Si l'objectiu no supera la tirada d'atac amb una de FOR + resistència, perd l'arma. Si la propera acció la feia servir, queda atordit i ha de tornar a declarar."
+    }
   },
   {
     "id": "fulla-curta",
@@ -157,7 +266,15 @@
     "danyBase": "FOR+1",
     "maniobra": "Finta — Si no es bloca, l'atac no fa dany però redueix a la meitat la latència del proper atac (amb qualsevol arma).",
     "rangExtrem": false,
-    "descripcio": "Fulla curta (manual: Lat +0, Abast a tocar, Dany FOR+1)."
+    "descripcio": "Fulla curta (manual: Lat +0, Abast a tocar, Dany FOR+1).",
+    "moviment": {
+      "id": "finta",
+      "nom": "Finta",
+      "dificultat": 0,
+      "senseDany": true,
+      "notaDJ": true,
+      "descripcio": "Si no es bloca, l'atac no fa dany, però redueix a la meitat la latència del següent atac (amb qualsevol arma)."
+    }
   },
   {
     "id": "fulla-llarga",
@@ -168,7 +285,19 @@
     "danyBase": "FOR+3",
     "maniobra": "Tall — Aplica l'estat sagnar/+1 a l'objectiu.",
     "rangExtrem": false,
-    "descripcio": "Fulla llarga (manual: Lat +2, Abast +1, Dany FOR+3)."
+    "descripcio": "Fulla llarga (manual: Lat +2, Abast +1, Dany FOR+3).",
+    "moviment": {
+      "id": "tall",
+      "nom": "Tall",
+      "dificultat": 0,
+      "estatsImpacte": [
+        {
+          "id": "sagnant",
+          "valorX": 1
+        }
+      ],
+      "descripcio": "Aplica l'estat sagnant/1 a l'objectiu."
+    }
   },
   {
     "id": "llances-i-armes-de-pal",
@@ -179,7 +308,14 @@
     "danyBase": "FOR+3",
     "maniobra": "Escombrada — Fa la traveta als enemics adjacents; s'aplica l'estat abatut si no superen AGI+Equilibri.",
     "rangExtrem": false,
-    "descripcio": "Llances i armes de pal (manual: Lat +3, Abast +2, Dany FOR+3)."
+    "descripcio": "Llances i armes de pal (manual: Lat +3, Abast +2, Dany FOR+3).",
+    "moviment": {
+      "id": "escombrada",
+      "nom": "Escombrada",
+      "dificultat": 0,
+      "notaDJ": true,
+      "descripcio": "Fa la traveta als enemics adjacents: abatut si no superen una tirada d'AGI + equilibri."
+    }
   },
   {
     "id": "pics",
@@ -190,7 +326,14 @@
     "danyBase": "FOR+3",
     "maniobra": "Destrossar — Malmet armadures físiques: redueix la protecció en 2 per cada atac de Destrossar que en superi el valor (s'aplica després de l'atac).",
     "rangExtrem": false,
-    "descripcio": "Pics (manual: Lat +3, Abast +1, Dany FOR+3)."
+    "descripcio": "Pics (manual: Lat +3, Abast +1, Dany FOR+3).",
+    "moviment": {
+      "id": "destrossar",
+      "nom": "Destrossar",
+      "dificultat": 0,
+      "notaDJ": true,
+      "descripcio": "Malmet les armadures físiques: redueix la protecció en 2 per cada atac de destrossar que en superi el valor (després de l'atac)."
+    }
   },
   {
     "id": "armes-improvisades-distancia",

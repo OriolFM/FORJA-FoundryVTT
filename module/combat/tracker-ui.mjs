@@ -19,7 +19,7 @@ import { modesDisponibles, regleArea, MODES_TRET } from "./modes-tret.mjs";
 import { atacArea, combinacio, contraatacar } from "./atac-multi.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
-import { teProprietat } from "./propietats.mjs";
+import { teProprietat, movimentEspecialArma, maniobraPerId } from "./propietats.mjs";
 import { combatentForaDelRellotge } from "../documents/combat.mjs";
 import { etiquetarObjectius, marcarObjectiu } from "./objectius.mjs";
 import { potCorregir, posicioBaseRedeclaracio, posicioCorregida, potRedeclararPerObjectiu } from "./correccio-declaracio.mjs";
@@ -255,6 +255,8 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
           // Arts marcials: només amb l'atac "Cop" i si l'actor en té l'habilitat
           // (manual › Cos a cos: "Arts Marcials (DES): el PJ fa servir moviments especials").
           permetManiobres: _esCop(i) && potArtsMarcials,
+          // Moviment especial de l'arma (Mossegar, Tall, Desarmar…): taula del manual.
+          movimentArma: movimentEspecialArma(i),
           // WP-M: la càrrega només amb armes cos a cos o naturals (manual l. 2794).
           categoria:     i.system.categoria ?? null,
           // Fase 6: modes de tret (ràfega, automàtic) i atacs d'àrea.
@@ -370,7 +372,10 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       if (arma && config.retardBarallarse > 0 && !config.maniobraId) {
         pendent = { ...pendent, retardBarallarse: config.retardBarallarse, label: config.etiqueta };
       }
-      if (arma && config.maniobraId) {
+      if (arma && config.maniobraId?.startsWith("arma:")) {
+        // Moviment especial de l'arma: mateixa tirada que l'arma.
+        pendent = { ...pendent, maniobraId: config.maniobraId, label: config.etiqueta };
+      } else if (arma && config.maniobraId) {
         // Maniobra d'arts marcials: la tirada és DES + Arts Marcials (manual ›
         // Cos a cos), no la de l'arma "Cop" (FOR + barallar-se).
         pendent = {
@@ -551,9 +556,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       // Maniobres d'Arts Marcials (S-12/B6, maniobres.mjs): es trien en
       // declarar l'acció (`pendent.maniobraId`); el pool ja és DES + Arts
       // Marcials (vegeu #onDeclararAccio).
-      const maniobra = pendent.maniobraId
-        ? (CONFIG.FORJA?.LLISTA_MANIOBRES ?? []).find(m => m.id === pendent.maniobraId) ?? null
-        : null;
+      const maniobra = maniobraPerId(pendent.maniobraId, arma);
 
       // Puntada de peu giratòria no necessita objectiu (és autocentrada).
       if (maniobra?.id === "puntada-de-peu-giratoria") {

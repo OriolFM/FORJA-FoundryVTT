@@ -100,7 +100,9 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
 
   const penalSalut      = actor.system.salut?.penalitzacio ?? 0;
   const dauConcentracio = rollPrevi ? 0 : await consumirConcentracio(actor);
-  const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0) + penalSalut;
+  // Empènyer (contundents): +1 per cada nivell de mida que l'objectiu sigui més gran.
+  const difMida = maniobra?.difPerMida ? Math.max(0, (objectiu.system?.mida ?? 3) - (actor.system?.mida ?? 3)) : 0;
+  const dificultatFinal = dificultat + (maniobra?.dificultat ?? 0) + difMida + penalSalut;
   const bonusRetard     = Math.max(0, retardBarallarse ?? 0);
   const dausCarrega     = Math.max(0, bonusCarrega?.daus ?? 0) + Math.max(0, bonusMode?.daus ?? 0);
   const danyCarrega     = Math.max(0, bonusCarrega?.dany ?? 0) + Math.max(0, bonusMode?.dany ?? 0);
@@ -123,7 +125,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
     const { valor: danyBaseArma, bonificador: bonificadorArma } = resoldreDanyArma(arma.system.danyBase, actor);
 
     // "Cop penetrant" (arts marcials) ignora les armadures naturals i flexibles.
-    const ignorarTipus = dimMak ? ["fisica", "flexible", "natural"]
+    // Atac a traïció (armes de mà): ignora totes les armadures, no la reducció.
+    const ignorarTipus = (dimMak || maniobra?.ignoraArmadura) ? ["fisica", "flexible", "natural"]
       : maniobra?.id === "cop-penetrant" ? ["natural", "flexible"] : [];
     // B13: "Poca penetració" de les escopetes — les rígides protegeixen el doble.
     const escopeta  = teProprietat(arma, "escopeta");
@@ -146,6 +149,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       egida,
       danyExtra
     });
+    // Finta (fulla curta): l'atac no fa dany.
+    if (maniobra?.senseDany) resultatDany.danyFinal = 0;
     // Dim Mak (fatiga): duplica el dany de fatiga després de la reducció.
     if (dimMak === "fatiga" && resultatDany.danyFinal > 0) resultatDany.danyFinal *= 2;
     if (danyExtra > 0) notes.push(game.i18n.format("FORJA.Combat.PifiaEsquivarDanyAplicat", { nom: objectiu.name, valor: danyExtra }));
@@ -163,8 +168,9 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       await actualitzarComGM(objectiu, canvis);
     }
 
-    // Fase 3: estats que aplica l'arma en impactar (armes que són artefactes).
-    for (const estat of arma.system.estatsImpacte ?? []) {
+    // Fase 3: estats que aplica l'arma en impactar (armes que són artefactes),
+    // i els del moviment especial de l'arma (Mossegar → sagnant/1…).
+    for (const estat of [...(arma.system.estatsImpacte ?? []), ...(maniobra?.deArma ? (maniobra.estatsImpacte ?? []) : [])]) {
       if (await aplicarEstat(objectiu, estat, { origen: artefacte?.uuid ?? arma.uuid, dificultatBase: excedent })) {
         notes.push(game.i18n.format("FORJA.Combat.EstatAplicat", {
           nom: objectiu.name,
@@ -202,6 +208,8 @@ export async function ferAtac({ actor, objectiu, arma, poolFinal, dificultat, ex
       notes.push(game.i18n.format("FORJA.Combat.ConcentracioAtordit", { nom: objectiu.name }));
     }
 
+    // Moviment especial amb part no automatitzada: nota per al DJ.
+    if (maniobra?.deArma && maniobra.notaDJ) notes.push(`${maniobra.nom}: ${maniobra.descripcio}`);
     // Estat de la maniobra d'arts marcials (B6).
     if (maniobra?.estat && _estatExisteix(maniobra.estat)) {
       await alternarEstatComGM(objectiu, maniobra.estat, true);

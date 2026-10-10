@@ -56,6 +56,36 @@ export function pistaArma(item, cataleg = globalThis.CONFIG?.FORJA?.CATALEG_ARME
 }
 
 /**
+ * Moviment especial d'una arma cos a cos o natural (manual › Cos a cos,
+ * taules d'armament natural i d'armes, l. 2925–2995): Mossegar, Tall,
+ * Desarmar… Del catàleg per `catalegId`. L'id porta el prefix «arma:» per
+ * no confondre'l amb les maniobres d'arts marcials. Funció pura.
+ * @param {{flags?:object}} item
+ * @param {Array<{id:string, moviment?:object}>} [cataleg]
+ * @returns {object|null}
+ */
+export function movimentEspecialArma(item, cataleg = globalThis.CONFIG?.FORJA?.CATALEG_ARMES ?? []) {
+  const catalegId = item?.flags?.forja?.catalegId;
+  const m = catalegId ? cataleg.find(e => e.id === catalegId)?.moviment : null;
+  return m ? { ...m, id: `arma:${m.id}`, deArma: true } : null;
+}
+
+/**
+ * Maniobra triada en declarar: d'arts marcials o el moviment especial de l'arma.
+ * @param {string|null} id
+ * @param {object|null} arma
+ * @returns {object|null}
+ */
+export function maniobraPerId(id, arma = null) {
+  if (!id) return null;
+  if (String(id).startsWith("arma:")) {
+    const m = movimentEspecialArma(arma);
+    return m?.id === id ? m : null;
+  }
+  return (globalThis.CONFIG?.FORJA?.LLISTA_MANIOBRES ?? []).find(m => m.id === id) ?? null;
+}
+
+/**
  * @param {object} item
  * @param {string} propietat
  * @param {Array} [cataleg]

@@ -124,3 +124,20 @@ console.log("WP-I: tots els tests OK");
   assert.equal(pistaArma({ system: {}, flags: { forja: { catalegId: "urpes" } } }, cataleg), "");
   console.log("OK: el Cop fa fatiga");
 }
+
+// Moviments especials de les armes cos a cos i naturals (taules del manual, l. 2925–2995).
+{
+  const { movimentEspecialArma, maniobraPerId } = prop;
+  const cataleg = [{ id: "ullals", moviment: { id: "mossegar", nom: "Mossegar", dificultat: 1, estatsImpacte: [{ id: "sagnant", valorX: 1 }] } }, { id: "pistoles" }];
+  const ullals = { flags: { forja: { catalegId: "ullals" } } };
+  const m = movimentEspecialArma(ullals, cataleg);
+  assert.equal(m.id, "arma:mossegar");
+  assert.equal(m.deArma, true);
+  assert.equal(m.dificultat, 1);
+  assert.equal(movimentEspecialArma({ flags: { forja: { catalegId: "pistoles" } } }, cataleg), null);
+  globalThis.CONFIG = { ...(globalThis.CONFIG ?? {}), FORJA: { ...(globalThis.CONFIG?.FORJA ?? {}), CATALEG_ARMES: cataleg, LLISTA_MANIOBRES: [{ id: "dim-mak", nom: "Dim Mak" }] } };
+  assert.equal(maniobraPerId("arma:mossegar", ullals).nom, "Mossegar");
+  assert.equal(maniobraPerId("dim-mak", ullals).nom, "Dim Mak");
+  assert.equal(maniobraPerId(null, ullals), null);
+  console.log("OK: moviments especials de les armes");
+}

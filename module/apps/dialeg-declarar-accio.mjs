@@ -102,7 +102,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       if (config.artefactes?.some(a => a.id === u.artefacteId)) this.#artefacteId = u.artefacteId;
       if (config.armes?.some(a => a.id === u.armaId)) this.#armaId = u.armaId;
       if (config.defenses?.some(d => d.id === u.defensaId)) this.#defensaId = u.defensaId;
-      if (u.maniobraId && this.#arma()?.permetManiobres) this.#maniobraId = u.maniobraId;
+      if (u.maniobraId && this.#maniobresArma(this.#arma()).some(m => m.id === u.maniobraId)) this.#maniobraId = u.maniobraId;
       if (u.moviment) this.#moviment = normalitzarMoviment(u.moviment);
       if (u.retard) this.#retard = u.retard;
       if (u.modeTret) this.#modeTret = u.modeTret;
@@ -177,11 +177,22 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     return limitarRetardBarallarse(this.#retard, this.#retardMax());
   }
 
+  /**
+   * Maniobres que es poden triar amb aquesta arma: les d'arts marcials (Cop i
+   * arts marcials) i el moviment especial de l'arma (Mossegar, Tall…).
+   */
+  #maniobresArma(arma) {
+    return [
+      ...(arma?.permetManiobres ? (this.#config.maniobres ?? []) : []),
+      ...(arma?.movimentArma ? [arma.movimentArma] : [])
+    ];
+  }
+
   async _prepareContext(options) {
     const c = this.#config;
     const arma = this.#arma();
-    const permetManiobres = this.#tipus === "atac" && !!arma?.permetManiobres;
-    const maniobres = permetManiobres ? (c.maniobres ?? []) : [];
+    const maniobres = this.#tipus === "atac" ? this.#maniobresArma(arma) : [];
+    const permetManiobres = maniobres.length > 0;
     return {
       nom:           c.nom,
       marcador:      c.marcador,
@@ -299,7 +310,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
 
     el.querySelector("[name='armaId']")?.addEventListener("change", ev => {
       this.#armaId = ev.target.value;
-      if (!this.#arma()?.permetManiobres) this.#maniobraId = "";
+      if (!this.#maniobresArma(this.#arma()).some(m => m.id === this.#maniobraId)) this.#maniobraId = "";
       this.render(false);
     });
 
@@ -367,9 +378,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     if (this.#bloqueig(tipus)) return;
     const arma    = tipus === "atac"    ? this.#config.armes?.find(a => a.id === d.armaId) : null;
     const defensa = tipus === "defensa" ? this.#config.defenses?.find(x => x.id === d.defensaId) : null;
-    const maniobra = (arma?.permetManiobres && d.maniobraId)
-      ? (this.#config.maniobres ?? []).find(m => m.id === d.maniobraId) ?? null
-      : null;
+    const maniobra = d.maniobraId ? this.#maniobresArma(arma).find(m => m.id === d.maniobraId) ?? null : null;
 
     // WP-M: el moviment triat, validat contra els permesos per a aquesta acció.
     const moviment = this.#movimentEfectiu();

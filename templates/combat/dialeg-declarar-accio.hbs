@@ -122,7 +122,7 @@
     </select>
   </div>
   {{#if maniobra}}
-  <p class="dda-avis">{{maniobra.descripcio}}<br>{{localize "FORJA.Combat.ManiobraTirada"}}</p>
+  <p class="dda-avis">{{maniobra.descripcio}}{{#unless maniobra.deArma}}<br>{{localize "FORJA.Combat.ManiobraTirada"}}{{/unless}}</p>
   {{/if}}
   {{#if esDimMak}}
   <div class="form-group">
