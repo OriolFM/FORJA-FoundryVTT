@@ -14,7 +14,7 @@ import ItemEfecte          from "./module/data/item-efecte.mjs";
 import ForjaActor          from "./module/documents/actor.mjs";
 import ForjaCombat         from "./module/documents/combat.mjs";
 import { crearTokenDocumentForja } from "./module/documents/token.mjs";
-import { crearTokenForja } from "./module/canvas/token.mjs";
+import { crearTokenForja, registrarIndicadorsCombat } from "./module/canvas/token.mjs";
 import ForjaCombatTracker  from "./module/combat/tracker-ui.mjs";
 import FullPersonatge      from "./module/apps/full-personatge.mjs";
 import FullPNJ             from "./module/apps/full-pnj.mjs";
@@ -115,6 +115,7 @@ Hooks.once("init", () => {
   // ferides i curació (Fase 1; Oriol FM, 2026-10-06). A tots els clients.
   registrarNotificacions();
   registrarTokenPrototip();
+  registrarIndicadorsCombat();
 
   // Handlebars helpers
   _registrarHelpers();

@@ -145,6 +145,32 @@ function _opcionsRestriccio(options = {}) {
  * @param {typeof foundry.canvas.placeables.Token} Base
  * @returns {typeof foundry.canvas.placeables.Token}
  */
+/**
+ * Defensa completa vigent del combatent d'aquest token, en qualsevol combat
+ * (`flags.forja.defensaCompleta`, `combat/defensa-completa.mjs`), o null.
+ * @param {TokenDocument} doc
+ * @returns {object|null}
+ */
+export function defensaCompletaDelToken(doc) {
+  for (const combat of game.combats ?? []) {
+    const c = combat.combatants.find(x => x.tokenId === doc.id);
+    const dc = c?.getFlag("forja", "defensaCompleta");
+    if (dc && dc.combatId === combat.id) return dc;
+  }
+  return null;
+}
+
+/**
+ * Redibuixa els indicadors dels tokens quan canvia un combatent (p. ex. la
+ * defensa completa) o s'acaba un combat. Només dibuixa al client local.
+ */
+export function registrarIndicadorsCombat() {
+  const refrescar = (combatant) => combatant?.token?.object?._forjaDibuixarSalut?.();
+  Hooks.on("updateCombatant", refrescar);
+  Hooks.on("deleteCombatant", refrescar);
+  Hooks.on("deleteCombat", (combat) => { for (const c of combat.combatants) refrescar(c); });
+}
+
 export function crearTokenForja(Base) {
   return class TokenForja extends Base {
 
@@ -228,6 +254,22 @@ export function crearTokenForja(Base) {
         text.anchor.set(0.5);
         text.position.copyFrom(insignia.position);
         c.addChild(insignia, text);
+      }
+
+      // Defensa completa declarada (i tirada): escut amb la puntuació a dalt a
+      // l'esquerra, fins que declara la propera acció (Oriol FM, 2026-10-10).
+      const dc = defensaCompletaDelToken(this.document);
+      if (dc) {
+        const m = Math.max(12, Math.round(Math.min(this.w, this.h) * 0.19));
+        const escut = new PIXI.Graphics();
+        escut.lineStyle(2, 0x000000, 0.9).beginFill(0x0d9488)
+          .drawPolygon([-m, -m, m, -m, m, m * 0.15, 0, m * 1.15, -m, m * 0.15])
+          .endFill();
+        escut.position.set(m * 0.35, m * 0.35);
+        const text = new PreciseText(String(dc.dificultat ?? "?"), estil(Math.round(m * 1.05)));
+        text.anchor.set(0.5);
+        text.position.set(escut.x, escut.y + m * 0.02);
+        c.addChild(escut, text);
       }
 
       // Resum en passar el ratolí: sota el nom (o sota el token).
