@@ -294,7 +294,12 @@ Mateix entorn. Per a la pífia i el marejat, els daus es forcen només al client
 | Marejat: en declarar, demana la dificultat i tira; amb 1s no declara; amb 10s s'obre el diàleg de declarar | OK |
 | Arma de dispersió que pifia: fuga de 15 − 3 = 12 a l'usuari (10 després de la reducció) i a l'adjacent (11) | OK. **Corregit:** si el relé no podia aplicar el dany a un adjacent, es perdia el missatge de la fuga; ara surt amb la nota per al DJ |
 
-**Observació:** el relé del DJ només accepta canvis de combat (dany a un PNJ) si hi ha un combat **actiu i començat a l'escena activa del món** (`game.combats.active`, que mira `game.scenes.current`). Un combat en una escena que el DJ no ha activat per a tothom no compta: els jugadors no hi poden fer dany a PNJ. A les proves passava perquè l'escena temporal no era l'activa.
+**Observació:** el relé del DJ només acceptava canvis de combat (dany a un PNJ) si hi havia un combat actiu i començat a l'escena activa del món. Canviat el 2026-10-10 (`5cb0e8d`, decisió de l'Oriol FM); provat al Foundry local:
+
+| Prova | Resultat |
+|-------|----------|
+| Combat en fase de declaració en una escena que no és l'activa: el jugador fa 3 de ferides a un PNJ | OK, s'aplica sense preguntar |
+| Sense cap combat: el jugador fa 5 de ferides a un PNJ → al DJ li surt «Canvi fora de combat» i clica «Sí» | OK, s'aplica (7 s) |
 
 ### Proves unitàries a Windows
 
