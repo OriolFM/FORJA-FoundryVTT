@@ -219,3 +219,19 @@ export function poolTiradaEstat(estatId, sys) {
   }
   return millor;
 }
+
+/** Estats que treuen un combatent del rellotge de temps actiu. */
+export const ESTATS_FORA_RELLOTGE = ["inconscient", "incapacitat", "dead"];
+
+/**
+ * El combatent ha de sortir del rellotge de temps actiu (Oriol FM,
+ * 2026-10-11): inconscient, incapacitat, mort o derrotat. No hi torna fins
+ * que deixi d'estar-ho i declari una acció nova (des del tic d'aquell moment).
+ * @param {{defeated?: boolean, statuses?: Iterable<string>, foraDeCombat?: boolean}} p
+ * @returns {boolean}
+ */
+export function foraDelRellotge({ defeated = false, statuses = [], foraDeCombat = false } = {}) {
+  if (defeated || foraDeCombat) return true;
+  const s = new Set(statuses);
+  return ESTATS_FORA_RELLOTGE.some(id => s.has(id));
+}

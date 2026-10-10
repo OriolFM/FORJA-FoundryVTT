@@ -83,6 +83,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - `criatures-exemple.json`: les criatures del manual són ara al compendi «Criatures».
 
 ### Canviat
+- **Inconscients, incapacitats, morts o derrotats surten del rellotge:** perden la posició i l'acció declarada, el rellotge els salta i no bloquegen «Avança». Al tracker surten atenuats i sense posició. Quan es recuperen, tornen a entrar declarant una acció nova des del tic actual.
 - **Dany dels jugadors fora del combat obert:** el DJ accepta el dany i els canvis de combat de qualsevol combat començat o en declaració, en qualsevol escena (combats paral·lels sense fusionar-los). Si no hi ha cap combat (p. ex. una emboscada), li surt una pregunta per acceptar-lo o no.
 - **Adepte i inepte** són per àmbit d'activitat (físic, mental, social o tècnic), no per atribut, com al manual original. Els actors que ja tinguin un «Adepte (FOR)»… el conserven; el DJ el pot canviar pel de l'àmbit que toqui.
 - **Manual:** el compendi es genera ara des del manual complet revisat; hi han aparegut apartats que faltaven (p. ex. Adepte, Animal) i les referències creuades són enllaços.

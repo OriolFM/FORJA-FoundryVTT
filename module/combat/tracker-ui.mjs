@@ -20,6 +20,7 @@ import { atacArea, combinacio, contraatacar } from "./atac-multi.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
 import { teProprietat } from "./propietats.mjs";
+import { combatentForaDelRellotge } from "../documents/combat.mjs";
 import { etiquetarObjectius, marcarObjectiu } from "./objectius.mjs";
 import { potCorregir, posicioBaseRedeclaracio, posicioCorregida, potRedeclararPerObjectiu } from "./correccio-declaracio.mjs";
 import {
@@ -131,6 +132,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       // Només qui ha d'actuar ara apareix habilitat (manual › Temps actiu).
       const habilitat = _estaHabilitat(combat, combatant);
       li.classList.toggle("forja-inactiu", !habilitat);
+      li.classList.toggle("forja-fora-rellotge", combatentForaDelRellotge(combatant));
 
       const div = document.createElement("div");
       div.classList.add("forja-controls");
@@ -862,6 +864,8 @@ function _senseDeclarar(combatant) {
  * @returns {boolean}
  */
 function _estaHabilitat(combat, combatant) {
+  // Fora del rellotge (inconscient, incapacitat, mort, derrotat): no actua ni declara.
+  if (combatentForaDelRellotge(combatant)) return false;
   // Inconscient o incapacitat: no pot fer res (el DJ en passa el torn sol,
   // `iniciTornEstats`). Marejat sí: pot provar de vèncer el mareig.
   const r = restriccionsActor(combatant.actor);

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   restriccionsEstats, tipusAccioBloquejats, movimentsPermesosPerEstats,
-  estatsPerSalut, pistaRecuperacio, marcatsDespresRecuperacio, poolTiradaEstat
+  estatsPerSalut, pistaRecuperacio, marcatsDespresRecuperacio, poolTiradaEstat, foraDelRellotge
 } from "../../module/estats/regles-estats.mjs";
 
 test("sense estats: ho pot fer tot", () => {
@@ -110,4 +110,14 @@ test("tirada d'atrapat: la millor alternativa", () => {
   };
   assert.deepEqual(poolTiradaEstat("atrapat", sys), { pool: 6, atribut: "DES", habilitat: "arts-marcials" });
   assert.equal(poolTiradaEstat("abatut", sys), null);
+});
+
+test("fora del rellotge: inconscient, incapacitat, mort, derrotat o fora de combat", () => {
+  assert.equal(foraDelRellotge({ statuses: ["inconscient"] }), true);
+  assert.equal(foraDelRellotge({ statuses: new Set(["incapacitat"]) }), true);
+  assert.equal(foraDelRellotge({ statuses: ["dead"] }), true);
+  assert.equal(foraDelRellotge({ defeated: true }), true);
+  assert.equal(foraDelRellotge({ foraDeCombat: true }), true);
+  assert.equal(foraDelRellotge({ statuses: ["abatut", "atordit"] }), false);
+  assert.equal(foraDelRellotge({}), false);
 });

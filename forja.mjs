@@ -237,6 +237,7 @@ Hooks.on("updateActor", async (actor, changes) => {
   if (!foundry.utils.hasProperty(changes, "system.salut")) return;
   await sincronitzarEstatsSalut(actor);
   await avisarObjectiuCaigut(actor);
+  await revisarRellotges();
 });
 // Tokens no enllaçats: el canvi de salut arriba com a delta del token.
 Hooks.on("updateToken", async (token, changes) => {
@@ -244,10 +245,19 @@ Hooks.on("updateToken", async (token, changes) => {
   if (!foundry.utils.hasProperty(changes, "delta.system.salut")) return;
   if (token.actor) await sincronitzarEstatsSalut(token.actor);
   if (token.actor) await avisarObjectiuCaigut(token.actor);
+  await revisarRellotges();
 });
 
 // Objectiu fora de combat o derrotat: qui l'havia declarat com a objectiu pot
 // tornar a declarar des d'aquest tic (Oriol FM, 2026-10-10; tracker-ui.mjs).
+// Inconscients, incapacitats, morts o derrotats: fora del rellotge (Oriol FM, 2026-10-11).
+async function revisarRellotges() {
+  if (!game.users.activeGM?.isSelf) return;
+  for (const combat of game.combats ?? []) await combat.revisarForaDelRellotge?.();
+}
+Hooks.on("createActiveEffect", (efecte) => { if ([...(efecte.statuses ?? [])].some(s => ["inconscient", "incapacitat", "dead"].includes(s))) revisarRellotges(); });
+Hooks.on("updateCombatant", (combatant, changes) => { if (changes.defeated === true) revisarRellotges(); });
+
 async function avisarObjectiuCaigut(actor) {
   if (!actor?.system?.salut?.foraDeCombat) return;
   const ids = actor.isToken ? [actor.token.id] : actor.getActiveTokens(false, true).map(t => t.id);

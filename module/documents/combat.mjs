@@ -1,7 +1,17 @@
 import { actualitzarComGM } from "../xarxa/socket.mjs";
 import { reiniciarReaccions } from "../combat/reaccions.mjs";
 import { egidaHaDeReactivar } from "../combat/dany.mjs";
-import { restriccionsEstats } from "../estats/regles-estats.mjs";
+import { restriccionsEstats, foraDelRellotge } from "../estats/regles-estats.mjs";
+
+/**
+ * El combatent és fora del rellotge: inconscient, incapacitat, mort o
+ * derrotat (Oriol FM, 2026-10-11; `foraDelRellotge`, regles-estats.mjs).
+ * @param {Combatant} c
+ * @returns {boolean}
+ */
+export function combatentForaDelRellotge(c) {
+  return foraDelRellotge({ defeated: !!c?.isDefeated, statuses: c?.actor?.statuses ?? [], foraDeCombat: !!c?.actor?.system?.salut?.foraDeCombat });
+}
 import { netejarTemporals } from "../combat/aplicar-efecte.mjs";
 
 /**
@@ -106,7 +116,8 @@ export default class ForjaCombat extends Combat {
     // Qui no pot actuar (inconscient, incapacitat, marejat; manual › Estats)
     // no ha de declarar per començar: entrarà al rellotge quan declari.
     return this.combatants.size > 0 && this.combatants.contents.every(c =>
-      (c.initiative !== null && c.initiative !== undefined) || !restriccionsEstats(c.actor?.statuses ?? []).potActuar);
+      (c.initiative !== null && c.initiative !== undefined) || !restriccionsEstats(c.actor?.statuses ?? []).potActuar
+      || combatentForaDelRellotge(c));
   }
 
   /**
@@ -171,6 +182,30 @@ export default class ForjaCombat extends Combat {
    * @param {string} combatantId
    * @param {number} latencia
    */
+  /**
+   * Treu un combatent del rellotge (sense posició ni acció declarada): quan
+   * cau inconscient, incapacitat, mort o derrotat. Hi tornarà declarant una
+   * acció nova des del tic en què es recuperi. Només el DJ actiu.
+   * @param {Combatant} combatant
+   * @returns {Promise<boolean>}  Si l'ha tret (tenia posició)
+   */
+  async treureDelRellotge(combatant) {
+    if (!combatant || combatant.initiative === null || combatant.initiative === undefined) return false;
+    await combatant.update({ initiative: null, "flags.forja.-=accioPendent": null, "flags.forja.-=estatTorn": null, "flags.forja.-=defensaCompleta": null });
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: combatant.actor }),
+      content: `<div class="forja-missatge-accio">${game.i18n.format("FORJA.Combat.ForaDelRellotge", { nom: combatant.name })}</div>`
+    });
+    this.setupTurns();
+    return true;
+  }
+
+  /** Treu del rellotge tots els combatents que hi han de ser fora (DJ actiu). */
+  async revisarForaDelRellotge() {
+    if (!this.started && this.getFlag("forja", "fase") !== "declaracio") return;
+    for (const c of this.combatants) if (combatentForaDelRellotge(c)) await this.treureDelRellotge(c);
+  }
+
   async declararAccio(combatantId, latencia) {
     const combatant = this.combatants.get(combatantId);
     if (!combatant) return;
@@ -261,7 +296,8 @@ export default class ForjaCombat extends Combat {
   async nextTurn() {
     const sortint = this.combatant ?? null;
     const seguent = calcularSeguentTorn({
-      turns:       this.turns.filter(c => !(this.settings?.skipDefeated && c.isDefeated)),
+      // Els inconscients, incapacitats, morts o derrotats no tenen torn.
+      turns:       this.turns.filter(c => !combatentForaDelRellotge(c)),
       ordre:       this.turns,
       marcador:    this.marcador,
       actuats:     this.getFlag("forja", "actuats") ?? [],

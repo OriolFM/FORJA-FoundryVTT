@@ -472,6 +472,7 @@
   "FORJA.Combat.DefensaCompletaJaTirada": "La defensa completa de {nom} ya se tiró al declararla: ahora solo hay que declarar la próxima acción.",
   "FORJA.Combat.DefensaCompletaConcentrada": "La defensa completa se tira ahora mismo, siempre concentrada (+1 dado), y vale contra todos los ataques hasta el final de vuestro turno.",
   "FORJA.Combat.Tic": "Tic {n}",
+  "FORJA.Combat.ForaDelRellotge": "{nom} queda fuera del reloj de tiempo activo hasta que se recupere (entonces deberá declarar una acción nueva).",
   "FORJA.Indicador.Moviment": "Movimiento",
   "FORJA.Indicador.MovimentRapid": "Movimiento rápido",
   "FORJA.Indicador.MovimentEspecial": "Movimiento especial",

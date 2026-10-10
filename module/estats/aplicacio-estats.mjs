@@ -1,7 +1,7 @@
 import ForjaRoll from "../dice/forja-roll.mjs";
 import { actualitzarComGM, alternarEstatComGM } from "../xarxa/socket.mjs";
 import {
-  restriccionsEstats, estatsPerSalut, poolTiradaEstat, TIRADES_ESTAT
+  restriccionsEstats, estatsPerSalut, poolTiradaEstat, TIRADES_ESTAT, foraDelRellotge
 } from "./regles-estats.mjs";
 import { avisarBloqueigEstat, textFlotant, COLORS } from "./notificacions.mjs";
 
@@ -70,6 +70,12 @@ export async function iniciTornEstats(combat, combatant) {
   const r = restriccionsActor(actor);
   const speaker = ChatMessage.getSpeaker({ actor });
 
+  // Inconscient, incapacitat, mort o derrotat: fora del rellotge fins que es
+  // recuperi (Oriol FM, 2026-10-11), en lloc de tornar a declarar sol.
+  if (combat.treureDelRellotge && foraDelRellotge({ defeated: !!combatant.isDefeated, statuses: actor.statuses ?? [], foraDeCombat: !!actor.system?.salut?.foraDeCombat })) {
+    await combat.treureDelRellotge(combatant);
+    return;
+  }
   if (!r.potActuar && r.motiuActuar !== "marejat") {
     await combatant.unsetFlag("forja", "accioPendent");
     await combat.declararAccio(combatant.id, Math.max(1, actor.system.latenciaBase ?? 1));
