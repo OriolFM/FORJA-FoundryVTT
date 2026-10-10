@@ -93,6 +93,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- **Trets antics sense efecte:** els trets creats a mà abans que el catàleg portés els efectes mecànics (p. ex. «Dur de Pelar» de la Yoko) no feien res: no ignorava la penalització per ferides. Ara l'efecte s'agafa del catàleg pel nom, i una migració enllaça aquests trets amb el catàleg.
 - **Armes d'artefactes en actors importats:** un actor importat del compendi amb un artefacte d'arma o d'armadura a dins (p. ex. la Trace i l'Espasa serra) no en tenia l'arma o l'armadura, i no sortia als atacs. Ara es crea en importar-lo, i una migració ho arregla als actors que ja hi ha al món.
 - **Cop (combat sense armes):** fa dany de **fatiga**, no de ferides, com diu el manual (l. 3273). També s'aplica al «Cop» dels actors ja creats. Les armes naturals (urpes, ullals…) continuen fent ferides.
 - **Moviment dels PNJ:** el DJ ja no pot moure el combatent que té el torn més enllà del moviment que ha declarat (p. ex. 4 m caminant si ha declarat un atac). Fora del torn i a la declaració continua movent lliurement, i amb «moviment sense restriccions» de Foundry no hi ha cap límit.

@@ -7,6 +7,7 @@ import {
   bonificacionsBuides, bonificacionsDeParametres, sumarBonificacions, artefacteSempreActiu
 } from "../combat/resultat-parametres.mjs";
 import { costTotalModular } from "../progressio/modular.mjs";
+import { tretDelCataleg } from "./trets-cataleg.mjs";
 
 /**
  * DataModel per a Personatges Jugadors (PJ).
@@ -282,7 +283,8 @@ function _aplicarEfectesTrets(sys) {
     if (efecte.flag) flags.add(efecte.flag);
   };
   for (const item of items) {
-    if (item.type === "tret") aplicar(item.system?.efecte);
+    // Sense efecte propi (trets antics, creats a mà): el del catàleg.
+    if (item.type === "tret") aplicar(item.system?.efecte ?? tretDelCataleg(item)?.efecte);
   }
   // Fase 3: trets temporals d'efectes i artefactes (p. ex. Benedicció del
   // fanàtic → dur de pelar), amb l'efecte mecànic del catàleg.

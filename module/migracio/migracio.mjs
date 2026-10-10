@@ -10,8 +10,12 @@
  * 2. **Armes i armadures vinculades dels artefactes** (2026-10-10): els actors
  *    importats amb artefactes a dins (p. ex. la Trace del compendi, amb
  *    l'Espasa serra) no les tenien, i l'arma no sortia als atacs.
+ * 3. **Trets antics sense identificador del catàleg** (2026-10-11): reben
+ *    `flags.forja.catalegId` i, si no en tenen, l'`efecte` del catàleg (pel
+ *    nom exacte). P. ex. «Dur de Pelar» de la Yoko no ignorava les ferides.
+ *    Després es creen els atacs i armadures naturals que concedeixin.
  */
-const MIGRACIO_ACTUAL = 2;
+const MIGRACIO_ACTUAL = 3;
 
 /** Registra la configuració. Cridar a l'init. */
 export function registrarMigracio() {
@@ -80,6 +84,30 @@ export async function executarMigracions() {
       for (const item of actor.items.filter(i => i.type === "artefacte")) { await sincronitzarVinculats(item); n++; }
     }
     if (n) console.log(`FORJA | Migració 2: objectes vinculats revisats per a ${n} artefactes`);
+  }
+
+  if (feta < 3) {
+    const { tretDelCataleg } = await import("../data/trets-cataleg.mjs");
+    const { assegurarAtacsAutomatics } = await import("../combat/equipament-automatic.mjs");
+    const canvisTret = (item) => {
+      if (item.type !== "tret" || item.getFlag("forja", "catalegId")) return null;
+      const e = tretDelCataleg(item);
+      if (!e) return null;
+      const canvi = { _id: item.id, "flags.forja.catalegId": e.id };
+      if (!item.system.efecte && e.efecte) canvi["system.efecte"] = e.efecte;
+      return canvi;
+    };
+    let n = 0;
+    const mundials = game.items.contents.map(canvisTret).filter(Boolean);
+    if (mundials.length) { await Item.updateDocuments(mundials); n += mundials.length; }
+    for (const actor of game.actors) {
+      const canvis = actor.items.contents.map(canvisTret).filter(Boolean);
+      if (!canvis.length) continue;
+      await actor.updateEmbeddedDocuments("Item", canvis);
+      await assegurarAtacsAutomatics(actor);
+      n += canvis.length;
+    }
+    if (n) console.log(`FORJA | Migració 3: ${n} trets enllaçats amb el catàleg`);
   }
 
   await game.settings.set("forja", "migracio", MIGRACIO_ACTUAL);
