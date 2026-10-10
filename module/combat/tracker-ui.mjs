@@ -531,6 +531,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       // Fase 6: atacs d'àrea (escopetes, dispersió, automàtic, foc automàtic).
       if (arma && regleArea(arma.system.propietats ?? [], modeTret)) {
         const fet = await atacArea({ combat, combatant, actor, arma, poolFinal, mode: modeTret,
+          tokenObjectiu: pendent.objectiuTokenId ? canvas.tokens?.get(pendent.objectiuTokenId) ?? null : null,
           extra: { bonusMode, label: pendent.label } });
         if (fet) await _marcarResolta(combat, combatant);
         return;

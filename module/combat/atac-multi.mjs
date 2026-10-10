@@ -5,7 +5,8 @@ import { decidirDefensa } from "./decisio-defensa.mjs";
 import { defensaCompletaDe, combatantDe, resolucioDefensaCompleta } from "./defensa-completa.mjs";
 import { distanciaEntreTokens, bandaDistancia, tokensATocar } from "./abast.mjs";
 import { regleArea, dinsAbastArea, danyFuga } from "./modes-tret.mjs";
-import { darreraPlantilla, consumirPlantilla, formaPlantilla } from "./plantilla.mjs";
+import { darreraPlantilla, consumirPlantilla, formaPlantilla, triarCon } from "./plantilla.mjs";
+import { dinsCon } from "./area-con.mjs";
 import { calcularDany, aplicarDanyAPista, proteccioArmadura } from "./dany.mjs";
 import { consumirConcentracio } from "./reaccions.mjs";
 import { activarArtefacte } from "./artefactes.mjs";
@@ -100,20 +101,30 @@ export async function atacarAmbDefensa({ combat, actor, nomAtacant, arma, poolFi
  * l'automàtic), modificada per la distància. Una sola tirada.
  * @returns {Promise<boolean>}  `false` si no s'ha pogut fer (sense plantilla…).
  */
-export async function atacArea({ combat, combatant, actor, arma, poolFinal, mode = "tret", extra = {} }) {
+export async function atacArea({ combat, combatant, actor, arma, poolFinal, mode = "tret", tokenObjectiu = null, extra = {} }) {
   const regla = regleArea(arma.system.propietats ?? [], mode);
   const plantilla = canvas?.ready ? darreraPlantilla() : null;
-  if (!regla || !plantilla) {
+  const tokenAtacant = combatant.token?.object;
+  let dinsArea = null;
+  if (regla && plantilla) {
+    const forma = formaPlantilla(plantilla);
+    dinsArea = t => !!forma?.contains(t.center.x - plantilla.x, t.center.y - plantilla.y);
+  } else if (regla && tokenAtacant && ["escopeta", "dispersio"].includes(regla.tipus)) {
+    // Llàgrima sense plantilla (v14): con automàtic de 15° amb l'abast de
+    // l'arma (dispersió: 15 m) cap a l'objectiu declarat (Oriol FM, 2026-10-10).
+    const con = await triarCon({ tokenAtacant, tokenObjectiu, nomArma: arma.name,
+      llargadaMetres: regla.distanciaMaxima ?? arma.system.abast ?? 10 });
+    if (!con) return false;
+    dinsArea = t => dinsCon(con, t.center);
+  }
+  if (!dinsArea) {
     ui.notifications?.warn(game.i18n.localize("FORJA.Combat.AreaSensePlantilla"));
     return false;
   }
-  const forma = formaPlantilla(plantilla);
-  const tokenAtacant = combatant.token?.object;
-  const tokens = (canvas.tokens?.placeables ?? []).filter(t => t.actor && t !== tokenAtacant
-    && forma?.contains(t.center.x - plantilla.x, t.center.y - plantilla.y));
+  const tokens = (canvas.tokens?.placeables ?? []).filter(t => t.actor && t !== tokenAtacant && dinsArea(t));
   const roll = await tiradaUnica(actor, arma, poolFinal);
   if (!roll) return false;
-  await consumirPlantilla(plantilla);
+  if (plantilla) await consumirPlantilla(plantilla);
 
   for (const token of tokens) {
     const objectiu = token.actor;

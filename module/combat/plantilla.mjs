@@ -1,3 +1,4 @@
+import { OBERTURA_CON, dinsCon, direccioCap, direccioDeRotacio, poligonCon } from "./area-con.mjs";
 /**
  * Lectura de plantilles de mesura NATIVES de Foundry per a atacs/efectes
  * d'àrea esfèrica o de llàgrima (motor a `area.mjs`). Flux en dos passos
@@ -94,4 +95,40 @@ export function formaPlantilla(template) {
 /** Elimina la plantilla un cop consumida, perquè no es reaprofiti per error en properes resolucions. */
 export async function consumirPlantilla(template) {
   if (template) await template.delete();
+}
+
+/**
+ * Con automàtic d'un tret en llàgrima (escopeta, arma de dispersió): a la v14
+ * no es poden dibuixar plantilles de mesura. Origen al centre del tirador,
+ * cap a l'objectiu declarat (o cap on mira el token), de 15° i amb la llargada
+ * de l'abast de l'arma (`combat/area-con.mjs`). Es dibuixa al mapa i es demana
+ * confirmació, amb la llista dels qui hi queden dins. (No és pura: canvas.)
+ * @param {object} p
+ * @param {Token} p.tokenAtacant
+ * @param {Token|null} [p.tokenObjectiu]
+ * @param {number} p.llargadaMetres
+ * @param {string} p.nomArma
+ * @returns {Promise<object|null>}  El con, o null si es cancel·la
+ */
+export async function triarCon({ tokenAtacant, tokenObjectiu = null, llargadaMetres, nomArma }) {
+  const origen = tokenAtacant.center;
+  const direccio = tokenObjectiu ? direccioCap(origen, tokenObjectiu.center) : direccioDeRotacio(tokenAtacant.document.rotation);
+  const llargada = llargadaMetres * (canvas.dimensions?.distancePixels ?? (canvas.grid.size / canvas.grid.distance));
+  const con = { origen, direccio, llargada, obertura: OBERTURA_CON };
+  const dibuix = new PIXI.Graphics();
+  dibuix.lineStyle(3, 0xf59e0b, 0.95).beginFill(0xf59e0b, 0.25).drawPolygon(poligonCon(con)).endFill();
+  canvas.controls?.addChild(dibuix);
+  const afectats = (canvas.tokens?.placeables ?? [])
+    .filter(t => t.actor && t !== tokenAtacant && dinsCon(con, t.center)).map(t => t.name);
+  try {
+    const ok = await foundry.applications.api.DialogV2.confirm({
+      window: { title: game.i18n.format("FORJA.Combat.ConTitol", { arma: nomArma }) },
+      content: `<p>${game.i18n.format("FORJA.Combat.ConConfirmar", { metres: llargadaMetres, graus: OBERTURA_CON })}</p>
+        <p><strong>${afectats.length ? Handlebars.escapeExpression(game.i18n.format("FORJA.Combat.ConAfectats", { noms: afectats.join(", ") })) : game.i18n.localize("FORJA.Combat.ConCap")}</strong></p>`,
+      rejectClose: false
+    });
+    return ok ? con : null;
+  } finally {
+    dibuix.destroy();
+  }
 }

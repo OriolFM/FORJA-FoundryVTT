@@ -73,6 +73,7 @@ FORJA-FoundryVTT/
 │   │   ├── defensa-completa.mjs # Defensa completa declarada: tirada en declarar, val fins al final del torn
 │   │   ├── anuncis.mjs        # Anuncis sobre la pantalla (declaració, inici, avanç del rellotge)
 │   │   ├── area.mjs / plantilla.mjs  # Motor d'àrees (esfèric, lliure, llàgrima) i lectura de plantilles
+│   │   ├── area-con.mjs       # Con automàtic dels trets en llàgrima (v14 no deixa dibuixar plantilles)
 │   │   ├── manifestar.mjs     # Sobrenatural: manifestar efectes, equilibri (S-20/S-21)
 │   │   ├── resistencia.mjs / contrarestar.mjs / desfer.mjs / control-efecte.mjs  # Resposta als efectes (S-21)
 │   │   ├── artefactes.mjs     # Activació i càrrega d'artefactes (S-26)

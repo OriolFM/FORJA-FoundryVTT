@@ -15,6 +15,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Trets en con (escopeta, armes de dispersió):** a Foundry v14 ja no es poden dibuixar plantilles de mesura, així que el sistema fa el con sol en resoldre l'atac: 15°, amb la llargada de l'abast de l'arma (escopeta 10 m, dispersió 15 m), cap a l'objectiu declarat (o cap on mira el token). Es dibuixa al mapa i un diàleg mostra qui hi queda dins abans de disparar.
 - **Corregir una declaració** (icona del llapis al tracker): el DJ pot corregir la de qualsevol PJ o PNJ en qualsevol moment; el jugador, la seva, mentre el rellotge no s'hagi mogut. La latència nova es compta des d'on es va declarar (no se suma dues vegades) i al xat surt «(declaració corregida)».
 - **Objectiu caigut:** si l'objectiu d'una acció declarada queda fora de combat o derrotat, qui l'havia declarat pot tornar a declarar des d'aquell tic (avís al xat).
 - **Acció declarada al mapa:** en passar el ratolí per un combatent, a sobre del token surt l'acció que ha declarat i el tic en què actuarà (p. ex. «Atac: Cop — Combinació · Tic 11»; un moviment, en curt: «Moviment 5 m», «Moviment ràpid 13 m») i, si té objectiu, el nom amb la direcció i la distància, i una línia fins a l'objectiu. Ho veu tothom qui veu el token (la declaració ja surt al xat).
