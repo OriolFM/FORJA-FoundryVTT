@@ -20,6 +20,7 @@ import { atacArea, combinacio, contraatacar } from "./atac-multi.mjs";
 import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancament } from "./maniobres.mjs";
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
 import { teProprietat } from "./propietats.mjs";
+import { etiquetarObjectius, marcarObjectiu } from "./objectius.mjs";
 import {
   tirarDefensaCompleta, desarDefensaCompleta, defensaCompletaDe, combatantDe, resolucioDefensaCompleta
 } from "./defensa-completa.mjs";
@@ -750,7 +751,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
 function _objectiusDeclarables(combat, combatant) {
   const tokenPropi = combatant.token?.object ?? null;
   const marcats = new Set([...game.user.targets].map(t => t.id));
-  return combat.combatants
+  const llista = combat.combatants
     .filter(c => c.id !== combatant.id && !c.isDefeated && c.token?.object)
     .map(c => {
       const token = c.token.object;
@@ -758,12 +759,16 @@ function _objectiusDeclarables(combat, combatant) {
       return {
         tokenId: token.id,
         nom:     c.name,
+        // Direcció des de l'atacant (fletxa a l'etiqueta, combat/objectius.mjs).
+        dx: tokenPropi ? token.center.x - tokenPropi.center.x : 0,
+        dy: tokenPropi ? token.center.y - tokenPropi.center.y : 0,
         distancia,
         aTocar:  tokenPropi ? tokensATocar(tokenPropi, token) : false,
         marcat:  marcats.has(token.id)
       };
     })
     .sort((a, b) => (a.distancia ?? Infinity) - (b.distancia ?? Infinity));
+  return etiquetarObjectius(llista, { aTocar: game.i18n.localize("FORJA.Combat.ObjectiuATocar") });
 }
 
 /** Objectiu preseleccionat: el marcat amb Target, si no l'últim declarat, si no el més proper. */
@@ -866,10 +871,7 @@ async function _marcarResolta(combat, combatant) {
 async function _demanarObjectiu(combat, combatant) {
   const objectius = _objectiusDeclarables(combat, combatant);
   if (!objectius.length) return null;
-  const opcions = objectius.map(o => {
-    const dist = o.aTocar ? game.i18n.localize("FORJA.Combat.ObjectiuATocar") : (o.distancia !== null ? `${o.distancia} m` : "");
-    return `<option value="${o.tokenId}">${Handlebars.escapeExpression(o.nom)}${dist ? ` (${dist})` : ""}</option>`;
-  }).join("");
+  const opcions = objectius.map(o => `<option value="${o.tokenId}">${Handlebars.escapeExpression(o.etiqueta)}</option>`).join("");
   const triat = await foundry.applications.api.DialogV2.prompt({
     window: { title: game.i18n.format("FORJA.Combat.TriaObjectiuTitol", { nom: combatant.name }) },
     content: `<div class="form-group"><label>${game.i18n.localize("FORJA.Combat.Objectiu")}</label>
@@ -878,7 +880,13 @@ async function _demanarObjectiu(combat, combatant) {
       label: game.i18n.localize("FORJA.Combat.Resoldre"),
       callback: (ev, button) => button.form.elements.objectiu.value
     },
-    rejectClose: false
+    rejectClose: false,
+    // L'objectiu triat es marca al mapa (combat/objectius.mjs).
+    render: (event, dialeg) => {
+      const sel = dialeg.element.querySelector("select[name='objectiu']");
+      marcarObjectiu(sel?.value);
+      sel?.addEventListener("change", ev => marcarObjectiu(ev.target.value, { ping: true }));
+    }
   });
   if (!triat) return undefined;
   return canvas.tokens?.get(triat) ?? null;

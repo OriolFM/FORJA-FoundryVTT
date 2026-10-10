@@ -14,6 +14,7 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Els combats començats amb una versió anterior poden tenir el marcador desfasat: el DJ el corregeix amb el botó «Avança».
 
 ### Afegit
+- **Triar l'objectiu d'un atac:** el token triat es marca al mapa (punt de mira de Foundry, i un «ping» en canviar-lo). Al desplegable, els PNJ amb el mateix nom es numeren («Guàrdia nº 1», «nº 2») i porten la direcció i la distància (p. ex. «↗ 3.8 m»).
 - **Orientació dels tokens:** el dibuix es queda sempre dret i un triangle a la vora marca cap on mira el personatge. Canvia en moure'l (rotació automàtica de Foundry) i a mà amb el token seleccionat: Ctrl + roda del ratolí (30°) o Maj + roda (60°, una cara de l'hexàgon). Sense triangle si el token té la rotació bloquejada.
 - **Salut al mapa:** una insígnia vermella damunt del token mostra la penalització per salut a les tirades (p. ex. «+2»; «✕» fora de combat). En passar el ratolí, sota el token surten el nivell de fatiga i de ferides i els estats actius. Només ho veu qui pot veure la fitxa (el DJ i el propietari).
 - **No-mort a la fitxa:** la secció de salut indica «No-mort: sense penalització» i la taula marca (+0) a tots els nivells (el tret ja eximia de la penalització, però la fitxa no ho deia).

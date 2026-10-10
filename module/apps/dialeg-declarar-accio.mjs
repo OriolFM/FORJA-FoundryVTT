@@ -2,6 +2,7 @@ import { retardMaximBarallarse, limitarRetardBarallarse } from "../combat/atac.m
 import { latenciaExtraMoviment, normalitzarMoviment, permisMoviment } from "../combat/moviment.mjs";
 import { movimentsPermesosPerEstats } from "../estats/regles-estats.mjs";
 import { MODES_TRET } from "../combat/modes-tret.mjs";
+import { marcarObjectiu } from "../combat/objectius.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -239,7 +240,7 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     const categoria = this.#arma()?.categoria;
     if (!obj || obj.aTocar || categoria === "distancia") return null;
     return game.i18n.format("FORJA.Combat.ObjectiuNoATocar", {
-      nom: obj.nom,
+      nom: obj.nomNumerat ?? obj.nom,
       distancia: obj.distancia ?? "?",
       metres: permisMoviment(this.#movimentEfectiu(), this.#config.distancies ?? {})
     });
@@ -319,8 +320,12 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
       this.render(false);
     });
 
-    el.querySelector("[name='objectiuTokenId']")?.addEventListener("change", ev => {
+    // L'objectiu triat es marca al mapa (amb un «ping» en canviar-lo).
+    const selObjectiu = el.querySelector("[name='objectiuTokenId']");
+    if (selObjectiu) marcarObjectiu(selObjectiu.value || null);
+    selObjectiu?.addEventListener("change", ev => {
       this.#objectiuTokenId = ev.target.value || null;
+      marcarObjectiu(this.#objectiuTokenId, { ping: true });
       this.render(false);
     });
 

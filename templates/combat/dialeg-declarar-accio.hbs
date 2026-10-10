@@ -67,7 +67,7 @@
     <select name="objectiuTokenId">
       <option value="" {{#unless objectiuTokenId}}selected{{/unless}}>{{localize "FORJA.Combat.SenseObjectiuDeclarat"}}</option>
       {{#each objectius as |o|}}
-      <option value="{{o.tokenId}}" {{#if (eq o.tokenId ../objectiuTokenId)}}selected{{/if}}>{{o.nom}}{{#if o.aTocar}} ({{localize "FORJA.Combat.ObjectiuATocar"}}){{else}}{{#if o.distancia}} ({{o.distancia}} m){{/if}}{{/if}}</option>
+      <option value="{{o.tokenId}}" {{#if (eq o.tokenId ../objectiuTokenId)}}selected{{/if}}>{{o.etiqueta}}</option>
       {{/each}}
     </select>
   </div>
@@ -92,7 +92,7 @@
       <option value="" {{#unless objectiuTokenId}}selected{{/unless}}>{{localize "FORJA.Combat.SenseObjectiuDeclarat"}}</option>
       {{#each objectius as |o|}}
       <option value="{{o.tokenId}}" {{#if (eq o.tokenId ../objectiuTokenId)}}selected{{/if}}>
-        {{o.nom}}{{#if o.aTocar}} ({{localize "FORJA.Combat.ObjectiuATocar"}}){{else}}{{#if o.distancia}} ({{o.distancia}} m){{/if}}{{/if}}
+        {{o.etiqueta}}
       </option>
       {{/each}}
     </select>
