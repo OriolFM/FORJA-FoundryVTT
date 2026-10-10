@@ -11,7 +11,10 @@ test("atac amb objectiu: tipus, arma, tic i objectiu amb direcció", () => {
 });
 
 test("sense detall ni objectiu, i sense acció declarada", () => {
-  assert.deepEqual(liniesAccio({ tipus: "moviment", etiqueta: "Moviment" }, { posicio: 7, t }), ["Moviment · Tic 7"]);
+  const d = { caminar: 5, correr: 13 };
+  assert.deepEqual(liniesAccio({ tipus: "moviment", moviment: "basic", etiqueta: "Només moviment — Moviment bàsic (caminar)" }, { posicio: 9, distancies: d, t }), ["Moviment 5 m · Tic 9"]);
+  assert.deepEqual(liniesAccio({ tipus: "moviment", moviment: "rapid" }, { posicio: 9, distancies: d, t }), ["MovimentRapid 13 m · Tic 9"]);
+  assert.deepEqual(liniesAccio({ tipus: "moviment" }, { posicio: 7, t }), ["Moviment · Tic 7"]);
   assert.deepEqual(liniesAccio({ tipus: "atac", label: "Urpes" }, { objectiu: { nom: "Yoko-1", aTocar: true }, t }), ["Atac: Urpes", "→ Yoko-1 (ObjectiuATocar)"]);
   assert.deepEqual(liniesAccio(null, { t }), []);
 });

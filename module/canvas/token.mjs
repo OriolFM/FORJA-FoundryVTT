@@ -268,6 +268,7 @@ export function crearTokenForja(Base) {
       const objectiu = pendent.objectiuTokenId ? canvas.tokens?.get(pendent.objectiuTokenId) : null;
       const linies = liniesAccio(pendent, {
         posicio: combatant.initiative ?? null,
+        distancies: this.actor?.system?.moviment ?? null,
         objectiu: objectiu ? {
           nom: objectiu.name,
           fletxa: fletxaDireccio(objectiu.center.x - this.center.x, objectiu.center.y - this.center.y),
