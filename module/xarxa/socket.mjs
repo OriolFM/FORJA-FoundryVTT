@@ -24,6 +24,23 @@ const CANAL = "system.forja";
 /** Temps màxim (ms) d'espera de la resposta del DJ. */
 const TEMPS_ESPERA = 30000;
 
+/** Temps (ms) que té el DJ per confirmar un canvi sense combat: abans que la petició caduqui. */
+const TEMPS_CONFIRMACIO = TEMPS_ESPERA - 5000;
+
+/**
+ * Hi ha algun combat en marxa, en qualsevol escena: començat o en fase de
+ * declaració. No cal que sigui el combat actiu de l'escena activa: el DJ pot
+ * tenir combats paral·lels sense fusionar-los (Oriol FM, 2026-10-10).
+ * @param {Iterable<Combat>} [combats=game.combats]
+ * @returns {boolean}
+ */
+export function hiHaCombatEnMarxa(combats = game.combats) {
+  for (const c of combats ?? []) {
+    if (c?.started || c?.getFlag?.("forja", "fase") === "declaracio") return true;
+  }
+  return false;
+}
+
 /** Tipus de document que el DJ accepta modificar per encàrrec. */
 const TIPUS_PERMESOS = new Set(["Actor", "Item", "ActiveEffect", "Combat", "Combatant", "Token"]);
 
@@ -327,22 +344,23 @@ function _validarCampsPermesos(doc, pla, user) {
  * justificar des de la interfície"): els camps d'Actor/Item de la llista
  * blanca només representen mecàniques de combat (dany, reaccions,
  * concentració, ègida). Per a un usuari no-GM que no posseeix el document:
- *   - si hi ha un combat en marxa (`game.combats.active.started`), s'accepta
- *     qualsevol camp de la llista blanca (és l'ús normal en combat);
- *   - si NO hi ha combat en marxa, només s'accepta que una pista de salut
+ *   - si hi ha algun combat en marxa, en qualsevol escena (`hiHaCombatEnMarxa`:
+ *     començat o en fase de declaració), s'accepta qualsevol camp de la llista
+ *     blanca (és l'ús normal en combat, també amb combats paral·lels);
+ *   - si NO n'hi ha cap, s'accepta sense preguntar que una pista de salut
  *     BAIXI (curació — primers auxilis, tractament mèdic i repòs es fan
- *     sovint fora de combat, `apps/full-personatge.mjs`/`full-pnj.mjs`); calen
- *     valors de baixada o iguals, mai de pujada.
+ *     sovint fora de combat, `apps/full-personatge.mjs`/`full-pnj.mjs`); la
+ *     resta (p. ex. el dany d'una emboscada abans d'obrir el combat) la
+ *     confirma el DJ (`_confirmarDJ`; Oriol FM, 2026-10-10).
  * Regla deliberadament simple: no intenta comprovar qui és "l'atacant" ni si
- * l'objectiu és al combat — només si hi ha combat actiu o si l'escriptura és
- * inequívocament una curació.
+ * l'objectiu és al combat.
  * @param {foundry.abstract.Document} doc
  * @param {Record<string, unknown>} pla
  * @param {User} user
  */
-function _validarContextCombat(doc, pla, user) {
+async function _validarContextCombat(doc, pla, user) {
   if (!["Actor", "Item", "Token"].includes(doc.documentName)) return;
-  if (game.combats?.active?.started) return;
+  if (hiHaCombatEnMarxa()) return;
 
   const rebutjats = Object.entries(pla).filter(([clau, valor]) => {
     if (clau === "system.nyapsActiu") return false;  // reparació de mecanoides (curació)
@@ -351,10 +369,42 @@ function _validarContextCombat(doc, pla, user) {
     return !(Number(valor) <= actual);
   }).map(([clau]) => clau);
 
+  // Sense cap combat (p. ex. una emboscada abans d'obrir-lo): decideix el DJ.
+  if (rebutjats.length && await _confirmarDJ(doc, pla, user)) return;
   if (rebutjats.length) {
     console.warn(`FORJA | Socket: petició rebutjada de ${user.name} — canvis de combat sense combat actiu a ${doc.documentName} (${doc.uuid})`, rebutjats);
     throw new Error(`aquest canvi només es permet dins d'un combat actiu: ${rebutjats.join(", ")}`);
   }
+}
+
+const _escapar = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+/**
+ * Pregunta al DJ (aquest client) si accepta un canvi de combat d'un jugador
+ * quan no hi ha cap combat en marxa. Sense resposta abans que la petició
+ * caduqui, es rebutja (i el diàleg es tanca).
+ * @returns {Promise<boolean>}
+ */
+async function _confirmarDJ(doc, pla, user) {
+  const Dialog = globalThis.foundry?.applications?.api?.DialogV2;
+  if (!Dialog) return false;
+  const nom = doc.documentName === "Actor" ? doc.name : `${doc.parent?.name ?? ""} › ${doc.name ?? doc.documentName}`;
+  const canvis = Object.entries(pla)
+    .map(([clau, valor]) => `<li>${_escapar(clau)}: ${_escapar(foundry.utils.getProperty(doc, clau))} → ${_escapar(valor)}</li>`).join("");
+  let dialeg = null;
+  const resposta = Dialog.confirm({
+    window: { title: game.i18n.localize("FORJA.Socket.ConfirmarTitol") },
+    content: `<p>${_escapar(game.i18n.format("FORJA.Socket.ConfirmarSenseCombat", { usuari: user.name, nom }))}</p><ul>${canvis}</ul>`,
+    rejectClose: false,
+    render: (event, d) => { dialeg = d; }
+  }).then(r => r === true, () => false);
+  let timer;
+  const caducat = new Promise(resolve => {
+    timer = setTimeout(() => { dialeg?.close?.(); resolve(false); }, TEMPS_CONFIRMACIO);
+  });
+  const acceptat = await Promise.race([resposta, caducat]);
+  clearTimeout(timer);
+  return acceptat;
 }
 
 /**
@@ -387,7 +437,7 @@ async function _atendrePeticio(msg) {
  * @returns {boolean}
  */
 function _esEfecteInterrupcio(dades) {
-  if (!game.combats?.active?.started || dades?.type !== "ActiveEffect") return false;
+  if (!hiHaCombatEnMarxa() || dades?.type !== "ActiveEffect") return false;
   const llista = Array.isArray(dades.data) ? dades.data : [];
   return llista.length === 1 && llista.every(e =>
     e?.flags?.forja?.autoconsum === true
@@ -454,12 +504,12 @@ async function _aplicar({ accio, dades, usuari }) {
           throw new Error("només el propietari del combatent en torn pot avançar el combat");
         }
         const nomesContraatac = Object.keys(foundry.utils.flattenObject(dades.changes ?? {})).every(k => k === "flags.forja.contraatac.usat");
-        if (doc.documentName === "Combatant" && !doc.testUserPermission(user, "OWNER") && !(nomesContraatac && game.combats?.active?.started)) {
+        if (doc.documentName === "Combatant" && !doc.testUserPermission(user, "OWNER") && !(nomesContraatac && hiHaCombatEnMarxa())) {
           throw new Error(`no es pot reposicionar un combatent que l'usuari no posseeix (${doc.uuid})`);
         }
         const pla = foundry.utils.flattenObject(dades.changes ?? {});
         _validarCampsPermesos(doc, pla, user);
-        _validarContextCombat(doc, pla, user);
+        await _validarContextCombat(doc, pla, user);
       }
       await doc.update(dades.changes, dades.options ?? {});
       return true;

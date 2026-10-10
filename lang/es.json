@@ -853,6 +853,8 @@
   "FORJA.Estat.vigilant": "Vigilante",
   "FORJA.Socket.SenseDJ": "No hay ningún DJ conectado: no se puede aplicar el cambio a un documento que no es tuyo.",
   "FORJA.Socket.TempsEsgotat": "El DJ no ha respondido a tiempo; puede que el cambio no se haya aplicado.",
+  "FORJA.Socket.ConfirmarTitol": "Cambio fuera de combate",
+  "FORJA.Socket.ConfirmarSenseCombat": "No hay ningún combate en marcha. {usuari} quiere aplicar estos cambios a {nom} (p. ej. el daño de una emboscada). ¿Lo aceptas?",
   "FORJA.Socket.Error": "El DJ no ha podido aplicar el cambio: {error}",
   "FORJA.Sheet.Item": "Ficha de objeto",
   "FORJA.Confirmar.EliminarTitol": "Eliminar",

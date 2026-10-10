@@ -853,6 +853,8 @@
   "FORJA.Estat.vigilant": "Watchful",
   "FORJA.Socket.SenseDJ": "No GM is connected: the change cannot be applied to a document you don't own.",
   "FORJA.Socket.TempsEsgotat": "The GM did not respond in time; the change may not have been applied.",
+  "FORJA.Socket.ConfirmarTitol": "Change outside combat",
+  "FORJA.Socket.ConfirmarSenseCombat": "There is no combat in progress. {usuari} wants to apply these changes to {nom} (e.g. damage from an ambush). Do you accept?",
   "FORJA.Socket.Error": "The GM could not apply the change: {error}",
   "FORJA.Sheet.Item": "Item Sheet",
   "FORJA.Confirmar.EliminarTitol": "Delete",

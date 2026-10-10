@@ -433,8 +433,11 @@ actual no posseeix ha de passar per aquestes funcions.** El DJ que atén la
 petició valida el tipus de document (`Actor`/`Item`/`ActiveEffect`/`Combat`/
 `Combatant`), una llista blanca de camps per tipus
 (`CAMPS_PERMESOS_PER_TIPUS`, p. ex. `system.salut.fatiga.marcats`,
-`flags.forja.*`) i, per a Actor/Item, que hi hagi un combat actiu (o que la
-salut només **baixi**, per permetre curació fora de combat). Amplia aquesta
+`flags.forja.*`) i, per a Actor/Item, que hi hagi algun combat en marxa en
+qualsevol escena (`hiHaCombatEnMarxa`: començat o en declaració; combats
+paral·lels inclosos), o que la salut només **baixi** (curació fora de
+combat). Sense cap combat, la resta (p. ex. el dany d'una emboscada) la
+**confirma el DJ** amb un diàleg (`_confirmarDJ`). Amplia aquesta
 llista blanca quan afegeixis un nou flux que escrigui un camp addicional per
 encàrrec — no relaxis les comprovacions de context per compensar-ho.
 `registrarSocket()` es crida un sol cop, a `Hooks.once("ready")`

@@ -68,8 +68,8 @@ globalThis.fromUuid = async (u) => (u === npc?.uuid ? npc : null);
 globalThis.game = {
   user: player,
   users: { activeGM: gm, get: (id) => ({ P: player, G: gm })[id] },
-  combats: { active: null },
-  i18n: { format: (k, d) => `${k}:${d.error}` },
+  combats: [],
+  i18n: { format: (k, d) => `${k}:${d.error}`, localize: (k) => k },
   socket: {
     on: (c, fn) => { listener = fn; },
     emit: (c, msg) => {
@@ -88,9 +88,17 @@ S.registrarSocket();
 // 1. Actualització permesa: camp de la llista blanca, amb combat en marxa (pot pujar dany).
 npc = novaNpc();
 game.user = player;
-game.combats.active = { started: true };
+game.combats = [{ started: false }, { started: true }];   // qualsevol combat començat, en qualsevol escena
 await S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 5 });
 assert.equal(npc.system.salut.ferides.marcats, 5, "l'actualització permesa hauria d'aplicar-se");
+
+// 1b. Un combat en fase de declaració també compta (Oriol FM, 2026-10-10).
+game.combats = [{ started: false, getFlag: (s, k) => (k === "fase" ? "declaracio" : null) }];
+await S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 6 });
+assert.equal(npc.system.salut.ferides.marcats, 6, "un combat en declaració ha de comptar com a combat en marxa");
+assert.equal(S.hiHaCombatEnMarxa([]), false);
+assert.equal(S.hiHaCombatEnMarxa([{ started: false }]), false);
+game.combats = [{ started: true }];
 
 // 2. Camp fora de la llista blanca: rebutjat encara que hi hagi combat.
 game.user = player;
@@ -102,13 +110,25 @@ await assert.rejects(
 assert.equal(npc.system.diners, 0, "el camp rebutjat no s'ha d'aplicar");
 
 // 2b. Fora de combat, només es permet que la pista de salut BAIXI (curació).
-game.combats.active = null;
+game.combats = [];
 game.user = player;
 await assert.rejects(
   S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 9 }),
   /combat actiu/,
   "pujar dany fora de combat s'ha de rebutjar"
 );
+
+// 2c. Sense combat, el DJ pot confirmar el dany (emboscades): sí → s'aplica; no → es rebutja.
+const preguntes = [];
+globalThis.foundry.applications = { api: { DialogV2: { confirm: async (o) => { preguntes.push(o.content); return globalThis._respostaDJ; } } } };
+globalThis._respostaDJ = false;
+await assert.rejects(S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 9 }), /combat actiu/, "si el DJ diu que no, es rebutja");
+globalThis._respostaDJ = true;
+await S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 9 });
+assert.equal(npc.system.salut.ferides.marcats, 9, "si el DJ ho confirma, s'aplica");
+assert.equal(preguntes.length, 2, "s'ha preguntat al DJ cada vegada");
+assert.match(preguntes[0], /ferides/);
+delete globalThis.foundry.applications;
 await S.actualitzarComGM(npc, { "system.salut.ferides.marcats": 2 });
 assert.equal(npc.system.salut.ferides.marcats, 2, "baixar (curar) fora de combat s'ha de permetre");
 
@@ -127,7 +147,7 @@ assert.equal(npc.statuses.has("atordit"), true);
 
 // 4. Petició d'origen GM: salta totes les comprovacions (camp fora de la llista blanca inclòs).
 game.user = gm;
-game.combats.active = null;
+game.combats = [];
 await S.actualitzarComGM(npc, { "system.diners": 42 });
 assert.equal(npc.system.diners, 42, "el DJ pot escriure qualsevol camp, salta la llista blanca");
 

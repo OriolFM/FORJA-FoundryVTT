@@ -891,6 +891,8 @@
   "FORJA.Estat.vigilant": "Vigilant",
   "FORJA.Socket.SenseDJ": "No hi ha cap DJ connectat: no es pot aplicar el canvi a un document que no és teu.",
   "FORJA.Socket.TempsEsgotat": "El DJ no ha respost a temps; el canvi potser no s'ha aplicat.",
+  "FORJA.Socket.ConfirmarTitol": "Canvi fora de combat",
+  "FORJA.Socket.ConfirmarSenseCombat": "No hi ha cap combat en marxa. {usuari} vol aplicar aquests canvis a {nom} (p. ex. el dany d'una emboscada). Ho acceptes?",
   "FORJA.Socket.Error": "El DJ no ha pogut aplicar el canvi: {error}",
   "FORJA.Sheet.Item": "Fitxa d’objecte",
   "FORJA.Confirmar.EliminarTitol": "Eliminar",
