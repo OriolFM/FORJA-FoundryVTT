@@ -1,0 +1,249 @@
+{
+  "_id": "M0kVTFYGQE4zJWqS",
+  "_key": "!actors!M0kVTFYGQE4zJWqS",
+  "name": "Fiona Fear",
+  "type": "personatge",
+  "system": {
+    "atributs": {
+      "FOR": 2,
+      "DES": 3,
+      "AGI": 3,
+      "PER": 2,
+      "INT": 2,
+      "APL": 2
+    },
+    "especie": "humanoide",
+    "mida": 3,
+    "constitucio": 3,
+    "habilitats": {
+      "acrobacies": {
+        "nivell": 2
+      },
+      "esquitllar-se": {
+        "nivell": 3
+      },
+      "amagar-se": {
+        "nivell": 3
+      },
+      "enginyeria": {
+        "nivell": 2
+      },
+      "enigmes": {
+        "nivell": 2
+      },
+      "humanitats": {
+        "nivell": 2
+      },
+      "medicina": {
+        "nivell": 1
+      },
+      "ciencia": {
+        "nivell": 2
+      },
+      "cercar": {
+        "nivell": 2
+      },
+      "vehicle": {
+        "nivell": 2
+      },
+      "supervivencia": {
+        "nivell": 2
+      },
+      "resistencia": {
+        "nivell": 2
+      },
+      "oratoria": {
+        "nivell": 2
+      },
+      "arts-marcials": {
+        "nivell": 3
+      }
+    },
+    "pc": 0,
+    "biografia": "La Fiona Fear és una bretxera de l'ANM que viu al sector d'Axis Mundi. Ha col·laborat sovint amb els custodis i participat en nombroses expedicions d'inspecció de nombrosos hàbitats als sectors Hades i Tàrtar. També té una àmplia experiència fent missions crítiques a l'altra banda de les bretxes, i acumula nombroses distincions del Ministeri d'assumptes multiversals."
+  },
+  "prototypeToken": {
+    "name": "Fiona Fear",
+    "actorLink": true,
+    "disposition": 1,
+    "texture": {
+      "src": "systems/forja/assets/tokens/pj/fiona-fear.png"
+    }
+  },
+  "items": [
+    {
+      "_id": "EmdjwDmV1YnaP6zz",
+      "_key": "!actors.items!M0kVTFYGQE4zJWqS.EmdjwDmV1YnaP6zz",
+      "name": "Estatus",
+      "type": "tret",
+      "system": {
+        "cost": 10,
+        "descripcio": "",
+        "efecte": null
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "estatus"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "PmGpAK3v0BL5bR71",
+      "_key": "!actors.items!M0kVTFYGQE4zJWqS.PmGpAK3v0BL5bR71",
+      "name": "Vestit de bretxa",
+      "type": "artefacte",
+      "system": {
+        "cost": 61,
+        "categoria": "armadura",
+        "activacio": {
+          "tipus": "permanent",
+          "dificultat": null
+        },
+        "us": {
+          "narratiu": true,
+          "actiu": true,
+          "modLatencia": 0
+        },
+        "carrega": {
+          "usosPerCarrega": null,
+          "tornsRecarrega": null,
+          "modeEspera": false
+        },
+        "mecanica": "Armadura Mitjana flexible (latència 1, protecció 3). Armadura 2. Atribut FOR +1. Atribut DES +1. Atribut AGI +1. Tret: levitar. Ègida 5.",
+        "descripcio": "El vestit de bretxa és un vestit de protecció que alguns bretxers de l'ANM fan servir per missions de risc. És lleuger, no destorba, ofereix una protecció excel·lent, i augmenta els atributs físics de l'usuari.",
+        "parametres": [
+          {
+            "tipus": "armaduraBase",
+            "base": "mitjana-flexible",
+            "latencia": 1,
+            "proteccio": 3
+          },
+          {
+            "tipus": "armadura",
+            "nivell": 2
+          },
+          {
+            "tipus": "atribut",
+            "nivell": 1,
+            "atribut": "FOR"
+          },
+          {
+            "tipus": "atribut",
+            "nivell": 1,
+            "atribut": "DES"
+          },
+          {
+            "tipus": "atribut",
+            "nivell": 1,
+            "atribut": "AGI"
+          },
+          {
+            "tipus": "tret",
+            "tret": "levitar",
+            "cost": 15
+          },
+          {
+            "tipus": "egida",
+            "nivell": 5
+          }
+        ],
+        "construccio": {
+          "dificultatDeclarada": null,
+          "latenciaDeclarada": 0,
+          "permanent": true
+        }
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "vestit-de-bretxa"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "IzEaKI9yDWLOs6UU",
+      "_key": "!actors.items!M0kVTFYGQE4zJWqS.IzEaKI9yDWLOs6UU",
+      "name": "Pistoles",
+      "type": "arma",
+      "system": {
+        "categoria": "distancia",
+        "modLatencia": 0,
+        "abast": 15,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "DES+2",
+        "pista": "",
+        "maniobra": "Desenfundar — Si van en una beina adequada, es desenfunden sense afegir latència.",
+        "rangExtrem": false,
+        "basic": false,
+        "propietats": [],
+        "descripcio": "Manual: Lat +0, Rang 15, Dany DES+2, munició 10."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "pistoles"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "86jqvd5KfnQyzCIX",
+      "_key": "!actors.items!M0kVTFYGQE4zJWqS.86jqvd5KfnQyzCIX",
+      "name": "Cop",
+      "type": "arma",
+      "system": {
+        "categoria": "natural",
+        "modLatencia": 0,
+        "abast": 0,
+        "rangMultFor": 0,
+        "esEscut": false,
+        "danyBase": "FOR+1",
+        "pista": "fatiga",
+        "maniobra": "Barallar-se — Cada +1 addicional a latència dóna un +1 a impactar (màxim de torns de retard = nivell d'habilitat). Arts marcials (+1 dif.) — Escull un moviment especial i resol-lo.",
+        "rangExtrem": false,
+        "basic": true,
+        "propietats": [],
+        "descripcio": "Atac bàsic a mans nues, disponible per a tot personatge."
+      },
+      "flags": {
+        "forja": {
+          "catalegId": "cop"
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "forja": {
+      "editor": "nou"
+    }
+  },
+  "img": "systems/forja/assets/tokens/pj/fiona-fear.png"
+}

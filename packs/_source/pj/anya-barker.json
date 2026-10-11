@@ -3,7 +3,7 @@
   "_key": "!actors!vivFBx3nuEjC1LRx",
   "name": "Anya Barker",
   "type": "personatge",
-  "img": "systems/forja/assets/tokens/pj/anya-barker.webp",
+  "img": "systems/forja/assets/tokens/pj/anya-barker.png",
   "system": {
     "atributs": {
       "FOR": 3,
@@ -89,7 +89,7 @@
     "actorLink": true,
     "disposition": 1,
     "texture": {
-      "src": "systems/forja/assets/tokens/pj/anya-barker.webp"
+      "src": "systems/forja/assets/tokens/pj/anya-barker.png"
     }
   },
   "items": [
@@ -309,7 +309,8 @@
         "defensa": 2,
         "reduccioDany": 3,
         "reaccio": 1
-      }
+      },
+      "editor": "editat"
     }
   }
 }

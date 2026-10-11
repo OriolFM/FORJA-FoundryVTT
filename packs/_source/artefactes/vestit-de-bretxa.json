@@ -1,0 +1,79 @@
+{
+  "_id": "1UmI0DuAN2yvpCuc",
+  "_key": "!items!1UmI0DuAN2yvpCuc",
+  "name": "Vestit de bretxa",
+  "type": "artefacte",
+  "system": {
+    "cost": 61,
+    "categoria": "armadura",
+    "activacio": {
+      "tipus": "permanent",
+      "dificultat": null
+    },
+    "us": {
+      "narratiu": true,
+      "actiu": true,
+      "modLatencia": 0
+    },
+    "carrega": {
+      "usosPerCarrega": null,
+      "tornsRecarrega": null,
+      "modeEspera": false
+    },
+    "mecanica": "Armadura Mitjana flexible (latència 1, protecció 3). Armadura 2. Atribut FOR +1. Atribut DES +1. Atribut AGI +1. Tret: levitar. Ègida 5.",
+    "descripcio": "El vestit de bretxa és un vestit de protecció que alguns bretxers de l'ANM fan servir per missions de risc. És lleuger, no destorba, ofereix una protecció excel·lent, i augmenta els atributs físics de l'usuari.",
+    "parametres": [
+      {
+        "tipus": "armaduraBase",
+        "base": "mitjana-flexible",
+        "latencia": 1,
+        "proteccio": 3
+      },
+      {
+        "tipus": "armadura",
+        "nivell": 2
+      },
+      {
+        "tipus": "atribut",
+        "nivell": 1,
+        "atribut": "FOR"
+      },
+      {
+        "tipus": "atribut",
+        "nivell": 1,
+        "atribut": "DES"
+      },
+      {
+        "tipus": "atribut",
+        "nivell": 1,
+        "atribut": "AGI"
+      },
+      {
+        "tipus": "tret",
+        "tret": "levitar",
+        "cost": 15
+      },
+      {
+        "tipus": "egida",
+        "nivell": 5
+      }
+    ],
+    "construccio": {
+      "dificultatDeclarada": null,
+      "latenciaDeclarada": 0,
+      "permanent": true
+    }
+  },
+  "flags": {
+    "forja": {
+      "catalegId": "vestit-de-bretxa",
+      "editor": "nou"
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  }
+}
