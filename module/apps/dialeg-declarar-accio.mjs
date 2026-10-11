@@ -152,7 +152,8 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
   /**
    * Moviments que es poden triar amb el tipus d'acció i l'arma actuals (WP-M).
    * El ràpid només sol (acció "moviment"); la càrrega només amb atac cos a
-   * cos o natural (manual l. 2794: "combina un moviment ràpid amb un atac cos a cos").
+   * cos o natural (manual l. 2794: "combina un moviment ràpid amb un atac cos a cos"),
+   * i no si l'objectiu declarat ja és a tocar.
    * @returns {string[]}
    */
   #movimentsPermesos() {
@@ -162,7 +163,9 @@ export default class DiategDeclararAccio extends HandlebarsApplicationMixin(Appl
     }
     const llista = ["basic", "especial"];
     const categoria = this.#arma()?.categoria;
-    if (this.#tipus === "atac" && (categoria === "cosAcos" || categoria === "natural")) llista.push("carrega");
+    // Càrrega: cal córrer fins a l'objectiu; si ja és a tocar, no n'hi ha (Oriol FM, 2026-10-11).
+    const objectiu = this.#config.objectius?.find(o => o.tokenId === this.#objectiuTokenId);
+    if (this.#tipus === "atac" && (categoria === "cosAcos" || categoria === "natural") && !objectiu?.aTocar) llista.push("carrega");
     return this.#config.restriccions ? movimentsPermesosPerEstats(llista, this.#config.restriccions) : llista;
   }
 

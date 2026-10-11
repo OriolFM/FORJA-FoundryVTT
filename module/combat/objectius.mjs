@@ -45,6 +45,22 @@ export function etiquetarObjectius(objectius, { aTocar = "a tocar" } = {}) {
 }
 
 /**
+ * Objectiu preseleccionat en declarar (funció pura): el que aquest combatent
+ * va declarar l'últim cop, si encara hi és; si no, el marcat amb Target; si
+ * no, el més proper (la llista ja ve ordenada per distància).
+ *
+ * L'últim declarat va abans que el marcat (Oriol FM, 2026-10-11): el mateix
+ * diàleg marca l'objectiu triat (`marcarObjectiu`), i quan el DJ declara per
+ * diversos combatents, el marcat d'un passava a ser l'objectiu del següent.
+ * @param {Array<{tokenId:string, marcat?:boolean}>} objectius
+ * @param {string|null} [ultimTokenId]
+ * @returns {string|null}
+ */
+export function objectiuPerDefecte(objectius, ultimTokenId = null) {
+  return (objectius.find(o => o.tokenId === ultimTokenId) ?? objectius.find(o => o.marcat) ?? objectius[0])?.tokenId ?? null;
+}
+
+/**
  * Marca al mapa el token triat com a objectiu (punt de mira de Foundry) i,
  * si es demana, hi fa un «ping» perquè es vegi on és. Sense id, treu els
  * objectius marcats. (No és pura: toca el canvas.)

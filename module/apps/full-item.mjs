@@ -84,12 +84,14 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
     const construit = await DiategConstructor.obrir({
       esArtefacte,
       inicial: {
-        nom: item.name, do: sys.do, categoria: sys.categoria,
+        nom: item.name, do: sys.do, categoria: sys.categoria, descripcio: sys.descripcio ?? "",
         parametres: sys.parametres ?? [], construccio: sys.construccio ?? {}
       }
     });
     if (!construit) return;
     const comu = { cost: construit.cost, parametres: construit.parametres, construccio: construit.construccio };
+    // La descripció només es toca si s'ha canviat al constructor (no se'n perd el format).
+    const desc = construit.descripcioCanviada ? { "system.descripcio": construit.descripcio } : {};
     if (esArtefacte) {
       await item.update({
         name: construit.nom,
@@ -99,12 +101,14 @@ export default class FullItem extends HandlebarsApplicationMixin(foundry.applica
         "system.categoria": construit.categoria,
         "system.activacio.tipus": construit.activacioId,
         "system.activacio.dificultat": construit.dificultat,
-        "system.us.modLatencia": construit.modLatencia
+        "system.us.modLatencia": construit.modLatencia,
+        ...desc
       });
     } else {
       await item.update({
         name: construit.nom,
-        system: { ...comu, do: construit.do, tipus: construit.tipus, dificultat: construit.dificultat, modLatencia: construit.modLatencia }
+        system: { ...comu, do: construit.do, tipus: construit.tipus, dificultat: construit.dificultat, modLatencia: construit.modLatencia,
+          ...(construit.descripcioCanviada ? { descripcio: construit.descripcio } : {}) }
       });
     }
   }

@@ -360,6 +360,14 @@
     <div class="forja-seccio-cap" data-action="toggleSection">
       <i class="fas fa-chevron-down forja-chevron"></i>
       {{localize "FORJA.Tab.Habilitats"}}
+      {{#unless modeEdicio}}
+      {{#if (or totesHabilitats habilitats.amagades)}}
+      <button type="button" class="btn-cap-afegir btn-cap-habilitats" data-action="totesHabilitats"
+              title="{{#if totesHabilitats}}{{localize 'FORJA.Hab.NomesLesQueTe'}}{{else}}{{localize 'FORJA.Hab.MostraTotes' n=habilitats.amagades}}{{/if}}">
+        <i class="fas {{#if totesHabilitats}}fa-eye-slash{{else}}fa-eye{{/if}}"></i>
+      </button>
+      {{/if}}
+      {{/unless}}
     </div>
     <div class="forja-seccio-cos">
       <div class="forja-habs-cos">

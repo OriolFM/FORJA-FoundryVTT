@@ -77,10 +77,12 @@ export async function aplicarEfecteProgressio(actor, construit, itemExistent = n
     construccio: construit.construccio ?? {}
   };
   if (itemExistent) {
+    // La descripció només es toca si l'usuari l'ha canviada al constructor.
+    if (construit.descripcioCanviada) dades.descripcio = construit.descripcio ?? "";
     await itemExistent.update({ name: construit.nom, system: dades });
   } else {
     await actor.createEmbeddedDocuments("Item", [{
-      name: construit.nom, type: "efecte", system: { ...dades, descripcio: "" }
+      name: construit.nom, type: "efecte", system: { ...dades, descripcio: construit.descripcio ?? "" }
     }]);
   }
   await actor.update(canvisDespesaPX(actor, cost, { tipus: "efecte", descripcio: construit.nom }));

@@ -84,6 +84,12 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - `criatures-exemple.json`: les criatures del manual són ara al compendi «Criatures».
 
 ### Canviat
+- **Fitxes de PJ i PNJ, mode de joc:** només es veuen les habilitats que té el personatge (amb nivell o bonificació, marcades o amb especialitat). L'ull de la capçalera d'Habilitats les mostra totes (per tirar-ne una sense nivell). En mode d'edició es veuen totes, com abans.
+- **Interfície de Foundry:** la barra lateral ja no mostra les pestanyes de taules de tirada ni de baralles (FORJA no en fa servir), i les icones de la barra lateral i dels controls d'escena són una mica més grans.
+- **Assistent de creació de PJ:** a dalt de tot, a tots els passos, es veuen les característiques secundàries calculades en viu (latència, defensa, reducció de dany, reaccions, moviment i caselles de fatiga i ferides per nivell).
+- **Constructor d'artefactes i efectes:** cada mode només ofereix els paràmetres que li corresponen: el ritual només als efectes; activació, recàrrega, acumulador, mode d'espera i arma/armadura base, només als artefactes. En triar l'arma o l'armadura base es carreguen soles la latència i el dany o la protecció (després es poden ajustar). Per afegir un paràmetre, el botó «Afegir» desplega la llista per ordre alfabètic (als artefactes, els propis d'artefacte a part) i se n'afegeix un en clicar-lo: ja no hi ha cap paràmetre preseleccionat. Els trets surten separats en positius i negatius, per ordre alfabètic. Nou quadre de descripció de l'objecte o efecte. Sota el total es mostra l'arma o l'armadura resultant. La creu per treure un paràmetre ja no s'ha de clicar dues vegades després d'editar un camp.
+- **Artefactes basats en armadures:** el paràmetre Armadura se suma a la protecció de l'armadura base (mitjana flexible 3 + armadura 2 = protecció 5), en lloc de comptar com una armadura natural a part.
+- **Diàleg de declarar:** el desplegable «Maniobra d'arts marcials» ara es diu «Especial», perquè també ofereix els moviments especials de les armes cos a cos i naturals.
 - **Inconscients, incapacitats, morts o derrotats surten del rellotge:** perden la posició i l'acció declarada, el rellotge els salta i no bloquegen «Avança». Al tracker surten atenuats i sense posició. Quan es recuperen, tornen a entrar declarant una acció nova des del tic actual.
 - **Dany dels jugadors fora del combat obert:** el DJ accepta el dany i els canvis de combat de qualsevol combat començat o en declaració, en qualsevol escena (combats paral·lels sense fusionar-los). Si no hi ha cap combat (p. ex. una emboscada), li surt una pregunta per acceptar-lo o no.
 - **Adepte i inepte** són per àmbit d'activitat (físic, mental, social o tècnic), no per atribut, com al manual original. Els actors que ja tinguin un «Adepte (FOR)»… el conserven; el DJ el pot canviar pel de l'àmbit que toqui.
@@ -95,6 +101,8 @@ Tots els canvis rellevants del sistema FORJA per a Foundry VTT, per versions.
 - Les maniobres d'arts marcials es trien en declarar l'acció (ja no en resoldre-la).
 
 ### Corregit
+- **Declarar acció:** la càrrega ja no s'ofereix si l'objectiu declarat és a tocar.
+- **Declarar acció:** l'objectiu proposat és el que aquell combatent va declarar l'últim cop (si encara hi és), i no el que s'acaba de marcar en declarar un altre combatent.
 - **Sagnant/X s'acumula en un sol estat:** dos cops de Sagnant/3 fan «Sagnant/6» (abans en sortien dos de /3; el dany per tic ja se sumava, 6 de fatiga cada cop que li toca actuar).
 - **Trets antics sense efecte:** els trets creats a mà abans que el catàleg portés els efectes mecànics (p. ex. «Dur de Pelar» de la Yoko) no feien res: no ignorava la penalització per ferides. Ara l'efecte s'agafa del catàleg pel nom, i una migració enllaça aquests trets amb el catàleg.
 - **Armes d'artefactes en actors importats:** un actor importat del compendi amb un artefacte d'arma o d'armadura a dins (p. ex. la Trace i l'Espasa serra) no en tenia l'arma o l'armadura, i no sortia als atacs. Ara es crea en importar-lo, i una migració ho arregla als actors que ja hi ha al món.

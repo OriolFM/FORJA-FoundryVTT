@@ -20,9 +20,16 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import crypto from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { AVENTURA, analitzarAventura } from "./aventura-hekate.mjs";
+import {
+  PACKS_ACTOR, PACKS_ITEM, normalitzar, slug, costTret, dadesSystem, calcularCost, calcularDerivats,
+  ARMAMENT_NATURAL_PER_TRET
+} from "./lib/contingut.mjs";
+import { idDeterminista } from "./lib/ids.mjs";
+
+// Lògica pura compartida amb l'editor de compendis (scripts/lib/contingut.mjs).
+export { PACKS_ACTOR, PACKS_ITEM, normalitzar, slug, costTret, dadesSystem, calcularCost, calcularDerivats, idDeterminista };
 
 const ARREL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MANUAL = path.join(ARREL, "docs/FORJA_FC001CA_CORE.md");
@@ -31,34 +38,12 @@ const FONTS = path.join(ARREL, "packs/_source");
 const INFORME = path.join(ARREL, "docs/CONTINGUT-INFORME.md");
 const TOKENS = path.join(ARREL, "assets/tokens");
 
-export const PACKS_ACTOR = ["pj", "pnj", "animals", "criatures"];
-export const PACKS_ITEM = ["trets", "armes", "armadures", "artefactes", "efectes"];
 
 /* ------------------------------------------------------------------ */
 /* Utilitats                                                           */
 /* ------------------------------------------------------------------ */
 
 const llegirJSON = f => JSON.parse(fs.readFileSync(path.join(DADES, f), "utf8"));
-
-/** Minúscules, sense accents ni signes: per comparar noms del manual i dels catàlegs. */
-export function normalitzar(text) {
-  return String(text).normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-}
-
-export function slug(text) {
-  return normalitzar(text).replace(/ /g, "-");
-}
-
-const ALFABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-/** _id determinista de 16 caràcters alfanumèrics a partir d'una clau (hash). */
-export function idDeterminista(clau) {
-  const hash = crypto.createHash("sha256").update(clau).digest();
-  let id = "";
-  for (let i = 0; i < 16; i++) id += ALFABET[hash[i] % ALFABET.length];
-  return id;
-}
 
 /** Treu escapaments i marques de Markdown del text del manual. */
 function netejarText(text) {
@@ -113,50 +98,6 @@ export function carregarCatalegs() {
     artefactes: llegirJSON("artefactes.json"),
     efectes: llegirJSON("efectes.json")
   };
-}
-
-/** Mateix mapeig que `ARMAMENT_NATURAL_PER_TRET` (module/combat/equipament-automatic.mjs). */
-const ARMAMENT_NATURAL_PER_TRET = {
-  "armament-urpes": "urpes",
-  "armament-mossegada": "ullals",
-  "armament-banyes": "banyes",
-  "armament-pinces": "pinces",
-  "armament-fiblons": "fiblons-i-espines"
-};
-
-/** Camps de `system` per tipus: còpia de `_dadesSystemPerTipus` (equipament-automatic.mjs). */
-export function dadesSystem(tipus, e) {
-  switch (tipus) {
-    case "arma":
-      return {
-        categoria: e.categoria, modLatencia: e.modLatencia, abast: e.abast,
-        rangMultFor: e.rangMultFor ?? 0, esEscut: e.esEscut ?? false,
-        danyBase: e.danyBase, pista: e.pista ?? "", maniobra: e.maniobra ?? "", rangExtrem: e.rangExtrem ?? false,
-        basic: e.basic ?? false, propietats: e.propietats ?? [], descripcio: e.descripcio ?? ""
-      };
-    case "armadura":
-      return {
-        tipus: e.tipus, reduccio: e.reduccio, modLatencia: e.modLatencia, equipada: true,
-        egida: e.egida ?? { activa: false, absorcio: 0, tornsInactiva: 0 },
-        descripcio: e.descripcio ?? ""
-      };
-    case "artefacte":
-      return {
-        cost: e.cost, categoria: e.categoria, activacio: e.activacio ?? {}, us: e.us ?? {},
-        carrega: e.carrega ?? {}, mecanica: e.mecanica ?? "", descripcio: e.descripcio ?? "",
-        parametres: e.parametres ?? [], construccio: e.construccio ?? {}
-      };
-    case "efecte":
-      return {
-        cost: e.cost, do: e.do, tipus: e.tipus, dificultat: e.dificultat,
-        modLatencia: e.modLatencia ?? 0, us: e.us ?? {}, mecanica: e.mecanica ?? "",
-        descripcio: e.descripcio ?? "", parametres: e.parametres ?? [], construccio: e.construccio ?? {}
-      };
-    case "tret":
-      return { cost: e.cost, descripcio: e.descripcio ?? "", efecte: e.efecte ?? null };
-    default:
-      throw new Error(`Tipus d'item desconegut: ${tipus}`);
-  }
 }
 
 /** Document Item (font de compendi) a partir d'una entrada de catàleg. */
@@ -243,13 +184,6 @@ export function resoldreTret(text, trets) {
       return res(entrada, Number.isFinite(x) ? x : null);
     }
   }
-}
-
-/** Cost d'un tret per al valor X indicat (mateixa fórmula que `DiategTrets#calcularCost`). */
-export function costTret(entrada, valorX) {
-  if (entrada.multiplicador) return entrada.multiplicador * Math.max(1, valorX ?? 1);
-  if (entrada.divisor) return Math.round(Math.max(0, valorX ?? 0) / entrada.divisor);
-  return entrada.cost;
 }
 
 /* ------------------------------------------------------------------ */
@@ -541,47 +475,6 @@ export function construirActor(bloc, cat, cfg, incidencies) {
 /* Càlcul de cost i de derivats (mateixes regles que el sistema)        */
 /* ------------------------------------------------------------------ */
 
-/** Cost en PC d'un actor generat; el manual suma també els artefactes i efectes. */
-export function calcularCost(actor, cfg, { inclouEquip = true } = {}) {
-  const s = actor.system;
-  let cost = 0;
-  for (const v of Object.values(s.atributs)) cost += cfg.COST_ATRIBUT[v] ?? 0;
-  cost += cfg.COST_ESPECIE[s.especie] ?? 0;
-  cost += cfg.COST_MIDA[s.mida] ?? 0;
-  cost += cfg.COST_CONSTITUCIO[s.constitucio] ?? 0;
-  for (const h of Object.values(s.habilitats)) cost += cfg.COST_HABILITAT[h.nivell] ?? 0;
-  for (const it of actor.items) {
-    if (it.type === "tret") cost += it.system.cost ?? 0;
-    else if (inclouEquip && (it.type === "artefacte" || it.type === "efecte")) cost += it.system.cost ?? 0;
-  }
-  return cost;
-}
-
-/** Derivats de combat (CLAUDE.md "Derivats"): latència, defensa, reducció de dany, reaccions. */
-export function calcularDerivats(actor, cfg) {
-  const s = actor.system;
-  // Incorporis (manual l. 1218): sense atributs físics; per als derivats fan servir
-  // PER enlloc d'AGI i APL com si fos FOR. El sistema (_prepararDerivats) NO ho implementa encara.
-  const incorpori = s.especie === "incorpori";
-  const agi = incorpori ? s.atributs.PER : s.atributs.AGI;
-  const forca = incorpori ? s.atributs.APL : s.atributs.FOR;
-  const d = {
-    latencia: Math.max(1, 10 + s.mida - agi * 2),
-    defensa: agi + (cfg.MIDA_DEFENSA[s.mida] ?? 0),
-    reduccioDany: forca,
-    reaccio: 1
-  };
-  const mapa = { latenciaBase: "latencia", defensa: "defensa", reduccioDany: "reduccioDany", reaccionsMax: "reaccio" };
-  for (const it of actor.items) {
-    if (it.type === "armadura" && it.system.equipada !== false) d.latencia += it.system.modLatencia ?? 0;
-    const ef = it.type === "tret" ? it.system.efecte : null;
-    if (ef?.stat && mapa[ef.stat] && Number.isFinite(ef.delta)) d[mapa[ef.stat]] += ef.delta;
-  }
-  d.latencia = Math.max(1, d.latencia);
-  d.reaccio = Math.max(0, d.reaccio);
-  return d;
-}
-
 /** Diferències entre el cost/derivats calculats i els del manual. */
 export function trobarDiferencies(actors, cfg) {
   const dif = [];
@@ -781,4 +674,13 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   console.log("Compendis generats:", r.comptes);
   console.log(`Incidències: ${r.incidencies.length} (vegeu docs/CONTINGUT-INFORME.md)`);
   console.log(`Diferències cost/derivats: ${dif.length}`);
+  // Eina local opcional (no és al repositori): avisa si s'han sobreescrit edicions seves.
+  try {
+    const { crearMagatzem } = await import("../editor/lib/edicions.mjs");
+    const pendents = crearMagatzem(ARREL).pendents();
+    if (pendents.length) {
+      console.log(`ATENCIÓ: ${pendents.length} edicions de l'editor de compendis s'han sobreescrit.`
+        + " Torna-les a aplicar des de l'editor o amb `node editor/aplicar-edicions.mjs`.");
+    }
+  } catch { /* sense editor local */ }
 }

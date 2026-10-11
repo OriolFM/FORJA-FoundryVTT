@@ -1,6 +1,8 @@
 import {
-  calcularParametres, TIPUS_PARAMETRE, PARAMETRE_PER_DEFECTE
+  calcularParametres, tipusParametrePermesos, valorsBaseParametre, PARAMETRE_PER_DEFECTE, TIPUS_NOMES_ARTEFACTE,
+  CAMPS_PARAMETRE
 } from "../progressio/construccio.mjs";
+import { armaDeArtefacte, armaduresDeArtefacte } from "../combat/resultat-parametres.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -21,10 +23,12 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
  * `obrir({ esArtefacte, inicial })`:
  *   - `esArtefacte`: mode artefacte (categoria, activació, permanent) o
  *     efecte (do).
- *   - `inicial`: `{ nom, do, parametres, construccio, categoria }` per partir
- *     d'un efecte o artefacte existent (p. ex. per millorar-lo).
- * Resol amb `{ nom, cost, dificultat, modLatencia, us, mecanica, parametres,
- * construccio, ... }`, o `null` si es tanca.
+ *   - `inicial`: `{ nom, do, parametres, construccio, categoria, descripcio }`
+ *     per partir d'un efecte o artefacte existent (p. ex. per millorar-lo).
+ * Resol amb `{ nom, cost, dificultat, modLatencia, us, mecanica, descripcio,
+ * descripcioCanviada, parametres, construccio, ... }`, o `null` si es tanca.
+ * `descripcio` és HTML (del quadre de text); `descripcioCanviada` diu si
+ * l'usuari l'ha tocat, perquè en editar un ítem no se n'esborri el format.
  */
 export default class DiategConstructor extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -36,6 +40,7 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     window: { title: "FORJA.Construccio.Titol", resizable: true },
     form: { closeOnSubmit: true, handler: DiategConstructor._onSubmit },
     actions: {
+      mostrarParametres: DiategConstructor._onMostrarParametres,
       afegirParametre: DiategConstructor._onAfegirParametre,
       treureParametre: DiategConstructor._onTreureParametre
     }
@@ -54,12 +59,17 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
   #dificultatDeclarada = null;
   #latenciaDeclarada = null;
   #permanent = false;
+  #descripcio = "";
+  #descripcioInicial = "";
+  /** La llista de paràmetres per afegir és oberta (botó «Afegir»). */
+  #mostrarLlista = false;
 
   constructor(config = {}, options = {}) {
     super(options);
     this.#esArtefacte = !!config.esArtefacte;
     const i = config.inicial ?? {};
     this.#nom = i.nom ?? "";
+    this.#descripcio = this.#descripcioInicial = DiategConstructor.#htmlAText(i.descripcio ?? "");
     this.#do = i.do ?? "canalitzacio";
     this.#categoria = i.categoria ?? "dispositiu";
     this.#parametres = foundry.utils.deepClone(i.parametres ?? []);
@@ -100,35 +110,23 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
       ...CONFIG.FORJA.LLISTA_HABILITATS.map(h => ({ id: h.id, nom: game.i18n.localize(h.nom) }))];
     const atributs = [{ id: "", nom: game.i18n.localize("FORJA.Construccio.ATriar") },
       ...CONFIG.FORJA.ATRIBUTS.map(a => ({ id: a, nom: a }))];
-    const trets = [{ id: "", nom: game.i18n.localize("FORJA.Construccio.ATriar") },
-      ...(CONFIG.FORJA.LLISTA_TRETS ?? []).map(t => ({ id: t.id, nom: `${t.nom} (${t.cost})` }))];
-    const num = (camp, min = 0) => ({ camp, tipus: "number", min });
-    const sel = (camp, opcions) => ({ camp, tipus: "select", opcions });
-    const definicio = {
-      activacio:        [sel("mode", op(P.artefacteActivacio).filter(o => o.id !== "normal"))],
-      recarrega:        [num("unitats")],
-      acumulador:       [num("carregues")],
-      arma:             [sel("base", op(P.armesBase)), num("latencia", -12), num("dany")],
-      armaduraBase:     [sel("base", op(P.armaduresBase)), num("latencia", -12), num("proteccio")],
-      dany:             [sel("categoria", op(P.danyCategoria)), num("nivell"), sel("danyTipus", op(P.danyTipus))],
-      cura:             [sel("pista", op(P.curacio)), num("nivell")],
-      armadura:         [num("nivell")],
-      egida:            [num("nivell")],
-      barrera:          [num("nivell")],
-      eina:             [sel("habilitat", habilitats), num("nivell"), { camp: "segona", tipus: "checkbox" }],
-      autoeina:         [sel("habilitat", habilitats), num("nivell"), { camp: "segona", tipus: "checkbox" }],
-      alterarPercepcio: [num("nivell")],
-      illusio:          [num("nivell")],
-      estat:            [sel("estat", op(P.estats)), num("nivell")],
-      atribut:          [sel("atribut", atributs), num("nivell", 1)],
-      tret:             [sel("tret", trets), num("cost", -100)],
-      transformacio:    [num("costAlterEgo")],
-      translocacio:     [sel("mode", op(P.translocacioTipus)), sel("distancia", op(P.translocacioDistancia))],
-      mental:           [sel("mode", op(P.mentals))],
-      telecinesi:       [sel("categoria", op(P.telecinesi))],
-      replicacio:       [sel("massa", op(P.replicacioMassa)), sel("complexitat", op(P.replicacioComplexitat))],
-      invocacio:        [num("costCriatura")]
-    }[param.tipus] ?? [];
+    // Trets: positius i negatius per separat, cadascun per ordre alfabètic.
+    const tretsDe = (positiu) => (CONFIG.FORJA.LLISTA_TRETS ?? [])
+      .filter(t => (t.positiu ?? t.cost >= 0) === positiu)
+      .map(t => ({ id: t.id, nom: `${t.nom} (${t.cost})` }))
+      .sort(DiategConstructor.#perNom);
+    const trets = [{ id: "", nom: game.i18n.localize("FORJA.Construccio.ATriar") }];
+    const grupsTrets = [
+      { nom: game.i18n.localize("FORJA.Construccio.TretsPositius"), opcions: tretsDe(true) },
+      { nom: game.i18n.localize("FORJA.Construccio.TretsNegatius"), opcions: tretsDe(false) }
+    ];
+    // Definició compartida amb l'editor de compendis (construccio.mjs).
+    const externes = { "@habilitats": habilitats, "@atributs": atributs, "@trets": trets };
+    const definicio = (CAMPS_PARAMETRE[param.tipus] ?? []).map(c => {
+      if (c.tipus !== "select") return c;
+      const opcions = externes[c.taula] ?? op(P[c.taula]).filter(o => !c.exclou?.includes(o.id));
+      return { ...c, opcions, grups: c.taula === "@trets" ? grupsTrets : null };
+    });
     return definicio.map(c => ({
       ...c,
       etiqueta: game.i18n.localize(`FORJA.Construccio.Camp.${c.camp}`),
@@ -138,11 +136,36 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
 
   async _prepareContext(options) {
     const resultat = this.#calcular();
-    const tipusPermesos = TIPUS_PARAMETRE.filter(t => this.#esArtefacte
-      || !["activacio", "recarrega", "acumulador", "espera", "arma", "armaduraBase"].includes(t));
+    // Ritual només per a efectes; activació, recàrrega, acumulador, mode
+    // d'espera i armes/armadures base només per a artefactes.
+    const tipusPermesos = tipusParametrePermesos(this.#esArtefacte);
+    // Un paràmetre que no correspon (p. ex. d'un ítem antic) es mostra amb un avís.
+    for (const p of this.#parametres) {
+      if (!tipusPermesos.includes(p.tipus)) {
+        resultat.avisos.push(game.i18n.format(
+          this.#esArtefacte ? "FORJA.Construccio.NomesEfecte" : "FORJA.Construccio.NomesArtefacte",
+          { param: game.i18n.localize(`FORJA.Construccio.Param.${p.tipus}`) }
+        ));
+      }
+    }
+    // Llista per afegir, per ordre alfabètic; als artefactes, els paràmetres
+    // propis d'artefacte en un grup a part, al principi.
+    const ambNom = (id) => ({ id, nom: game.i18n.localize(`FORJA.Construccio.Param.${id}`) });
+    const grupsParametres = this.#esArtefacte
+      ? [
+        { nom: game.i18n.localize("FORJA.Construccio.GrupArtefacte"),
+          tipus: tipusPermesos.filter(t => TIPUS_NOMES_ARTEFACTE.includes(t)).map(ambNom).sort(DiategConstructor.#perNom) },
+        { nom: game.i18n.localize("FORJA.Construccio.GrupGeneral"),
+          tipus: tipusPermesos.filter(t => !TIPUS_NOMES_ARTEFACTE.includes(t)).map(ambNom).sort(DiategConstructor.#perNom) }
+      ]
+      : [{ nom: null, tipus: tipusPermesos.map(ambNom).sort(DiategConstructor.#perNom) }];
     return {
       esArtefacte: this.#esArtefacte,
       nom: this.#nom,
+      descripcio: this.#descripcio,
+      mostrarLlista: this.#mostrarLlista,
+      grupsParametres,
+      resultants: this.#resultants(resultat),
       do: this.#do,
       categoria: this.#categoria,
       categories: ["dispositiu", "arma", "armadura", "permanent"].map(id => ({
@@ -159,9 +182,46 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
         nom: game.i18n.localize(`FORJA.Construccio.Param.${param.tipus}`),
         camps: this.#campsParametre(param)
       })),
-      tipusPermesos: tipusPermesos.map(id => ({ id, nom: game.i18n.localize(`FORJA.Construccio.Param.${id}`) })),
       resultat
     };
+  }
+
+  /** Ordre alfabètic per `nom`, segons l'idioma de Foundry. */
+  static #perNom(a, b) {
+    return String(a.nom).localeCompare(String(b.nom), game.i18n.lang, { sensitivity: "base" });
+  }
+
+  /**
+   * L'arma i l'armadura que en resultaran, amb la base i el que s'hi suma
+   * (les mateixes funcions que fan servir els artefactes en joc).
+   * @returns {string[]}
+   */
+  #resultants(resultat) {
+    if (!this.#esArtefacte) return [];
+    const artefacte = { system: { parametres: this.#parametres, us: { modLatencia: resultat.latencia } } };
+    const linies = [];
+    const arma = armaDeArtefacte(artefacte, CONFIG.FORJA.CATALEG_ARMES);
+    if (arma) linies.push(game.i18n.format("FORJA.Construccio.ArmaResultant", { dany: arma.danyBase, latencia: arma.modLatencia }));
+    const base = this.#parametres.some(p => p.tipus === "armaduraBase");
+    const armadura = base ? armaduresDeArtefacte(artefacte)[0] : null;
+    if (armadura) linies.push(game.i18n.format("FORJA.Construccio.ArmaduraResultant", { proteccio: armadura.reduccio, latencia: armadura.modLatencia }));
+    return linies;
+  }
+
+  /** Text d'un camp HTML (descripció) per al quadre de text. */
+  static #htmlAText(html) {
+    if (!html) return "";
+    const div = document.createElement("div");
+    div.innerHTML = String(html).replace(/<\/p>\s*<p[^>]*>/gi, "\n\n").replace(/<br\s*\/?>/gi, "\n");
+    return div.textContent.trim();
+  }
+
+  /** Text del quadre de descripció → HTML (un paràgraf per bloc). */
+  static #textAHtml(text) {
+    const esc = (s) => foundry.utils.escapeHTML ? foundry.utils.escapeHTML(s)
+      : s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return String(text ?? "").trim().split(/\n\s*\n/).filter(Boolean)
+      .map(p => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
   }
 
   async _onRender(context, options) {
@@ -170,7 +230,12 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     const reRender = () => this.render(false);
     const enter = (v) => (v === "" || v == null ? null : parseInt(v));
 
-    el.querySelector("input[name='nom']")?.addEventListener("change", ev => { this.#nom = ev.target.value; });
+    el.querySelector("input[name='nom']")?.addEventListener("input", ev => { this.#nom = ev.target.value; });
+    el.querySelector("textarea[name='descripcio']")?.addEventListener("input", ev => { this.#descripcio = ev.target.value; });
+
+    // Els botons no prenen el focus: si no, el clic que treu el focus d'un camp
+    // editat el re-renderitza i el clic es perd (calia clicar dues vegades la creu).
+    el.querySelectorAll("[data-action]").forEach(b => b.addEventListener("mousedown", ev => ev.preventDefault()));
     el.querySelector("select[name='do']")?.addEventListener("change", ev => { this.#do = ev.target.value; });
     el.querySelector("select[name='categoria']")?.addEventListener("change", ev => { this.#categoria = ev.target.value; reRender(); });
     el.querySelector("input[name='permanent']")?.addEventListener("change", ev => { this.#permanent = ev.target.checked; reRender(); });
@@ -192,28 +257,45 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
 
     // Camps dels paràmetres: data-idx (fila) i data-camp (clau del paràmetre).
     el.querySelectorAll("[data-camp]").forEach(input => {
-      input.addEventListener("change", ev => {
+      const llegir = () => {
         const param = this.#parametres[Number(input.dataset.idx)];
-        if (!param) return;
+        if (!param) return null;
         const camp = input.dataset.camp;
-        let valor;
-        if (input.type === "checkbox") valor = input.checked;
-        else if (input.type === "number") valor = parseInt(input.value) || 0;
-        else valor = input.value || null;
-        param[camp] = valor;
+        if (input.type === "checkbox") param[camp] = input.checked;
+        else if (input.type === "number") param[camp] = parseInt(input.value) || 0;
+        else param[camp] = input.value || null;
+        return { param, camp, valor: param[camp] };
+      };
+      // Els números es desen mentre s'escriu (sense re-render) i es recalcula en sortir.
+      if (input.type === "number") input.addEventListener("input", llegir);
+      input.addEventListener("change", ev => {
+        const l = llegir();
+        if (!l) return;
+        const { param, camp, valor } = l;
         // Tret: el cost és el del catàleg (en valor absolut, manual › Alteració).
         if (param.tipus === "tret" && camp === "tret") {
           param.cost = Math.abs(CONFIG.FORJA.LLISTA_TRETS?.find(t => t.id === valor)?.cost ?? 0);
         }
+        // Arma o armadura base: es carreguen la latència i el dany/protecció de
+        // la base (manual › Artefactes basats en armes i armadures, l. 4163).
+        if (camp === "base") Object.assign(param, valorsBaseParametre(param.tipus, valor) ?? {});
         reRender();
       });
     });
   }
 
+  /** Obre o tanca la llista de paràmetres per afegir. */
+  static _onMostrarParametres(event, target) {
+    this.#mostrarLlista = !this.#mostrarLlista;
+    this.render(false);
+  }
+
+  /** Afegeix el paràmetre clicat a la llista (`data-tipus`) i la tanca. */
   static _onAfegirParametre(event, target) {
-    const tipus = this.element.querySelector("select[name='nouParametre']")?.value;
+    const tipus = target.dataset.tipus;
     if (!tipus) return;
     this.#parametres.push({ tipus, ...foundry.utils.deepClone(PARAMETRE_PER_DEFECTE[tipus] ?? {}) });
+    this.#mostrarLlista = false;
     this.render(false);
   }
 
@@ -232,6 +314,8 @@ export default class DiategConstructor extends HandlebarsApplicationMixin(Applic
     const us = { narratiu: true, actiu: !tipusParams.has("narratiu") && !tipusParams.has("ritual") };
     const comu = {
       nom, cost: resultat.cost, dificultat: resultat.dificultat, modLatencia: resultat.latencia, us, mecanica,
+      descripcio: DiategConstructor.#textAHtml(this.#descripcio),
+      descripcioCanviada: this.#descripcio.trim() !== this.#descripcioInicial.trim(),
       parametres: foundry.utils.deepClone(this.#parametres),
       construccio: {
         dificultatDeclarada: this.#dificultatDeclarada,

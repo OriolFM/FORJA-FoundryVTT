@@ -100,3 +100,13 @@ test("sempre actius: permanents, armes i armadures; no els dispositius", () => {
   assert.equal(artefacteSempreActiu(artefactes["cibermodem"]), false);
   assert.equal(artefacteSempreActiu({ system: { ...artefactes["holocapa"].system, equipat: false } }), false);
 });
+
+test("armadura base + paràmetre armadura: es sumen en una sola armadura (mitjana flexible 3 + 2 = 5)", () => {
+  const arm = armaduresDeArtefacte({ system: { us: { modLatencia: 1 }, parametres: [
+    { tipus: "armaduraBase", base: "mitjana-flexible", latencia: 1, proteccio: 3 },
+    { tipus: "armadura", nivell: 2 },
+    { tipus: "egida", nivell: 10 }
+  ] } });
+  assert.deepEqual(arm.map(a => [a.tipus, a.reduccio]), [["flexible", 5], ["natural", 0]]);
+  assert.equal(arm[1].egida.absorcio, 10);
+});

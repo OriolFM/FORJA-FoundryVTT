@@ -17,8 +17,9 @@ globalThis.CONFIG = { FORJA: { PARAMETRES: P } };
 const calcula = (e) => calcularParametres(e.parametres, e.construccio, P);
 
 test("hi ha 18 artefactes (+2 de La porta d'Hèkate) i 65 efectes, tots amb paràmetres", () => {
-  assert.equal(artefactes.length, 20);
-  assert.equal(efectes.length, 65);
+  // Sense comptar els afegits després a mà (`editor: "nou"`).
+  assert.equal(artefactes.filter(e => e.editor !== "nou").length, 20);
+  assert.equal(efectes.filter(e => e.editor !== "nou").length, 65);
   for (const e of [...artefactes, ...efectes]) {
     assert.ok(Array.isArray(e.parametres) && e.parametres.length, e.id);
     assert.ok(e.construccio, e.id);
@@ -92,4 +93,39 @@ test("compatibilitat amb la selecció antiga del constructor", () => {
   const r = calcularConstruccio(sel);
   assert.equal(r.cost, 16);
   assert.equal(r.dificultat, 1);
+});
+
+const { tipusParametrePermesos, valorsBaseParametre, TIPUS_PARAMETRE } =
+  await import("../../module/progressio/construccio.mjs");
+
+test("paràmetres permesos: ritual només per a efectes; activació, recàrrega, espera i armes/armadures base només per a artefactes", () => {
+  const art = tipusParametrePermesos(true), efe = tipusParametrePermesos(false);
+  assert.ok(!art.includes("ritual"));
+  assert.ok(efe.includes("ritual"));
+  for (const t of ["activacio", "recarrega", "acumulador", "espera", "arma", "armaduraBase"]) {
+    assert.ok(art.includes(t), t);
+    assert.ok(!efe.includes(t), t);
+  }
+  // La resta, compartits.
+  for (const t of TIPUS_PARAMETRE) assert.ok(art.includes(t) || efe.includes(t), t);
+  assert.ok(art.includes("dany") && efe.includes("dany"));
+});
+
+test("cap plantilla del catàleg fa servir un paràmetre de l'altre tipus", () => {
+  const art = tipusParametrePermesos(true), efe = tipusParametrePermesos(false);
+  for (const a of artefactes) for (const p of a.parametres) assert.ok(art.includes(p.tipus), `${a.id}: ${p.tipus}`);
+  for (const e of efectes) for (const p of e.parametres) assert.ok(efe.includes(p.tipus), `${e.id}: ${p.tipus}`);
+});
+
+test("valors de l'arma o armadura base: latència i dany/protecció de la taula, cost 0", () => {
+  assert.deepEqual(valorsBaseParametre("arma", "rifle", P), { latencia: 2, dany: 4 });
+  assert.deepEqual(valorsBaseParametre("armaduraBase", "mitjana-rigida", P), { latencia: 2, proteccio: 4 });
+  assert.equal(valorsBaseParametre("arma", "inexistent", P), null);
+  assert.equal(valorsBaseParametre("dany", "rifle", P), null);
+  for (const b of P.armesBase) {
+    assert.equal(costParametre({ tipus: "arma", base: b.id, ...valorsBaseParametre("arma", b.id, P) }, P).cost, 0, b.id);
+  }
+  for (const b of P.armaduresBase) {
+    assert.equal(costParametre({ tipus: "armaduraBase", base: b.id, ...valorsBaseParametre("armaduraBase", b.id, P) }, P).cost, 0, b.id);
+  }
 });

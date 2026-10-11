@@ -10,6 +10,11 @@
     <div class="as-pc-resum {{#if (lt pc.lliures 0)}}pc-negatius{{/if}}">
       {{localize "FORJA.PC.Lliures"}}: <strong>{{pc.lliures}}</strong> / {{pc.total}}
     </div>
+    <div class="as-derivats" title="{{localize 'FORJA.Section.Derivats'}}">
+      {{#each derivats as |d|}}
+      <span class="as-derivat" {{#if d.desc}}title="{{d.desc}}"{{/if}}><small>{{d.nom}}</small> <strong>{{d.val}}</strong></span>
+      {{/each}}
+    </div>
   </div>
 
   <div class="as-cos">

@@ -245,16 +245,18 @@ export function armaduresDeArtefacte(artefacte) {
   const parametres = artefacte?.system?.parametres ?? [];
   const sortida = [];
   const pBase = parametres.find(p => p.tipus === "armaduraBase");
+  const b = bonificacionsDeParametres(parametres);
   if (pBase) {
+    // Amb armadura base, el paràmetre `armadura` s'hi suma («qualsevol
+    // modificador o funció s'aplica sobre aquesta base», manual l. 4163;
+    // Oriol FM, 2026-10-11): mitjana flexible 3 + armadura 2 = protecció 5.
     sortida.push({
       tipus: String(pBase.base).includes("flexible") ? "flexible" : "fisica",
-      reduccio: Number(pBase.proteccio) || 0,
+      reduccio: (Number(pBase.proteccio) || 0) + Math.max(0, b.armadura),
       modLatencia: artefacte.system.us?.modLatencia ?? Number(pBase.latencia) ?? 0,
       egida: { activa: false, absorcio: 0, tornsInactiva: 0 }
     });
-  }
-  const b = bonificacionsDeParametres(parametres);
-  if (b.armadura > 0) {
+  } else if (b.armadura > 0) {
     sortida.push({ tipus: "natural", reduccio: b.armadura, modLatencia: 0, egida: { activa: false, absorcio: 0, tornsInactiva: 0 } });
   }
   if (b.egida > 0) {

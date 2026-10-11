@@ -1,6 +1,10 @@
 # Node
 node_modules/
 
+# Eines locals de l'Oriol (no es publiquen): editor de compendis i còpies de les seves edicions
+editor/
+contingut-edicions/
+
 # OS
 .DS_Store
 Thumbs.db

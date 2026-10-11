@@ -4,8 +4,13 @@
   <p class="dm-desc">{{#if esArtefacte}}{{localize "FORJA.Construccio.IntroArtefacte"}}{{else}}{{localize "FORJA.Construccio.Intro"}}{{/if}}</p>
 
   <div class="form-group dm-camp">
-    <label>{{localize "FORJA.Construccio.Nom"}}</label>
+    <label>{{#if esArtefacte}}{{localize "FORJA.Construccio.NomArtefacte"}}{{else}}{{localize "FORJA.Construccio.Nom"}}{{/if}}</label>
     <input type="text" name="nom" value="{{nom}}" placeholder="{{localize 'FORJA.Construccio.NomPlaceholder'}}"/>
+  </div>
+
+  <div class="form-group dm-camp">
+    <label>{{localize "FORJA.Construccio.Descripcio"}}</label>
+    <textarea name="descripcio" rows="3" placeholder="{{localize 'FORJA.Construccio.DescripcioPlaceholder'}}">{{descripcio}}</textarea>
   </div>
 
   {{#if esArtefacte}}
@@ -45,6 +50,9 @@
           {{#if (eq c.tipus "select")}}
           <select data-idx="{{f.idx}}" data-camp="{{c.camp}}">
             {{#each c.opcions as |o|}}<option value="{{o.id}}" {{#if (eq o.id c.valor)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+            {{#each c.grups as |g|}}<optgroup label="{{g.nom}}">
+              {{#each g.opcions as |o|}}<option value="{{o.id}}" {{#if (eq o.id c.valor)}}selected{{/if}}>{{o.nom}}</option>{{/each}}
+            </optgroup>{{/each}}
           </select>
           {{else if (eq c.tipus "checkbox")}}
           <input type="checkbox" data-idx="{{f.idx}}" data-camp="{{c.camp}}" {{#if c.valor}}checked{{/if}}>
@@ -61,11 +69,21 @@
     {{/each}}
   </div>
 
-  <div class="dc-afegir-fila">
-    <select name="nouParametre">
-      {{#each tipusPermesos as |t|}}<option value="{{t.id}}">{{t.nom}}</option>{{/each}}
-    </select>
-    <button type="button" data-action="afegirParametre"><i class="fas fa-plus"></i> {{localize "FORJA.Construccio.Afegir"}}</button>
+  <div class="dc-afegir">
+    <button type="button" data-action="mostrarParametres" class="{{#if mostrarLlista}}actiu{{/if}}">
+      <i class="fas {{#if mostrarLlista}}fa-xmark{{else}}fa-plus{{/if}}"></i>
+      {{#if mostrarLlista}}{{localize "FORJA.Construccio.Tancar"}}{{else}}{{localize "FORJA.Construccio.Afegir"}}{{/if}}
+    </button>
+    {{#if mostrarLlista}}
+    <div class="dc-llista-parametres">
+      {{#each grupsParametres as |g|}}
+      {{#if g.nom}}<div class="dc-llista-grup">{{g.nom}}</div>{{/if}}
+      <div class="dc-llista-opcions">
+        {{#each g.tipus as |t|}}<button type="button" data-action="afegirParametre" data-tipus="{{t.id}}">{{t.nom}}</button>{{/each}}
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
   </div>
 
   <hr>
@@ -88,6 +106,7 @@
     <div class="dc-total-xifra">{{localize "FORJA.Construccio.Dificultat"}}<strong>{{#if (eq resultat.dificultat null)}}—{{else}}{{resultat.dificultat}}{{/if}}</strong></div>
     <div class="dc-total-xifra">{{localize "FORJA.Construccio.Latencia"}}<strong>{{resultat.latencia}}</strong></div>
   </div>
+  {{#each resultants as |r|}}<p class="dc-resultant">{{r}}</p>{{/each}}
   <ul class="dc-desglossament">
     {{#each resultat.desglossament as |l|}}<li>{{l.etiqueta}}: {{l.cost}} PC{{#if l.dificultat}}, dif. {{l.dificultat}}{{/if}}{{#if l.latencia}}, lat. {{l.latencia}}{{/if}}</li>{{/each}}
   </ul>

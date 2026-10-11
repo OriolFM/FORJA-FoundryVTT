@@ -21,7 +21,7 @@ import { aplicarEfecteManiobra, resoldrePuntadaDePeuGiratoria, resoldreLlancamen
 import { eliminarEmbegutsComGM } from "../xarxa/socket.mjs";
 import { teProprietat, movimentEspecialArma, maniobraPerId } from "./propietats.mjs";
 import { combatentForaDelRellotge } from "../documents/combat.mjs";
-import { etiquetarObjectius, marcarObjectiu } from "./objectius.mjs";
+import { etiquetarObjectius, marcarObjectiu, objectiuPerDefecte } from "./objectius.mjs";
 import { potCorregir, posicioBaseRedeclaracio, posicioCorregida, potRedeclararPerObjectiu } from "./correccio-declaracio.mjs";
 import {
   tirarDefensaCompleta, desarDefensaCompleta, defensaCompletaDe, combatantDe, resolucioDefensaCompleta
@@ -299,7 +299,7 @@ export default class ForjaCombatTracker extends foundry.applications.sidebar.tab
       concentrat:   !!sys.concentrat,
       distancies:   sys.moviment ?? distanciesMoviment(sys.atributs?.AGI ?? 0, sys.mida ?? 3),
       objectius,
-      objectiuPerDefecte: _objectiuPerDefecte(objectius, ultima?.objectiuTokenId),
+      objectiuPerDefecte: objectiuPerDefecte(objectius, ultima?.objectiuTokenId),
       ultima,
       // Estats (Fase 1): tipus d'acció i moviments que no es poden triar.
       restriccions,
@@ -813,11 +813,6 @@ function _objectiusDeclarables(combat, combatant) {
     })
     .sort((a, b) => (a.distancia ?? Infinity) - (b.distancia ?? Infinity));
   return etiquetarObjectius(llista, { aTocar: game.i18n.localize("FORJA.Combat.ObjectiuATocar") });
-}
-
-/** Objectiu preseleccionat: el marcat amb Target, si no l'últim declarat, si no el més proper. */
-function _objectiuPerDefecte(objectius, ultimTokenId = null) {
-  return (objectius.find(o => o.marcat) ?? objectius.find(o => o.tokenId === ultimTokenId) ?? objectius[0])?.tokenId ?? null;
 }
 
 /**

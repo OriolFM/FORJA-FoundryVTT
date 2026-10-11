@@ -43,6 +43,8 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
   _acordio    = new Map();
   _seleccio   = { atribut: null, habId: null, armaId: null };
   _modeEdicio = false;
+  /** Mode de joc: es veuen totes les habilitats (també les que no té)? */
+  _totesHabilitats = false;
 
   static DEFAULT_OPTIONS = {
     // `classes` es deixa als subtipus (FullPersonatge/FullPNJ): ApplicationV2
@@ -54,6 +56,7 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       toggleSalut:      FullActorBase._onToggleSalut,
       toggleMarca:      FullActorBase._onToggleMarca,
       toggleSection:    FullActorBase._onToggleSection,
+      totesHabilitats:  FullActorBase._onTotesHabilitats,
       toggleModeEdicio: FullActorBase._onToggleModeEdicio,
       // Mode joc
       selectAtribut:    FullActorBase._onSelectAtribut,
@@ -142,7 +145,10 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
       estatsActius: estatsPerFitxa(this.actor),
       sobrenatural:   _prepSobrenatural(sys),
       disputaControl: _prepDisputaControl(this.actor),
-      habilitats: _prepHabilitats(sys, cfg, foundry.utils.getProperty(this.actor._source, "system.habilitats")),
+      // En joc, només les que té (Oriol FM, 2026-10-11); en edició, totes.
+      habilitats: _prepHabilitats(sys, cfg, foundry.utils.getProperty(this.actor._source, "system.habilitats"),
+        { nomesAmbNivell: !this._modeEdicio && !this._totesHabilitats }),
+      totesHabilitats: this._totesHabilitats,
       trets:      _prepTrets(this.actor),
       armes:      _prepItems(this.actor, "arma"),
       armadures:  _prepItems(this.actor, "armadura"),
@@ -376,7 +382,7 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
         modLatencia: construit.modLatencia,
         us:          construit.us,
         mecanica:    construit.mecanica,
-        descripcio:  "",
+        descripcio:  construit.descripcio ?? "",
         parametres:  construit.parametres,
         construccio: construit.construccio
       }
@@ -428,6 +434,13 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
     const id  = seccio.dataset.seccio;
     const ara = seccio.classList.toggle("tancada");
     this._acordio.set(id, !ara);
+  }
+
+  /** Mode de joc: mostra totes les habilitats o només les que té. */
+  static async _onTotesHabilitats(event, target) {
+    event.stopPropagation();
+    this._totesHabilitats = !this._totesHabilitats;
+    this.render(false);
   }
 
   static async _onToggleSalut(event, target) {
@@ -631,7 +644,7 @@ export default class FullActorBase extends HandlebarsApplicationMixin(foundry.ap
         activacio:  { tipus: construit.activacioId, dificultat: construit.dificultat },
         us:         { ...construit.us, modLatencia: construit.modLatencia },
         mecanica:   construit.mecanica,
-        descripcio: "",
+        descripcio: construit.descripcio ?? "",
         fase:       "prototip1",
         parametres:  construit.parametres,
         construccio: construit.construccio
@@ -804,7 +817,17 @@ export function _prepDisputaControl(actor) {
   };
 }
 
-export function _prepHabilitats(sys, cfg, habilitatsBase = null) {
+/**
+ * Habilitats per a la fitxa, en dues columnes.
+ * @param {object} sys
+ * @param {object} cfg
+ * @param {object|null} [habilitatsBase]  Valors base (sense bonificacions).
+ * @param {object} [opcions]
+ * @param {boolean} [opcions.nomesAmbNivell=false]  Només les que té: nivell o
+ *   bonificació, o bé marcades (per a l'XP) o amb especialitat. Mode de joc.
+ * @returns {{esquerra:object[], dreta:object[], amagades:number}}
+ */
+export function _prepHabilitats(sys, cfg, habilitatsBase = null, { nomesAmbNivell = false } = {}) {
   const tots = cfg.LLISTA_HABILITATS.map(h => ({
     id:           h.id,
     nom:          game.i18n.localize(h.nom),
@@ -818,8 +841,11 @@ export function _prepHabilitats(sys, cfg, habilitatsBase = null) {
     especialitat: sys.habilitats[h.id]?.especialitat  ?? ""
   })).sort((a, b) => a.nom.localeCompare(b.nom, "ca"));
 
-  const meitat = Math.ceil(tots.length / 2);
-  return { esquerra: tots.slice(0, meitat), dreta: tots.slice(meitat) };
+  const visibles = nomesAmbNivell
+    ? tots.filter(h => h.nivell > 0 || h.bonus > 0 || h.marca || h.especialitat)
+    : tots;
+  const meitat = Math.ceil(visibles.length / 2);
+  return { esquerra: visibles.slice(0, meitat), dreta: visibles.slice(meitat), amagades: tots.length - visibles.length };
 }
 
 export function _prepItems(actor, type) {

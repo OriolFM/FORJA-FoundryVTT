@@ -105,6 +105,87 @@ export const TIPUS_PARAMETRE = [
   "mental", "telecinesi", "replicacio", "invocacio"
 ];
 
+/**
+ * Paràmetres exclusius d'un dels dos tipus de construcció (manual › Paràmetres,
+ * l. 4706: artefactes i efectes comparteixen «la majoria de paràmetres»):
+ *   - Només efectes: el ritual (› Tipus d'efecte, l. 4736).
+ *   - Només artefactes: activació, recàrrega, acumulador i mode d'espera
+ *     (› Artefacte - …, l. 4889-4935) i les armes i armadures base
+ *     (› Artefactes basats en armes i armadures, l. 4163).
+ */
+export const TIPUS_NOMES_EFECTE = ["ritual"];
+export const TIPUS_NOMES_ARTEFACTE = ["activacio", "recarrega", "acumulador", "espera", "arma", "armaduraBase"];
+
+/**
+ * Tipus de paràmetre que es poden afegir a un artefacte o a un efecte.
+ * @param {boolean} esArtefacte
+ * @returns {string[]}
+ */
+export function tipusParametrePermesos(esArtefacte) {
+  const exclosos = esArtefacte ? TIPUS_NOMES_EFECTE : TIPUS_NOMES_ARTEFACTE;
+  return TIPUS_PARAMETRE.filter(t => !exclosos.includes(t));
+}
+
+/**
+ * Característiques bàsiques de l'arma o armadura base d'un paràmetre `arma` /
+ * `armaduraBase` (manual › Artefactes basats en armes i armadures, l. 4163:
+ * «pren les característiques bàsiques de l'objecte en el que es basa»).
+ * El constructor les carrega en triar la base; només es paga el que s'hi afegeix.
+ * @param {"arma"|"armaduraBase"} tipus
+ * @param {string} baseId
+ * @param {object} [P=CONFIG.FORJA.PARAMETRES]
+ * @returns {{latencia:number, dany:number}|{latencia:number, proteccio:number}|null}
+ */
+export function valorsBaseParametre(tipus, baseId, P = CONFIG.FORJA.PARAMETRES) {
+  if (tipus === "arma") {
+    const b = _buscar(P.armesBase, baseId);
+    return b ? { latencia: b.latencia, dany: b.dany } : null;
+  }
+  if (tipus === "armaduraBase") {
+    const b = _buscar(P.armaduresBase, baseId);
+    return b ? { latencia: b.latencia, proteccio: b.proteccio } : null;
+  }
+  return null;
+}
+
+/**
+ * Camps editables de cada tipus de paràmetre, compartits pel constructor de
+ * Foundry (`apps/dialeg-constructor.mjs`) i altres eines.
+ * `tipus`: "number", "select" o "checkbox". Els selects porten `taula` (una
+ * llista de `parametres.json`, amb `exclou` opcional) o una llista externa:
+ * "@habilitats", "@atributs" o "@trets".
+ */
+export const CAMPS_PARAMETRE = (() => {
+  const num = (camp, min = 0) => ({ camp, tipus: "number", min });
+  const sel = (camp, taula, exclou = []) => ({ camp, tipus: "select", taula, exclou });
+  const chk = (camp) => ({ camp, tipus: "checkbox" });
+  return {
+    activacio:        [sel("mode", "artefacteActivacio", ["normal"])],
+    recarrega:        [num("unitats")],
+    acumulador:       [num("carregues")],
+    arma:             [sel("base", "armesBase"), num("latencia", -12), num("dany")],
+    armaduraBase:     [sel("base", "armaduresBase"), num("latencia", -12), num("proteccio")],
+    dany:             [sel("categoria", "danyCategoria"), num("nivell"), sel("danyTipus", "danyTipus")],
+    cura:             [sel("pista", "curacio"), num("nivell")],
+    armadura:         [num("nivell")],
+    egida:            [num("nivell")],
+    barrera:          [num("nivell")],
+    eina:             [sel("habilitat", "@habilitats"), num("nivell"), chk("segona")],
+    autoeina:         [sel("habilitat", "@habilitats"), num("nivell"), chk("segona")],
+    alterarPercepcio: [num("nivell")],
+    illusio:          [num("nivell")],
+    estat:            [sel("estat", "estats"), num("nivell")],
+    atribut:          [sel("atribut", "@atributs"), num("nivell", 1)],
+    tret:             [sel("tret", "@trets"), num("cost", -100)],
+    transformacio:    [num("costAlterEgo")],
+    translocacio:     [sel("mode", "translocacioTipus"), sel("distancia", "translocacioDistancia")],
+    mental:           [sel("mode", "mentals")],
+    telecinesi:       [sel("categoria", "telecinesi")],
+    replicacio:       [sel("massa", "replicacioMassa"), sel("complexitat", "replicacioComplexitat")],
+    invocacio:        [num("costCriatura")]
+  };
+})();
+
 /** Valors per defecte de cada tipus de paràmetre (en afegir-ne un de nou). */
 export const PARAMETRE_PER_DEFECTE = {
   activacio:        { mode: "trivial" },

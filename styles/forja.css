@@ -6483,6 +6483,11 @@ li.combatant:has(> .forja-controls) {
 .as-progres-punt.actiu { background: var(--forja-primary-light, var(--forja-primary)); box-shadow: 0 0 4px var(--forja-primary); }
 .as-pc-resum { font-size: 0.85rem; color: #cbd5e1; }
 .as-pc-resum.pc-negatius strong { color: var(--forja-danger); }
+/* Assistent: secundàries calculades en viu, a tots els passos. */
+.as-derivats { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.8rem; color: #cbd5e1; padding: 4px 0 2px; border-top: 1px solid rgba(255,255,255,0.08); }
+.as-derivat { white-space: nowrap; }
+.as-derivat small { color: #94a3b8; }
+.as-derivat strong { color: #e2f8f5; }
 
 .as-cos { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
 .as-intro { margin: 0; font-size: 0.85rem; color: #94a3b8; font-style: italic; }
@@ -6660,6 +6665,17 @@ li.combatant:has(> .forja-controls) {
 
 .dc-afegir-fila { display: flex; gap: 6px; align-items: center; }
 .dc-afegir-fila select { flex: 1; }
+
+/* Constructor: botó «Afegir» que desplega la llista de paràmetres. */
+.dc-afegir { display: flex; flex-direction: column; gap: 6px; }
+.dc-afegir > button { align-self: flex-start; width: auto; }
+.dc-afegir > button.actiu { border-color: rgba(251,146,60,0.6); }
+.dc-llista-parametres { display: flex; flex-direction: column; gap: 4px; padding: 6px; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; background: rgba(0,0,0,0.15); }
+.dc-llista-grup { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; margin-top: 2px; }
+.dc-llista-opcions { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px; }
+.dc-llista-opcions button { font-size: 0.82rem; line-height: 1.2; padding: 4px 6px; text-align: left; white-space: normal; height: auto; }
+.forja-dialeg-constructor textarea[name="descripcio"] { width: 100%; resize: vertical; min-height: 3.5em; }
+.dc-resultant { margin: 0; font-size: 0.85rem; color: #e2f8f5; }
 
 .dc-total { display: flex; justify-content: space-around; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 8px; }
 .dc-total-xifra { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 0.8rem; color: #94a3b8; }
@@ -7029,3 +7045,15 @@ li.combatant.forja-inactiu:hover { opacity: 0.75; }
 /* Combatent fora del rellotge (inconscient, incapacitat, mort, derrotat): atenuat al final del tracker. */
 #combat .combatant.forja-fora-rellotge { opacity: 0.4; filter: grayscale(0.8); }
 #combat .combatant.forja-fora-rellotge .forja-posicio { visibility: hidden; }
+
+/* ---------------------------------------------------------------- */
+/* Interfície de Foundry (Oriol FM, 2026-10-11)                      */
+/* ---------------------------------------------------------------- */
+/* Barra lateral: FORJA no fa servir taules de tirada ni baralles de cartes. */
+#sidebar-tabs li:has(> [data-tab="tables"]),
+#sidebar-tabs li:has(> [data-tab="cards"]) { display: none; }
+/* Icones una mica més grans: pestanyes de la barra lateral (dreta) i controls d'escena (esquerra). */
+#sidebar-tabs { --control-size: 40px; }
+#sidebar-tabs .ui-control { font-size: 1.15rem; }
+#ui-left { --control-size: 40px; }
+#scene-controls .ui-control { font-size: 1.15rem; }

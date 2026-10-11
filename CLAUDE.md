@@ -109,7 +109,9 @@ FORJA-FoundryVTT/
 ├── packs/
 │   ├── _source/manual/        # Fonts JSON (JournalEntry) del compendi "Manual FORJA"
 │   └── <compendi>/            # Compilats (LevelDB): NO van a git; `npm run compila`
+├── editor/                    # LOCAL, ignorat per git: eina privada de l'Oriol (vegeu editor/README.md). No la publiquis.
 ├── scripts/
+│   ├── lib/                   # contingut.mjs (pur: cost, derivats i items dels compendis; també al navegador), ids.mjs
 │   ├── build-manual.mjs       # Genera packs/_source/manual/*.json des de Markdown extern
 │   ├── build-packs.mjs        # npm run build:packs: compendis de contingut (manual + catàlegs)
 │   ├── generar-tokens.py      # Tokens provisionals dels actors dels compendis (Pillow)

@@ -38,10 +38,14 @@ const PACKS = {
 // Tots els actors (proves d'estructura) i només els del manual (proves de fidelitat al manual).
 // Els de l'aventura «La porta d'Hèkate» segueixen regles anteriors: les diferències
 // es publiquen a moduls/forja-la-porta-dhekate/CONVERSIO.md.
+// Contingut fet o retocat a mà després de generar-lo (`flags.forja.editor`: "nou" o
+// "editat"): compta per a l'estructura, però no ha de coincidir amb el manual.
+const editor = d => d.flags?.forja?.editor;
 const TOTS = ["pj", "pnj", "animals", "criatures"].flatMap(p => PACKS[p].map(a => ({ pack: p, actor: a })));
-const ACTORS = TOTS.filter(a => !a.actor.flags.forja.aventura);
-const AVENTURA = TOTS.filter(a => a.actor.flags.forja.aventura);
-const delManual = pack => PACKS[pack].filter(a => !a.flags.forja.aventura);
+const ACTORS = TOTS.filter(a => !a.actor.flags.forja.aventura && !editor(a.actor));
+const AVENTURA = TOTS.filter(a => a.actor.flags.forja.aventura && editor(a.actor) !== "nou");
+const delManual = pack => PACKS[pack].filter(a => !a.flags.forja.aventura && editor(a) !== "nou");
+const senseNous = pack => PACKS[pack].filter(d => editor(d) !== "nou");
 
 /**
  * Excepcions conegudes (culpa del manual) al cost o als derivats:
@@ -101,8 +105,8 @@ test("comptes de documents per compendi", () => {
     assert.equal(actor.folder, carpeta._id);
     assert.equal(carpeta._key, `!folders!${carpeta._id}`);
   }
-  assert.equal(PACKS.artefactes.length, 20); // 18 del manual + 2 ègides ancestrals (La porta d'Hèkate)
-  assert.equal(PACKS.efectes.length, 65);
+  assert.equal(senseNous("artefactes").length, 20); // 18 del manual + 2 ègides ancestrals (La porta d'Hèkate)
+  assert.equal(senseNous("efectes").length, 65);
   assert.equal(PACKS.trets.length, 95); // 91 del manual (adepte i inepte per 4 àmbits) + 4 variants de Tòxic (La porta d'Hèkate)
   assert.equal(PACKS.armes.length, 29); // 27 del manual + armes de dispersió i de suport (Fase 6)
   assert.equal(PACKS.armadures.length, 5);
@@ -114,6 +118,7 @@ test("els fitxers font coincideixen amb el que genera l'script (no estan desfasa
   assert.equal(comptes.pj, delManual("pj").length);
   const perId = new Map(TOTS.map(a => [a.actor._id, a.actor]));
   for (const { actor } of [...actors, ...actorsAventura]) {
+    if (editor(perId.get(actor._id) ?? {})) continue; // retocat després de generar-lo
     assert.deepEqual(perId.get(actor._id), actor, `${actor.name} desfasat: torna a executar node scripts/build-packs.mjs`);
   }
 });
@@ -150,8 +155,10 @@ test("tipus d'actor, tier i fitxa de token", () => {
       assert.equal(actor.type, "personatge");
       assert.equal(actor.prototypeToken.actorLink, true);
       assert.equal(actor.prototypeToken.disposition, 1);
-      assert.equal(actor.system.pc, actor.flags.forja.aventura ? 150 : 200);
-      assert.ok(actor.system.biografia.startsWith("<p>"), `${actor.name} sense biografia`);
+      if (!editor(actor)) {
+        assert.equal(actor.system.pc, actor.flags.forja.aventura ? 150 : 200);
+        assert.ok(actor.system.biografia.startsWith("<p>"), `${actor.name} sense biografia`);
+      }
     } else {
       assert.equal(actor.type, "pnj");
       assert.equal(actor.prototypeToken.actorLink, false);
@@ -244,7 +251,8 @@ test("latència, defensa, reducció de dany i reacció recalculades = les del ma
 test("artefactes i efectes embeguts coincideixen amb el catàleg (cost i dades)", () => {
   const cat = { artefacte: PACKS.artefactes, efecte: PACKS.efectes };
   let total = 0;
-  for (const { actor } of ACTORS) {
+  // També els retocats a mà (els seus items continuen sortint del catàleg); no els nous.
+  for (const { actor } of TOTS.filter(a => !a.actor.flags.forja.aventura && editor(a.actor) !== "nou")) {
     for (const it of actor.items.filter(i => i.type === "artefacte" || i.type === "efecte")) {
       const ref = cat[it.type].find(c => c.flags.forja.catalegId === it.flags.forja.catalegId);
       assert.ok(ref, `${actor.name}: ${it.name} no és al catàleg`);

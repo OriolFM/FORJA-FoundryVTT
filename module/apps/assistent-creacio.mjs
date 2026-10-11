@@ -96,6 +96,19 @@ export default class AssistentCreacio extends HandlebarsApplicationMixin(Applica
       actor,
       sys,
       pc: { total: sys.pc, gastats: sys.pcGastats ?? 0, lliures: sys.pcLliures ?? 0 },
+      // Secundàries calculades en viu (els derivats de l'actor, `_prepararDerivats`),
+      // les mateixes que la secció de la fitxa, més les caselles de salut per nivell.
+      derivats: [
+        { nom: "FORJA.Derivat.Latencia", val: sys.latenciaBase },
+        { nom: "FORJA.Derivat.Defensa",  val: sys.defensa },
+        { nom: "FORJA.Derivat.Reduccio", val: sys.reduccioDany },
+        { nom: "FORJA.Derivat.Reaccions", val: sys.reaccionsMax },
+        { nom: "FORJA.Derivat.Caminar",  val: `${sys.moviment?.caminar ?? "—"} m`, desc: "FORJA.Derivat.MovimentDesc" },
+        { nom: "FORJA.Derivat.Correr",   val: `${sys.moviment?.correr ?? "—"} m`, desc: "FORJA.Derivat.MovimentDesc" },
+        { nom: "FORJA.Derivat.Saltar",   val: `${sys.moviment?.saltar ?? "—"} m`, desc: "FORJA.Derivat.MovimentDesc" },
+        { nom: "FORJA.Assistent.FatigaPerNivell", val: sys.salut?.fatiga?.perNivell ?? "—" },
+        { nom: "FORJA.Assistent.FeridesPerNivell", val: sys.salut?.ferides?.perNivell ?? "—" }
+      ].map(d => ({ ...d, nom: game.i18n.localize(d.nom), desc: d.desc ? game.i18n.localize(d.desc) : "" })),
 
       // Pas: identitat
       nom: actor.name,

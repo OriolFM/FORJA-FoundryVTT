@@ -1,7 +1,17 @@
 // Etiquetes dels objectius d'atac (combat/objectius.mjs).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fletxaDireccio, etiquetarObjectius } from "../../module/combat/objectius.mjs";
+import { fletxaDireccio, etiquetarObjectius, objectiuPerDefecte } from "../../module/combat/objectius.mjs";
+
+test("objectiu per defecte: l'últim declarat, si no el marcat, si no el més proper", () => {
+  const llista = [{ tokenId: "a" }, { tokenId: "b", marcat: true }, { tokenId: "c" }];
+  // El marcat (p. ex. el de la declaració d'un altre combatent) no passa davant de l'últim propi.
+  assert.equal(objectiuPerDefecte(llista, "c"), "c");
+  assert.equal(objectiuPerDefecte(llista, "ja-no-hi-es"), "b");
+  assert.equal(objectiuPerDefecte(llista, null), "b");
+  assert.equal(objectiuPerDefecte([{ tokenId: "a" }, { tokenId: "c" }], null), "a");
+  assert.equal(objectiuPerDefecte([], "c"), null);
+});
 
 test("fletxa de direcció (y cap avall)", () => {
   assert.equal(fletxaDireccio(10, 0), "→");
